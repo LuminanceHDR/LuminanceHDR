@@ -34,35 +34,36 @@ namespace colorspace {
 struct ConvertInvertedCMYK2RGB {
     //! \brief
     template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn c, TypeIn m, TypeIn y, TypeIn k,
-                    TypeOut& r, TypeOut& g, TypeOut& b) const
-    {
+    void operator()(TypeIn c, TypeIn m, TypeIn y, TypeIn k, TypeOut &r,
+                    TypeOut &g, TypeOut &b) const {
         float c_ = ConvertSample<float, TypeIn>()(c);
         float m_ = ConvertSample<float, TypeIn>()(m);
         float y_ = ConvertSample<float, TypeIn>()(y);
         float k_ = ConvertSample<float, TypeIn>()(k);
 
-        r = ConvertSample<TypeOut, float>()(c_*k_);
-        g = ConvertSample<TypeOut, float>()(m_*k_);
-        b = ConvertSample<TypeOut, float>()(y_*k_);
+        r = ConvertSample<TypeOut, float>()(c_ * k_);
+        g = ConvertSample<TypeOut, float>()(m_ * k_);
+        b = ConvertSample<TypeOut, float>()(y_ * k_);
     }
 };
 
 struct ConvertCMYK2RGB {
     //! \brief
     template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn c, TypeIn m, TypeIn y, TypeIn k,
-                    TypeOut& r, TypeOut& g, TypeOut& b) const
-    {
+    void operator()(TypeIn c, TypeIn m, TypeIn y, TypeIn k, TypeOut &r,
+                    TypeOut &g, TypeOut &b) const {
         float K = (1.f - ConvertSample<float, TypeIn>()(k));
 
-        r = ConvertSample<TypeOut, float>()((1.f - ConvertSample<float, TypeIn>()(c))*K);
-        g = ConvertSample<TypeOut, float>()((1.f - ConvertSample<float, TypeIn>()(m))*K);
-        b = ConvertSample<TypeOut, float>()((1.f - ConvertSample<float, TypeIn>()(y))*K);
+        r = ConvertSample<TypeOut, float>()(
+            (1.f - ConvertSample<float, TypeIn>()(c)) * K);
+        g = ConvertSample<TypeOut, float>()(
+            (1.f - ConvertSample<float, TypeIn>()(m)) * K);
+        b = ConvertSample<TypeOut, float>()(
+            (1.f - ConvertSample<float, TypeIn>()(y)) * K);
     }
 };
 
-}   // colorspace
-}   // pfs
+}  // colorspace
+}  // pfs
 
-#endif // PFS_COLORSPACE_CMYK_H
+#endif  // PFS_COLORSPACE_CMYK_H

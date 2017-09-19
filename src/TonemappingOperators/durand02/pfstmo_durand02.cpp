@@ -31,9 +31,9 @@
  * $Id: pfstmo_durand02.cpp,v 1.5 2009/02/23 19:09:41 rafm Exp $
  */
 
+#include <cmath>
 #include <iostream>
 #include <sstream>
-#include <cmath>
 
 #include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/exception.h"
@@ -41,8 +41,7 @@
 #include "Libpfs/progress.h"
 #include "tmo_durand02.h"
 
-namespace
-{
+namespace {
 const int downsample = 1;
 const bool original_algorithm = false;
 }
@@ -51,24 +50,22 @@ const bool original_algorithm = false;
 //#ifdef HAVE_FFTW3F
 //  float sigma_s = 40.0f;
 //#else
-//float sigma_s = 8.0f;
+// float sigma_s = 8.0f;
 //#endif
-//float sigma_r = 0.4f;
-//float baseContrast = 5.0f;
+// float sigma_r = 0.4f;
+// float baseContrast = 5.0f;
 
-void pfstmo_durand02(pfs::Frame& frame,
-                     float sigma_s, float sigma_r, float baseContrast,
-                     pfs::Progress &ph)
-{
+void pfstmo_durand02(pfs::Frame &frame, float sigma_s, float sigma_r,
+                     float baseContrast, pfs::Progress &ph) {
 #ifndef NDEBUG
     std::stringstream ss;
 
     ss << "pfstmo_durand02 (";
-  #ifdef HAVE_FFTW3F
+#ifdef HAVE_FFTW3F
     ss << "fftw3f ON";
-  #else
+#else
     ss << "fftw3f OFF";
-  #endif
+#endif
     ss << ", sigma_s: " << sigma_s;
     ss << ", sigma_r: " << sigma_r;
     ss << ", base contrast: " << baseContrast << ")";
@@ -76,29 +73,22 @@ void pfstmo_durand02(pfs::Frame& frame,
     std::cout << ss.str() << std::endl;
 #endif
 
-  pfs::Channel *X, *Y, *Z;
+    pfs::Channel *X, *Y, *Z;
 
-  frame.getXYZChannels( X, Y, Z );
-  frame.getTags().setTag("LUMINANCE", "RELATIVE");
-  //---
+    frame.getXYZChannels(X, Y, Z);
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
+    //---
 
-  if ( Y == NULL || X == NULL || Z == NULL )
-  {
-    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-  }
+    if (Y == NULL || X == NULL || Z == NULL) {
+        throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
+    }
 
-  try
-  {
-    tmo_durand02(*X, *Y, *Z,
-                 sigma_s, sigma_r, baseContrast, downsample, !original_algorithm,
-                 ph);
-  }
-  catch(...)
-  {
-    throw pfs::Exception( "Tonemapping Failed!" );
-  }
+    try {
+        tmo_durand02(*X, *Y, *Z, sigma_s, sigma_r, baseContrast, downsample,
+                     !original_algorithm, ph);
+    } catch (...) {
+        throw pfs::Exception("Tonemapping Failed!");
+    }
 
-  if ( !ph.canceled() )
-      ph.setValue(100);
+    if (!ph.canceled()) ph.setValue(100);
 }
-

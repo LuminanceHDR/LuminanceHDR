@@ -27,22 +27,20 @@
 #include <QDialog>
 #include <QScopedPointer>
 
-namespace Ui
-{
-    class ExportToHtmlDialog;
+namespace Ui {
+class ExportToHtmlDialog;
 }
 
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
-class ExportToHtmlDialog : public QDialog
-{
+class ExportToHtmlDialog : public QDialog {
     Q_OBJECT
-public:
-    ExportToHtmlDialog(QWidget* parent, pfs::Frame *frame);
+   public:
+    ExportToHtmlDialog(QWidget *parent, pfs::Frame *frame);
 
-private:
+   private:
     pfs::Frame *m_frame;
     QString m_pageName;
     QString m_outputFolder;
@@ -52,15 +50,15 @@ private:
 
     QScopedPointer<Ui::ExportToHtmlDialog> m_Ui;
 
-private slots:
+   private slots:
     void onExportButtonClicked();
     void onOutputFolderButtonClicked();
     void onEditPageNameFinished();
     void onEditOutputFolderFinished();
     void onEditImagesFolderFinished();
 
-public:
+   public:
     ~ExportToHtmlDialog();
 };
 
-#endif // EXPORTTOHTMLDIALOG_H
+#endif  // EXPORTTOHTMLDIALOG_H

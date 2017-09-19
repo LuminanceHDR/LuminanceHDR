@@ -30,26 +30,26 @@
 #define SCHELP_TREEMODEL_H
 
 #include <QAbstractItemModel>
+#include <QDomDocument>
 #include <QModelIndex>
 #include <QVariant>
-#include <QDomDocument>
 
 #include "treemodel.h"
 
+class ScHelpTreeModel : public TreeModel {
+    // Q_OBJECT
 
-class ScHelpTreeModel : public TreeModel
-{
-    //Q_OBJECT
+   public:
+    ScHelpTreeModel(const QString &dataFile, const QString &col1name,
+                    const QString &col2name,
+                    QMap<QString, QString> *indexToBuild, QObject *parent = 0);
+    ~ScHelpTreeModel(){};
 
-public:
-    ScHelpTreeModel(const QString &dataFile, const QString &col1name, const QString &col2name, QMap<QString, QString>* indexToBuild, QObject *parent = 0);
-    ~ScHelpTreeModel() {};
+    void addRow(const QString &, const QString &, int i);
 
-    void addRow(const QString&, const QString&, int i);
-
-private:
-    void setupModelData(const QString &dataFile, TreeItem *parent, QMap<QString, QString>* indexToBuild);
-
+   private:
+    void setupModelData(const QString &dataFile, TreeItem *parent,
+                        QMap<QString, QString> *indexToBuild);
 };
 
 #endif

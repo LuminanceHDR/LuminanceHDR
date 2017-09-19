@@ -27,29 +27,27 @@
 #include <QDialog>
 #include <QScopedPointer>
 
-namespace Ui
-{
-    class DonationDialog;
+namespace Ui {
+class DonationDialog;
 }
 
-class DonationDialog : public QDialog
-{
+class DonationDialog : public QDialog {
     Q_OBJECT
-public:
+   public:
     static void showDonationDialog();
     static void openDonationPage();
 
-private:
+   private:
     QScopedPointer<Ui::DonationDialog> m_ui;
 
-    explicit DonationDialog(QWidget* parent = 0);
+    explicit DonationDialog(QWidget *parent = 0);
 
-private slots:
+   private slots:
     void onYesButtonClicked();
     void onNoButtonClicked();
 
-public:
+   public:
     ~DonationDialog();
 };
 
-#endif // DONATIONDIALOG_H
+#endif  // DONATIONDIALOG_H

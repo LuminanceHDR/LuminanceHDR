@@ -11,19 +11,19 @@
  * channel, saturating a percentage of the pixels at the beginning and
  * end of the color space on each channel.
  */
-void colorBalanceRGB(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
-                          float nb_min, float nb_max);
-void robustAWB(pfs::Array2Df* R, pfs::Array2Df* G, pfs::Array2Df* B);
-void shadesOfGrayAWB(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B);
+void colorBalanceRGB(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
+                     float nb_min, float nb_max);
+void robustAWB(pfs::Array2Df *R, pfs::Array2Df *G, pfs::Array2Df *B);
+void shadesOfGrayAWB(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B);
 
-enum WhiteBalanceType
-{
+enum WhiteBalanceType {
     WB_COLORBALANCE = 0,
     WB_ROBUST = 1,
     WB_SHADESOFGRAY = 2
 };
 
-void whiteBalance(pfs::Frame& frame, WhiteBalanceType type);
-void whiteBalance(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B, WhiteBalanceType type);
+void whiteBalance(pfs::Frame &frame, WhiteBalanceType type);
+void whiteBalance(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
+                  WhiteBalanceType type);
 
-#endif // WHITEBALANCE_H
+#endif  // WHITEBALANCE_H

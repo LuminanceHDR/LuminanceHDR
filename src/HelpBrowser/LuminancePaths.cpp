@@ -32,10 +32,8 @@
 #include <iostream>
 
 LuminancePaths *LuminancePaths::instance = 0;
-LuminancePaths * LuminancePaths::getThis()
-{
-    if(!instance)
-        instance = new LuminancePaths;
+LuminancePaths *LuminancePaths::getThis() {
+    if (!instance) instance = new LuminancePaths;
     return instance;
 }
 
@@ -43,23 +41,28 @@ namespace {
 const QString dirsep(QDir::separator());
 }
 
-QString LuminancePaths::HelpDir()
-{
+QString LuminancePaths::HelpDir() {
     if (getThis()->LuminancePathsDB.contains(QStringLiteral("HelpDir"))) {
         QString hf = getThis()->LuminancePathsDB[QStringLiteral("HelpDir")];
-        if ( !hf.isEmpty() && QDir(hf).exists() ) {
+        if (!hf.isEmpty() && QDir(hf).exists()) {
             return hf;
         }
     }
 
 #ifdef Q_OS_MAC
-    QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "../Resources/help/en" + dirsep);
+    QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep +
+                                  "../Resources/help/en" + dirsep);
 #elif _WIN32
-    QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep);
-    // no fall-back
-#else   // UNIX
-    // hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
-    // hf = LocalizedDirPath("usr" + dirsep + "share" + dirsep + "luminance-hdr" + dirsep + "help" + dirsep);
+    QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep +
+                                  "help" + dirsep);
+// no fall-back
+#else  // UNIX
+    // hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix"
+    // +
+    // dirsep + "help" + dirsep );
+    // hf = LocalizedDirPath("usr" + dirsep + "share" + dirsep + "luminance-hdr"
+    // +
+    // dirsep + "help" + dirsep);
     QString hf = LocalizedDirPath(HELPDIR + dirsep);
 #endif
 
@@ -68,27 +71,24 @@ QString LuminancePaths::HelpDir()
     return hf;
 }
 
-QString LuminancePaths::LocalizedDirPath(const QString & base, const QString& fallback )
-{
+QString LuminancePaths::LocalizedDirPath(const QString &base,
+                                         const QString &fallback) {
     QString sep(QStringLiteral("_"));
     QStringList l_c(QLocale::system().name().split(sep));
-    QString langcode( l_c.first() );
+    QString langcode(l_c.first());
     QString countrycode(l_c.last());
 
     QStringList names;
-    if((!langcode.isEmpty()) || (!countrycode.isEmpty()))
-    {
-        names << base + langcode + sep + countrycode ;
-        names << base + langcode  ;
+    if ((!langcode.isEmpty()) || (!countrycode.isEmpty())) {
+        names << base + langcode + sep + countrycode;
+        names << base + langcode;
     }
-    names << base + fallback  ;
-    names << base  ;
+    names << base + fallback;
+    names << base;
 
-    foreach(const QString &t, names)
-    {
+    foreach (const QString &t, names) {
         QDir d(t);
-        if( d.exists() )
-            return d.absolutePath() + QString(QDir::separator()) ;
+        if (d.exists()) return d.absolutePath() + QString(QDir::separator());
     }
 
     return QString();

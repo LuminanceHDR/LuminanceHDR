@@ -29,23 +29,19 @@
 
 #include "cut.h"
 
-#include <climits>
+#include <algorithm>
 #include <cassert>
+#include <climits>
 #include <cstdlib>
 #include <iostream>
-#include <algorithm>
 
-#include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/frame.h"
+#include "Libpfs/utils/msec_timer.h"
 
-namespace pfs
-{
+namespace pfs {
 
-
-
-pfs::Frame *cut(const pfs::Frame *inFrame,
-                size_t x_ul, size_t y_ul, size_t x_br, size_t y_br)
-{
+pfs::Frame *cut(const pfs::Frame *inFrame, size_t x_ul, size_t y_ul,
+                size_t x_br, size_t y_br) {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
@@ -58,20 +54,17 @@ pfs::Frame *cut(const pfs::Frame *inFrame,
     if (y_br > inFrame->getHeight()) y_br = inFrame->getHeight();
     // -----
 
-    pfs::Frame *outFrame = new pfs::Frame((x_br-x_ul), (y_br-y_ul));
+    pfs::Frame *outFrame = new pfs::Frame((x_br - x_ul), (y_br - y_ul));
 
-    const ChannelContainer& channels = inFrame->getChannels();
+    const ChannelContainer &channels = inFrame->getChannels();
 
-    for ( ChannelContainer::const_iterator it = channels.begin();
-          it != channels.end();
-          ++it)
-    {
-        const pfs::Channel* inCh = *it;
+    for (ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end(); ++it) {
+        const pfs::Channel *inCh = *it;
 
         pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
 
-        cut(inCh, outCh,
-            x_ul, y_ul, x_br, y_br);
+        cut(inCh, outCh, x_ul, y_ul, x_br, y_br);
     }
 
     pfs::copyTags(inFrame, outFrame);
@@ -79,12 +72,12 @@ pfs::Frame *cut(const pfs::Frame *inFrame,
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
     std::cout << "pfscut(";
-    std::cout << "[" << x_ul <<", " << y_ul <<"],";
-    std::cout << "[" << x_br << ", " << y_br <<"]";
+    std::cout << "[" << x_ul << ", " << y_ul << "],";
+    std::cout << "[" << x_br << ", " << y_br << "]";
     std::cout << ") = " << f_timer.get_time() << " msec" << std::endl;
 #endif
 
     return outFrame;
 }
 
-} // pfs
+}  // pfs

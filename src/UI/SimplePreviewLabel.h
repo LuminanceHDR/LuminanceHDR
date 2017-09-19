@@ -27,20 +27,19 @@
 #include <QLabel>
 #include <QMouseEvent>
 
-class SimplePreviewLabel : public QLabel
-{
+class SimplePreviewLabel : public QLabel {
     Q_OBJECT
 
-public:
+   public:
     SimplePreviewLabel(int index, QWidget *parent = 0);
     ~SimplePreviewLabel();
 
     bool isSelected() { return m_selected; }
 
-signals:
+   signals:
     void selected(int);
 
-protected:
+   protected:
     void mousePressEvent(QMouseEvent *event);
     int m_index;
     bool m_selected;

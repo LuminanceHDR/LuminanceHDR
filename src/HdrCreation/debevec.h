@@ -37,25 +37,19 @@ namespace libhdr {
 namespace fusion {
 
 //! \brief Debevec Radiance Map operator
-class DebevecOperator : public IFusionOperator
-{
-public:
-    DebevecOperator()
-        : IFusionOperator()
-    {}
+class DebevecOperator : public IFusionOperator {
+   public:
+    DebevecOperator() : IFusionOperator() {}
 
-    FusionOperator getType() const
-    {
-        return DEBEVEC;
-    }
+    FusionOperator getType() const { return DEBEVEC; }
 
-private:
-    void computeFusion(ResponseCurve& response, WeightFunction& weight,
+   private:
+    void computeFusion(ResponseCurve &response, WeightFunction &weight,
                        const std::vector<FrameEnhanced> &frames,
                        pfs::Frame &frame);
 };
 
-}   // fusion
-}   // libhdr
+}  // fusion
+}  // libhdr
 
-#endif // LIBHDR_FUSION_DEBEVEC_H
+#endif  // LIBHDR_FUSION_DEBEVEC_H

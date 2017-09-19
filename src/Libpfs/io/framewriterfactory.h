@@ -19,36 +19,42 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief FrameWriterFactory, creation of FrameWriter based on the input filename
+//! \brief FrameWriterFactory, creation of FrameWriter based on the input
+//! filename
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 #ifndef PFS_IO_FRAMEWRITERFACTORY_H
 #define PFS_IO_FRAMEWRITERFACTORY_H
 
-#include <string>
-#include <map>
 #include <Libpfs/io/framewriter.h>
 #include <Libpfs/io/ioexception.h>
 #include <Libpfs/utils/string.h>
+#include <map>
+#include <string>
 
 namespace pfs {
 namespace io {
 
 class FrameWriterFactory {
-public:
-    typedef FrameWriterPtr (*FrameWriterCreator)(const std::string& filename);
-    typedef std::map<std::string, FrameWriterCreator, utils::StringUnsensitiveComp> FrameWriterCreatorMap;
+   public:
+    typedef FrameWriterPtr (*FrameWriterCreator)(const std::string &filename);
+    typedef std::map<std::string, FrameWriterCreator,
+                     utils::StringUnsensitiveComp>
+        FrameWriterCreatorMap;
 
-    static FrameWriterPtr open(const std::string& filename, const pfs::Params& params);
+    static FrameWriterPtr open(const std::string &filename,
+                               const pfs::Params &params);
 
-    static void registerFormat(const std::string& format, FrameWriterCreator creator);
+    static void registerFormat(const std::string &format,
+                               FrameWriterCreator creator);
     static size_t numRegisteredFormats();
-    static bool isSupported(const std::string& format);
-private:
+    static bool isSupported(const std::string &format);
+
+   private:
     static FrameWriterCreatorMap sm_registry;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
-#endif // PFS_IO_FRAMEWRITERFACTORY_H
+#endif  // PFS_IO_FRAMEWRITERFACTORY_H

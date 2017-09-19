@@ -24,48 +24,46 @@
 #ifndef OSINTEGRATION_H
 #define OSINTEGRATION_H
 
-#include <QObject>
-#include <QWidget>
-#include <QString>
 #include <QByteArray>
+#include <QObject>
+#include <QString>
+#include <QWidget>
 
 #ifdef Q_OS_WIN
 #include "ecwin7.h"
 #endif
 
-class OsIntegration : public QObject
-{
+class OsIntegration : public QObject {
     Q_OBJECT
 
-public:
-    static OsIntegration& getInstance();
-    static OsIntegration* getInstancePtr();
+   public:
+    static OsIntegration &getInstance();
+    static OsIntegration *getInstancePtr();
 
-    void init(QWidget* mainWindow);
+    void init(QWidget *mainWindow);
     void setProgress(int value, int max = 100);
 
     ~OsIntegration();
 
     bool isRunningOnSameCpuPlatform();
 
-    void addRecentFile(const QString& filename);
+    void addRecentFile(const QString &filename);
 
-public Q_SLOTS:
+   public Q_SLOTS:
     void setProgressValue(int value);
     void setProgressRange(int min, int max);
 
-private:
+   private:
     OsIntegration();
-    OsIntegration(const OsIntegration&);
-    OsIntegration& operator=(const OsIntegration&);
+    OsIntegration(const OsIntegration &);
+    OsIntegration &operator=(const OsIntegration &);
 
-    static OsIntegration* instance;
+    static OsIntegration *instance;
     int m_progressMin;
     int m_progressMax;
 
 #ifdef Q_OS_WIN
-    EcWin7* m_winProgressbar;
+    EcWin7 *m_winProgressbar;
 #endif
-
 };
-#endif // OSINTEGRATION_H
+#endif  // OSINTEGRATION_H

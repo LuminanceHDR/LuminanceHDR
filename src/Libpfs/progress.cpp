@@ -24,60 +24,29 @@
 
 #include "progress.h"
 
-namespace pfs
-{
+namespace pfs {
 
 Progress::Progress()
-    : m_maximum(0)
-    , m_minimum(0)
-    , m_value(0)
-    , m_canceled(false)
-{}
+    : m_maximum(0), m_minimum(0), m_value(0), m_canceled(false) {}
 
-void Progress::setMaximum(int maximum)
-{
-    m_maximum = maximum;
-}
+void Progress::setMaximum(int maximum) { m_maximum = maximum; }
 
-void Progress::setMinimum(int minimum)
-{
-    m_minimum = minimum;
-}
+void Progress::setMinimum(int minimum) { m_minimum = minimum; }
 
-void Progress::setRange(int minimum, int maximum)
-{
+void Progress::setRange(int minimum, int maximum) {
     setMinimum(minimum);
     setMaximum(maximum);
 }
 
-int Progress::maximum() const
-{
-    return m_maximum;
-}
-int Progress::minimum() const
-{
-    return m_minimum;
-}
+int Progress::maximum() const { return m_maximum; }
+int Progress::minimum() const { return m_minimum; }
 
-void Progress::setValue(int value)
-{
-    m_value = value;
-}
+void Progress::setValue(int value) { m_value = value; }
 
 // int Progress::next();
 
-int Progress::value() const
-{
-    return m_value;
-}
+int Progress::value() const { return m_value; }
 
-void Progress::cancel(bool b)
-{
-    m_canceled = b;
-}
-bool Progress::canceled() const
-{
-    return m_canceled;
-}
-
+void Progress::cancel(bool b) { m_canceled = b; }
+bool Progress::canceled() const { return m_canceled; }
 }

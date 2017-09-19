@@ -34,40 +34,45 @@
 
 // Forward declaration
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
 class TonemappingOptions;
 class ProgressHelper;
 
-class TMWorker : public QObject
-{
+class TMWorker : public QObject {
     Q_OBJECT
 
-public:
-    TMWorker(QObject* parent = 0);
+   public:
+    TMWorker(QObject *parent = 0);
     ~TMWorker();
 
-public Q_SLOTS:
+   public Q_SLOTS:
     //!
     //!  This function creates a copy of the input frame, tonemap the copy
     //!  and then returns it
     //!
-    pfs::Frame* computeTonemap(/* const */pfs::Frame*, TonemappingOptions*, InterpolationMethod m);
+    pfs::Frame *computeTonemap(/* const */ pfs::Frame *, TonemappingOptions *,
+                               InterpolationMethod m);
 
-    void computeTonemapAndExport(/* const */pfs::Frame*, TonemappingOptions*, pfs::Params, QString exportDir, QString hdrName, QString inputfname, QVector<float> inputExpoTimes, InterpolationMethod m);
+    void computeTonemapAndExport(/* const */ pfs::Frame *, TonemappingOptions *,
+                                 pfs::Params, QString exportDir,
+                                 QString hdrName, QString inputfname,
+                                 QVector<float> inputExpoTimes,
+                                 InterpolationMethod m);
 
     //!
     //! This function tonemap the input frame
     //!
-    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
+    void tonemapFrame(pfs::Frame *, TonemappingOptions *);
 
-private:
-    pfs::Frame* preprocessFrame(pfs::Frame*, TonemappingOptions*, InterpolationMethod m);
-    void postprocessFrame(pfs::Frame*, TonemappingOptions*);
+   private:
+    pfs::Frame *preprocessFrame(pfs::Frame *, TonemappingOptions *,
+                                InterpolationMethod m);
+    void postprocessFrame(pfs::Frame *, TonemappingOptions *);
 
-Q_SIGNALS:
-    void tonemapSuccess(pfs::Frame*, TonemappingOptions*);
+   Q_SIGNALS:
+    void tonemapSuccess(pfs::Frame *, TonemappingOptions *);
     void tonemapFailed(QString);
 
     void tonemapBegin();
@@ -77,8 +82,8 @@ Q_SIGNALS:
     void tonemapSetValue(int);
     void tonemapRequestTermination(bool);
 
-private:
-    ProgressHelper* m_Callback;
+   private:
+    ProgressHelper *m_Callback;
 };
 
-#endif // TMWORKER_H
+#endif  // TMWORKER_H

@@ -45,22 +45,21 @@ for which a new license (GPL+exception) is in place.
 #define SCTEXTBROWSER_H
 
 #include <QUrl>
-#include  <QWebEngineView>
+#include <QWebEngineView>
 
-class ScTextBrowser : public QWebEngineView
-{
+class ScTextBrowser : public QWebEngineView {
     Q_OBJECT
     QUrl m_home;
-    public:
-        explicit ScTextBrowser( QWidget * parent = 0 );
-        void setHome(const QUrl& h){m_home = h;}
 
-    signals:
-        void overLink(const QString &link);
+   public:
+    explicit ScTextBrowser(QWidget *parent = 0);
+    void setHome(const QUrl &h) { m_home = h; }
 
-    public slots:
-        void home();
+   signals:
+    void overLink(const QString &link);
 
+   public slots:
+    void home();
 };
 
 #endif

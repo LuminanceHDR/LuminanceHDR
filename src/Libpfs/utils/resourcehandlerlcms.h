@@ -30,17 +30,15 @@
 
 #include <Libpfs/utils/resourcehandler.h>
 
-#include <iostream>
 #include <lcms2.h>
+#include <iostream>
 
 namespace pfs {
 namespace utils {
 
-struct CleanUpCmsProfile
-{
-    static inline
-    void cleanup(cmsHPROFILE profile) {
-        if ( profile ) {
+struct CleanUpCmsProfile {
+    static inline void cleanup(cmsHPROFILE profile) {
+        if (profile) {
 #ifndef NDEBUG
             std::clog << "CleanUpCmsProfile::cleanup()\n";
 #endif
@@ -50,11 +48,9 @@ struct CleanUpCmsProfile
 };
 typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
 
-struct CleanUpCmsTransform
-{
-    static inline
-    void cleanup(cmsHTRANSFORM transform) {
-        if ( transform ) {
+struct CleanUpCmsTransform {
+    static inline void cleanup(cmsHTRANSFORM transform) {
+        if (transform) {
 #ifndef NDEBUG
             std::clog << "CleanUpCmsTransform::cleanup()\n";
 #endif
@@ -64,7 +60,7 @@ struct CleanUpCmsTransform
 };
 typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
 #endif  // RESOURCEHANDLERLCMS_H

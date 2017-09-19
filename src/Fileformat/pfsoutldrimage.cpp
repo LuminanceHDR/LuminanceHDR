@@ -32,20 +32,20 @@
 
 #include "pfsoutldrimage.h"
 
-#include <QImage>
 #include <QDebug>
+#include <QImage>
 
-#include <iostream>
 #include <assert.h>
+#include <iostream>
 #include <stdexcept>
 
 #include <boost/assign/list_of.hpp>
 
+#include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/exception.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/transform.h>
-#include <Libpfs/colorspace/rgbremapper.h>
-#include <Libpfs/exception.h>
 
 using namespace std;
 using namespace pfs;
@@ -53,27 +53,18 @@ using namespace boost::assign;
 
 using namespace pfs;
 
-
-QRgbRemapper::QRgbRemapper(float minLuminance, float maxLuminance, RGBMappingType mappingType)
+QRgbRemapper::QRgbRemapper(float minLuminance, float maxLuminance,
+                           RGBMappingType mappingType)
     : m_remapper(
-          utils::chain(
-              colorspace::Normalizer(minLuminance, maxLuminance),
-              utils::CLAMP_F32,
-              Remapper<uint8_t>(mappingType)
-              )
-          )
-{}
+          utils::chain(colorspace::Normalizer(minLuminance, maxLuminance),
+                       utils::CLAMP_F32, Remapper<uint8_t>(mappingType))) {}
 
-void QRgbRemapper::operator()(float r, float g, float b, QRgb& qrgb) const
-{
+void QRgbRemapper::operator()(float r, float g, float b, QRgb &qrgb) const {
     qrgb = qRgb(m_remapper(r), m_remapper(g), m_remapper(b));
 }
 
-QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
-                           float min_luminance,
-                           float max_luminance,
-                           RGBMappingType mapping_method)
-{
+QImage *fromLDRPFStoQImage(pfs::Frame *in_frame, float min_luminance,
+                           float max_luminance, RGBMappingType mapping_method) {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
@@ -86,20 +77,20 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     assert(in_frame != NULL);
 
     pfs::Channel *Xc, *Yc, *Zc;
-    in_frame->getXYZChannels( Xc, Yc, Zc );
-    assert( Xc != NULL && Yc != NULL && Zc != NULL );
+    in_frame->getXYZChannels(Xc, Yc, Zc);
+    assert(Xc != NULL && Yc != NULL && Zc != NULL);
 
-    QImage* temp_qimage = new QImage(in_frame->getWidth(), in_frame->getHeight(),
-                                     QImage::Format_RGB32);
+    QImage *temp_qimage = new QImage(
+        in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);
 
     QRgbRemapper remapper(min_luminance, max_luminance, mapping_method);
     utils::transform(Xc->begin(), Xc->end(), Yc->begin(), Zc->begin(),
-                     reinterpret_cast<QRgb*>(temp_qimage->bits()),
-                     remapper);
+                     reinterpret_cast<QRgb *>(temp_qimage->bits()), remapper);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
-    std::cout << "fromLDRPFStoQImage() = " << stop_watch.get_time() << " msec" << std::endl;
+    std::cout << "fromLDRPFStoQImage() = " << stop_watch.get_time() << " msec"
+              << std::endl;
 #endif
 
     return temp_qimage;

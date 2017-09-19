@@ -28,24 +28,22 @@
 #include <QListWidgetItem>
 #include <QScopedPointer>
 
-namespace Ui
-{
-    class SupportedCamerasDialog;
+namespace Ui {
+class SupportedCamerasDialog;
 }
 
-class SupportedCamerasDialog : public QDialog
-{
+class SupportedCamerasDialog : public QDialog {
     Q_OBJECT
-public:
-    explicit SupportedCamerasDialog(QWidget* parent);
+   public:
+    explicit SupportedCamerasDialog(QWidget *parent);
     ~SupportedCamerasDialog();
 
-private:
+   private:
     QList<QListWidgetItem *> m_items;
     QScopedPointer<Ui::SupportedCamerasDialog> m_Ui;
 
-public slots:
+   public slots:
     void search(const QString &);
 };
 
-#endif // SUPPORTEDCAMERASDIALOG_H
+#endif  // SUPPORTEDCAMERASDIALOG_H

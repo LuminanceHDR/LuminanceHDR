@@ -25,36 +25,34 @@
 #ifndef PFS_IO_FRAMEWRITER_H
 #define PFS_IO_FRAMEWRITER_H
 
-#include <string>
 #include <memory>
+#include <string>
 
-#include <Libpfs/params.h>
 #include <Libpfs/io/ioexception.h>
+#include <Libpfs/params.h>
 
 namespace pfs {
 class Frame;
 
 namespace io {
 
-class FrameWriter
-{
-public:
-    explicit FrameWriter(const std::string& filename);
+class FrameWriter {
+   public:
+    explicit FrameWriter(const std::string &filename);
     explicit FrameWriter();
     virtual ~FrameWriter();
 
-    virtual bool write(const pfs::Frame& frame, const pfs::Params& params) = 0;
+    virtual bool write(const pfs::Frame &frame, const pfs::Params &params) = 0;
 
-    const std::string& filename() const
-    { return m_filename; }
+    const std::string &filename() const { return m_filename; }
 
-private:
+   private:
     std::string m_filename;
 };
 
 typedef std::shared_ptr<FrameWriter> FrameWriterPtr;
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
-#endif // PFS_IO_FRAMEWRITER_H
+#endif  // PFS_IO_FRAMEWRITER_H

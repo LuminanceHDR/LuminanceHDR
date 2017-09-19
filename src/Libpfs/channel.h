@@ -27,9 +27,9 @@
 #ifndef PFS_CHANNEL_H
 #define PFS_CHANNEL_H
 
-#include <string>
-#include <map>
 #include <cstddef>
+#include <map>
+#include <string>
 
 #include <Libpfs/array2d.h>
 #include <Libpfs/tag.h>
@@ -38,12 +38,11 @@ namespace pfs {
 
 //! \brief Channel interface represents a 2D rectangular array with
 //! associated tags.
-class Channel : public Array2D<float>
-{
-public:
+class Channel : public Array2D<float> {
+   public:
     typedef Array2D<float> ChannelData;
 
-    Channel(size_t width, size_t height, const std::string& channelName);
+    Channel(size_t width, size_t height, const std::string &channelName);
 
     virtual ~Channel();
 
@@ -69,19 +68,18 @@ public:
 
     //! Gets name of the channel.
     //!
-    const std::string& getName() const;
+    const std::string &getName() const;
 
-//    //! \brief return handler to the underlying data
-//    inline ChannelData* getChannelData();
-//    inline const ChannelData* getChannelData() const;
+    //    //! \brief return handler to the underlying data
+    //    inline ChannelData* getChannelData();
+    //    inline const ChannelData* getChannelData() const;
 
-private:
-    std::string     m_name;
-    TagContainer    m_tags;
+   private:
+    std::string m_name;
+    TagContainer m_tags;
 };
 
-} // namespace pfs
+}  // namespace pfs
 
 #include <Libpfs/channel.hxx>
-#endif // PFS_CHANNEL_H
-
+#endif  // PFS_CHANNEL_H

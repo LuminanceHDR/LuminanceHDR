@@ -32,18 +32,12 @@ namespace pfs {
 /**
  * General exception class used to throw exceptions from pfs library.
  */
-class Exception : public std::runtime_error
-{
-public:
-    Exception(const std::string& message)
-        : std::runtime_error(message)
-    {}
+class Exception : public std::runtime_error {
+   public:
+    Exception(const std::string &message) : std::runtime_error(message) {}
 
-    Exception(const char* message)
-        : std::runtime_error(message)
-    {}
+    Exception(const char *message) : std::runtime_error(message) {}
 };
-
 }
 
-#endif // PFS_EXCEPTION_H
+#endif  // PFS_EXCEPTION_H

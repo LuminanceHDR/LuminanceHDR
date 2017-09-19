@@ -24,19 +24,15 @@
 #include "HelpSideBar.h"
 #include "ui_HelpSideBar.h"
 
-HelpSideBar::HelpSideBar(const QString &title, QWidget *parent, Qt::WindowFlags flags):
-    QDockWidget(title, parent, flags),
-    m_Ui(new Ui::HelpSideBar)
-{
+HelpSideBar::HelpSideBar(const QString &title, QWidget *parent,
+                         Qt::WindowFlags flags)
+    : QDockWidget(title, parent, flags), m_Ui(new Ui::HelpSideBar) {
     m_Ui->setupUi(this);
 }
 
-HelpSideBar::~HelpSideBar()
-{}
+HelpSideBar::~HelpSideBar() {}
 
-void HelpSideBar::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::LanguageChange)
-        m_Ui->retranslateUi(this);
+void HelpSideBar::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) m_Ui->retranslateUi(this);
     QWidget::changeEvent(event);
 }

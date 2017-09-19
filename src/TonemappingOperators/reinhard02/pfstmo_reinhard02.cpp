@@ -31,78 +31,72 @@
  * $Id: pfstmo_reinhard02.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
-#include <iostream>
 #include <math.h>
 #include <cstddef>
+#include <iostream>
 
-#include "Libpfs/frame.h"
 #include "Libpfs/exception.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "tmo_reinhard02.h"
 
-void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low, int high, bool use_scales, pfs::Progress &ph )
-{
-  //--- default tone mapping parameters;
-  //float key = 0.18;
-  //float phi = 1.0;
-  //int num = 8;
-  //int low = 1;
-  //int high = 43;
-  //bool use_scales = false;
-  bool temporal_coherent = false;
+void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,
+                       int low, int high, bool use_scales, pfs::Progress &ph) {
+    //--- default tone mapping parameters;
+    // float key = 0.18;
+    // float phi = 1.0;
+    // int num = 8;
+    // int low = 1;
+    // int high = 43;
+    // bool use_scales = false;
+    bool temporal_coherent = false;
 #ifndef NDEBUG
-  std::cout << "pfstmo_reinhard02 (";
-  std::cout << "key: " << key;
-  std::cout << ", phi: " << phi;
-  std::cout << ", range: " << num;
-  std::cout << ", lower scale: " << low;
-  std::cout << ", upper scale: " << high;
-  std::cout << ", use scales: " << use_scales << ")" << std::endl;
+    std::cout << "pfstmo_reinhard02 (";
+    std::cout << "key: " << key;
+    std::cout << ", phi: " << phi;
+    std::cout << ", range: " << num;
+    std::cout << ", lower scale: " << low;
+    std::cout << ", upper scale: " << high;
+    std::cout << ", use scales: " << use_scales << ")" << std::endl;
 #endif
-  pfs::Channel *X, *Y, *Z;
-  frame.getXYZChannels( X, Y, Z );
-  //---
+    pfs::Channel *X, *Y, *Z;
+    frame.getXYZChannels(X, Y, Z);
+    //---
 
-  if ( Y==NULL || X==NULL || Z==NULL ) {
-     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-  }
-
-  frame.getTags().setTag("LUMINANCE", "RELATIVE");
-  // tone mapping
-  size_t w = Y->getWidth();
-  size_t h = Y->getHeight();
-  pfs::Array2Df L(w, h);
-
-  Reinhard02 tmoperator( Y, &L, use_scales, key, phi, num, low, high, temporal_coherent, ph );
-
-  try
-  {
-    tmoperator.tmo_reinhard02();
-  }
-  catch(...)
-  {
-    throw pfs::Exception( "Tonemapping Failed!" );
-  }
-
-  // TODO: this section can be rewritten using SSE Function
-  for (size_t x = 0; x < w; x++)
-  {
-    for (size_t y = 0; y < h; y++)
-    {
-      float yr = (*Y)(x,y);
-      float scale = 0.f;
-      if (yr != 0.f)
-      {
-         scale = L(x,y) / yr;
-      }
-
-      (*Y)(x,y) *= scale;
-      (*X)(x,y) *= scale;
-      (*Z)(x,y) *= scale;
+    if (Y == NULL || X == NULL || Z == NULL) {
+        throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
-  }
-  if (!ph.canceled())
-  {
-      ph.setValue(100);
-  }
+
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
+    // tone mapping
+    size_t w = Y->getWidth();
+    size_t h = Y->getHeight();
+    pfs::Array2Df L(w, h);
+
+    Reinhard02 tmoperator(Y, &L, use_scales, key, phi, num, low, high,
+                          temporal_coherent, ph);
+
+    try {
+        tmoperator.tmo_reinhard02();
+    } catch (...) {
+        throw pfs::Exception("Tonemapping Failed!");
+    }
+
+    // TODO: this section can be rewritten using SSE Function
+    for (size_t x = 0; x < w; x++) {
+        for (size_t y = 0; y < h; y++) {
+            float yr = (*Y)(x, y);
+            float scale = 0.f;
+            if (yr != 0.f) {
+                scale = L(x, y) / yr;
+            }
+
+            (*Y)(x, y) *= scale;
+            (*X)(x, y) *= scale;
+            (*Z)(x, y) *= scale;
+        }
+    }
+    if (!ph.canceled()) {
+        ph.setValue(100);
+    }
 }

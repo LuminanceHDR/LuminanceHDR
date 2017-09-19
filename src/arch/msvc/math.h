@@ -26,14 +26,14 @@
 #define MSVC_MATH_H
 
 //#define _USE_MATH_DEFINES
-#include <math.h>   // re-include here
+#include <math.h>  // re-include here
 
 #include <boost/math/constants/constants.hpp>
 
-#define exp2f(x)        (powf(2.0f, x))
-#define log2(x)        (log(x)  / boost::math::double_constants::ln_two)
-#define log2f(x)       (logf(x) / boost::math::double_constants::ln_two)
+#define exp2f(x) (powf(2.0f, x))
+#define log2(x) (log(x) / boost::math::double_constants::ln_two)
+#define log2f(x) (logf(x) / boost::math::double_constants::ln_two)
 
-#pragma warning (disable:4996)
+#pragma warning(disable : 4996)
 
 #endif  // MSVC_MATH_H

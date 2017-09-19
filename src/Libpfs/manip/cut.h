@@ -24,23 +24,22 @@
 #ifndef PFS_CUT_H
 #define PFS_CUT_H
 
-#include <cstddef>
 #include <Libpfs/array2d_fwd.h>
+#include <cstddef>
 
 //! \brief Cut a rectangle out of images in PFS stream
 //! \author Franco Comida <fcomida@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
 
-Frame *cut(const Frame *inFrame,
-           size_t x_ul, size_t y_ul, size_t x_br, size_t y_br);
+Frame *cut(const Frame *inFrame, size_t x_ul, size_t y_ul, size_t x_br,
+           size_t y_br);
 
 template <typename Type>
-void cut(const Array2D<Type> *from, Array2D<Type> *to,
-         size_t x_ul, size_t y_ul, size_t x_br, size_t y_br);
+void cut(const Array2D<Type> *from, Array2D<Type> *to, size_t x_ul, size_t y_ul,
+         size_t x_br, size_t y_br);
 }
 
 #include "cut.hxx"

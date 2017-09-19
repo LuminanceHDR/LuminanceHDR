@@ -23,7 +23,8 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing
  * @author Franco Comida <fcomida@users.sourceforge.net>
- * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * Refactory of TMThread.h class to TonemapOperator in order to remove
+ * dependency from QObject and QThread
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
@@ -36,16 +37,14 @@
 #include "Core/TonemappingOptions.h"
 
 // Forward declaration
-namespace pfs
-{
+namespace pfs {
 class Progress;
 class Frame;
 }
 
-class TonemapOperator
-{
-public:
-    static TonemapOperator* getTonemapOperator(const TMOperator tmo);
+class TonemapOperator {
+   public:
+    static TonemapOperator *getTonemapOperator(const TMOperator tmo);
     virtual ~TonemapOperator();
 
     //!
@@ -58,10 +57,11 @@ public:
     //! \note input frame is MODIFIED
     //! If you want to keep the original frame, make a copy before
     //!
-    virtual void tonemapFrame(pfs::Frame&, TonemappingOptions*, pfs::Progress& ph) = 0;
+    virtual void tonemapFrame(pfs::Frame &, TonemappingOptions *,
+                              pfs::Progress &ph) = 0;
 
-protected:
+   protected:
     TonemapOperator();
 };
 
-#endif // TONEMAPOPERATOR_H
+#endif  // TONEMAPOPERATOR_H

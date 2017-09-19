@@ -21,34 +21,27 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
-
 #include "PreviewFrame.h"
 
-PreviewFrame::PreviewFrame(QWidget *parent) :
-    QFrame(parent),
-    m_index(0)
-{
+PreviewFrame::PreviewFrame(QWidget *parent) : QFrame(parent), m_index(0) {
     m_flowLayout = new FlowLayout;
     setLayout(m_flowLayout);
-    QPalette* palette = new QPalette();
-    palette->setColor(QPalette::Foreground,Qt::red);
+    QPalette *palette = new QPalette();
+    palette->setColor(QPalette::Foreground, Qt::red);
     setPalette(*palette);
 }
 
-PreviewFrame::~PreviewFrame()
-{
-}
+PreviewFrame::~PreviewFrame() {}
 
-void PreviewFrame::addLabel(SimplePreviewLabel* label)
-{
-    connect(label, &SimplePreviewLabel::selected, this, &PreviewFrame::selectLabel);
+void PreviewFrame::addLabel(SimplePreviewLabel *label) {
+    connect(label, &SimplePreviewLabel::selected, this,
+            &PreviewFrame::selectLabel);
     label->setFrameStyle(QFrame::Box);
     m_labels.push_back(label);
     m_flowLayout->addWidget(label);
 }
 
-void PreviewFrame::selectLabel(int index)
-{
+void PreviewFrame::selectLabel(int index) {
     m_labels[m_index]->setLineWidth(1);
     m_index = index;
     m_labels[m_index]->setLineWidth(3);

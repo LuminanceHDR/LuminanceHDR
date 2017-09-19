@@ -28,17 +28,16 @@
 #ifndef PFS_IO_JPEGREADER_H
 #define PFS_IO_JPEGREADER_H
 
-#include <string>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
+#include <string>
 
 namespace pfs {
 namespace io {
 
-class JpegReader : public FrameReader
-{
-public:
-    JpegReader(const std::string& filename);
+class JpegReader : public FrameReader {
+   public:
+    JpegReader(const std::string &filename);
     ~JpegReader();
 
     void open();
@@ -46,13 +45,13 @@ public:
     void close();
     void read(Frame &frame, const Params &params);
 
-private:
+   private:
     struct JpegReaderData;
 
     std::unique_ptr<JpegReaderData> m_data;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
 #endif  // PFS_IO_JPEGREADER_H

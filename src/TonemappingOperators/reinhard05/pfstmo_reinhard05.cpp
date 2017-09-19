@@ -33,21 +33,22 @@
 
 #include "tmo_reinhard05.h"
 
+#include <cmath>
 #include <iostream>
 #include <sstream>
-#include <cmath>
 
-#include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/exception.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 
-void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadaptation, float lightadaptation, pfs::Progress &ph)
-{
-    //--- default tone mapping parameters;
-    //float brightness = 0.0f;
-    //float chromaticadaptation = 0.5f;
-    //float lightadaptation = 0.75f;
+void pfstmo_reinhard05(pfs::Frame &frame, float brightness,
+                       float chromaticadaptation, float lightadaptation,
+                       pfs::Progress &ph) {
+//--- default tone mapping parameters;
+// float brightness = 0.0f;
+// float chromaticadaptation = 0.5f;
+// float lightadaptation = 0.75f;
 
 #ifndef NDEBUG
     std::stringstream ss;
@@ -61,12 +62,11 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadapt
 #endif
 
     pfs::Channel *R, *G, *B;
-    frame.getXYZChannels( R, G, B );
+    frame.getXYZChannels(R, G, B);
     //---
 
-    if ( !R || !G || !B )
-    {
-        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    if (!R || !G || !B) {
+        throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
@@ -76,20 +76,18 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadapt
 
     // is there a way to remove this copy as well?
     // I am pretty sure there is!
-    pfs::Array2Df Y(width,height);
+    pfs::Array2Df Y(width, height);
     pfs::transformRGB2Y(R, G, B, &Y);
-    try
-    {
-        tmo_reinhard05(width, height, R->data(), G->data(), B->data(), Y.data(),
-                       Reinhard05Params(brightness, chromaticadaptation, lightadaptation), ph);
-    }
-    catch(...)
-    {
-        throw pfs::Exception( "Tonemapping Failed!" );
+    try {
+        tmo_reinhard05(
+            width, height, R->data(), G->data(), B->data(), Y.data(),
+            Reinhard05Params(brightness, chromaticadaptation, lightadaptation),
+            ph);
+    } catch (...) {
+        throw pfs::Exception("Tonemapping Failed!");
     }
 
-    if (!ph.canceled())
-    {
-        ph.setValue( 100 );
+    if (!ph.canceled()) {
+        ph.setValue(100);
     }
 }

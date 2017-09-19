@@ -32,34 +32,34 @@
 #ifndef DISPLAY_SIZE_H
 #define DISPLAY_SIZE_H
 
-#include <stdio.h>
 #include <Libpfs/exception.h>
+#include <stdio.h>
 
-class DisplaySize
-{
-  float view_d;
-  float ppd;
-public:
-  /**
-   * @param vres vertical screen resolution in pixels
-   * @param vd_screen_h viewing distance as the multiplies of screen height (e.g. 2)
-   * @param vd_meters viewing distance in meters
-   */
-  DisplaySize( int vres, float vd_screen_h, float vd_meters = 0.5 );
+class DisplaySize {
+    float view_d;
+    float ppd;
 
+   public:
+    /**
+     * @param vres vertical screen resolution in pixels
+     * @param vd_screen_h viewing distance as the multiplies of screen height
+     * (e.g. 2)
+     * @param vd_meters viewing distance in meters
+     */
+    DisplaySize(int vres, float vd_screen_h, float vd_meters = 0.5);
 
-  /**
-   * @param ppd number of pixels per one visual degree (e.g. 30)
-   * @param vd_meters viewing distance in meters
-   */
-  DisplaySize( float ppd, float vd_meters = 0.5 );
+    /**
+     * @param ppd number of pixels per one visual degree (e.g. 30)
+     * @param vd_meters viewing distance in meters
+     */
+    DisplaySize(float ppd, float vd_meters = 0.5);
 
-  void print( FILE *fh );
+    void print(FILE *fh);
 
-  float getPixPerDeg();
-  float getViewD();
+    float getPixPerDeg();
+    float getViewD();
 };
 
-DisplaySize *createDisplaySizeFromArgs( int &argc, char* argv[] );
+DisplaySize *createDisplaySizeFromArgs(int &argc, char *argv[]);
 
 #endif

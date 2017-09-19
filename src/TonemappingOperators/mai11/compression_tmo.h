@@ -1,10 +1,13 @@
 /**
- * @brief Tone-mapping optimized for backward-compatible HDR image and video compression
+ * @brief Tone-mapping optimized for backward-compatible HDR image and video
+ * compression
  *
  * From:
  * Mai, Z., Mansour, H., Mantiuk, R., Nasiopoulos, P., Ward, R., & Heidrich, W.
- * Optimizing a tone curve for backward-compatible high dynamic range image and video compression.
- * IEEE Transactions on Image Processing, 20(6), 1558 – 1571. doi:10.1109/TIP.2010.2095866, 2011
+ * Optimizing a tone curve for backward-compatible high dynamic range image and
+ * video compression.
+ * IEEE Transactions on Image Processing, 20(6), 1558 – 1571.
+ * doi:10.1109/TIP.2010.2095866, 2011
  *
  * This file is a part of LuminanceHDR package, based on pfstmo.
  * ----------------------------------------------------------------------
@@ -34,11 +37,11 @@
 #include "Libpfs/progress.h"
 
 namespace mai {
-class CompressionTMO
-{
- public:
-  void tonemap(const float *R_in, const float *G_in, float *B_in, int width, int height,
-        float *R_out, float *G_out, float *B_out, const float *L_in, pfs::Progress &ph);
+class CompressionTMO {
+   public:
+    void tonemap(const float *R_in, const float *G_in, float *B_in, int width,
+                 int height, float *R_out, float *G_out, float *B_out,
+                 const float *L_in, pfs::Progress &ph);
 };
 }
 

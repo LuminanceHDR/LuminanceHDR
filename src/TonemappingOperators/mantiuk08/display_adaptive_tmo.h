@@ -32,77 +32,74 @@
 #include "display_function.h"
 #include "display_size.h"
 
-#include "TonemappingOperators/pfstmo.h"
 #include "Libpfs/pfs.h"
+#include "TonemappingOperators/pfstmo.h"
 
-namespace pfs
-{
+namespace pfs {
 class Progress;
 }
 
-#define DATMO_TF_TAPSIZE 4     /* Number of samples required for the temporal filter */
+#define DATMO_TF_TAPSIZE \
+    4 /* Number of samples required for the temporal filter */
 
-class datmoToneCurve
-{
-  bool own_y_i;
-public:
-  size_t size;
-  const double *x_i;  /* log10 of input luminance factor */
-  double *y_i;        /* log10 of output luminance (use inverse display model to get pixel values) */
+class datmoToneCurve {
+    bool own_y_i;
 
-  datmoToneCurve();
-  ~datmoToneCurve();
+   public:
+    size_t size;
+    const double *x_i; /* log10 of input luminance factor */
+    double *y_i; /* log10 of output luminance (use inverse display model to get
+                    pixel values) */
 
-  void init( size_t n_size, const double *n_x_i, double *n_y_i = NULL );
-  void free();
+    datmoToneCurve();
+    ~datmoToneCurve();
 
+    void init(size_t n_size, const double *n_x_i, double *n_y_i = NULL);
+    void free();
 };
 
+class datmoTCFilter {
+    int sz;
+    size_t pos;
+    float y_min, y_max, fps;
 
-class datmoTCFilter
-{
-  int sz;
-  size_t pos;
-  float y_min, y_max, fps;
+    double *t_filter_a, *t_filter_b;
 
-  double *t_filter_a, *t_filter_b;
+    datmoToneCurve ring_buffer_org[DATMO_TF_TAPSIZE];   // original
+    datmoToneCurve ring_buffer_filt[DATMO_TF_TAPSIZE];  // filtered
+    datmoToneCurve tc_filt_clamp;  // filtered and clammped tone-curve
 
-  datmoToneCurve ring_buffer_org[DATMO_TF_TAPSIZE]; // original
-  datmoToneCurve ring_buffer_filt[DATMO_TF_TAPSIZE]; // filtered
-  datmoToneCurve tc_filt_clamp; // filtered and clammped tone-curve
+    datmoToneCurve *get_tc(datmoToneCurve *ring_buf, int time);
 
-  datmoToneCurve *get_tc( datmoToneCurve *ring_buf, int time );
-public:
-  /**
-   * Create a temporal filter for tone-curves. This shoudl be used to
-   * tonemap video sequences.
-   *
-   * @param fps - frames per second. Only certain values are allowed
-   * as all filters are precomputed at the moment. See the code for
-   * more details.
-   * @param y_min - minimum log10 display luminance (for clamping the
-   * results)
-   * @param y_max - maximum log10 display luminance (for clamping the
-   * results)
-   */
-  datmoTCFilter( float fps, float y_min, float y_max );
+   public:
+    /**
+     * Create a temporal filter for tone-curves. This shoudl be used to
+     * tonemap video sequences.
+     *
+     * @param fps - frames per second. Only certain values are allowed
+     * as all filters are precomputed at the moment. See the code for
+     * more details.
+     * @param y_min - minimum log10 display luminance (for clamping the
+     * results)
+     * @param y_max - maximum log10 display luminance (for clamping the
+     * results)
+     */
+    datmoTCFilter(float fps, float y_min, float y_max);
 
-  /**
-   * Get the pointer to store the tone-curve.
-   */
-  datmoToneCurve *getToneCurvePtr();
+    /**
+     * Get the pointer to store the tone-curve.
+     */
+    datmoToneCurve *getToneCurvePtr();
 
-  /**
-   * Get the filterted tone-curve.
-   */
-  datmoToneCurve *filterToneCurve();
+    /**
+     * Get the filterted tone-curve.
+     */
+    datmoToneCurve *filterToneCurve();
 };
 
-
-class datmoConditionalDensity
-{
-public:
-  virtual ~datmoConditionalDensity();
+class datmoConditionalDensity {
+   public:
+    virtual ~datmoConditionalDensity();
 };
 
 typedef int datmoVisualModel;
@@ -134,7 +131,8 @@ typedef int datmoVisualModel;
  * @param G_in green input radiance map.
  * @param B_in blue input radiance map.
  * @param L_in input luminance map (L=0.212656*R + 0.715158*G + 0.072186*B)
- * @param df display function. See DisplayFunction class documentation for more details.
+ * @param df display function. See DisplayFunction class documentation for more
+ * details.
  * @param ds display size. See DisplaySize class documentation for more details.
  * @param enh_factor conrast enhancement factor. See man
  * pfstmo_mantiuk08 page for details
@@ -142,17 +140,20 @@ typedef int datmoVisualModel;
  * pfstmo_mantiuk08 page for details
  * @param white_y luminance factor in the input image that should be
  * mapped to the maximum luminance of a display. If the parameter is
- * set to -1, the tone-mapper will not anchor to white (recommended for HDR images).
- * @param progress_cb callback function for reporting progress or stopping computations.
+ * set to -1, the tone-mapper will not anchor to white (recommended for HDR
+ * images).
+ * @param progress_cb callback function for reporting progress or stopping
+ * computations.
  * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */
-int datmo_tonemap( float *R_out, float *G_out, float *B_out, int width, int height,
-  const float *R_in, const float *G_in, const float *B_in, const float *L_in,
-  DisplayFunction *df, DisplaySize *ds, const float enh_factor, const float saturation_factor,
-  const float white_y, pfs::Progress &ph );
-
+int datmo_tonemap(float *R_out, float *G_out, float *B_out, int width,
+                  int height, const float *R_in, const float *G_in,
+                  const float *B_in, const float *L_in, DisplayFunction *df,
+                  DisplaySize *ds, const float enh_factor,
+                  const float saturation_factor, const float white_y,
+                  pfs::Progress &ph);
 
 /**
  * Computes image statistics required for
@@ -164,14 +165,15 @@ int datmo_tonemap( float *R_out, float *G_out, float *B_out, int width, int heig
  * @param width image width in pixels
  * @param height image height in pixels
  * @param L input luminance map (L=0.212656*R + 0.715158*G + 0.072186*B)
- * @param progress_cb callback function for reporting progress or stopping computations.
+ * @param progress_cb callback function for reporting progress or stopping
+ * computations.
  * @return pointer to conditional_density or NULL if computation was
  * aborted or an error was encountered. The conditional_density object
  * must be freed by the calling application using the 'delete'
  * statement.
  */
-std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfs::Progress &ph );
-
+std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
+    int width, int height, const float *L, pfs::Progress &ph);
 
 /**
  * Computes the best tone-curve for a given conditional_density and
@@ -180,22 +182,29 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int 
  * function.
  *
  * @param tc datmoToneCurve where the resulting tone-curve will be stored
- * @param conditional_density image statistics computed with datmo_compute_conditional_density()
- * @param df display function. See DisplayFunction class documentation for more details.
+ * @param conditional_density image statistics computed with
+ * datmo_compute_conditional_density()
+ * @param df display function. See DisplayFunction class documentation for more
+ * details.
  * @param ds display size. See DisplaySize class documentation for more details.
  * @param enh_factor conrast enhancement factor. See man
  * pfstmo_mantiuk08 page for details
  * @param white_y luminance factor in the input image that should be
  * mapped to the maximum luminance of a display. If the parameter is
- * set to -1, the tone-mapper will not anchor to white (recommended for HDR images).
- * @param progress_cb callback function for reporting progress or stopping computations.
+ * set to -1, the tone-mapper will not anchor to white (recommended for HDR
+ * images).
+ * @param progress_cb callback function for reporting progress or stopping
+ * computations.
  * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */
-int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_dens,
-  DisplayFunction *df, DisplaySize *ds, const float enh_factor,
-  const float white_y, datmoVisualModel visual_model, double scene_l_adapt, pfs::Progress &ph );
+int datmo_compute_tone_curve(datmoToneCurve *tc,
+                             datmoConditionalDensity *cond_dens,
+                             DisplayFunction *df, DisplaySize *ds,
+                             const float enh_factor, const float white_y,
+                             datmoVisualModel visual_model,
+                             double scene_l_adapt, pfs::Progress &ph);
 
 /**
  * Deprectaied: use datmo_apply_tone_curve_cc()
@@ -221,9 +230,11 @@ int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */
-int datmo_apply_tone_curve( float *R_out, float *G_out, float *B_out, int width, int height,
-  const float *R_in, const float *G_in, const float *B_in, const float *L_in, datmoToneCurve *tc,
-  DisplayFunction *df, const float saturation_factor = 0.4f );
+int datmo_apply_tone_curve(float *R_out, float *G_out, float *B_out, int width,
+                           int height, const float *R_in, const float *G_in,
+                           const float *B_in, const float *L_in,
+                           datmoToneCurve *tc, DisplayFunction *df,
+                           const float saturation_factor = 0.4f);
 
 /**
  * Tone-map image using the tone-curve computed with
@@ -247,15 +258,18 @@ int datmo_apply_tone_curve( float *R_out, float *G_out, float *B_out, int width,
  * @param B_in blue input radiance map.
  * @param L_in input luminance map (L=0.212656*R + 0.715158*G + 0.072186*B)
  * @param tc tone-curve computed with datmo_compute_tone_curve()
- * @param saturation_factor color saturation factor. Set to 1 to preserve colors, >1 to increase color saturation, <1 to reduce color saturation.
+ * @param saturation_factor color saturation factor. Set to 1 to preserve
+ * colors, >1 to increase color saturation, <1 to reduce color saturation.
  * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */
-int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int width, int height,
-  const float *R_in, const float *G_in, const float *B_in, const float *L_in, datmoToneCurve *tc,
-  DisplayFunction *df, const float saturation_factor );
-
+int datmo_apply_tone_curve_cc(float *R_out, float *G_out, float *B_out,
+                              int width, int height, const float *R_in,
+                              const float *G_in, const float *B_in,
+                              const float *L_in, datmoToneCurve *tc,
+                              DisplayFunction *df,
+                              const float saturation_factor);
 
 /**
  * Filter tone curves over time to avoid flickering. This filtering is
@@ -265,5 +279,5 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
  * @param count_in_tc the number of input tone curves in the array
  * @param out_tc the output tone curve. Must be pre-allocated.
  */
-void datmo_filter_tone_curves( datmoToneCurve **in_tc, size_t count_in_tc, datmoToneCurve *out_tc );
-
+void datmo_filter_tone_curves(datmoToneCurve **in_tc, size_t count_in_tc,
+                              datmoToneCurve *out_tc);

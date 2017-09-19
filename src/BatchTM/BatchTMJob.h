@@ -20,7 +20,8 @@
  *
  * Original Work
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- * This class splits the "Batch Tonemapping core" from the UI, to achieve a simpler
+ * This class splits the "Batch Tonemapping core" from the UI, to achieve a
+ * simpler
  * code, faster, easier to maintain and more clear to read
  *
  */
@@ -28,38 +29,40 @@
 #ifndef BATCHTMJOB_H
 #define BATCHTMJOB_H
 
-#include <QThread>
-#include <QString>
 #include <QList>
+#include <QString>
+#include <QThread>
 
 #include <Libpfs/params.h>
 
 // Forward declaration
 class TonemappingOptions;
 
-class BatchTMJob : public QThread
-{
+class BatchTMJob : public QThread {
     Q_OBJECT
-public:
-    BatchTMJob(int thread_id, const QString& filename, const QList<TonemappingOptions*>* tm_options,
-               const QString& output_folder, const QString& ldr_output_format, pfs::Params params);
+   public:
+    BatchTMJob(int thread_id, const QString &filename,
+               const QList<TonemappingOptions *> *tm_options,
+               const QString &output_folder, const QString &ldr_output_format,
+               pfs::Params params);
     virtual ~BatchTMJob();
-signals:
+   signals:
     void done(int thread_id);
-    void add_log_message(const QString&);
-    //void update_progress_bar();
+    void add_log_message(const QString &);
+    // void update_progress_bar();
     void increment_progress_bar(int);
-protected:
+
+   protected:
     void run();
 
-private:
-    int             m_thread_id;
-    QString         m_file_name;
-    const QList<TonemappingOptions*>* m_tm_options;
-    QString         m_output_folder;
-    QString         m_output_file_name_base;
-    QString         m_ldr_output_format;
-    pfs::Params        m_params;
+   private:
+    int m_thread_id;
+    QString m_file_name;
+    const QList<TonemappingOptions *> *m_tm_options;
+    QString m_output_folder;
+    QString m_output_file_name_base;
+    QString m_ldr_output_format;
+    pfs::Params m_params;
 };
 
-#endif // BATCHTMJOB_H
+#endif  // BATCHTMJOB_H

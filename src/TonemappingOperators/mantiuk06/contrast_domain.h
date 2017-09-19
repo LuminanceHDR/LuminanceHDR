@@ -37,8 +37,8 @@
 #ifndef CONTRAST_DOMAIN_H
 #define CONTRAST_DOMAIN_H
 
-#include "TonemappingOperators/pfstmo.h"
 #include <Libpfs/array2d_fwd.h>
+#include "TonemappingOperators/pfstmo.h"
 
 //! \brief: Tone mapping algorithm [Mantiuk2006]
 //!
@@ -55,10 +55,10 @@
 //! it was stopped from a callback function and PFSTMO_ERROR if an
 //! error was encountered.
 //!
-int tmo_mantiuk06_contmap( pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
-                           pfs::Array2Df& Y,
-                           float contrastFactor, float saturationFactor, float detailFactor,
-                           int itmax /*= 200*/, float tol /*= 1e-3*/,
-                           pfs::Progress &ph);
+int tmo_mantiuk06_contmap(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
+                          pfs::Array2Df &Y, float contrastFactor,
+                          float saturationFactor, float detailFactor,
+                          int itmax /*= 200*/, float tol /*= 1e-3*/,
+                          pfs::Progress &ph);
 
 #endif

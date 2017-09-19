@@ -24,38 +24,38 @@
 #ifndef ALIGN_H
 #define ALIGN_H
 
-#include <QProcess>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QProcess>
 #include <QScopedPointer>
 
 #include "Common/LuminanceOptions.h"
 #include "HdrWizard/HdrCreationItem.h"
 
-class Align : public QObject
-{
+class Align : public QObject {
     Q_OBJECT
 
-public:
-    Align(HdrCreationItemContainer& data, bool fromCommandLine, int savingMode = 1, float minLum = 0.0f, float maxLum = 1.0f);
+   public:
+    Align(HdrCreationItemContainer &data, bool fromCommandLine,
+          int savingMode = 1, float minLum = 0.0f, float maxLum = 1.0f);
     ~Align();
 
     void align_with_ais(bool ais_crop_flag);
     void reset();
     void removeTempFiles();
 
-signals:
+   signals:
     void finishedAligning(int);
     void failedAligning(QProcess::ProcessError);
-    void dataReady(QByteArray&);
+    void dataReady(QByteArray &);
 
-protected slots:
+   protected slots:
     void ais_finished(int exitcode, QProcess::ExitStatus exitstatus);
     void alignedFilesLoaded();
     void ais_failed_slot(QProcess::ProcessError error);
     void readData();
 
-protected:
+   protected:
     HdrCreationItemContainer m_data;
     bool m_fromCommandLine;
     int m_savingMode;

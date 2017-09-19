@@ -25,13 +25,12 @@
 #ifndef PFS_IO_FITSREADER_H
 #define PFS_IO_FITSREADER_H
 
-#include <string>
 #include <memory>
+#include <string>
 
-#include <Libpfs/params.h>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
-
+#include <Libpfs/params.h>
 
 namespace pfs {
 class Frame;
@@ -40,25 +39,23 @@ namespace io {
 
 class FitsReaderData;
 
-class FitsReader : public FrameReader
-{
-public:
-    FitsReader(const std::string& filename);
+class FitsReader : public FrameReader {
+   public:
+    FitsReader(const std::string &filename);
 
     ~FitsReader();
 
-    bool isOpen() const
-    { return m_data.get(); }
+    bool isOpen() const { return m_data.get(); }
 
     void open();
     void close();
     void read(Frame &frame, const Params &);
 
-private:
+   private:
     std::unique_ptr<FitsReaderData> m_data;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
 #endif

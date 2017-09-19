@@ -29,46 +29,36 @@
 //! merged image, ready for tonemap or other processing
 //! \note This the first header written specifically for LibHDR (milestone!)
 
-
-#include <Libpfs/frame.h>
 #include <HdrCreation/responses.h>
 #include <HdrCreation/weights.h>
+#include <Libpfs/frame.h>
 
 namespace libhdr {
 namespace fusion {
 
 //! \brief This class contains a (shared) pointer to a frame, plus its average
 //! luminance, to be used during the fusion process
-class FrameEnhanced
-{
-public:
-    FrameEnhanced(const pfs::FramePtr& frame, float averageLuminance)
-        : m_frame(frame)
-        , m_averageLuminance(averageLuminance)
-    {}
+class FrameEnhanced {
+   public:
+    FrameEnhanced(const pfs::FramePtr &frame, float averageLuminance)
+        : m_frame(frame), m_averageLuminance(averageLuminance) {}
 
-    const pfs::FramePtr& frame() const { return m_frame; }
+    const pfs::FramePtr &frame() const { return m_frame; }
     float averageLuminance() const { return m_averageLuminance; }
 
-private:
+   private:
     pfs::FramePtr m_frame;
     float m_averageLuminance;
 };
 
-enum FusionOperator
-{
-    DEBEVEC = 0,
-    ROBERTSON = 1,
-    ROBERTSON_AUTO = 2
-};
+enum FusionOperator { DEBEVEC = 0, ROBERTSON = 1, ROBERTSON_AUTO = 2 };
 
 class IFusionOperator;
 
 typedef std::shared_ptr<IFusionOperator> FusionOperatorPtr;
 
-class IFusionOperator
-{
-public:
+class IFusionOperator {
+   public:
     virtual ~IFusionOperator() {}
 
     //! \brief create an instance of the IFusionOperator from a member of
@@ -77,31 +67,27 @@ public:
 
     //! \brief retrieve the right \c FusionOperator value for the input string.
     //! Valid values are "debevec", "robertson" and "robertson-auto"
-    static FusionOperator fromString(const std::string& type);
+    static FusionOperator fromString(const std::string &type);
 
-    pfs::Frame* computeFusion(
-            ResponseCurve& response,
-            WeightFunction& weight,
-            const std::vector<FrameEnhanced>& frames);
+    pfs::Frame *computeFusion(ResponseCurve &response, WeightFunction &weight,
+                              const std::vector<FrameEnhanced> &frames);
 
     virtual FusionOperator getType() const = 0;
 
-protected:
+   protected:
     IFusionOperator();
 
-    virtual void computeFusion(
-            ResponseCurve& response,
-            WeightFunction& weight,
-            const std::vector<FrameEnhanced>& frames,
-            pfs::Frame &outFrame) = 0;
+    virtual void computeFusion(ResponseCurve &response, WeightFunction &weight,
+                               const std::vector<FrameEnhanced> &frames,
+                               pfs::Frame &outFrame) = 0;
 };
 
-typedef vector<float*> DataList;
+typedef vector<float *> DataList;
 
-void fillDataLists(const vector<FrameEnhanced> &frames,
-                   DataList& redChannels, DataList& greenChannels, DataList& blueChannels);
+void fillDataLists(const vector<FrameEnhanced> &frames, DataList &redChannels,
+                   DataList &greenChannels, DataList &blueChannels);
 
-}   // fusion
-}   // libhdr
+}  // fusion
+}  // libhdr
 
-#endif // LIBHDR_FUSION_FUSIONOPERATOR_H
+#endif  // LIBHDR_FUSION_FUSIONOPERATOR_H

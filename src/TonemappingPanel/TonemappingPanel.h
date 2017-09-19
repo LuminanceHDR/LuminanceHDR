@@ -38,64 +38,40 @@
 class Gang;
 class QtWaitingSpinner;
 
-namespace Ui
-{
-    class TonemappingPanel;
+namespace Ui {
+class TonemappingPanel;
 }
 
-class TonemappingPanel: public QWidget
-{
+class TonemappingPanel : public QWidget {
     Q_OBJECT
 
-protected:
+   protected:
     Gang
-            //mantiuk06
-            *contrastfactorGang,
-            *saturationfactorGang,
-            *detailfactorGang,
-            // mantiuk08
-            *colorSaturationGang,
-            *contrastEnhancementGang,
-            *luminanceLevelGang,
-            // fattal02
-            *alphaGang,
-            *betaGang,
-            *saturation2Gang,
-            *noiseGang,
-            // *oldFattalGang,
-            *fftSolverGang,
-            // ferrands11
-            *rhoGang,
-            *inv_alphaGang,
-            // ashikhmin02
-            *contrastGang,
-            *simpleGang,
-            *eq2Gang,
-            // drago03
-            *biasGang,
-            // durand02
-            *spatialGang,
-            *rangeGang,
-            *baseGang,
-            // pattanaik00
-            *multiplierGang,
-            *coneGang,
-            *rodGang,
-            *autoYGang,
-            *pattalocalGang,
-            // reinhard02
-            *keyGang,
-            *phiGang,
-            *range2Gang,
-            *lowerGang,
-            *upperGang,
-            *usescalesGang,
-            // reinhard05
-            *brightnessGang,
-            *chromaticGang,
-            *lightGang,
-            //
-            *pregammaGang;
+        // mantiuk06
+        *contrastfactorGang,
+        *saturationfactorGang, *detailfactorGang,
+        // mantiuk08
+        *colorSaturationGang, *contrastEnhancementGang, *luminanceLevelGang,
+        // fattal02
+        *alphaGang, *betaGang, *saturation2Gang, *noiseGang,
+        // *oldFattalGang,
+        *fftSolverGang,
+        // ferrands11
+        *rhoGang, *inv_alphaGang,
+        // ashikhmin02
+        *contrastGang, *simpleGang, *eq2Gang,
+        // drago03
+        *biasGang,
+        // durand02
+        *spatialGang, *rangeGang, *baseGang,
+        // pattanaik00
+        *multiplierGang, *coneGang, *rodGang, *autoYGang, *pattalocalGang,
+        // reinhard02
+        *keyGang, *phiGang, *range2Gang, *lowerGang, *upperGang, *usescalesGang,
+        // reinhard05
+        *brightnessGang, *chromaticGang, *lightGang,
+        //
+        *pregammaGang;
 
     TMOperator currentTmoOperator;
     TonemappingOptions *toneMappingOptions;
@@ -103,8 +79,9 @@ protected:
     QVector<int> sizes;
     void fillToneMappingOptions(bool exportMode);
     void setupUndo();
-    void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
-    //QString recentPathLoadSaveTmoSettings;
+    void fromGui2Txt(QString destination);  // i.e. WRITE tmo settings to text
+                                            // file
+    // QString recentPathLoadSaveTmoSettings;
     QString tmoSettingsFilename;
     int out_ldr_cs;
 
@@ -120,8 +97,8 @@ protected:
     QScopedPointer<ThresholdWidget> m_thd;
     QScopedPointer<Ui::TonemappingPanel> m_Ui;
 
-protected Q_SLOTS:
-    virtual void changeEvent(QEvent* event);
+   protected Q_SLOTS:
+    virtual void changeEvent(QEvent *event);
     void on_pregammadefault_clicked();
     void on_defaultButton_clicked();
     void on_applyButton_clicked();
@@ -130,18 +107,18 @@ protected Q_SLOTS:
     void on_savesettingsbutton_clicked();
     void on_loadsettingsbutton_clicked();
     void on_queueButton_clicked();
-    void on_lblOpenQueue_linkActivated(const QString& link);
+    void on_lblOpenQueue_linkActivated(const QString &link);
 
-    //APPLY tmo settings from text file
+    // APPLY tmo settings from text file
     void fromTxt2Gui();
-    //user wants a custom size.
+    // user wants a custom size.
     void on_addCustomSizeButton_clicked();
     void fillCustomSizeComboBox();
     void updateCurrentTmoOperator(int);
     void updateUndoState();
     void loadParameters();
     void saveParameters();
-    void execMantiuk06Query(bool, float, float,    float, QString);
+    void execMantiuk06Query(bool, float, float, float, QString);
     void execMantiuk08Query(float, float, float, bool, QString);
     void execAshikhminQuery(bool, bool, float, QString);
     void execDragoQuery(float, QString);
@@ -160,8 +137,9 @@ protected Q_SLOTS:
     void on_toolButtonThreshold_clicked();
     void thresholdReady();
 
-public:
-    TonemappingPanel(int mainWinNumber, PreviewPanel *p = 0, QWidget *parent = 0);
+   public:
+    TonemappingPanel(int mainWinNumber, PreviewPanel *p = 0,
+                     QWidget *parent = 0);
     ~TonemappingPanel();
     void setSizes(int, int);
     bool replaceLdr();
@@ -169,24 +147,22 @@ public:
     float getAutoLevelsThreshold();
     void setExportQueueSize(int);
 
-public Q_SLOTS:
+   public Q_SLOTS:
     void setEnabled(bool);
-    void updatedHDR(pfs::Frame*);
+    void updatedHDR(pfs::Frame *);
     void updateTonemappingParams(TonemappingOptions *opts);
     void setRealtimePreviews(bool);
     void autoLevels(bool b);
 
-signals:
-    void startTonemapping(TonemappingOptions*);
-    void startExport(TonemappingOptions*);
+   signals:
+    void startTonemapping(TonemappingOptions *);
+    void startExport(TonemappingOptions *);
     void autoLevels(bool, float);
 
-private:
+   private:
     void onUndoRedo(bool undo);
 
-    QtWaitingSpinner* m_spinner;
-
-
+    QtWaitingSpinner *m_spinner;
 };
 
 #endif

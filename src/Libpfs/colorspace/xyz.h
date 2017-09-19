@@ -32,36 +32,35 @@ extern const float rgb2xyzD65Mat[3][3];
 extern const float xyz2rgbD65Mat[3][3];
 
 struct ConvertRGB2XYZ {
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
 };
 
 struct ConvertSRGB2XYZ {
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
 };
 
 struct ConvertRGB2Y {
     template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeOut& o) const;
+    void operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeOut &o) const;
 };
 
 struct ConvertSRGB2Y {
-    void operator()(float i1, float i2, float i3, float& o) const;
+    void operator()(float i1, float i2, float i3, float &o) const;
 };
 
 struct ConvertXYZ2RGB {
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
 };
 
 struct ConvertXYZ2SRGB {
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
 };
-
 }
 }
 
 #include <Libpfs/colorspace/xyz.hxx>
-#endif // PFS_COLORSPACE_XYZ_H
+#endif  // PFS_COLORSPACE_XYZ_H

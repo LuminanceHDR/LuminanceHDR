@@ -33,39 +33,36 @@
 #include <QImage>
 #include <QRgb>
 
-#include <Libpfs/utils/chain.h>
-#include <Libpfs/utils/clamp.h>
 #include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/utils/chain.h>
+#include <Libpfs/utils/clamp.h>
 
 // forward declaration
 namespace pfs {
 class Frame;
 }
 
-struct QRgbRemapper
-{
-    QRgbRemapper(float minLuminance, float maxLuminance, RGBMappingType mappingType);
+struct QRgbRemapper {
+    QRgbRemapper(float minLuminance, float maxLuminance,
+                 RGBMappingType mappingType);
 
-    void operator()(float r, float g, float b, QRgb& qrgb) const;
+    void operator()(float r, float g, float b, QRgb &qrgb) const;
 
-private:
+   private:
     typedef pfs::utils::Chain<
-            pfs::colorspace::Normalizer,
-            pfs::utils::Chain<
-                pfs::utils::Clamp<float>,
-                Remapper<uint8_t>
-            >> QRgbRemapperCore;
+        pfs::colorspace::Normalizer,
+        pfs::utils::Chain<pfs::utils::Clamp<float>, Remapper<uint8_t>>>
+        QRgbRemapperCore;
 
     QRgbRemapperCore m_remapper;
 };
 
-
 //! \brief Build from a pfs::Frame a QImage of the same size
 //! \param[in] in_frame is a pointer to pfs::Frame*
-//! \return Pointer to QImage containing an 8 bit/channel representation of the input frame
-QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
-                           float min_luminance = 0.0f,
+//! \return Pointer to QImage containing an 8 bit/channel representation of the
+//! input frame
+QImage *fromLDRPFStoQImage(pfs::Frame *in_frame, float min_luminance = 0.0f,
                            float max_luminance = 1.0f,
                            RGBMappingType mapping_method = MAP_LINEAR);
 

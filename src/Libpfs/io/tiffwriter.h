@@ -34,31 +34,31 @@
 #ifndef PFS_TIFFWRITER_H
 #define PFS_TIFFWRITER_H
 
-#include <string>
-#include <Libpfs/params.h>
 #include <Libpfs/io/framewriter.h>
+#include <Libpfs/params.h>
+#include <string>
 
 namespace pfs {
 namespace io {
 
 //! \brief Writer class for TIFF files
-class TiffWriter : public FrameWriter
-{
-public:
-    TiffWriter(const std::string& filename);
+class TiffWriter : public FrameWriter {
+   public:
+    TiffWriter(const std::string &filename);
     ~TiffWriter();
 
     //! \brief write a pfs::Frame into a properly formatted TIFF file
     //!  \c params can take:
-    //!   tiff_mode (int): 0 = 8bit uint, 1 = 16bit uint, 2 = 32bit float, 3 = logluv
+    //!   tiff_mode (int): 0 = 8bit uint, 1 = 16bit uint, 2 = 32bit float, 3 =
+    //!   logluv
     //!   min_luminance (float): minimum luminance to consider trusthworthy
     //!   max_luminance (float): maximum luminance to consider trusthworthy
     //!   mapping_method (int): RGB mapping methodo choosen between
     //!   RGBMappingType in rgbremapper.h
-    bool write(const pfs::Frame& frame, const pfs::Params& params);
+    bool write(const pfs::Frame &frame, const pfs::Params &params);
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
 #endif  // PFS_TIFFWRITER_H

@@ -35,20 +35,16 @@
 
 #include <cstddef>
 
-namespace pfs
-{
+namespace pfs {
 class Progress;
 }
 
-struct Reinhard05Params
-{
-    Reinhard05Params(float brightness,
-                     float chromaticAdaptation,
+struct Reinhard05Params {
+    Reinhard05Params(float brightness, float chromaticAdaptation,
                      float lightAdaptation)
-        : m_brightness(brightness)
-        , m_chromaticAdaptation(chromaticAdaptation)
-        , m_lightAdaptation(lightAdaptation)
-    {
+        : m_brightness(brightness),
+          m_chromaticAdaptation(chromaticAdaptation),
+          m_lightAdaptation(lightAdaptation) {
         // ideally double check that parameters are not outside
         // of the allowed range!
     }
@@ -69,10 +65,8 @@ struct Reinhard05Params
 //! \param br brightness level -8:8 (def 0)
 //! \param ca amount of chromatic adaptation 0:1 (saturation, def 0)
 //! \param la amount of light adaptation 0:1 (local/global, def 1)
-void tmo_reinhard05(size_t width, size_t height,
-                    float* R, float* G, float* B,
-                    const float* Y,
-                    const Reinhard05Params& params,
+void tmo_reinhard05(size_t width, size_t height, float *R, float *G, float *B,
+                    const float *Y, const Reinhard05Params &params,
                     pfs::Progress &ph);
 
-#endif // TMO_REINHARD05_H
+#endif  // TMO_REINHARD05_H

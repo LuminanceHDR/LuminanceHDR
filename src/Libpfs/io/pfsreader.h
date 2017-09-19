@@ -26,35 +26,33 @@
 #ifndef PFS_IO_PFSREADER_H
 #define PFS_IO_PFSREADER_H
 
-#include <string>
-#include <Libpfs/params.h>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
+#include <Libpfs/params.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
+#include <string>
 
 namespace pfs {
 class Frame;
 
 namespace io {
 
-class PfsReader : public FrameReader
-{
-public:
-    PfsReader(const std::string& filename);
+class PfsReader : public FrameReader {
+   public:
+    PfsReader(const std::string &filename);
 
-    bool isOpen() const
-    { return m_file; }
+    bool isOpen() const { return m_file; }
 
     void open();
     void close();
     void read(pfs::Frame &frame, const pfs::Params &);
 
-private:
+   private:
     utils::ScopedStdIoFile m_file;
     size_t m_channelCount;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
-#endif // PFS_IO_PFSREADER_H
+#endif  // PFS_IO_PFSREADER_H

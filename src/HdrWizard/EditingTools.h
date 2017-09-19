@@ -31,10 +31,10 @@
 #include <QDialog>
 #include <QMap>
 
-#include "PreviewWidget.h"
+#include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 #include "HdrWizard/HdrCreationManager.h"
-#include "Common/LuminanceOptions.h"
+#include "PreviewWidget.h"
 
 class HistogramLDR;
 class PanIconWidget;
@@ -43,23 +43,26 @@ namespace Ui {
 class EditingToolsDialog;
 }
 
-class EditingTools : public QDialog
-{
-Q_OBJECT
-public:
-    EditingTools(HdrCreationManager *, bool autoAg, QWidget *parent=0);
+class EditingTools : public QDialog {
+    Q_OBJECT
+   public:
+    EditingTools(HdrCreationManager *, bool autoAg, QWidget *parent = 0);
     ~EditingTools();
-    bool isAutoAntighostingEnabled()   { return m_doAutoAntighosting == true; }
-    bool isManualAntighostingEnabled() { return m_doManualAntighosting == true; }
-    int getAgGoodImageIndex()          { return m_agGoodImageIndex; }
-protected:
+    bool isAutoAntighostingEnabled() { return m_doAutoAntighosting == true; }
+    bool isManualAntighostingEnabled() {
+        return m_doManualAntighosting == true;
+    }
+    int getAgGoodImageIndex() { return m_agGoodImageIndex; }
+
+   protected:
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
-private:
+
+   private:
     QScopedPointer<Ui::EditingToolsDialog> m_Ui;
-    QList<QImage*> m_originalImagesList;
-    QList<QImage*> m_antiGhostingMasksList;
-    QImage* m_antiGhostingMask;
+    QList<QImage *> m_originalImagesList;
+    QList<QImage *> m_antiGhostingMasksList;
+    QImage *m_antiGhostingMask;
     int m_currentAgMaskIndex;
     QStringList m_fileList;
     HdrCreationManager *m_hcm;
@@ -67,7 +70,7 @@ private:
     QScrollArea *m_scrollArea;
     PreviewWidget *m_previewWidget;
     int m_additionalShiftValue;
-    QList< QPair<int,int> > m_HV_offsets;
+    QList<QPair<int, int>> m_HV_offsets;
     HistogramLDR *m_histogram;
     QSize m_previousPreviewWidgetSize;
     bool m_imagesSaved;
@@ -80,14 +83,14 @@ private:
     int m_gridY;
     bool m_doAutoAntighosting;
     bool m_doManualAntighosting;
-    QImage* m_patchesMask;
+    QImage *m_patchesMask;
     bool m_patchesEdited;
 
-    void setAntiGhostingWidget(QImage*, QPair<int, int>);
-    void cropAgMasks(const QRect& ca);
+    void setAntiGhostingWidget(QImage *, QPair<int, int>);
+    void cropAgMasks(const QRect &ca);
     void computeAgMask();
 
-private slots:
+   private slots:
     void saveImagesButtonClicked();
     void updatePivot(int);
     void updateMovable(int);

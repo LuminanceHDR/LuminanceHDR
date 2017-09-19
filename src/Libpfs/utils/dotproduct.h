@@ -37,17 +37,17 @@ namespace utils {
 //! output = \sum_{i=0}^{n}{v1[i] * v2[i]}
 // v1 . v2
 template <typename _Type>
-_Type dotProduct(const _Type* v1, const _Type* v2, size_t N);
+_Type dotProduct(const _Type *v1, const _Type *v2, size_t N);
 
 //! \brief Perform the dotProduct element-wise of the vector \c v1
 //! output = \sum_{i=0}^{n}{v1[i] * v1[i]}
 //! \note this version is slightly more optimized of the binary version
 // v1 . v1
 template <typename _Type>
-_Type dotProduct(const _Type* v1, size_t N);
+_Type dotProduct(const _Type *v1, size_t N);
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
 #include <Libpfs/utils/dotproduct.hxx>
-#endif // PFS_UTILS_DOTPRODUCT_H
+#endif  // PFS_UTILS_DOTPRODUCT_H

@@ -26,160 +26,225 @@
  *
  */
 
-#include <QMessageBox>
-#include <QDesktopServices>
-#include <QFileDialog>
-#include <QTextStream>
-#include <QDir>
-#include <QInputDialog>
-#include <QStatusBar>
-#include <QProgressBar>
-#include <QLineEdit>
-#include <QKeyEvent>
 #include <QDebug>
-#include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QSqlQuery>
+#include <QDesktopServices>
+#include <QDir>
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QKeyEvent>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QProgressBar>
 #include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlTableModel>
+#include <QStatusBar>
+#include <QTextStream>
 
 #include "Common/LuminanceOptions.h"
+#include "Common/SavedParametersDialog.h"
 #include "Common/config.h"
 #include "PreviewPanel/PreviewLabel.h"
-#include "TonemappingPanel/TonemappingPanel.h"
-#include "TonemappingPanel/TMOProgressIndicator.h"
-#include "TonemappingPanel/TonemappingSettings.h"
-#include "Common/SavedParametersDialog.h"
-#include "TonemappingPanel/SavingParametersDialog.h"
 #include "TonemappingOperators/pfstmdefaultparams.h"
-#include "UI/Gang.h"
+#include "TonemappingPanel/SavingParametersDialog.h"
+#include "TonemappingPanel/TMOProgressIndicator.h"
+#include "TonemappingPanel/TonemappingPanel.h"
+#include "TonemappingPanel/TonemappingSettings.h"
 #include "TonemappingPanel/ui_TonemappingPanel.h"
+#include "UI/Gang.h"
 
 #include "contrib/qtwaitingspinner/QtWaitingSpinner.h"
 
-TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidget *parent):
-    QWidget(parent),
-    adding_custom_size(false),
-    m_previewPanel(panel),
-    m_mainWinNumber(mainWinNumber),
-    m_autolevelThreshold(0.985f),
-    m_thd(new ThresholdWidget(this)),
-    m_Ui(new Ui::TonemappingPanel)
-{
+TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
+                                   QWidget *parent)
+    : QWidget(parent),
+      adding_custom_size(false),
+      m_previewPanel(panel),
+      m_mainWinNumber(mainWinNumber),
+      m_autolevelThreshold(0.985f),
+      m_thd(new ThresholdWidget(this)),
+      m_Ui(new Ui::TonemappingPanel) {
     m_Ui->setupUi(this);
 
-    connect(m_thd.data(), &ThresholdWidget::ready, this, &TonemappingPanel::thresholdReady);
+    connect(m_thd.data(), &ThresholdWidget::ready, this,
+            &TonemappingPanel::thresholdReady);
 
-    if ( !QIcon::hasThemeIcon(QStringLiteral("edit-download")) )
+    if (!QIcon::hasThemeIcon(QStringLiteral("edit-download")))
         m_Ui->saveButton->setIcon(QIcon(":/program-icons/edit-download"));
-    if ( !QIcon::hasThemeIcon(QStringLiteral("cloud-upload")) )
+    if (!QIcon::hasThemeIcon(QStringLiteral("cloud-upload")))
         m_Ui->loadButton->setIcon(QIcon(":/program-icons/cloud-upload"));
 
-    currentTmoOperator = mantiuk06; // from Qt Designer
+    currentTmoOperator = mantiuk06;  // from Qt Designer
 
     // mantiuk06
-    contrastfactorGang = new Gang(m_Ui->contrastFactorSlider,m_Ui->contrastFactordsb,m_Ui->contrastEqualizCheckBox,NULL,NULL, NULL, 0.01f /*0.001f*/, 1.0f, MANTIUK06_CONTRAST_FACTOR);
+    contrastfactorGang =
+        new Gang(m_Ui->contrastFactorSlider, m_Ui->contrastFactordsb,
+                 m_Ui->contrastEqualizCheckBox, NULL, NULL, NULL,
+                 0.01f /*0.001f*/, 1.0f, MANTIUK06_CONTRAST_FACTOR);
 
-    connect(contrastfactorGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
-    connect(contrastfactorGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
+    connect(contrastfactorGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(contrastfactorGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
 
-    saturationfactorGang = new Gang(m_Ui->saturationFactorSlider, m_Ui->saturationFactordsb, NULL, NULL, NULL, NULL, 0.0f, 2.0f, MANTIUK06_SATURATION_FACTOR);
-    detailfactorGang = new Gang(m_Ui->detailFactorSlider, m_Ui->detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, MANTIUK06_DETAIL_FACTOR);
+    saturationfactorGang =
+        new Gang(m_Ui->saturationFactorSlider, m_Ui->saturationFactordsb, NULL,
+                 NULL, NULL, NULL, 0.0f, 2.0f, MANTIUK06_SATURATION_FACTOR);
+    detailfactorGang =
+        new Gang(m_Ui->detailFactorSlider, m_Ui->detailFactordsb, NULL, NULL,
+                 NULL, NULL, 1.0f, 99.0f, MANTIUK06_DETAIL_FACTOR);
 
     // mantiuk08
-    colorSaturationGang = new Gang(m_Ui->colorSaturationSlider,m_Ui->colorSaturationDSB, NULL, NULL, NULL, NULL, 0.f, 2.f, MANTIUK08_COLOR_SATURATION);
+    colorSaturationGang =
+        new Gang(m_Ui->colorSaturationSlider, m_Ui->colorSaturationDSB, NULL,
+                 NULL, NULL, NULL, 0.f, 2.f, MANTIUK08_COLOR_SATURATION);
 
-    connect(colorSaturationGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
-    connect(colorSaturationGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
+    connect(colorSaturationGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(colorSaturationGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
 
-    contrastEnhancementGang = new Gang(m_Ui->contrastEnhancementSlider, m_Ui->contrastEnhancementDSB, NULL, NULL, NULL, NULL, .01f, 10.f, MANTIUK08_CONTRAST_ENHANCEMENT);
-    luminanceLevelGang = new Gang(m_Ui->luminanceLevelSlider, m_Ui->luminanceLevelDSB, m_Ui->luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f, MANTIUK08_LUMINANCE_LEVEL);
+    contrastEnhancementGang = new Gang(
+        m_Ui->contrastEnhancementSlider, m_Ui->contrastEnhancementDSB, NULL,
+        NULL, NULL, NULL, .01f, 10.f, MANTIUK08_CONTRAST_ENHANCEMENT);
+    luminanceLevelGang =
+        new Gang(m_Ui->luminanceLevelSlider, m_Ui->luminanceLevelDSB,
+                 m_Ui->luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f,
+                 MANTIUK08_LUMINANCE_LEVEL);
 
     // fattal02
-    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL,NULL,NULL,NULL, 0.05, 2.f, FATTAL02_ALPHA, true);
+    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL, NULL, NULL,
+                         NULL, 0.05, 2.f, FATTAL02_ALPHA, true);
 
-    connect(alphaGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
-    connect(alphaGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
+    connect(alphaGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(alphaGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
 
-    betaGang = new Gang(m_Ui->betaSlider, m_Ui->betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, FATTAL02_BETA);
-    saturation2Gang = new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.5f, FATTAL02_COLOR);
-    noiseGang = new Gang(m_Ui->noiseSlider, m_Ui->noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
+    betaGang = new Gang(m_Ui->betaSlider, m_Ui->betadsb, NULL, NULL, NULL, NULL,
+                        0.1f, 2.f, FATTAL02_BETA);
+    saturation2Gang =
+        new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL, NULL,
+                 NULL, NULL, 0.f, 1.5f, FATTAL02_COLOR);
+    noiseGang = new Gang(m_Ui->noiseSlider, m_Ui->noisedsb, NULL, NULL, NULL,
+                         NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
     // oldFattalGang = new Gang(NULL,NULL, m_Ui->oldFattalCheckBox);
-    fftSolverGang = new Gang(NULL, NULL,m_Ui->fftVersionCheckBox);
+    fftSolverGang = new Gang(NULL, NULL, m_Ui->fftVersionCheckBox);
 
     // ferradans11
-    rhoGang = new Gang(m_Ui->rhoSlider, m_Ui->rhodsb, NULL,NULL,NULL,NULL, -10.f, 10.f, FERRADANS11_RHO);
+    rhoGang = new Gang(m_Ui->rhoSlider, m_Ui->rhodsb, NULL, NULL, NULL, NULL,
+                       -10.f, 10.f, FERRADANS11_RHO);
 
     connect(rhoGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
     connect(rhoGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
-    inv_alphaGang = new Gang(m_Ui->inv_alphaSlider, m_Ui->inv_alphadsb, NULL,NULL,NULL,NULL, 0.1f, 10.f, FERRADANS11_INV_ALPHA);
+    inv_alphaGang =
+        new Gang(m_Ui->inv_alphaSlider, m_Ui->inv_alphadsb, NULL, NULL, NULL,
+                 NULL, 0.1f, 10.f, FERRADANS11_INV_ALPHA);
 
     // ashikhmin02
-    contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
+    contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb, NULL, NULL,
+                            NULL, NULL, 0.f, 1.f, 0.5f);
 
-    connect(contrastGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
-    connect(contrastGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
+    connect(contrastGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(contrastGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
 
     simpleGang = new Gang(NULL, NULL, m_Ui->simpleCheckBox);
-    eq2Gang = new Gang(NULL, NULL,NULL, NULL, m_Ui->eq2RadioButton, m_Ui->eq4RadioButton);
+    eq2Gang = new Gang(NULL, NULL, NULL, NULL, m_Ui->eq2RadioButton,
+                       m_Ui->eq4RadioButton);
 
     // drago03
-    biasGang = new Gang(m_Ui->biasSlider, m_Ui->biasdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, DRAGO03_BIAS);
+    biasGang = new Gang(m_Ui->biasSlider, m_Ui->biasdsb, NULL, NULL, NULL, NULL,
+                        0.f, 1.f, DRAGO03_BIAS);
 
-    connect(biasGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
-    connect(biasGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
+    connect(biasGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(biasGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
 
     // durand02
-    spatialGang = new Gang(m_Ui->spatialSlider, m_Ui->spatialdsb, NULL, NULL, NULL, NULL, 0.f, 100.f, DURAND02_SPATIAL);
+    spatialGang = new Gang(m_Ui->spatialSlider, m_Ui->spatialdsb, NULL, NULL,
+                           NULL, NULL, 0.f, 100.f, DURAND02_SPATIAL);
 
-    connect(spatialGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
-    connect(spatialGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
+    connect(spatialGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(spatialGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
 
-    rangeGang = new Gang(m_Ui->rangeSlider, m_Ui->rangedsb,NULL,NULL,NULL,NULL, 0.01f, 10.f, DURAND02_RANGE);
-    baseGang = new Gang(m_Ui->baseSlider, m_Ui->basedsb,NULL,NULL,NULL,NULL, 0.f, 10.f, DURAND02_BASE);
+    rangeGang = new Gang(m_Ui->rangeSlider, m_Ui->rangedsb, NULL, NULL, NULL,
+                         NULL, 0.01f, 10.f, DURAND02_RANGE);
+    baseGang = new Gang(m_Ui->baseSlider, m_Ui->basedsb, NULL, NULL, NULL, NULL,
+                        0.f, 10.f, DURAND02_BASE);
 
     // pattanaik00
-    multiplierGang = new Gang(m_Ui->multiplierSlider, m_Ui->multiplierdsb,NULL,NULL,NULL,NULL, 1e-3,1000.f, PATTANAIK00_MULTIPLIER, true);
+    multiplierGang =
+        new Gang(m_Ui->multiplierSlider, m_Ui->multiplierdsb, NULL, NULL, NULL,
+                 NULL, 1e-3, 1000.f, PATTANAIK00_MULTIPLIER, true);
 
-    connect(multiplierGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
-    connect(multiplierGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
+    connect(multiplierGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(multiplierGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
 
-    coneGang = new Gang(m_Ui->coneSlider, m_Ui->conedsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_CONE);
-    rodGang = new Gang(m_Ui->rodSlider, m_Ui->roddsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_ROD);
-    autoYGang = new Gang(NULL,NULL, m_Ui->autoYcheckbox);
-    pattalocalGang = new Gang(NULL,NULL, m_Ui->pattalocal);
+    coneGang = new Gang(m_Ui->coneSlider, m_Ui->conedsb, NULL, NULL, NULL, NULL,
+                        0.f, 1.f, PATTANAIK00_CONE);
+    rodGang = new Gang(m_Ui->rodSlider, m_Ui->roddsb, NULL, NULL, NULL, NULL,
+                       0.f, 1.f, PATTANAIK00_ROD);
+    autoYGang = new Gang(NULL, NULL, m_Ui->autoYcheckbox);
+    pattalocalGang = new Gang(NULL, NULL, m_Ui->pattalocal);
 
     // reinhard02
-    keyGang = new Gang(m_Ui->keySlider, m_Ui->keydsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
+    keyGang = new Gang(m_Ui->keySlider, m_Ui->keydsb, NULL, NULL, NULL, NULL,
+                       0.f, 1.f, 0.18f);
 
     connect(keyGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
     connect(keyGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
-    phiGang = new Gang(m_Ui->phiSlider, m_Ui->phidsb, NULL,NULL,NULL,NULL, 0.f, 100.f, REINHARD02_PHI);
-    range2Gang = new Gang(m_Ui->range2Slider, m_Ui->range2dsb,NULL,NULL,NULL,NULL, 1.f, 32.f, REINHARD02_RANGE);
-    lowerGang = new Gang(m_Ui->lowerSlider, m_Ui->lowerdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, REINHARD02_LOWER);
-    upperGang = new Gang(m_Ui->upperSlider, m_Ui->upperdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, REINHARD02_UPPER);
-    usescalesGang = new Gang(NULL,NULL, m_Ui->usescalescheckbox);
+    phiGang = new Gang(m_Ui->phiSlider, m_Ui->phidsb, NULL, NULL, NULL, NULL,
+                       0.f, 100.f, REINHARD02_PHI);
+    range2Gang = new Gang(m_Ui->range2Slider, m_Ui->range2dsb, NULL, NULL, NULL,
+                          NULL, 1.f, 32.f, REINHARD02_RANGE);
+    lowerGang = new Gang(m_Ui->lowerSlider, m_Ui->lowerdsb, NULL, NULL, NULL,
+                         NULL, 1.f, 100.f, REINHARD02_LOWER);
+    upperGang = new Gang(m_Ui->upperSlider, m_Ui->upperdsb, NULL, NULL, NULL,
+                         NULL, 1.f, 100.f, REINHARD02_UPPER);
+    usescalesGang = new Gang(NULL, NULL, m_Ui->usescalescheckbox);
 
     // reinhard05
-    brightnessGang = new Gang(m_Ui->brightnessSlider, m_Ui->brightnessdsb,NULL,NULL,NULL,NULL, -20.f, 20.f, REINHARD05_BRIGHTNESS);
+    brightnessGang =
+        new Gang(m_Ui->brightnessSlider, m_Ui->brightnessdsb, NULL, NULL, NULL,
+                 NULL, -20.f, 20.f, REINHARD05_BRIGHTNESS);
 
-    connect(brightnessGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
-    connect(brightnessGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
+    connect(brightnessGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(brightnessGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
 
-    chromaticGang = new Gang(m_Ui->chromaticAdaptSlider, m_Ui->chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_CHROMATIC_ADAPTATION);
-    lightGang = new Gang(m_Ui->lightAdaptSlider, m_Ui->lightAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
+    chromaticGang =
+        new Gang(m_Ui->chromaticAdaptSlider, m_Ui->chromaticAdaptdsb, NULL,
+                 NULL, NULL, NULL, 0.f, 1.f, REINHARD05_CHROMATIC_ADAPTATION);
+    lightGang =
+        new Gang(m_Ui->lightAdaptSlider, m_Ui->lightAdaptdsb, NULL, NULL, NULL,
+                 NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
 
     // pregamma
-    pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb,NULL,NULL,NULL,NULL, 0, 5, 1);
+    pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb, NULL, NULL,
+                            NULL, NULL, 0, 5, 1);
 
     //--
-    connect(m_Ui->stackedWidget_operators, &QStackedWidget::currentChanged, this, &TonemappingPanel::updateCurrentTmoOperator);
+    connect(m_Ui->stackedWidget_operators, &QStackedWidget::currentChanged,
+            this, &TonemappingPanel::updateCurrentTmoOperator);
 
-    connect(m_Ui->loadButton, &QAbstractButton::clicked, this, &TonemappingPanel::loadParameters);
-    connect(m_Ui->saveButton, &QAbstractButton::clicked, this, &TonemappingPanel::saveParameters);
+    connect(m_Ui->loadButton, &QAbstractButton::clicked, this,
+            &TonemappingPanel::loadParameters);
+    connect(m_Ui->saveButton, &QAbstractButton::clicked, this,
+            &TonemappingPanel::saveParameters);
 
-    connect(m_Ui->autoLevelsCheckBox, SIGNAL(toggled(bool)), this, SLOT(autoLevels(bool)));
+    connect(m_Ui->autoLevelsCheckBox, SIGNAL(toggled(bool)), this,
+            SLOT(autoLevels(bool)));
 
     m_spinner = new QtWaitingSpinner(this);
 
@@ -200,15 +265,12 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     createDatabase();
 }
 
-void TonemappingPanel::setExportQueueSize(int size)
-{
+void TonemappingPanel::setExportQueueSize(int size) {
     m_spinner->setVisible(size > 0);
     m_Ui->lblQueueSize->setText(QString(tr("Queue size: %1")).arg(size));
 }
 
-
-TonemappingPanel::~TonemappingPanel()
-{
+TonemappingPanel::~TonemappingPanel() {
     qDebug() << "TonemappingPanel::~TonemappingPanel()";
 
     delete contrastfactorGang;
@@ -255,236 +317,239 @@ TonemappingPanel::~TonemappingPanel()
     }
 }
 
-void TonemappingPanel::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::LanguageChange)
-         m_Ui->retranslateUi(this);
+void TonemappingPanel::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) m_Ui->retranslateUi(this);
     QWidget::changeEvent(event);
 }
 
-void TonemappingPanel::createDatabase()
-{
+void TonemappingPanel::createDatabase() {
     LuminanceOptions options;
 
     QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
     db.setDatabaseName(options.getDatabaseFileName());
     db.setHostName(QStringLiteral("localhost"));
     bool ok = db.open();
-    if (!ok)
-    {
-        QMessageBox::warning(this,tr("TM Database Problem"),
-                                  tr("The database used for saving TM parameters cannot be opened.\n"
-                                    "Error: %1").arg(db.lastError().databaseText()),
-                                  QMessageBox::Ok,QMessageBox::NoButton);
+    if (!ok) {
+        QMessageBox::warning(
+            this, tr("TM Database Problem"),
+            tr("The database used for saving TM parameters cannot be opened.\n"
+               "Error: %1")
+                .arg(db.lastError().databaseText()),
+            QMessageBox::Ok, QMessageBox::NoButton);
         return;
     }
     QSqlQuery query;
     // Mantiuk 06
-    bool res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean NOT NULL, contrastFactor real, saturationFactor real, detailFactor real, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    bool res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean "
+        "NOT "
+        "NULL, contrastFactor real, saturationFactor real, detailFactor real, "
+        "pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Mantiuk 08
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, contrastEnhancement real, luminanceLevel real, manualLuminanceLevel boolean NOT NULL, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, "
+        "contrastEnhancement real, luminanceLevel real, manualLuminanceLevel "
+        "boolean NOT NULL, pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Ashikhmin
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 boolean NOT NULL, lct real, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 "
+        "boolean NOT NULL, lct real, pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Drago
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS drago (bias real, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(
+        QStringLiteral(" CREATE TABLE IF NOT EXISTS drago (bias real, "
+                       "pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Durand
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS durand (spatial real, range real, base real, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS durand (spatial real, range "
+        "real, base real, pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Fattal
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, colorSaturation real, noiseReduction real, oldFattal boolean NOT NULL, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, "
+        "colorSaturation real, noiseReduction real, oldFattal boolean NOT "
+        "NULL, "
+        "pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Fattal
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS ferradans (rho real, inv_alpha real, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS ferradans (rho real, "
+        "inv_alpha real, pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Pattanaik
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean NOT NULL, local boolean NOT NULL, cone real, rod real, multiplier real, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean "
+        "NOT NULL, local boolean NOT NULL, cone real, rod real, "
+        "multiplier real, pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Reinhard02
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean NOT NULL, key real, phi real, range int, lower int, upper int, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(
+        QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean "
+                       "NOT NULL, key real, phi real, range int, lower int, "
+                       "upper int, pregamma real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Reinhard05
-    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, chromaticAdaptation real, lightAdaptation real, pregamma real, comment varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, "
+        "chromaticAdaptation real, lightAdaptation real, pregamma "
+        "real, comment varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
     // Hdr creation custom config parameters
-    res = query.exec(QStringLiteral("CREATE TABLE IF NOT EXISTS parameters (weight integer, response integer, model integer, filename varchar(150));"));
-    if (res == false)
-        qDebug() << query.lastError();
+    res = query.exec(QStringLiteral(
+        "CREATE TABLE IF NOT EXISTS parameters (weight integer, response "
+        "integer, model integer, filename varchar(150));"));
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::setSizes(int width, int height)
-{
+void TonemappingPanel::setSizes(int width, int height) {
     sizes.resize(0);
-    for(int x = 256; x <= width; x *= 2) {
-        if( x >= width )
-            break;
+    for (int x = 256; x <= width; x *= 2) {
+        if (x >= width) break;
         sizes.push_front(x);
-        if( 3*(x/2) >= width )
-            break;
-        sizes.push_front(3*(x/2));
+        if (3 * (x / 2) >= width) break;
+        sizes.push_front(3 * (x / 2));
     }
     sizes.push_front(width);
-    heightToWidthRatio = ( (float)height )/( (float) width);
+    heightToWidthRatio = ((float)height) / ((float)width);
     fillCustomSizeComboBox();
     m_Ui->sizeComboBox->setCurrentIndex(m_Ui->sizeComboBox->count() - 1);
 }
 
-void TonemappingPanel::on_defaultButton_clicked()
-{
-    switch (currentTmoOperator)
-    {
-    case ashikhmin:
-        contrastGang->setDefault();
-        m_Ui->simpleCheckBox->setChecked(false);
-        m_Ui->eq2RadioButton->setChecked(true);
-        break;
-    case drago:
-        biasGang->setDefault();
-        break;
-    case durand:
-        spatialGang->setDefault();
-        rangeGang->setDefault();
-        baseGang->setDefault();
-        break;
-    case fattal:
-        alphaGang->setDefault();
-        betaGang->setDefault();
-        saturation2Gang->setDefault();
-        noiseGang->setDefault();
-        fftSolverGang->setDefault();
-        m_Ui->fftVersionCheckBox->setChecked(true);
-        break;
-    case ferradans:
-        rhoGang->setDefault();
-        inv_alphaGang->setDefault();
-        break;
-    case mai: //no options
-        break;
-    case mantiuk06:
-        contrastfactorGang->setDefault();
-        saturationfactorGang->setDefault();
-        detailfactorGang->setDefault();
-        m_Ui->contrastEqualizCheckBox->setChecked(false);
-        break;
-    case mantiuk08:
-        colorSaturationGang->setDefault();
-        contrastEnhancementGang->setDefault();
-        luminanceLevelGang->setDefault();
-        m_Ui->luminanceLevelCheckBox->setChecked(false);
-        break;
-    case pattanaik:
-        multiplierGang->setDefault();
-        coneGang->setDefault();
-        rodGang->setDefault();
-        m_Ui->pattalocal->setChecked(false);
-        m_Ui->autoYcheckbox->setChecked(true);
-        break;
-    case reinhard02:
-        keyGang->setDefault();
-        phiGang->setDefault();
-        range2Gang->setDefault();
-        lowerGang->setDefault();
-        upperGang->setDefault();
-        m_Ui->usescalescheckbox->setChecked(false);
-        break;
-    case reinhard05:
-        brightnessGang->setDefault();
-        chromaticGang->setDefault();
-        lightGang->setDefault();
-        break;
+void TonemappingPanel::on_defaultButton_clicked() {
+    switch (currentTmoOperator) {
+        case ashikhmin:
+            contrastGang->setDefault();
+            m_Ui->simpleCheckBox->setChecked(false);
+            m_Ui->eq2RadioButton->setChecked(true);
+            break;
+        case drago:
+            biasGang->setDefault();
+            break;
+        case durand:
+            spatialGang->setDefault();
+            rangeGang->setDefault();
+            baseGang->setDefault();
+            break;
+        case fattal:
+            alphaGang->setDefault();
+            betaGang->setDefault();
+            saturation2Gang->setDefault();
+            noiseGang->setDefault();
+            fftSolverGang->setDefault();
+            m_Ui->fftVersionCheckBox->setChecked(true);
+            break;
+        case ferradans:
+            rhoGang->setDefault();
+            inv_alphaGang->setDefault();
+            break;
+        case mai:  // no options
+            break;
+        case mantiuk06:
+            contrastfactorGang->setDefault();
+            saturationfactorGang->setDefault();
+            detailfactorGang->setDefault();
+            m_Ui->contrastEqualizCheckBox->setChecked(false);
+            break;
+        case mantiuk08:
+            colorSaturationGang->setDefault();
+            contrastEnhancementGang->setDefault();
+            luminanceLevelGang->setDefault();
+            m_Ui->luminanceLevelCheckBox->setChecked(false);
+            break;
+        case pattanaik:
+            multiplierGang->setDefault();
+            coneGang->setDefault();
+            rodGang->setDefault();
+            m_Ui->pattalocal->setChecked(false);
+            m_Ui->autoYcheckbox->setChecked(true);
+            break;
+        case reinhard02:
+            keyGang->setDefault();
+            phiGang->setDefault();
+            range2Gang->setDefault();
+            lowerGang->setDefault();
+            upperGang->setDefault();
+            m_Ui->usescalescheckbox->setChecked(false);
+            break;
+        case reinhard05:
+            brightnessGang->setDefault();
+            chromaticGang->setDefault();
+            lightGang->setDefault();
+            break;
     }
 }
 
 // TODO : if you change the position of the operator inside the TMOperator enum
 // you will screw up this function!!!
-void TonemappingPanel::updateCurrentTmoOperator(int idx)
-{
+void TonemappingPanel::updateCurrentTmoOperator(int idx) {
     currentTmoOperator = TMOperator(idx);
     updateUndoState();
 }
 
-void TonemappingPanel::updateUndoState()
-{
-    switch (currentTmoOperator)
-    {
-    case ashikhmin:
-        contrastGang->updateUndoState();
-        break;
-    case drago:
-        biasGang->updateUndoState();
-        break;
-    case durand:
-        spatialGang->updateUndoState();
-        break;
-    case fattal:
-        alphaGang->updateUndoState();
-        break;
-    case ferradans:
-        rhoGang->updateUndoState();
-        break;
-    case mai: //no options
-        break;
-    case mantiuk06:
-        contrastfactorGang->updateUndoState();
-        break;
-    case mantiuk08:
-        colorSaturationGang->updateUndoState();
-        break;
-    case pattanaik:
-        multiplierGang->updateUndoState();
-        break;
-    case reinhard02:
-        keyGang->updateUndoState();
-        break;
-    case reinhard05:
-        brightnessGang->updateUndoState();
-        break;
+void TonemappingPanel::updateUndoState() {
+    switch (currentTmoOperator) {
+        case ashikhmin:
+            contrastGang->updateUndoState();
+            break;
+        case drago:
+            biasGang->updateUndoState();
+            break;
+        case durand:
+            spatialGang->updateUndoState();
+            break;
+        case fattal:
+            alphaGang->updateUndoState();
+            break;
+        case ferradans:
+            rhoGang->updateUndoState();
+            break;
+        case mai:  // no options
+            break;
+        case mantiuk06:
+            contrastfactorGang->updateUndoState();
+            break;
+        case mantiuk08:
+            colorSaturationGang->updateUndoState();
+            break;
+        case pattanaik:
+            multiplierGang->updateUndoState();
+            break;
+        case reinhard02:
+            keyGang->updateUndoState();
+            break;
+        case reinhard05:
+            brightnessGang->updateUndoState();
+            break;
     }
 }
 
-void TonemappingPanel::on_pregammadefault_clicked()
-{
+void TonemappingPanel::on_pregammadefault_clicked() {
     pregammaGang->setDefault();
 }
 
-void TonemappingPanel::on_applyButton_clicked()
-{
+void TonemappingPanel::on_applyButton_clicked() {
     fillToneMappingOptions(false);
     setupUndo();
 
     emit startTonemapping(toneMappingOptions);
 }
 
-void TonemappingPanel::on_queueButton_clicked()
-{
+void TonemappingPanel::on_queueButton_clicked() {
     fillToneMappingOptions(true);
-    //setupUndo();
+    // setupUndo();
 
     emit startExport(toneMappingOptions);
 }
 
-void TonemappingPanel::fillToneMappingOptions(bool exportMode)
-{
+void TonemappingPanel::fillToneMappingOptions(bool exportMode) {
     toneMappingOptions = new TonemappingOptions;
-    if (!exportMode)
-    {
+    if (!exportMode) {
         toneMappingOptionsToDelete.push_back(toneMappingOptions);
     }
-    if (!exportMode && sizes.size())
-    {
+    if (!exportMode && sizes.size()) {
         toneMappingOptions->origxsize = sizes[0];
         toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
     } else {
@@ -495,369 +560,396 @@ void TonemappingPanel::fillToneMappingOptions(bool exportMode)
     // toneMappingOptions->tonemapSelection = checkBoxSelection->isChecked();
     // toneMappingOptions->tonemapOriginal = checkBoxOriginal->isChecked();
     switch (currentTmoOperator) {
-    case ashikhmin:
-        toneMappingOptions->tmoperator = ashikhmin;
-        toneMappingOptions->operator_options.ashikhminoptions.simple=simpleGang->isCheckBox1Checked();
-        toneMappingOptions->operator_options.ashikhminoptions.eq2=eq2Gang->isRadioButton1Checked();
-        toneMappingOptions->operator_options.ashikhminoptions.lct=contrastGang->v();
-        break;
-    case drago:
-        toneMappingOptions->tmoperator = drago;
-        toneMappingOptions->operator_options.dragooptions.bias=biasGang->v();
-        break;
-    case durand:
-        toneMappingOptions->tmoperator = durand;
-        toneMappingOptions->operator_options.durandoptions.spatial=spatialGang->v();
-        toneMappingOptions->operator_options.durandoptions.range=rangeGang->v();
-        toneMappingOptions->operator_options.durandoptions.base=baseGang->v();
-        break;
-    case fattal:
-        toneMappingOptions->tmoperator = fattal;
-        toneMappingOptions->operator_options.fattaloptions.alpha=alphaGang->v();
-        toneMappingOptions->operator_options.fattaloptions.beta=betaGang->v();
-        toneMappingOptions->operator_options.fattaloptions.color=saturation2Gang->v();
-        toneMappingOptions->operator_options.fattaloptions.noiseredux=noiseGang->v();
-//        toneMappingOptions->operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
-        toneMappingOptions->operator_options.fattaloptions.fftsolver=fftSolverGang->isCheckBox1Checked();
-        break;
-    case ferradans:
-        toneMappingOptions->tmoperator = ferradans;
-        toneMappingOptions->operator_options.ferradansoptions.rho=rhoGang->v();
-        toneMappingOptions->operator_options.ferradansoptions.inv_alpha=inv_alphaGang->v();
-        break;
-    case mai:
-        toneMappingOptions->tmoperator = mai;
-        break;
-    case mantiuk06:
-        toneMappingOptions->tmoperator = mantiuk06;
-        toneMappingOptions->operator_options.mantiuk06options.contrastfactor=contrastfactorGang->v();
-        toneMappingOptions->operator_options.mantiuk06options.saturationfactor=saturationfactorGang->v();
-        toneMappingOptions->operator_options.mantiuk06options.detailfactor=detailfactorGang->v();
-        toneMappingOptions->operator_options.mantiuk06options.contrastequalization=contrastfactorGang->isCheckBox1Checked();
-        break;
-    case mantiuk08:
-        toneMappingOptions->tmoperator = mantiuk08;
-        toneMappingOptions->operator_options.mantiuk08options.colorsaturation=colorSaturationGang->v();
-        toneMappingOptions->operator_options.mantiuk08options.contrastenhancement=contrastEnhancementGang->v();
-        toneMappingOptions->operator_options.mantiuk08options.luminancelevel=luminanceLevelGang->v();
-        toneMappingOptions->operator_options.mantiuk08options.setluminance=luminanceLevelGang->isCheckBox1Checked();
-        break;
-    case pattanaik:
-        toneMappingOptions->tmoperator = pattanaik;
-        toneMappingOptions->operator_options.pattanaikoptions.autolum=autoYGang->isCheckBox1Checked();
-        toneMappingOptions->operator_options.pattanaikoptions.local=pattalocalGang->isCheckBox1Checked();
-        toneMappingOptions->operator_options.pattanaikoptions.cone=coneGang->v();
-        toneMappingOptions->operator_options.pattanaikoptions.rod=rodGang->v();
-        toneMappingOptions->operator_options.pattanaikoptions.multiplier=multiplierGang->v();
-        break;
-    case reinhard02:
-        toneMappingOptions->tmoperator = reinhard02;
-        toneMappingOptions->operator_options.reinhard02options.scales=usescalesGang->isCheckBox1Checked();
-        toneMappingOptions->operator_options.reinhard02options.key=keyGang->v();
-        toneMappingOptions->operator_options.reinhard02options.phi=phiGang->v();
-        toneMappingOptions->operator_options.reinhard02options.range=(int)range2Gang->v();
-        toneMappingOptions->operator_options.reinhard02options.lower=(int)lowerGang->v();
-        toneMappingOptions->operator_options.reinhard02options.upper=(int)upperGang->v();
-        break;
-    case reinhard05:
-        toneMappingOptions->tmoperator = reinhard05;
-        toneMappingOptions->operator_options.reinhard05options.brightness=brightnessGang->v();
-        toneMappingOptions->operator_options.reinhard05options.chromaticAdaptation=chromaticGang->v();
-        toneMappingOptions->operator_options.reinhard05options.lightAdaptation=lightGang->v();
-        break;
+        case ashikhmin:
+            toneMappingOptions->tmoperator = ashikhmin;
+            toneMappingOptions->operator_options.ashikhminoptions.simple =
+                simpleGang->isCheckBox1Checked();
+            toneMappingOptions->operator_options.ashikhminoptions.eq2 =
+                eq2Gang->isRadioButton1Checked();
+            toneMappingOptions->operator_options.ashikhminoptions.lct =
+                contrastGang->v();
+            break;
+        case drago:
+            toneMappingOptions->tmoperator = drago;
+            toneMappingOptions->operator_options.dragooptions.bias =
+                biasGang->v();
+            break;
+        case durand:
+            toneMappingOptions->tmoperator = durand;
+            toneMappingOptions->operator_options.durandoptions.spatial =
+                spatialGang->v();
+            toneMappingOptions->operator_options.durandoptions.range =
+                rangeGang->v();
+            toneMappingOptions->operator_options.durandoptions.base =
+                baseGang->v();
+            break;
+        case fattal:
+            toneMappingOptions->tmoperator = fattal;
+            toneMappingOptions->operator_options.fattaloptions.alpha =
+                alphaGang->v();
+            toneMappingOptions->operator_options.fattaloptions.beta =
+                betaGang->v();
+            toneMappingOptions->operator_options.fattaloptions.color =
+                saturation2Gang->v();
+            toneMappingOptions->operator_options.fattaloptions.noiseredux =
+                noiseGang->v();
+            //        toneMappingOptions->operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
+            toneMappingOptions->operator_options.fattaloptions.fftsolver =
+                fftSolverGang->isCheckBox1Checked();
+            break;
+        case ferradans:
+            toneMappingOptions->tmoperator = ferradans;
+            toneMappingOptions->operator_options.ferradansoptions.rho =
+                rhoGang->v();
+            toneMappingOptions->operator_options.ferradansoptions.inv_alpha =
+                inv_alphaGang->v();
+            break;
+        case mai:
+            toneMappingOptions->tmoperator = mai;
+            break;
+        case mantiuk06:
+            toneMappingOptions->tmoperator = mantiuk06;
+            toneMappingOptions->operator_options.mantiuk06options
+                .contrastfactor = contrastfactorGang->v();
+            toneMappingOptions->operator_options.mantiuk06options
+                .saturationfactor = saturationfactorGang->v();
+            toneMappingOptions->operator_options.mantiuk06options.detailfactor =
+                detailfactorGang->v();
+            toneMappingOptions->operator_options.mantiuk06options
+                .contrastequalization =
+                contrastfactorGang->isCheckBox1Checked();
+            break;
+        case mantiuk08:
+            toneMappingOptions->tmoperator = mantiuk08;
+            toneMappingOptions->operator_options.mantiuk08options
+                .colorsaturation = colorSaturationGang->v();
+            toneMappingOptions->operator_options.mantiuk08options
+                .contrastenhancement = contrastEnhancementGang->v();
+            toneMappingOptions->operator_options.mantiuk08options
+                .luminancelevel = luminanceLevelGang->v();
+            toneMappingOptions->operator_options.mantiuk08options.setluminance =
+                luminanceLevelGang->isCheckBox1Checked();
+            break;
+        case pattanaik:
+            toneMappingOptions->tmoperator = pattanaik;
+            toneMappingOptions->operator_options.pattanaikoptions.autolum =
+                autoYGang->isCheckBox1Checked();
+            toneMappingOptions->operator_options.pattanaikoptions.local =
+                pattalocalGang->isCheckBox1Checked();
+            toneMappingOptions->operator_options.pattanaikoptions.cone =
+                coneGang->v();
+            toneMappingOptions->operator_options.pattanaikoptions.rod =
+                rodGang->v();
+            toneMappingOptions->operator_options.pattanaikoptions.multiplier =
+                multiplierGang->v();
+            break;
+        case reinhard02:
+            toneMappingOptions->tmoperator = reinhard02;
+            toneMappingOptions->operator_options.reinhard02options.scales =
+                usescalesGang->isCheckBox1Checked();
+            toneMappingOptions->operator_options.reinhard02options.key =
+                keyGang->v();
+            toneMappingOptions->operator_options.reinhard02options.phi =
+                phiGang->v();
+            toneMappingOptions->operator_options.reinhard02options.range =
+                (int)range2Gang->v();
+            toneMappingOptions->operator_options.reinhard02options.lower =
+                (int)lowerGang->v();
+            toneMappingOptions->operator_options.reinhard02options.upper =
+                (int)upperGang->v();
+            break;
+        case reinhard05:
+            toneMappingOptions->tmoperator = reinhard05;
+            toneMappingOptions->operator_options.reinhard05options.brightness =
+                brightnessGang->v();
+            toneMappingOptions->operator_options.reinhard05options
+                .chromaticAdaptation = chromaticGang->v();
+            toneMappingOptions->operator_options.reinhard05options
+                .lightAdaptation = lightGang->v();
+            break;
     }
 }
 
-void TonemappingPanel::setupUndo()
-{
-    switch (currentTmoOperator)
-    {
-    case ashikhmin:
-        simpleGang->setupUndo();
-        eq2Gang->setupUndo();
-        contrastGang->setupUndo();
-        break;
-    case drago:
-        biasGang->setupUndo();
-        break;
-    case durand:
-        spatialGang->setupUndo();
-        rangeGang->setupUndo();
-        baseGang->setupUndo();
-        break;
-    case fattal:
-        alphaGang->setupUndo();
-        betaGang->setupUndo();
-        saturation2Gang->setupUndo();
-        noiseGang->setupUndo();
-//        oldFattalGang->setupUndo();
-        fftSolverGang->setupUndo();
-        break;
-    case ferradans:
-        rhoGang->setupUndo();
-        inv_alphaGang->setupUndo();
-        break;
-    case mai: //no options
-        break;
-    case mantiuk06:
-        contrastfactorGang->setupUndo();
-        saturationfactorGang->setupUndo();
-        detailfactorGang->setupUndo();
-        break;
-    case mantiuk08:
-        colorSaturationGang->setupUndo();
-        contrastEnhancementGang->setupUndo();
-        luminanceLevelGang->setupUndo();
-        break;
-    case pattanaik:
-        autoYGang->setupUndo();
-        pattalocalGang->setupUndo();
-        coneGang->setupUndo();
-        rodGang->setupUndo();
-        multiplierGang->setupUndo();
-        break;
-    case reinhard02:
-        usescalesGang->setupUndo();
-        keyGang->setupUndo();
-        phiGang->setupUndo();
-        range2Gang->setupUndo();
-        lowerGang->setupUndo();
-        upperGang->setupUndo();
-        break;
-    case reinhard05:
-        brightnessGang->setupUndo();
-        chromaticGang->setupUndo();
-        lightGang->setupUndo();
-        break;
+void TonemappingPanel::setupUndo() {
+    switch (currentTmoOperator) {
+        case ashikhmin:
+            simpleGang->setupUndo();
+            eq2Gang->setupUndo();
+            contrastGang->setupUndo();
+            break;
+        case drago:
+            biasGang->setupUndo();
+            break;
+        case durand:
+            spatialGang->setupUndo();
+            rangeGang->setupUndo();
+            baseGang->setupUndo();
+            break;
+        case fattal:
+            alphaGang->setupUndo();
+            betaGang->setupUndo();
+            saturation2Gang->setupUndo();
+            noiseGang->setupUndo();
+            //        oldFattalGang->setupUndo();
+            fftSolverGang->setupUndo();
+            break;
+        case ferradans:
+            rhoGang->setupUndo();
+            inv_alphaGang->setupUndo();
+            break;
+        case mai:  // no options
+            break;
+        case mantiuk06:
+            contrastfactorGang->setupUndo();
+            saturationfactorGang->setupUndo();
+            detailfactorGang->setupUndo();
+            break;
+        case mantiuk08:
+            colorSaturationGang->setupUndo();
+            contrastEnhancementGang->setupUndo();
+            luminanceLevelGang->setupUndo();
+            break;
+        case pattanaik:
+            autoYGang->setupUndo();
+            pattalocalGang->setupUndo();
+            coneGang->setupUndo();
+            rodGang->setupUndo();
+            multiplierGang->setupUndo();
+            break;
+        case reinhard02:
+            usescalesGang->setupUndo();
+            keyGang->setupUndo();
+            phiGang->setupUndo();
+            range2Gang->setupUndo();
+            lowerGang->setupUndo();
+            upperGang->setupUndo();
+            break;
+        case reinhard05:
+            brightnessGang->setupUndo();
+            chromaticGang->setupUndo();
+            lightGang->setupUndo();
+            break;
     }
 }
 
-void TonemappingPanel::on_undoButton_clicked()
-{
-    onUndoRedo(true);
-}
+void TonemappingPanel::on_undoButton_clicked() { onUndoRedo(true); }
 
-void TonemappingPanel::on_redoButton_clicked()
-{
-    onUndoRedo(false);
-}
+void TonemappingPanel::on_redoButton_clicked() { onUndoRedo(false); }
 
-void TonemappingPanel::onUndoRedo(bool undo)
-{
-    typedef void (Gang::*REDO_UNDO) ();
+void TonemappingPanel::onUndoRedo(bool undo) {
+    typedef void (Gang::*REDO_UNDO)();
     REDO_UNDO redoUndo = undo ? &Gang::undo : &Gang::redo;
-    switch (currentTmoOperator)
-    {
-    case ashikhmin:
-        (simpleGang->*redoUndo)();
-        (eq2Gang->*redoUndo)();
-        (contrastGang->*redoUndo)();
-        break;
-    case drago:
-        (biasGang->*redoUndo)();
-        break;
-    case durand:
-        (spatialGang->*redoUndo)();
-        (rangeGang->*redoUndo)();
-        (baseGang->*redoUndo)();
-        break;
-    case fattal:
-        (alphaGang->*redoUndo)();
-        (betaGang->*redoUndo)();
-        (saturation2Gang->*redoUndo)();
-        (noiseGang->*redoUndo)();
-//      (oldFattalGang->*redoUndo)();
-        (fftSolverGang->*redoUndo)();
-        break;
-    case ferradans:
-        (rhoGang->*redoUndo)();
-        (inv_alphaGang->*redoUndo)();
-        break;
-    case mai:
-        break;
-    case mantiuk06:
-        (contrastfactorGang->*redoUndo)();
-        (saturationfactorGang->*redoUndo)();
-        (detailfactorGang->*redoUndo)();
-        break;
-    case mantiuk08:
-        (colorSaturationGang->*redoUndo)();
-        (contrastEnhancementGang->*redoUndo)();
-        (luminanceLevelGang->*redoUndo)();
-        break;
-    case pattanaik:
-        (autoYGang->*redoUndo)();
-        (pattalocalGang->*redoUndo)();
-        (coneGang->*redoUndo)();
-        (rodGang->*redoUndo)();
-        (multiplierGang->*redoUndo)();
-        break;
-    case reinhard02:
-        (usescalesGang->*redoUndo)();
-        (keyGang->*redoUndo)();
-        (phiGang->*redoUndo)();
-        (range2Gang->*redoUndo)();
-        (lowerGang->*redoUndo)();
-        (upperGang->*redoUndo)();
-        break;
-    case reinhard05:
-        (brightnessGang->*redoUndo)();
-        (chromaticGang->*redoUndo)();
-        (lightGang->*redoUndo)();
-        break;
+    switch (currentTmoOperator) {
+        case ashikhmin:
+            (simpleGang->*redoUndo)();
+            (eq2Gang->*redoUndo)();
+            (contrastGang->*redoUndo)();
+            break;
+        case drago:
+            (biasGang->*redoUndo)();
+            break;
+        case durand:
+            (spatialGang->*redoUndo)();
+            (rangeGang->*redoUndo)();
+            (baseGang->*redoUndo)();
+            break;
+        case fattal:
+            (alphaGang->*redoUndo)();
+            (betaGang->*redoUndo)();
+            (saturation2Gang->*redoUndo)();
+            (noiseGang->*redoUndo)();
+            //      (oldFattalGang->*redoUndo)();
+            (fftSolverGang->*redoUndo)();
+            break;
+        case ferradans:
+            (rhoGang->*redoUndo)();
+            (inv_alphaGang->*redoUndo)();
+            break;
+        case mai:
+            break;
+        case mantiuk06:
+            (contrastfactorGang->*redoUndo)();
+            (saturationfactorGang->*redoUndo)();
+            (detailfactorGang->*redoUndo)();
+            break;
+        case mantiuk08:
+            (colorSaturationGang->*redoUndo)();
+            (contrastEnhancementGang->*redoUndo)();
+            (luminanceLevelGang->*redoUndo)();
+            break;
+        case pattanaik:
+            (autoYGang->*redoUndo)();
+            (pattalocalGang->*redoUndo)();
+            (coneGang->*redoUndo)();
+            (rodGang->*redoUndo)();
+            (multiplierGang->*redoUndo)();
+            break;
+        case reinhard02:
+            (usescalesGang->*redoUndo)();
+            (keyGang->*redoUndo)();
+            (phiGang->*redoUndo)();
+            (range2Gang->*redoUndo)();
+            (lowerGang->*redoUndo)();
+            (upperGang->*redoUndo)();
+            break;
+        case reinhard05:
+            (brightnessGang->*redoUndo)();
+            (chromaticGang->*redoUndo)();
+            (lightGang->*redoUndo)();
+            break;
     }
 }
 
-void TonemappingPanel::on_lblOpenQueue_linkActivated(const QString& link)
-{
+void TonemappingPanel::on_lblOpenQueue_linkActivated(const QString &link) {
     LuminanceOptions options;
     QDesktopServices::openUrl(QUrl::fromLocalFile(options.getExportDir()));
 }
 
-
-void TonemappingPanel::on_loadsettingsbutton_clicked()
-{
+void TonemappingPanel::on_loadsettingsbutton_clicked() {
     LuminanceOptions lum_options;
 
-    QString opened = QFileDialog::getOpenFileName(this,
-                                                  tr("Load a tonemapping settings text file..."),
-                                                  lum_options.getDefaultPathTmoSettings(),
-                                                  tr("LuminanceHDR tonemapping settings text file (*.txt)") );
-    if ( !opened.isEmpty() )
-    {
+    QString opened = QFileDialog::getOpenFileName(
+        this, tr("Load a tonemapping settings text file..."),
+        lum_options.getDefaultPathTmoSettings(),
+        tr("LuminanceHDR tonemapping settings text file (*.txt)"));
+    if (!opened.isEmpty()) {
         QFileInfo qfi(opened);
-        if (!qfi.isReadable())
-        {
-            QMessageBox::critical(this,tr("Aborting..."),
-                                  tr("File is not readable (check existence, permissions,...)"),
-                                  QMessageBox::Ok,QMessageBox::NoButton);
+        if (!qfi.isReadable()) {
+            QMessageBox::critical(
+                this, tr("Aborting..."),
+                tr("File is not readable (check existence, permissions,...)"),
+                QMessageBox::Ok, QMessageBox::NoButton);
             return;
         }
-        lum_options.setDefaultPathTmoSettings( qfi.path() );
+        lum_options.setDefaultPathTmoSettings(qfi.path());
 
-        //update filename internal field, used by parsing function fromTxt2Gui()
+        // update filename internal field, used by parsing function
+        // fromTxt2Gui()
         tmoSettingsFilename = opened;
-        //call parsing function
+        // call parsing function
         fromTxt2Gui();
     }
 }
 
-void TonemappingPanel::on_savesettingsbutton_clicked()
-{
+void TonemappingPanel::on_savesettingsbutton_clicked() {
     LuminanceOptions lum_options;
 
-    QString fname = QFileDialog::getSaveFileName(this,
-                                                 tr("Save tonemapping settings text file to..."),
-                                                 lum_options.getDefaultPathTmoSettings(),
-                                                 tr("LuminanceHDR tonemapping settings text file (*.txt)"));
-    if( ! fname.isEmpty() )
-    {
+    QString fname = QFileDialog::getSaveFileName(
+        this, tr("Save tonemapping settings text file to..."),
+        lum_options.getDefaultPathTmoSettings(),
+        tr("LuminanceHDR tonemapping settings text file (*.txt)"));
+    if (!fname.isEmpty()) {
         QFileInfo qfi(fname);
-        if (qfi.suffix().toUpper() != QLatin1String("TXT"))
-        {
-            fname+=QLatin1String(".txt");
+        if (qfi.suffix().toUpper() != QLatin1String("TXT")) {
+            fname += QLatin1String(".txt");
         }
 
-        lum_options.setDefaultPathTmoSettings( qfi.path() );
+        lum_options.setDefaultPathTmoSettings(qfi.path());
 
-        //write txt file
+        // write txt file
         fromGui2Txt(fname);
     }
 }
 
-void TonemappingPanel::fromGui2Txt(QString destination)
-{
+void TonemappingPanel::fromGui2Txt(QString destination) {
     QFile file(destination);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox::critical(this,tr("Aborting..."),tr("File is not writable (check permissions, path...)"),
-                              QMessageBox::Ok,QMessageBox::NoButton);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::critical(
+            this, tr("Aborting..."),
+            tr("File is not writable (check permissions, path...)"),
+            QMessageBox::Ok, QMessageBox::NoButton);
         return;
     }
     QTextStream out(&file);
     out << "# LuminanceHDR Tonemapping Setting file." << endl;
-    out << "# Editing this file by hand is risky, worst case scenario is Luminance crashing." << endl;
-    out << "# Please edit this file by hand only if you know what you're doing, in any case never change the left hand side text (i.e. the part before the ``='')." << endl;
+    out << "# Editing this file by hand is risky, worst case scenario is "
+           "Luminance crashing."
+        << endl;
+    out << "# Please edit this file by hand only if you know what you're "
+           "doing, "
+           "in any case never change the left hand side text (i.e. the part "
+           "before the ``='')."
+        << endl;
     out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
     out << "XSIZE=" << sizes[m_Ui->sizeComboBox->currentIndex()] << endl;
 
     QWidget *current_page = m_Ui->stackedWidget_operators->currentWidget();
-    if (current_page == m_Ui->page_mantiuk06)
-    {
-        out << "TMO=" << "Mantiuk06" << endl;
+    if (current_page == m_Ui->page_mantiuk06) {
+        out << "TMO="
+            << "Mantiuk06" << endl;
         out << "CONTRASTFACTOR=" << contrastfactorGang->v() << endl;
         out << "SATURATIONFACTOR=" << saturationfactorGang->v() << endl;
         out << "DETAILFACTOR=" << detailfactorGang->v() << endl;
-        out << "CONTRASTEQUALIZATION=" << (m_Ui->contrastEqualizCheckBox->isChecked() ? "YES" : "NO") << endl;
-    }
-    else if (current_page == m_Ui->page_mantiuk08)
-    {
-        out << "TMO=" << "Mantiuk08" << endl;
+        out << "CONTRASTEQUALIZATION="
+            << (m_Ui->contrastEqualizCheckBox->isChecked() ? "YES" : "NO")
+            << endl;
+    } else if (current_page == m_Ui->page_mantiuk08) {
+        out << "TMO="
+            << "Mantiuk08" << endl;
         out << "COLORSATURATION=" << colorSaturationGang->v() << endl;
         out << "CONTRASTENHANCEMENT=" << contrastEnhancementGang->v() << endl;
         out << "LUMINANCELEVEL=" << luminanceLevelGang->v() << endl;
-        out << "SETLUMINANCE=" << (m_Ui->luminanceLevelCheckBox->isChecked() ? "YES" : "NO") << endl;
-    }
-    else if (current_page == m_Ui->page_fattal)
-    {
-        out << "TMO=" << "Fattal02" << endl;
+        out << "SETLUMINANCE="
+            << (m_Ui->luminanceLevelCheckBox->isChecked() ? "YES" : "NO")
+            << endl;
+    } else if (current_page == m_Ui->page_fattal) {
+        out << "TMO="
+            << "Fattal02" << endl;
         out << "ALPHA=" << alphaGang->v() << endl;
         out << "BETA=" << betaGang->v() << endl;
         out << "COLOR=" << saturation2Gang->v() << endl;
         out << "NOISE=" << noiseGang->v() << endl;
-        out << "OLDFATTAL=" << (m_Ui->fftVersionCheckBox->isChecked() ? "NO" : "YES") << endl;
-    }
-    else if (current_page == m_Ui->page_ferradans)
-    {
-        out << "TMO=" << "Ferradans11" << endl;
+        out << "OLDFATTAL="
+            << (m_Ui->fftVersionCheckBox->isChecked() ? "NO" : "YES") << endl;
+    } else if (current_page == m_Ui->page_ferradans) {
+        out << "TMO="
+            << "Ferradans11" << endl;
         out << "RHO=" << rhoGang->v() << endl;
         out << "INV_ALPHA=" << inv_alphaGang->v() << endl;
-    }
-    else if (current_page == m_Ui->page_mai)
-    {
-        out << "TMO=" << "Mai11" << endl;
-    }
-    else if (current_page == m_Ui->page_ashikhmin)
-    {
-        out << "TMO=" << "Ashikhmin02" << endl;
-        out << "SIMPLE=" << (m_Ui->simpleCheckBox->isChecked() ? "YES" : "NO") << endl;
-        out << "EQUATION=" << (m_Ui->eq2RadioButton->isChecked() ? "2" : "4") << endl;
+    } else if (current_page == m_Ui->page_mai) {
+        out << "TMO="
+            << "Mai11" << endl;
+    } else if (current_page == m_Ui->page_ashikhmin) {
+        out << "TMO="
+            << "Ashikhmin02" << endl;
+        out << "SIMPLE=" << (m_Ui->simpleCheckBox->isChecked() ? "YES" : "NO")
+            << endl;
+        out << "EQUATION=" << (m_Ui->eq2RadioButton->isChecked() ? "2" : "4")
+            << endl;
         out << "CONTRAST=" << contrastGang->v() << endl;
-    }
-    else if (current_page == m_Ui->page_durand)
-    {
-        out << "TMO=" << "Durand02" << endl;
+    } else if (current_page == m_Ui->page_durand) {
+        out << "TMO="
+            << "Durand02" << endl;
         out << "SPATIAL=" << spatialGang->v() << endl;
         out << "RANGE=" << rangeGang->v() << endl;
         out << "BASE=" << baseGang->v() << endl;
-    }
-    else if (current_page == m_Ui->page_drago)
-    {
-        out << "TMO=" << "Drago03" << endl;
+    } else if (current_page == m_Ui->page_drago) {
+        out << "TMO="
+            << "Drago03" << endl;
         out << "BIAS=" << biasGang->v() << endl;
-    }
-    else if (current_page == m_Ui->page_pattanaik)
-    {
-        out << "TMO=" << "Pattanaik00" << endl;
+    } else if (current_page == m_Ui->page_pattanaik) {
+        out << "TMO="
+            << "Pattanaik00" << endl;
         out << "MULTIPLIER=" << multiplierGang->v() << endl;
-        out << "LOCAL=" << (m_Ui->pattalocal->isChecked() ? "YES" : "NO") << endl;
-        out << "AUTOLUMINANCE=" << (m_Ui->autoYcheckbox->isChecked() ? "YES" : "NO") << endl;
+        out << "LOCAL=" << (m_Ui->pattalocal->isChecked() ? "YES" : "NO")
+            << endl;
+        out << "AUTOLUMINANCE="
+            << (m_Ui->autoYcheckbox->isChecked() ? "YES" : "NO") << endl;
         out << "CONE=" << coneGang->v() << endl;
         out << "ROD=" << rodGang->v() << endl;
-    }
-    else if (current_page == m_Ui->page_reinhard02)
-    {
-        out << "TMO=" << "Reinhard02" << endl;
+    } else if (current_page == m_Ui->page_reinhard02) {
+        out << "TMO="
+            << "Reinhard02" << endl;
         out << "KEY=" << keyGang->v() << endl;
         out << "PHI=" << phiGang->v() << endl;
-        out << "SCALES=" << (m_Ui->usescalescheckbox->isChecked() ? "YES" : "NO") << endl;
+        out << "SCALES="
+            << (m_Ui->usescalescheckbox->isChecked() ? "YES" : "NO") << endl;
         out << "RANGE=" << range2Gang->v() << endl;
         out << "LOWER=" << lowerGang->v() << endl;
         out << "UPPER=" << upperGang->v() << endl;
-    }
-    else if (current_page == m_Ui->page_reinhard05)
-    {
-        out << "TMO=" << "Reinhard05" << endl;
+    } else if (current_page == m_Ui->page_reinhard05) {
+        out << "TMO="
+            << "Reinhard05" << endl;
         out << "BRIGHTNESS=" << brightnessGang->v() << endl;
         out << "CHROMATICADAPTATION=" << chromaticGang->v() << endl;
         out << "LIGHTADAPTATION=" << lightGang->v() << endl;
@@ -866,115 +958,128 @@ void TonemappingPanel::fromGui2Txt(QString destination)
     file.close();
 }
 
-void TonemappingPanel::fromTxt2Gui()
-{
+void TonemappingPanel::fromTxt2Gui() {
     QFile file(tmoSettingsFilename);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || file.size()==0)
-    {
-        QMessageBox::critical(this,tr("Aborting..."),tr("File is not readable (check permissions, path...)"),
-                              QMessageBox::Ok,QMessageBox::NoButton);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || file.size() == 0) {
+        QMessageBox::critical(
+            this, tr("Aborting..."),
+            tr("File is not readable (check permissions, path...)"),
+            QMessageBox::Ok, QMessageBox::NoButton);
         return;
     }
     QTextStream in(&file);
-    QString field,value;
+    QString field, value;
 
-    while (!in.atEnd())
-    {
+    while (!in.atEnd()) {
         QString line = in.readLine();
-        //skip comments
-        if (line.startsWith('#'))
-            continue;
+        // skip comments
+        if (line.startsWith('#')) continue;
 
-        QString tmo; // Hack, same parameter "RANGE" in durand and reinhard02
+        QString tmo;  // Hack, same parameter "RANGE" in durand and reinhard02
 
-        field=line.section('=',0,0); //get the field
-        value=line.section('=',1,1); //get the value
-        if (field == QLatin1String("TMOSETTINGSVERSION"))
-        {
-            if (value != TMOSETTINGSVERSION)
-            {
-                QMessageBox::critical(this,tr("Aborting..."),tr("Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one."),
-                                      QMessageBox::Ok,QMessageBox::NoButton);
+        field = line.section('=', 0, 0);  // get the field
+        value = line.section('=', 1, 1);  // get the value
+        if (field == QLatin1String("TMOSETTINGSVERSION")) {
+            if (value != TMOSETTINGSVERSION) {
+                QMessageBox::critical(this, tr("Aborting..."),
+                                      tr("Error: The tone mapping settings "
+                                         "file format has changed. This "
+                                         "(old) file cannot be used with this "
+                                         "version of LuminanceHDR. "
+                                         "Create a new one."),
+                                      QMessageBox::Ok, QMessageBox::NoButton);
                 return;
             }
-        }
-        else if (field == QLatin1String("XSIZE"))
-        {
+        } else if (field == QLatin1String("XSIZE")) {
             int idx;
-            for (idx = 0; idx < m_Ui->sizeComboBox->count(); idx++)
-            {
-                    if (sizes[idx] == value.toInt())
-                        break;
+            for (idx = 0; idx < m_Ui->sizeComboBox->count(); idx++) {
+                if (sizes[idx] == value.toInt()) break;
             }
-            if (idx == m_Ui->sizeComboBox->count()) // Custom XSIZE
+            if (idx == m_Ui->sizeComboBox->count())  // Custom XSIZE
             {
                 sizes.push_back(value.toInt());
                 fillCustomSizeComboBox();
-                m_Ui->sizeComboBox->setCurrentIndex(m_Ui->sizeComboBox->count() - 1);
-            }
-            else
+                m_Ui->sizeComboBox->setCurrentIndex(
+                    m_Ui->sizeComboBox->count() - 1);
+            } else
                 m_Ui->sizeComboBox->setCurrentIndex(idx);
         }
-        //else if ( field == "QUALITY" å)
+        // else if ( field == "QUALITY" å)
         //{
         //    m_Ui->qualityHS->setValue(value.toInt());
         //    m_Ui->qualitySB->setValue(value.toInt());
         //}
-        else if (field == QLatin1String("TMO"))
-        {
+        else if (field == QLatin1String("TMO")) {
             if (value == QLatin1String("Ashikhmin02")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ashikhmin);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_ashikhmin);
                 tmo = QStringLiteral("Ashikhmin02");
             } else if (value == QLatin1String("Mantiuk06")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mantiuk06);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_mantiuk06);
                 tmo = QStringLiteral("Mantiuk06");
             } else if (value == QLatin1String("Mantiuk08")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mantiuk08);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_mantiuk08);
                 tmo = QStringLiteral("Mantiuk08");
             } else if (value == QLatin1String("Drago03")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_drago);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_drago);
                 tmo = QStringLiteral("Drago03");
             } else if (value == QLatin1String("Durand02")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_durand);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_durand);
                 tmo = QStringLiteral("Durand02");
             } else if (value == QLatin1String("Fattal02")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_fattal);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_fattal);
                 tmo = QStringLiteral("Fattal02");
             } else if (value == QLatin1String("Ferradans11")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ferradans);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_ferradans);
                 tmo = QStringLiteral("Ferradans11");
             } else if (value == QLatin1String("Mai11")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mai);
                 tmo = QStringLiteral("Mai11");
             } else if (value == QLatin1String("Pattanaik00")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_pattanaik);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_pattanaik);
                 tmo = QStringLiteral("Pattanaik00");
             } else if (value == QLatin1String("Reinhard02")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_reinhard02);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_reinhard02);
                 tmo = QStringLiteral("Reinhard02");
             } else if (value == QLatin1String("Reinhard05")) {
-                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_reinhard05);
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_reinhard05);
                 tmo = QStringLiteral("Reinhard05");
             }
         } else if (field == QLatin1String("CONTRASTFACTOR")) {
-            m_Ui->contrastFactorSlider->setValue(contrastfactorGang->v2p(value.toFloat()));
+            m_Ui->contrastFactorSlider->setValue(
+                contrastfactorGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("SATURATIONFACTOR")) {
-            m_Ui->saturationFactorSlider->setValue(saturationfactorGang->v2p(value.toFloat()));
+            m_Ui->saturationFactorSlider->setValue(
+                saturationfactorGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("DETAILFACTOR")) {
-            m_Ui->detailFactorSlider->setValue(detailfactorGang->v2p(value.toFloat()));
+            m_Ui->detailFactorSlider->setValue(
+                detailfactorGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("CONTRASTEQUALIZATION")) {
-            m_Ui->contrastEqualizCheckBox->setChecked((value == QLatin1String("YES")));
+            m_Ui->contrastEqualizCheckBox->setChecked(
+                (value == QLatin1String("YES")));
         } else if (field == QLatin1String("COLORSATURATION")) {
-            m_Ui->contrastFactorSlider->setValue(colorSaturationGang->v2p(value.toFloat()));
+            m_Ui->contrastFactorSlider->setValue(
+                colorSaturationGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("CONTRASTENHANCEMENT")) {
-            m_Ui->saturationFactorSlider->setValue(contrastEnhancementGang->v2p(value.toFloat()));
+            m_Ui->saturationFactorSlider->setValue(
+                contrastEnhancementGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("LUMINANCELEVEL")) {
-            m_Ui->detailFactorSlider->setValue(luminanceLevelGang->v2p(value.toFloat()));
+            m_Ui->detailFactorSlider->setValue(
+                luminanceLevelGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("SIMPLE")) {
             m_Ui->simpleCheckBox->setChecked((value == QLatin1String("YES")));
         } else if (field == QLatin1String("EQUATION")) {
-            m_Ui->eq2RadioButton->setChecked((value==QLatin1String("2")));
-            m_Ui->eq4RadioButton->setChecked((value==QLatin1String("4")));
+            m_Ui->eq2RadioButton->setChecked((value == QLatin1String("2")));
+            m_Ui->eq4RadioButton->setChecked((value == QLatin1String("4")));
         } else if (field == QLatin1String("CONTRAST")) {
             m_Ui->contrastSlider->setValue(contrastGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("BIAS")) {
@@ -993,7 +1098,8 @@ void TonemappingPanel::fromTxt2Gui()
         } else if (field == QLatin1String("BETA")) {
             m_Ui->betaSlider->setValue(betaGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("COLOR")) {
-            m_Ui->saturation2Slider->setValue(saturation2Gang->v2p(value.toFloat()));
+            m_Ui->saturation2Slider->setValue(
+                saturation2Gang->v2p(value.toFloat()));
         } else if (field == QLatin1String("NOISE")) {
             m_Ui->noiseSlider->setValue(noiseGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("OLDFATTAL")) {
@@ -1001,13 +1107,19 @@ void TonemappingPanel::fromTxt2Gui()
         } else if (field == QLatin1String("RHO")) {
             m_Ui->rhoSlider->setValue(rhoGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("INV_ALPHA")) {
-            m_Ui->inv_alphaSlider->setValue(inv_alphaGang->v2p(value.toFloat()));
+            m_Ui->inv_alphaSlider->setValue(
+                inv_alphaGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("MULTIPLIER")) {
-            m_Ui->multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
+            m_Ui->multiplierSlider->setValue(
+                multiplierGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("LOCAL")) {
-            (value == QLatin1String("YES")) ? m_Ui->pattalocal->setChecked(value == QLatin1String("YES")) : m_Ui->pattalocal->setChecked(value==QLatin1String("NO"));
+            (value == QLatin1String("YES"))
+                ? m_Ui->pattalocal->setChecked(value == QLatin1String("YES"))
+                : m_Ui->pattalocal->setChecked(value == QLatin1String("NO"));
         } else if (field == QLatin1String("AUTOLUMINANCE")) {
-            (value == QLatin1String("YES")) ? m_Ui->autoYcheckbox->setChecked(value == QLatin1String("YES")) : m_Ui->autoYcheckbox->setChecked(value==QLatin1String("NO"));
+            (value == QLatin1String("YES"))
+                ? m_Ui->autoYcheckbox->setChecked(value == QLatin1String("YES"))
+                : m_Ui->autoYcheckbox->setChecked(value == QLatin1String("NO"));
         } else if (field == QLatin1String("CONE")) {
             m_Ui->coneSlider->setValue(coneGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("ROD")) {
@@ -1017,15 +1129,21 @@ void TonemappingPanel::fromTxt2Gui()
         } else if (field == QLatin1String("PHI")) {
             m_Ui->phiSlider->setValue(phiGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("SCALES")) {
-            (value == QLatin1String("YES")) ? m_Ui->usescalescheckbox->setChecked(value == QLatin1String("YES")) : m_Ui->usescalescheckbox->setChecked(value==QLatin1String("NO"));
+            (value == QLatin1String("YES"))
+                ? m_Ui->usescalescheckbox->setChecked(value ==
+                                                      QLatin1String("YES"))
+                : m_Ui->usescalescheckbox->setChecked(value ==
+                                                      QLatin1String("NO"));
         } else if (field == QLatin1String("LOWER")) {
             m_Ui->lowerSlider->setValue(lowerGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("UPPER")) {
             m_Ui->upperSlider->setValue(upperGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("BRIGHTNESS")) {
-            m_Ui->brightnessSlider->setValue(brightnessGang->v2p(value.toFloat()));
+            m_Ui->brightnessSlider->setValue(
+                brightnessGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("CHROMATICADAPTATION")) {
-            m_Ui->chromaticAdaptSlider->setValue(chromaticGang->v2p(value.toFloat()));
+            m_Ui->chromaticAdaptSlider->setValue(
+                chromaticGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("LIGHTADAPTATION")) {
             m_Ui->lightAdaptSlider->setValue(lightGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("PREGAMMA")) {
@@ -1034,37 +1152,30 @@ void TonemappingPanel::fromTxt2Gui()
     }
 }
 
-void TonemappingPanel::on_addCustomSizeButton_clicked()
-{
+void TonemappingPanel::on_addCustomSizeButton_clicked() {
     bool ok;
-    int i = QInputDialog::getInt(this,
-                                     tr("Custom LDR size"),
-                                     tr("Enter the width of the new size:"), 0 , 0, 2147483647, 1, &ok);
-    if (ok && i > 0)
-    {
+    int i = QInputDialog::getInt(this, tr("Custom LDR size"),
+                                 tr("Enter the width of the new size:"), 0, 0,
+                                 2147483647, 1, &ok);
+    if (ok && i > 0) {
         sizes.push_back(i);
         fillCustomSizeComboBox();
         m_Ui->sizeComboBox->setCurrentIndex(m_Ui->sizeComboBox->count() - 1);
     }
 }
 
-void TonemappingPanel::fillCustomSizeComboBox()
-{
+void TonemappingPanel::fillCustomSizeComboBox() {
     m_Ui->sizeComboBox->clear();
-    for (int i = 0; i < sizes.size(); i++)
-    {
-        m_Ui->sizeComboBox->addItem( QStringLiteral("%1x%2").arg(sizes[i]).arg( (int)(heightToWidthRatio*sizes[i]) ));
+    for (int i = 0; i < sizes.size(); i++) {
+        m_Ui->sizeComboBox->addItem(QStringLiteral("%1x%2").arg(sizes[i]).arg(
+            (int)(heightToWidthRatio * sizes[i])));
     }
 }
 
-void TonemappingPanel::setEnabled(bool b)
-{
-    if (b)
-    {
+void TonemappingPanel::setEnabled(bool b) {
+    if (b) {
         updateUndoState();
-    }
-    else
-    {
+    } else {
         m_Ui->undoButton->setEnabled(false);
         m_Ui->redoButton->setEnabled(false);
     }
@@ -1079,50 +1190,49 @@ void TonemappingPanel::setEnabled(bool b)
     m_Ui->replaceLdrCheckBox->setEnabled(b);
     m_Ui->autoLevelsCheckBox->setEnabled(b);
     m_Ui->toolButtonThreshold->setEnabled(b);
-/*
-    // Operator select
-    m_Ui->cmbOperators->setEnabled(b);
-    m_Ui->stackedWidget_operators->setEnabled(b);
+    /*
+        // Operator select
+        m_Ui->cmbOperators->setEnabled(b);
+        m_Ui->stackedWidget_operators->setEnabled(b);
 
-    // Load/Store/Reset
-    m_Ui->loadsettingsbutton->setEnabled(b);
-    m_Ui->savesettingsbutton->setEnabled(b);
-    m_Ui->defaultButton->setEnabled(b);
-    // Size
-    m_Ui->sizeComboBox->setEnabled(b);
-    m_Ui->addCustomSizeButton->setEnabled(b);
+        // Load/Store/Reset
+        m_Ui->loadsettingsbutton->setEnabled(b);
+        m_Ui->savesettingsbutton->setEnabled(b);
+        m_Ui->defaultButton->setEnabled(b);
+        // Size
+        m_Ui->sizeComboBox->setEnabled(b);
+        m_Ui->addCustomSizeButton->setEnabled(b);
 
-    // Gamma
-    m_Ui->pregammadefault->setEnabled(b);
-    m_Ui->pregammaSlider->setEnabled(b);
-    m_Ui->pregammadsb->setEnabled(b);
+        // Gamma
+        m_Ui->pregammadefault->setEnabled(b);
+        m_Ui->pregammaSlider->setEnabled(b);
+        m_Ui->pregammadsb->setEnabled(b);
 
-    // Tonemap
-    m_Ui->applyButton->setEnabled(b);
-    m_Ui->queueButton->setEnabled(b);
-    m_Ui->lblOpenQueue->setVisible(b);
+        // Tonemap
+        m_Ui->applyButton->setEnabled(b);
+        m_Ui->queueButton->setEnabled(b);
+        m_Ui->lblOpenQueue->setVisible(b);
 
-    // DB
-    m_Ui->loadButton->setEnabled(b);
-    m_Ui->saveButton->setEnabled(b);
+        // DB
+        m_Ui->loadButton->setEnabled(b);
+        m_Ui->saveButton->setEnabled(b);
 
-    //m_Ui->qualityHS->setEnabled(b);
-    //m_Ui->qualitySB->setEnabled(b);
+        //m_Ui->qualityHS->setEnabled(b);
+        //m_Ui->qualitySB->setEnabled(b);
 
-    m_Ui->replaceLdrCheckBox->setEnabled(b);
-    m_Ui->autoLevelsCheckBox->setEnabled(b);
+        m_Ui->replaceLdrCheckBox->setEnabled(b);
+        m_Ui->autoLevelsCheckBox->setEnabled(b);
 
-    // Labels
-    m_Ui->lblOperators->setEnabled(b);
-    m_Ui->groupSaveLoadTMOsetting->setEnabled(b);
-    m_Ui->label->setEnabled(b);
-    m_Ui->pregammaLabel->setEnabled(b);
-    m_Ui->pregammaGroup->setEnabled(b);
-*/
+        // Labels
+        m_Ui->lblOperators->setEnabled(b);
+        m_Ui->groupSaveLoadTMOsetting->setEnabled(b);
+        m_Ui->label->setEnabled(b);
+        m_Ui->pregammaLabel->setEnabled(b);
+        m_Ui->pregammaGroup->setEnabled(b);
+    */
 }
 
-void TonemappingPanel::updatedHDR(pfs::Frame* f)
-{
+void TonemappingPanel::updatedHDR(pfs::Frame *f) {
     setSizes(f->getWidth(), f->getHeight());
     m_currentFrame = f;
 }
@@ -1131,65 +1241,44 @@ void TonemappingPanel::updatedHDR(pfs::Frame* f)
  * This function should set the entire status.
  * Currently I'm only interested in changing the TM operator
  */
-void TonemappingPanel::updateTonemappingParams(TonemappingOptions *opts)
-{
-    qDebug() << "TonemappingPanel::updateTonemappingParams(TonemappingOptions *opts)";
-//    currentTmoOperator = opts->tmoperator;
-//    updateUndoState();
+void TonemappingPanel::updateTonemappingParams(TonemappingOptions *opts) {
+    qDebug() << "TonemappingPanel::updateTonemappingParams(TonemappingOptions "
+                "*opts)";
+    //    currentTmoOperator = opts->tmoperator;
+    //    updateUndoState();
     m_Ui->cmbOperators->setCurrentIndex(opts->tmoperator);
 }
 
-void TonemappingPanel::saveParameters()
-{
+void TonemappingPanel::saveParameters() {
     SavingParameters dialog;
-    if (dialog.exec())
-    {
+    if (dialog.exec()) {
         // Ashikhmin
         float lct;
-        bool simple,
-                eq2;
+        bool simple, eq2;
         // Drago
         float bias;
         // Durand
-        float spatial,
-                range,
-                base;
+        float spatial, range, base;
         // Fattal
-        float alpha,
-                beta,
-                colorSat,
-                noiseReduction;
+        float alpha, beta, colorSat, noiseReduction;
         bool oldFattal;
         // Ferradans
-        float rho,
-                inv_alpha;
+        float rho, inv_alpha;
         // Mantiuk 06
-        float contrastFactor,
-                saturationFactor,
-                detailFactor;
+        float contrastFactor, saturationFactor, detailFactor;
         bool contrastEqualization;
         // Mantiuk 08
-        float colorSaturation,
-                contrastEnhancement,
-                luminanceLevel;
+        float colorSaturation, contrastEnhancement, luminanceLevel;
         bool manualLuminanceLevel;
         // Pattanaik
-        float multiplier,
-                rod,
-                cone;
-        bool autolum,
-                local;
+        float multiplier, rod, cone;
+        bool autolum, local;
         // Reinhard 02
         bool scales;
-        float key,
-                phi;
-        int irange,
-            lower,
-            upper;
+        float key, phi;
+        int irange, lower, upper;
         // Reinhard 05
-        float brightness,
-                chromaticAdaptation,
-                lightAdaptation;
+        float brightness, chromaticAdaptation, lightAdaptation;
 
         QString comment = dialog.getComment();
 
@@ -1199,128 +1288,116 @@ void TonemappingPanel::saveParameters()
                 eq2 = eq2Gang->isRadioButton1Checked();
                 lct = contrastGang->v();
                 execAshikhminQuery(simple, eq2, lct, comment);
-            break;
+                break;
             case drago:
                 bias = biasGang->v();
                 execDragoQuery(bias, comment);
-            break;
+                break;
             case durand:
                 spatial = spatialGang->v();
                 range = rangeGang->v();
                 base = baseGang->v();
                 execDurandQuery(spatial, range, base, comment);
-            break;
+                break;
             case fattal:
                 alpha = alphaGang->v();
                 beta = betaGang->v();
                 colorSat = saturation2Gang->v();
                 noiseReduction = noiseGang->v();
                 oldFattal = !fftSolverGang->isCheckBox1Checked();
-                execFattalQuery(alpha, beta, colorSat, noiseReduction, oldFattal, comment);
-            break;
+                execFattalQuery(alpha, beta, colorSat, noiseReduction,
+                                oldFattal, comment);
+                break;
             case ferradans:
                 rho = rhoGang->v();
                 inv_alpha = inv_alphaGang->v();
                 execFerradansQuery(rho, inv_alpha, comment);
-            break;
-            case mai: //no options
-            break;
+                break;
+            case mai:  // no options
+                break;
             case mantiuk06:
                 contrastFactor = contrastfactorGang->v();
                 saturationFactor = saturationfactorGang->v();
                 detailFactor = detailfactorGang->v();
                 contrastEqualization = contrastfactorGang->isCheckBox1Checked();
-                execMantiuk06Query(contrastEqualization, contrastFactor, saturationFactor, detailFactor, comment);
-            break;
+                execMantiuk06Query(contrastEqualization, contrastFactor,
+                                   saturationFactor, detailFactor, comment);
+                break;
             case mantiuk08:
                 colorSaturation = colorSaturationGang->v();
                 contrastEnhancement = contrastEnhancementGang->v();
                 luminanceLevel = luminanceLevelGang->v();
                 manualLuminanceLevel = luminanceLevelGang->isCheckBox1Checked();
-                execMantiuk08Query(colorSaturation, contrastEnhancement, luminanceLevel, manualLuminanceLevel, comment);
-            break;
+                execMantiuk08Query(colorSaturation, contrastEnhancement,
+                                   luminanceLevel, manualLuminanceLevel,
+                                   comment);
+                break;
             case pattanaik:
-                autolum=autoYGang->isCheckBox1Checked();
-                local=pattalocalGang->isCheckBox1Checked();
-                cone=coneGang->v();
-                rod=rodGang->v();
-                multiplier=multiplierGang->v();
-                execPattanaikQuery(autolum, local, cone, rod, multiplier, comment);
-            break;
+                autolum = autoYGang->isCheckBox1Checked();
+                local = pattalocalGang->isCheckBox1Checked();
+                cone = coneGang->v();
+                rod = rodGang->v();
+                multiplier = multiplierGang->v();
+                execPattanaikQuery(autolum, local, cone, rod, multiplier,
+                                   comment);
+                break;
             case reinhard02:
                 scales = usescalesGang->isCheckBox1Checked();
                 key = keyGang->v();
                 phi = phiGang->v();
-                irange = (int) range2Gang->v();
-                lower = (int) lowerGang->v();
-                upper = (int) upperGang->v();
-                execReinhard02Query(scales, key, phi, irange, lower, upper, comment);
-            break;
+                irange = (int)range2Gang->v();
+                lower = (int)lowerGang->v();
+                upper = (int)upperGang->v();
+                execReinhard02Query(scales, key, phi, irange, lower, upper,
+                                    comment);
+                break;
             case reinhard05:
                 brightness = brightnessGang->v();
                 chromaticAdaptation = chromaticGang->v();
                 lightAdaptation = lightGang->v();
-                execReinhard05Query(brightness, chromaticAdaptation, lightAdaptation, comment);
-            break;
+                execReinhard05Query(brightness, chromaticAdaptation,
+                                    lightAdaptation, comment);
+                break;
         }
     }
 }
 
-void TonemappingPanel::loadParameters()
-{
+void TonemappingPanel::loadParameters() {
     TonemappingSettings dialog(this, m_currentFrame);
 
-    if (dialog.exec())
-    {
+    if (dialog.exec()) {
         LuminanceOptions *luminance_options = new LuminanceOptions;
         setRealtimePreviews(false);
         TonemappingOptions *tmopts = dialog.getTonemappingOptions();
         // Ashikhmin
-        bool simple,
-                eq2;
+        bool simple, eq2;
         float lct;
         // Drago
         float bias;
         // Durand
-        float spatial,
-                range,
-                base;
+        float spatial, range, base;
         // Fattal
-        float alpha,
-                beta,
-                colorSat,
-                noiseReduction;
+        float alpha, beta, colorSat, noiseReduction;
         bool fftsolver;
         // Ferradans
-        float rho,
-                inv_alpha;
+        float rho, inv_alpha;
         // Mantiuk 06
         bool contrastEqualization;
         float contrastFactor;
         float saturationFactor;
         float detailFactor;
         // Mantiuk 08
-        float colorSaturation,
-                contrastEnhancement,
-                luminanceLevel;
+        float colorSaturation, contrastEnhancement, luminanceLevel;
         bool manualLuminanceLevel;
         // Pattanaik
-        float multiplier,
-                rod,
-                cone;
-        bool autolum,
-                local;
+        float multiplier, rod, cone;
+        bool autolum, local;
         // Reinhard 02
         bool scales;
-        float key,
-                phi;
-        int irange,
-            lower,
-            upper;
+        float key, phi;
+        int irange, lower, upper;
         // Reinhard 05
-        float brightness,
-                chromaticAdaptation,
-                lightAdaptation;
+        float brightness, chromaticAdaptation, lightAdaptation;
         // Pre-gamma
         float pregamma;
 
@@ -1340,7 +1417,7 @@ void TonemappingPanel::loadParameters()
                 m_Ui->contrastdsb->setValue(lct);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case drago:
                 m_Ui->stackedWidget_operators->setCurrentIndex(drago);
                 bias = tmopts->operator_options.dragooptions.bias;
@@ -1349,7 +1426,7 @@ void TonemappingPanel::loadParameters()
                 m_Ui->biasdsb->setValue(bias);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case durand:
                 m_Ui->stackedWidget_operators->setCurrentIndex(durand);
                 spatial = tmopts->operator_options.durandoptions.spatial;
@@ -1364,13 +1441,14 @@ void TonemappingPanel::loadParameters()
                 m_Ui->basedsb->setValue(base);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case fattal:
                 m_Ui->stackedWidget_operators->setCurrentIndex(fattal);
                 alpha = tmopts->operator_options.fattaloptions.alpha;
                 beta = tmopts->operator_options.fattaloptions.beta;
                 colorSat = tmopts->operator_options.fattaloptions.color;
-                noiseReduction = tmopts->operator_options.fattaloptions.noiseredux;
+                noiseReduction =
+                    tmopts->operator_options.fattaloptions.noiseredux;
                 fftsolver = tmopts->operator_options.fattaloptions.fftsolver;
                 pregamma = tmopts->pregamma;
                 m_Ui->alphaSlider->setValue(alpha);
@@ -1384,7 +1462,7 @@ void TonemappingPanel::loadParameters()
                 m_Ui->fftVersionCheckBox->setChecked(fftsolver);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case ferradans:
                 m_Ui->stackedWidget_operators->setCurrentIndex(ferradans);
                 rho = tmopts->operator_options.ferradansoptions.rho;
@@ -1396,17 +1474,21 @@ void TonemappingPanel::loadParameters()
                 m_Ui->inv_alphadsb->setValue(inv_alpha);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case mai:
                 m_Ui->stackedWidget_operators->setCurrentIndex(mai);
                 pregamma = tmopts->pregamma;
-            break;
+                break;
             case mantiuk06:
                 m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk06);
-                contrastEqualization = tmopts->operator_options.mantiuk06options.contrastequalization;
-                contrastFactor = tmopts->operator_options.mantiuk06options.contrastfactor;
-                saturationFactor = tmopts->operator_options.mantiuk06options.saturationfactor;
-                detailFactor = tmopts->operator_options.mantiuk06options.detailfactor;
+                contrastEqualization = tmopts->operator_options.mantiuk06options
+                                           .contrastequalization;
+                contrastFactor =
+                    tmopts->operator_options.mantiuk06options.contrastfactor;
+                saturationFactor =
+                    tmopts->operator_options.mantiuk06options.saturationfactor;
+                detailFactor =
+                    tmopts->operator_options.mantiuk06options.detailfactor;
                 pregamma = tmopts->pregamma;
                 m_Ui->contrastEqualizCheckBox->setChecked(contrastEqualization);
                 m_Ui->contrastFactorSlider->setValue(contrastFactor);
@@ -1417,13 +1499,17 @@ void TonemappingPanel::loadParameters()
                 m_Ui->detailFactordsb->setValue(detailFactor);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case mantiuk08:
                 m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk08);
-                colorSaturation = tmopts->operator_options.mantiuk08options.colorsaturation;
-                contrastEnhancement = tmopts->operator_options.mantiuk08options.contrastenhancement;
-                luminanceLevel = tmopts->operator_options.mantiuk08options.luminancelevel;
-                manualLuminanceLevel = tmopts->operator_options.mantiuk08options.setluminance;
+                colorSaturation =
+                    tmopts->operator_options.mantiuk08options.colorsaturation;
+                contrastEnhancement = tmopts->operator_options.mantiuk08options
+                                          .contrastenhancement;
+                luminanceLevel =
+                    tmopts->operator_options.mantiuk08options.luminancelevel;
+                manualLuminanceLevel =
+                    tmopts->operator_options.mantiuk08options.setluminance;
                 pregamma = tmopts->pregamma;
                 m_Ui->colorSaturationSlider->setValue(colorSaturation);
                 m_Ui->colorSaturationDSB->setValue(colorSaturation);
@@ -1434,10 +1520,11 @@ void TonemappingPanel::loadParameters()
                 m_Ui->luminanceLevelCheckBox->setChecked(manualLuminanceLevel);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case pattanaik:
                 m_Ui->stackedWidget_operators->setCurrentIndex(pattanaik);
-                multiplier = tmopts->operator_options.pattanaikoptions.multiplier;
+                multiplier =
+                    tmopts->operator_options.pattanaikoptions.multiplier;
                 rod = tmopts->operator_options.pattanaikoptions.rod;
                 cone = tmopts->operator_options.pattanaikoptions.cone;
                 autolum = tmopts->operator_options.pattanaikoptions.autolum;
@@ -1453,7 +1540,7 @@ void TonemappingPanel::loadParameters()
                 m_Ui->autoYcheckbox->setChecked(autolum);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case reinhard02:
                 m_Ui->stackedWidget_operators->setCurrentIndex(reinhard02);
                 scales = tmopts->operator_options.reinhard02options.scales;
@@ -1476,12 +1563,15 @@ void TonemappingPanel::loadParameters()
                 m_Ui->upperdsb->setValue(upper);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
             case reinhard05:
                 m_Ui->stackedWidget_operators->setCurrentIndex(reinhard05);
-                brightness = tmopts->operator_options.reinhard05options.brightness;
-                chromaticAdaptation = tmopts->operator_options.reinhard05options.chromaticAdaptation;
-                lightAdaptation = tmopts->operator_options.reinhard05options.lightAdaptation;
+                brightness =
+                    tmopts->operator_options.reinhard05options.brightness;
+                chromaticAdaptation = tmopts->operator_options.reinhard05options
+                                          .chromaticAdaptation;
+                lightAdaptation =
+                    tmopts->operator_options.reinhard05options.lightAdaptation;
                 pregamma = tmopts->pregamma;
                 m_Ui->brightnessSlider->setValue(brightness);
                 m_Ui->brightnessdsb->setValue(brightness);
@@ -1491,7 +1581,7 @@ void TonemappingPanel::loadParameters()
                 m_Ui->lightAdaptdsb->setValue(lightAdaptation);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
-            break;
+                break;
         }
         if (dialog.wantsTonemap()) {
             TonemappingOptions *t = new TonemappingOptions(*tmopts);
@@ -1505,106 +1595,120 @@ void TonemappingPanel::loadParameters()
     }
 }
 
-void TonemappingPanel::execMantiuk06Query(bool contrastEqualization, float contrastFactor, float saturationFactor,
-    float detailFactor, QString comment)
-{
+void TonemappingPanel::execMantiuk06Query(bool contrastEqualization,
+                                          float contrastFactor,
+                                          float saturationFactor,
+                                          float detailFactor, QString comment) {
     qDebug() << "TonemappingPanel::execMantiuk06Query";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, saturationFactor, detailFactor, pregamma, comment) "
-                "VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, :detailFactor, :pregamma, :comment)");
-    query.bindValue(QStringLiteral(":contrastEqualization"), contrastEqualization);
+    query.prepare(
+        "INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, "
+        "saturationFactor, detailFactor, pregamma, comment) "
+        "VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, "
+        ":detailFactor, :pregamma, :comment)");
+    query.bindValue(QStringLiteral(":contrastEqualization"),
+                    contrastEqualization);
     query.bindValue(QStringLiteral(":contrastFactor"), contrastFactor);
     query.bindValue(QStringLiteral(":saturationFactor"), saturationFactor);
     query.bindValue(QStringLiteral(":detailFactor"), detailFactor);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execMantiuk08Query(float colorSaturation, float contrastEnhancement, float luminanceLevel,
-    bool manualLuminanceLevel, QString comment)
-{
+void TonemappingPanel::execMantiuk08Query(float colorSaturation,
+                                          float contrastEnhancement,
+                                          float luminanceLevel,
+                                          bool manualLuminanceLevel,
+                                          QString comment) {
     qDebug() << "TonemappingPanel::execMantiuk08Query";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, luminanceLevel, manualLuminanceLevel, pregamma, comment) "
-                "VALUES (:colorSaturation, :contrastEnhancement, :luminanceLevel, :manualLuminanceLevel, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, "
+        "luminanceLevel, manualLuminanceLevel, pregamma, comment) "
+        "VALUES (:colorSaturation, :contrastEnhancement, :luminanceLevel, "
+        ":manualLuminanceLevel, :pregamma, :comment)");
     query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
-    query.bindValue(QStringLiteral(":contrastEnhancement"), contrastEnhancement);
+    query.bindValue(QStringLiteral(":contrastEnhancement"),
+                    contrastEnhancement);
     query.bindValue(QStringLiteral(":luminanceLevel"), luminanceLevel);
-    query.bindValue(QStringLiteral(":manualLuminanceLevel"), manualLuminanceLevel);
+    query.bindValue(QStringLiteral(":manualLuminanceLevel"),
+                    manualLuminanceLevel);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct, QString comment)
-{
+void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct,
+                                          QString comment) {
     qDebug() << "TonemappingPanel::execAshikhminQuery";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO ashikhmin (simple, eq2, lct, pregamma, comment) "
-                "VALUES (:simple, :eq2, :lct, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO ashikhmin (simple, eq2, lct, pregamma, comment) "
+        "VALUES (:simple, :eq2, :lct, :pregamma, :comment)");
     query.bindValue(QStringLiteral(":simple"), simple);
     query.bindValue(QStringLiteral(":eq2"), eq2);
     query.bindValue(QStringLiteral(":lct"), lct);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execDragoQuery(float bias, QString comment)
-{
+void TonemappingPanel::execDragoQuery(float bias, QString comment) {
     qDebug() << "TonemappingPanel::execDragoQuery";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO drago (bias, pregamma, comment) "
-                "VALUES (:bias, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO drago (bias, pregamma, comment) "
+        "VALUES (:bias, :pregamma, :comment)");
     query.bindValue(QStringLiteral(":bias"), bias);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execDurandQuery(float spatial, float range, float base, QString comment)
-{
+void TonemappingPanel::execDurandQuery(float spatial, float range, float base,
+                                       QString comment) {
     qDebug() << "TonemappingPanel::execDurandQuery";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO durand (spatial, range, base, pregamma, comment) "
-                "VALUES (:spatial, :range, :base, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO durand (spatial, range, base, pregamma, comment) "
+        "VALUES (:spatial, :range, :base, :pregamma, :comment)");
     query.bindValue(QStringLiteral(":spatial"), spatial);
     query.bindValue(QStringLiteral(":base"), base);
     query.bindValue(QStringLiteral(":range"), range);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execFattalQuery(float alpha, float beta, float colorSaturation, float noiseReduction, bool oldFattal, QString comment)
-{
+void TonemappingPanel::execFattalQuery(float alpha, float beta,
+                                       float colorSaturation,
+                                       float noiseReduction, bool oldFattal,
+                                       QString comment) {
     qDebug() << "TonemappingPanel::execFattalQuery";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, oldFattal, pregamma, comment) "
-                "VALUES (:alpha, :beta, :colorSaturation, :noiseReduction, :oldFattal, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, "
+        "oldFattal, pregamma, comment) "
+        "VALUES (:alpha, :beta, :colorSaturation, :noiseReduction, :oldFattal, "
+        ":pregamma, :comment)");
     query.bindValue(QStringLiteral(":alpha"), alpha);
     query.bindValue(QStringLiteral(":beta"), beta);
     query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
@@ -1613,34 +1717,38 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta, float colorSatur
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha, QString comment)
-{
+void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha,
+                                          QString comment) {
     qDebug() << "TonemappingPanel::execFerradansQuery";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO ferradans (rho, inv_alpha, pregamma, comment) "
-                "VALUES (:rho, :inv_alpha, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO ferradans (rho, inv_alpha, pregamma, comment) "
+        "VALUES (:rho, :inv_alpha, :pregamma, :comment)");
     query.bindValue(QStringLiteral(":rho"), rho);
     query.bindValue(QStringLiteral(":inv_alpha"), inv_alpha);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
-void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone, float rod, float multiplier, QString comment)
-{
+void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone,
+                                          float rod, float multiplier,
+                                          QString comment) {
     qDebug() << "TonemappingPanel::execPattanaikQuery";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, pregamma, comment) "
-                "VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, "
+        "pregamma, "
+        "comment) "
+        "VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, "
+        ":comment)");
     query.bindValue(QStringLiteral(":autolum"), autolum);
     query.bindValue(QStringLiteral(":local"), local);
     query.bindValue(QStringLiteral(":cone"), cone);
@@ -1649,18 +1757,21 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone, 
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi, int range, int lower, int upper, QString comment)
-{
+void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi,
+                                           int range, int lower, int upper,
+                                           QString comment) {
     qDebug() << "TonemappingPanel::execReinhard02Query";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, pregamma, comment) "
-                "VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, "
+        "pregamma, comment) "
+        "VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, "
+        ":comment)");
     query.bindValue(QStringLiteral(":scales"), scales);
     query.bindValue(QStringLiteral(":key"), key);
     query.bindValue(QStringLiteral(":phi"), phi);
@@ -1670,136 +1781,134 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi, in
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execReinhard05Query(float brightness, float chromaticAdaptation, float lightAdaptation, QString comment)
-{
+void TonemappingPanel::execReinhard05Query(float brightness,
+                                           float chromaticAdaptation,
+                                           float lightAdaptation,
+                                           QString comment) {
     qDebug() << "TonemappingPanel::execReinhard05Query";
     QSqlDatabase db = QSqlDatabase::database();
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
-    query.prepare("INSERT INTO reinhard05 (brightness, chromaticAdaptation, lightAdaptation, pregamma, comment) "
-                "VALUES (:brightness, :chromaticAdaptation, :lightAdaptation, :pregamma, :comment)");
+    query.prepare(
+        "INSERT INTO reinhard05 (brightness, chromaticAdaptation, "
+        "lightAdaptation, pregamma, comment) "
+        "VALUES (:brightness, :chromaticAdaptation, "
+        ":lightAdaptation, :pregamma, "
+        ":comment)");
     query.bindValue(QStringLiteral(":brightness"), brightness);
-    query.bindValue(QStringLiteral(":chromaticAdaptation"), chromaticAdaptation);
+    query.bindValue(QStringLiteral(":chromaticAdaptation"),
+                    chromaticAdaptation);
     query.bindValue(QStringLiteral(":lightAdaptation"), lightAdaptation);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
-    if (res == false)
-        qDebug() << query.lastError();
+    if (res == false) qDebug() << query.lastError();
 }
 
-bool TonemappingPanel::replaceLdr()
-{
+bool TonemappingPanel::replaceLdr() {
     return m_Ui->replaceLdrCheckBox->isChecked();
 }
 
-bool TonemappingPanel::doAutoLevels()
-{
+bool TonemappingPanel::doAutoLevels() {
     return m_Ui->autoLevelsCheckBox->isChecked();
 }
 
-float TonemappingPanel::getAutoLevelsThreshold()
-{
+float TonemappingPanel::getAutoLevelsThreshold() {
     return m_autolevelThreshold;
 }
 
-void TonemappingPanel::updatePreviews(double v)
-{
+void TonemappingPanel::updatePreviews(double v) {
     int index = m_Ui->stackedWidget_operators->currentIndex();
-    TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
+    TonemappingOptions *tmopts =
+        new TonemappingOptions(*toneMappingOptions);  // make a copy
     fillToneMappingOptions(false);
-    QObject* eventSender(sender());
+    QObject *eventSender(sender());
     // Mantiuk06
     if (eventSender == m_Ui->contrastFactordsb)
         tmopts->operator_options.mantiuk06options.contrastfactor = v;
-    else if(eventSender == m_Ui->saturationFactordsb)
+    else if (eventSender == m_Ui->saturationFactordsb)
         tmopts->operator_options.mantiuk06options.saturationfactor = v;
-    else if(eventSender == m_Ui->detailFactordsb)
+    else if (eventSender == m_Ui->detailFactordsb)
         tmopts->operator_options.mantiuk06options.detailfactor = v;
     // Mantiuk08
-    else if(eventSender == m_Ui->colorSaturationDSB)
+    else if (eventSender == m_Ui->colorSaturationDSB)
         tmopts->operator_options.mantiuk08options.colorsaturation = v;
-    else if(eventSender == m_Ui->contrastEnhancementDSB)
+    else if (eventSender == m_Ui->contrastEnhancementDSB)
         tmopts->operator_options.mantiuk08options.contrastenhancement = v;
-    else if(eventSender == m_Ui->luminanceLevelDSB)
+    else if (eventSender == m_Ui->luminanceLevelDSB)
         tmopts->operator_options.mantiuk08options.luminancelevel = v;
     // Fattal
-    else if(eventSender == m_Ui->alphadsb)
+    else if (eventSender == m_Ui->alphadsb)
         tmopts->operator_options.fattaloptions.alpha = v;
-    else if(eventSender == m_Ui->betadsb)
+    else if (eventSender == m_Ui->betadsb)
         tmopts->operator_options.fattaloptions.beta = v;
-    else if(eventSender == m_Ui->saturation2dsb)
+    else if (eventSender == m_Ui->saturation2dsb)
         tmopts->operator_options.fattaloptions.color = v;
-    else if(eventSender == m_Ui->noisedsb)
+    else if (eventSender == m_Ui->noisedsb)
         tmopts->operator_options.fattaloptions.noiseredux = v;
     // Ferradans
-    else if(eventSender == m_Ui->rhodsb)
+    else if (eventSender == m_Ui->rhodsb)
         tmopts->operator_options.ferradansoptions.rho = v;
-    else if(eventSender == m_Ui->inv_alphadsb)
+    else if (eventSender == m_Ui->inv_alphadsb)
         tmopts->operator_options.ferradansoptions.inv_alpha = v;
     // Drago
-    else if(eventSender == m_Ui->biasdsb)
+    else if (eventSender == m_Ui->biasdsb)
         tmopts->operator_options.dragooptions.bias = v;
     // Durand
-    else if(eventSender == m_Ui->basedsb)
+    else if (eventSender == m_Ui->basedsb)
         tmopts->operator_options.durandoptions.base = v;
-    else if(eventSender == m_Ui->spatialdsb)
+    else if (eventSender == m_Ui->spatialdsb)
         tmopts->operator_options.durandoptions.spatial = v;
-    else if(eventSender == m_Ui->rangedsb)
+    else if (eventSender == m_Ui->rangedsb)
         tmopts->operator_options.durandoptions.range = v;
     // Reinhard02
-    else if(eventSender == m_Ui->keydsb)
+    else if (eventSender == m_Ui->keydsb)
         tmopts->operator_options.reinhard02options.key = v;
-    else if(eventSender == m_Ui->phidsb)
+    else if (eventSender == m_Ui->phidsb)
         tmopts->operator_options.reinhard02options.phi = v;
-    else if(eventSender == m_Ui->range2dsb)
+    else if (eventSender == m_Ui->range2dsb)
         tmopts->operator_options.reinhard02options.range = (int)v;
-    else if(eventSender == m_Ui->lowerdsb)
+    else if (eventSender == m_Ui->lowerdsb)
         tmopts->operator_options.reinhard02options.lower = (int)v;
-    else if(eventSender == m_Ui->upperdsb)
+    else if (eventSender == m_Ui->upperdsb)
         tmopts->operator_options.reinhard02options.upper = (int)v;
     // Reinhard05
-    else if(eventSender == m_Ui->brightnessdsb)
+    else if (eventSender == m_Ui->brightnessdsb)
         tmopts->operator_options.reinhard05options.brightness = v;
-    else if(eventSender == m_Ui->chromaticAdaptdsb)
+    else if (eventSender == m_Ui->chromaticAdaptdsb)
         tmopts->operator_options.reinhard05options.chromaticAdaptation = v;
-    else if(eventSender == m_Ui->lightAdaptdsb)
+    else if (eventSender == m_Ui->lightAdaptdsb)
         tmopts->operator_options.reinhard05options.lightAdaptation = v;
     // Ashikhmin
-    else if(eventSender == m_Ui->contrastdsb)
+    else if (eventSender == m_Ui->contrastdsb)
         tmopts->operator_options.ashikhminoptions.lct = v;
     // Pattanaik
-    else if(eventSender == m_Ui->multiplierdsb)
+    else if (eventSender == m_Ui->multiplierdsb)
         tmopts->operator_options.pattanaikoptions.multiplier = v;
-    else if(eventSender == m_Ui->conedsb)
+    else if (eventSender == m_Ui->conedsb)
         tmopts->operator_options.pattanaikoptions.cone = v;
-    else if(eventSender == m_Ui->roddsb)
+    else if (eventSender == m_Ui->roddsb)
         tmopts->operator_options.pattanaikoptions.rod = v;
-    //else if(eventSender == m_Ui->pregammadsb)
+    // else if(eventSender == m_Ui->pregammadsb)
     //    tmopts->pregamma = v;
 
-    if (index >= 0)
-    {
-        if(eventSender == m_Ui->pregammadsb)
-        {
+    if (index >= 0) {
+        if (eventSender == m_Ui->pregammadsb) {
             int maxIndex = m_Ui->stackedWidget_operators->count();
-            for (int i = 0; i < maxIndex; i++)
-            {
+            for (int i = 0; i < maxIndex; i++) {
                 updateCurrentTmoOperator(i);
                 fillToneMappingOptions(false);
-                TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
+                TonemappingOptions *tmopts =
+                    new TonemappingOptions(*toneMappingOptions);  // make a copy
                 tmopts->pregamma = v;
                 m_previewPanel->getLabel(i)->setTonemappingOptions(tmopts);
                 m_previewPanel->updatePreviews(m_currentFrame, i);
             }
             updateCurrentTmoOperator(index);
-        }
-        else
-        {
+        } else {
             m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
             m_previewPanel->updatePreviews(m_currentFrame, index);
         }
@@ -1807,12 +1916,12 @@ void TonemappingPanel::updatePreviews(double v)
     delete tmopts;
 }
 
-void TonemappingPanel::updatePreviewsCB(int state)
-{
+void TonemappingPanel::updatePreviewsCB(int state) {
     int index = m_Ui->stackedWidget_operators->currentIndex();
-    TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
+    TonemappingOptions *tmopts =
+        new TonemappingOptions(*toneMappingOptions);  // make a copy
     fillToneMappingOptions(false);
-    QObject* eventSender(sender());
+    QObject *eventSender(sender());
     // Mantiuk06
     if (eventSender == m_Ui->contrastEqualizCheckBox)
         tmopts->operator_options.mantiuk06options.contrastequalization = state;
@@ -1834,156 +1943,224 @@ void TonemappingPanel::updatePreviewsCB(int state)
     else if (eventSender == m_Ui->autoYcheckbox)
         tmopts->operator_options.pattanaikoptions.autolum = state;
 
-    if (index >= 0)
-    {
+    if (index >= 0) {
         m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
         m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     delete tmopts;
 }
 
-void TonemappingPanel::updatePreviewsRB(bool toggled)
-{
+void TonemappingPanel::updatePreviewsRB(bool toggled) {
     int index = m_Ui->stackedWidget_operators->currentIndex();
-    TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
+    TonemappingOptions *tmopts =
+        new TonemappingOptions(*toneMappingOptions);  // make a copy
     fillToneMappingOptions(false);
 
     // Only one sender: Ashikhmin
     tmopts->operator_options.ashikhminoptions.eq2 = toggled;
 
-    if (index >= 0)
-    {
+    if (index >= 0) {
         m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
         m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     delete tmopts;
 }
 
-void TonemappingPanel::setRealtimePreviews(bool toggled)
-{
+void TonemappingPanel::setRealtimePreviews(bool toggled) {
     if (toggled) {
         fillToneMappingOptions(false);
 
-        //Mantiuk06
-        connect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        // Mantiuk06
+        connect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
-        //Mantiuk08
-        connect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        // Mantiuk08
+        connect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)),
+                this, SLOT(updatePreviews(double)));
+        connect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
-        //Fattal
-        connect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        // Fattal
+        connect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
-        //Ferradans
-        connect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        // Ferradans
+        connect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
 
-        //Drago
-        connect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        // Drago
+        connect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
 
-        //Durand
-        connect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        // Durand
+        connect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
 
-        //Reinhard02
-        connect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->usescalescheckbox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        // Reinhard02
+        connect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->usescalescheckbox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
-        //Reinhard05
-        connect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        // Reinhard05
+        connect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
 
-        //Ashikhmin
-        connect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->simpleCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
-        connect(m_Ui->eq2RadioButton, &QAbstractButton::toggled, this, &TonemappingPanel::updatePreviewsRB);
+        // Ashikhmin
+        connect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->simpleCheckBox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
+        connect(m_Ui->eq2RadioButton, &QAbstractButton::toggled, this,
+                &TonemappingPanel::updatePreviewsRB);
 
-        //Pattanaik
-        connect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->pattalocal, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
-        connect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        // Pattanaik
+        connect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->pattalocal, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
+        connect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
-        //GLOBAL Pregamma
-        connect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    }
-    else {
-        disconnect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        // GLOBAL Pregamma
+        connect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+    } else {
+        disconnect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)),
+                   this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)),
+                   this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
+        disconnect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+        disconnect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        disconnect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged,
+                   this, &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this,
+                   &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this,
+                   &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->usescalescheckbox, &QCheckBox::stateChanged, this,
+                   &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->usescalescheckbox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->simpleCheckBox, &QCheckBox::stateChanged, this,
+                   &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->simpleCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->pattalocal, &QCheckBox::stateChanged, this,
+                   &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this,
+                   &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->pattalocal, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
-        disconnect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
-
-        disconnect(m_Ui->eq2RadioButton, &QAbstractButton::toggled, this, &TonemappingPanel::updatePreviewsRB);
+        disconnect(m_Ui->eq2RadioButton, &QAbstractButton::toggled, this,
+                   &TonemappingPanel::updatePreviewsRB);
     }
 }
 
-void TonemappingPanel::on_pattalocal_toggled(bool b)
-{
+void TonemappingPanel::on_pattalocal_toggled(bool b) {
     bool autoY = m_Ui->autoYcheckbox->isChecked();
 
     m_Ui->label_cone->setDisabled(b || autoY);
@@ -1994,20 +2171,17 @@ void TonemappingPanel::on_pattalocal_toggled(bool b)
     m_Ui->roddsb->setDisabled(b || autoY);
 }
 
-void TonemappingPanel::autoLevels(bool b)
-{
+void TonemappingPanel::autoLevels(bool b) {
     emit autoLevels(b, m_autolevelThreshold);
 }
 
-void TonemappingPanel::on_toolButtonThreshold_clicked()
-{
+void TonemappingPanel::on_toolButtonThreshold_clicked() {
     QPoint pos = mapToGlobal(m_Ui->toolButtonThreshold->pos());
     m_thd->move(pos.x() - 40, pos.y() - 20);
     m_thd->show();
 }
 
-void TonemappingPanel::thresholdReady()
-{
+void TonemappingPanel::thresholdReady() {
     m_autolevelThreshold = m_thd->threshold();
     m_thd->hide();
     emit autoLevels(doAutoLevels(), m_autolevelThreshold);

@@ -29,7 +29,7 @@
 #include <mm_malloc.h>
 #else
 #include <stdlib.h>
-#define _mm_malloc(a,b)    malloc(a)
-#define _mm_free(a)    free(a)
+#define _mm_malloc(a, b) malloc(a)
+#define _mm_free(a) free(a)
 #endif
 #endif

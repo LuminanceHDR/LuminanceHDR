@@ -30,37 +30,31 @@ namespace pfs {
 namespace colorspace {
 
 struct Gamma2_2 {
-    static float gamma() { return 1/2.2f; }
+    static float gamma() { return 1 / 2.2f; }
 };
 
 struct Gamma1_8 {
-    static float gamma() { return 1/1.8f; }
+    static float gamma() { return 1 / 1.8f; }
 };
 
 template <typename GammaFactor>
-struct Gamma
-{
+struct Gamma {
     template <typename TypeIn, typename TypeOut>
-    TypeOut operator()(TypeIn sample) const
-    {
+    TypeOut operator()(TypeIn sample) const {
         return ConvertSample<TypeOut, float>()(
-                std::pow(
-                        convertSample<float>(sample), GammaFactor::gamma()
-                    )
-                );
+            std::pow(convertSample<float>(sample), GammaFactor::gamma()));
     }
 
     template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn v1, TypeIn v2, TypeIn v3,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3)
-    {
-        o1 = operator ()<TypeIn, TypeOut>(v1);
-        o2 = operator ()<TypeIn, TypeOut>(v2);
-        o3 = operator ()<TypeIn, TypeOut>(v3);
+    void operator()(TypeIn v1, TypeIn v2, TypeIn v3, TypeOut &o1, TypeOut &o2,
+                    TypeOut &o3) {
+        o1 = operator()<TypeIn, TypeOut>(v1);
+        o2 = operator()<TypeIn, TypeOut>(v2);
+        o3 = operator()<TypeIn, TypeOut>(v3);
     }
 };
 
-}   // colorspace
-}   // pfs
+}  // colorspace
+}  // pfs
 
-#endif // PFS_COLORSPACE_GAMMA_H
+#endif  // PFS_COLORSPACE_GAMMA_H

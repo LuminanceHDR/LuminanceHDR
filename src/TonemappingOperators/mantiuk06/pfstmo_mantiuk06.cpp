@@ -34,19 +34,18 @@
  * $Id: pfstmo_mantiuk06.cpp,v 1.9 2008/06/16 22:09:33 rafm Exp $
  */
 
-#include <cstdlib>
+#include <algorithm>
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <sstream>
-#include <algorithm>
 
 #include "contrast_domain.h"
 
-#include "Libpfs/pfs.h"
-#include "Libpfs/frame.h"
-#include "Libpfs/progress.h"
 #include "Libpfs/colorspace/colorspace.h"
-
+#include "Libpfs/frame.h"
+#include "Libpfs/pfs.h"
+#include "Libpfs/progress.h"
 
 //--- default tone mapping parameters;
 // float scaleFactor = 0.1f;
@@ -54,27 +53,22 @@
 // bool cont_map = false, cont_eq = false
 // bool cont_map = false;
 
-namespace
-{
+namespace {
 const int itmax = 200;
 const float tol = 5e-3f;
 }
 
-void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
-                      float saturationFactor, float detailFactor,
-                      bool cont_eq, pfs::Progress &ph)
-{
+void pfstmo_mantiuk06(pfs::Frame &frame, float scaleFactor,
+                      float saturationFactor, float detailFactor, bool cont_eq,
+                      pfs::Progress &ph) {
 #ifndef NDEBUG
     std::stringstream ss;
 
     ss << "pfstmo_mantiuk06 (";
-    if (!cont_eq)
-    {
+    if (!cont_eq) {
         ss << "Mode: Contrast Mapping, ";
-    }
-    else
-    {
-        //scaleFactor = -scaleFactor; this was only executed in release mode!!!
+    } else {
+        // scaleFactor = -scaleFactor; this was only executed in release mode!!!
         ss << "Mode: Contrast Equalization, ";
     }
 
@@ -86,35 +80,28 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
 #endif
     ph.setValue(0);
 
-    if (cont_eq)
-        scaleFactor = -scaleFactor;
+    if (cont_eq) scaleFactor = -scaleFactor;
 
     pfs::Channel *inRed, *inGreen, *inBlue;
     frame.getXYZChannels(inRed, inGreen, inBlue);
 
-    if ( !inRed || !inGreen || !inBlue )
-    {
-        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    if (!inRed || !inGreen || !inBlue) {
+        throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 
     const int cols = frame.getWidth();
     const int rows = frame.getHeight();
 
-    pfs::Array2Df inY( cols, rows );
+    pfs::Array2Df inY(cols, rows);
     pfs::transformRGB2Y(inRed, inGreen, inBlue, &inY);
 
-    try
-    {
-        tmo_mantiuk06_contmap(*inRed, *inGreen, *inBlue, inY,
-                              scaleFactor, saturationFactor, detailFactor, itmax, tol,
-                              ph);
-    }
-    catch(...)
-    {
-        throw pfs::Exception( "Tonemapping Failed!" );
+    try {
+        tmo_mantiuk06_contmap(*inRed, *inGreen, *inBlue, inY, scaleFactor,
+                              saturationFactor, detailFactor, itmax, tol, ph);
+    } catch (...) {
+        throw pfs::Exception("Tonemapping Failed!");
     }
 
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
-    if ( !ph.canceled() )
-        ph.setValue(100);
+    if (!ph.canceled()) ph.setValue(100);
 }

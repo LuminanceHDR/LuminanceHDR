@@ -25,39 +25,33 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
 
-#include <Libpfs/tag.h>
 #include <Libpfs/frame.h>
+#include <Libpfs/tag.h>
 
-#include <cstdio>
-#include <string>
 #include <cassert>
+#include <cstdio>
 #include <sstream>
+#include <string>
 
 using namespace std;
 
-namespace pfs
-{
+namespace pfs {
 
-std::string TagContainer::getTag(const string &tagName) const
-{
+std::string TagContainer::getTag(const string &tagName) const {
     TagList::const_iterator it = m_tags.find(tagName);
-    if ( it != m_tags.end() )
-        return it->second;
+    if (it != m_tags.end()) return it->second;
     return std::string();
 }
 
-void TagContainer::removeTag(const std::string& tagName)
-{
+void TagContainer::removeTag(const std::string &tagName) {
     m_tags.erase(tagName);
 }
 
-void TagContainer::setTag(const string &tagName, const string &tagValue)
-{
+void TagContainer::setTag(const string &tagName, const string &tagValue) {
     m_tags[tagName] = tagValue;
 }
 
-std::ostream& operator<<(std::ostream& out, const TagContainer& tags)
-{
+std::ostream &operator<<(std::ostream &out, const TagContainer &tags) {
     if (tags.size() == 0) return out;
 
     TagContainer::const_iterator itEnd = tags.end();
@@ -66,39 +60,33 @@ std::ostream& operator<<(std::ostream& out, const TagContainer& tags)
 
     std::stringstream ss;
 
-    for ( ; it != itEnd; ++it)
-    {
+    for (; it != itEnd; ++it) {
         ss << it->first << "=" << it->second << " ";
     }
     ss << it->first << "=" << it->second;
     return (out << ss.str());
 }
 
-void copyTags(const TagContainer& f, TagContainer& t)
-{
+void copyTags(const TagContainer &f, TagContainer &t) {
     t.clear();
     t = f;
 }
 
-void copyTags(const Frame *from, Frame *to)
-{
-    copyTags( from->getTags(), to->getTags() );
+void copyTags(const Frame *from, Frame *to) {
+    copyTags(from->getTags(), to->getTags());
 
-    const ChannelContainer& channels = from->getChannels();
+    const ChannelContainer &channels = from->getChannels();
 
     for (ChannelContainer::const_iterator it = channels.begin();
-         it != channels.end();
-         ++it)
-    {
+         it != channels.end(); ++it) {
         const pfs::Channel *fromCh = *it;
-        pfs::Channel *toCh = to->getChannel( fromCh->getName() );
+        pfs::Channel *toCh = to->getChannel(fromCh->getName());
 
         // Skip if there is no corresponding channel
-        if ( toCh != NULL )
-        {
+        if (toCh != NULL) {
             copyTags(fromCh->getTags(), toCh->getTags());
         }
     }
 }
 
-}   // pfs
+}  // pfs

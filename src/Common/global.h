@@ -32,12 +32,12 @@
 #include <QStringList>
 #include <QUrl>
 
-enum InterpolationMethod {LanczosInterp, BilinearInterp};
+enum InterpolationMethod { LanczosInterp, BilinearInterp };
 
-bool matchesLdrFilename(const QString& file);
-bool matchesHdrFilename(const QString& file);
-bool matchesValidHDRorLDRfilename(const QString& file);
-QStringList convertUrlListToFilenameList(const QList<QUrl>& urls);
+bool matchesLdrFilename(const QString &file);
+bool matchesHdrFilename(const QString &file);
+bool matchesValidHDRorLDRfilename(const QString &file);
+QStringList convertUrlListToFilenameList(const QList<QUrl> &urls);
 QStringList getAllHdrFileExtensions();
 
 #endif

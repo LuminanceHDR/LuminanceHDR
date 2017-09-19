@@ -30,30 +30,26 @@ namespace pfs {
 namespace utils {
 
 template <typename _Type>
-_Type dotProduct(const _Type* v1, const _Type* v2, size_t N)
-{
+_Type dotProduct(const _Type *v1, const _Type *v2, size_t N) {
     double dotProd = _Type();
-#pragma omp parallel for reduction(+:dotProd)
-    for (int idx = 0; idx < static_cast<int>(N); idx++)
-    {
+#pragma omp parallel for reduction(+ : dotProd)
+    for (int idx = 0; idx < static_cast<int>(N); idx++) {
         dotProd = dotProd + (v1[idx] * v2[idx]);
     }
     return static_cast<_Type>(dotProd);
 }
 
 template <typename _Type>
-_Type dotProduct(const _Type* v1, size_t N)
-{
+_Type dotProduct(const _Type *v1, size_t N) {
     double dotProd = _Type();
-#pragma omp parallel for reduction(+:dotProd)
-    for (int idx = 0; idx < static_cast<int>(N); idx++)
-    {
+#pragma omp parallel for reduction(+ : dotProd)
+    for (int idx = 0; idx < static_cast<int>(N); idx++) {
         dotProd = dotProd + (v1[idx] * v1[idx]);
     }
     return static_cast<_Type>(dotProd);
 }
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
-#endif // PFS_UTILS_DOTPRODUCT_HXX
+#endif  // PFS_UTILS_DOTPRODUCT_HXX

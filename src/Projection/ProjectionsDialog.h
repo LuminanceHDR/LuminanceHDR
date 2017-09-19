@@ -29,31 +29,31 @@
 #include <QFutureWatcher>
 
 namespace Ui {
-    class ProjectionsDialog;
+class ProjectionsDialog;
 }
 
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
 class Projection;
 class TransformInfo;
 
-class ProjectionsDialog : public QDialog
-{
-Q_OBJECT
-public:
-     ProjectionsDialog(QWidget *parent, pfs::Frame *orig);
+class ProjectionsDialog : public QDialog {
+    Q_OBJECT
+   public:
+    ProjectionsDialog(QWidget *parent, pfs::Frame *orig);
     ~ProjectionsDialog();
-    pfs::Frame* getTranformedFrame();
+    pfs::Frame *getTranformedFrame();
     TransformInfo *transforminfo;
-private:
+
+   private:
     pfs::Frame *original, *transformed;
-    QList <Projection*> projectionList;
+    QList<Projection *> projectionList;
     QScopedPointer<Ui::ProjectionsDialog> m_Ui;
     QFutureWatcher<void> m_futureWatcher;
     QFuture<void> m_future;
-private slots:
+   private slots:
     void okClicked();
     void XRotChanged(int);
     void YRotChanged(int);
@@ -66,8 +66,7 @@ private slots:
     void projectionFinished();
 };
 
-inline pfs::Frame* ProjectionsDialog::getTranformedFrame()
-{
+inline pfs::Frame *ProjectionsDialog::getTranformedFrame() {
     return transformed;
 }
 

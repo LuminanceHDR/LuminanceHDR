@@ -26,52 +26,48 @@
 #include <QDesktopServices>
 #include <QUrl>
 
-#include "ui_DonationDialog.h"
 #include "Common/LuminanceOptions.h"
+#include "ui_DonationDialog.h"
 
-namespace
-{
+namespace {
 static const QString DONATION_DIALOG_KEY = QStringLiteral("DonationDialogShow");
 }
 
-DonationDialog::DonationDialog(QWidget* parent)
-    : QDialog(parent)
-    , m_ui(new Ui::DonationDialog)
-{
+DonationDialog::DonationDialog(QWidget *parent)
+    : QDialog(parent), m_ui(new Ui::DonationDialog) {
     m_ui->setupUi(this);
 
-    connect(m_ui->yesButton, &QAbstractButton::clicked, this, &DonationDialog::onYesButtonClicked);
-    connect(m_ui->noButton, &QAbstractButton::clicked, this, &DonationDialog::onNoButtonClicked);
-    connect(m_ui->askMeLaterButton, &QAbstractButton::clicked, this, &QWidget::close);
+    connect(m_ui->yesButton, &QAbstractButton::clicked, this,
+            &DonationDialog::onYesButtonClicked);
+    connect(m_ui->noButton, &QAbstractButton::clicked, this,
+            &DonationDialog::onNoButtonClicked);
+    connect(m_ui->askMeLaterButton, &QAbstractButton::clicked, this,
+            &QWidget::close);
 }
 
-void DonationDialog::onYesButtonClicked()
-{
+void DonationDialog::onYesButtonClicked() {
     openDonationPage();
     emit close();
 }
 
-void DonationDialog::onNoButtonClicked()
-{
+void DonationDialog::onNoButtonClicked() {
     LuminanceOptions().setValue(DONATION_DIALOG_KEY, false);
     emit close();
 }
 
-DonationDialog::~DonationDialog()
-{
-}
+DonationDialog::~DonationDialog() {}
 
-void DonationDialog::showDonationDialog()
-{
-    if (LuminanceOptions().value(DONATION_DIALOG_KEY, true).toBool())
-    {
+void DonationDialog::showDonationDialog() {
+    if (LuminanceOptions().value(DONATION_DIALOG_KEY, true).toBool()) {
         QScopedPointer<DonationDialog> dd(new DonationDialog);
 
         dd->exec();
     }
 }
 
-void DonationDialog::openDonationPage()
-{
-    QDesktopServices::openUrl(QUrl(QStringLiteral("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C"))); //davideanastasia
+void DonationDialog::openDonationPage() {
+    QDesktopServices::openUrl(
+        QUrl(QStringLiteral("https://www.paypal.com/cgi-bin/"
+                            "webscr?cmd=_s-xclick&hosted_button_id="
+                            "77BSTWEH7447C")));  // davideanastasia
 }

@@ -25,41 +25,33 @@
 #define PREVIEWWIDGET_H
 
 #include <QColor>
-#include <QResizeEvent>
-#include <QMouseEvent>
-#include <QScrollBar>
-#include <QScrollArea>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 #include <QImage>
+#include <QMouseEvent>
+#include <QResizeEvent>
+#include <QScrollArea>
+#include <QScrollBar>
 #include <QToolButton>
 #include <QVBoxLayout>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
 
-#include "AutoAntighosting.h" // Just for agGridSize !!!
+#include "AutoAntighosting.h"  // Just for agGridSize !!!
 
 class IGraphicsView;
 class IGraphicsPixmapItem;
 class PanIconWidget;
 
-class PreviewWidget : public QWidget
-{
-Q_OBJECT
-public:
+class PreviewWidget : public QWidget {
+    Q_OBJECT
+   public:
     //! \brief Enum containing the list of possible view mode
-    enum ViewerMode
-    {
-        FIT_WINDOW = 0,
-        FILL_WINDOW = 1,
-        NORMAL_SIZE = 2
-    };
+    enum ViewerMode { FIT_WINDOW = 0, FILL_WINDOW = 1, NORMAL_SIZE = 2 };
 
     PreviewWidget(QWidget *parent, QImage *m, const QImage *p);
     ~PreviewWidget();
-    QSize sizeHint () const {
-        return m_previewImage->size();
-    }
+    QSize sizeHint() const { return m_previewImage->size(); }
     float getScaleFactor();
-    QImage * getPreviewImage() {
+    QImage *getPreviewImage() {
         renderPreviewImage(blendmode);
         return m_previewImage;
     }
@@ -78,8 +70,9 @@ public:
     bool isNormalSize();
 
     void setMask(QImage *mask);
-    QImage* getMask(); // Conversion to QImage to QPixmap is made for speed optimization
-                       // we need to return a QImage from the modified QPixmap
+    QImage *getMask();  // Conversion to QImage to QPixmap is made for speed
+                        // optimization
+                        // we need to return a QImage from the modified QPixmap
 
     void setPatchesMask(QImage *mask);
     void setHV_offset(QPair<int, int> HV_offset) {
@@ -89,10 +82,11 @@ public:
 
     void setDrawWithBrush();
     void setDrawPath();
-    //void renderPatchesMask(bool patches[][agGridSize], const int gridX, const int gridY);
+    // void renderPatchesMask(bool patches[][agGridSize], const int gridX, const
+    // int gridY);
     void renderPatchesMask();
 
-public slots:
+   public slots:
     void requestedBlendMode(int);
     void updateView();  // tells the Viewer to update the View area
     void updatePreviewImage();
@@ -117,8 +111,8 @@ public slots:
     void removeSelection();
 
     void switchAntighostingMode(bool);
-    void switchViewPatchesMode(bool, bool [][agGridSize], const int, const int);
-    void getPatches(bool [][agGridSize]);
+    void switchViewPatchesMode(bool, bool[][agGridSize], const int, const int);
+    void getPatches(bool[][agGridSize]);
     void setBrushSize(const int);
     void setBrushStrength(const int);
     void setBrushColor(const QColor);
@@ -127,67 +121,72 @@ public slots:
     void saveAgMask();
     QImage *getSavedAgMask();
 
-protected slots:
+   protected slots:
     void slotPanIconSelectionMoved(QRect);
     void slotPanIconHidden();
     void slotCornerButtonPressed();
     void scrollBarChanged(int /*value*/);
 
-signals:
+   signals:
     void moved(QPoint diff);
     void selectionReady(bool isReady);
-    void changed(PreviewWidget *v);     // emitted when zoomed in/out, scrolled ....
+    void changed(
+        PreviewWidget *v);  // emitted when zoomed in/out, scrolled ....
     void patchesEdited();
 
-protected:
-    bool eventFilter(QObject* object, QEvent* event);
+   protected:
+    bool eventFilter(QObject *object, QEvent *event);
     virtual void timerEvent(QTimerEvent *event);
 
-private:
-    //5 blending modes
-    inline QRgb computeOnlyMovable(const QRgb *Mrgba, const QRgb */*Prgba*/) const {
+   private:
+    // 5 blending modes
+    inline QRgb computeOnlyMovable(const QRgb *Mrgba,
+                                   const QRgb * /*Prgba*/) const {
         return *Mrgba;
     }
-    inline QRgb computeOnlyPivot(const QRgb */*Mrgba*/, const QRgb *Prgba) const {
+    inline QRgb computeOnlyPivot(const QRgb * /*Mrgba*/,
+                                 const QRgb *Prgba) const {
         return *Prgba;
     }
     inline QRgb computeAddRgba(const QRgb *Mrgba, const QRgb *Prgba) const {
-        int ro,go,bo;
-        int Mred   = qRed(*Mrgba);
+        int ro, go, bo;
+        int Mred = qRed(*Mrgba);
         int Mgreen = qGreen(*Mrgba);
-        int Mblue  = qBlue(*Mrgba);
+        int Mblue = qBlue(*Mrgba);
         int Malpha = qAlpha(*Mrgba);
-        int Pred   = qRed(*Prgba);
+        int Pred = qRed(*Prgba);
         int Pgreen = qGreen(*Prgba);
-        int Pblue  = qBlue(*Prgba);
+        int Pblue = qBlue(*Prgba);
         int Palpha = qAlpha(*Prgba);
-        //blend samples using alphas as weights
-        ro = ( Pred*Palpha + Mred*Malpha )/510;
-        go = ( Pgreen*Palpha + Mgreen*Malpha )/510;
-        bo = ( Pblue*Palpha + Mblue*Malpha )/510;
-        //the output image still has alpha=255 (opaque)
-        return qRgba(ro,go,bo,255);
+        // blend samples using alphas as weights
+        ro = (Pred * Palpha + Mred * Malpha) / 510;
+        go = (Pgreen * Palpha + Mgreen * Malpha) / 510;
+        bo = (Pblue * Palpha + Mblue * Malpha) / 510;
+        // the output image still has alpha=255 (opaque)
+        return qRgba(ro, go, bo, 255);
     }
     inline QRgb computeDiffRgba(const QRgb *Mrgba, const QRgb *Prgba) const {
-        int ro,go,bo;
-        int Mred        = qRed(*Mrgba);
-        int Mgreen      = qGreen(*Mrgba);
-        int Mblue       = qBlue(*Mrgba);
-        int Malpha      = qAlpha(*Mrgba);
-        int Pred        = qRed(*Prgba);
-        int Pgreen      = qGreen(*Prgba);
-        int Pblue       = qBlue(*Prgba);
-        int Palpha      = qAlpha(*Prgba);
-        //blend samples using alphas as weights
-        ro = qAbs( Pred*Palpha - Mred*Malpha )/255;
-        go = qAbs( Pgreen*Palpha - Mgreen*Malpha )/255;
-        bo = qAbs( Pblue*Palpha - Mblue*Malpha )/255;
-        //the output image still has alpha=255 (opaque)
-        return qRgba(ro,go,bo,255);
+        int ro, go, bo;
+        int Mred = qRed(*Mrgba);
+        int Mgreen = qGreen(*Mrgba);
+        int Mblue = qBlue(*Mrgba);
+        int Malpha = qAlpha(*Mrgba);
+        int Pred = qRed(*Prgba);
+        int Pgreen = qGreen(*Prgba);
+        int Pblue = qBlue(*Prgba);
+        int Palpha = qAlpha(*Prgba);
+        // blend samples using alphas as weights
+        ro = qAbs(Pred * Palpha - Mred * Malpha) / 255;
+        go = qAbs(Pgreen * Palpha - Mgreen * Malpha) / 255;
+        bo = qAbs(Pblue * Palpha - Mblue * Malpha) / 255;
+        // the output image still has alpha=255 (opaque)
+        return qRgba(ro, go, bo, 255);
     }
 
-    QRgb(PreviewWidget::*blendmode)(const QRgb*,const QRgb*)const;
-    void renderPreviewImage(QRgb(PreviewWidget::*f)(const QRgb*,const QRgb*)const,const QRect a = QRect());
+    QRgb (PreviewWidget::*blendmode)(const QRgb *, const QRgb *) const;
+    void renderPreviewImage(QRgb (PreviewWidget::*f)(const QRgb *, const QRgb *)
+                                const,
+                            const QRect a = QRect());
     void renderAgMask();
     void scrollAgMask(int, int);
 
@@ -201,30 +200,30 @@ private:
     QPixmap *m_agMaskPixmap;
     QImage *m_savedMask;
 
-    QToolButton* mCornerButton;
-    PanIconWidget* mPanIconWidget;
+    QToolButton *mCornerButton;
+    PanIconWidget *mPanIconWidget;
 
     QVBoxLayout *mVBL;
 
-    QGraphicsScene* mScene;
-    IGraphicsView* mView;
+    QGraphicsScene *mScene;
+    IGraphicsView *mView;
     ViewerMode mViewerMode;
     IGraphicsPixmapItem *mPixmap, *mAgPixmap;
 
     QRegion m_prevComputed;
     QRect m_rect;
-    //movable and pivot's x,y shifts
+    // movable and pivot's x,y shifts
     int m_mx, m_my, m_px, m_py;
     int m_old_mx, m_old_my;
-    //zoom factor
-    //float m_scaleFactor;
+    // zoom factor
+    // float m_scaleFactor;
 
     int m_timerid;
     QPixmap *m_agcursorPixmap;
     int m_requestedPixmapSize, m_previousPixmapSize;
     int m_requestedPixmapStrength, m_previousPixmapStrength;
     QColor m_requestedPixmapColor, m_previousPixmapColor, m_requestedLassoColor;
-    bool m_brushAddMode;//false means brush is in remove mode.
+    bool m_brushAddMode;  // false means brush is in remove mode.
     void fillAntiGhostingCursorPixmap();
     void drawWithBrush();
     void drawPath();
@@ -240,8 +239,8 @@ private:
     int m_gridX;
     int m_gridY;
 
-    enum {BRUSH, PATH} m_drawingMode;
-    enum {EditingMode, AntighostingMode, ViewPatches} m_mode;
+    enum { BRUSH, PATH } m_drawingMode;
+    enum { EditingMode, AntighostingMode, ViewPatches } m_mode;
 };
 
 #endif

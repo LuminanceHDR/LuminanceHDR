@@ -27,22 +27,21 @@
 
 #include "Libpfs/array2d_fwd.h"
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
 
-pfs::Frame* copy(const pfs::Frame *inFrame);
+pfs::Frame *copy(const pfs::Frame *inFrame);
 
 //! \brief Copy data from one Array2D to another.
 //! Dimensions of the arrays must be the same.
 //!
 //! \param from array to copy from
 //! \param to array to copy to
-template<typename Type>
+template <typename Type>
 void copy(const Array2D<Type> *from, Array2D<Type> *to);
 
-} // pfs
+}  // pfs
 
 #include "copy.hxx"
 
-#endif // #ifndef PFS_COPY_H
+#endif  // #ifndef PFS_COPY_H

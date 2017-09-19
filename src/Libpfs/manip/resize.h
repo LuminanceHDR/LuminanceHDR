@@ -31,23 +31,23 @@
 #include "Common/global.h"
 #include "Libpfs/array2d.h"
 
-namespace pfs
-{
+namespace pfs {
 // forward declaration
 class Frame;
 
-Frame* resize(Frame* frame, int xSize, InterpolationMethod m);
+Frame *resize(Frame *frame, int xSize, InterpolationMethod m);
 
 template <typename Type>
-void resize(const Array2D<Type> *from, Array2D<Type> *to, InterpolationMethod m);
+void resize(const Array2D<Type> *from, Array2D<Type> *to,
+            InterpolationMethod m);
 
 template <typename Type>
-void resize(const Array2D<Type>& from, Array2D<Type>& to, InterpolationMethod m) {
+void resize(const Array2D<Type> &from, Array2D<Type> &to,
+            InterpolationMethod m) {
     resize(&from, &to, m);
 }
-
 }
 
 #include "resize.hxx"
 
-#endif // PFS_RESIZE_H
+#endif  // PFS_RESIZE_H

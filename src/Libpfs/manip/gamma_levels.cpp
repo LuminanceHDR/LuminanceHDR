@@ -25,28 +25,27 @@
 #include <cmath>
 #include <iostream>
 
-#include "Libpfs/frame.h"
 #include "Libpfs/channel.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/utils/msec_timer.h"
 
-namespace
-{
+namespace {
 
 template <typename T>
-inline T clamp(const T& v, const T& lower_bound, const T& upper_bound)
-{
-    if ( v <= lower_bound ) return lower_bound;
-    if ( v >= upper_bound ) return upper_bound;
+inline T clamp(const T &v, const T &lower_bound, const T &upper_bound) {
+    if (v <= lower_bound) return lower_bound;
+    if (v >= upper_bound) return upper_bound;
     return v;
 }
 
 ////! \note I assume that *in* contains only value between [0,1]
-//void gamma_levels_array(const pfs::Array2D* in, pfs::Array2D* out,
+// void gamma_levels_array(const pfs::Array2D* in, pfs::Array2D* out,
 //                        float black_in, float white_in,
 //                        float black_out, float white_out, float gamma)
 //{
 //    // same formula used inside GammaAndLevels::refreshLUT()
-//    //float value = powf( ( ((float)(i)/255.0f) - bin ) / (win-bin), expgamma);
+//    //float value = powf( ( ((float)(i)/255.0f) - bin ) / (win-bin),
+//    expgamma);
 //    //LUT[i] = clamp(blackout+value*(whiteout-blackout),0,255);
 
 //    const float* in_vector = in->getRawData();
@@ -81,17 +80,12 @@ inline T clamp(const T& v, const T& lower_bound, const T& upper_bound)
 //        }
 //    }
 //}
-
 }
 
-namespace pfs
-{
+namespace pfs {
 
-void gammaAndLevels(pfs::Frame* inFrame,
-                    float black_in, float white_in,
-                    float black_out, float white_out,
-                    float gamma)
-{
+void gammaAndLevels(pfs::Frame *inFrame, float black_in, float white_in,
+                    float black_out, float white_out, float gamma) {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
@@ -100,36 +94,33 @@ void gammaAndLevels(pfs::Frame* inFrame,
 #ifndef NDEBUG
     std::cerr << "Black in = " << black_in << ", Black out = " << black_out
               << ", White in = " << white_in << ", White out = " << white_out
-              << ", Gamma = " << gamma
-              << std::endl;
+              << ", Gamma = " << gamma << std::endl;
 #endif
 
-    const int outWidth   = inFrame->getWidth();
-    const int outHeight  = inFrame->getHeight();
+    const int outWidth = inFrame->getWidth();
+    const int outHeight = inFrame->getHeight();
 
     pfs::Channel *Xc, *Yc, *Zc;
-    inFrame->getXYZChannels( Xc, Yc, Zc );
-    assert( Xc != NULL && Yc != NULL && Zc != NULL );
+    inFrame->getXYZChannels(Xc, Yc, Zc);
+    assert(Xc != NULL && Yc != NULL && Zc != NULL);
 
-    const float* R_i = Xc->data();
-    const float* G_i = Yc->data();
-    const float* B_i = Zc->data();
+    const float *R_i = Xc->data();
+    const float *G_i = Yc->data();
+    const float *B_i = Zc->data();
 
-    float* R_o = Xc->data();
-    float* G_o = Yc->data();
-    float* B_o = Zc->data();
+    float *R_o = Xc->data();
+    float *G_o = Yc->data();
+    float *B_o = Zc->data();
 
-    // float exp_gamma = 1.f/gamma;
+// float exp_gamma = 1.f/gamma;
 #pragma omp parallel for
-    for (int idx = 0; idx < outWidth*outHeight; ++idx)
-    {
+    for (int idx = 0; idx < outWidth * outHeight; ++idx) {
         float red = R_i[idx];
         float green = G_i[idx];
         float blue = B_i[idx];
 
-        float L = 0.2126f * red
-                + 0.7152f * green
-                + 0.0722f * blue; // number between [0..1]
+        float L = 0.2126f * red + 0.7152f * green +
+                  0.0722f * blue;  // number between [0..1]
 
         float c = powf(L, gamma - 1.0f);
 
@@ -149,8 +140,8 @@ void gammaAndLevels(pfs::Frame* inFrame,
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
-    std::cout << "gamma_levels() = " << f_timer.get_time() << " msec" << std::endl;
+    std::cout << "gamma_levels() = " << f_timer.get_time() << " msec"
+              << std::endl;
 #endif
 }
-
 }

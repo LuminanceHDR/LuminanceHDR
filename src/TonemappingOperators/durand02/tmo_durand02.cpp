@@ -32,10 +32,10 @@
  * $Id: tmo_durand02.cpp,v 1.6 2009/02/23 19:09:41 rafm Exp $
  */
 
-#include <iostream>
-#include <vector>
 #include <algorithm>
 #include <cmath>
+#include <iostream>
+#include <vector>
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/progress.h"
@@ -49,41 +49,32 @@
 #include "bilateral.h"
 #endif
 
-namespace
-{
+namespace {
 /**
  * @brief Find minimum and maximum value skipping the extreems
  *
  */
-inline
-void findMaxMinPercentile(pfs::Array2Df* I,
-                          float minPrct, float maxPrct,
-                          float& minLum, float& maxLum)
-{
+inline void findMaxMinPercentile(pfs::Array2Df *I, float minPrct, float maxPrct,
+                                 float &minLum, float &maxLum) {
     int size = I->getRows() * I->getCols();
     std::vector<float> vI;
 
-    for (int i=0 ; i<size ; i++ )
-    {
-        if ( (*I)(i) != 0.0f )
-            vI.push_back((*I)(i));
+    for (int i = 0; i < size; i++) {
+        if ((*I)(i) != 0.0f) vI.push_back((*I)(i));
     }
 
     std::sort(vI.begin(), vI.end());
 
-    minLum = vI.at( int(minPrct*vI.size()) );
-    maxLum = vI.at( int(maxPrct*vI.size()) );
+    minLum = vI.at(int(minPrct * vI.size()));
+    maxLum = vI.at(int(maxPrct * vI.size()));
 }
 
 template <typename T>
-inline
-T decode(const T& value)
-{
-    if ( value <= 0.0031308f )
-    {
+inline T decode(const T &value) {
+    if (value <= 0.0031308f) {
         return (value * 12.92f);
     }
-    return (1.055f * std::pow( value, 1.f/2.4f ) - 0.055f);
+    return (1.055f * std::pow(value, 1.f / 2.4f) - 0.055f);
 }
 }
 
@@ -104,34 +95,28 @@ R output = r*exp(log(output intensity)), etc.
 
 */
 
-void tmo_durand02(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
-                  float sigma_s, float sigma_r, float baseContrast, int downsample,
-                  bool color_correction,
-                  pfs::Progress &ph)
-{
+void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
+                  float sigma_s, float sigma_r, float baseContrast,
+                  int downsample, bool color_correction, pfs::Progress &ph) {
     int w = R.getCols();
     int h = R.getRows();
-    int size = w*h;
+    int size = w * h;
 
-    pfs::Array2Df I(w,h); // intensities
-    pfs::Array2Df BASE(w,h); // base layer
-    pfs::Array2Df DETAIL(w,h); // detail layer
+    pfs::Array2Df I(w, h);       // intensities
+    pfs::Array2Df BASE(w, h);    // base layer
+    pfs::Array2Df DETAIL(w, h);  // detail layer
 
-    float min_pos = 1e10f; // minimum positive value (to avoid log(0))
-    for (int i = 0 ; i < size ; i++)
-    {
-        I(i) = 1.0f/61.0f * ( 20.0f*R(i) + 40.0f*G(i) + B(i) );
-        if ( I(i) < min_pos && I(i) > 0.0f )
-        {
+    float min_pos = 1e10f;  // minimum positive value (to avoid log(0))
+    for (int i = 0; i < size; i++) {
+        I(i) = 1.0f / 61.0f * (20.0f * R(i) + 40.0f * G(i) + B(i));
+        if (I(i) < min_pos && I(i) > 0.0f) {
             min_pos = I(i);
         }
     }
 
-    for (int i = 0 ; i < size ; i++)
-    {
+    for (int i = 0; i < size; i++) {
         float L = I(i);
-        if ( L <= 0.0f )
-        {
+        if (L <= 0.0f) {
             L = min_pos;
         }
 
@@ -139,13 +124,13 @@ void tmo_durand02(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
         G(i) /= L;
         B(i) /= L;
 
-        I(i) = std::log( L );
+        I(i) = std::log(L);
     }
 
 #ifdef HAVE_FFTW3F
-    fastBilateralFilter( I, BASE, sigma_s, sigma_r, downsample, ph );
+    fastBilateralFilter(I, BASE, sigma_s, sigma_r, downsample, ph);
 #else
-    bilateralFilter( &I, &BASE, sigma_s, sigma_r, ph );
+    bilateralFilter(&I, &BASE, sigma_s, sigma_r, ph);
 #endif
 
     //!! FIX: find minimum and maximum luminance, but skip 1% of outliers
@@ -158,37 +143,32 @@ void tmo_durand02(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
     // Color correction factor
     const float k1 = 1.48f;
     const float k2 = 0.82f;
-    const float s = ( (1 + k1)*pow(compressionfactor,k2) )/( 1 + k1*pow(compressionfactor,k2) );
+    const float s = ((1 + k1) * pow(compressionfactor, k2)) /
+                    (1 + k1 * pow(compressionfactor, k2));
 
-    for (int i = 0 ; i < size ; i++)
-    {
+    for (int i = 0; i < size; i++) {
         DETAIL(i) = I(i) - BASE(i);
         I(i) = BASE(i) * compressionfactor + DETAIL(i);
 
         //!! FIX: this to keep the output in normalized range 0.01 - 1.0
-        //intensitites are related only to minimum luminance because I
-        //would say this is more stable over time than using maximum
-        //luminance and is also robust against random peaks of very high
-        //luminance
-        I(i) -=  4.3f+minB*compressionfactor;
+        // intensitites are related only to minimum luminance because I
+        // would say this is more stable over time than using maximum
+        // luminance and is also robust against random peaks of very high
+        // luminance
+        I(i) -= 4.3f + minB * compressionfactor;
 
-        if ( color_correction )
-        {
-            R(i) = decode( std::pow( R(i), s ) *  std::exp( I(i) ) );
-            G(i) = decode( std::pow( G(i), s ) *  std::exp( I(i) ) );
-            B(i) = decode( std::pow( B(i), s ) *  std::exp( I(i) ) );
-        }
-        else
-        {
-            R(i) *= decode( std::exp( I(i) ) );
-            G(i) *= decode( std::exp( I(i) ) );
-            B(i) *= decode( std::exp( I(i) ) );
+        if (color_correction) {
+            R(i) = decode(std::pow(R(i), s) * std::exp(I(i)));
+            G(i) = decode(std::pow(G(i), s) * std::exp(I(i)));
+            B(i) = decode(std::pow(B(i), s) * std::exp(I(i)));
+        } else {
+            R(i) *= decode(std::exp(I(i)));
+            G(i) *= decode(std::exp(I(i)));
+            B(i) *= decode(std::exp(I(i)));
         }
     }
 
-    if (!ph.canceled())
-    {
-        ph.setValue( 100 );
+    if (!ph.canceled()) {
+        ph.setValue(100);
     }
 }
-

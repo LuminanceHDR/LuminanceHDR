@@ -27,20 +27,18 @@
 
 #include "copy.h"
 
-#include <cassert>
 #include <algorithm>
+#include <cassert>
 
-namespace pfs
-{
+namespace pfs {
 
 template <typename Type>
-void copy(const Array2D<Type> *from, Array2D<Type> *to)
-{
-    assert( from->getRows() == to->getRows() );
-    assert( from->getCols() == to->getCols() );
+void copy(const Array2D<Type> *from, Array2D<Type> *to) {
+    assert(from->getRows() == to->getRows());
+    assert(from->getCols() == to->getCols());
 
     std::copy(from->begin(), from->end(), to->begin());
 }
 }
 
-#endif // #ifndef PFS_COPY_HXX
+#endif  // #ifndef PFS_COPY_HXX

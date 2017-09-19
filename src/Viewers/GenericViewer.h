@@ -26,20 +26,20 @@
 
 #include <memory>
 
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 #include <QImage>
-#include <QWidget>
 #include <QString>
-#include <QVBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
+#include <QVBoxLayout>
+#include <QWidget>
 
 #include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 // Forward declaration
 namespace pfs {
-class Frame;                // #include "Libpfs/frame.h"
+class Frame;  // #include "Libpfs/frame.h"
 }
 
 class PanIconWidget;        // #include "Common/PanIconWidget.h"
@@ -47,24 +47,17 @@ class IGraphicsView;        // #include "Viewers/IGraphicsView.h"
 class IGraphicsPixmapItem;  // #include "Viewers/IGraphicsPixmapItem.h"
 class TonemappingOptions;
 
-class GenericViewer : public QWidget
-{
+class GenericViewer : public QWidget {
     Q_OBJECT
-public:
-
+   public:
     //! \brief Enum containing the list of possible view mode
-    enum ViewerMode
-    {
-        FIT_WINDOW = 0,
-        FILL_WINDOW = 1,
-        NORMAL_SIZE = 2
-    };
+    enum ViewerMode { FIT_WINDOW = 0, FILL_WINDOW = 1, NORMAL_SIZE = 2 };
 
-public:
+   public:
     //! \brief GenericViewer constructor
     //! \param[in] frame reference frame
     //! \param[in] ns need saving
-    GenericViewer(pfs::Frame* frame, QWidget *parent = 0, bool ns = false);
+    GenericViewer(pfs::Frame *frame, QWidget *parent = 0, bool ns = false);
 
     //! \brief GenericViewer virtual destructor
     virtual ~GenericViewer();
@@ -80,17 +73,21 @@ public:
     /*virtual*/ bool isNormalSize();
 
     //! \brief Set tonemap options that generated the handled frame
-    //! \note GenericViewer holds only an empty implementation of this function. It is
+    //! \note GenericViewer holds only an empty implementation of this function.
+    //! It is
     //! up to the derived class to override this behaviour
-    virtual void setTonemappingOptions(TonemappingOptions* tmopts) {}
+    virtual void setTonemappingOptions(TonemappingOptions *tmopts) {}
 
     //! \brief Get tonemap options that generated the handled frame
-    //! \note GenericViewer holds only an empty implementation of this function. It is
+    //! \note GenericViewer holds only an empty implementation of this function.
+    //! It is
     //! up to the derived class to override this behaviour
-    virtual TonemappingOptions* getTonemappingOptions() { return NULL; }
+    virtual TonemappingOptions *getTonemappingOptions() { return NULL; }
 
-public Q_SLOTS:
-    //! \brief Update viewer's pixmap when a new frame is set by setFrame() or AWB is performed
+   public Q_SLOTS:
+    //! \brief Update viewer's pixmap when a new frame is set by setFrame() or
+    //! AWB
+    //! is performed
     virtual void updatePixmap() = 0;
 
     /*virtual*/ void updateView();  // tells the Viewer to update the View area
@@ -98,7 +95,8 @@ public Q_SLOTS:
     /*virtual*/ void zoomIn();
     /*virtual*/ void zoomOut();
 
-    /*virtual*/ void fitToWindow(bool checked = true);  // checked is useless: kept for compatibility
+    /*virtual*/ void fitToWindow(
+        bool checked = true);  // checked is useless: kept for compatibility
     /*virtual*/ void fillToWindow();
     /*virtual*/ void normalSize();
 
@@ -118,14 +116,14 @@ public Q_SLOTS:
     void setNeedsSaving(bool);
 
     //! \brief get filename if set, or an empty string
-    const QString& getFileName() const;
+    const QString &getFileName() const;
 
     //! \brief set filename (overwrite previous status)
-    void setFileName(const QString&);
+    void setFileName(const QString &);
 
     //! \brief This function syncronizes scrollbars position and zoom mode
     //! \param[src] GenericViewer to syncronize with
-    void syncViewer(GenericViewer* src);
+    void syncViewer(GenericViewer *src);
 
     //! \brief tells is the viewer holds an LDR or an HDR frame
     virtual bool isHDR() = 0;
@@ -137,10 +135,7 @@ public Q_SLOTS:
     virtual float getMinLuminanceValue() = 0;
 
     //! \brief returns the mapping method
-    virtual RGBMappingType getLuminanceMappingMethod()
-    {
-        return MAP_LINEAR;
-    }
+    virtual RGBMappingType getLuminanceMappingMethod() { return MAP_LINEAR; }
 
     //! \brief returns a filename postfix based on the viewer's content
     virtual QString getFileNamePostFix() = 0;
@@ -152,50 +147,50 @@ public Q_SLOTS:
     QImage getQImage() const;
 
     //! \brief set new QImage
-    void setQImage(const QImage& qimage);
+    void setQImage(const QImage &qimage);
 
     //! \brief
     void setDevicePixelRatio(const float s);
 
     //! this function returns an handle to the internal data type
     //! it would be better if the return pointer is const
-    //! It requires to many changes at this stage and it does not worth the effort
+    //! It requires to many changes at this stage and it does not worth the
+    //! effort
     //! it will be done during the integration of LibHDR
-    pfs::Frame* getFrame() const;
+    pfs::Frame *getFrame() const;
 
     //! set a new reference frame to be shown in the viewport
     //! previous frame gets DELETED!
-    void setFrame(pfs::Frame* new_frame, TonemappingOptions* tmopts = NULL);
+    void setFrame(pfs::Frame *new_frame, TonemappingOptions *tmopts = NULL);
 
-protected Q_SLOTS:
-    /*virtual*/  void slotPanIconSelectionMoved(QRect);
-    /*virtual*/  void slotPanIconHidden();
-    /*virtual*/  void slotCornerButtonPressed();
-    /*virtual*/  void scrollBarChanged(int /*value*/);
+   protected Q_SLOTS:
+    /*virtual*/ void slotPanIconSelectionMoved(QRect);
+    /*virtual*/ void slotPanIconHidden();
+    /*virtual*/ void slotCornerButtonPressed();
+    /*virtual*/ void scrollBarChanged(int /*value*/);
 
     void startDragging();
 
-protected:
-
+   protected:
     virtual void retranslateUi();
-    virtual void changeEvent(QEvent* event);
+    virtual void changeEvent(QEvent *event);
 
-    QToolBar* mToolBar;
-    QToolButton* mCornerButton;
-    PanIconWidget* mPanIconWidget;
+    QToolBar *mToolBar;
+    QToolButton *mCornerButton;
+    PanIconWidget *mPanIconWidget;
 
     QVBoxLayout *mVBL;
 
-    QGraphicsScene* mScene;
-    IGraphicsView* mView;
+    QGraphicsScene *mScene;
+    IGraphicsView *mView;
     ViewerMode mViewerMode;
-    IGraphicsPixmapItem* mPixmap;
+    IGraphicsPixmapItem *mPixmap;
 
     QString mFileName;
 
     void keyPressEvent(QKeyEvent *event);
 
-private:
+   private:
     //! \brief Zoom to the input factor
     //! \param[in] factor zoom factor to match
     //! \attention currently this function has an empty body
@@ -208,46 +203,29 @@ private:
     bool mNeedsSaving;
     std::unique_ptr<pfs::Frame> mFrame;
 
-    QAction* m_actionClose;
+    QAction *m_actionClose;
 
     float m_devicePixelRatio = 1.0;
 
-Q_SIGNALS:
+   Q_SIGNALS:
     void selectionReady(bool isReady);
-    void changed(GenericViewer *v);     // emitted when zoomed in/out, scrolled ....
-    void reparent(GenericViewer *v);    // emitted when exit fullscreen
-    void goNext(GenericViewer *v);      // shows next image in fullscreen
-    void goPrevious(GenericViewer *v);  // shows previous image in fullscreen
-    void syncViewers(GenericViewer *v); // toggle viewers syncronization
+    void changed(
+        GenericViewer *v);  // emitted when zoomed in/out, scrolled ....
+    void reparent(GenericViewer *v);     // emitted when exit fullscreen
+    void goNext(GenericViewer *v);       // shows next image in fullscreen
+    void goPrevious(GenericViewer *v);   // shows previous image in fullscreen
+    void syncViewers(GenericViewer *v);  // toggle viewers syncronization
 };
 
-inline
-bool GenericViewer::needsSaving(void)
-{
-    return mNeedsSaving;
-}
+inline bool GenericViewer::needsSaving(void) { return mNeedsSaving; }
 
-inline
-void GenericViewer::setNeedsSaving(bool s)
-{
-    mNeedsSaving = s;
-}
+inline void GenericViewer::setNeedsSaving(bool s) { mNeedsSaving = s; }
 
-inline
-const QString& GenericViewer::getFileName() const
-{
-    return mFileName;
-}
+inline const QString &GenericViewer::getFileName() const { return mFileName; }
 
-inline
-void GenericViewer::setFileName(const QString& fn)
-{
-    mFileName = fn;
-}
+inline void GenericViewer::setFileName(const QString &fn) { mFileName = fn; }
 
-inline
-void GenericViewer::setDevicePixelRatio(const float s)
-{
+inline void GenericViewer::setDevicePixelRatio(const float s) {
     m_devicePixelRatio = s;
 }
 #endif

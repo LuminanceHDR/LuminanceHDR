@@ -27,11 +27,11 @@
 
 #include "HdrViewer.h"
 
-#include <QFileInfo>
 #include <QDebug>
+#include <QFileInfo>
 
-#include <cmath>
 #include <cassert>
+#include <cmath>
 #include "arch/math.h"
 
 #include "Common/global.h"
@@ -43,28 +43,27 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/utils/sse.h"
 #include "Libpfs/utils/msec_timer.h"
+#include "Libpfs/utils/sse.h"
 
-namespace // anonymous namespace
+namespace  // anonymous namespace
 {
 // Implementation details stay inside an anonymous namespace
-// In this way, we let know the compiler it can mess up as much as it wants with the code,
+// In this way, we let know the compiler it can mess up as much as it wants with
+// the code,
 // because it will only used inside this compilation unit
 
-const pfs::Array2Df* getPrimaryChannel(const pfs::Frame& frame)
-{
+const pfs::Array2Df *getPrimaryChannel(const pfs::Frame &frame) {
     return frame.getChannel("Y");
 }
 
-} // end anonymous namespace
+}  // end anonymous namespace
 
-HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns)
-    : GenericViewer(frame, parent, ns)
-    , m_mappingMethod(MAP_GAMMA2_2)
-    , m_minValue(0.f)
-    , m_maxValue(1.f)
-{
+HdrViewer::HdrViewer(pfs::Frame *frame, QWidget *parent, bool ns)
+    : GenericViewer(frame, parent, ns),
+      m_mappingMethod(MAP_GAMMA2_2),
+      m_minValue(0.f),
+      m_maxValue(1.f) {
     initUi();
 
     // I prefer to do everything by hand, so the flow of the calls is clear
@@ -73,9 +72,10 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns)
     m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
     m_lumRange->fitToDynamicRange();
 
-    m_mappingMethod = static_cast<RGBMappingType>( m_mappingMethodCB->currentIndex() );
-    m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
-    m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
+    m_mappingMethod =
+        static_cast<RGBMappingType>(m_mappingMethodCB->currentIndex());
+    m_minValue = powf(10.0f, m_lumRange->getRangeWindowMin());
+    m_maxValue = powf(10.0f, m_lumRange->getRangeWindowMax());
 
     QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
     mPixmap->setPixmap(QPixmap::fromImage(*qImage));
@@ -84,55 +84,55 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns)
     m_lumRange->blockSignals(false);
 }
 
-void HdrViewer::initUi()
-{
-    m_mappingMethodLabel = new QLabel( mToolBar );
-    m_mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    m_mappingMethodCB = new QComboBox( mToolBar );
+void HdrViewer::initUi() {
+    m_mappingMethodLabel = new QLabel(mToolBar);
+    m_mappingMethodLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    m_mappingMethodCB = new QComboBox(mToolBar);
     mToolBar->addWidget(m_mappingMethodLabel);
     mToolBar->addWidget(m_mappingMethodCB);
     mToolBar->addSeparator();
-    m_mappingMethodLabel->setBuddy( m_mappingMethodCB );
+    m_mappingMethodLabel->setBuddy(m_mappingMethodCB);
 
-    m_histLabel = new QLabel( mToolBar );
-    m_lumRange = new LuminanceRangeWidget( mToolBar );
+    m_histLabel = new QLabel(mToolBar);
+    m_lumRange = new LuminanceRangeWidget(mToolBar);
     mToolBar->addWidget(m_histLabel);
     mToolBar->addWidget(m_lumRange);
     mToolBar->addSeparator();
-    connect( m_lumRange, &LuminanceRangeWidget::updateRangeWindow, this, &HdrViewer::updateRangeWindow );
-    mToolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    connect(m_lumRange, &LuminanceRangeWidget::updateRangeWindow, this,
+            &HdrViewer::updateRangeWindow);
+    mToolBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
     retranslateUi();
 }
 
-void HdrViewer::retranslateUi()
-{
+void HdrViewer::retranslateUi() {
     m_mappingMethodLabel->setText(tr("&Mapping:"));
     m_histLabel->setText(tr("Histogram:"));
 
     int oldMappingMethodIndex = m_mappingMethodCB->currentIndex();
 
-    disconnect( m_mappingMethodCB, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &HdrViewer::setLumMappingMethod );
+    disconnect(m_mappingMethodCB,
+               static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
+               this, &HdrViewer::setLumMappingMethod);
     QStringList methods;
-    methods << tr("Linear")
-            << tr("Gamma 1.4")
-            << tr("Gamma 1.8")
-            << tr("Gamma 2.2")
-            << tr("Gamma 2.6")
-            << tr("Logarithmic");
+    methods << tr("Linear") << tr("Gamma 1.4") << tr("Gamma 1.8")
+            << tr("Gamma 2.2") << tr("Gamma 2.6") << tr("Logarithmic");
 
     m_mappingMethodCB->clear();
     m_mappingMethodCB->addItems(methods);
-    m_mappingMethodCB->setCurrentIndex( oldMappingMethodIndex >= 0 ? oldMappingMethodIndex : 3 );
-    connect(m_mappingMethodCB, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &HdrViewer::setLumMappingMethod);
-    connect(m_mappingMethodCB, SIGNAL(currentIndexChanged(int)), m_mappingMethodCB, SLOT(setFocus())); //TODO convert to new style
+    m_mappingMethodCB->setCurrentIndex(
+        oldMappingMethodIndex >= 0 ? oldMappingMethodIndex : 3);
+    connect(m_mappingMethodCB,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
+            &HdrViewer::setLumMappingMethod);
+    connect(m_mappingMethodCB, SIGNAL(currentIndexChanged(int)),
+            m_mappingMethodCB, SLOT(setFocus()));  // TODO convert to new style
 
     GenericViewer::retranslateUi();
 }
 
-void HdrViewer::refreshPixmap()
-{
-    setCursor( Qt::WaitCursor );
+void HdrViewer::refreshPixmap() {
+    setCursor(Qt::WaitCursor);
 
     QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
     mPixmap->setPixmap(QPixmap::fromImage(*qImage));
@@ -140,8 +140,7 @@ void HdrViewer::refreshPixmap()
     unsetCursor();
 }
 
-void HdrViewer::updatePixmap()
-{
+void HdrViewer::updatePixmap() {
 #ifdef QT_DEBUG
     qDebug() << "void HdrViewer::updatePixmap()";
 #endif
@@ -156,93 +155,70 @@ void HdrViewer::updatePixmap()
     m_lumRange->blockSignals(false);
 }
 
-LuminanceRangeWidget* HdrViewer::lumRange()
-{
-    return m_lumRange;
-}
+LuminanceRangeWidget *HdrViewer::lumRange() { return m_lumRange; }
 
-void HdrViewer::updateRangeWindow()
-{
+void HdrViewer::updateRangeWindow() {
     setRangeWindow(powf(10.0f, m_lumRange->getRangeWindowMin()),
                    powf(10.0f, m_lumRange->getRangeWindowMax()));
 }
 
-void HdrViewer::setRangeWindow( float min, float max )
-{
+void HdrViewer::setRangeWindow(float min, float max) {
     m_minValue = min;
     m_maxValue = max;
 
     refreshPixmap();
 }
 
-int HdrViewer::getLumMappingMethod()
-{
+int HdrViewer::getLumMappingMethod() {
     return m_mappingMethodCB->currentIndex();
 }
 
-void HdrViewer::setLumMappingMethod( int method )
-{
-    m_mappingMethodCB->setCurrentIndex( method );
+void HdrViewer::setLumMappingMethod(int method) {
+    m_mappingMethodCB->setCurrentIndex(method);
     m_mappingMethod = static_cast<RGBMappingType>(method);
 
     refreshPixmap();
 }
 
 //! empty dtor
-HdrViewer::~HdrViewer()
-{}
+HdrViewer::~HdrViewer() {}
 
-QString HdrViewer::getFileNamePostFix()
-{
+QString HdrViewer::getFileNamePostFix() {
     return QStringLiteral("_hdr_preview");
 }
 
-QString HdrViewer::getExifComment()
-{
+QString HdrViewer::getExifComment() {
     return QStringLiteral("HDR Created with Luminance HDR");
 }
 
 //! \brief returns max value of the handled frame
-float HdrViewer::getMaxLuminanceValue()
-{
-    return m_maxValue;
-}
+float HdrViewer::getMaxLuminanceValue() { return m_maxValue; }
 
 //! \brief returns min value of the handled frame
-float HdrViewer::getMinLuminanceValue()
-{
-    return m_minValue;
-}
+float HdrViewer::getMinLuminanceValue() { return m_minValue; }
 
-RGBMappingType HdrViewer::getLuminanceMappingMethod()
-{
+RGBMappingType HdrViewer::getLuminanceMappingMethod() {
     return m_mappingMethod;
 }
 
-QImage* HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
-{
-    return fromLDRPFStoQImage(in_frame, m_minValue, m_maxValue, m_mappingMethod);
+QImage *HdrViewer::mapFrameToImage(pfs::Frame *in_frame) {
+    return fromLDRPFStoQImage(in_frame, m_minValue, m_maxValue,
+                              m_mappingMethod);
 }
 
-void HdrViewer::keyPressEvent(QKeyEvent *event)
-{
+void HdrViewer::keyPressEvent(QKeyEvent *event) {
     GenericViewer::keyPressEvent(event);
     if (event->key() == Qt::Key_L) {
         m_lumRange->lowDynamicRange();
-    }
-    else if (event->key() == Qt::Key_BracketLeft) {
+    } else if (event->key() == Qt::Key_BracketLeft) {
         m_lumRange->extendRange();
-    }
-    else if (event->key() == Qt::Key_BracketRight) {
+    } else if (event->key() == Qt::Key_BracketRight) {
         m_lumRange->shrinkRange();
-    }
-    else if (event->key() == Qt::Key_Backslash) {
+    } else if (event->key() == Qt::Key_Backslash) {
         m_lumRange->fitToDynamicRange();
-    }
-    else if (event->key() == Qt::Key_0) {
+    } else if (event->key() == Qt::Key_0) {
         m_lumRange->decreaseExposure();
-    }
-    else if (event->key() == Qt::Key_9) {
+    } else if (event->key() == Qt::Key_9) {
         m_lumRange->increaseExposure();
     }
 }

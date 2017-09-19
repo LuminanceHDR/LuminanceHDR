@@ -27,8 +27,8 @@
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \note This class is different then the one in the PFSTOOLS
 
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 #include <Libpfs/array2d.h>
 #include <Libpfs/utils/numeric.h>
@@ -38,33 +38,22 @@ using namespace std;
 namespace pfs {
 
 template <typename Type>
-Array2D<Type>::Array2D()
-    : m_data()
-    , m_cols(0)
-    , m_rows(0) 
-{}
+Array2D<Type>::Array2D() : m_data(), m_cols(0), m_rows(0) {}
 
 template <typename Type>
 Array2D<Type>::Array2D(size_t cols, size_t rows)
-    : m_data(cols*rows)
-    , m_cols(cols)
-    , m_rows(rows)
-{
-    assert( m_data.size() >= m_cols*m_rows);
+    : m_data(cols * rows), m_cols(cols), m_rows(rows) {
+    assert(m_data.size() >= m_cols * m_rows);
 }
 
 template <typename Type>
-Array2D<Type>::Array2D(const self& rhs)
-    : m_data(rhs.m_data)
-    , m_cols(rhs.m_cols)
-    , m_rows(rhs.m_rows)
-{
-    assert( m_data.size() >= m_cols*m_rows);
+Array2D<Type>::Array2D(const self &rhs)
+    : m_data(rhs.m_data), m_cols(rhs.m_cols), m_rows(rhs.m_rows) {
+    assert(m_data.size() >= m_cols * m_rows);
 }
 
 template <typename Type>
-Array2D<Type>& Array2D<Type>::operator=(const Array2D<Type>& other)
-{
+Array2D<Type> &Array2D<Type>::operator=(const Array2D<Type> &other) {
     using std::swap;
 
     Array2D<Type> newState(other);
@@ -74,79 +63,67 @@ Array2D<Type>& Array2D<Type>::operator=(const Array2D<Type>& other)
 }
 
 template <typename Type>
-void Array2D<Type>::resize(size_t width, size_t height)
-{
-    m_data.resize( width*height );
+void Array2D<Type>::resize(size_t width, size_t height) {
+    m_data.resize(width * height);
     m_cols = width;
     m_rows = height;
 
-    assert( m_data.size() >= m_cols*m_rows);
+    assert(m_data.size() >= m_cols * m_rows);
 }
 
 template <typename Type>
-void Array2D<Type>::swap(self& other)
-{
+void Array2D<Type>::swap(self &other) {
     std::swap(m_cols, other.m_cols);
     std::swap(m_rows, other.m_rows);
     std::swap(m_data, other.m_data);
 }
 
 template <typename Type>
-inline
-Type& Array2D<Type>::operator()(size_t cols, size_t rows)
-{
+inline Type &Array2D<Type>::operator()(size_t cols, size_t rows) {
 #ifndef NDEBUG
-    return m_data.at( rows*m_cols + cols );
+    return m_data.at(rows * m_cols + cols);
 #else
-    return m_data[ rows*m_cols + cols ];
+    return m_data[rows * m_cols + cols];
 #endif
 }
 
 template <typename Type>
-inline
-const Type& Array2D<Type>::operator()( size_t cols, size_t rows ) const
-{
+inline const Type &Array2D<Type>::operator()(size_t cols, size_t rows) const {
 #ifndef NDEBUG
-    return m_data.at( rows*m_cols + cols );
+    return m_data.at(rows * m_cols + cols);
 #else
-    return m_data[ rows*m_cols + cols ];
+    return m_data[rows * m_cols + cols];
 #endif
 }
 
 template <typename Type>
-inline
-Type& Array2D<Type>::operator()( size_t index )
-{
+inline Type &Array2D<Type>::operator()(size_t index) {
 #ifndef NDEBUG
-    return m_data.at( index );
+    return m_data.at(index);
 #else
     return m_data[index];
 #endif
 }
 
 template <typename Type>
-inline
-const Type& Array2D<Type>::operator()( size_t index ) const
-{
+inline const Type &Array2D<Type>::operator()(size_t index) const {
 #ifndef NDEBUG
-    return m_data.at( index );
+    return m_data.at(index);
 #else
     return m_data[index];
 #endif
 }
 
 template <typename Type>
-void Array2D<Type>::fill(const Type& value)
-{
+void Array2D<Type>::fill(const Type &value) {
     std::fill(m_data.begin(), m_data.end(), value);
 }
 
 template <typename Type>
-void Array2D<Type>::reset()
-{
+void Array2D<Type>::reset() {
     std::fill(m_data.begin(), m_data.end(), Type());
 }
 
-} // Libpfs
+}  // Libpfs
 
-#endif // PFS_ARRAY2D_HXX
+#endif  // PFS_ARRAY2D_HXX

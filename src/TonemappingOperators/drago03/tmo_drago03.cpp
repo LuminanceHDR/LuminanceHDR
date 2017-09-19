@@ -31,8 +31,8 @@
 
 #include "tmo_drago03.h"
 
-#include <cmath>
 #include <cassert>
+#include <cmath>
 
 #include <boost/math/special_functions/fpclassify.hpp>
 
@@ -40,37 +40,30 @@
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
 
-namespace
-{
-inline float biasFunc(float b, float x)
-{
-    return std::pow(x, b);        // pow(x, log(bias)/log(0.5))
+namespace {
+inline float biasFunc(float b, float x) {
+    return std::pow(x, b);  // pow(x, log(bias)/log(0.5))
 }
 
-const float LOG05 = -0.693147f; // log(0.5)
+const float LOG05 = -0.693147f;  // log(0.5)
 }
 
-void calculateLuminance(unsigned int width, unsigned int height,
-                        const float* Y, float& avLum, float& maxLum)
-{
+void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
+                        float &avLum, float &maxLum) {
     avLum = 0.0f;
     maxLum = 0.0f;
 
     int size = width * height;
 
-    for (int i = 0; i < size; i++)
-    {
-        avLum += log( Y[i] + 1e-4 );
-        maxLum = ( Y[i] > maxLum ) ? Y[i] : maxLum ;
+    for (int i = 0; i < size; i++) {
+        avLum += log(Y[i] + 1e-4);
+        maxLum = (Y[i] > maxLum) ? Y[i] : maxLum;
     }
-    avLum = exp( avLum/size );
+    avLum = exp(avLum / size);
 }
 
-
-void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
-                 float maxLum, float avLum, float bias,
-                 pfs::Progress &ph)
-{
+void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
+                 float avLum, float bias, pfs::Progress &ph) {
     assert(Y.getRows() == L.getRows());
     assert(Y.getCols() == L.getCols());
 
@@ -78,24 +71,22 @@ void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
     maxLum /= avLum;
 
     float divider = std::log10(maxLum + 1.0f);
-    float biasP = log(bias)/LOG05;
+    float biasP = log(bias) / LOG05;
 
     // Normal tone mapping of every pixel
-    for (int y=0, yEnd = Y.getRows(); y < yEnd; y++)
-    {
-        ph.setValue(100*y/yEnd);
-        if (ph.canceled())
-            break;
+    for (int y = 0, yEnd = Y.getRows(); y < yEnd; y++) {
+        ph.setValue(100 * y / yEnd);
+        if (ph.canceled()) break;
 
-        for (int x=0, xEnd = Y.getCols(); x < xEnd; x++)
-        {
-            float Yw = Y(x,y) / avLum;
-            float interpol = std::log (2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
-            //L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
-            L(x,y) = ( std::log1p(Yw)/interpol ) / divider; // avoid loss of precision
+        for (int x = 0, xEnd = Y.getCols(); x < xEnd; x++) {
+            float Yw = Y(x, y) / avLum;
+            float interpol =
+                std::log(2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
+            // L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
+            L(x, y) = (std::log1p(Yw) / interpol) /
+                      divider;  // avoid loss of precision
 
-            assert(!boost::math::isnan(L(x,y)));
+            assert(!boost::math::isnan(L(x, y)));
         }
     }
 }
-

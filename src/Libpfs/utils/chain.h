@@ -26,50 +26,43 @@ namespace pfs {
 namespace utils {
 
 template <typename Func1, typename Func2>
-struct Chain
-{
+struct Chain {
     typedef Func1 F1;
     typedef Func2 F2;
 
-    Chain(const Func1& func1, const Func2& func2)
-        : func1_(func1)
-        , func2_(func2)
-    {}
+    Chain(const Func1 &func1, const Func2 &func2)
+        : func1_(func1), func2_(func2) {}
 
     template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn v1, TypeIn v2, TypeIn v3,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3) const
-    {
+    void operator()(TypeIn v1, TypeIn v2, TypeIn v3, TypeOut &o1, TypeOut &o2,
+                    TypeOut &o3) const {
         func1_(v1, v2, v3, v1, v2, v3);
         func2_(v1, v2, v3, o1, o2, o3);
     }
 
     template <typename Type>
-    Type operator()(Type v1) const
-    {
+    Type operator()(Type v1) const {
         return func2_(func1_(v1));
     }
 
-private:
+   private:
     Func1 func1_;
     Func2 func2_;
 };
 
 template <typename Func1, typename Func2>
-Chain<Func1, Func2> chain(const Func1& func1, const Func2& func2)
-{
+Chain<Func1, Func2> chain(const Func1 &func1, const Func2 &func2) {
     return Chain<Func1, Func2>(func1, func2);
 }
 
 template <typename Func1, typename Func2, typename Func3>
-Chain<Func1, Chain<Func2, Func3> > chain(const Func1& func1, const Func2& func2, const Func3& func3)
-{
-    return Chain<Func1, Chain<Func2, Func3> >(func1, Chain<Func2, Func3>(func2, func3));
+Chain<Func1, Chain<Func2, Func3>> chain(const Func1 &func1, const Func2 &func2,
+                                        const Func3 &func3) {
+    return Chain<Func1, Chain<Func2, Func3>>(func1,
+                                             Chain<Func2, Func3>(func2, func3));
 }
 
+}  // utils
+}  // pfs
 
-}   // utils
-}   // pfs
-
-
-#endif // PFS_UTILS_CHAIN_H
+#endif  // PFS_UTILS_CHAIN_H

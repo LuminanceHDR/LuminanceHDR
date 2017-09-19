@@ -25,72 +25,52 @@
 //! \brief Robertson02 algorithm for automatic self-calibration.
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
+#include <HdrCreation/fusionoperator.h>
 #include <Libpfs/array2d.h>
 #include <Libpfs/frame.h>
-#include <HdrCreation/fusionoperator.h>
 
 namespace libhdr {
 namespace fusion {
 
 //! \brief Debevec Radiance Map operator
-class RobertsonOperator : public IFusionOperator
-{
-public:
-    RobertsonOperator()
-        : IFusionOperator()
-    {}
+class RobertsonOperator : public IFusionOperator {
+   public:
+    RobertsonOperator() : IFusionOperator() {}
 
-    FusionOperator getType() const
-    {
-        return ROBERTSON;
-    }
+    FusionOperator getType() const { return ROBERTSON; }
 
-private:
-    void computeFusion(
-            ResponseCurve& response,
-            WeightFunction& weight,
-            const std::vector<FrameEnhanced>& frames, pfs::Frame &frame);
+   private:
+    void computeFusion(ResponseCurve &response, WeightFunction &weight,
+                       const std::vector<FrameEnhanced> &frames,
+                       pfs::Frame &frame);
 
-protected:
-    void applyResponse(
-            ResponseCurve& response,
-            WeightFunction& weight,
-            ResponseChannel channel,
-            const DataList& inputData, float* outputData,
-            size_t width, size_t height,
-            float minAllowedValue, float maxAllowedValue,
-            const float* arrayofexptime);
+   protected:
+    void applyResponse(ResponseCurve &response, WeightFunction &weight,
+                       ResponseChannel channel, const DataList &inputData,
+                       float *outputData, size_t width, size_t height,
+                       float minAllowedValue, float maxAllowedValue,
+                       const float *arrayofexptime);
 };
 
-class RobertsonOperatorAuto : public RobertsonOperator
-{
-public:
-    RobertsonOperatorAuto()
-        : RobertsonOperator()
-    {}
+class RobertsonOperatorAuto : public RobertsonOperator {
+   public:
+    RobertsonOperatorAuto() : RobertsonOperator() {}
 
-    FusionOperator getType() const
-    {
-        return ROBERTSON_AUTO;
-    }
+    FusionOperator getType() const { return ROBERTSON_AUTO; }
 
-private:
-    void computeFusion(
-            ResponseCurve& response,
-            WeightFunction& weight,
-            const std::vector<FrameEnhanced>& frames, pfs::Frame &outFrame);
+   private:
+    void computeFusion(ResponseCurve &response, WeightFunction &weight,
+                       const std::vector<FrameEnhanced> &frames,
+                       pfs::Frame &outFrame);
 
-    void computeResponse(
-            ResponseCurve& response,
-            WeightFunction& weight,
-            ResponseChannel channel,
-            const DataList& inputData, float* outputData,
-            size_t width, size_t height,
-            float minAllowedValue, float maxAllowedValue,
-            const float* arrayofexptime);
+    void computeResponse(ResponseCurve &response, WeightFunction &weight,
+                         ResponseChannel channel, const DataList &inputData,
+                         float *outputData, size_t width, size_t height,
+                         float minAllowedValue, float maxAllowedValue,
+                         const float *arrayofexptime);
 };
 
-}   // fusion
-}   // libhdr
+}  // fusion
+}  // libhdr
 
-#endif // ROBERTSON02_H
+#endif  // ROBERTSON02_H

@@ -36,51 +36,28 @@
 
 #include "treeitem.h"
 
-TreeItem::TreeItem ( const QList<QVariant> &data, TreeItem *parent )
-{
+TreeItem::TreeItem(const QList<QVariant> &data, TreeItem *parent) {
     parentItem = parent;
     itemData = data;
 }
 
-TreeItem::~TreeItem()
-{
-    qDeleteAll ( childItems );
-}
+TreeItem::~TreeItem() { qDeleteAll(childItems); }
 
-void TreeItem::appendChild ( TreeItem *item )
-{
-    childItems.append ( item );
-}
+void TreeItem::appendChild(TreeItem *item) { childItems.append(item); }
 
-TreeItem *TreeItem::child ( int row )
-{
-    return childItems.value ( row );
-}
+TreeItem *TreeItem::child(int row) { return childItems.value(row); }
 
-int TreeItem::childCount() const
-{
-    return childItems.count();
-}
+int TreeItem::childCount() const { return childItems.count(); }
 
-int TreeItem::columnCount() const
-{
-    return itemData.count();
-}
+int TreeItem::columnCount() const { return itemData.count(); }
 
-QVariant TreeItem::data ( int column ) const
-{
-    return itemData.value ( column );
-}
+QVariant TreeItem::data(int column) const { return itemData.value(column); }
 
-TreeItem *TreeItem::parent()
-{
-    return parentItem;
-}
+TreeItem *TreeItem::parent() { return parentItem; }
 
-int TreeItem::row() const
-{
-    if ( parentItem )
-        return parentItem->childItems.indexOf ( const_cast<TreeItem*> ( this ) );
+int TreeItem::row() const {
+    if (parentItem)
+        return parentItem->childItems.indexOf(const_cast<TreeItem *>(this));
 
     return 0;
 }

@@ -22,41 +22,37 @@
  *
  */
 
-#include <QString>
 #include <QImage>
+#include <QString>
 
 #include <Libpfs/frame.h>
 #include "HdrCreationItem.h"
 
 HdrCreationItem::HdrCreationItem(const QString &filename)
-    : m_filename(filename)
-    , m_convertedFilename(filename)
-    , m_alignedFilename(filename)
-    , m_averageLuminance(-1.f)
-    , m_exposureTime(-1.f)
-    , m_datamin(0.f)
-    , m_datamax(1.f)
-    , m_frame(std::make_shared<pfs::Frame>())
-    , m_thumbnail(new QImage())
-{
-     // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
+    : m_filename(filename),
+      m_convertedFilename(filename),
+      m_alignedFilename(filename),
+      m_averageLuminance(-1.f),
+      m_exposureTime(-1.f),
+      m_datamin(0.f),
+      m_datamax(1.f),
+      m_frame(std::make_shared<pfs::Frame>()),
+      m_thumbnail(new QImage()) {
+    // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
 }
 
-HdrCreationItem::HdrCreationItem(const QString &filename, const QString& convertedFilename)
-    : m_filename(filename)
-    , m_convertedFilename(convertedFilename)
-    , m_alignedFilename(convertedFilename)
-    , m_averageLuminance(-1.f)
-    , m_exposureTime(-1.f)
-    , m_datamin(0.f)
-    , m_datamax(1.f)
-    , m_frame(std::make_shared<pfs::Frame>())
-    , m_thumbnail(new QImage())
-{
-}
+HdrCreationItem::HdrCreationItem(const QString &filename,
+                                 const QString &convertedFilename)
+    : m_filename(filename),
+      m_convertedFilename(convertedFilename),
+      m_alignedFilename(convertedFilename),
+      m_averageLuminance(-1.f),
+      m_exposureTime(-1.f),
+      m_datamin(0.f),
+      m_datamax(1.f),
+      m_frame(std::make_shared<pfs::Frame>()),
+      m_thumbnail(new QImage()) {}
 
-HdrCreationItem::~HdrCreationItem()
-{
+HdrCreationItem::~HdrCreationItem() {
     // qDebug() << QString("Destroying HdrCreationItem for %1").arg(m_filename);
 }
-

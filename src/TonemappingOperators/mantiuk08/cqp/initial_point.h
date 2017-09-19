@@ -26,20 +26,24 @@
  */
 
 #ifdef __cplusplus
-# define __BEGIN_DECLS extern "C" {
-# define __END_DECLS }
+#define __BEGIN_DECLS extern "C" {
+#define __END_DECLS }
 #else
-# define __BEGIN_DECLS /* empty */
-# define __END_DECLS /* empty */
+#define __BEGIN_DECLS /* empty */
+#define __END_DECLS   /* empty */
 #endif
 
 __BEGIN_DECLS
 
-int pdip_initial_point_feasible_x(const gsl_matrix * A, const gsl_vector *b, gsl_vector *x);
+int pdip_initial_point_feasible_x(const gsl_matrix *A, const gsl_vector *b,
+                                  gsl_vector *x);
 
-int pdip_initial_point_feasible_s(const gsl_matrix * C, const gsl_vector *d, const gsl_vector *x, gsl_vector *s);
+int pdip_initial_point_feasible_s(const gsl_matrix *C, const gsl_vector *d,
+                                  const gsl_vector *x, gsl_vector *s);
 
-int pdip_initial_point_y(const gsl_matrix *Q, const gsl_vector *q, const gsl_matrix *A, const gsl_vector *x, gsl_vector *y);
+int pdip_initial_point_y(const gsl_matrix *Q, const gsl_vector *q,
+                         const gsl_matrix *A, const gsl_vector *x,
+                         gsl_vector *y);
 
 int pdip_initial_point_z(gsl_vector *z);
 

@@ -28,8 +28,8 @@
 #ifndef GSL_CQP_H
 #define GSL_CQP_H
 
-#include <gsl/gsl_vector.h>
 #include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
 
 //#ifdef __cplusplus
 //# define __BEGIN_DECLS extern "C" {
@@ -43,44 +43,43 @@
 extern "C" {
 #endif
 
-typedef struct
-{
+typedef struct {
     /* objective function: 0.5*(x^t)Qx+(q^t)x */
-    gsl_matrix * Q;
-    gsl_vector * q;
+    gsl_matrix *Q;
+    gsl_vector *q;
 
     /* constraints: Ax=b; Cx>=d */
-    const gsl_matrix * A;
-    const gsl_vector * b;
-    gsl_matrix * C;
-    gsl_vector * d;
-}
-gsl_cqp_data;
+    const gsl_matrix *A;
+    const gsl_vector *b;
+    gsl_matrix *C;
+    gsl_vector *d;
+} gsl_cqp_data;
 
-typedef struct
-{
+typedef struct {
     const char *name;
     size_t size;
-    int (*alloc) (void *state, size_t n, size_t me, size_t mi);
-    int (*set) (void *state, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y, gsl_vector *z,
-              double *gap, double *residuals_norm, double *data_norm, double *inf_barrier, double *inf_barrier_min);
-    int (*iterate) (void *state, const gsl_cqp_data * cqp, gsl_vector *x, gsl_vector *y, gsl_vector *z,
-                  double *gap, double *residuals_norm, double *inf_barrier, double *inf_barrier_min);
+    int (*alloc)(void *state, size_t n, size_t me, size_t mi);
+    int (*set)(void *state, const gsl_cqp_data *cqp, gsl_vector *x,
+               gsl_vector *y, gsl_vector *z, double *gap,
+               double *residuals_norm, double *data_norm, double *inf_barrier,
+               double *inf_barrier_min);
+    int (*iterate)(void *state, const gsl_cqp_data *cqp, gsl_vector *x,
+                   gsl_vector *y, gsl_vector *z, double *gap,
+                   double *residuals_norm, double *inf_barrier,
+                   double *inf_barrier_min);
 
     /*  int (*restart) (void *state); */
-    void (*free) (void *state);
-}
-gsl_cqpminimizer_type;
+    void (*free)(void *state);
+} gsl_cqpminimizer_type;
 
-typedef struct
-{
-    const gsl_cqpminimizer_type * type;
+typedef struct {
+    const gsl_cqpminimizer_type *type;
 
-    gsl_cqp_data * cqp;
-    gsl_vector * x;
+    gsl_cqp_data *cqp;
+    gsl_vector *x;
     /* Lagrange-multipliers */
-    gsl_vector * y; /*corresponding to Ax=b */
-    gsl_vector * z; /*corresponding to CX>=d */
+    gsl_vector *y; /*corresponding to Ax=b */
+    gsl_vector *z; /*corresponding to CX>=d */
 
     double gap;
     double residuals_norm;
@@ -89,58 +88,46 @@ typedef struct
     double quantity_of_infeasibility_min;
 
     void *state;
-}
-gsl_cqpminimizer;
+} gsl_cqpminimizer;
 
-gsl_cqpminimizer *
-gsl_cqpminimizer_alloc(const gsl_cqpminimizer_type *T, size_t n, size_t me, size_t mi);
+gsl_cqpminimizer *gsl_cqpminimizer_alloc(const gsl_cqpminimizer_type *T,
+                                         size_t n, size_t me, size_t mi);
 /*
 int
 gsl_cqpminimizer_set (gsl_cqpminimizer * minimizer, gsl_cqp_problem * cqp);
 */
-int
-gsl_cqpminimizer_set (gsl_cqpminimizer * minimizer, gsl_cqp_data * cqp);
+int gsl_cqpminimizer_set(gsl_cqpminimizer *minimizer, gsl_cqp_data *cqp);
 
-void
-gsl_cqpminimizer_free(gsl_cqpminimizer *minimizer);
+void gsl_cqpminimizer_free(gsl_cqpminimizer *minimizer);
 
-const char *
-gsl_cqpminimizer_name (const gsl_cqpminimizer * minimizer);
+const char *gsl_cqpminimizer_name(const gsl_cqpminimizer *minimizer);
 
-int
-gsl_cqpminimizer_iterate(gsl_cqpminimizer *minimizer);
+int gsl_cqpminimizer_iterate(gsl_cqpminimizer *minimizer);
 
 /*
 int
 gsl_cqpminimizer_restart(gsl_cqpminimizer *minimizer);
 */
 
-gsl_vector *
-gsl_cqpminimizer_x (gsl_cqpminimizer * minimizer);
+gsl_vector *gsl_cqpminimizer_x(gsl_cqpminimizer *minimizer);
 
-gsl_vector *
-gsl_cqpminimizer_lm_eq (gsl_cqpminimizer * minimizer);
+gsl_vector *gsl_cqpminimizer_lm_eq(gsl_cqpminimizer *minimizer);
 
-gsl_vector *
-gsl_cqpminimizer_lm_ineq (gsl_cqpminimizer * minimizer);
+gsl_vector *gsl_cqpminimizer_lm_ineq(gsl_cqpminimizer *minimizer);
 
-double
-gsl_cqpminimizer_f (gsl_cqpminimizer * minimizer);
+double gsl_cqpminimizer_f(gsl_cqpminimizer *minimizer);
 
-double
-gsl_cqpminimizer_gap (gsl_cqpminimizer *minimizer);
+double gsl_cqpminimizer_gap(gsl_cqpminimizer *minimizer);
 
-double
-gsl_cqpminimizer_residuals_norm (gsl_cqpminimizer *minimizer);
+double gsl_cqpminimizer_residuals_norm(gsl_cqpminimizer *minimizer);
 
-int
-gsl_cqpminimizer_test_convergence(gsl_cqpminimizer * minimizer, double eps_gap, double eps_residual);
+int gsl_cqpminimizer_test_convergence(gsl_cqpminimizer *minimizer,
+                                      double eps_gap, double eps_residual);
 
-int
-gsl_cqp_minimizer_test_infeasibility(gsl_cqpminimizer * minimizer, double eps_infeasible);
+int gsl_cqp_minimizer_test_infeasibility(gsl_cqpminimizer *minimizer,
+                                         double eps_infeasible);
 
-double
-gsl_cqpminimizer_minimum (gsl_cqpminimizer * minimizer);
+double gsl_cqpminimizer_minimum(gsl_cqpminimizer *minimizer);
 
 GSL_VAR const gsl_cqpminimizer_type *gsl_cqpminimizer_mg_pdip;
 /*GSL_VAR const gsl_cqpminimizer_type *gsl_cqpminimizer_pdip_mpc_eqc;*/

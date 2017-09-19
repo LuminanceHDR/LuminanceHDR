@@ -25,54 +25,56 @@
 #ifndef ISELECTIONTOOL_H
 #define ISELECTIONTOOL_H
 
-#include <QPointF>
-#include <QGraphicsObject>
 #include <QGraphicsItem>
+#include <QGraphicsObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsRectItem>
-#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneDragDropEvent>
+#include <QGraphicsSceneMouseEvent>
+#include <QPointF>
 
 #include "Viewers/ISelectionAnchor.h"
 
-class ISelectionBox : public QGraphicsItem
-{
-public:
-    ISelectionBox(QGraphicsPixmapItem * parent = 0);
+class ISelectionBox : public QGraphicsItem {
+   public:
+    ISelectionBox(QGraphicsPixmapItem *parent = 0);
     ~ISelectionBox();
 
     void setSelection(QRectF selection);
     QRectF getSelection();
 
     // checks and modifies that a certain point is not outside the parent's area
-    static QPointF checkBorders(QPointF, QGraphicsItem*);
-protected:
-    // must be re-implemented in this class to provide the diminsions of the box to the QGraphicsView
+    static QPointF checkBorders(QPointF, QGraphicsItem *);
+
+   protected:
+    // must be re-implemented in this class to provide the diminsions of the box
+    // to the QGraphicsView
     virtual QRectF boundingRect() const;
     // must be re-implemented here to pain the box on the paint-event
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    virtual void paint(QPainter *painter,
+                       const QStyleOptionGraphicsItem *option, QWidget *widget);
     // must be re-implemented to handle mouse hover enter events
-    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     // must be re-implemented to handle mouse hover leave events
-    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
+    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
-    // allows the main object to be moved in the scene by capturing the mouse move events
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent * event);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * event);
+    // allows the main object to be moved in the scene by capturing the mouse
+    // move
+    // events
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-    //virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
-    //virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
-    virtual bool sceneEventFilter(QGraphicsItem * watched, QEvent * event);
+    // virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
+    // virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
+    virtual bool sceneEventFilter(QGraphicsItem *watched, QEvent *event);
 
     void setCornerPositions();
 
-    QGraphicsPixmapItem* mParent;
+    QGraphicsPixmapItem *mParent;
 
-    ISelectionAnchor* mAnchors[8];
+    ISelectionAnchor *mAnchors[8];
 
     QRectF mSelectedArea;
-
 };
 #endif
-

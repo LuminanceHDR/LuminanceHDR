@@ -26,17 +26,16 @@
 #include <QTranslator>
 
 //! \brief QTranslator context manager
-class TranslatorManager
-{
-public:
+class TranslatorManager {
+   public:
     typedef QScopedPointer<QTranslator> ScopedQTranslator;
 
-    static
-    void setLanguage(const QString& lang, bool installQtTranslation = true);
+    static void setLanguage(const QString &lang,
+                            bool installQtTranslation = true);
 
-private:
-    static void setAppTranslator(const QString& lang);
-    static void setQtTranslator(const QString& lang);
+   private:
+    static void setAppTranslator(const QString &lang);
+    static void setQtTranslator(const QString &lang);
 
     static void cleanAppTranslator();
     static void cleanQtTranslator();
@@ -45,4 +44,4 @@ private:
     static ScopedQTranslator sm_qtTranslator;
 };
 
-#endif // TRANSLATORMANAGER_H
+#endif  // TRANSLATORMANAGER_H

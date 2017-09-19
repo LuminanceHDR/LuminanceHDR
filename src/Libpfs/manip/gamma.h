@@ -29,16 +29,14 @@
 //! \author Rafal Mantiuk <mantiuk@mpi-sb.mpg.de>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
 
 //! \brief Apply \c gamma on the input \c frame
-void applyGamma(pfs::Frame* frame, float gamma);
+void applyGamma(pfs::Frame *frame, float gamma);
 
 //! \brief Apply gamma on the input \c array
 void applyGamma(pfs::Array2Df *array, float exponent, float multiplier = 1.0f);
-
 }
 
-#endif // PFSGAMMA_H
+#endif  // PFSGAMMA_H

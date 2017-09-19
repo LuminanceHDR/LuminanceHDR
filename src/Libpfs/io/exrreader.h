@@ -28,25 +28,23 @@ namespace pfs {
 namespace io {
 
 class EXRReader : public FrameReader {
-public:
-    EXRReader(const std::string& filename);
+   public:
+    EXRReader(const std::string &filename);
     ~EXRReader();
 
-    bool isOpen() const
-    { return (m_data.get() != NULL); }
+    bool isOpen() const { return (m_data.get() != NULL); }
 
     void close();
     void open();
     void read(Frame &frame, const Params &params);
 
-protected:
+   protected:
     class EXRReaderData;
 
     std::unique_ptr<EXRReaderData> m_data;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
-
-#endif // #ifndef PFS_IO_EXRREADER_H
+#endif  // #ifndef PFS_IO_EXRREADER_H

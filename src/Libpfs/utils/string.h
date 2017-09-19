@@ -28,13 +28,13 @@ namespace pfs {
 namespace utils {
 
 struct StringUnsensitiveComp {
-    bool operator()(const std::string& str1, const std::string& str2) const;
+    bool operator()(const std::string &str1, const std::string &str2) const;
 };
 
 //! \brief return extension from filename
-std::string getFormat(const std::string& filename);
+std::string getFormat(const std::string &filename);
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
-#endif // PFS_UTILS_STRING_H
+#endif  // PFS_UTILS_STRING_H

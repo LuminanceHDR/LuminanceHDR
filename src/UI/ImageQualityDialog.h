@@ -37,26 +37,26 @@ namespace pfs {
 class Frame;
 }
 
-class ImageQualityDialog : public QDialog
-{
+class ImageQualityDialog : public QDialog {
     Q_OBJECT
 
-public:
-    ImageQualityDialog(const pfs::Frame* frame, const QString& fmt, int defaultValue = -1, QWidget *parent = 0);
+   public:
+    ImageQualityDialog(const pfs::Frame *frame, const QString &fmt,
+                       int defaultValue = -1, QWidget *parent = 0);
     ~ImageQualityDialog();
 
     int getQuality(void) const;
 
-protected slots:
+   protected slots:
     void on_getSizeButton_clicked();
     void reset(int);
 
-protected:
-    const pfs::Frame* m_frame;
+   protected:
+    const pfs::Frame *m_frame;
     QString m_format;
 
     QScopedPointer<Ui::ImgQualityDialog> m_ui;
     QScopedPointer<LuminanceOptions> m_options;
 };
 
-#endif // IMAGEQUALITYDIALOG_H
+#endif  // IMAGEQUALITYDIALOG_H

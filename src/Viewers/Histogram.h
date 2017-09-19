@@ -30,34 +30,26 @@
 #include <assert.h>
 #include "Libpfs/array2d_fwd.h"
 
-class Histogram
-{
-  int bins;
-  int accuracy;
+class Histogram {
+    int bins;
+    int accuracy;
 
-  float *P;
+    float *P;
 
-public:
-  Histogram( int bins, int accuracy = 1 );
-  ~Histogram();
+   public:
+    Histogram(int bins, int accuracy = 1);
+    ~Histogram();
 
-  void computeLog( const pfs::Array2Df *image );
-  void computeLog( const pfs::Array2Df *image, float min, float max );
+    void computeLog(const pfs::Array2Df *image);
+    void computeLog(const pfs::Array2Df *image, float min, float max);
 
-  int getBins() const
-    {
-      return bins;
+    int getBins() const { return bins; }
+
+    float getMaxP() const;
+    float getP(int bin) const {
+        assert(bin < bins);
+        return P[bin];
     }
-
-  float getMaxP() const;
-  float getP( int bin ) const
-    {
-      assert( bin < bins );
-      return P[bin];
-    }
-
-
-
 };
 
 #endif

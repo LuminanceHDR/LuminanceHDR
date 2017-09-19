@@ -19,8 +19,8 @@
  * ----------------------------------------------------------------------
  */
 
-#include <boost/assign.hpp>
 #include <Libpfs/io/framewriterfactory.h>
+#include <boost/assign.hpp>
 
 using namespace ::boost::assign;
 using namespace std;
@@ -30,82 +30,69 @@ namespace io {
 
 using pfs::utils::getFormat;
 
-FrameWriterPtr FrameWriterFactory::open(const std::string& filename, const pfs::Params& params)
-{
+FrameWriterPtr FrameWriterFactory::open(const std::string &filename,
+                                        const pfs::Params &params) {
     string ext = getFormat(filename);
     std::string content;
     if (params.get("format", content)) {
-        if (!content.empty())
-        {
-            FrameWriterCreatorMap::const_iterator it = sm_registry.find(content);
-            if (it != sm_registry.end())
-            {
+        if (!content.empty()) {
+            FrameWriterCreatorMap::const_iterator it =
+                sm_registry.find(content);
+            if (it != sm_registry.end()) {
                 return (it->second)(filename);
             }
         }
     }
-    if ( !ext.empty() )
-    {
+    if (!ext.empty()) {
         FrameWriterCreatorMap::const_iterator it = sm_registry.find(ext);
-        if ( it != sm_registry.end() )
-        {
+        if (it != sm_registry.end()) {
             return (it->second)(filename);
         }
     }
     throw UnsupportedFormat("Cannot find the correct handler for " + filename);
 }
 
-void FrameWriterFactory::registerFormat(const std::string& format,
-                                        FrameWriterFactory::FrameWriterCreator creator)
-{
-    sm_registry.insert( FrameWriterCreatorMap::value_type(format, creator) );
+void FrameWriterFactory::registerFormat(
+    const std::string &format, FrameWriterFactory::FrameWriterCreator creator) {
+    sm_registry.insert(FrameWriterCreatorMap::value_type(format, creator));
 }
 
-size_t FrameWriterFactory::numRegisteredFormats()
-{
-    return sm_registry.size();
-}
+size_t FrameWriterFactory::numRegisteredFormats() { return sm_registry.size(); }
 
-bool FrameWriterFactory::isSupported(const std::string& format)
-{
+bool FrameWriterFactory::isSupported(const std::string &format) {
     return sm_registry.count(format);
 }
 
-}   // io
-}   // pfs
-
+}  // io
+}  // pfs
 
 // Factory subscriptions    ---------------------------------------------------
 
-#include <Libpfs/io/tiffwriter.h>
-#include <Libpfs/io/pngwriter.h>
+#include <Libpfs/io/exrwriter.h>
 #include <Libpfs/io/jpegwriter.h>
 #include <Libpfs/io/pfswriter.h>
-#include <Libpfs/io/exrwriter.h>
+#include <Libpfs/io/pngwriter.h>
 #include <Libpfs/io/rgbewriter.h>
+#include <Libpfs/io/tiffwriter.h>
 
 namespace pfs {
 namespace io {
 
 template <typename ConcreteClass>
-FrameWriterPtr creator(const std::string& filename) {
+FrameWriterPtr creator(const std::string &filename) {
     return FrameWriterPtr(std::make_shared<ConcreteClass>(filename));
 }
 
 FrameWriterFactory::FrameWriterCreatorMap FrameWriterFactory::sm_registry =
-        map_list_of
-        // LDR formats
-        ("jpeg", creator<JpegWriter>)
-        ("jpg", creator<JpegWriter>)
-        ("png", creator<PngWriter>)
-        // Ibrid formats (can be both, depending on the parameters
-        ("tiff", creator<TiffWriter>)
-        ("tif", creator<TiffWriter>)
-        // HDR formats
-        ("pfs", creator<PfsWriter>)
-        ("exr", creator<EXRWriter>)
-        ("hdr", creator<RGBEWriter>)
-        ;
+    map_list_of
+    // LDR formats
+    ("jpeg", creator<JpegWriter>)(
+        "jpg", creator<JpegWriter>)("png", creator<PngWriter>)
+    // Ibrid formats (can be both, depending on the parameters
+    ("tiff", creator<TiffWriter>)("tif", creator<TiffWriter>)
+    // HDR formats
+    ("pfs", creator<PfsWriter>)("exr", creator<EXRWriter>)("hdr",
+                                                           creator<RGBEWriter>);
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs

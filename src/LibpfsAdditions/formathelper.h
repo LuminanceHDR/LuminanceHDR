@@ -25,58 +25,54 @@
 #ifndef LIBPFSADDITIONS_FORMATHELPER_H
 #define LIBPFSADDITIONS_FORMATHELPER_H
 
+#include <QAbstractButton>
+#include <QComboBox>
+#include <QMetaObject>
 #include <QObject>
 #include <QString>
-#include <QMetaObject>
-#include <QComboBox>
-#include <QAbstractButton>
 #include "Common/LuminanceOptions.h"
 
 #include <Libpfs/params.h>
 
-namespace pfsadditions
-{
+namespace pfsadditions {
 
-    class FormatHelper : public QObject
-    {
-        Q_OBJECT
+class FormatHelper : public QObject {
+    Q_OBJECT
 
-    public:
-        FormatHelper();
+   public:
+    FormatHelper();
 
-        //! \brief virtual dtor, enable derivation
-        ~FormatHelper() {}
+    //! \brief virtual dtor, enable derivation
+    ~FormatHelper() {}
 
-        void initConnection(QComboBox* comboBox, QAbstractButton* settingsButton, bool hdr);
-        pfs::Params getParams();
-        QString getFileExtension();
+    void initConnection(QComboBox *comboBox, QAbstractButton *settingsButton,
+                        bool hdr);
+    pfs::Params getParams();
+    QString getFileExtension();
 
-        void loadFromSettings(const QString prefix);
-        void writeSettings(const QString prefix);
+    void loadFromSettings(const QString prefix);
+    void writeSettings(const QString prefix);
 
-        static pfs::Params getParamsFromSettings(const QString prefix, bool hdr);
+    static pfs::Params getParamsFromSettings(const QString prefix, bool hdr);
 
-    protected:
-        void setDefaultParams(int format);
+   protected:
+    void setDefaultParams(int format);
 
-        void updateButton(int format);
+    void updateButton(int format);
 
-        static pfs::Params getParamsForFormat(int format);
-        static QString getFileExtensionForFormat(int format);
+    static pfs::Params getParamsForFormat(int format);
+    static QString getFileExtensionForFormat(int format);
 
-    protected slots:
-        void comboBoxIndexChanged(int idx);
-        void buttonPressed();
+   protected slots:
+    void comboBoxIndexChanged(int idx);
+    void buttonPressed();
 
-    private:
-
-        QComboBox* m_comboBox;
-        QAbstractButton* m_settingsButton;
-        pfs::Params m_params;
-        bool m_hdr;
-
+   private:
+    QComboBox *m_comboBox;
+    QAbstractButton *m_settingsButton;
+    pfs::Params m_params;
+    bool m_hdr;
 };
-
 }
 
-#endif // LIBPFSADDITIONS_FORMATHELPER_H
+#endif  // LIBPFSADDITIONS_FORMATHELPER_H

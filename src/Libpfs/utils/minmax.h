@@ -28,18 +28,18 @@ namespace pfs {
 namespace utils {
 
 template <typename _Type>
-_Type minElement(const _Type* data, size_t size);
+_Type minElement(const _Type *data, size_t size);
 
 template <typename _Type>
-_Type maxElement(const _Type* data, size_t size);
+_Type maxElement(const _Type *data, size_t size);
 
 //! \brief computes the maximum and the minumum between 3 samples using the
 //! least amount of compares
 template <typename Type>
-void minmax(Type i1, Type i2, Type i3, Type& min, Type& max);
+void minmax(Type i1, Type i2, Type i3, Type &min, Type &max);
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
 #include <Libpfs/utils/minmax.hxx>
-#endif // PFS_UTILS_MINMAX_H
+#endif  // PFS_UTILS_MINMAX_H

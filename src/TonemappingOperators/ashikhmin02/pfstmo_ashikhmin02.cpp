@@ -1,5 +1,6 @@
 /**
- * @brief Ashikhmin Tone Mapping Operator: tone reproduction for displaying high contrast scenes
+ * @brief Ashikhmin Tone Mapping Operator: tone reproduction for displaying high
+ * contrast scenes
  * Michael Ashikhmin 2002
  *
  * This file is a part of LuminanceHDR package, based on pfstmo.
@@ -28,38 +29,36 @@
  */
 
 #include <stdlib.h>
+#include <cassert>
 #include <cmath>
 #include <iostream>
-#include <cassert>
 
-#include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 
 #include "tmo_ashikhmin02.h"
 
-namespace
-{
-void calculateLuminance( pfs::Array2Df* Y, float& avLum, float& maxLum, float& minLum)
-{
+namespace {
+void calculateLuminance(pfs::Array2Df *Y, float &avLum, float &maxLum,
+                        float &minLum) {
     avLum = 0.0f;
     maxLum = 0.0f;
     minLum = 0.0f;
 
     int size = Y->getCols() * Y->getRows();
 
-    for ( int i=0 ; i<size; i++ )
-    {
-        avLum += log( (*Y)(i) + 1e-4 );
-        maxLum = ( (*Y)(i) > maxLum ) ? (*Y)(i) : maxLum ;
-        minLum = ( (*Y)(i) < minLum ) ? (*Y)(i) : minLum ;
+    for (int i = 0; i < size; i++) {
+        avLum += log((*Y)(i) + 1e-4);
+        maxLum = ((*Y)(i) > maxLum) ? (*Y)(i) : maxLum;
+        minLum = ((*Y)(i) < minLum) ? (*Y)(i) : minLum;
     }
-    avLum =exp( avLum/ size);
+    avLum = exp(avLum / size);
 }
 }
 
-void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int eq, pfs::Progress &ph)
-{
+void pfstmo_ashikhmin02(pfs::Frame &frame, bool simple_flag, float lc_value,
+                        int eq, pfs::Progress &ph) {
 #ifndef NDEBUG
     //--- default tone mapping parameters;
     std::cout << "pfstmo_ashikhmin02 (";
@@ -70,49 +69,41 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
 
     pfs::Channel *Xr, *Yr, *Zr;
     frame.getXYZChannels(Xr, Yr, Zr);
-    assert( Xr != NULL );
-    assert( Yr != NULL );
-    assert( Zr != NULL );
-    if ( !Xr || !Yr || !Zr )
-    {
-        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    assert(Xr != NULL);
+    assert(Yr != NULL);
+    assert(Zr != NULL);
+    if (!Xr || !Yr || !Zr) {
+        throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 
-
-    pfs::transformColorSpace( pfs::CS_RGB, Xr, Yr, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
+    pfs::transformColorSpace(pfs::CS_RGB, Xr, Yr, Zr, pfs::CS_XYZ, Xr, Yr, Zr);
     float maxLum, avLum, minLum;
     calculateLuminance(Yr, avLum, maxLum, minLum);
 
     int w = Yr->getCols();
     int h = Yr->getRows();
 
-    pfs::Array2Df L(w,h);
-    try
-    {
-        tmo_ashikhmin02(Yr, &L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
-    }
-    catch(...)
-    {
-        throw pfs::Exception( "Tonemapping Failed!" );
+    pfs::Array2Df L(w, h);
+    try {
+        tmo_ashikhmin02(Yr, &L, maxLum, minLum, avLum, simple_flag, lc_value,
+                        eq, ph);
+    } catch (...) {
+        throw pfs::Exception("Tonemapping Failed!");
     }
 
     // TODO: this section can be rewritten using SSE Function
-    for ( int x=0 ; x<w ; x++ )
-    {
-        for ( int y=0 ; y<h ; y++ )
-        {
-            float scale = L(x,y) / (*Yr)(x,y);
-            (*Yr)(x,y) = (*Yr)(x,y) * scale;
-            (*Xr)(x,y) = (*Xr)(x,y) * scale;
-            (*Zr)(x,y) = (*Zr)(x,y) * scale;
+    for (int x = 0; x < w; x++) {
+        for (int y = 0; y < h; y++) {
+            float scale = L(x, y) / (*Yr)(x, y);
+            (*Yr)(x, y) = (*Yr)(x, y) * scale;
+            (*Xr)(x, y) = (*Xr)(x, y) * scale;
+            (*Zr)(x, y) = (*Zr)(x, y) * scale;
         }
     }
 
-    if (!ph.canceled())
-    {
-        ph.setValue( 100 );
+    if (!ph.canceled()) {
+        ph.setValue(100);
     }
 
     pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, Yr, Zr);
 }
-

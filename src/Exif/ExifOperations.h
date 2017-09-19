@@ -25,15 +25,13 @@
 
 #include <string>
 
-namespace ExifOperations
-{
+namespace ExifOperations {
 //!
 //!
-void copyExifData(const std::string& from, const std::string& to,
+void copyExifData(const std::string &from, const std::string &to,
                   bool dont_overwrite,
-                  const std::string& comment = std::string(),
-                  bool destIsLDR = false,
-                  bool keepRotation = true);
+                  const std::string &comment = std::string(),
+                  bool destIsLDR = false, bool keepRotation = true);
 
 //!
 //!
@@ -44,10 +42,9 @@ void copyExifData(const std::string& from, const std::string& to,
 
 //! \brief compute average luminance from exposure bias
 //! \return Average Luminance (as 2^EV) or -1 if the value cannot be calculated
-float getAverageLuminance(const std::string& filename);
+float getAverageLuminance(const std::string &filename);
 
-float getExposureTime(const std::string& filename);
-
+float getExposureTime(const std::string &filename);
 }
 
 #endif

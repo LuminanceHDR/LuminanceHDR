@@ -36,38 +36,35 @@
 
 #include "Libpfs/utils/msec_timer.h"
 
-namespace pfs
-{
+namespace pfs {
 
-pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
-{
+pfs::Frame *rotate(const pfs::Frame *frame, bool clock_wise) {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
 
-    pfs::Frame *resizedFrame = new pfs::Frame( frame->getHeight(),
-                                               frame->getWidth() );
+    pfs::Frame *resizedFrame =
+        new pfs::Frame(frame->getHeight(), frame->getWidth());
 
-    const ChannelContainer& channels = frame->getChannels();
+    const ChannelContainer &channels = frame->getChannels();
 
-    for ( ChannelContainer::const_iterator it = channels.begin();
-          it != channels.end();
-          ++it)
-    {
+    for (ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end(); ++it) {
         pfs::Channel *newCh = resizedFrame->createChannel((*it)->getName());
 
         rotate(*it, newCh, clock_wise);
     }
 
-    pfs::copyTags( frame, resizedFrame );
+    pfs::copyTags(frame, resizedFrame);
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
-    std::cout << "rotateFrame() = " << f_timer.get_time() << " msec" << std::endl;
+    std::cout << "rotateFrame() = " << f_timer.get_time() << " msec"
+              << std::endl;
 #endif
 
     return resizedFrame;
 }
 
-} // pfs
+}  // pfs

@@ -25,61 +25,57 @@
 #ifndef PFS_COLORSPACE_LCMS_H
 #define PFS_COLORSPACE_LCMS_H
 
-#include <lcms2.h>
 #include <Libpfs/colorspace/convert.h>
+#include <lcms2.h>
 
 namespace pfs {
 namespace colorspace {
 
 //! \brief Functor 4 -> 3 conversion based on LCMS
 struct Convert4LCMS3 {
-    Convert4LCMS3(cmsHTRANSFORM transform)
-        : transform_(transform) {}
+    Convert4LCMS3(cmsHTRANSFORM transform) : transform_(transform) {}
 
     //! \brief
     template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeIn i4,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3) const
-    {
-        TypeIn inBuffer[4] = { i1, i2, i3, i4 };
+    void operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeIn i4, TypeOut &o1,
+                    TypeOut &o2, TypeOut &o3) const {
+        TypeIn inBuffer[4] = {i1, i2, i3, i4};
         TypeOut outBuffer[3];
 
-        cmsDoTransform(transform_, &inBuffer[0],
-                &outBuffer[0], 1);
+        cmsDoTransform(transform_, &inBuffer[0], &outBuffer[0], 1);
 
         o1 = outBuffer[0];
         o2 = outBuffer[1];
         o3 = outBuffer[2];
     }
-private:
+
+   private:
     cmsHTRANSFORM transform_;
 };
 
 //! \brief Functor 4 -> 3 conversion based on LCMS
 struct Convert3LCMS3 {
-    Convert3LCMS3(cmsHTRANSFORM transform)
-        : transform_(transform) {}
+    Convert3LCMS3(cmsHTRANSFORM transform) : transform_(transform) {}
 
     //! \brief
     template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn i1, TypeIn i2, TypeIn i3,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3) const
-    {
-        TypeIn inBuffer[3] = { i1, i2, i3 };
+    void operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeOut &o1, TypeOut &o2,
+                    TypeOut &o3) const {
+        TypeIn inBuffer[3] = {i1, i2, i3};
         TypeOut outBuffer[3];
 
-        cmsDoTransform(transform_, &inBuffer[0],
-                &outBuffer[0], 1);
+        cmsDoTransform(transform_, &inBuffer[0], &outBuffer[0], 1);
 
         o1 = outBuffer[0];
         o2 = outBuffer[1];
         o3 = outBuffer[2];
     }
-private:
+
+   private:
     cmsHTRANSFORM transform_;
 };
 
-}   // colorspace
-}   // pfs
+}  // colorspace
+}  // pfs
 
-#endif // PFS_COLORSPACE_CMYK_H
+#endif  // PFS_COLORSPACE_CMYK_H

@@ -31,23 +31,21 @@
 #ifndef PFS_IO_RGBEWRITER_H
 #define PFS_IO_RGBEWRITER_H
 
-#include <string>
-#include <Libpfs/params.h>
-#include <Libpfs/io/ioexception.h>
 #include <Libpfs/io/framewriter.h>
+#include <Libpfs/io/ioexception.h>
+#include <Libpfs/params.h>
+#include <string>
 
 namespace pfs {
 namespace io {
 
-class RGBEWriter : public FrameWriter
-{
-public:
-    RGBEWriter(const std::string& filename);
+class RGBEWriter : public FrameWriter {
+   public:
+    RGBEWriter(const std::string &filename);
 
     bool write(const pfs::Frame &frame, const pfs::Params &params);
 };
-
 }
 }
 
-#endif // PFS_IO_RGBEWRITER_H
+#endif  // PFS_IO_RGBEWRITER_H

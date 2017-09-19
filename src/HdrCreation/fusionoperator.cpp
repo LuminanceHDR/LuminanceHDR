@@ -23,9 +23,9 @@
 #include "debevec.h"
 #include "robertson02.h"
 
+#include <boost/assign.hpp>
 #include <cassert>
 #include <map>
-#include <boost/assign.hpp>
 
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/string.h>
@@ -37,64 +37,55 @@ using namespace boost::assign;
 namespace libhdr {
 namespace fusion {
 
-IFusionOperator::IFusionOperator()
-{}
+IFusionOperator::IFusionOperator() {}
 
 // TODO: fix this to return a shared_ptr
-pfs::Frame* IFusionOperator::computeFusion(ResponseCurve& response, WeightFunction& weight, const std::vector<FrameEnhanced>& frames)
-{
-    pfs::Frame* frame = new pfs::Frame;
+pfs::Frame *IFusionOperator::computeFusion(
+    ResponseCurve &response, WeightFunction &weight,
+    const std::vector<FrameEnhanced> &frames) {
+    pfs::Frame *frame = new pfs::Frame;
     computeFusion(response, weight, frames, *frame);
     return frame;
 }
 
 FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
-    switch (type)
-    {
-    case ROBERTSON_AUTO:
-        return std::make_shared<RobertsonOperatorAuto>();
-        break;
-    case ROBERTSON:
-        return std::make_shared<RobertsonOperator>();
-        break;
-    case DEBEVEC:
-    default:
-        return std::make_shared<DebevecOperator>();
-        break;
+    switch (type) {
+        case ROBERTSON_AUTO:
+            return std::make_shared<RobertsonOperatorAuto>();
+            break;
+        case ROBERTSON:
+            return std::make_shared<RobertsonOperator>();
+            break;
+        case DEBEVEC:
+        default:
+            return std::make_shared<DebevecOperator>();
+            break;
     }
 }
 
-FusionOperator IFusionOperator::fromString(const std::string& type)
-{
+FusionOperator IFusionOperator::fromString(const std::string &type) {
     typedef map<string, FusionOperator, pfs::utils::StringUnsensitiveComp> Dict;
-    static Dict v =
-            map_list_of
-            ("debevec", DEBEVEC)
-            ("robertson", ROBERTSON)
-            ("robertson-auto", ROBERTSON_AUTO)
-            ;
+    static Dict v = map_list_of("debevec", DEBEVEC)("robertson", ROBERTSON)(
+        "robertson-auto", ROBERTSON_AUTO);
 
     Dict::const_iterator it = v.find(type);
-    if (it != v.end())
-    {
+    if (it != v.end()) {
         return it->second;
     }
     return DEBEVEC;
 }
 
-void fillDataLists(const vector<FrameEnhanced> &frames,
-                   DataList& redChannels, DataList& greenChannels, DataList& blueChannels)
-{
+void fillDataLists(const vector<FrameEnhanced> &frames, DataList &redChannels,
+                   DataList &greenChannels, DataList &blueChannels) {
     assert(frames.size() == redChannels.size());
     assert(frames.size() == greenChannels.size());
     assert(frames.size() == blueChannels.size());
 
     // build temporary data structure
-    for ( size_t exp = 0; exp < frames.size(); ++exp )
-    {
-        Channel* red;
-        Channel* green;
-        Channel* blue;
+    for (size_t exp = 0; exp < frames.size(); ++exp) {
+        Channel *red;
+        Channel *green;
+        Channel *blue;
         frames[exp].frame()->getXYZChannels(red, green, blue);
 
         redChannels[exp] = red->data();
@@ -103,5 +94,5 @@ void fillDataLists(const vector<FrameEnhanced> &frames,
     }
 }
 
-}   // fusion
-}   // libhdr
+}  // fusion
+}  // libhdr

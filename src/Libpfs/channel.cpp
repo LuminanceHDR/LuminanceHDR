@@ -30,16 +30,9 @@
 
 namespace pfs {
 
-Channel::Channel( size_t width, size_t height, const std::string& channelName)
-    : ChannelData( width, height )
-    , m_name( channelName )
-    , m_tags()
-{}
+Channel::Channel(size_t width, size_t height, const std::string &channelName)
+    : ChannelData(width, height), m_name(channelName), m_tags() {}
 
-Channel::~Channel()
-{}
+Channel::~Channel() {}
 
-} // pfs
-
-
-
+}  // pfs

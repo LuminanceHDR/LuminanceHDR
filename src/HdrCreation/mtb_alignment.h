@@ -29,11 +29,11 @@
 
 #include <vector>
 
-#include <Libpfs/frame.h>
 #include <Libpfs/array2d_fwd.h>
+#include <Libpfs/frame.h>
 
 namespace libhdr {
 
-void mtb_alignment(std::vector<pfs::FramePtr>& framePtrList);
+void mtb_alignment(std::vector<pfs::FramePtr> &framePtrList);
 
-}   // libhdr
+}  // libhdr

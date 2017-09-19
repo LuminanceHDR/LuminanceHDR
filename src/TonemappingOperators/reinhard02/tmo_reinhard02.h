@@ -13,69 +13,55 @@
 
 #include <Libpfs/array2d_fwd.h>
 
-namespace pfs
-{
+namespace pfs {
 class Progress;
 }
 
 /**
  * Used to achieve temporal coherence
  */
-template<class T>
-class TemporalSmoothVariable
-{
-//  const int hist_length = 100;
-  T value;
+template <class T>
+class TemporalSmoothVariable {
+    //  const int hist_length = 100;
+    T value;
 
-  T getThreshold( T luminance )
-  {
-    return 0.01 * luminance;
-  }
+    T getThreshold(T luminance) { return 0.01 * luminance; }
 
-public:
-  TemporalSmoothVariable() : value( -1 )
-  {
-  }
+   public:
+    TemporalSmoothVariable() : value(-1) {}
 
-  void set( T new_value )
-  {
-    if( value == -1 )
-      value = new_value;
-    else {
-      T delta = new_value - value;
-      const T threshold = getThreshold( (new_value + value)/2 );
-      if( delta > threshold ) delta = threshold;
-      else if( delta < -threshold ) delta = -threshold;
-      value += delta;
+    void set(T new_value) {
+        if (value == -1)
+            value = new_value;
+        else {
+            T delta = new_value - value;
+            const T threshold = getThreshold((new_value + value) / 2);
+            if (delta > threshold)
+                delta = threshold;
+            else if (delta < -threshold)
+                delta = -threshold;
+            value += delta;
+        }
     }
-  }
 
-  T get() const
-  {
-    return value;
-  }
+    T get() const { return value; }
 };
 
 //--- from defines.h
-typedef struct {
-  int     xmax, ymax;     /* image dimensions */
-} CVTS;
+typedef struct { int xmax, ymax; /* image dimensions */ } CVTS;
 
-typedef double  COLOR[3];       /* red, green, blue (or X,Y,Z) */
+typedef double COLOR[3]; /* red, green, blue (or X,Y,Z) */
 //--- end of defines.h
 
-
-//static double    key              = 0.18;
-//static double    threshold        = 0.05;
-//static double    phi              = 8.;
-//static double    white            = 1e20;
-//static int       scale_low        = 1;
-//static int       scale_high       = 43;  // 1.6^8 = 43
-//static int       range            = 8;
-//static int       use_scales       = 0;
-//static int       use_border       = 0;
-
-
+// static double    key              = 0.18;
+// static double    threshold        = 0.05;
+// static double    phi              = 8.;
+// static double    white            = 1e20;
+// static int       scale_low        = 1;
+// static int       scale_high       = 43;  // 1.6^8 = 43
+// static int       range            = 8;
+// static int       use_scales       = 0;
+// static int       use_border       = 0;
 
 /*
  * @brief Photographic tone-reproduction
@@ -91,41 +77,38 @@ typedef double  COLOR[3];       /* red, green, blue (or X,Y,Z) */
  * @param low size in pixels of smallest scale (should be kept at 1)
  * @param high size in pixels of largest scale (default 1.6^8 = 43)
  */
-class Reinhard02
-{
-public:
-    Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
-               bool use_scales, float key, float phi,
-               int num, int low, int high, bool temporal_coherent,
-               pfs::Progress &ph);
+class Reinhard02 {
+   public:
+    Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L, bool use_scales,
+               float key, float phi, int num, int low, int high,
+               bool temporal_coherent, pfs::Progress &ph);
 
-    ~Reinhard02()
-    {}
+    ~Reinhard02() {}
 
     void tmo_reinhard02();
 
-private:
+   private:
     TemporalSmoothVariable<double> m_avg_luminance, m_max_luminance;
     CVTS m_cvts;
-    COLOR   **m_image;
+    COLOR **m_image;
     double m_sigma_0, m_sigma_1;
     double **m_luminance;
     unsigned int m_width, m_height;
-    const pfs::Array2Df* m_Y;
-    pfs::Array2Df* m_L;
+    const pfs::Array2Df *m_Y;
+    pfs::Array2Df *m_L;
     bool m_use_scales;
     bool m_use_border;
     double m_key, m_phi, m_white;
     int m_range, m_scale_low, m_scale_high;
-    bool  m_temporal_coherent;
+    bool m_temporal_coherent;
     const double m_alpha;
     double m_bbeta;
     double m_threshold;
     pfs::Progress &m_ph;
 
     double ***Pyramid;
-    int       PyramidHeight;
-    int       PyramidWidth0;
+    int PyramidHeight;
+    int PyramidWidth0;
 
     double bessel(double);
     void compute_bessel();
@@ -144,4 +127,4 @@ private:
     void build_pyramid(double **, int, int);
     void clean_pyramid();
 };
-#endif // TMO_REINHARD02_H
+#endif  // TMO_REINHARD02_H

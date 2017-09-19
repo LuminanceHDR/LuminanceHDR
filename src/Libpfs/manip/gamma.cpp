@@ -26,61 +26,53 @@
 
 #include "gamma.h"
 
-#include <iostream>
-#include <cmath>
 #include <cassert>
+#include <cmath>
+#include <iostream>
 
 #include "Libpfs/array2d.h"
-#include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/utils/msec_timer.h"
 
-namespace pfs
-{
+namespace pfs {
 
-void applyGamma(pfs::Frame* frame, float gamma)
-{
+void applyGamma(pfs::Frame *frame, float gamma) {
     float multiplier = 1.0f;
 
-    if ( gamma == 1.0f ) return;
+    if (gamma == 1.0f) return;
 
     pfs::Channel *X, *Y, *Z;
-    frame->getXYZChannels( X, Y, Z );
+    frame->getXYZChannels(X, Y, Z);
 
-    applyGamma(X, 1.0f/gamma, multiplier);
-    applyGamma(Y, 1.0f/gamma, multiplier);
-    applyGamma(Z, 1.0f/gamma, multiplier);
+    applyGamma(X, 1.0f / gamma, multiplier);
+    applyGamma(Y, 1.0f / gamma, multiplier);
+    applyGamma(Z, 1.0f / gamma, multiplier);
 }
 
-
-void applyGamma(pfs::Array2Df *array, const float exponent, const float multiplier)
-{
+void applyGamma(pfs::Array2Df *array, const float exponent,
+                const float multiplier) {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
 
-    float* Vin  = array->data();
+    float *Vin = array->data();
 
-    int V_ELEMS = array->getRows()*array->getCols();
+    int V_ELEMS = array->getRows() * array->getCols();
 #pragma omp parallel for
-    for (int idx = 0; idx < V_ELEMS; idx++)
-    {
-        if (Vin[idx] > 0.0f)
-        {
-            Vin[idx] = powf(Vin[idx]*multiplier, exponent);
-        }
-        else
-        {
+    for (int idx = 0; idx < V_ELEMS; idx++) {
+        if (Vin[idx] > 0.0f) {
+            Vin[idx] = powf(Vin[idx] * multiplier, exponent);
+        } else {
             Vin[idx] = 0.0f;
         }
     }
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
-    std::cout << "applyGamma() = " << f_timer.get_time() << " msec" << std::endl;
+    std::cout << "applyGamma() = " << f_timer.get_time() << " msec"
+              << std::endl;
 #endif
 }
-
 }
-

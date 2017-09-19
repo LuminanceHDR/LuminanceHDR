@@ -29,36 +29,30 @@
 namespace pfs {
 namespace colorspace {
 
-struct Normalizer
-{
-    Normalizer(float min, float max)
-        : m_min(min)
-        , m_range(max - min)
-    {
+struct Normalizer {
+    Normalizer(float min, float max) : m_min(min), m_range(max - min) {
         assert(m_range != 0.f);
     }
 
-    float operator()(float sample) const
-    {
+    float operator()(float sample) const {
         assert(!boost::math::isnan(sample));
 
-        return (sample - m_min)/m_range;
+        return (sample - m_min) / m_range;
     }
 
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const
-    {
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const {
         o1 = (*this)(i1);
         o2 = (*this)(i2);
         o3 = (*this)(i3);
     }
 
-private:
+   private:
     float m_min;
     float m_range;
 };
 
-}   // colorspace
-}   // pfs
+}  // colorspace
+}  // pfs
 
 #endif

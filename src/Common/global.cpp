@@ -21,68 +21,84 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#include <QCoreApplication>
 #include <QFileDialog>
 #include <QImage>
 #include <QMessageBox>
-#include <QUrl>
-#include <QTranslator>
-#include <QCoreApplication>
 #include <QScopedPointer>
+#include <QTranslator>
+#include <QUrl>
 #include <iostream>
 
-#include "Common/config.h"
-#include "Common/global.hxx"
-#include "Common/global.h"
 #include "Common/LuminanceOptions.h"
+#include "Common/config.h"
+#include "Common/global.h"
+#include "Common/global.hxx"
 
-
-bool matchesLdrFilename(const QString& file)
-{
-    QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
+bool matchesLdrFilename(const QString &file) {
+    QRegExp exp(
+        ".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|"
+        "raf|ptx|pef|"
+        "x3f|raw|sr2|rw2)$",
+        Qt::CaseInsensitive);
     return exp.exactMatch(file);
 }
 
-bool matchesHdrFilename(const QString& file)
-{
+bool matchesHdrFilename(const QString &file) {
 #ifdef HAVE_CFITSIO
-    QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
+    QRegExp exp(
+        ".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|nef|dng|mrw|"
+        "orf|kdc|dcr|"
+        "arw|raf|ptx|pef|x3f|raw|sr2|rw2)$",
+        Qt::CaseInsensitive);
 #else
-    QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
+    QRegExp exp(
+        ".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|"
+        "dcr|arw|raf|"
+        "ptx|pef|x3f|raw|sr2|rw2)$",
+        Qt::CaseInsensitive);
 #endif
     return exp.exactMatch(file);
 }
 
-QStringList getAllHdrFileExtensions()
-{
+QStringList getAllHdrFileExtensions() {
     QStringList listAll;
     QStringList list;
-    list << QStringLiteral(".exr") << QStringLiteral(".hdr") << QStringLiteral(".pic") << QStringLiteral(".tiff") << QStringLiteral(".tif");
+    list << QStringLiteral(".exr") << QStringLiteral(".hdr")
+         << QStringLiteral(".pic") << QStringLiteral(".tiff")
+         << QStringLiteral(".tif");
 #if HAVE_CFITSIO
     list << QStringLiteral(".fit") << QStringLiteral(".fits");
 #endif
-    list << QStringLiteral(".pfs") << QStringLiteral(".crw") << QStringLiteral(".cr2") << QStringLiteral(".nef") << QStringLiteral(".dng") << QStringLiteral(".mrw") << QStringLiteral(".orf") << QStringLiteral(".kdc") << QStringLiteral(".dcr") << QStringLiteral(".arw") << QStringLiteral(".raf") << QStringLiteral(".ptx") << QStringLiteral(".pef") << QStringLiteral(".x3f") << QStringLiteral(".raw") << QStringLiteral(".rw2") << QStringLiteral(".sr2") << QStringLiteral(".3fr") << QStringLiteral(".mef") << QStringLiteral(".mos") << QStringLiteral(".erf") << QStringLiteral(".nrw") << QStringLiteral(".srw");
+    list << QStringLiteral(".pfs") << QStringLiteral(".crw")
+         << QStringLiteral(".cr2") << QStringLiteral(".nef")
+         << QStringLiteral(".dng") << QStringLiteral(".mrw")
+         << QStringLiteral(".orf") << QStringLiteral(".kdc")
+         << QStringLiteral(".dcr") << QStringLiteral(".arw")
+         << QStringLiteral(".raf") << QStringLiteral(".ptx")
+         << QStringLiteral(".pef") << QStringLiteral(".x3f")
+         << QStringLiteral(".raw") << QStringLiteral(".rw2")
+         << QStringLiteral(".sr2") << QStringLiteral(".3fr")
+         << QStringLiteral(".mef") << QStringLiteral(".mos")
+         << QStringLiteral(".erf") << QStringLiteral(".nrw")
+         << QStringLiteral(".srw");
 
-    foreach(const QString &s, list)
-    {
+    foreach (const QString &s, list) {
         listAll << s;
         listAll << s.toUpper();
     }
     return listAll;
 }
 
-bool matchesValidHDRorLDRfilename(const QString& file)
-{
+bool matchesValidHDRorLDRfilename(const QString &file) {
     return matchesLdrFilename(file) || matchesHdrFilename(file);
 }
 
-QStringList convertUrlListToFilenameList(const QList<QUrl>& urls)
-{
+QStringList convertUrlListToFilenameList(const QList<QUrl> &urls) {
     QStringList files;
-    for (int i = 0; i < urls.size(); ++i)
-    {
+    for (int i = 0; i < urls.size(); ++i) {
         QString localFile = urls.at(i).toLocalFile();
-        if (matchesValidHDRorLDRfilename(localFile))
-        {
+        if (matchesValidHDRorLDRfilename(localFile)) {
             files.append(localFile);
         }
     }

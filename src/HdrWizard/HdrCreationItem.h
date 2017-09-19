@@ -24,65 +24,64 @@
 #ifndef HDRCREATIONITEM_H
 #define HDRCREATIONITEM_H
 
-#include <QSharedPointer>
-#include <QImage>
-#include <QString>
 #include <Libpfs/frame.h>
+#include <QImage>
+#include <QSharedPointer>
+#include <QString>
 
 #include <cmath>
 #include "arch/math.h"
 
 // defines an element that contains all the informations for this particular
 // image to be used inside the HdrWizard
-class HdrCreationItem
-{
-public:
-    explicit HdrCreationItem(const QString& filename);
-    HdrCreationItem(const QString& filename, const QString& convertedFilename);
+class HdrCreationItem {
+   public:
+    explicit HdrCreationItem(const QString &filename);
+    HdrCreationItem(const QString &filename, const QString &convertedFilename);
     ~HdrCreationItem();
 
-    const QString& filename() const     { return m_filename; }
-    const QString& convertedFilename() const { return m_convertedFilename; }
-    void setConvertedFilename(const QString& f) { m_convertedFilename = f; }
-    const QString& alignedFilename() const { return m_alignedFilename; }
-    void setAlignedFilename(const QString& f) { m_alignedFilename = f; }
+    const QString &filename() const { return m_filename; }
+    const QString &convertedFilename() const { return m_convertedFilename; }
+    void setConvertedFilename(const QString &f) { m_convertedFilename = f; }
+    const QString &alignedFilename() const { return m_alignedFilename; }
+    void setAlignedFilename(const QString &f) { m_alignedFilename = f; }
 
-    const pfs::FramePtr& frame() const  { return m_frame; }
-    pfs::FramePtr& frame()              { return m_frame; }
-    bool isValid() const                { return m_frame->isValid(); }
+    const pfs::FramePtr &frame() const { return m_frame; }
+    pfs::FramePtr &frame() { return m_frame; }
+    bool isValid() const { return m_frame->isValid(); }
 
-    bool hasAverageLuminance() const    { return (m_averageLuminance != -1.f); }
+    bool hasAverageLuminance() const { return (m_averageLuminance != -1.f); }
     void setAverageLuminance(float avl) { m_averageLuminance = avl; }
-    float getAverageLuminance() const   { return m_averageLuminance; }
+    float getAverageLuminance() const { return m_averageLuminance; }
 
-    bool hasExposureTime() const        { return (m_exposureTime != -1.f); }
-    void setExposureTime(float e)       { m_exposureTime = e; }
-    float getExposureTime() const       { return m_exposureTime; }
+    bool hasExposureTime() const { return (m_exposureTime != -1.f); }
+    void setExposureTime(float e) { m_exposureTime = e; }
+    float getExposureTime() const { return m_exposureTime; }
 
-    bool hasEV() const                  { return hasAverageLuminance(); }
-    void setEV(float ev)                { m_averageLuminance = std::pow(2.f, ev); }
-    float getEV() const                 { return log2(m_averageLuminance); }
+    bool hasEV() const { return hasAverageLuminance(); }
+    void setEV(float ev) { m_averageLuminance = std::pow(2.f, ev); }
+    float getEV() const { return log2(m_averageLuminance); }
 
-    void setMin(float m)                { m_datamin = m; }
-    void setMax (float M)               { m_datamax = M; }
-    float getMin() const                { return m_datamin; }
-    float getMax() const                { return m_datamax; }
+    void setMin(float m) { m_datamin = m; }
+    void setMax(float M) { m_datamax = M; }
+    float getMin() const { return m_datamin; }
+    float getMax() const { return m_datamax; }
 
-    QImage& qimage()                    { return *m_thumbnail; }
-    const QImage& qimage() const        { return *m_thumbnail; }
+    QImage &qimage() { return *m_thumbnail; }
+    const QImage &qimage() const { return *m_thumbnail; }
 
-private:
-    QString                 m_filename;
-    QString                 m_convertedFilename;
-    QString                 m_alignedFilename;
-    float                   m_averageLuminance;
-    float                   m_exposureTime;
-    float                   m_datamin;
-    float                   m_datamax;
-    pfs::FramePtr           m_frame;
-    QSharedPointer<QImage>  m_thumbnail;
+   private:
+    QString m_filename;
+    QString m_convertedFilename;
+    QString m_alignedFilename;
+    float m_averageLuminance;
+    float m_exposureTime;
+    float m_datamin;
+    float m_datamax;
+    pfs::FramePtr m_frame;
+    QSharedPointer<QImage> m_thumbnail;
 };
 
-typedef std::vector< HdrCreationItem > HdrCreationItemContainer;
+typedef std::vector<HdrCreationItem> HdrCreationItemContainer;
 
 #endif

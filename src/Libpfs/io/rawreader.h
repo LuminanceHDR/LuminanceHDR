@@ -43,8 +43,8 @@ namespace pfs {
 namespace io {
 
 class RAWReader : public FrameReader {
-public:
-    RAWReader(const std::string& filename);
+   public:
+    RAWReader(const std::string &filename);
     ~RAWReader();
 
     void open();
@@ -53,11 +53,11 @@ public:
 
     void read(Frame &frame, const Params &params);
 
-private:
+   private:
     LibRaw m_processor;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
 #endif

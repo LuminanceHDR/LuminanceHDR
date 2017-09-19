@@ -30,38 +30,34 @@
 #ifndef PFS_FRAME_H
 #define PFS_FRAME_H
 
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
 
 #include <Libpfs/channel.h>
 #include <Libpfs/tag.h>
 
-namespace pfs
-{
+namespace pfs {
 
-typedef std::vector< Channel* > ChannelContainer;
+typedef std::vector<Channel *> ChannelContainer;
 
 //! Interface representing a single PFS frame. Frame may contain 0
 //! or more channels (e.g. color XYZ, depth channel, alpha
 //! channnel). All the channels are of the same size. Frame can
 //! also contain additional information in tags (see getTags).
-class Frame
-{
-public:
+class Frame {
+   public:
     Frame(size_t width = 0, size_t height = 0);
     ~Frame();
 
-    bool isValid() const {
-        return (getWidth() > 0 && getHeight() > 0);
-    }
+    bool isValid() const { return (getWidth() > 0 && getHeight() > 0); }
 
     //! \return width of the frame (in pixels).
-    inline size_t getWidth() const  { return m_width; }
+    inline size_t getWidth() const { return m_width; }
     //! \return height of the frame (in pixels).
     inline size_t getHeight() const { return m_height; }
     //! \return height * width
-    inline size_t size() const      { return m_height*m_width; }
+    inline size_t size() const { return m_height * m_width; }
 
     //! \brief Changes the size of the frame
     void resize(size_t width, size_t height);
@@ -74,9 +70,10 @@ public:
     //! \param X [out] a pointer to store X channel in
     //! \param Y [out] a pointer to store Y channel in
     //! \param Z [out] a pointer to store Z channel in
-    void getXYZChannels(Channel* &X, Channel* &Y, Channel* &Z);
+    void getXYZChannels(Channel *&X, Channel *&Y, Channel *&Z);
 
-    void getXYZChannels(const Channel* &X, const Channel* &Y, const Channel* &Z) const;
+    void getXYZChannels(const Channel *&X, const Channel *&Y,
+                        const Channel *&Z) const;
 
     //! Creates color channels in XYZ color space. If such channels
     //! already exists, returns existing channels, rather than
@@ -86,15 +83,15 @@ public:
     //! \param X [out] a pointer to store X channel in
     //! \param Y [out] a pointer to store Y channel in
     //! \param Z [out] a pointer to store Z channel in
-    void createXYZChannels(Channel* &X, Channel* &Y, Channel* &Z);
+    void createXYZChannels(Channel *&X, Channel *&Y, Channel *&Z);
 
     //! Gets a named channel.
     //!
     //! \param name [in] name of the channel. Name must be 8 or less
     //! character long.
     //! \return channel or NULL if the channel does not exist
-    Channel* getChannel(const std::string& name);
-    const Channel* getChannel(const std::string &name) const;
+    Channel *getChannel(const std::string &name);
+    const Channel *getChannel(const std::string &name) const;
 
     //! Creates a named channel. If the channel already exists, returns
     //! existing channel.
@@ -106,30 +103,31 @@ public:
     //! \param name [in] name of the channel. Name must be 8 or less
     //! character long.
     //! \return existing or newly created channel
-    Channel *createChannel(const std::string& name);
+    Channel *createChannel(const std::string &name);
 
     //! Removes a channel. It is safe to remove the channel pointed by
     //! the ChannelIterator.
     //!
     //! \param channel [in] channel that should be removed.
-    void removeChannel(const std::string& channel);
+    void removeChannel(const std::string &channel);
 
-    //! \return \c ChannelContainer associated to the internal list of \c Channel
-    ChannelContainer& getChannels();
+    //! \return \c ChannelContainer associated to the internal list of \c
+    //! Channel
+    ChannelContainer &getChannels();
 
-    const ChannelContainer& getChannels() const;
+    const ChannelContainer &getChannels() const;
 
     //! \brief Returns TagContainer that can be used to access or modify
     //! tags associated with this Frame object.
-    TagContainer& getTags();
+    TagContainer &getTags();
 
     //! Returns TagContainer that can be used to access or modify
     //! tags associated with this Frame object.
-    const TagContainer& getTags() const;
+    const TagContainer &getTags() const;
 
-    void swap(Frame& other);
+    void swap(Frame &other);
 
-private:
+   private:
     size_t m_width;
     size_t m_height;
 
@@ -137,13 +135,13 @@ private:
     ChannelContainer m_channels;
 
     // cache for X Y Z
-    Channel* m_X;
-    Channel* m_Y;
-    Channel* m_Z;
+    Channel *m_X;
+    Channel *m_Y;
+    Channel *m_Z;
 };
 
-typedef std::shared_ptr< pfs::Frame > FramePtr;
+typedef std::shared_ptr<pfs::Frame> FramePtr;
 
-} // namespace pfs
+}  // namespace pfs
 
-#endif // PFS_FRAME_H
+#endif  // PFS_FRAME_H

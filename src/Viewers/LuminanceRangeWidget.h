@@ -28,79 +28,67 @@
 #define LUMINANCERANGE_WIDGET_H
 
 #include <QFrame>
-#include "Viewers/Histogram.h"
 #include "Libpfs/array2d_fwd.h"
+#include "Viewers/Histogram.h"
 
 class LuminanceRangeWidget : public QFrame {
-  Q_OBJECT
-public:
-  explicit LuminanceRangeWidget( QWidget *parent=0 );
-  ~LuminanceRangeWidget();
+    Q_OBJECT
+   public:
+    explicit LuminanceRangeWidget(QWidget *parent = 0);
+    ~LuminanceRangeWidget();
 
-  QSize sizeHint () const;
+    QSize sizeHint() const;
 
-protected:
-  void paintEvent( QPaintEvent * );
-  void mouseMoveEvent( QMouseEvent * );
-  void mousePressEvent( QMouseEvent * me );
-  void mouseReleaseEvent( QMouseEvent * me );
+   protected:
+    void paintEvent(QPaintEvent *);
+    void mouseMoveEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *me);
+    void mouseReleaseEvent(QMouseEvent *me);
 
-  float draggedMin();
-  float draggedMax();
+    float draggedMin();
+    float draggedMax();
 
-signals:
-  void updateRangeWindow();
-public slots:
-  void decreaseExposure();
-  void increaseExposure();
-  void extendRange();
-  void shrinkRange();
-  void fitToDynamicRange();
-  void lowDynamicRange();
+   signals:
+    void updateRangeWindow();
+   public slots:
+    void decreaseExposure();
+    void increaseExposure();
+    void extendRange();
+    void shrinkRange();
+    void fitToDynamicRange();
+    void lowDynamicRange();
 
-private:
-  float minValue;
-  float maxValue;
+   private:
+    float minValue;
+    float maxValue;
 
-  float windowMin;
-  float windowMax;
+    float windowMin;
+    float windowMax;
 
+    static const int DRAGNOTSTARTED = -1;
+    int mouseDragStart;
+    float dragShift;
+    enum DragMode { DRAG_MIN, DRAG_MAX, DRAG_MINMAX, DRAG_NO };
+    DragMode dragMode;
 
-  static const int DRAGNOTSTARTED = -1;
-  int mouseDragStart;
-  float dragShift;
-  enum DragMode
-    {
-      DRAG_MIN, DRAG_MAX, DRAG_MINMAX, DRAG_NO
-    };
-  DragMode dragMode;
+    bool showVP;
+    float valuePointer;
 
+    Histogram *histogram;
+    const pfs::Array2Df *histogramImage;
 
-  bool showVP;
-  float valuePointer;
+    QRect getPaintRect() const;
 
-  Histogram *histogram;
-  const pfs::Array2Df *histogramImage;
+   public:
+    float getRangeWindowMin() const { return windowMin; }
+    float getRangeWindowMax() const { return windowMax; }
 
-  QRect getPaintRect() const;
+    void setRangeWindowMinMax(float min, float max);
 
-public:
-  float getRangeWindowMin() const
-    {
-      return windowMin;
-    }
-  float getRangeWindowMax() const
-    {
-      return windowMax;
-    }
+    void setHistogramImage(const pfs::Array2Df *image);
 
-  void setRangeWindowMinMax( float min, float max );
-
-  void setHistogramImage( const pfs::Array2Df *image );
-
-  void showValuePointer( float value );
-  void hideValuePointer();
+    void showValuePointer(float value);
+    void hideValuePointer();
 };
-
 
 #endif

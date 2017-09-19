@@ -33,4 +33,4 @@
 #define MAX_TAG_STRING 1024
 #define MAX_CHANNEL_COUNT 1024
 
-#endif // PFS_IO_PFSCOMMON_H
+#endif  // PFS_IO_PFSCOMMON_H

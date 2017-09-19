@@ -25,27 +25,20 @@
 namespace pfs {
 namespace utils {
 
-template<typename T>
+template <typename T>
 struct ResourceHandlerTraits {
-    static inline
-    void cleanup(T* p) {
-        delete p;
-    }
+    static inline void cleanup(T *p) { delete p; }
 };
 
 //! \brief This class resemble QScopedPointer or boost::scoped_ptr
 //! however, it doesn't provide and operator*(), which allow to store
 //! a pointer to void
-template<typename T, typename Traits = ResourceHandlerTraits<T> >
-class ResourceHandler
-{
-public:
-    ResourceHandler(T* p = 0):
-        p_(p)
-    {}
+template <typename T, typename Traits = ResourceHandlerTraits<T>>
+class ResourceHandler {
+   public:
+    ResourceHandler(T *p = 0) : p_(p) {}
 
-    inline
-    void reset(T* p = 0) {
+    inline void reset(T *p = 0) {
         if (p == p_) return;
         if (p_ != 0) {
             Traits::cleanup(p_);
@@ -53,39 +46,34 @@ public:
         p_ = p;
     }
 
-    inline
-    ~ResourceHandler() {
+    inline ~ResourceHandler() {
         T *oldD = this->p_;
         Traits::cleanup(oldD);
         this->p_ = 0;
     }
 
-    inline T* data()
-    { return p_; }
+    inline T *data() { return p_; }
 
-    inline const T* data() const
-    { return p_; }
+    inline const T *data() const { return p_; }
 
-    inline T* take() {
-        T* old_p = p_;
+    inline T *take() {
+        T *old_p = p_;
         p_ = 0;
         return old_p;
     }
 
-    inline operator bool() const
-    { return p_; }
+    inline operator bool() const { return p_; }
 
-    inline bool operator!() const
-    { return !p_; }
+    inline bool operator!() const { return !p_; }
 
-private:
-    ResourceHandler(const ResourceHandler&);
-    ResourceHandler& operator=(const ResourceHandler&);
+   private:
+    ResourceHandler(const ResourceHandler &);
+    ResourceHandler &operator=(const ResourceHandler &);
 
-    T* p_;
+    T *p_;
 };
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
-#endif // RESOURCEHANDLER_H
+#endif  // RESOURCEHANDLER_H

@@ -23,25 +23,18 @@
 
 #include "SimplePreviewLabel.h"
 
-SimplePreviewLabel::SimplePreviewLabel(int index, QWidget *parent):
-    QLabel(parent),
-    m_index(index),
-    m_selected(false)
-{
+SimplePreviewLabel::SimplePreviewLabel(int index, QWidget *parent)
+    : QLabel(parent), m_index(index), m_selected(false) {
     setScaledContents(true);
     setMinimumSize(130, 100);
     setMaximumSize(130, 100);
 }
 
-SimplePreviewLabel::~SimplePreviewLabel()
-{
-}
+SimplePreviewLabel::~SimplePreviewLabel() {}
 
-void SimplePreviewLabel::mousePressEvent(QMouseEvent *event)
-{
+void SimplePreviewLabel::mousePressEvent(QMouseEvent *event) {
     if (event->buttons() == Qt::LeftButton) {
         m_selected = true;
         emit selected(m_index);
     }
 }
-

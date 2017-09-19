@@ -29,20 +29,20 @@
 #ifndef LUMINANCEPATHS_H
 #define LUMINANCEPATHS_H
 
-#include <QString>
-#include <QMap>
-#include <QLocale>
 #include <QDir>
+#include <QLocale>
+#include <QMap>
+#include <QString>
 
-class LuminancePaths
-{
-        QMap<QString,QString> LuminancePathsDB;
-        LuminancePaths() {}
-        static LuminancePaths *instance;
-        static LuminancePaths *getThis();
+class LuminancePaths {
+    QMap<QString, QString> LuminancePathsDB;
+    LuminancePaths() {}
+    static LuminancePaths *instance;
+    static LuminancePaths *getThis();
 
-    public:
-        static QString HelpDir();
-        static QString LocalizedDirPath(const QString& base, const QString& fallback = QStringLiteral("en"));
+   public:
+    static QString HelpDir();
+    static QString LocalizedDirPath(
+        const QString &base, const QString &fallback = QStringLiteral("en"));
 };
 #endif

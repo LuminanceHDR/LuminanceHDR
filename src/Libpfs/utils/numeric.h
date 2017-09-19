@@ -25,9 +25,9 @@
 //! \brief This file contains a series of extensions for vector operations
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
+#include <cstddef>
 #include <functional>
 #include <numeric>
-#include <cstddef>
 
 namespace pfs {
 namespace utils {
@@ -35,30 +35,24 @@ namespace utils {
 namespace numeric {
 //! \brief Extension of std::plus to compute A + s*B
 template <typename T>
-struct vadds
-{
-    vadds(const T& s)
-        : s_(s) {}
-    T
-    operator()(const T& t1, const T& t2) const
-    { return (t1 + (s_*t2)); }
-private:
+struct vadds {
+    vadds(const T &s) : s_(s) {}
+    T operator()(const T &t1, const T &t2) const { return (t1 + (s_ * t2)); }
+
+   private:
     T s_;
 };
 
 //! \brief Extension of std::minus to compute A - s*B
 template <typename T>
-struct vsubs
-{
-    vsubs(const T& s)
-        : s_(s) {}
-    T
-    operator()(const T& t1, const T& t2) const
-    { return (t1 - (s_*t2)); }
-private:
+struct vsubs {
+    vsubs(const T &s) : s_(s) {}
+    T operator()(const T &t1, const T &t2) const { return (t1 - (s_ * t2)); }
+
+   private:
     T s_;
 };
-}   // numeric
+}  // numeric
 
 //! \brief multiplies element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] * B[i]
@@ -68,53 +62,56 @@ private:
 //! \param[in] N size of the vectors
 //! \note caller is in charge of properly allocate all the vectors
 template <typename _Type>
-void vmul(const _Type* A, const _Type* B, _Type* C, size_t size);
+void vmul(const _Type *A, const _Type *B, _Type *C, size_t size);
 
 //! \brief divides element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] / B[i]
 template <typename _Type>
-void vdiv(const _Type* A, const _Type* B, _Type* C, size_t size);
-
+void vdiv(const _Type *A, const _Type *B, _Type *C, size_t size);
 
 //! \brief sum element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] + B[i]
 template <typename _Type>
-void vadd(const _Type* A, const _Type* B, _Type* C, size_t size);
+void vadd(const _Type *A, const _Type *B, _Type *C, size_t size);
 
 //! \brief sum  element-wise \c s to \c A and stores into \c B
 //! B[i] = A[i] + s
 template <typename _Type>
-void vsadd(const _Type* A, const float s, _Type* B, size_t size);
+void vsadd(const _Type *A, const float s, _Type *B, size_t size);
 
-//! \brief multiplies element-wise \c s and \c B, sum it to \c A and stores into \c C
+//! \brief multiplies element-wise \c s and \c B, sum it to \c A and stores into
+//! \c C
 //! C[i] = A[i] + (s * B[i])
 template <typename _Type>
-void vadds(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size);
+void vadds(const _Type *A, const _Type &s, const _Type *B, _Type *C,
+           size_t size);
 
 //! \brief subtract element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] - B[i]
 template <typename _Type>
-void vsub(const _Type* A, const _Type* B, _Type* C, size_t size);
+void vsub(const _Type *A, const _Type *B, _Type *C, size_t size);
 
-//! \brief multiplies element-wise \c s and \c B, subtract it from \c A and stores into \c C
+//! \brief multiplies element-wise \c s and \c B, subtract it from \c A and
+//! stores into \c C
 //! C[i] = A[i] - (s * B[i])
 template <typename _Type>
-void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size);
+void vsubs(const _Type *A, const _Type &s, const _Type *B, _Type *C,
+           size_t size);
 
 //! // O[i] = c * I[i]
 template <typename _Type>
-void vsmul(const _Type* I, const float c, _Type* O, size_t size);
+void vsmul(const _Type *I, const float c, _Type *O, size_t size);
 
 template <typename _Type>
-void vsum_scalar(const _Type* I, const float c, _Type* O, size_t size);
+void vsum_scalar(const _Type *I, const float c, _Type *O, size_t size);
 
 template <typename _Type>
-void vmul_scalar(const _Type* I, const float c, _Type* O, size_t size);
+void vmul_scalar(const _Type *I, const float c, _Type *O, size_t size);
 
 template <typename _Type>
-void vdiv_scalar(const _Type* I, float c, _Type* O, size_t size);
-}   // utils
-}   // pfs
+void vdiv_scalar(const _Type *I, float c, _Type *O, size_t size);
+}  // utils
+}  // pfs
 
 #include <Libpfs/utils/numeric.hxx>
-#endif // PFS_UTILS_NUMERIC_H
+#endif  // PFS_UTILS_NUMERIC_H

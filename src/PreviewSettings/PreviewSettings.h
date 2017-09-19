@@ -30,17 +30,16 @@
 
 // forward declaration
 namespace pfs {
-    class Frame;            // #include "Libpfs/frame.h"
+class Frame;  // #include "Libpfs/frame.h"
 }
 
-class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
-class PreviewLabel;         // #include "PreviewSettings/PreviewLabel.h"
+class TonemappingOptions;  // #include "Core/TonemappingOptions.h"
+class PreviewLabel;        // #include "PreviewSettings/PreviewLabel.h"
 
-class PreviewSettings : public QWidget
-{
+class PreviewSettings : public QWidget {
     Q_OBJECT
 
-public:
+   public:
     explicit PreviewSettings(QWidget *parent = 0);
     ~PreviewSettings();
     void addPreviewLabel(PreviewLabel *label);
@@ -48,23 +47,24 @@ public:
     QSize getLabelSize();
     int getSize() { return m_ListPreviewLabel.size(); }
     void clear();
-protected:
-    virtual void changeEvent(QEvent* event);
 
-public Q_SLOTS:
+   protected:
+    virtual void changeEvent(QEvent *event);
+
+   public Q_SLOTS:
     void selectLabel(int index);
-    void updatePreviews(pfs::Frame* frame);
+    void updatePreviews(pfs::Frame *frame);
 
-protected Q_SLOTS:
-    void tonemapPreview(TonemappingOptions*);
+   protected Q_SLOTS:
+    void tonemapPreview(TonemappingOptions *);
 
-Q_SIGNALS:
-    void startTonemapping(TonemappingOptions*);
+   Q_SIGNALS:
+    void startTonemapping(TonemappingOptions *);
     void triggered();
 
-private:
+   private:
     int m_original_width_frame;
-    QList<PreviewLabel*> m_ListPreviewLabel;
+    QList<PreviewLabel *> m_ListPreviewLabel;
     FlowLayout *m_flowLayout;
 };
 #endif

@@ -54,10 +54,6 @@
 /**
  * All classes and function from PFS library reside in pfs namespace.
  */
-namespace pfs
-{
-
-
-}
+namespace pfs {}
 
 #endif

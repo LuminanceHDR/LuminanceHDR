@@ -28,20 +28,18 @@
 
 #include "Libpfs/array2d_fwd.h"
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
 
 //! \brief rotate frame into a newly created one
-pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise);
+pfs::Frame *rotate(const pfs::Frame *frame, bool clock_wise);
 
 //! \brief rotate \c in inside \c out
 //! \param[in] clockwise true if clockwise rotation, false if counter clockwise
 template <typename Type>
 void rotate(const Array2D<Type> *in, Array2D<Type> *out, bool clockwise);
-
 }
 
 #include "rotate.hxx"
 
-#endif // PFSROTATE_H
+#endif  // PFSROTATE_H

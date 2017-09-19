@@ -24,123 +24,124 @@
  */
 
 #include <QApplication>
-#include <QObject>
 #include <QDebug>
 #include <QFile>
-#include <QString>
-#include <QStringList>
+#include <QObject>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include <QString>
+#include <QStringList>
 
-#include "Common/global.h"
-#include "Common/config.h"
-#include "Common/TranslatorManager.h"
-#include "MainWindow/MainWindow.h"
-#include "MainWindow/DonationDialog.h"
-#include "BatchTM/BatchTMDialog.h"
 #include "BatchHDR/BatchHDRDialog.h"
+#include "BatchTM/BatchTMDialog.h"
+#include "Common/TranslatorManager.h"
+#include "Common/config.h"
+#include "Common/global.h"
+#include "MainWindow/DonationDialog.h"
+#include "MainWindow/MainWindow.h"
 
-namespace
-{
-QStringList getCliFiles(const QStringList& arguments)
-{
+namespace {
+QStringList getCliFiles(const QStringList &arguments) {
     // empty QStringList;
     QStringList fileList;
 
     // check if any of the parameters is a proper file on the file system
-    // I skip the first value of the list because it is the name of the executable
+    // I skip the first value of the list because it is the name of the
+    // executable
     for (int i = 1; i < arguments.size(); ++i) {
-        QFile file( arguments.at(i).toLocal8Bit() );
+        QFile file(arguments.at(i).toLocal8Bit());
 
-        if ( file.exists() ) {
-            fileList.push_back( arguments.at(i).toLocal8Bit() );
+        if (file.exists()) {
+            fileList.push_back(arguments.at(i).toLocal8Bit());
         }
     }
 
     return fileList;
 }
 
-bool check_db()
-{
-        LuminanceOptions options;
+bool check_db() {
+    LuminanceOptions options;
 
-        QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
-        db.setDatabaseName(options.getDatabaseFileName());
-        db.setHostName(QStringLiteral("localhost"));
-        bool ok = db.open();
-        if (!ok)
-        {
-            QTextStream out(stdout);
-            out << QObject::tr("The database used for saving TM parameters cannot be opened.\n"
-                                         "Error: %1").arg(db.lastError().databaseText());
-        }
-        return ok;
+    QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
+    db.setDatabaseName(options.getDatabaseFileName());
+    db.setHostName(QStringLiteral("localhost"));
+    bool ok = db.open();
+    if (!ok) {
+        QTextStream out(stdout);
+        out << QObject::tr(
+                   "The database used for saving TM parameters cannot "
+                   "be opened.\n"
+                   "Error: %1")
+                   .arg(db.lastError().databaseText());
+    }
+    return ok;
 }
-
 }
 
 #if defined(WIN32) || defined(__APPLE__)
-void customMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
-{
+void customMessageHandler(QtMsgType type, const QMessageLogContext &context,
+                          const QString &msg) {
     QString txt;
     switch (type) {
-    case QtDebugMsg:
-        txt = QString("Debug: %1").arg(msg);
-        break;
-    case QtWarningMsg:
-        txt = QString("Warning: %1").arg(msg);
-    break;
-    case QtCriticalMsg:
-        txt = QString("Critical: %1").arg(msg);
-    break;
-    case QtFatalMsg:
-        txt = QString("Fatal: %1").arg(msg);
-        abort();
+        case QtDebugMsg:
+            txt = QString("Debug: %1").arg(msg);
+            break;
+        case QtWarningMsg:
+            txt = QString("Warning: %1").arg(msg);
+            break;
+        case QtCriticalMsg:
+            txt = QString("Critical: %1").arg(msg);
+            break;
+        case QtFatalMsg:
+            txt = QString("Fatal: %1").arg(msg);
+            abort();
     }
 
     QFile outFile("debuglog.txt");
-    if (outFile.open(QIODevice::WriteOnly | QIODevice::Append))
-    {
+    if (outFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
         QTextStream ts(&outFile);
         ts << txt << endl;
     }
 }
 #endif
 
-int main( int argc, char ** argv )
-{
+int main(int argc, char **argv) {
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
-#ifdef WIN32 //TODO: there are problems with HiDPI on X11, let's enable this only on Windows by now
+#ifdef WIN32  // TODO: there are problems with HiDPI on X11, let's enable this
+              // only on Windows by now
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
     Q_INIT_RESOURCE(icons);
-    QApplication application( argc, argv );
-
+    QApplication application(argc, argv);
 
 #ifdef WIN32
-    //qInstallMessageHandler(customMessageHandler);
+    // qInstallMessageHandler(customMessageHandler);
 
-    QIcon::setThemeSearchPaths( QStringList() << QGuiApplication::applicationDirPath() + QString("/icons/luminance-hdr") );
+    QIcon::setThemeSearchPaths(QStringList()
+                               << QGuiApplication::applicationDirPath() +
+                                      QString("/icons/luminance-hdr"));
     QIcon::setThemeName("luminance-hdr");
 #endif
 #ifdef __APPLE__
-    QIcon::setThemeSearchPaths( QStringList() << QCoreApplication::applicationDirPath() + QString("/../Resources/icons/luminance-hdr") );
+    QIcon::setThemeSearchPaths(
+        QStringList() << QCoreApplication::applicationDirPath() +
+                             QString("/../Resources/icons/luminance-hdr"));
     QIcon::setThemeName("luminance-hdr");
 #endif
 
     LuminanceOptions::isCurrentPortableMode =
-            QDir(QGuiApplication::applicationDirPath()).exists(QStringLiteral("PortableMode.txt"));
+        QDir(QGuiApplication::applicationDirPath())
+            .exists(QStringLiteral("PortableMode.txt"));
     LuminanceOptions::checkHomeFolder();
 
-    if (LuminanceOptions::isCurrentPortableMode)
-    {
+    if (LuminanceOptions::isCurrentPortableMode) {
         QSettings::setDefaultFormat(QSettings::IniFormat);
-        QSettings::setPath(QSettings::IniFormat,
-                           QSettings::UserScope, QDir::currentPath());
+        QSettings::setPath(QSettings::IniFormat, QSettings::UserScope,
+                           QDir::currentPath());
     }
 
     LuminanceOptions::conditionallyDoUpgrade();
@@ -155,40 +156,30 @@ int main( int argc, char ** argv )
     bool isBatchHDR = false;
     bool isBatchTM = false;
 
-    foreach( QString arg , arguments)
-    {
-        if (arg.startsWith("--batchhdr"))
-            isBatchHDR = true;
-        if (arg.startsWith("--batchtm"))
-            isBatchTM = true;
+    foreach (QString arg, arguments) {
+        if (arg.startsWith("--batchhdr")) isBatchHDR = true;
+        if (arg.startsWith("--batchtm")) isBatchTM = true;
     }
 
-    if (appname.contains("luminance-hdr") && (!isBatchHDR) && (!isBatchTM))
-    {
+    if (appname.contains("luminance-hdr") && (!isBatchHDR) && (!isBatchTM)) {
         DonationDialog::showDonationDialog();
 
         // TODO: create update checker...
         // TODO: pass update checker to MainWindow
-        MainWindow* mainWindow = new MainWindow;
+        MainWindow *mainWindow = new MainWindow;
 
         mainWindow->show();
-        mainWindow->openFiles( getCliFiles( application.arguments() ) );
+        mainWindow->openFiles(getCliFiles(application.arguments()));
 
         return application.exec();
-    }
-    else if (appname.contains("batch-tonemapping") || isBatchTM)
-    {
-        if (!check_db())
-            return EXIT_FAILURE;
+    } else if (appname.contains("batch-tonemapping") || isBatchTM) {
+        if (!check_db()) return EXIT_FAILURE;
 
         BatchTMDialog *tmdialog = new BatchTMDialog;
 
         tmdialog->exec();
-    }
-    else if (appname.contains("batch-hdr") || isBatchHDR)
-    {
-        if (!check_db())
-            return EXIT_FAILURE;
+    } else if (appname.contains("batch-hdr") || isBatchHDR) {
+        if (!check_db()) return EXIT_FAILURE;
 
         BatchHDRDialog *hdrdialog = new BatchHDRDialog;
 
@@ -197,4 +188,3 @@ int main( int argc, char ** argv )
 
     return EXIT_SUCCESS;
 }
-

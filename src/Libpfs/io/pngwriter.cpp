@@ -22,24 +22,24 @@
 
 #include "pngwriter.h"
 
-#include <vector>
+#include <algorithm>
 #include <iostream>
 #include <sstream>
-#include <algorithm>
+#include <vector>
 
 #include <lcms2.h>
-#include <stdio.h>
 #include <png.h>
+#include <stdio.h>
 
-#include <Libpfs/frame.h>
-#include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/normalizer.h>
+#include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/fixedstrideiterator.h>
+#include <Libpfs/frame.h>
+#include <Libpfs/utils/chain.h>
+#include <Libpfs/utils/clamp.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
 #include <Libpfs/utils/transform.h>
-#include <Libpfs/utils/chain.h>
-#include <Libpfs/utils/clamp.h>
-#include <Libpfs/fixedstrideiterator.h>
 
 using namespace std;
 using namespace pfs;
@@ -47,41 +47,38 @@ using namespace pfs;
 namespace pfs {
 namespace io {
 
-struct PngWriterParams
-{
+struct PngWriterParams {
     PngWriterParams()
-        : quality_(100)
-        , minLuminance_(0.f)
-        , maxLuminance_(1.f)
-        , luminanceMapping_(MAP_LINEAR)
-    {}
+        : quality_(100),
+          minLuminance_(0.f),
+          maxLuminance_(1.f),
+          luminanceMapping_(MAP_LINEAR) {}
 
-    void parse(const Params& params)
-    {
-        for ( Params::const_iterator it = params.begin(), itEnd = params.end();
-              it != itEnd; ++it )
-        {
-            if ( it->first == "quality" ) {
+    void parse(const Params &params) {
+        for (Params::const_iterator it = params.begin(), itEnd = params.end();
+             it != itEnd; ++it) {
+            if (it->first == "quality") {
                 quality_ = it->second.as<size_t>(quality_);
                 continue;
             }
-            if ( it->first == "min_luminance" ) {
+            if (it->first == "min_luminance") {
                 minLuminance_ = it->second.as<float>(minLuminance_);
                 continue;
             }
-            if ( it->first == "max_luminance" ) {
+            if (it->first == "max_luminance") {
                 maxLuminance_ = it->second.as<float>(maxLuminance_);
                 continue;
             }
-            if ( it->first == "mapping_method" ) {
-                luminanceMapping_ = it->second.as<RGBMappingType>(luminanceMapping_);
+            if (it->first == "mapping_method") {
+                luminanceMapping_ =
+                    it->second.as<RGBMappingType>(luminanceMapping_);
                 continue;
             }
         }
     }
 
     int compressionLevel() const {
-        int compLevel = (9 - (int)((float)quality_/11.11111f + 0.5f));
+        int compLevel = (9 - (int)((float)quality_ / 11.11111f + 0.5f));
 
         assert(compLevel >= 0);
         assert(compLevel <= 9);
@@ -95,8 +92,7 @@ struct PngWriterParams
     RGBMappingType luminanceMapping_;
 };
 
-ostream& operator<<(ostream& out, const PngWriterParams& params)
-{
+ostream &operator<<(ostream &out, const PngWriterParams &params) {
     stringstream ss;
     ss << "PngWriterParams: [";
     ss << "compression_level: " << params.compressionLevel() << ", ";
@@ -107,12 +103,10 @@ ostream& operator<<(ostream& out, const PngWriterParams& params)
     return (out << ss.str());
 }
 
-static
-void png_write_icc_profile(png_structp png_ptr, png_infop info_ptr)
-{
+static void png_write_icc_profile(png_structp png_ptr, png_infop info_ptr) {
     cmsUInt32Number profileSize = 0;
     cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-    cmsSaveProfileToMem(hsRGB, NULL, &profileSize);        // get the size
+    cmsSaveProfileToMem(hsRGB, NULL, &profileSize);  // get the size
 
 #if PNG_LIBPNG_VER_MINOR < 5
     std::vector<char> profileBuffer(profileSize);
@@ -130,30 +124,28 @@ void png_write_icc_profile(png_structp png_ptr, png_infop info_ptr)
                  profileBuffer.data(), (png_uint_32)profileSize);
 }
 
-class PngWriterImpl
-{
-public:
+class PngWriterImpl {
+   public:
     PngWriterImpl() : m_filesize(0) {}
-    virtual ~PngWriterImpl()        {}
+    virtual ~PngWriterImpl() {}
 
-    virtual void setupPngDest(png_structp png_ptr, const std::string& filename) = 0;
+    virtual void setupPngDest(png_structp png_ptr,
+                              const std::string &filename) = 0;
 
     virtual void close() = 0;
     virtual void computeSize() = 0;
 
-    size_t getFileSize()            { return m_filesize; }
-    void setFileSize(size_t size)   { m_filesize = size; }
+    size_t getFileSize() { return m_filesize; }
+    void setFileSize(size_t size) { m_filesize = size; }
 
-    bool write(const pfs::Frame &frame, const PngWriterParams& params,
-               const std::string& filename)
-    {
+    bool write(const pfs::Frame &frame, const PngWriterParams &params,
+               const std::string &filename) {
         png_uint_32 width = frame.getWidth();
         png_uint_32 height = frame.getHeight();
 
         png_structp png_ptr =
-                png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-        if (!png_ptr)
-        {
+            png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        if (!png_ptr) {
             close();
 
             throw io::WriteException("PNG: Failed to create write struct");
@@ -161,8 +153,7 @@ public:
         }
 
         png_infop info_ptr = png_create_info_struct(png_ptr);
-        if (!info_ptr)
-        {
+        if (!info_ptr) {
             png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
             close();
 
@@ -170,8 +161,7 @@ public:
             return false;
         }
 
-        if (setjmp(png_jmpbuf(png_ptr)))
-        {
+        if (setjmp(png_jmpbuf(png_ptr))) {
             png_destroy_write_struct(&png_ptr, &info_ptr);
             close();
 
@@ -181,38 +171,34 @@ public:
 
         setupPngDest(png_ptr, filename);
 
-        png_set_IHDR(png_ptr, info_ptr, width, height,
-                     8, /*PNG_COLOR_TYPE_RGB_ALPHA*/ PNG_COLOR_TYPE_RGB,
+        png_set_IHDR(png_ptr, info_ptr, width, height, 8,
+                     /*PNG_COLOR_TYPE_RGB_ALPHA*/ PNG_COLOR_TYPE_RGB,
                      PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
                      PNG_FILTER_TYPE_DEFAULT);
 
         png_set_compression_level(png_ptr, params.compressionLevel());
         png_set_bgr(png_ptr);
-        png_write_icc_profile(png_ptr, info_ptr);   // user defined function, see above
+        png_write_icc_profile(png_ptr,
+                              info_ptr);  // user defined function, see above
         png_write_info(png_ptr, info_ptr);
 
-        const Channel* rChannel;
-        const Channel* gChannel;
-        const Channel* bChannel;
+        const Channel *rChannel;
+        const Channel *gChannel;
+        const Channel *bChannel;
         frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-        std::vector<png_byte> scanLineOut( width * 3 );
-        for (png_uint_32 row = 0; row < height; ++row)
-        {
+        std::vector<png_byte> scanLineOut(width * 3);
+        for (png_uint_32 row = 0; row < height; ++row) {
             utils::transform(
-                        rChannel->row_begin(row),
-                        rChannel->row_end(row),
-                        gChannel->row_begin(row),
-                        bChannel->row_begin(row),
-                        FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 2),
-                        FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 1),
-                        FixedStrideIterator<png_byte*, 3>(scanLineOut.data()),
-                        utils::chain(
-                            colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
-                            utils::CLAMP_F32,
-                            Remapper<png_byte>(params.luminanceMapping_)
-                            )
-                        );
+                rChannel->row_begin(row), rChannel->row_end(row),
+                gChannel->row_begin(row), bChannel->row_begin(row),
+                FixedStrideIterator<png_byte *, 3>(scanLineOut.data() + 2),
+                FixedStrideIterator<png_byte *, 3>(scanLineOut.data() + 1),
+                FixedStrideIterator<png_byte *, 3>(scanLineOut.data()),
+                utils::chain(colorspace::Normalizer(params.minLuminance_,
+                                                    params.maxLuminance_),
+                             utils::CLAMP_F32,
+                             Remapper<png_byte>(params.luminanceMapping_)));
             png_write_row(png_ptr, scanLineOut.data());
         }
 
@@ -225,31 +211,27 @@ public:
         return true;
     }
 
-protected:
+   protected:
     size_t m_filesize;
 };
 
-struct PngWriterImplFile : public PngWriterImpl
-{
-    PngWriterImplFile()
-        : PngWriterImpl()
-        , m_handle()
-    {}
+struct PngWriterImplFile : public PngWriterImpl {
+    PngWriterImplFile() : PngWriterImpl(), m_handle() {}
 
-    void setupPngDest(png_structp png_ptr, const std::string& filename) {
+    void setupPngDest(png_structp png_ptr, const std::string &filename) {
         open(filename);
         png_init_io(png_ptr, handle());
     }
 
-    void close()                    { m_handle.reset(); }
-    void computeSize()              { m_filesize = 0; }
+    void close() { m_handle.reset(); }
+    void computeSize() { m_filesize = 0; }
 
-private:
-    FILE* handle()                  { return m_handle.data(); }
+   private:
+    FILE *handle() { return m_handle.data(); }
 
-    void open(const std::string& filename) {
-        m_handle.reset( fopen(filename.c_str(), "wb") );
-        if ( !m_handle ) {
+    void open(const std::string &filename) {
+        m_handle.reset(fopen(filename.c_str(), "wb"));
+        if (!m_handle) {
             throw io::InvalidFile("Cannot open file " + filename);
         }
     }
@@ -259,10 +241,9 @@ private:
 
 typedef std::vector<char> PngBuffer;
 
-static
-void my_png_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
-{
-    PngBuffer* buffer = (PngBuffer*)png_get_io_ptr(png_ptr);
+static void my_png_write_data(png_structp png_ptr, png_bytep data,
+                              png_size_t length) {
+    PngBuffer *buffer = (PngBuffer *)png_get_io_ptr(png_ptr);
     size_t newSize = buffer->size() + length;
 
     buffer->resize(newSize);
@@ -270,45 +251,30 @@ void my_png_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
     std::copy(data, data + length, buffer->end() - length);
 }
 
-struct PngWriterImplMemory : public PngWriterImpl
-{
-    PngWriterImplMemory()
-        : PngWriterImpl()
-        , m_buffer()
-    {}
+struct PngWriterImplMemory : public PngWriterImpl {
+    PngWriterImplMemory() : PngWriterImpl(), m_buffer() {}
 
-    void setupPngDest(png_structp png_ptr, const std::string&)
-    {
+    void setupPngDest(png_structp png_ptr, const std::string &) {
         png_set_write_fn(png_ptr, &m_buffer, my_png_write_data, NULL);
     }
 
-    void close()            { m_buffer.clear(); }
-    void computeSize()      { setFileSize(m_buffer.size()); }
+    void close() { m_buffer.clear(); }
+    void computeSize() { setFileSize(m_buffer.size()); }
 
-private:
+   private:
     PngBuffer m_buffer;
 };
 
-PngWriter::PngWriter()
-    : FrameWriter()
-    , m_impl(new PngWriterImplMemory)
-{}
+PngWriter::PngWriter() : FrameWriter(), m_impl(new PngWriterImplMemory) {}
 
 PngWriter::PngWriter(const string &filename)
-    : FrameWriter(filename)
-    , m_impl(new PngWriterImplFile())
-{}
+    : FrameWriter(filename), m_impl(new PngWriterImplFile()) {}
 
+PngWriter::~PngWriter() { m_impl->close(); }
 
-PngWriter::~PngWriter()
-{
-    m_impl->close();
-}
-
-bool PngWriter::write(const pfs::Frame& frame, const Params& params)
-{
+bool PngWriter::write(const pfs::Frame &frame, const Params &params) {
     PngWriterParams p;
-    p.parse( params );
+    p.parse(params);
 
 #ifndef NDEBUG
     cout << p << endl << flush;
@@ -317,10 +283,7 @@ bool PngWriter::write(const pfs::Frame& frame, const Params& params)
     return m_impl->write(frame, p, filename());
 }
 
-size_t PngWriter::getFileSize() const
-{
-    return m_impl->getFileSize();
-}
+size_t PngWriter::getFileSize() const { return m_impl->getFileSize(); }
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs

@@ -26,9 +26,9 @@
 #define PFS_COLORSPACE_TRANSFORM_HXX
 
 #include <Libpfs/utils/transform.h>
-#include <iterator>
 #include <algorithm>
 #include <cassert>
+#include <iterator>
 
 namespace pfs {
 namespace utils {
@@ -37,15 +37,13 @@ namespace detail {
 
 // transform for generic iterators
 template <typename InputIterator, typename OutputIterator,
-          typename ConversionOperator,
-          typename InputIteratorTag, typename OutputIteratorTag>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
-               OutputIterator out1, OutputIterator out2, OutputIterator out3,
-               ConversionOperator convOp,
-               InputIteratorTag, OutputIteratorTag)
-{
-    while ( in1 != in1End )
-    {
+          typename ConversionOperator, typename InputIteratorTag,
+          typename OutputIteratorTag>
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, OutputIterator out1, OutputIterator out2,
+               OutputIterator out3, ConversionOperator convOp, InputIteratorTag,
+               OutputIteratorTag) {
+    while (in1 != in1End) {
         convOp(*in1++, *in2++, *in3++, *out1++, *out2++, *out3++);
     }
 }
@@ -53,47 +51,44 @@ void transform(InputIterator in1, InputIterator in1End, InputIterator in2, Input
 // transform for random_access_iterator_tag, so we can use OpenMP (optimized)
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
-               OutputIterator out1, OutputIterator out2, OutputIterator out3,
-               ConversionOperator convOp,
-               std::random_access_iterator_tag, std::random_access_iterator_tag)
-{
-    typename std::iterator_traits<InputIterator>::difference_type
-            numElem = (in1End - in1);
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, OutputIterator out1, OutputIterator out2,
+               OutputIterator out3, ConversionOperator convOp,
+               std::random_access_iterator_tag,
+               std::random_access_iterator_tag) {
+    typename std::iterator_traits<InputIterator>::difference_type numElem =
+        (in1End - in1);
 #pragma omp parallel for
-    for ( int idx = 0; idx < numElem; ++idx) {
-        convOp(in1[idx], in2[idx], in3[idx],
-               out1[idx], out2[idx], out3[idx]);
+    for (int idx = 0; idx < numElem; ++idx) {
+        convOp(in1[idx], in2[idx], in3[idx], out1[idx], out2[idx], out3[idx]);
     }
 }
 
-}   // detail
+}  // detail
 
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
-               OutputIterator out1, OutputIterator out2, OutputIterator out3,
-               ConversionOperator convOp)
-{
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, OutputIterator out1, OutputIterator out2,
+               OutputIterator out3, ConversionOperator convOp) {
     // dispatch to best implementation!
-    detail::transform(in1, in1End, in2, in3, out1, out2, out3, convOp,
-                      typename std::iterator_traits<InputIterator>::iterator_category(),
-                      typename std::iterator_traits<OutputIterator>::iterator_category());
+    detail::transform(
+        in1, in1End, in2, in3, out1, out2, out3, convOp,
+        typename std::iterator_traits<InputIterator>::iterator_category(),
+        typename std::iterator_traits<OutputIterator>::iterator_category());
 }
 
 namespace detail {
 
 // transform for generic iterators
 template <typename InputIterator, typename OutputIterator,
-          typename ConversionOperator,
-          typename InputIteratorTag, typename OutputIteratorTag>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3, InputIterator in4,
-               OutputIterator out1, OutputIterator out2, OutputIterator out3,
-               ConversionOperator convOp,
-               InputIteratorTag, OutputIteratorTag)
-{
-    while ( in1 != in1End )
-    {
+          typename ConversionOperator, typename InputIteratorTag,
+          typename OutputIteratorTag>
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, InputIterator in4, OutputIterator out1,
+               OutputIterator out2, OutputIterator out3,
+               ConversionOperator convOp, InputIteratorTag, OutputIteratorTag) {
+    while (in1 != in1End) {
         convOp(*in1++, *in2++, *in3++, *in4++, *out1++, *out2++, *out3++);
     }
 }
@@ -101,47 +96,45 @@ void transform(InputIterator in1, InputIterator in1End, InputIterator in2, Input
 // transform for random_access_iterator_tag, so we can use OpenMP (optimized)
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3, InputIterator in4,
-               OutputIterator out1, OutputIterator out2, OutputIterator out3,
-               ConversionOperator convOp,
-               std::random_access_iterator_tag, std::random_access_iterator_tag)
-{
-    typename std::iterator_traits<InputIterator>::difference_type
-            numElem = (in1End - in1);
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, InputIterator in4, OutputIterator out1,
+               OutputIterator out2, OutputIterator out3,
+               ConversionOperator convOp, std::random_access_iterator_tag,
+               std::random_access_iterator_tag) {
+    typename std::iterator_traits<InputIterator>::difference_type numElem =
+        (in1End - in1);
 #pragma omp parallel for
-    for ( int idx = 0; idx < numElem; ++idx) {
-        convOp(in1[idx], in2[idx], in3[idx], in4[idx],
-               out1[idx], out2[idx], out3[idx]);
+    for (int idx = 0; idx < numElem; ++idx) {
+        convOp(in1[idx], in2[idx], in3[idx], in4[idx], out1[idx], out2[idx],
+               out3[idx]);
     }
 }
 
-}   // detail
+}  // detail
 
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3, InputIterator in4,
-               OutputIterator out1, OutputIterator out2, OutputIterator out3,
-               ConversionOperator convOp)
-{
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, InputIterator in4, OutputIterator out1,
+               OutputIterator out2, OutputIterator out3,
+               ConversionOperator convOp) {
     // dispatch to best implementation!
-    detail::transform(in1, in1End, in2, in3, in4, out1, out2, out3, convOp,
-                      typename std::iterator_traits<InputIterator>::iterator_category(),
-                      typename std::iterator_traits<OutputIterator>::iterator_category());
+    detail::transform(
+        in1, in1End, in2, in3, in4, out1, out2, out3, convOp,
+        typename std::iterator_traits<InputIterator>::iterator_category(),
+        typename std::iterator_traits<OutputIterator>::iterator_category());
 }
-
 
 namespace detail {
 
 // transform for generic iterators
 template <typename InputIterator, typename OutputIterator,
-          typename ConversionOperator,
-          typename InputIteratorTag, typename OutputIteratorTag>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
-               OutputIterator out, ConversionOperator convOp,
-               InputIteratorTag, OutputIteratorTag)
-{
-    while ( in1 != in1End )
-    {
+          typename ConversionOperator, typename InputIteratorTag,
+          typename OutputIteratorTag>
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, OutputIterator out, ConversionOperator convOp,
+               InputIteratorTag, OutputIteratorTag) {
+    while (in1 != in1End) {
         convOp(*in1++, *in2++, *in3++, *out++);
     }
 }
@@ -149,32 +142,33 @@ void transform(InputIterator in1, InputIterator in1End, InputIterator in2, Input
 // transform for random_access_iterator_tag, so we can use OpenMP (optimized)
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
-               OutputIterator out, ConversionOperator convOp,
-               std::random_access_iterator_tag, std::random_access_iterator_tag)
-{
-    typename std::iterator_traits<InputIterator>::difference_type
-            numElem = (in1End - in1);
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, OutputIterator out, ConversionOperator convOp,
+               std::random_access_iterator_tag,
+               std::random_access_iterator_tag) {
+    typename std::iterator_traits<InputIterator>::difference_type numElem =
+        (in1End - in1);
 #pragma omp parallel for
-    for ( int idx = 0; idx < numElem; ++idx) {
+    for (int idx = 0; idx < numElem; ++idx) {
         convOp(in1[idx], in2[idx], in3[idx], out[idx]);
     }
 }
 
-}   // detail
+}  // detail
 
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
-void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
-               OutputIterator out, ConversionOperator convOp)
-{
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
+               InputIterator in3, OutputIterator out,
+               ConversionOperator convOp) {
     // dispatch to best implementation!
-    detail::transform(in1, in1End, in2, in3, out, convOp,
-                      typename std::iterator_traits<InputIterator>::iterator_category(),
-                      typename std::iterator_traits<OutputIterator>::iterator_category());
+    detail::transform(
+        in1, in1End, in2, in3, out, convOp,
+        typename std::iterator_traits<InputIterator>::iterator_category(),
+        typename std::iterator_traits<OutputIterator>::iterator_category());
 }
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
-#endif //  PFS_COLORSPACE_TRANSFORM_HXX
+#endif  //  PFS_COLORSPACE_TRANSFORM_HXX

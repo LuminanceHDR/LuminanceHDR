@@ -34,74 +34,69 @@
 
 #include <cstdio>
 
-#include "arch/math.h"
-#include "Libpfs/utils/sse.h"
 #include <Libpfs/exception.h>
+#include "Libpfs/utils/sse.h"
+#include "arch/math.h"
 
-class DisplayFunction
-{
-public:
-  /** Convert input luminance (cd/m^2) to pixel value (0-1)
-   */
-  virtual float inv_display( float L ) = 0;
+class DisplayFunction {
+   public:
+    /** Convert input luminance (cd/m^2) to pixel value (0-1)
+     */
+    virtual float inv_display(float L) = 0;
 
-  /** Convert pixel value (0-1) to input luminance (cd/m^2)
-   */
-  virtual float display( float pix ) = 0;
+    /** Convert pixel value (0-1) to input luminance (cd/m^2)
+     */
+    virtual float display(float pix) = 0;
 
 #ifdef LUMINANCE_USE_SSE
-  virtual v4sf inv_display( v4sf L ) = 0;
-  virtual v4sf display( v4sf L ) = 0;
+    virtual v4sf inv_display(v4sf L) = 0;
+    virtual v4sf display(v4sf L) = 0;
 #endif
 
-  virtual void print( FILE *fh ) = 0;
+    virtual void print(FILE *fh) = 0;
 
-  virtual ~DisplayFunction()
-  {
-  }
-
+    virtual ~DisplayFunction() {}
 };
-
 
 /**
  * Gamma Gain Black and Ambient display model
  */
-class DisplayFunctionGGBA : public DisplayFunction
-{
-  float gamma, L_max, L_offset, L_black, E_amb, screen_refl;
+class DisplayFunctionGGBA : public DisplayFunction {
+    float gamma, L_max, L_offset, L_black, E_amb, screen_refl;
 
-public:
-  DisplayFunctionGGBA( float gamma, float L_max, float L_black, float E_amb, float screen_refl );
-  DisplayFunctionGGBA( const char *predefined );
+   public:
+    DisplayFunctionGGBA(float gamma, float L_max, float L_black, float E_amb,
+                        float screen_refl);
+    DisplayFunctionGGBA(const char *predefined);
 
-  float inv_display( float L );
-  float display( float pix );
+    float inv_display(float L);
+    float display(float pix);
 
 #ifdef LUMINANCE_USE_SSE
-  virtual v4sf inv_display( v4sf L );
-  virtual v4sf display( v4sf L );
+    virtual v4sf inv_display(v4sf L);
+    virtual v4sf display(v4sf L);
 #endif
 
-  void print( FILE *fh );
+    void print(FILE *fh);
 
-private:
-  void init( float gamma, float L_max, float L_black, float E_amb, float screen_refl );
+   private:
+    void init(float gamma, float L_max, float L_black, float E_amb,
+              float screen_refl);
 };
 
-class DisplayFunctionLUT : public DisplayFunction
-{
-  float *pix_lut, *L_lut;
-  size_t lut_size;
+class DisplayFunctionLUT : public DisplayFunction {
+    float *pix_lut, *L_lut;
+    size_t lut_size;
 
-public:
-  DisplayFunctionLUT( const char *file_name );
-  ~DisplayFunctionLUT();
+   public:
+    DisplayFunctionLUT(const char *file_name);
+    ~DisplayFunctionLUT();
 
-  float inv_display( float L );
-  float display( float pix );
-  void print( FILE *fh );
+    float inv_display(float L);
+    float display(float pix);
+    void print(FILE *fh);
 };
 
-//DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] );
+// DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] );
 
 #endif

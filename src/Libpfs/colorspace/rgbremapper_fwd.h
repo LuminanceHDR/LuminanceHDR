@@ -24,17 +24,16 @@
 #ifndef PFS_RGBREMAPPER_FWD_H
 #define PFS_RGBREMAPPER_FWD_H
 
-enum RGBMappingType
-{
-    MAP_LINEAR      = 0,
-    MAP_GAMMA1_4    = 1,
-    MAP_GAMMA1_8    = 2,
-    MAP_GAMMA2_2    = 3,
-    MAP_GAMMA2_6    = 4,
+enum RGBMappingType {
+    MAP_LINEAR = 0,
+    MAP_GAMMA1_4 = 1,
+    MAP_GAMMA1_8 = 2,
+    MAP_GAMMA2_2 = 3,
+    MAP_GAMMA2_6 = 4,
     MAP_LOGARITHMIC = 5
 };
 
 template <typename TypeOut>
 class Remapper;
 
-#endif // PFS_RGBREMAPPER_FWD_H
+#endif  // PFS_RGBREMAPPER_FWD_H

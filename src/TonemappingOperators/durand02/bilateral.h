@@ -28,12 +28,10 @@
  * $Id: bilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
 
-
 #ifndef BILATERAL_H
 #define BILATERAL_H
 
-namespace pfs
-{
+namespace pfs {
 class Array2D;
 class Progress;
 }
@@ -48,8 +46,7 @@ class Progress;
 //! \param sigma_s sigma value for spatial kernel
 //! \param sigma_r sigma value for range kernel
 //!
-void bilateralFilter(const pfs::Array2D *I, pfs::Array2D *J,
-                     float sigma_s, float sigma_r,
-                     pfs::Progress& ph);
+void bilateralFilter(const pfs::Array2D *I, pfs::Array2D *J, float sigma_s,
+                     float sigma_r, pfs::Progress &ph);
 
 #endif /* #ifndef BILATERAL_H */

@@ -25,38 +25,37 @@
 #define FITSIMPORTER_H
 
 #include <QDialog>
+#include <QFutureWatcher>
 #include <QLineEdit>
 #include <QProcess>
-#include <QFutureWatcher>
 #include <QSlider>
 #include <QWizard>
 
-#include "PreviewFrame.h"
 #include "Alignment/Align.h"
 #include "Common/LuminanceOptions.h"
 #include "HdrWizard/HdrCreationItem.h"
+#include "PreviewFrame.h"
 
 namespace Ui {
 class FitsImporter;
 }
 
-class FitsImporter : public QWizard
-{
+class FitsImporter : public QWizard {
     Q_OBJECT
 
-public:
+   public:
     explicit FitsImporter(QWidget *parent = 0);
     ~FitsImporter();
 
     pfs::Frame *getFrame();
 
-protected slots:
+   protected slots:
     void on_pushButtonLuminosity_clicked();
     void on_pushButtonRed_clicked();
     void on_pushButtonGreen_clicked();
     void on_pushButtonBlue_clicked();
     void on_pushButtonH_clicked();
-    //void on_pushButtonOK_clicked();
+    // void on_pushButtonOK_clicked();
     void on_pushButtonLoad_clicked();
     void on_pushButtonClockwise_clicked();
     void on_pushButtonPreview_clicked();
@@ -75,15 +74,14 @@ protected slots:
     void on_vsGamma_valueChanged(int newValue);
     void on_pushButtonReset_clicked();
 
-signals:
+   signals:
     void setValue(int);
     void setRange(int, int);
 
-protected:
+   protected:
     virtual int nextId() const;
     virtual bool validateCurrentPage();
     virtual void initializePage(int id);
-
 
     void checkLoadButton();
     bool framesHaveSameSize();
@@ -98,7 +96,7 @@ protected:
 
     pfs::Frame *m_frame;
     PreviewFrame *m_previewFrame;
-    QLabel* m_previewLabel;
+    QLabel *m_previewLabel;
 
     LuminanceOptions m_luminance_options;
 
@@ -110,18 +108,18 @@ protected:
 
     HdrCreationItemContainer m_data;
     HdrCreationItemContainer m_tmpdata;
-    std::vector<std::vector<float> > m_contents;
+    std::vector<std::vector<float>> m_contents;
     std::vector<QImage> m_qimages;
 
-    //QFutureWatcher<void> m_futureWatcher;
+    // QFutureWatcher<void> m_futureWatcher;
 
     // alignment
     std::unique_ptr<Align> m_align;
 
     QScopedPointer<Ui::FitsImporter> m_Ui;
 
-private:
-    void selectInputFile(QLineEdit* textField, QString* channel);
+   private:
+    void selectInputFile(QLineEdit *textField, QString *channel);
 };
 
 #endif

@@ -30,16 +30,14 @@
 
 #include "Core/TonemappingOptions.h"
 
-namespace Ui
-{
-    class SavedParametersDialog;
+namespace Ui {
+class SavedParametersDialog;
 }
 
-class SavedParametersDialog : public QDialog
-{
+class SavedParametersDialog : public QDialog {
     Q_OBJECT
 
-public:
+   public:
     //! \brief Default constructor
     explicit SavedParametersDialog(QWidget *parent = 0);
 
@@ -50,11 +48,10 @@ public:
 
     QModelIndex getCurrentIndex();
     QModelIndexList getSelectedRows();
-    QSqlQueryModel* getModel();
+    QSqlQueryModel *getModel();
 
-protected:
-    QSqlQueryModel* model;
+   protected:
+    QSqlQueryModel *model;
     QScopedPointer<Ui::SavedParametersDialog> m_Ui;
-
 };
 #endif

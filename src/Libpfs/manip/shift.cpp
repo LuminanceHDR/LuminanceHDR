@@ -23,27 +23,25 @@
 
 namespace pfs {
 
-Frame* shift(const Frame& frame, int dx, int dy)
-{
+Frame *shift(const Frame &frame, int dx, int dy) {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
 
-    pfs::Frame *shiftedFrame = new pfs::Frame( frame.getWidth(), frame.getHeight() );
+    pfs::Frame *shiftedFrame =
+        new pfs::Frame(frame.getWidth(), frame.getHeight());
 
-    const ChannelContainer& channels = frame.getChannels();
+    const ChannelContainer &channels = frame.getChannels();
 
-    for ( ChannelContainer::const_iterator it = channels.begin();
-          it != channels.end();
-          ++it)
-    {
+    for (ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end(); ++it) {
         pfs::Channel *newCh = shiftedFrame->createChannel((*it)->getName());
 
         shift(**it, -dx, -dy, *newCh);
     }
 
-    pfs::copyTags( &frame, shiftedFrame );
+    pfs::copyTags(&frame, shiftedFrame);
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
@@ -52,5 +50,4 @@ Frame* shift(const Frame& frame, int dx, int dy)
 
     return shiftedFrame;
 }
-
 }

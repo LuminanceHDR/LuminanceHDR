@@ -34,8 +34,7 @@
 
 #include <Libpfs/array2d_fwd.h>
 
-namespace pfs
-{
+namespace pfs {
 class Progress;
 }
 
@@ -54,8 +53,8 @@ void solve_pde_multigrid(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph);
  * @param U [out] solution
  * @param adjust_bound, adjust boundary values of F to make pde solvable
  */
-void solve_pde_fft(pfs::Array2Df& F, pfs::Array2Df& U,
-                   pfs::Progress &ph, bool adjust_bound = false);
+void solve_pde_fft(pfs::Array2Df &F, pfs::Array2Df &U, pfs::Progress &ph,
+                   bool adjust_bound = false);
 
 /**
  * @brief returns the residual error of the solution U, ie norm(Laplace U - F)
@@ -63,8 +62,6 @@ void solve_pde_fft(pfs::Array2Df& F, pfs::Array2Df& U,
  * @param F [in] right hand side
  * @param U [in] solution
  */
-float residual_pde(pfs::Array2Df& U, pfs::Array2Df& F);
-
+float residual_pde(pfs::Array2Df &U, pfs::Array2Df &F);
 
 #endif
-

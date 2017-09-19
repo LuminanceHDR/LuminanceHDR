@@ -28,17 +28,16 @@
 #include "robertson02.h"
 #include "arch/math.h"
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
-#include <vector>
-#include <algorithm>
 #include <iterator>
+#include <vector>
 
 #include <boost/bind.hpp>
 #include <boost/limits.hpp>
-#include <boost/numeric/conversion/bounds.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
-
+#include <boost/numeric/conversion/bounds.hpp>
 
 #include <Libpfs/array2d.h>
 
@@ -55,21 +54,15 @@ namespace libhdr {
 namespace fusion {
 
 void RobertsonOperator::applyResponse(
-        ResponseCurve& response,
-        WeightFunction& weight,
-        ResponseChannel channel,
-        const DataList& inputData, float* outputData,
-        size_t width, size_t height,
-        float minAllowedValue, float maxAllowedValue,
-        const float* arrayofexptime)
-{
-    assert( inputData.size() );
+    ResponseCurve &response, WeightFunction &weight, ResponseChannel channel,
+    const DataList &inputData, float *outputData, size_t width, size_t height,
+    float minAllowedValue, float maxAllowedValue, const float *arrayofexptime) {
+    assert(inputData.size());
 
     size_t saturatedPixels = 0;
 
-    int numPixels = (int) width*height;
-    for (int j = 0; j < numPixels; ++j)
-    {
+    int numPixels = (int)width * height;
+    for (int j = 0; j < numPixels; ++j) {
         // all exposures for each pixel
         float sum = 0.0f;
         float div = 0.0f;
@@ -77,8 +70,7 @@ void RobertsonOperator::applyResponse(
         float minti = +1e6f;
 
         // for all exposures
-        for (int i = 0; i < (int)inputData.size(); ++i)
-        {
+        for (int i = 0; i < (int)inputData.size(); ++i) {
             float m = inputData[i][j];
             float ti = arrayofexptime[i];
 
@@ -87,24 +79,24 @@ void RobertsonOperator::applyResponse(
             // --- anti saturation: observe minimum exposure time at which
             // saturated value is present, and maximum exp time at which
             // black value is present
-            if ( m > maxAllowedValue ) {
+            if (m > maxAllowedValue) {
                 minti = std::min(minti, ti);
             }
-            if ( m < minAllowedValue ) {
+            if (m < minAllowedValue) {
                 maxti = std::max(maxti, ti);
             }
 
             // --- anti-ghosting: monotonous increase in time should result
             // in monotonous increase in intensity; make forward and
             // backward check, ignore value if condition not satisfied
-//            int m_lower = inputData.getSample(i_lower[i], j);
-//            int m_upper = inputData.getSample(i_upper[i], j);
+            //            int m_lower = inputData.getSample(i_lower[i], j);
+            //            int m_upper = inputData.getSample(i_upper[i], j);
 
-//            if ( N > 1) {
-//                if ( m_lower > m || m_upper < m ) {
-//                    continue;
-//                }
-//            }
+            //            if ( N > 1) {
+            //                if ( m_lower > m || m_upper < m ) {
+            //                    continue;
+            //                }
+            //            }
 
             sum += w * ti * r;
             div += w * ti * ti;
@@ -112,20 +104,20 @@ void RobertsonOperator::applyResponse(
 
         // --- anti saturation: if a meaningful representation of pixel
         // was not found, replace it with information from observed data
-        if ( div == 0.0f ) {
+        if (div == 0.0f) {
             ++saturatedPixels;
         }
-        if ( div == 0.0f && maxti > -1e6f ) {
+        if (div == 0.0f && maxti > -1e6f) {
             sum = minAllowedValue;
             div = maxti;
         }
-        if ( div == 0.0f && minti < +1e6f ) {
+        if (div == 0.0f && minti < +1e6f) {
             sum = maxAllowedValue;
             div = minti;
         }
 
-        if ( div != 0.0f ) {
-            outputData[j] = sum/div;
+        if (div != 0.0f) {
+            outputData[j] = sum / div;
         } else {
             outputData[j] = 0.0f;
         }
@@ -134,18 +126,19 @@ void RobertsonOperator::applyResponse(
     PRINT_DEBUG("Saturated pixels: " << saturatedPixels);
 }
 
-void RobertsonOperator::computeFusion(ResponseCurve& response, WeightFunction& weight,
-        const std::vector<FrameEnhanced> &frames, pfs::Frame &frame)
-{
-    assert( frames.size() );
+void RobertsonOperator::computeFusion(ResponseCurve &response,
+                                      WeightFunction &weight,
+                                      const std::vector<FrameEnhanced> &frames,
+                                      pfs::Frame &frame) {
+    assert(frames.size());
 
     size_t numExposures = frames.size();
-    Frame tempFrame (frames[0].frame()->getWidth(),
-            frames[0].frame()->getHeight());
+    Frame tempFrame(frames[0].frame()->getWidth(),
+                    frames[0].frame()->getHeight());
 
-    Channel* outputRed;
-    Channel* outputGreen;
-    Channel* outputBlue;
+    Channel *outputRed;
+    Channel *outputGreen;
+    Channel *outputBlue;
     tempFrame.createXYZChannels(outputRed, outputGreen, outputBlue);
 
     DataList redChannels(numExposures);
@@ -162,18 +155,18 @@ void RobertsonOperator::computeFusion(ResponseCurve& response, WeightFunction& w
                    std::back_inserter(averageLuminances),
                    boost::bind(&FrameEnhanced::averageLuminance, _1));
 
-    applyResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
-                  tempFrame.getWidth(), tempFrame.getHeight(),
-                  minAllowedValue, maxAllowedValue,
-                  averageLuminances.data());       // red
-    applyResponse(response, weight, RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
-                  tempFrame.getWidth(), tempFrame.getHeight(),
-                  minAllowedValue, maxAllowedValue,
-                  averageLuminances.data());       // blue
-    applyResponse(response, weight, RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
-                  tempFrame.getWidth(), tempFrame.getHeight(),
-                  minAllowedValue, maxAllowedValue,
-                  averageLuminances.data());       // green
+    applyResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels,
+                  outputRed->data(), tempFrame.getWidth(),
+                  tempFrame.getHeight(), minAllowedValue, maxAllowedValue,
+                  averageLuminances.data());  // red
+    applyResponse(response, weight, RESPONSE_CHANNEL_BLUE, blueChannels,
+                  outputBlue->data(), tempFrame.getWidth(),
+                  tempFrame.getHeight(), minAllowedValue, maxAllowedValue,
+                  averageLuminances.data());  // blue
+    applyResponse(response, weight, RESPONSE_CHANNEL_GREEN, greenChannels,
+                  outputGreen->data(), tempFrame.getWidth(),
+                  tempFrame.getHeight(), minAllowedValue, maxAllowedValue,
+                  averageLuminances.data());  // green
 
     float cmax[3];
     cmax[0] = *max_element(outputRed->begin(), outputRed->end());
@@ -181,55 +174,55 @@ void RobertsonOperator::computeFusion(ResponseCurve& response, WeightFunction& w
     cmax[2] = *max_element(outputBlue->begin(), outputBlue->end());
     float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
 
-    replace_if(outputRed->begin(), outputRed->end(), [](float f){ return !isnormal(f); }, Max);
-    replace_if(outputGreen->begin(), outputGreen->end(), [](float f){ return !isnormal(f); }, Max);
-    replace_if(outputBlue->begin(), outputBlue->end(), [](float f){ return !isnormal(f); }, Max);
+    replace_if(outputRed->begin(), outputRed->end(),
+               [](float f) { return !isnormal(f); }, Max);
+    replace_if(outputGreen->begin(), outputGreen->end(),
+               [](float f) { return !isnormal(f); }, Max);
+    replace_if(outputBlue->begin(), outputBlue->end(),
+               [](float f) { return !isnormal(f); }, Max);
 
-    frame.swap( tempFrame );
+    frame.swap(tempFrame);
 }
 
-}   // namespace fusion
-}   // namespace libhdr
+}  // namespace fusion
+}  // namespace libhdr
 
-namespace
-{
+namespace {
 using namespace libhdr::fusion;
 
 // maximum iterations after algorithm accepts local minima
-const int MAXIT = 35; //500;
+const int MAXIT = 35;  // 500;
 
 // maximum accepted error
-const float MAX_DELTA = 1e-3f; //1e-5f;
+const float MAX_DELTA = 1e-3f;  // 1e-5f;
 
-float normalizeI(ResponseCurve::ResponseContainer& I)
-{
+float normalizeI(ResponseCurve::ResponseContainer &I) {
     size_t M = I.size();
     size_t Mmin = 0;
-    size_t Mmax = M-1;
+    size_t Mmax = M - 1;
     // find min max
-    for (Mmin=0 ; Mmin<M && I[Mmin]==0 ; ++Mmin);
-    for (Mmax=M-1 ; Mmax>0 && I[Mmax]==0 ; --Mmax);
+    for (Mmin = 0; Mmin < M && I[Mmin] == 0; ++Mmin)
+        ;
+    for (Mmax = M - 1; Mmax > 0 && I[Mmax] == 0; --Mmax)
+        ;
 
-    size_t Mmid = Mmin+(Mmax-Mmin)/2;
+    size_t Mmid = Mmin + (Mmax - Mmin) / 2;
     float mid = I[Mmid];
 
-    if (mid == 0.0f)
-    {
+    if (mid == 0.0f) {
         // find first non-zero middle response
-        while ((Mmid < Mmax) && (I[Mmid] == 0.0f))
-        {
+        while ((Mmid < Mmax) && (I[Mmid] == 0.0f)) {
             Mmid++;
         }
         mid = I[Mmid];
     }
 
-    PRINT_DEBUG("robertson02: middle response, mid = " << mid <<
-                " [" << Mmid << "]" << " " << Mmin << "..." << Mmax);
+    PRINT_DEBUG("robertson02: middle response, mid = "
+                << mid << " [" << Mmid << "]"
+                << " " << Mmin << "..." << Mmax);
 
-    if (mid != 0.0f)
-    {
-        for (size_t m = 0; m < M; ++m)
-        {
+    if (mid != 0.0f) {
+        for (size_t m = 0; m < M; ++m) {
             I[m] /= mid;
         }
     }
@@ -265,35 +258,30 @@ void pseudoSort(const float* arrayofexptime, int* i_lower, int* i_upper, int N)
 }
 */
 
-}   // anonymous
+}  // anonymous
 
 namespace libhdr {
 namespace fusion {
 
 void RobertsonOperatorAuto::computeResponse(
-        ResponseCurve& response,
-        WeightFunction& weight,
-        ResponseChannel channel,
-        const DataList& inputData, float* outputData,
-        size_t width, size_t height,
-        float minAllowedValue, float maxAllowedValue,
-        const float* arrayofexptime)
-{
+    ResponseCurve &response, WeightFunction &weight, ResponseChannel channel,
+    const DataList &inputData, float *outputData, size_t width, size_t height,
+    float minAllowedValue, float maxAllowedValue, const float *arrayofexptime) {
     typedef ResponseCurve::ResponseContainer ResponseContainer;
 
-    int N       = inputData.size();
+    int N = inputData.size();
 
     // 0 . initialization
     // a. normalize response
-    ResponseContainer& I = response.get(channel);
+    ResponseContainer &I = response.get(channel);
     normalizeI(I);
     // b. copy response
     ResponseContainer Ip = response.get(channel);
     // c. set previous delta
     double pdelta = 0.0;
 
-    applyResponse(response, weight, channel, inputData, outputData, width, height,
-                  minAllowedValue, maxAllowedValue, arrayofexptime);
+    applyResponse(response, weight, channel, inputData, outputData, width,
+                  height, minAllowedValue, maxAllowedValue, arrayofexptime);
 
     std::vector<long> cardEm(ResponseCurve::NUM_BINS);
     ResponseContainer sum;
@@ -302,24 +290,22 @@ void RobertsonOperatorAuto::computeResponse(
     assert(sum.size() == Ip.size());
     assert(sum.size() == I.size());
 
-    for (size_t cur_it = 0; cur_it < MAXIT; ++cur_it)
-    {
+    for (size_t cur_it = 0; cur_it < MAXIT; ++cur_it) {
         // reset buffers
         fill(cardEm.begin(), cardEm.end(), 0);
         fill(sum.begin(), sum.end(), 0.f);
 
         // 1. Minimize with respect to I
-        for (int i = 0; i < N; ++i)
-        {
+        for (int i = 0; i < N; ++i) {
             float ti = arrayofexptime[i];
             // this is probably uglier than necessary, (I copy th FOR in order
             // not to do the IFs inside them) but I don't know how to improve it
-            for (size_t j = 0; j < width*height; ++j)
-            {
+            for (size_t j = 0; j < width * height; ++j) {
                 size_t sample = response.getIdx(inputData[i][j]);
-                //if ((sample < ResponseCurve::NUM_BINS) && (sample >= 0)) // sample is unsigned so always >= 0
-                if (sample < ResponseCurve::NUM_BINS)
-                {
+                // if ((sample < ResponseCurve::NUM_BINS) && (sample >= 0)) //
+                // sample is
+                // unsigned so always >= 0
+                if (sample < ResponseCurve::NUM_BINS) {
                     sum[sample] += ti * outputData[j];
                     cardEm[sample]++;
                 }
@@ -331,14 +317,10 @@ void RobertsonOperatorAuto::computeResponse(
         }
 
         float Iprevious = 0.f;
-        for (size_t m = 0; m < I.size(); ++m)
-        {
-            if (cardEm[m] != 0)
-            {
+        for (size_t m = 0; m < I.size(); ++m) {
+            if (cardEm[m] != 0) {
                 I[m] = Iprevious = sum[m] / cardEm[m];
-            }
-            else
-            {
+            } else {
                 I[m] = Iprevious;
             }
         }
@@ -347,16 +329,14 @@ void RobertsonOperatorAuto::computeResponse(
         normalizeI(I);
 
         // 3. Apply new response
-        applyResponse(response, weight, channel, inputData, outputData, width, height,
-                      minAllowedValue, maxAllowedValue, arrayofexptime);
+        applyResponse(response, weight, channel, inputData, outputData, width,
+                      height, minAllowedValue, maxAllowedValue, arrayofexptime);
 
         // 4. Check stopping condition
         double delta = 0.0;
         int hits = 0;
-        for (size_t m = 0; m < I.size(); ++m)
-        {
-            if (I[m] != 0.0f)
-            {
+        for (size_t m = 0; m < I.size(); ++m) {
+            if (I[m] != 0.0f) {
                 float diff = I[m] - Ip[m];
                 delta += diff * diff;
                 Ip[m] = I[m];
@@ -366,17 +346,18 @@ void RobertsonOperatorAuto::computeResponse(
         delta /= hits;
 
 #ifndef NDEBUG
-        PRINT_DEBUG(" #" << cur_it << " delta=" << delta << " (coverage: " << 100*hits/I.size() << "%)");
+        PRINT_DEBUG(" #" << cur_it << " delta=" << delta
+                         << " (coverage: " << 100 * hits / I.size() << "%)");
 #endif
-        if (delta < MAX_DELTA)
-        {
-            std::cerr << " #" << cur_it << " delta=" << pdelta << " <- converged\n";
+        if (delta < MAX_DELTA) {
+            std::cerr << " #" << cur_it << " delta=" << pdelta
+                      << " <- converged\n";
             break;
-        }
-        else if ( boost::math::isnan(delta) || (cur_it > MAXIT && pdelta < delta) )
-        {
+        } else if (boost::math::isnan(delta) ||
+                   (cur_it > MAXIT && pdelta < delta)) {
 #ifndef NDEBUG
-            std::cerr << "algorithm failed to converge, too noisy data in range\n";
+            std::cerr
+                << "algorithm failed to converge, too noisy data in range\n";
 #endif
             break;
         }
@@ -386,21 +367,17 @@ void RobertsonOperatorAuto::computeResponse(
 }
 
 void RobertsonOperatorAuto::computeFusion(
-        ResponseCurve& response,
-        WeightFunction& weight,
-        const std::vector<FrameEnhanced> &frames, pfs::Frame &frame)
-{
-    assert( frames.size() );
+    ResponseCurve &response, WeightFunction &weight,
+    const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) {
+    assert(frames.size());
 
     size_t numExposures = frames.size();
-    Frame tempFrame(
-                frames[0].frame()->getWidth(),
-                frames[0].frame()->getHeight()
-            );
+    Frame tempFrame(frames[0].frame()->getWidth(),
+                    frames[0].frame()->getHeight());
 
-    Channel* outputRed;
-    Channel* outputGreen;
-    Channel* outputBlue;
+    Channel *outputRed;
+    Channel *outputGreen;
+    Channel *outputBlue;
     tempFrame.createXYZChannels(outputRed, outputGreen, outputBlue);
 
     DataList redChannels(numExposures);
@@ -418,19 +395,19 @@ void RobertsonOperatorAuto::computeFusion(
                    boost::bind(&FrameEnhanced::averageLuminance, _1));
 
     // red
-    computeResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
-                    tempFrame.getWidth(), tempFrame.getHeight(),
-                    minAllowedValue, maxAllowedValue,
+    computeResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels,
+                    outputRed->data(), tempFrame.getWidth(),
+                    tempFrame.getHeight(), minAllowedValue, maxAllowedValue,
                     averageLuminances.data());
     // green
-    computeResponse(response, weight, RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
-                    tempFrame.getWidth(), tempFrame.getHeight(),
-                    minAllowedValue, maxAllowedValue,
+    computeResponse(response, weight, RESPONSE_CHANNEL_GREEN, greenChannels,
+                    outputGreen->data(), tempFrame.getWidth(),
+                    tempFrame.getHeight(), minAllowedValue, maxAllowedValue,
                     averageLuminances.data());
     // blue
-    computeResponse(response, weight, RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
-                    tempFrame.getWidth(), tempFrame.getHeight(),
-                    minAllowedValue, maxAllowedValue,
+    computeResponse(response, weight, RESPONSE_CHANNEL_BLUE, blueChannels,
+                    outputBlue->data(), tempFrame.getWidth(),
+                    tempFrame.getHeight(), minAllowedValue, maxAllowedValue,
                     averageLuminances.data());
 
     float cmax[3];
@@ -439,12 +416,15 @@ void RobertsonOperatorAuto::computeFusion(
     cmax[2] = *max_element(outputBlue->begin(), outputBlue->end());
     float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
 
-    replace_if(outputRed->begin(), outputRed->end(), [](float f){ return !isnormal(f); }, Max);
-    replace_if(outputGreen->begin(), outputGreen->end(), [](float f){ return !isnormal(f); }, Max);
-    replace_if(outputBlue->begin(), outputBlue->end(), [](float f){ return !isnormal(f); }, Max);
+    replace_if(outputRed->begin(), outputRed->end(),
+               [](float f) { return !isnormal(f); }, Max);
+    replace_if(outputGreen->begin(), outputGreen->end(),
+               [](float f) { return !isnormal(f); }, Max);
+    replace_if(outputBlue->begin(), outputBlue->end(),
+               [](float f) { return !isnormal(f); }, Max);
 
-    frame.swap( tempFrame );
+    frame.swap(tempFrame);
 }
 
-}   // namespace fusion
-}   // namespace libhdr
+}  // namespace fusion
+}  // namespace libhdr

@@ -27,50 +27,39 @@
 
 #include <QDebug>
 
-IGraphicsView::IGraphicsView(QWidget * parent):
-    QGraphicsView(parent)
-{
+IGraphicsView::IGraphicsView(QWidget *parent) : QGraphicsView(parent) {
     init();
 }
 
-IGraphicsView::IGraphicsView(QGraphicsScene * scene, QWidget * parent):
-    QGraphicsView(scene, parent)
-{
+IGraphicsView::IGraphicsView(QGraphicsScene *scene, QWidget *parent)
+    : QGraphicsView(scene, parent) {
     init();
 }
 
-void IGraphicsView::init()
-{
-    //setDragMode(QGraphicsView::RubberBandDrag);
+void IGraphicsView::init() {
+    // setDragMode(QGraphicsView::RubberBandDrag);
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 }
 
-IGraphicsView::~IGraphicsView()
-{ }
+IGraphicsView::~IGraphicsView() {}
 
-void IGraphicsView::wheelEvent(QWheelEvent *event)
-{
+void IGraphicsView::wheelEvent(QWheelEvent *event) {
     // get the focus!
     setFocus();
 
-    if (event->modifiers() == Qt::ControlModifier)
-    {
+    if (event->modifiers() == Qt::ControlModifier) {
         if (event->delta() > 0) emit zoomIn();
         if (event->delta() < 0) emit zoomOut();
-    }
-    else
-    {
+    } else {
         // scrolls up/down - left/right
         QGraphicsView::wheelEvent(event);
     }
 }
 
-void IGraphicsView::resizeEvent(QResizeEvent* event)
-{
+void IGraphicsView::resizeEvent(QResizeEvent *event) {
     // default resizeEvent handling
     // keeps the center
     QGraphicsView::resizeEvent(event);
 
     emit viewAreaChangedSize();
 }
-

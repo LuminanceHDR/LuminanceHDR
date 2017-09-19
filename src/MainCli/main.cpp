@@ -23,36 +23,30 @@
 
 #include <QCoreApplication>
 
-#include "Common/config.h"
-#include "Common/TranslatorManager.h"
 #include "Common/LuminanceOptions.h"
+#include "Common/TranslatorManager.h"
+#include "Common/config.h"
 
 #include "MainCli/commandline.h"
 
-
-int main( int argc, char ** argv )
-{
+int main(int argc, char **argv) {
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
-    QCoreApplication application( argc, argv );
+    QCoreApplication application(argc, argv);
     LuminanceOptions lumOpts;
 
-    TranslatorManager::setLanguage( lumOpts.getGuiLang(), false );
+    TranslatorManager::setLanguage(lumOpts.getGuiLang(), false);
 
-    CommandLineInterfaceManager cli( argc, argv );
+    CommandLineInterfaceManager cli(argc, argv);
 
-    try
-    {
+    try {
         int result = cli.execCommandLineParams();
-        if (result != 0)
-        return result;
-    }
-    catch(...)
-    {
+        if (result != 0) return result;
+    } catch (...) {
         return -1;
     }
-    application.connect(&cli, SIGNAL(finishedParsing()), &application, SLOT(quit()));
+    application.connect(&cli, SIGNAL(finishedParsing()), &application,
+                        SLOT(quit()));
 
     return application.exec();
 }
-

@@ -31,33 +31,33 @@
 #include "Common/LuminanceOptions.h"
 
 namespace Ui {
-    class TransplantExifDialog;
+class TransplantExifDialog;
 }
 
-
 class TransplantExifDialog : public QDialog {
-Q_OBJECT
-public:
+    Q_OBJECT
+   public:
     TransplantExifDialog(QWidget *);
     ~TransplantExifDialog();
-private:
-    int start_left,stop_left,start_right,stop_right;
-    QStringList from,to;
+
+   private:
+    int start_left, stop_left, start_right, stop_right;
+    QStringList from, to;
     bool done;
     void updateinterval(bool);
     QString RecentDirEXIFfrom;
     QString RecentDirEXIFto;
-    //fuction that adds a log message to the model
+    // fuction that adds a log message to the model
     void add_log_message(const QString &);
-    //the class that performs regexp filtering
+    // the class that performs regexp filtering
     QSortFilterProxyModel *log_filter;
-    //the model that holds the data
+    // the model that holds the data
     QStringListModel *full_Log_Model;
 
     LuminanceOptions luminance_options;
 
     QScopedPointer<Ui::TransplantExifDialog> m_Ui;
-private slots:
+   private slots:
     void transplant_requested();
     void help_requested();
     void moveup_left();
@@ -68,7 +68,7 @@ private slots:
     void remove_right();
     void append_left();
     void append_right();
-    void filterChanged(const QString&);
+    void filterChanged(const QString &);
     void filterComboBoxActivated(int);
 };
 #endif

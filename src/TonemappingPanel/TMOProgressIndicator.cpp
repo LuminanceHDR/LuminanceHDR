@@ -29,76 +29,70 @@
 
 #include <QDebug>
 
-TMOProgressIndicator::TMOProgressIndicator(QWidget *parent):
-    QWidget(parent),
-    m_isTerminated(true)
-{
+TMOProgressIndicator::TMOProgressIndicator(QWidget *parent)
+    : QWidget(parent), m_isTerminated(true) {
     m_hbl = new QHBoxLayout(this);
 
-    m_hbl->setMargin(0);        // Design
-    m_hbl->setSpacing(4);       // Design
+    m_hbl->setMargin(0);   // Design
+    m_hbl->setSpacing(4);  // Design
     m_hbl->setContentsMargins(0, 0, 0, 0);
 
     m_progressBar = new QProgressBar(this);
     m_progressBar->setValue(0);
 
     m_abortButton = new QPushButton(this);
-    m_abortButton->resize(22,22);
-    m_abortButton->setIcon(QIcon::fromTheme(QStringLiteral("tab-close"), QIcon(":/program-icons/tab-close")));
+    m_abortButton->resize(22, 22);
+    m_abortButton->setIcon(QIcon::fromTheme(
+        QStringLiteral("tab-close"), QIcon(":/program-icons/tab-close")));
     m_abortButton->setToolTip(QString(tr("Abort computation")));
 
     m_hbl->addWidget(m_progressBar);
     m_hbl->addWidget(m_abortButton);
 
-    connect(m_abortButton, &QAbstractButton::clicked, this, &TMOProgressIndicator::terminate);
-    connect(m_abortButton, &QAbstractButton::clicked, this, &TMOProgressIndicator::terminated);
+    connect(m_abortButton, &QAbstractButton::clicked, this,
+            &TMOProgressIndicator::terminate);
+    connect(m_abortButton, &QAbstractButton::clicked, this,
+            &TMOProgressIndicator::terminated);
 
-    //Memory management
-    //connect(this, SIGNAL(destroyed()), )
+    // Memory management
+    // connect(this, SIGNAL(destroyed()), )
 }
 
-TMOProgressIndicator::~TMOProgressIndicator()
-{
+TMOProgressIndicator::~TMOProgressIndicator() {
     delete m_progressBar;
     delete m_abortButton;
     delete m_hbl;
 }
 
-void TMOProgressIndicator::terminated()
-{
+void TMOProgressIndicator::terminated() {
     std::cout << "TMOProgressIndicator::terminated()" << std::endl;
     m_isTerminated = true;
 }
 
-bool TMOProgressIndicator::isTerminated()
-{
-    return m_isTerminated;
-}
+bool TMOProgressIndicator::isTerminated() { return m_isTerminated; }
 
-void TMOProgressIndicator::setValue(int value)
-{
+void TMOProgressIndicator::setValue(int value) {
 #ifdef QT_DEBUG
-    qDebug() << "TMOProgressIndicator::setValue("<< value <<")";
+    qDebug() << "TMOProgressIndicator::setValue(" << value << ")";
 #endif
 
     m_progressBar->setValue(value);
-    //OsIntegration::getInstance().setProgress(value, m_progressBar->maximum() - m_progressBar->minimum());
+    // OsIntegration::getInstance().setProgress(value, m_progressBar->maximum()
+    // -
+    // m_progressBar->minimum());
 }
 
-void TMOProgressIndicator::setMaximum(int max)
-{
+void TMOProgressIndicator::setMaximum(int max) {
     m_progressBar->setMaximum(max);
     m_isTerminated = false;
 }
 
-void TMOProgressIndicator::setMinimum(int min)
-{
+void TMOProgressIndicator::setMinimum(int min) {
     m_progressBar->setMinimum(min);
 }
 
-void TMOProgressIndicator::reset()
-{
+void TMOProgressIndicator::reset() {
     m_progressBar->reset();
-    //OsIntegration::getInstance().setProgress(-1);
+    // OsIntegration::getInstance().setProgress(-1);
     m_isTerminated = true;
 }

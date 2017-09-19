@@ -21,64 +21,64 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
-#include <QDebug>
-#include <QtConcurrentMap>
-#include <QSharedPointer>
 #include <QAction>
+#include <QDebug>
+#include <QSharedPointer>
+#include <QtConcurrentMap>
 
 #include "PreviewSettings.h"
 
 #include "Libpfs/frame.h"
-#include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/copy.h"
+#include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/resize.h"
 #include "Libpfs/progress.h"
 #include "Libpfs/tm/TonemapOperator.h"
 
+#include "Common/LuminanceOptions.h"
 #include "Core/TMWorker.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"
-#include "Common/LuminanceOptions.h"
 
-namespace // anoymous namespace
+namespace  // anoymous namespace
 {
 const int PREVIEW_WIDTH = 120;
 const int PREVIEW_HEIGHT = 100;
 
-//! \note It is not the most efficient way to do this thing, but I will fix it later
+//! \note It is not the most efficient way to do this thing, but I will fix it
+//! later
 //! this function get calls multiple time
-void resetTonemappingOptions(TonemappingOptions* tm_options, const pfs::Frame* frame)
-{
-    tm_options->origxsize          = frame->getWidth();
-    tm_options->xsize              = frame->getWidth();
-    tm_options->pregamma           = 1.0f;
-    tm_options->tonemapSelection   = false;
+void resetTonemappingOptions(TonemappingOptions *tm_options,
+                             const pfs::Frame *frame) {
+    tm_options->origxsize = frame->getWidth();
+    tm_options->xsize = frame->getWidth();
+    tm_options->pregamma = 1.0f;
+    tm_options->tonemapSelection = false;
 }
 
-class PreviewLabelUpdater
-{
-public:
-    explicit PreviewLabelUpdater(QSharedPointer<pfs::Frame> reference_frame):
-        m_ReferenceFrame(reference_frame)
-    {}
+class PreviewLabelUpdater {
+   public:
+    explicit PreviewLabelUpdater(QSharedPointer<pfs::Frame> reference_frame)
+        : m_ReferenceFrame(reference_frame) {}
 
     //! \brief QRunnable::run() definition
-    //! \caption I use shared pointer in this function, so I don't have to worry about memory allocation
+    //! \caption I use shared pointer in this function, so I don't have to worry
+    //! about memory allocation
     //! in case something wrong happens, it shouldn't leak
-    void operator()(PreviewLabel* to_update)
-    {
+    void operator()(PreviewLabel *to_update) {
 #ifdef QT_DEBUG
-        //qDebug() << QThread::currentThread() << "running...";
+// qDebug() << QThread::currentThread() << "running...";
 #endif
 
         // retrieve TM parameters
-        TonemappingOptions* tm_options = to_update->getTonemappingOptions();
+        TonemappingOptions *tm_options = to_update->getTonemappingOptions();
         resetTonemappingOptions(tm_options, m_ReferenceFrame.data());
 
-        if ( m_ReferenceFrame.isNull() )
-        {
+        if (m_ReferenceFrame.isNull()) {
 #ifdef QT_DEBUG
-            qDebug() << "operator()() for TM" << static_cast<int>(tm_options->tmoperator) << " received a NULL pointer";
+            qDebug() << "operator()() for TM"
+                     << static_cast<int>(tm_options->tmoperator)
+                     << " received a NULL pointer";
             return;
 #endif
         }
@@ -86,65 +86,67 @@ public:
         pfs::Progress fake_progress;
 
         // Copy Reference Frame
-        QSharedPointer<pfs::Frame> temp_frame( pfs::copy(m_ReferenceFrame.data()) );
+        QSharedPointer<pfs::Frame> temp_frame(
+            pfs::copy(m_ReferenceFrame.data()));
 
         // Tone Mapping
-        QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
+        QScopedPointer<TonemapOperator> tm_operator(
+            TonemapOperator::getTonemapOperator(tm_options->tmoperator));
         tm_operator->tonemapFrame(*temp_frame, tm_options, fake_progress);
 
-        // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
+        // Create QImage from pfs::Frame into QSharedPointer, and I give it to
+        // the
+        // preview panel
         QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
 
-        //! \note I cannot use these 2 functions, because setPixmap must run in the GUI thread
-        //m_PreviewLabel->setPixmap( QPixmap::fromImage(*qimage) );
-        //m_PreviewLabel->adjustSize();
+        //! \note I cannot use these 2 functions, because setPixmap must run in
+        //! the
+        //! GUI thread
+        // m_PreviewLabel->setPixmap( QPixmap::fromImage(*qimage) );
+        // m_PreviewLabel->adjustSize();
         //! \note So I queue a SLOT request on the m_PreviewSettings
-        QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
+        QMetaObject::invokeMethod(to_update, "assignNewQImage",
+                                  Qt::QueuedConnection,
                                   Q_ARG(QSharedPointer<QImage>, qimage));
 
 #ifdef QT_DEBUG
-        //qDebug() << QThread::currentThread() << "done!";
+// qDebug() << QThread::currentThread() << "done!";
 #endif
     }
 
-private:
+   private:
     QSharedPointer<pfs::Frame> m_ReferenceFrame;
 };
-
 }
 
-PreviewSettings::PreviewSettings(QWidget *parent):
-    QWidget(parent),
-    m_original_width_frame(0)
-{
-    //! \note I need to register the new object to pass this class as parameter inside invokeMethod()
+PreviewSettings::PreviewSettings(QWidget *parent)
+    : QWidget(parent), m_original_width_frame(0) {
+    //! \note I need to register the new object to pass this class as parameter
+    //! inside invokeMethod()
     //! see run() inside PreviewLabelUpdater
-    qRegisterMetaType< QSharedPointer<QImage> >("QSharedPointer<QImage>");
+    qRegisterMetaType<QSharedPointer<QImage>>("QSharedPointer<QImage>");
 
     m_flowLayout = new FlowLayout;
 
     setLayout(m_flowLayout);
 }
 
-PreviewSettings::~PreviewSettings()
-{
+PreviewSettings::~PreviewSettings() {
 #ifdef QT_DEBUG
     qDebug() << "PreviewSettings::~PreviewSettings()";
 #endif
 }
 
-void PreviewSettings::changeEvent(QEvent *event)
-{
+void PreviewSettings::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange) {
-        //m_Ui->retranslateUi(this);
+        // m_Ui->retranslateUi(this);
     }
 
     QWidget::changeEvent(event);
 }
 
-void PreviewSettings::updatePreviews(pfs::Frame* frame)
-{
-    if ( frame == NULL ) return;
+void PreviewSettings::updatePreviews(pfs::Frame *frame) {
+    if (frame == NULL) return;
 
     m_original_width_frame = frame->getWidth();
 
@@ -152,26 +154,27 @@ void PreviewSettings::updatePreviews(pfs::Frame* frame)
     int frame_height = frame->getHeight();
 
     int resized_width = PREVIEW_WIDTH;
-    if (frame_height > frame_width)
-    {
-        float ratio = ((float)frame_width)/frame_height;
-        resized_width = PREVIEW_HEIGHT*ratio;
+    if (frame_height > frame_width) {
+        float ratio = ((float)frame_width) / frame_height;
+        resized_width = PREVIEW_HEIGHT * ratio;
     }
     // 1. make a resized copy
-    QSharedPointer<pfs::Frame> current_frame( pfs::resize(frame, resized_width, BilinearInterp) );
+    QSharedPointer<pfs::Frame> current_frame(
+        pfs::resize(frame, resized_width, BilinearInterp));
 
-    // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
-    foreach (PreviewLabel* current_label, m_ListPreviewLabel)
-    {
+    // 2. (non concurrent) for each PreviewLabel, call
+    // PreviewLabelUpdater::operator()
+    foreach (PreviewLabel *current_label, m_ListPreviewLabel) {
         PreviewLabelUpdater updater(current_frame);
         updater(current_label);
     }
-    // 2. (concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
-    //QtConcurrent::map (m_ListPreviewLabel, PreviewLabelUpdater(current_frame) );
+    // 2. (concurrent) for each PreviewLabel, call
+    // PreviewLabelUpdater::operator()
+    // QtConcurrent::map (m_ListPreviewLabel, PreviewLabelUpdater(current_frame)
+    // );
 }
 
-void PreviewSettings::tonemapPreview(TonemappingOptions* opts)
-{
+void PreviewSettings::tonemapPreview(TonemappingOptions *opts) {
 #ifdef QT_DEBUG
     qDebug() << "void PreviewSettings::tonemapPreview()";
 #endif
@@ -182,20 +185,19 @@ void PreviewSettings::tonemapPreview(TonemappingOptions* opts)
     emit startTonemapping(opts);
 }
 
-QSize PreviewSettings::getLabelSize()
-{
+QSize PreviewSettings::getLabelSize() {
     return m_ListPreviewLabel.at(0)->pixmap()->size();
 }
 
-void PreviewSettings::addPreviewLabel(PreviewLabel *label)
-{
+void PreviewSettings::addPreviewLabel(PreviewLabel *label) {
     TonemappingOptions *opts = label->getTonemappingOptions();
     QString text = opts->getCaption(false, QStringLiteral("\n"));
 
     if (label->actions().isEmpty()) {
-        QAction* pAction = new QAction(tr("Load settings"), label);
+        QAction *pAction = new QAction(tr("Load settings"), label);
         label->addAction(pAction);
-        connect(pAction, &QAction::triggered, this, &PreviewSettings::triggered);
+        connect(pAction, &QAction::triggered, this,
+                &PreviewSettings::triggered);
     }
 
     label->setToolTip(text);
@@ -213,7 +215,7 @@ void PreviewSettings::selectLabel(int index) {
     }
 }
 
-PreviewLabel * PreviewSettings::getPreviewLabel(int index) {
+PreviewLabel *PreviewSettings::getPreviewLabel(int index) {
     QWidget *w = m_flowLayout->itemAt(index)->widget();
     return static_cast<PreviewLabel *>(w);
 }

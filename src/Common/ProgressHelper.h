@@ -31,11 +31,9 @@
 #include "Libpfs/progress.h"
 
 //! \brief glue between pfs::Progress and Qt signal/slot
-class ProgressHelper
-        : public QObject, public pfs::Progress
-{
+class ProgressHelper : public QObject, public pfs::Progress {
     Q_OBJECT
-public:
+   public:
     explicit ProgressHelper(QObject *p = 0);
 
     void setValue(int value);
@@ -43,14 +41,14 @@ public:
     void setMaximum(int maximum);
     void setMinimum(int minimum);
 
-public slots:
+   public slots:
     void qtCancel(bool b = true);
 
-signals:
+   signals:
     void qtSetValue(int value);
     void qtSetRange(int minimum, int maximum);
     void qtSetMaximum(int max);
     void qtSetMinimum(int min);
 };
 
-#endif // PROGRESSHELPER_H
+#endif  // PROGRESSHELPER_H

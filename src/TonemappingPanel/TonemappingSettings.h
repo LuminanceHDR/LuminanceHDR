@@ -30,44 +30,44 @@
 
 #include "Core/TonemappingOptions.h"
 
-#include "PreviewSettings/PreviewSettings.h"
 #include "Libpfs/frame.h"
+#include "PreviewSettings/PreviewSettings.h"
 
-namespace Ui
-{
-    class TonemappingSettings;
+namespace Ui {
+class TonemappingSettings;
 }
 
-class TonemappingSettings: public QDialog
-{
+class TonemappingSettings : public QDialog {
     Q_OBJECT
 
-public:
+   public:
     TonemappingSettings(QWidget *parent = 0, pfs::Frame *frame = NULL);
     ~TonemappingSettings();
-    TonemappingOptions * getTonemappingOptions();
+    TonemappingOptions *getTonemappingOptions();
     bool wantsTonemap() { return m_wantsTonemap; }
 
-protected:
+   protected:
     void fillPreviews();
     pfs::Frame *m_frame;
-    PreviewSettings* m_previewSettings;
-    QSqlQueryModel* m_modelPreviews;
+    PreviewSettings *m_previewSettings;
+    QSqlQueryModel *m_modelPreviews;
     int m_currentIndex;
     QList<PreviewLabel *> m_previewLabelList;
     bool m_wantsTonemap;
     QScopedPointer<Ui::TonemappingSettings> m_Ui;
 
-protected Q_SLOTS:
+   protected Q_SLOTS:
     void listWidgetChanged(int row);
     void updateListView(int);
     void sortPreviews(int);
     void tonemapPreview(TonemappingOptions *);
     void on_btnTonemap_clicked();
 
-private:
-    void addPreview(PreviewLabel* previewLabel, const QSqlRecord& record);
-    void fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, TMOperator tOperator, const QSqlRecord& record);
+   private:
+    void addPreview(PreviewLabel *previewLabel, const QSqlRecord &record);
+    void fillCommonValues(TonemappingOptions *tmOptions, int origxsize,
+                          int previewWidth, TMOperator tOperator,
+                          const QSqlRecord &record);
 };
 
 #endif

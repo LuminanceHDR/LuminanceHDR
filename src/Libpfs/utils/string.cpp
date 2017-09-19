@@ -21,8 +21,8 @@
 
 #include <Libpfs/utils/string.h>
 
-#include <cmath>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
@@ -30,42 +30,37 @@ namespace pfs {
 namespace utils {
 
 // Utility functions for case insensitive string compare
-static
-int charDiff(char c1, char c2)
-{
-    if ( tolower(c1) < tolower(c2) ) return -1;
-    if ( tolower(c1) == tolower(c2) ) return 0;
+static int charDiff(char c1, char c2) {
+    if (tolower(c1) < tolower(c2)) return -1;
+    if (tolower(c1) == tolower(c2)) return 0;
     return 1;
 }
 
-static
-int stringCompare(const string& str1, const string& str2)
-{
+static int stringCompare(const string &str1, const string &str2) {
     int diff = 0;
     size_t size = std::min(str1.size(), str2.size());
-    for (size_t idx = 0; idx < size && diff == 0; ++idx)
-    {
+    for (size_t idx = 0; idx < size && diff == 0; ++idx) {
         diff = charDiff(str1[idx], str2[idx]);
     }
-    if ( diff != 0 ) return diff;
+    if (diff != 0) return diff;
 
-    if ( str2.length() == str1.length() ) return 0;
-    if ( str2.length() > str1.length() ) return 1;
+    if (str2.length() == str1.length()) return 0;
+    if (str2.length() > str1.length()) return 1;
     return -1;
 }
 
-bool StringUnsensitiveComp::operator()(const std::string& str1, const std::string& str2) const {
-    return ( stringCompare(str1, str2) == -1 );
+bool StringUnsensitiveComp::operator()(const std::string &str1,
+                                       const std::string &str2) const {
+    return (stringCompare(str1, str2) == -1);
 }
 
-string getFormat(const string &filename)
-{
+string getFormat(const string &filename) {
     size_t i = filename.rfind('.', filename.length());
-    if ( i != string::npos ) {
-        return filename.substr(i+1, filename.length()-i);
+    if (i != string::npos) {
+        return filename.substr(i + 1, filename.length() - i);
     }
     return string();
 }
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs

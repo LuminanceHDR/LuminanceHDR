@@ -30,25 +30,20 @@
 namespace pfs {
 namespace colorspace {
 
-inline
-void ConvertSRGB2RGB::operator()(float i1, float i2, float i3,
-                                 float& o1, float& o2, float& o3) const
-{
+inline void ConvertSRGB2RGB::operator()(float i1, float i2, float i3, float &o1,
+                                        float &o2, float &o3) const {
     o1 = (*this)(i1);
     o2 = (*this)(i2);
     o3 = (*this)(i3);
 }
 
-inline
-void ConvertRGB2SRGB::operator()(float i1, float i2, float i3,
-                                 float& o1, float& o2, float& o3) const
-{
+inline void ConvertRGB2SRGB::operator()(float i1, float i2, float i3, float &o1,
+                                        float &o2, float &o3) const {
     o1 = (*this)(i1);
     o2 = (*this)(i2);
     o3 = (*this)(i3);
 }
-
 }
 }
 
-#endif // PFS_COLORSPACE_RGB_HXX
+#endif  // PFS_COLORSPACE_RGB_HXX

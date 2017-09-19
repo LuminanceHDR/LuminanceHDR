@@ -19,36 +19,41 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief FrameReaderFactory, creation of FrameReader based on the input filename
+//! \brief FrameReaderFactory, creation of FrameReader based on the input
+//! filename
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 #ifndef PFS_IO_FRAMEREADERFACTORY_H
 #define PFS_IO_FRAMEREADERFACTORY_H
 
-#include <string>
-#include <map>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
 #include <Libpfs/utils/string.h>
+#include <map>
+#include <string>
 
 namespace pfs {
 namespace io {
 
 class FrameReaderFactory {
-public:
-    typedef FrameReaderPtr (*FrameReaderCreator)(const std::string& filename);
-    typedef std::map<std::string, FrameReaderCreator, utils::StringUnsensitiveComp> FrameReaderCreatorMap;
+   public:
+    typedef FrameReaderPtr (*FrameReaderCreator)(const std::string &filename);
+    typedef std::map<std::string, FrameReaderCreator,
+                     utils::StringUnsensitiveComp>
+        FrameReaderCreatorMap;
 
-    static FrameReaderPtr open(const std::string& filename);
+    static FrameReaderPtr open(const std::string &filename);
 
-    static void registerFormat(const std::string& format, FrameReaderCreator creator);
+    static void registerFormat(const std::string &format,
+                               FrameReaderCreator creator);
     static size_t numRegisteredFormats();
-    static bool isSupported(const std::string& format);
-private:
+    static bool isSupported(const std::string &format);
+
+   private:
     static FrameReaderCreatorMap sm_registry;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
-#endif // PFS_IO_FRAMEREADERFACTORY_H
+#endif  // PFS_IO_FRAMEREADERFACTORY_H

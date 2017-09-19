@@ -26,29 +26,23 @@ namespace pfs {
 namespace utils {
 
 template <typename Type>
-struct Clamp
-{
-    Clamp(Type min, Type max)
-        : m_min(min)
-        , m_max(max)
-    {}
+struct Clamp {
+    Clamp(Type min, Type max) : m_min(min), m_max(max) {}
 
-    Type operator()(Type in) const
-    {
+    Type operator()(Type in) const {
         if (in < m_min) return m_min;
         if (in > m_max) return m_max;
         return in;
     }
 
-    void operator()(Type i1, Type i2, Type i3,
-                    Type& o1, Type& o2, Type& o3) const
-    {
+    void operator()(Type i1, Type i2, Type i3, Type &o1, Type &o2,
+                    Type &o3) const {
         o1 = (*this)(i1);
         o2 = (*this)(i2);
         o3 = (*this)(i3);
     }
 
-private:
+   private:
     Type m_min;
     Type m_max;
 };
@@ -58,7 +52,7 @@ typedef Clamp<float> ClampF32;
 // default float clamp between 0 and 1.f (very common)
 static const ClampF32 CLAMP_F32(0.f, 1.f);
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
-#endif // PFS_UTILS_CLAMP_H
+#endif  // PFS_UTILS_CLAMP_H

@@ -24,45 +24,36 @@
 
 #include "rotate.h"
 
-namespace pfs
-{
+namespace pfs {
 
 template <typename Type>
-void rotate(const pfs::Array2D<Type> *in, pfs::Array2D<Type> *out, bool clockwise)
-{
-    const Type* Vin  = in->data();
-    Type* Vout       = out->data();
+void rotate(const pfs::Array2D<Type> *in, pfs::Array2D<Type> *out,
+            bool clockwise) {
+    const Type *Vin = in->data();
+    Type *Vout = out->data();
 
-    const int I_ROWS  = in->getRows();
-    const int I_COLS  = in->getCols();
+    const int I_ROWS = in->getRows();
+    const int I_COLS = in->getCols();
 
-    //const int O_ROWS = out->getRows();
+    // const int O_ROWS = out->getRows();
     const int O_COLS = out->getCols();
 
-    if (clockwise)
-    {
+    if (clockwise) {
 #pragma omp parallel for
-        for (int j = 0; j < I_ROWS; j++)
-        {
-            for (int i = 0; i < I_COLS; i++)
-            {
-                Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS + i];
+        for (int j = 0; j < I_ROWS; j++) {
+            for (int i = 0; i < I_COLS; i++) {
+                Vout[(i + 1) * O_COLS - 1 - j] = Vin[j * I_COLS + i];
             }
         }
-    }
-    else
-    {
+    } else {
 #pragma omp parallel for
-        for (int j = 0; j < I_ROWS; j++)
-        {
-            for (int i = 0; i < I_COLS; i++)
-            {
-                Vout[(I_COLS - i - 1)*O_COLS + j] = Vin[j*I_COLS + i];
+        for (int j = 0; j < I_ROWS; j++) {
+            for (int i = 0; i < I_COLS; i++) {
+                Vout[(I_COLS - i - 1) * O_COLS + j] = Vin[j * I_COLS + i];
             }
         }
     }
 }
-
 }
 
-#endif // #ifndef PFS_ROTATE_HXX
+#endif  // #ifndef PFS_ROTATE_HXX

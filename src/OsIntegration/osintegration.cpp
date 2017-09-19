@@ -26,21 +26,22 @@
 #include <QSysInfo>
 
 #ifdef Q_OS_WIN
-#define _WINSOCKAPI_    // stops windows.h including winsock.h
+#define _WINSOCKAPI_  // stops windows.h including winsock.h
 #include <windows.h>
 
-typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+typedef BOOL(WINAPI *LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
 LPFN_ISWOW64PROCESS fnIsWow64Process;
 #endif
 
-OsIntegration* OsIntegration::instance = 0;
+OsIntegration *OsIntegration::instance = 0;
 
 OsIntegration::OsIntegration()
-    : QObject()
-    , m_progressMin(0)
-    , m_progressMax(100)
+    : QObject(),
+      m_progressMin(0),
+      m_progressMax(100)
 #ifdef Q_OS_WIN
-    , m_winProgressbar(0)
+      ,
+      m_winProgressbar(0)
 #endif
 {
 #ifdef Q_OS_WIN
@@ -49,90 +50,76 @@ OsIntegration::OsIntegration()
 #endif
 }
 
-OsIntegration::~OsIntegration()
-{
+OsIntegration::~OsIntegration() {
 #ifdef Q_OS_WIN
     if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
         delete m_winProgressbar;
 #endif
 }
 
-OsIntegration& OsIntegration::getInstance()
-{
-    if (!instance)
-    {
+OsIntegration &OsIntegration::getInstance() {
+    if (!instance) {
         instance = new OsIntegration();
     }
     return *instance;
 }
 
-OsIntegration* OsIntegration::getInstancePtr()
-{
-    if (!instance)
-    {
+OsIntegration *OsIntegration::getInstancePtr() {
+    if (!instance) {
         instance = new OsIntegration();
     }
     return instance;
 }
 
-void OsIntegration::init(QWidget* mainWindow)
-{
+void OsIntegration::init(QWidget *mainWindow) {
 #ifdef Q_OS_WIN
-    if (m_winProgressbar)
-    {
+    if (m_winProgressbar) {
         m_winProgressbar->init(mainWindow);
     }
 #endif
 }
 
-void OsIntegration::setProgress(int value, int max)
-{
+void OsIntegration::setProgress(int value, int max) {
 #ifdef Q_OS_WIN
-    if (m_winProgressbar)
-    {
+    if (m_winProgressbar) {
         m_winProgressbar->setProgressValue(value, max);
     }
 #endif
 }
 
-void OsIntegration::setProgressValue(int value)
-{
+void OsIntegration::setProgressValue(int value) {
 #ifdef Q_OS_WIN
-    if (m_winProgressbar)
-    {
-        m_winProgressbar->setProgressValue(value, m_progressMax - m_progressMin);
+    if (m_winProgressbar) {
+        m_winProgressbar->setProgressValue(value,
+                                           m_progressMax - m_progressMin);
     }
 #endif
 }
 
-void OsIntegration::setProgressRange(int min, int max)
-{
+void OsIntegration::setProgressRange(int min, int max) {
     m_progressMin = min;
     m_progressMax = max;
 }
 
-void OsIntegration::addRecentFile(const QString& filename)
-{
+void OsIntegration::addRecentFile(const QString &filename) {
 #ifdef Q_OS_WIN
-    if (m_winProgressbar)
-    {
+    if (m_winProgressbar) {
         m_winProgressbar->addRecentFile(filename);
     }
 #endif
 }
 
-bool OsIntegration::isRunningOnSameCpuPlatform()
-{
+bool OsIntegration::isRunningOnSameCpuPlatform() {
 #if defined(_WIN32)
     // 32-bit programs run on both 32-bit and 64-bit Windows
     // so must sniff
     BOOL f64 = true;
     LPFN_ISWOW64PROCESS fnIsWow64Process;
 
-    fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
-    if (NULL != fnIsWow64Process)
-    {
-        return !(fnIsWow64Process(GetCurrentProcess(),&f64) && f64);
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(
+        GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
+    if (NULL != fnIsWow64Process) {
+        return !(fnIsWow64Process(GetCurrentProcess(), &f64) && f64);
     }
     return true;
 #else

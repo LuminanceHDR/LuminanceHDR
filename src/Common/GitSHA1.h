@@ -23,7 +23,7 @@
 //#ifndef GITSHA1_H
 //#define GITSHA1_H
 
-//extern "C"
+// extern "C"
 //{
 extern char g_GIT_SHA1[];
 //}

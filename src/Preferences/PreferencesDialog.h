@@ -25,41 +25,39 @@
 #define OPTIONS_IMPL_H
 
 #include <QDialog>
-#include <QMap>
 #include <QLineEdit>
+#include <QMap>
 #include <QSignalMapper>
 
 #include "LibpfsAdditions/formathelper.h"
 
-namespace Ui
-{
-    class PreferencesDialog;
+namespace Ui {
+class PreferencesDialog;
 }
 
-class PreferencesDialog : public QDialog
-{
+class PreferencesDialog : public QDialog {
     Q_OBJECT
 
-private:
+   private:
     QScopedPointer<Ui::PreferencesDialog> m_Ui;
 
-public:
+   public:
     PreferencesDialog(QWidget *parent, int tab = 0);
     ~PreferencesDialog();
-private:
+
+   private:
     void from_options_to_gui();
 
     QColor infnancolor, negcolor;
     QMap<QString, int> fromIso639ToGuiIndex;
     QMap<int, QString> fromGuiIndexToIso639;
-    QSignalMapper* toolButtonMapper;
+    QSignalMapper *toolButtonMapper;
     pfsadditions::FormatHelper m_formatHelper;
 
+   protected:
+    virtual void changeEvent(QEvent *event);
 
-protected:
-    virtual void changeEvent(QEvent* event);
-
-private Q_SLOTS:
+   private Q_SLOTS:
     void on_okButton_clicked();
     void on_cancelButton_clicked();
     void on_chooseCachePathButton_clicked();
@@ -109,7 +107,7 @@ private Q_SLOTS:
 
     void toolButton_clicked(int);
 
-    void openColorProfile(QLineEdit* lineEdit);
+    void openColorProfile(QLineEdit *lineEdit);
 
     void on_themeChanged();
 };

@@ -29,35 +29,48 @@
 #ifndef PFSTMO_H
 #define PFSTMO_H
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
 class Progress;
 }
 
 #ifdef BRANCH_PREDICTION
-#define likely(x)       __builtin_expect((x),1)
-#define unlikely(x)     __builtin_expect((x),0)
+#define likely(x) __builtin_expect((x), 1)
+#define unlikely(x) __builtin_expect((x), 0)
 #else
-#define likely(x)       (x)
-#define unlikely(x)     (x)
+#define likely(x) (x)
+#define unlikely(x) (x)
 #endif
 
 /* Common return codes for operators */
-#define PFSTMO_OK             1       /* Successful */
-#define PFSTMO_ABORTED        -1      /* User aborted (from callback) */
-#define PFSTMO_ERROR          -2      /* Failed, encountered error */
+#define PFSTMO_OK 1       /* Successful */
+#define PFSTMO_ABORTED -1 /* User aborted (from callback) */
+#define PFSTMO_ERROR -2   /* Failed, encountered error */
 
-void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int eq, pfs::Progress &ph);
-void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress& ph);
-void pfstmo_durand02(pfs::Frame& frame, float sigma_s, float sigma_r, float baseContrast, pfs::Progress &ph);
-void pfstmo_fattal02(pfs::Frame& frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal, bool fftsolver, int detail_level, pfs::Progress &ph);
-void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, pfs::Progress &ph);
-void pfstmo_mai11(pfs::Frame& frame, pfs::Progress &ph);
-void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, pfs::Progress &ph);
-void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, pfs::Progress &ph);
-void pfstmo_pattanaik00(pfs::Frame& frame, bool local, float multiplier, float Acone, float Arod, bool autolum, pfs::Progress &ph);
-void pfstmo_reinhard02 (pfs::Frame& frame, float key, float phi, int num, int low, int high, bool use_scales, pfs::Progress &ph);
-void pfstmo_reinhard05(pfs::Frame& frame, float brightness, float chromaticadaptation, float lightadaptation, pfs::Progress &ph);
+void pfstmo_ashikhmin02(pfs::Frame &frame, bool simple_flag, float lc_value,
+                        int eq, pfs::Progress &ph);
+void pfstmo_drago03(pfs::Frame &frame, float biasValue, pfs::Progress &ph);
+void pfstmo_durand02(pfs::Frame &frame, float sigma_s, float sigma_r,
+                     float baseContrast, pfs::Progress &ph);
+void pfstmo_fattal02(pfs::Frame &frame, float opt_alpha, float opt_beta,
+                     float opt_saturation, float opt_noise, bool newfattal,
+                     bool fftsolver, int detail_level, pfs::Progress &ph);
+void pfstmo_ferradans11(pfs::Frame &frame, float opt_rho, float opt_inv_alpha,
+                        pfs::Progress &ph);
+void pfstmo_mai11(pfs::Frame &frame, pfs::Progress &ph);
+void pfstmo_mantiuk06(pfs::Frame &frame, float scaleFactor,
+                      float saturationFactor, float detailFactor, bool cont_eq,
+                      pfs::Progress &ph);
+void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
+                      float contrast_enhance_factor, float white_y,
+                      bool setluminance, pfs::Progress &ph);
+void pfstmo_pattanaik00(pfs::Frame &frame, bool local, float multiplier,
+                        float Acone, float Arod, bool autolum,
+                        pfs::Progress &ph);
+void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,
+                       int low, int high, bool use_scales, pfs::Progress &ph);
+void pfstmo_reinhard05(pfs::Frame &frame, float brightness,
+                       float chromaticadaptation, float lightadaptation,
+                       pfs::Progress &ph);
 
 #endif

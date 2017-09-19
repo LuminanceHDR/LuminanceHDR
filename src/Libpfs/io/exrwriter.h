@@ -36,14 +36,13 @@ namespace pfs {
 namespace io {
 
 class EXRWriter : public FrameWriter {
-public:
-    EXRWriter(const std::string& filename);
+   public:
+    EXRWriter(const std::string &filename);
 
     bool write(const Frame &frame, const Params &params);
 };
 
-}   // pfs
-}   // io
+}  // pfs
+}  // io
 
-#endif //  PFS_IO_EXRWRITER_H
-
+#endif  //  PFS_IO_EXRWRITER_H

@@ -27,11 +27,10 @@
 //! \author Giuseppe Rota <grota@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <QString>
 #include <HdrCreation/fusionoperator.h>
+#include <QString>
 
-struct FusionOperatorConfig
-{
+struct FusionOperatorConfig {
     libhdr::fusion::WeightFunctionType weightFunction;
     libhdr::fusion::ResponseCurveType responseCurve;
     libhdr::fusion::FusionOperator fusionOperator;

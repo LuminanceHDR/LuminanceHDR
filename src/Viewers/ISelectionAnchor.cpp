@@ -27,13 +27,13 @@
 
 #include "Viewers/ISelectionAnchor.h"
 
-ISelectionAnchor::ISelectionAnchor(AnchorPosition position, QGraphicsItem *parent):
-    QGraphicsItem(parent),
-    mAnchorColor(Qt::black),
-    mSize(ANCHOR_SIZE),
-    mPosition(position),
-    mMouseState(MOUSE_BUTTON_RELEASED)
-{
+ISelectionAnchor::ISelectionAnchor(AnchorPosition position,
+                                   QGraphicsItem *parent)
+    : QGraphicsItem(parent),
+      mAnchorColor(Qt::black),
+      mSize(ANCHOR_SIZE),
+      mPosition(position),
+      mMouseState(MOUSE_BUTTON_RELEASED) {
     setParentItem(parent);
 
     this->setAcceptHoverEvents(true);
@@ -42,30 +42,27 @@ ISelectionAnchor::ISelectionAnchor(AnchorPosition position, QGraphicsItem *paren
 // we have to implement the mouse events to keep the linker happy,
 // just set accepted to false since are not actually handling them
 
-//void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneDragDropEvent *event)
+// void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneDragDropEvent *event)
 //{
 //    event->setAccepted(false);
 //}
 
-//void ISelectionAnchor::mousePressEvent(QGraphicsSceneDragDropEvent *event)
+// void ISelectionAnchor::mousePressEvent(QGraphicsSceneDragDropEvent *event)
 //{
 //    event->setAccepted(false);
 //}
 
-void ISelectionAnchor::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
+void ISelectionAnchor::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     mMouseState = MOUSE_BUTTON_RELEASED;
     event->setAccepted(false);
 }
 
-void ISelectionAnchor::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
+void ISelectionAnchor::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     mMouseState = MOUSE_BUTTON_PRESSED;
     event->setAccepted(false);
 }
 
-void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
-{
+void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     mMouseState = MOUSE_MOVING;
     event->setAccepted(false);
 }
@@ -73,65 +70,62 @@ void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 // change the color on hover events to indicate to the use the object has
 // been captured by the mouse
 
-void ISelectionAnchor::hoverLeaveEvent(QGraphicsSceneHoverEvent*)
-{
+void ISelectionAnchor::hoverLeaveEvent(QGraphicsSceneHoverEvent *) {
     unsetCursor();
     mAnchorColor = Qt::black;
     this->update();
 }
 
-void ISelectionAnchor::hoverEnterEvent(QGraphicsSceneHoverEvent*)
-{
+void ISelectionAnchor::hoverEnterEvent(QGraphicsSceneHoverEvent *) {
     setCursor(Qt::CrossCursor);
 
-//    switch (mPosition)
-//    {
-//    case TOP_LEFT:
-//    case BOTTOM_RIGHT:
-//        setCursor(Qt::SizeFDiagCursor);
-//        break;
-//    case TOP_RIGHT:
-//    case BOTTOM_LEFT:
-//        setCursor(Qt::SizeBDiagCursor);
-//        break;
-//    case LEFT: case RIGHT:
-//        setCursor(Qt::SizeHorCursor);
-//        break;
-//    case TOP: case BOTTOM:
-//        setCursor(Qt::SizeVerCursor);
-//        break;
-//    }
+    //    switch (mPosition)
+    //    {
+    //    case TOP_LEFT:
+    //    case BOTTOM_RIGHT:
+    //        setCursor(Qt::SizeFDiagCursor);
+    //        break;
+    //    case TOP_RIGHT:
+    //    case BOTTOM_LEFT:
+    //        setCursor(Qt::SizeBDiagCursor);
+    //        break;
+    //    case LEFT: case RIGHT:
+    //        setCursor(Qt::SizeHorCursor);
+    //        break;
+    //    case TOP: case BOTTOM:
+    //        setCursor(Qt::SizeVerCursor);
+    //        break;
+    //    }
 
     mAnchorColor = Qt::red;
     this->update();
 }
 
-QRectF ISelectionAnchor::boundingRect() const
-{
-    return QRectF(-mSize/qreal(2.), -mSize/qreal(2.), mSize, mSize).normalized() ;
+QRectF ISelectionAnchor::boundingRect() const {
+    return QRectF(-mSize / qreal(2.), -mSize / qreal(2.), mSize, mSize)
+        .normalized();
 }
 
 #include <qmath.h>
 
-void ISelectionAnchor::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
-{
-    QList<QGraphicsView*> views = this->scene()->views();
+void ISelectionAnchor::paint(QPainter *painter,
+                             const QStyleOptionGraphicsItem *, QWidget *) {
+    QList<QGraphicsView *> views = this->scene()->views();
 
     // I only consider the first one for speed, being sure that
-    if ( views.count() >= 1)
-    {
-        QGraphicsView* view = views.at(0);
-        qreal sf = 1.0/view->transform().m11();
+    if (views.count() >= 1) {
+        QGraphicsView *view = views.at(0);
+        qreal sf = 1.0 / view->transform().m11();
 
-        mSize = qFloor(ANCHOR_SIZE*sf);
-    }
-    else
-    {
+        mSize = qFloor(ANCHOR_SIZE * sf);
+    } else {
         // default values
         mSize = ANCHOR_SIZE;
     }
 
-    painter->setPen( Qt::NoPen );
-    painter->setBrush( QBrush(mAnchorColor, Qt::SolidPattern) );
-    painter->drawEllipse( QRectF(-mSize/qreal(2.), -mSize/qreal(2.), mSize, mSize).normalized() );
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(QBrush(mAnchorColor, Qt::SolidPattern));
+    painter->drawEllipse(
+        QRectF(-mSize / qreal(2.), -mSize / qreal(2.), mSize, mSize)
+            .normalized());
 }

@@ -1,23 +1,21 @@
 #include "ecwin7.h"
 
-#include <QGuiApplication>
-#include <QFileInfo>
-#include <QSettings>
 #include <QDir>
+#include <QFileInfo>
+#include <QGuiApplication>
+#include <QSettings>
 
 #include "Common/global.h"
 
 // Constructor: variabiles initialization
-EcWin7::EcWin7()
-{
+EcWin7::EcWin7() {
     taskbarButton = 0;
     taskbarProgress = 0;
     jumplist = 0;
 }
 
 // Init taskbar communication
-void EcWin7::init(QWidget* widget)
-{
+void EcWin7::init(QWidget *widget) {
     taskbarButton = new QWinTaskbarButton(widget);
     taskbarButton->setWindow(widget->windowHandle());
 
@@ -28,14 +26,12 @@ void EcWin7::init(QWidget* widget)
     jumplist->recent()->setVisible(true);
 }
 
-void EcWin7::addRecentFile(const QString& filename)
-{
+void EcWin7::addRecentFile(const QString &filename) {
     jumplist->recent()->addDestination(filename);
 }
 
 // Set progress bar current value
-void EcWin7::setProgressValue(int value, int max)
-{
+void EcWin7::setProgressValue(int value, int max) {
     if (!taskbarProgress) return;
 
     if (value < 0) {
@@ -49,17 +45,18 @@ void EcWin7::setProgressValue(int value, int max)
     taskbarProgress->setValue(value);
 }
 
-void EcWin7::associateFileTypes(const QStringList &fileTypes)
-{
+void EcWin7::associateFileTypes(const QStringList &fileTypes) {
     QString displayName = QGuiApplication::applicationDisplayName();
     QString filePath = QCoreApplication::applicationFilePath();
     QString fileName = QFileInfo(filePath).fileName();
 
-    QSettings settings("HKEY_CURRENT_USER\\Software\\Classes\\Applications\\" + fileName, QSettings::NativeFormat);
+    QSettings settings(
+        "HKEY_CURRENT_USER\\Software\\Classes\\Applications\\" + fileName,
+        QSettings::NativeFormat);
     settings.setValue("FriendlyAppName", displayName);
 
     settings.beginGroup("SupportedTypes");
-    foreach (const QString& fileType, fileTypes)
+    foreach (const QString &fileType, fileTypes)
         settings.setValue(fileType, QString());
     settings.endGroup();
 
@@ -67,5 +64,7 @@ void EcWin7::associateFileTypes(const QStringList &fileTypes)
     settings.beginGroup("open");
     settings.setValue("FriendlyAppName", displayName);
     settings.beginGroup("Command");
-    settings.setValue(".", QChar('"') + QDir::toNativeSeparators(filePath) + QString("\" \"%1\""));
+    settings.setValue(
+        ".",
+        QChar('"') + QDir::toNativeSeparators(filePath) + QString("\" \"%1\""));
 }

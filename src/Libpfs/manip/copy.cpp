@@ -29,29 +29,25 @@
 
 #include <algorithm>
 
-namespace pfs
-{
+namespace pfs {
 using namespace utils;
 
-pfs::Frame *copy(const pfs::Frame *inFrame)
-{
+pfs::Frame *copy(const pfs::Frame *inFrame) {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
 
-    const int outWidth   = inFrame->getWidth();
-    const int outHeight  = inFrame->getHeight();
+    const int outWidth = inFrame->getWidth();
+    const int outHeight = inFrame->getHeight();
 
     pfs::Frame *outFrame = new pfs::Frame(outWidth, outHeight);
 
-    const ChannelContainer& channels = inFrame->getChannels();
+    const ChannelContainer &channels = inFrame->getChannels();
 
-    for ( ChannelContainer::const_iterator it = channels.begin();
-          it != channels.end();
-          ++it)
-    {
-        const pfs::Channel* inCh = *it;
+    for (ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end(); ++it) {
+        const pfs::Channel *inCh = *it;
 
         pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
 
@@ -67,5 +63,4 @@ pfs::Frame *copy(const pfs::Frame *inFrame)
 
     return outFrame;
 }
-
 }

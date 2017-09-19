@@ -26,8 +26,8 @@
 #define PFS_COLORSPACE_CONVERT_H
 
 #include <stdint.h>
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 namespace pfs {
 namespace colorspace {
@@ -36,46 +36,40 @@ template <typename TypeOut, typename TypeIn>
 struct ConvertSample;
 
 template <typename Type>
-struct ConvertSample<Type, Type>
-{
-    Type operator()(Type vIn)
-    { return vIn; }
+struct ConvertSample<Type, Type> {
+    Type operator()(Type vIn) { return vIn; }
 };
 
 template <>
-struct ConvertSample<float, uint16_t>
-{
-    float operator()(uint16_t vIn)
-    { return ((float)vIn)/65535.f; }
+struct ConvertSample<float, uint16_t> {
+    float operator()(uint16_t vIn) { return ((float)vIn) / 65535.f; }
 };
 
 template <>
-struct ConvertSample<float, uint8_t>
-{
-    float operator()(uint8_t vIn)
-    { return ((float)vIn)/255.f; }
+struct ConvertSample<float, uint8_t> {
+    float operator()(uint8_t vIn) { return ((float)vIn) / 255.f; }
 };
 
 template <>
-struct ConvertSample<uint8_t, float>
-{
-    uint8_t operator()(float vIn)
-    { return static_cast<uint8_t>(vIn*255.f + 0.5f); }
+struct ConvertSample<uint8_t, float> {
+    uint8_t operator()(float vIn) {
+        return static_cast<uint8_t>(vIn * 255.f + 0.5f);
+    }
 };
 
 template <>
 struct ConvertSample<uint16_t, float> {
-    uint16_t operator()(float vIn)
-    { return static_cast<uint16_t>(vIn*65535.f + 0.5f); }
+    uint16_t operator()(float vIn) {
+        return static_cast<uint16_t>(vIn * 65535.f + 0.5f);
+    }
 };
 
 template <typename TypeOut, typename TypeIn>
-TypeOut convertSample(TypeIn vIn)
-{
+TypeOut convertSample(TypeIn vIn) {
     return ConvertSample<TypeOut, TypeIn>()(vIn);
 }
 
-}   // colorspace
-}   // pfs
+}  // colorspace
+}  // pfs
 
-#endif // PFS_COLORSPACE_CONVERT_H
+#endif  // PFS_COLORSPACE_CONVERT_H

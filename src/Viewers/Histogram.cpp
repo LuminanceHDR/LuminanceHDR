@@ -27,75 +27,64 @@
 
 #include "Histogram.h"
 
-#include <math.h>
 #include <assert.h>
+#include <math.h>
 
 #include <Libpfs/array2d.h>
 
-Histogram::Histogram( int bins, int accuracy )
-    : bins( bins )
-    , accuracy( accuracy )
-    , P( new float[bins] )
-{}
+Histogram::Histogram(int bins, int accuracy)
+    : bins(bins), accuracy(accuracy), P(new float[bins]) {}
 
-Histogram::~Histogram()
-{
-    delete[] P;
-}
+Histogram::~Histogram() { delete[] P; }
 
-void Histogram::computeLog( const pfs::Array2Df *image )
-{
-  const int size = image->getRows()*image->getCols();
+void Histogram::computeLog(const pfs::Array2Df *image) {
+    const int size = image->getRows() * image->getCols();
 
-  float max, min;               // Find min, max
-  {
-    min = 999999999.0f;
-    max = -999999999.0f;
+    float max, min;  // Find min, max
+    {
+        min = 999999999.0f;
+        max = -999999999.0f;
 
-    for( int i = 0; i < size; i += accuracy ) {
-      float v = (*image)(i);
-      if( v > max ) max = v;
-      else if( v < min ) min = v;
+        for (int i = 0; i < size; i += accuracy) {
+            float v = (*image)(i);
+            if (v > max)
+                max = v;
+            else if (v < min)
+                min = v;
+        }
     }
-  }
-  computeLog( image, min, max );
+    computeLog(image, min, max);
 }
 
+void Histogram::computeLog(const pfs::Array2Df *image, float min, float max) {
+    const int size = image->getRows() * image->getCols();
 
-void Histogram::computeLog( const pfs::Array2Df *image, float min, float max )
-{
-  const int size = image->getRows()*image->getCols();
+    // Empty all bins
+    for (int i = 0; i < bins; i++) P[i] = 0;
 
-  // Empty all bins
-  for( int i = 0; i < bins; i++ )
-    P[i] = 0;
-
-  float count = 0;
-  float binWidth = (max-min)/(float)bins;
-  for( int i = 0; i < size; i += accuracy ) {
-    float v = (*image)(i);
-    if( v <= 0 ) continue;
-    v = log10(v);
-    int bin = (int)((v-min)/binWidth);
-    if( bin > bins || bin < 0 ) continue;
-    if( bin == bins ) bin = bins-1;
-    P[bin] += 1;
-    count++;
-  }
-
-  // Normalize, to get probability
-  for( int i = 0; i < bins; i++ )
-    P[i] /= (float)(count/accuracy);
-
-}
-
-float Histogram::getMaxP() const
-{
-  float maxP = -1;
-  for( int i = 0; i < bins; i++ ) {
-    if( P[i] > maxP ) {
-      maxP = P[i];
+    float count = 0;
+    float binWidth = (max - min) / (float)bins;
+    for (int i = 0; i < size; i += accuracy) {
+        float v = (*image)(i);
+        if (v <= 0) continue;
+        v = log10(v);
+        int bin = (int)((v - min) / binWidth);
+        if (bin > bins || bin < 0) continue;
+        if (bin == bins) bin = bins - 1;
+        P[bin] += 1;
+        count++;
     }
-  }
-  return maxP;
+
+    // Normalize, to get probability
+    for (int i = 0; i < bins; i++) P[i] /= (float)(count / accuracy);
+}
+
+float Histogram::getMaxP() const {
+    float maxP = -1;
+    for (int i = 0; i < bins; i++) {
+        if (P[i] > maxP) {
+            maxP = P[i];
+        }
+    }
+    return maxP;
 }

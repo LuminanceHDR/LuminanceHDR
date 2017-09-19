@@ -31,61 +31,51 @@
 #include <map>
 #include <string>
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
 
-class TagContainer
-{
-public:
+class TagContainer {
+   public:
     typedef std::map<std::string, std::string> TagList;
 
-    TagContainer()
-        : m_tags()
-    {}
+    TagContainer() : m_tags() {}
 
-    size_t size() const
-    { return m_tags.size(); }
+    size_t size() const { return m_tags.size(); }
 
     //! \brief Set or add a string tagValue of the name tagName.
     //! \param tagName name of the tag to add or set
     //! \param tagValue value of the tag
-    void setTag(const std::string& tagName, const std::string& tagValue);
+    void setTag(const std::string &tagName, const std::string &tagValue);
 
     //! \brief Get a string tag of the name tagName from the TagContainer.
     //! \param tagName name of the tag to retrieve
     //! \return tag value or empty string if tag was not found
-    std::string getTag(const std::string& tagName) const;
+    std::string getTag(const std::string &tagName) const;
 
-    //! \brief Removes (if exists) a tag of the name tagName from the TagContainer.
+    //! \brief Removes (if exists) a tag of the name tagName from the
+    //! TagContainer.
     //! \param tagName name of the tag to remove
-    void removeTag(const std::string& tagName);
+    void removeTag(const std::string &tagName);
 
-    void clear()
-    { m_tags.clear(); }
+    void clear() { m_tags.clear(); }
 
-    void swap(TagContainer& other)
-    { m_tags.swap( other.m_tags ); }
+    void swap(TagContainer &other) { m_tags.swap(other.m_tags); }
 
     // iterators
     typedef TagList::iterator iterator;
     typedef TagList::const_iterator const_iterator;
 
-    iterator begin()
-    { return m_tags.begin(); }
-    iterator end()
-    { return m_tags.end(); }
+    iterator begin() { return m_tags.begin(); }
+    iterator end() { return m_tags.end(); }
 
-    const_iterator begin() const
-    { return m_tags.begin(); }
-    const_iterator end() const
-    { return m_tags.end(); }
+    const_iterator begin() const { return m_tags.begin(); }
+    const_iterator end() const { return m_tags.end(); }
 
-private:
+   private:
     TagList m_tags;
 };
 
-std::ostream& operator<<(std::ostream& out, const TagContainer& tags);
+std::ostream &operator<<(std::ostream &out, const TagContainer &tags);
 
 //! Copy all tags from both the frame and its channels to the
 //! destination frame. If there is no corresponding destination
@@ -100,10 +90,8 @@ void copyTags(const Frame *from, Frame *to);
 //! tags in the destination channel will be removed before
 //! copying. Therefore after this operation, the destination will
 //! contain exactly the same tags as the source.
-void copyTags(const TagContainer& from, TagContainer& to);
+void copyTags(const TagContainer &from, TagContainer &to);
 
-}   // pfs
+}  // pfs
 
-#endif // PFS_TAG_H
-
-
+#endif  // PFS_TAG_H

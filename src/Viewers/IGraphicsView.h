@@ -28,27 +28,27 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QWheelEvent>
 #include <QResizeEvent>
+#include <QWheelEvent>
 
 class IGraphicsView : public QGraphicsView {
     Q_OBJECT
-private:
+   private:
     void init();
 
-public:
-    explicit IGraphicsView ( QWidget * parent = 0 );
-    IGraphicsView ( QGraphicsScene * scene, QWidget * parent = 0 );
+   public:
+    explicit IGraphicsView(QWidget *parent = 0);
+    IGraphicsView(QGraphicsScene *scene, QWidget *parent = 0);
     ~IGraphicsView();
-protected:
-    virtual void wheelEvent(QWheelEvent *event);
-    virtual void resizeEvent(QResizeEvent* event);
 
-Q_SIGNALS:
+   protected:
+    virtual void wheelEvent(QWheelEvent *event);
+    virtual void resizeEvent(QResizeEvent *event);
+
+   Q_SIGNALS:
     void zoomIn();
     void zoomOut();
     void viewAreaChangedSize();
 };
 
 #endif
-

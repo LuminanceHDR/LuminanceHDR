@@ -22,13 +22,9 @@
 //! \brief apply gamma and black/white point to the input frame
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
 
-void gammaAndLevels(pfs::Frame* in,
-                    float black_in, float white_in,
-                    float black_out, float white_out,
-                    float gamma = 1.0f);
-
+void gammaAndLevels(pfs::Frame *in, float black_in, float white_in,
+                    float black_out, float white_out, float gamma = 1.0f);
 }

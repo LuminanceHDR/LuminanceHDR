@@ -22,22 +22,19 @@
 #ifndef EXIF_DATA_HPP
 #define EXIF_DATA_HPP
 
-#include <string>
-#include <stdexcept>
 #include <iosfwd>
+#include <stdexcept>
+#include <string>
 
-namespace pfs
-{
+namespace pfs {
 //! \namespace Contains all the operations based on EXIF data
-namespace exif
-{
+namespace exif {
 
 //! \class exif_data
 //! \brief Holds Exif Data
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-class ExifData
-{
-public:
+class ExifData {
+   public:
     //! \brief empty ctor
     ExifData();
 
@@ -73,7 +70,8 @@ public:
     //! "average scene luminance" is the L (aka B) value mentioned in [1]
     //! You have to take a log2f of the returned value to get an EV value.
     //!
-    //! We are using K=12.07488f and the exif-implied value of N=1/3.125 (see [1]).
+    //! We are using K=12.07488f and the exif-implied value of N=1/3.125 (see
+    //! [1]).
     //! K=12.07488f is the 1.0592f * 11.4f value in pfscalibration's
     //! pfshdrcalibrate.cpp file.
     //! Based on [3] we can say that the value can also be 12.5 or even 14.
@@ -96,7 +94,6 @@ public:
     //! Luminance HDR http://qtpfsgui.sourceforge.net/
     float getAverageSceneLuminance() const;
 
-
     //! \brief This function returns the image rotation to apply in degrees.
     //! Possible values are 0, 90, 180, 270.
     short getOrientationDegree() const;
@@ -110,7 +107,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& out,
                                     const ExifData& exifdata);
-private:
+
+   private:
     float m_exposureTime;
     float m_isoSpeed;
     float m_FNumber;
@@ -120,7 +118,7 @@ private:
 
 std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
 
-} // exif
-} // pfs
+}  // exif
+}  // pfs
 
-#endif // EXIF_DATA_HPP
+#endif  // EXIF_DATA_HPP

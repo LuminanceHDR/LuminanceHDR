@@ -34,10 +34,9 @@ namespace io {
 // sort of private implementation for TiffReader
 struct TiffReaderData;
 
-class TiffReader : public FrameReader
-{
-public:
-    TiffReader(const std::string& filename);
+class TiffReader : public FrameReader {
+   public:
+    TiffReader(const std::string &filename);
     ~TiffReader();
 
     void open();
@@ -46,11 +45,11 @@ public:
 
     void read(Frame &frame, const Params &params);
 
-private:
+   private:
     std::unique_ptr<TiffReaderData> m_data;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
 #endif

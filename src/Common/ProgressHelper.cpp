@@ -26,36 +26,26 @@
 
 using namespace pfs;
 
-ProgressHelper::ProgressHelper(QObject *p):
-    QObject(p),
-    Progress()
-{}
+ProgressHelper::ProgressHelper(QObject *p) : QObject(p), Progress() {}
 
-void ProgressHelper::setValue(int value)
-{
+void ProgressHelper::setValue(int value) {
     Progress::setValue(value);
     emit qtSetValue(value);
 }
 
-void ProgressHelper::setMaximum(int maximum)
-{
+void ProgressHelper::setMaximum(int maximum) {
     Progress::setMaximum(maximum);
     emit qtSetMaximum(maximum);
 }
 
-void ProgressHelper::setMinimum(int minimum)
-{
+void ProgressHelper::setMinimum(int minimum) {
     Progress::setMinimum(minimum);
     emit qtSetMinimum(minimum);
 }
 
-void ProgressHelper::setRange(int minimum, int maximum)
-{
+void ProgressHelper::setRange(int minimum, int maximum) {
     Progress::setRange(minimum, maximum);
     emit qtSetRange(minimum, maximum);
 }
 
-void ProgressHelper::qtCancel(bool b)
-{
-    Progress::cancel(b);
-}
+void ProgressHelper::qtCancel(bool b) { Progress::cancel(b); }

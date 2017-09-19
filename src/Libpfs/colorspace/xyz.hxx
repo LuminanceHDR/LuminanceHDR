@@ -25,47 +25,40 @@
 //! \brief XYZ conversion functions
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <Libpfs/colorspace/xyz.h>
-#include <Libpfs/colorspace/rgb.h>
 #include <Libpfs/colorspace/convert.h>
+#include <Libpfs/colorspace/rgb.h>
+#include <Libpfs/colorspace/xyz.h>
 
 namespace pfs {
 namespace colorspace {
 
 template <typename TypeIn, typename TypeOut>
-void ConvertRGB2Y::operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeOut& o) const
-{
-    o = convertSample<TypeOut>(
-                rgb2xyzD65Mat[1][0]*convertSample<float>(i1) +
-                rgb2xyzD65Mat[1][1]*convertSample<float>(i2) +
-                rgb2xyzD65Mat[1][2]*convertSample<float>(i3)
-            );
+void ConvertRGB2Y::operator()(TypeIn i1, TypeIn i2, TypeIn i3,
+                              TypeOut &o) const {
+    o = convertSample<TypeOut>(rgb2xyzD65Mat[1][0] * convertSample<float>(i1) +
+                               rgb2xyzD65Mat[1][1] * convertSample<float>(i2) +
+                               rgb2xyzD65Mat[1][2] * convertSample<float>(i3));
 }
 
-inline
-void ConvertSRGB2XYZ::operator()(float i1, float i2, float i3,
-                                 float& o1, float& o2, float& o3) const
-{
+inline void ConvertSRGB2XYZ::operator()(float i1, float i2, float i3, float &o1,
+                                        float &o2, float &o3) const {
     colorspace::ConvertSRGB2RGB()(i1, i2, i3, i1, i2, i3);
     colorspace::ConvertRGB2XYZ()(i1, i2, i3, o1, o2, o3);
 }
 
-inline
-void ConvertXYZ2SRGB::operator()(float i1, float i2, float i3,
-                                 float& o1, float& o2, float& o3) const
-{
+inline void ConvertXYZ2SRGB::operator()(float i1, float i2, float i3, float &o1,
+                                        float &o2, float &o3) const {
     colorspace::ConvertXYZ2RGB()(i1, i2, i3, i1, i2, i3);
     colorspace::ConvertRGB2SRGB()(i1, i2, i3, o1, o2, o3);
 }
 
-inline
-void ConvertSRGB2Y::operator()(float i1, float i2, float i3, float& o) const
-{
+inline void ConvertSRGB2Y::operator()(float i1, float i2, float i3,
+                                      float &o) const {
     colorspace::ConvertSRGB2RGB()(i1, i2, i3, i1, i2, i3);
     colorspace::ConvertRGB2Y()(i1, i2, i3, o);
 }
 
-}   // namespace
-}   // pfs
+}  // namespace
+}  // pfs
 
-#endif // PFS_COLORSPACE_XYZ_H
+#endif  // PFS_COLORSPACE_XYZ_H

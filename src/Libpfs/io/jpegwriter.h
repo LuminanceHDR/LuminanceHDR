@@ -30,12 +30,12 @@
 #ifndef PFS_IO_JPEGWRITER_H
 #define PFS_IO_JPEGWRITER_H
 
-#include <string>
 #include <memory>
+#include <string>
 
-#include <Libpfs/params.h>
-#include <Libpfs/io/ioexception.h>
 #include <Libpfs/io/framewriter.h>
+#include <Libpfs/io/ioexception.h>
+#include <Libpfs/params.h>
 
 namespace pfs {
 class Frame;
@@ -44,24 +44,23 @@ namespace io {
 
 class JpegWriterImpl;
 
-class JpegWriter : public FrameWriter
-{
-public:
-    JpegWriter(const std::string& filename);
+class JpegWriter : public FrameWriter {
+   public:
+    JpegWriter(const std::string &filename);
     JpegWriter();
     ~JpegWriter();
 
     //! \brief write a pfs::Frame into file or memory
-    bool write(const pfs::Frame& frame, const pfs::Params& params);
+    bool write(const pfs::Frame &frame, const pfs::Params &params);
 
     //! \brief return size in bytes of the file written
     size_t getFileSize() const;
 
-private:
+   private:
     std::unique_ptr<JpegWriterImpl> m_impl;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
 #endif  // PFS_IO_JPEGWRITER_H

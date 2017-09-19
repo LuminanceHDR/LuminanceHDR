@@ -29,17 +29,15 @@
 //! \since 2.3.0-beta1
 
 #include <Libpfs/utils/resourcehandler.h>
-#include <iostream>
 #include <cstdio>
+#include <iostream>
 
 namespace pfs {
 namespace utils {
 
-struct CleanUpStdIoFile
-{
-    static inline
-    void cleanup(FILE* p) {
-        if ( p ) {
+struct CleanUpStdIoFile {
+    static inline void cleanup(FILE *p) {
+        if (p) {
             fclose(p);
         }
     }
@@ -47,7 +45,7 @@ struct CleanUpStdIoFile
 
 typedef ResourceHandler<FILE, CleanUpStdIoFile> ScopedStdIoFile;
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
-#endif // RESOURCEHANDLERSTDIO_H
+#endif  // RESOURCEHANDLERSTDIO_H

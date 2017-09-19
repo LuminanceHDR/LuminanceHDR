@@ -29,21 +29,16 @@
 
 namespace pfs {
 
-inline const std::string& Channel::getName() const
-{ return m_name; }
+inline const std::string &Channel::getName() const { return m_name; }
 
-inline size_t Channel::getWidth() const
-{ return getCols(); }
+inline size_t Channel::getWidth() const { return getCols(); }
 
-inline size_t Channel::getHeight() const
-{ return getRows(); }
+inline size_t Channel::getHeight() const { return getRows(); }
 
-inline TagContainer& Channel::getTags()
-{ return m_tags; }
+inline TagContainer &Channel::getTags() { return m_tags; }
 
-inline const TagContainer& Channel::getTags() const
-{ return m_tags; }
+inline const TagContainer &Channel::getTags() const { return m_tags; }
 
-} // pfs
+}  // pfs
 
-#endif // PFS_CHANNEL_HXX
+#endif  // PFS_CHANNEL_HXX

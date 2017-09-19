@@ -30,8 +30,9 @@
 
 #include <string>
 
-void generate_hdrhtml(pfs::Frame *frame,
-        std::string page_name, std::string out_dir, std::string image_dir, std::string object_output, std::string html_output,
-        int quality, bool verbose);
+void generate_hdrhtml(pfs::Frame *frame, std::string page_name,
+                      std::string out_dir, std::string image_dir,
+                      std::string object_output, std::string html_output,
+                      int quality, bool verbose);
 
 #endif

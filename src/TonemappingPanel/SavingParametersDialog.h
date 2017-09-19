@@ -27,22 +27,19 @@
 
 #include <QDialog>
 
-namespace Ui
-{
-    class SavingParameters;
+namespace Ui {
+class SavingParameters;
 }
 
-
-class SavingParameters : public QDialog
-{
+class SavingParameters : public QDialog {
     Q_OBJECT
 
-public:
+   public:
     SavingParameters(QWidget *parent = 0);
     ~SavingParameters();
     QString getComment();
 
-protected:
+   protected:
     QScopedPointer<Ui::SavingParameters> m_Ui;
 };
 

@@ -23,15 +23,15 @@
 #include "global.hxx"
 
 #include <QCoreApplication>
-#include <QLibraryInfo>
 #include <QDebug>
+#include <QLibraryInfo>
 
 TranslatorManager::ScopedQTranslator TranslatorManager::sm_appTranslator;
 TranslatorManager::ScopedQTranslator TranslatorManager::sm_qtTranslator;
 
-void TranslatorManager::setLanguage(const QString& lang, bool installQtTranslation)
-{
-    if ( lang == QLatin1String("en") ) {
+void TranslatorManager::setLanguage(const QString &lang,
+                                    bool installQtTranslation) {
+    if (lang == QLatin1String("en")) {
         cleanAppTranslator();
         cleanQtTranslator();
 
@@ -39,54 +39,51 @@ void TranslatorManager::setLanguage(const QString& lang, bool installQtTranslati
     }
 
     setAppTranslator(lang);
-    if ( installQtTranslation ) setQtTranslator(lang);
+    if (installQtTranslation) setQtTranslator(lang);
 }
 
-void TranslatorManager::cleanAppTranslator()
-{
-    if ( sm_appTranslator ) {
+void TranslatorManager::cleanAppTranslator() {
+    if (sm_appTranslator) {
         QCoreApplication::removeTranslator(sm_appTranslator.data());
         sm_appTranslator.reset();
     }
 }
 
-void TranslatorManager::cleanQtTranslator()
-{
-    if ( sm_qtTranslator ) {
+void TranslatorManager::cleanQtTranslator() {
+    if (sm_qtTranslator) {
         QCoreApplication::removeTranslator(sm_qtTranslator.data());
         sm_qtTranslator.reset();
     }
 }
 
-void TranslatorManager::setAppTranslator(const QString& lang)
-{
+void TranslatorManager::setAppTranslator(const QString &lang) {
     qDebug() << "I18NDIR: " << I18NDIR;
     cleanAppTranslator();
 
-    ScopedQTranslator appTranslator( new QTranslator() );
+    ScopedQTranslator appTranslator(new QTranslator());
 
-    if ( appTranslator->load(QStringLiteral("lang_") + lang, QStringLiteral("i18n")) ||
-         appTranslator->load(QStringLiteral("lang_") + lang, I18NDIR) )
-    {
+    if (appTranslator->load(QStringLiteral("lang_") + lang,
+                            QStringLiteral("i18n")) ||
+        appTranslator->load(QStringLiteral("lang_") + lang, I18NDIR)) {
         QCoreApplication::installTranslator(appTranslator.data());
-        sm_appTranslator.swap( appTranslator );
+        sm_appTranslator.swap(appTranslator);
     }
 }
 
-void TranslatorManager::setQtTranslator(const QString& lang)
-{
+void TranslatorManager::setQtTranslator(const QString &lang) {
     qDebug() << "QLibraryInfo::location(QLibraryInfo::TranslationsPath)): "
              << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
     cleanQtTranslator();
 
-    ScopedQTranslator qtTranslator( new QTranslator() );
+    ScopedQTranslator qtTranslator(new QTranslator());
 
-    if ( qtTranslator->load(QStringLiteral("qt_") + lang, QStringLiteral("i18n")) ||
-         // qtTranslator->load(QString("qt_") + lang, I18NDIR) )
-         qtTranslator->load(QStringLiteral("qt_") + lang, QLibraryInfo::location(
-                                QLibraryInfo::TranslationsPath)) )
-    {
+    if (qtTranslator->load(QStringLiteral("qt_") + lang,
+                           QStringLiteral("i18n")) ||
+        // qtTranslator->load(QString("qt_") + lang, I18NDIR) )
+        qtTranslator->load(
+            QStringLiteral("qt_") + lang,
+            QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
         QCoreApplication::installTranslator(qtTranslator.data());
-        sm_qtTranslator.swap( qtTranslator );
+        sm_qtTranslator.swap(qtTranslator);
     }
 }

@@ -35,13 +35,14 @@
 #include "GenericViewer.h"
 
 // Forward declaration
-class TonemappingOptions;       // #include "Core/TonemappingOptions.h"
+class TonemappingOptions;  // #include "Core/TonemappingOptions.h"
 
-class LdrViewer: public GenericViewer
-{
+class LdrViewer : public GenericViewer {
     Q_OBJECT
-public:
-    LdrViewer(pfs::Frame* frame, TonemappingOptions* opts = 0, QWidget *parent = 0, bool ns = 0, const float devicePixelRatio = 1.0);
+   public:
+    LdrViewer(pfs::Frame *frame, TonemappingOptions *opts = 0,
+              QWidget *parent = 0, bool ns = 0,
+              const float devicePixelRatio = 1.0);
     virtual ~LdrViewer();
     QString getFileNamePostFix();
     QString getExifComment();
@@ -52,11 +53,11 @@ public:
 
     //! \brief Set tonemap options that generated the handled frame
     //! \note Override default empty behavioru of GenericViewer
-    virtual void setTonemappingOptions(TonemappingOptions* tmopts);
+    virtual void setTonemappingOptions(TonemappingOptions *tmopts);
 
     //! \brief Get tonemap options that generated the handled frame
     //! \note Override default empty behavioru of GenericViewer
-    virtual TonemappingOptions* getTonemappingOptions();
+    virtual TonemappingOptions *getTonemappingOptions();
 
     //! \brief returns max value of the handled frame
     float getMaxLuminanceValue();
@@ -67,21 +68,18 @@ public:
     void doSoftProofing(bool);
     void undoSoftProofing();
 
-protected Q_SLOTS:
+   protected Q_SLOTS:
     virtual void updatePixmap();
 
-protected:
+   protected:
     virtual void retranslateUi();
 
-private:
-    QString caption; // ,postfix,exif_comment;
+   private:
+    QString caption;  // ,postfix,exif_comment;
     QLabel *informativeLabel;
 
-    TonemappingOptions* mTonemappingOptions;
+    TonemappingOptions *mTonemappingOptions;
 };
 
-inline bool LdrViewer::isHDR()
-{
-    return false;
-}
+inline bool LdrViewer::isHDR() { return false; }
 #endif

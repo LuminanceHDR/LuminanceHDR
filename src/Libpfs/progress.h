@@ -25,8 +25,7 @@
 #ifndef LIBPFS_PROGRESS_H
 #define LIBPFS_PROGRESS_H
 
-namespace pfs
-{
+namespace pfs {
 
 //! \brief This class is a virtual interface for a status callback. It allows
 //! to decouple the interface from the actual implementation (which can be, for
@@ -34,9 +33,8 @@ namespace pfs
 //! \note All the functions have an empty implementation, so it not necessary
 //! to pass a concrete instance to routine that require the presence of this
 //! class
-class Progress
-{
-public:
+class Progress {
+   public:
     Progress();
 
     //! \brief virtual dtor, enable derivation
@@ -61,7 +59,7 @@ public:
     virtual void cancel(bool b = true);
     virtual bool canceled() const;
 
-private:
+   private:
     int m_maximum;
     int m_minimum;
 
@@ -69,7 +67,6 @@ private:
 
     bool m_canceled;
 };
-
 }
 
-#endif // LIBPFS_PROGRESS_H
+#endif  // LIBPFS_PROGRESS_H

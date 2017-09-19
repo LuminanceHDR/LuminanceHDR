@@ -24,44 +24,44 @@
 #ifndef GAMMA_AND_LEVELS_H
 #define GAMMA_AND_LEVELS_H
 
-#include <QWidget>
-#include <QImage>
 #include <QDialog>
+#include <QImage>
+#include <QWidget>
 
 #include "Viewers/GenericViewer.h"
 
-namespace Ui
-{
-    class LevelsDialog;
+namespace Ui {
+class LevelsDialog;
 }
 
-class GrayBar : public QWidget
-{
-Q_OBJECT
-public:
-    GrayBar(QWidget *parent, bool two_handles=false);
-    QSize sizeHint () const;
-    QSize minimumSizeHint () const;
+class GrayBar : public QWidget {
+    Q_OBJECT
+   public:
+    GrayBar(QWidget *parent, bool two_handles = false);
+    QSize sizeHint() const;
+    QSize minimumSizeHint() const;
     bool dont_emit;
-protected:
-    void paintEvent( QPaintEvent * );
-    void resizeEvent ( QResizeEvent * event );
-    void mouseMoveEvent ( QMouseEvent * event );
-    void mousePressEvent ( QMouseEvent * event );
-    void mouseReleaseEvent ( QMouseEvent * event );
-private:
-    //graphical coordinate, 0-width(), NOT 0-255
-    int blackpos,gammapos,whitepos;
+
+   protected:
+    void paintEvent(QPaintEvent *);
+    void resizeEvent(QResizeEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
+   private:
+    // graphical coordinate, 0-width(), NOT 0-255
+    int blackpos, gammapos, whitepos;
     float blackgrayratio;
     bool twohandles;
-    enum draggingT {DRAGNONE,DRAGBLACK,DRAGGRAY,DRAGWHITE} dragging;
+    enum draggingT { DRAGNONE, DRAGBLACK, DRAGGRAY, DRAGWHITE } dragging;
     draggingT findHandle(int x, int y);
-public slots:
+   public slots:
     void resetvalues();
     void changeBlack(int);
     void changeGamma(double);
     void changeWhite(int);
-signals:
+   signals:
     void black_changed(int);
     void gamma_changed(double);
     void white_changed(int);
@@ -69,30 +69,29 @@ signals:
     void default_black_white();
 };
 
-class HistogramLDR : public QWidget
-{
+class HistogramLDR : public QWidget {
     Q_OBJECT
-public:
+   public:
     HistogramLDR(QWidget *parent);
     ~HistogramLDR();
-    QSize sizeHint () const;
-    QSize minimumSizeHint () const;
-    void setData(const QImage* data);
+    QSize sizeHint() const;
+    QSize minimumSizeHint() const;
+    void setData(const QImage *data);
 
     void setFrame(bool b = true);
     void setColorHistogram(bool b = true);
 
-    bool isFrame() {  return isDrawFrame; }
+    bool isFrame() { return isDrawFrame; }
     bool isColorHistogram() { return isDrawColorHist; }
 
-protected:
+   protected:
     //! \brief repaints canvas
-    void paintEvent( QPaintEvent * );
+    void paintEvent(QPaintEvent *);
     //! \brief disable/enable color histogram on each double click
-    void mouseDoubleClickEvent( QMouseEvent * event );
+    void mouseDoubleClickEvent(QMouseEvent *event);
 
-private:
-    //LDR means 256 bins
+   private:
+    // LDR means 256 bins
     float m_GreyHist[256];
     float m_RedHist[256];
     float m_GreenHist[256];
@@ -102,11 +101,10 @@ private:
     bool isDrawColorHist;
 };
 
-class GammaAndLevels : public QDialog
-{
+class GammaAndLevels : public QDialog {
     Q_OBJECT
-private:
-    const QImage m_ReferenceQImage; // can only be read
+   private:
+    const QImage m_ReferenceQImage;  // can only be read
 
     int blackin, whitein, blackout, whiteout;
     float gamma;
@@ -118,22 +116,23 @@ private:
     QScopedPointer<Ui::LevelsDialog> m_Ui;
 
     void refreshLUT();
-public:
-        GammaAndLevels(QWidget *parent, const QImage& image);
+
+   public:
+    GammaAndLevels(QWidget *parent, const QImage &image);
     ~GammaAndLevels();
 
-        QImage getReferenceQImage();
+    QImage getReferenceQImage();
 
-        float getBlackPointInput();
-        float getBlackPointOutput();
-        float getWhitePointInput();
-        float getWhitePointOutput();
-        float getGamma();
+    float getBlackPointInput();
+    float getBlackPointOutput();
+    float getWhitePointInput();
+    float getWhitePointOutput();
+    float getGamma();
 
-signals:
-        void updateQImage(QImage image);
+   signals:
+    void updateQImage(QImage image);
 
-private slots:
+   private slots:
     void resetValues();
     void updateBlackIn(int);
     void updateGamma(double);

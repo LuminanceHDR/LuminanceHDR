@@ -36,7 +36,6 @@ namespace utils {
 // #define LUMINANCE_USE_SSE
 #include <mm_malloc.h>
 #include <xmmintrin.h>
-#include <mm_malloc.h>
 //#include <pmmintrin.h>
 //#include <tmmintrin.h>
 
@@ -44,7 +43,7 @@ namespace utils {
 #error unsupported architecture
 #endif
 
-#endif // __SSE__
+#endif  // __SSE__
 
 #ifdef LUMINANCE_USE_SSE
 typedef __v4sf v4sf;
@@ -53,7 +52,7 @@ v4sf _mm_exp2_ps(v4sf);
 v4sf _mm_pow_ps(v4sf, v4sf);
 #endif
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
-#endif // PFS_UTILS_SSE_H
+#endif  // PFS_UTILS_SSE_H

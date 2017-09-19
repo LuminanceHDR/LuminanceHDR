@@ -28,40 +28,39 @@
 
 // forward declaration
 namespace pfs {
-    class Frame;            // #include "Libpfs/frame.h"
+class Frame;  // #include "Libpfs/frame.h"
 }
 
 namespace Ui {
-    class PreviewPanel;
+class PreviewPanel;
 }
 
-class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
-class PreviewLabel;         // #include "PreviewPanel/PreviewLabel.h"
+class TonemappingOptions;  // #include "Core/TonemappingOptions.h"
+class PreviewLabel;        // #include "PreviewPanel/PreviewLabel.h"
 
-class PreviewPanel : public QWidget
-{
+class PreviewPanel : public QWidget {
     Q_OBJECT
 
-public:
+   public:
     explicit PreviewPanel(QWidget *parent = 0);
     ~PreviewPanel();
     QSize getLabelSize();
     PreviewLabel *getLabel(int);
 
-public Q_SLOTS:
-    void updatePreviews(pfs::Frame* frame, int index = -1);
+   public Q_SLOTS:
+    void updatePreviews(pfs::Frame *frame, int index = -1);
     void setAutolevels(bool, float);
 
-protected Q_SLOTS:
-    void tonemapPreview(TonemappingOptions*);
+   protected Q_SLOTS:
+    void tonemapPreview(TonemappingOptions *);
 
-Q_SIGNALS:
-    void startTonemapping(TonemappingOptions*);
+   Q_SIGNALS:
+    void startTonemapping(TonemappingOptions *);
 
-private:
+   private:
     int m_original_width_frame;
     bool m_doAutolevels;
     float m_autolevelThreshold;
-    QList<PreviewLabel*> m_ListPreviewLabel;
+    QList<PreviewLabel *> m_ListPreviewLabel;
 };
 #endif

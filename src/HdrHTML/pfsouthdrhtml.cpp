@@ -27,26 +27,25 @@
 
 #include "hdrhtml.h"
 
-#if defined (WIN32) || defined (__APPLE__)
+#if defined(WIN32) || defined(__APPLE__)
 #include <QCoreApplication>
 #endif
 #include <QObject>
 #include <cstdlib>
 #include <iostream>
 
-#include "hdrhtml-path.hxx"
-#include "Libpfs/frame.h"
-#include "Libpfs/exception.h"
 #include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/exception.h"
+#include "Libpfs/frame.h"
+#include "hdrhtml-path.hxx"
 
 using namespace hdrhtml;
 using namespace std;
 
-void generate_hdrhtml(pfs::Frame *frame,
-                     string page_name, string out_dir, string image_dir, string object_output, string html_output,
-                     int quality, bool verbose)
-{
-#if defined (WIN32) || defined (__APPLE__)
+void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
+                      string image_dir, string object_output,
+                      string html_output, int quality, bool verbose) {
+#if defined(WIN32) || defined(__APPLE__)
     const int MAX_LINE_LENGTH = 2048;
     QString p_t = HDRHTMLDIR;
     p_t.append("/hdrhtml_default_templ/hdrhtml_page_templ.html");
@@ -62,28 +61,31 @@ void generate_hdrhtml(pfs::Frame *frame,
     const char *page_template = p_t_temp;
     const char *image_template = i_t_temp;
 #else
-    const char *page_template = HDRHTMLDIR "/hdrhtml_default_templ/hdrhtml_page_templ.html";
-    const char *image_template = HDRHTMLDIR "/hdrhtml_default_templ/hdrhtml_image_templ.html";
+    const char *page_template =
+        HDRHTMLDIR "/hdrhtml_default_templ/hdrhtml_page_templ.html";
+    const char *image_template =
+        HDRHTMLDIR "/hdrhtml_default_templ/hdrhtml_image_templ.html";
 #endif
 
-    if( quality < 1 || quality > 5 )
-        throw pfs::Exception( QObject::tr("The quality must be between 1 (worst) and 5 (best).").toStdString() );
+    if (quality < 1 || quality > 5)
+        throw pfs::Exception(
+            QObject::tr("The quality must be between 1 (worst) and 5 (best).")
+                .toStdString());
 
-    if( frame == NULL ) {
-        throw pfs::Exception( QObject::tr("NULL frame passed.").toStdString() );
+    if (frame == NULL) {
+        throw pfs::Exception(QObject::tr("NULL frame passed.").toStdString());
     }
 
     pfs::Channel *R, *G, *B;
-    frame->getXYZChannels( R, G, B );
+    frame->getXYZChannels(R, G, B);
 
-    int size = frame->getWidth()*frame->getHeight();
+    int size = frame->getWidth() * frame->getHeight();
 
-    pfs::Array2Df X( frame->getWidth(), frame->getHeight() );
-    pfs::Array2Df Y( frame->getWidth(), frame->getHeight() );
-    pfs::Array2Df Z( frame->getWidth(), frame->getHeight() );
+    pfs::Array2Df X(frame->getWidth(), frame->getHeight());
+    pfs::Array2Df Y(frame->getWidth(), frame->getHeight());
+    pfs::Array2Df Z(frame->getWidth(), frame->getHeight());
 
-    pfs::transformColorSpace( pfs::CS_RGB, R, G, B,
-          pfs::CS_XYZ, &X, &Y, &Z );
+    pfs::transformColorSpace(pfs::CS_RGB, R, G, B, pfs::CS_XYZ, &X, &Y, &Z);
 
     float *R1 = new float[size];
     float *G1 = new float[size];
@@ -96,45 +98,43 @@ void generate_hdrhtml(pfs::Frame *frame,
     copy(Y.begin(), Y.end(), Y1);
     // Get base_name if needed
     string base_name;
-    string tmp_str( page_name );
+    string tmp_str(page_name);
 
     // Remove extension
-    size_t dot_pos = tmp_str.find_last_of( '.' );
-    if( (dot_pos != string::npos) & (dot_pos > 0) )
-        tmp_str = tmp_str.substr( 0, dot_pos );
+    size_t dot_pos = tmp_str.find_last_of('.');
+    if ((dot_pos != string::npos) & (dot_pos > 0))
+        tmp_str = tmp_str.substr(0, dot_pos);
 
     // Substitute invalid characters
-    while( true ) {
-        size_t invalid_pos = tmp_str.find_last_of( "-! #@()[]{}`." );
-        if( invalid_pos == string::npos )
-            break;
-        tmp_str.replace( invalid_pos, 1, 1, '_' );
+    while (true) {
+        size_t invalid_pos = tmp_str.find_last_of("-! #@()[]{}`.");
+        if (invalid_pos == string::npos) break;
+        tmp_str.replace(invalid_pos, 1, 1, '_');
     }
 
     base_name = tmp_str;
 
-    HDRHTMLSet image_set( NULL, image_dir.empty() ? NULL : image_dir.c_str() );
+    HDRHTMLSet image_set(NULL, image_dir.empty() ? NULL : image_dir.c_str());
     if (verbose)
-        cout << QObject::tr("Adding image ").toStdString() << base_name << QObject::tr(" to the web page").toStdString() << endl;
+        cout << QObject::tr("Adding image ").toStdString() << base_name
+             << QObject::tr(" to the web page").toStdString() << endl;
 
     try {
-        image_set.add_image( frame->getWidth(), frame->getHeight(),
-                             R1, G1, B1, Y1,
-                             base_name.c_str(),
-                             out_dir.empty() ? NULL : out_dir.c_str(),
-                             quality, verbose );
-    }
-    catch( pfs::Exception &e) {
+        image_set.add_image(frame->getWidth(), frame->getHeight(), R1, G1, B1,
+                            Y1, base_name.c_str(),
+                            out_dir.empty() ? NULL : out_dir.c_str(), quality,
+                            verbose);
+    } catch (pfs::Exception &e) {
         throw;
     }
 
     try {
-        image_set.generate_webpage( page_template, image_template,
-                                    out_dir.empty() ? NULL : out_dir.c_str(),
-                                    object_output.empty() ? NULL : object_output.c_str(),
-                                    html_output.empty() ? NULL: html_output.c_str(), verbose );
-    }
-    catch( pfs::Exception &e) {
+        image_set.generate_webpage(
+            page_template, image_template,
+            out_dir.empty() ? NULL : out_dir.c_str(),
+            object_output.empty() ? NULL : object_output.c_str(),
+            html_output.empty() ? NULL : html_output.c_str(), verbose);
+    } catch (pfs::Exception &e) {
         throw;
     }
 
@@ -143,4 +143,3 @@ void generate_hdrhtml(pfs::Frame *frame,
     delete[] B1;
     delete[] Y1;
 }
-

@@ -30,8 +30,7 @@
 
 #include <Libpfs/array2d_fwd.h>
 
-namespace pfs
-{
+namespace pfs {
 class Progress;
 }
 
@@ -48,8 +47,8 @@ class Progress;
 //! \param avLum logarithmic average of luminance in the image
 //! \param bias bias parameter of tone mapping algorithm (eg 0.85)
 //!
-void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
-                 float maxLum, float avLum, float bias, pfs::Progress &ph);
+void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
+                 float avLum, float bias, pfs::Progress &ph);
 
 //! \brief Find average and maximum luminance in an image
 //!
@@ -57,7 +56,7 @@ void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
 //! \param avLum [out] average luminance
 //! \param maxLum [out] maximum luminance
 //!
-void calculateLuminance(unsigned int width, unsigned int height,
-                        const float* Y, float& avLum, float& maxLum);
+void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
+                        float &avLum, float &maxLum);
 
 #endif

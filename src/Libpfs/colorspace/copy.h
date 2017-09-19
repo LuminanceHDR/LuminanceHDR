@@ -29,17 +29,15 @@ namespace colorspace {
 
 struct Copy {
     template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn v1, TypeIn v2, TypeIn v3,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3)
-    {
+    void operator()(TypeIn v1, TypeIn v2, TypeIn v3, TypeOut &o1, TypeOut &o2,
+                    TypeOut &o3) {
         o1 = ConvertSample<TypeOut, TypeIn>()(v1);
         o2 = ConvertSample<TypeOut, TypeIn>()(v2);
         o3 = ConvertSample<TypeOut, TypeIn>()(v3);
     }
 };
 
-}   // utils
-}   // pfs
+}  // utils
+}  // pfs
 
-
-#endif // PFS_UTILS_CHAIN_H
+#endif  // PFS_UTILS_CHAIN_H

@@ -34,8 +34,8 @@ struct ConvertSRGB2RGB {
     float operator()(float sample) const;
 
     //! \brief RGB triplet expanding SRGB -> RGB
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
 };
 
 //! \brief Functor RGB -> SRGB conversion
@@ -44,12 +44,12 @@ struct ConvertRGB2SRGB {
     float operator()(float sample) const;
 
     //! \brief RGB triplet companding SRGB -> RGB
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
 };
 
-}   // colorspace
-}   // pfs
+}  // colorspace
+}  // pfs
 
-#include <Libpfs/colorspace/rgb.hxx>        // inline functions or template
-#endif // PFS_COLORSPACE_RGB_H
+#include <Libpfs/colorspace/rgb.hxx>  // inline functions or template
+#endif                                // PFS_COLORSPACE_RGB_H

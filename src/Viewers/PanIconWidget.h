@@ -27,42 +27,42 @@
 
 #include <QFrame>
 
-class PanIconWidget : public QFrame
-{
-Q_OBJECT
-public:
-    PanIconWidget(QWidget *parent=0, Qt::WindowFlags flags=Qt::Popup);
+class PanIconWidget : public QFrame {
+    Q_OBJECT
+   public:
+    PanIconWidget(QWidget *parent = 0, Qt::WindowFlags flags = Qt::Popup);
     ~PanIconWidget();
-    void setImage(const QImage * fullsize_zoomed_image);
+    void setImage(const QImage *fullsize_zoomed_image);
     void popup(const QPoint &pos);
     void setRegionSelection(QRect regionSelection);
     void setMouseFocus(void);
     void setCursorToLocalRegionSelectionCenter(void);
-signals:
-    //void signalSelectionMoved( QRect rect, bool targetDone );
-    void selectionMoved( QRect rect );
+   signals:
+    // void signalSelectionMoved( QRect rect, bool targetDone );
+    void selectionMoved(QRect rect);
     void signalHidden(void);
     void finished();
 
-public slots:
-protected:
+   public slots:
+   protected:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
-private:
+
+   private:
     /** Recalculate the target selection position and emit 'selectionMoved'.*/
-    void regionSelectionMoved( );
-    //coordinates relative to this widget
-    int      xpos;
-    int      ypos;
-    bool     moveSelection;
-    QRect    regionSelection;  // Original size image selection.
-    QRect    m_localRegionSelection; // Thumbnail size selection.
-    int      m_width;
-    int      m_height;
-    int      m_orgWidth;
-    int      m_orgHeight;
-    QImage  *m_image;
+    void regionSelectionMoved();
+    // coordinates relative to this widget
+    int xpos;
+    int ypos;
+    bool moveSelection;
+    QRect regionSelection;         // Original size image selection.
+    QRect m_localRegionSelection;  // Thumbnail size selection.
+    int m_width;
+    int m_height;
+    int m_orgWidth;
+    int m_orgHeight;
+    QImage *m_image;
 };
 #endif

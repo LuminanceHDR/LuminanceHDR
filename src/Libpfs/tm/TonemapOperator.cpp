@@ -23,122 +23,102 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing
  * @author Franco Comida <fcomida@users.sourceforge.net>
- * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * Refactory of TMThread.h class to TonemapOperator in order to remove
+ * dependency from QObject and QThread
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  *
  */
 
-#include <map>
 #include <boost/assign.hpp>
 #include <boost/thread/mutex.hpp>
+#include <map>
 
 #include "TonemappingOperators/pfstmo.h"
 
-#include "Libpfs/frame.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "Libpfs/tm/TonemapOperator.h"
 
 using namespace boost::assign;
 
 template <TMOperator Key, typename ConcreteClass>
-struct TonemapOperatorRegister : public TonemapOperator
-{
-    static TonemapOperator* create()
-    {
-        return new ConcreteClass();
-    }
+struct TonemapOperatorRegister : public TonemapOperator {
+    static TonemapOperator *create() { return new ConcreteClass(); }
 
-    TMOperator getType() const
-    {
-        return Key;
-    }
+    TMOperator getType() const { return Key; }
 };
 
 class TonemapOperatorMantiuk06
-        : public TonemapOperatorRegister<mantiuk06, TonemapOperatorMantiuk06>
-{
-public:
-    void tonemapFrame(pfs::Frame& workingFrame, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<mantiuk06, TonemapOperatorMantiuk06> {
+   public:
+    void tonemapFrame(pfs::Frame &workingFrame, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
-        try
-        {
-            pfstmo_mantiuk06(workingFrame,
-                             opts->operator_options.mantiuk06options.contrastfactor,
-                             opts->operator_options.mantiuk06options.saturationfactor,
-                             opts->operator_options.mantiuk06options.detailfactor,
-                             opts->operator_options.mantiuk06options.contrastequalization,
-                             ph);
-        }
-        catch (...)
-        {
+        try {
+            pfstmo_mantiuk06(
+                workingFrame,
+                opts->operator_options.mantiuk06options.contrastfactor,
+                opts->operator_options.mantiuk06options.saturationfactor,
+                opts->operator_options.mantiuk06options.detailfactor,
+                opts->operator_options.mantiuk06options.contrastequalization,
+                ph);
+        } catch (...) {
             throw std::runtime_error("Mantiuk06: Tonemap Failed");
         }
     }
-
 };
 
 struct TonemapOperatorMantiuk08
-        : public TonemapOperatorRegister<mantiuk08, TonemapOperatorMantiuk08>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<mantiuk08, TonemapOperatorMantiuk08> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
-        workingframe.getXYZChannels( X, Y, Z );
-        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
-                                 pfs::CS_XYZ, X, Y, Z);
+        workingframe.getXYZChannels(X, Y, Z);
+        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z);
 
-        try
-        {
-            pfstmo_mantiuk08(workingframe,
-                             opts->operator_options.mantiuk08options.colorsaturation,
-                             opts->operator_options.mantiuk08options.contrastenhancement,
-                             opts->operator_options.mantiuk08options.luminancelevel,
-                             opts->operator_options.mantiuk08options.setluminance,
-                             ph);
-        }
-        catch (...)
-        {
+        try {
+            pfstmo_mantiuk08(
+                workingframe,
+                opts->operator_options.mantiuk08options.colorsaturation,
+                opts->operator_options.mantiuk08options.contrastenhancement,
+                opts->operator_options.mantiuk08options.luminancelevel,
+                opts->operator_options.mantiuk08options.setluminance, ph);
+        } catch (...) {
             throw std::runtime_error("Mantiuk08: Tonemap Failed");
         }
 
-
-        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
-                                 pfs::CS_RGB, X, Y, Z);
+        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z);
     }
 };
 
 struct TonemapOperatorFattal02
-        : public TonemapOperatorRegister<fattal, TonemapOperatorFattal02>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<fattal, TonemapOperatorFattal02> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
         int detail_level = 0;
         if (opts->xsize > 0) {
             float ratio = (float)opts->origxsize / (float)opts->xsize;
-            if ( ratio < 2 )
+            if (ratio < 2)
                 detail_level = 3;
-            else if ( ratio < 4 )
+            else if (ratio < 4)
                 detail_level = 2;
-            else if ( ratio < 8 )
+            else if (ratio < 8)
                 detail_level = 1;
             else
                 detail_level = 0;
-        }
-        else
+        } else
             detail_level = 3;
 
-        try
-        {
+        try {
             pfstmo_fattal02(workingframe,
                             opts->operator_options.fattaloptions.alpha,
                             opts->operator_options.fattaloptions.beta,
@@ -146,250 +126,206 @@ struct TonemapOperatorFattal02
                             opts->operator_options.fattaloptions.noiseredux,
                             opts->operator_options.fattaloptions.newfattal,
                             opts->operator_options.fattaloptions.fftsolver,
-                            detail_level,
-                            ph);
-        }
-        catch (...)
-        {
+                            detail_level, ph);
+        } catch (...) {
             throw std::runtime_error("Fattal: Tonemap Failed");
         }
-
     }
 };
 
 struct TonemapOperatorFerradans11
-        : public TonemapOperatorRegister<ferradans, TonemapOperatorFerradans11>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<ferradans, TonemapOperatorFerradans11> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
-        try
-        {
-            pfstmo_ferradans11(workingframe,
-                               opts->operator_options.ferradansoptions.rho,
-                               opts->operator_options.ferradansoptions.inv_alpha,
-                               ph);
-        }
-        catch (...)
-        {
+        try {
+            pfstmo_ferradans11(
+                workingframe, opts->operator_options.ferradansoptions.rho,
+                opts->operator_options.ferradansoptions.inv_alpha, ph);
+        } catch (...) {
             throw std::runtime_error("Ferradans: Tonemap Failed");
         }
-
     }
 };
 
 struct TonemapOperatorMai11
-        : public TonemapOperatorRegister<mai, TonemapOperatorMai11>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<mai, TonemapOperatorMai11> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
-        try
-        {
+        try {
             pfstmo_mai11(workingframe, ph);
-        }
-        catch (...)
-        {
+        } catch (...) {
             throw std::runtime_error("Mai: Tonemap Failed");
         }
-
     }
 };
 
 struct TonemapOperatorDrago03
-        : public TonemapOperatorRegister<drago, TonemapOperatorDrago03>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
-        ph.setMaximum(100);         // this guy should not be here!
+    : public TonemapOperatorRegister<drago, TonemapOperatorDrago03> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
+        ph.setMaximum(100);  // this guy should not be here!
 
-        try
-        {
+        try {
             pfstmo_drago03(workingframe,
-                           opts->operator_options.dragooptions.bias,
-                           ph);
-        }
-        catch (...)
-        {
+                           opts->operator_options.dragooptions.bias, ph);
+        } catch (...) {
             throw std::runtime_error("Drago: Tonemap Failed");
         }
-
     }
 };
 
 class TonemapOperatorDurand02
-        : public TonemapOperatorRegister<durand, TonemapOperatorDurand02>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<durand, TonemapOperatorDurand02> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
-        try
-        {
+        try {
             pfstmo_durand02(workingframe,
                             opts->operator_options.durandoptions.spatial,
                             opts->operator_options.durandoptions.range,
-                            opts->operator_options.durandoptions.base,
-                            ph);
-        }
-        catch (...)
-        {
+                            opts->operator_options.durandoptions.base, ph);
+        } catch (...) {
             throw std::runtime_error("Durand: Tonemap Failed");
         }
     }
 };
 
 struct TonemapOperatorReinhard02
-        : public TonemapOperatorRegister<reinhard02, TonemapOperatorReinhard02>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<reinhard02, TonemapOperatorReinhard02> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
-        workingframe.getXYZChannels( X, Y, Z );
-        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
-                                 pfs::CS_XYZ, X, Y, Z);
+        workingframe.getXYZChannels(X, Y, Z);
+        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z);
 
         try {
-            pfstmo_reinhard02(workingframe,
-                              opts->operator_options.reinhard02options.key,
-                              opts->operator_options.reinhard02options.phi,
-                              opts->operator_options.reinhard02options.range,
-                              opts->operator_options.reinhard02options.lower,
-                              opts->operator_options.reinhard02options.upper,
-                              opts->operator_options.reinhard02options.scales,
-                              ph);
-        }
-        catch (...)
-        {
+            pfstmo_reinhard02(
+                workingframe, opts->operator_options.reinhard02options.key,
+                opts->operator_options.reinhard02options.phi,
+                opts->operator_options.reinhard02options.range,
+                opts->operator_options.reinhard02options.lower,
+                opts->operator_options.reinhard02options.upper,
+                opts->operator_options.reinhard02options.scales, ph);
+        } catch (...) {
             throw std::runtime_error("Reinhard02: Tonemap Failed");
         }
 
-        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
-                                 pfs::CS_SRGB, X, Y, Z);
+        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, pfs::CS_SRGB, X, Y, Z);
     }
 };
 
 struct TonemapOperatorReinhard05
-        : public TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
-        try
-        {
-            pfstmo_reinhard05(workingframe,
-                              opts->operator_options.reinhard05options.brightness,
-                              opts->operator_options.reinhard05options.chromaticAdaptation,
-                              opts->operator_options.reinhard05options.lightAdaptation,
-                              ph);
-        }
-        catch (...)
-        {
+        try {
+            pfstmo_reinhard05(
+                workingframe,
+                opts->operator_options.reinhard05options.brightness,
+                opts->operator_options.reinhard05options.chromaticAdaptation,
+                opts->operator_options.reinhard05options.lightAdaptation, ph);
+        } catch (...) {
             throw std::runtime_error("Reinhard05: Tonemap Failed");
         }
-
     }
 };
 
 struct TonemapOperatorAshikhmin02
-        : public TonemapOperatorRegister<ashikhmin, TonemapOperatorAshikhmin02>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<ashikhmin, TonemapOperatorAshikhmin02> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
-        try
-        {
-            pfstmo_ashikhmin02(workingframe,
-                              opts->operator_options.ashikhminoptions.simple,
-                              opts->operator_options.ashikhminoptions.lct,
-                              (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
-                              ph);
-        }
-        catch (...)
-        {
+        try {
+            pfstmo_ashikhmin02(
+                workingframe, opts->operator_options.ashikhminoptions.simple,
+                opts->operator_options.ashikhminoptions.lct,
+                (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4), ph);
+        } catch (...) {
             throw std::runtime_error("Ashikhmin: Tonemap Failed");
         }
-
     }
 };
 
 struct TonemapOperatorPattanaik00
-        : public TonemapOperatorRegister<pattanaik, TonemapOperatorPattanaik00>
-{
-    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
-    {
+    : public TonemapOperatorRegister<pattanaik, TonemapOperatorPattanaik00> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
         ph.setMaximum(100);
 
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
-        workingframe.getXYZChannels( X, Y, Z );
-        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
-                                 pfs::CS_XYZ, X, Y, Z);
+        workingframe.getXYZChannels(X, Y, Z);
+        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z);
 
-        try
-        {
-            pfstmo_pattanaik00(workingframe,
-                               opts->operator_options.pattanaikoptions.local,
-                               opts->operator_options.pattanaikoptions.multiplier,
-                               opts->operator_options.pattanaikoptions.cone*1000,
-                               opts->operator_options.pattanaikoptions.rod*1000,
-                               opts->operator_options.pattanaikoptions.autolum,
-                               ph);
-        }
-        catch (...)
-        {
+        try {
+            pfstmo_pattanaik00(
+                workingframe, opts->operator_options.pattanaikoptions.local,
+                opts->operator_options.pattanaikoptions.multiplier,
+                opts->operator_options.pattanaikoptions.cone * 1000,
+                opts->operator_options.pattanaikoptions.rod * 1000,
+                opts->operator_options.pattanaikoptions.autolum, ph);
+        } catch (...) {
             throw std::runtime_error("Pattanaik: Tonemap Failed");
         }
 
-
-
-        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
-                                 pfs::CS_RGB, X, Y, Z);
+        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z);
     }
 };
 
-typedef TonemapOperator* (*TonemapOperatorCreator)();
+typedef TonemapOperator *(*TonemapOperatorCreator)();
 typedef std::map<TMOperator, TonemapOperatorCreator> TonemapOperatorCreatorMap;
 
-inline
-const TonemapOperatorCreatorMap& registry()
-{
-    static TonemapOperatorCreatorMap reg =
-            map_list_of
-            // XYZ -> *
-            (mantiuk06, TonemapOperatorRegister<mantiuk06, TonemapOperatorMantiuk06>::create)
-            (mantiuk08, TonemapOperatorRegister<mantiuk08, TonemapOperatorMantiuk08>::create)
-            (fattal, TonemapOperatorRegister<fattal, TonemapOperatorFattal02>::create)
-            (ferradans, TonemapOperatorRegister<ferradans, TonemapOperatorFerradans11>::create)
-            (mai, TonemapOperatorRegister<mai, TonemapOperatorMai11>::create)
-            (drago, TonemapOperatorRegister<drago, TonemapOperatorDrago03>::create)
-            (durand, TonemapOperatorRegister<durand, TonemapOperatorDurand02>::create)
-            (reinhard02, TonemapOperatorRegister<reinhard02, TonemapOperatorReinhard02>::create)
-            (reinhard05, TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05>::create)
-            (ashikhmin, TonemapOperatorRegister<ashikhmin, TonemapOperatorAshikhmin02>::create)
-            (pattanaik, TonemapOperatorRegister<pattanaik, TonemapOperatorPattanaik00>::create)
-            ;
+inline const TonemapOperatorCreatorMap &registry() {
+    static TonemapOperatorCreatorMap reg = map_list_of
+        // XYZ -> *
+        (mantiuk06,
+         TonemapOperatorRegister<mantiuk06, TonemapOperatorMantiuk06>::create)(
+            mantiuk08,
+            TonemapOperatorRegister<mantiuk08,
+                                    TonemapOperatorMantiuk08>::create)(
+            fattal,
+            TonemapOperatorRegister<fattal, TonemapOperatorFattal02>::create)(
+            ferradans,
+            TonemapOperatorRegister<ferradans,
+                                    TonemapOperatorFerradans11>::create)(
+            mai, TonemapOperatorRegister<mai, TonemapOperatorMai11>::create)(
+            drago,
+            TonemapOperatorRegister<drago, TonemapOperatorDrago03>::create)(
+            durand,
+            TonemapOperatorRegister<durand, TonemapOperatorDurand02>::create)(
+            reinhard02,
+            TonemapOperatorRegister<reinhard02,
+                                    TonemapOperatorReinhard02>::create)(
+            reinhard05,
+            TonemapOperatorRegister<reinhard05,
+                                    TonemapOperatorReinhard05>::create)(
+            ashikhmin,
+            TonemapOperatorRegister<ashikhmin,
+                                    TonemapOperatorAshikhmin02>::create)(
+            pattanaik,
+            TonemapOperatorRegister<pattanaik,
+                                    TonemapOperatorPattanaik00>::create);
     return reg;
 }
 
-TonemapOperator::TonemapOperator()
-{}
+TonemapOperator::TonemapOperator() {}
 
-TonemapOperator::~TonemapOperator()
-{}
+TonemapOperator::~TonemapOperator() {}
 
-TonemapOperator* TonemapOperator::getTonemapOperator(const TMOperator tmo)
-{
+TonemapOperator *TonemapOperator::getTonemapOperator(const TMOperator tmo) {
     TonemapOperatorCreatorMap::const_iterator it = registry().find(tmo);
-    if ( it != registry().end() )
-    {
+    if (it != registry().end()) {
         return (it->second)();
     }
     throw std::runtime_error("Invalid TMOperator");

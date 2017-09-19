@@ -32,13 +32,12 @@
 #ifndef TONEMAPPINGOPTIONS_H
 #define TONEMAPPINGOPTIONS_H
 
-#include <QString>
 #include <QObject>
+#include <QString>
 
 //----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
 // all is used by SavedParametersDialog to select comments from all operators
-enum TMOperator : unsigned short
-{
+enum TMOperator : unsigned short {
     mantiuk06 = 0,
     mantiuk08 = 1,
     fattal = 2,
@@ -52,24 +51,23 @@ enum TMOperator : unsigned short
     mai = 10,
 };
 
-class TonemappingOptions
-{
-
-public:
-    int origxsize;          // this parameter should be coming from the UI
-    int xsize_percent;        // this parameter should be coming from the UI
-    int xsize;              // this parameter should be coming from the frame
+class TonemappingOptions {
+   public:
+    int origxsize;      // this parameter should be coming from the UI
+    int xsize_percent;  // this parameter should be coming from the UI
+    int xsize;          // this parameter should be coming from the frame
     int quality;
     float pregamma;
-    bool tonemapSelection;  // we should let do this thing to the tonemapping thread
+    bool tonemapSelection;  // we should let do this thing to the tonemapping
+                            // thread
     TMOperator tmoperator;
     struct {
         struct {
-            bool  simple;
-            bool  eq2; //false means eq4
+            bool simple;
+            bool eq2;  // false means eq4
             float lct;
         } ashikhminoptions;
-        struct{
+        struct {
             float bias;
         } dragooptions;
         struct {
@@ -90,19 +88,19 @@ public:
             float inv_alpha;
         } ferradansoptions;
         struct {
-            bool  autolum;
-            bool  local;
+            bool autolum;
+            bool local;
             float cone;
             float rod;
             float multiplier;
         } pattanaikoptions;
         struct {
-            bool  scales;
+            bool scales;
             float key;
             float phi;
-            int   range;
-            int   lower;
-            int   upper;
+            int range;
+            int lower;
+            int upper;
         } reinhard02options;
         struct {
             float brightness;
@@ -113,18 +111,19 @@ public:
             float contrastfactor;
             float saturationfactor;
             float detailfactor;
-            bool  contrastequalization;
+            bool contrastequalization;
         } mantiuk06options;
         struct {
             float colorsaturation;
             float contrastenhancement;
             float luminancelevel;
-            bool  setluminance;
+            bool setluminance;
         } mantiuk08options;
     } operator_options;
 
     // Davide Anastasia <davideanastasia@users.sourceforge.net>
-    // Adding the coordinates of the crop inside this structure will allow TMOThread
+    // Adding the coordinates of the crop inside this structure will allow
+    // TMOThread
     // to crop itself the region of interest, keeping the code tight and simple
     // and avoiding useless copy in memory of the frame to be processed.
     int selection_x_up_left;
@@ -133,13 +132,12 @@ public:
     int selection_y_bottom_right;
 
     // default constructor
-    TonemappingOptions() {
-        setDefaultParameters();
-    }
+    TonemappingOptions() { setDefaultParameters(); }
     const QString getPostfix();
 
     /** returns the translated description of the TMO operator**/
-    const QString getCaption(bool pregamma = true, QString separator = QStringLiteral(" ~ "));
+    const QString getCaption(bool pregamma = true,
+                             QString separator = QStringLiteral(" ~ "));
     void setDefaultTonemapParameters();
     void setDefaultParameters();
 
@@ -155,15 +153,14 @@ public:
  */
 
 class TMOptionsOperations {
-public:
-        TMOptionsOperations(const TonemappingOptions* opts);
-        static TonemappingOptions* parseFile(const QString& file);
-        static TonemappingOptions* getDefaultTMOptions();
-        QString getExifComment();
-private:
-        const TonemappingOptions* opts;
+   public:
+    TMOptionsOperations(const TonemappingOptions *opts);
+    static TonemappingOptions *parseFile(const QString &file);
+    static TonemappingOptions *getDefaultTMOptions();
+    QString getExifComment();
 
-
+   private:
+    const TonemappingOptions *opts;
 };
 
-#endif // TONEMAPPINGOPTIONS_H
+#endif  // TONEMAPPINGOPTIONS_H

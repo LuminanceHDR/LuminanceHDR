@@ -25,8 +25,8 @@
 #ifndef PFS_IO_FRAMEREADER_H
 #define PFS_IO_FRAMEREADER_H
 
-#include <string>
 #include <memory>
+#include <string>
 
 #include <Libpfs/params.h>
 
@@ -35,30 +35,29 @@ class Frame;
 
 namespace io {
 
-class FrameReader
-{
-public:
-    FrameReader(const std::string& filename);
+class FrameReader {
+   public:
+    FrameReader(const std::string &filename);
 
     virtual ~FrameReader();
 
     //! \brief filename of the file being read
-    const std::string& filename() const     { return m_filename; }
+    const std::string &filename() const { return m_filename; }
     //! \brief return the width of the file being read
-    size_t width() const                    { return m_width; }
+    size_t width() const { return m_width; }
     //! \brief return the height of the file being read
-    size_t height() const                   { return m_height; }
+    size_t height() const { return m_height; }
 
     virtual void open() = 0;
     virtual bool isOpen() const = 0;
     virtual void close() = 0;
-    virtual void read(pfs::Frame& frame, const pfs::Params& params);
+    virtual void read(pfs::Frame &frame, const pfs::Params &params);
 
-protected:
-    void setWidth(size_t width)     { m_width = width; }
-    void setHeight(size_t height)   { m_height = height; }
+   protected:
+    void setWidth(size_t width) { m_width = width; }
+    void setHeight(size_t height) { m_height = height; }
 
-private:
+   private:
     std::string m_filename;
     size_t m_width;
     size_t m_height;
@@ -66,7 +65,7 @@ private:
 
 typedef std::shared_ptr<FrameReader> FrameReaderPtr;
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
-#endif // PFS_IO_FRAMEREADER_H
+#endif  // PFS_IO_FRAMEREADER_H

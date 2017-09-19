@@ -25,21 +25,20 @@
 #ifndef IGRAPHICSPIXMAPITEM_H
 #define IGRAPHICSPIXMAPITEM_H
 
-#include <QRect>
-#include <QObject>
+#include <QGraphicsDropShadowEffect>
 #include <QGraphicsItem>
 #include <QGraphicsObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
-#include <QGraphicsDropShadowEffect>
+#include <QObject>
+#include <QRect>
 
-class ISelectionBox;    // forward declaration
+class ISelectionBox;  // forward declaration
 
-class IGraphicsPixmapItem : public QObject, public virtual QGraphicsPixmapItem
-{
+class IGraphicsPixmapItem : public QObject, public virtual QGraphicsPixmapItem {
     Q_OBJECT
-public:
-    IGraphicsPixmapItem(QGraphicsItem * parent = 0);
+   public:
+    IGraphicsPixmapItem(QGraphicsItem *parent = 0);
     ~IGraphicsPixmapItem();
 
     QRect getSelectionRect();
@@ -49,37 +48,35 @@ public:
     void enableSelectionTool();
     void disableSelectionTool();
 
-Q_SIGNALS:
+   Q_SIGNALS:
     void selectionReady(bool);
     void startDragging();
 
-protected:
+   protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *e);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *e);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
 
-    //virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    // virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem
+    // *option, QWidget *widget);
 
-    QGraphicsDropShadowEffect* mDropShadow;
-    ISelectionBox* mSelectionBox;
+    QGraphicsDropShadowEffect *mDropShadow;
+    ISelectionBox *mSelectionBox;
 
     bool mIsSelectionEnabled;
 
     enum { IDLE, SELECTING } mMouseState;
 };
 
-inline bool IGraphicsPixmapItem::hasSelection()
-{
+inline bool IGraphicsPixmapItem::hasSelection() {
     return (mSelectionBox != NULL);
 }
 
-inline void IGraphicsPixmapItem::enableSelectionTool()
-{
+inline void IGraphicsPixmapItem::enableSelectionTool() {
     mIsSelectionEnabled = true;
 }
 
-inline void IGraphicsPixmapItem::disableSelectionTool()
-{
+inline void IGraphicsPixmapItem::disableSelectionTool() {
     mIsSelectionEnabled = false;
     removeSelection();
 }

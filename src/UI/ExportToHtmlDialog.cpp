@@ -23,43 +23,46 @@
 
 #include "ExportToHtmlDialog.h"
 
-#include <QMessageBox>
-#include <QFileDialog>
 #include <QDesktopServices>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QUrl>
 
-#include "ui_ExportToHtmlDialog.h"
 #include "HdrHTML/pfsouthdrhtml.h"
-#include "Libpfs/frame.h"
 #include "Libpfs/exception.h"
-#include "Libpfs/manip/resize.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/manip/copy.h"
+#include "Libpfs/manip/resize.h"
+#include "ui_ExportToHtmlDialog.h"
 
-
-ExportToHtmlDialog::ExportToHtmlDialog(QWidget* parent, pfs::Frame *frame)
-    : QDialog(parent)
-    , m_frame(frame)
-    , m_pageName()
-    , m_outputFolder()
-    , m_imagesFolder()
-    , m_Ui(new Ui::ExportToHtmlDialog)
-{
+ExportToHtmlDialog::ExportToHtmlDialog(QWidget *parent, pfs::Frame *frame)
+    : QDialog(parent),
+      m_frame(frame),
+      m_pageName(),
+      m_outputFolder(),
+      m_imagesFolder(),
+      m_Ui(new Ui::ExportToHtmlDialog) {
     m_Ui->setupUi(this);
 
-    connect(m_Ui->ExportButton, &QAbstractButton::clicked, this, &ExportToHtmlDialog::onExportButtonClicked);
-    connect(m_Ui->OutputFolderButton, &QAbstractButton::clicked, this, &ExportToHtmlDialog::onOutputFolderButtonClicked);
-    connect(m_Ui->lineEditPageName, &QLineEdit::editingFinished, this, &ExportToHtmlDialog::onEditPageNameFinished);
-    connect(m_Ui->lineEditOutputFolder, &QLineEdit::editingFinished, this, &ExportToHtmlDialog::onEditOutputFolderFinished);
-    connect(m_Ui->lineEditImagesFolder, &QLineEdit::editingFinished, this, &ExportToHtmlDialog::onEditImagesFolderFinished);
+    connect(m_Ui->ExportButton, &QAbstractButton::clicked, this,
+            &ExportToHtmlDialog::onExportButtonClicked);
+    connect(m_Ui->OutputFolderButton, &QAbstractButton::clicked, this,
+            &ExportToHtmlDialog::onOutputFolderButtonClicked);
+    connect(m_Ui->lineEditPageName, &QLineEdit::editingFinished, this,
+            &ExportToHtmlDialog::onEditPageNameFinished);
+    connect(m_Ui->lineEditOutputFolder, &QLineEdit::editingFinished, this,
+            &ExportToHtmlDialog::onEditOutputFolderFinished);
+    connect(m_Ui->lineEditImagesFolder, &QLineEdit::editingFinished, this,
+            &ExportToHtmlDialog::onEditImagesFolderFinished);
 }
 
-void ExportToHtmlDialog::onOutputFolderButtonClicked()
-{
-    QString dirname=QFileDialog::getExistingDirectory(this, tr("Choose a directory"), QDir::homePath() );
+void ExportToHtmlDialog::onOutputFolderButtonClicked() {
+    QString dirname = QFileDialog::getExistingDirectory(
+        this, tr("Choose a directory"), QDir::homePath());
 
     QFileInfo test(dirname);
-    if (test.isWritable() && test.exists() && test.isDir() && !dirname.isEmpty())
-    {
+    if (test.isWritable() && test.exists() && test.isDir() &&
+        !dirname.isEmpty()) {
         m_outputFolder = dirname;
 
         m_Ui->lineEditOutputFolder->setText(dirname);
@@ -67,36 +70,36 @@ void ExportToHtmlDialog::onOutputFolderButtonClicked()
     }
 }
 
-void ExportToHtmlDialog::onExportButtonClicked()
-{
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+void ExportToHtmlDialog::onExportButtonClicked() {
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     bool quit = false;
     pfs::Frame *resized;
     int size_percent = m_Ui->spinBoxSize->value();
     if (size_percent == 100) {
         resized = pfs::copy(m_frame);
-    }
-    else {
-        int resized_width = (int)((float)(size_percent*m_frame->getWidth()) / 100.f);
+    } else {
+        int resized_width =
+            (int)((float)(size_percent * m_frame->getWidth()) / 100.f);
         resized = pfs::resize(m_frame, resized_width, BilinearInterp);
     }
     try {
-        generate_hdrhtml(resized,
-                         m_pageName.toStdString(), m_outputFolder.toStdString(), m_imagesFolder.toStdString(),
-                         "", "", m_Ui->spinBoxQuality->value(), false);
-    }
-    catch( pfs::Exception &e) {
+        generate_hdrhtml(resized, m_pageName.toStdString(),
+                         m_outputFolder.toStdString(),
+                         m_imagesFolder.toStdString(), "", "",
+                         m_Ui->spinBoxQuality->value(), false);
+    } catch (pfs::Exception &e) {
         delete resized;
         QApplication::restoreOverrideCursor();
-        QMessageBox::critical(this, tr("Error: "), e.what() ,
-                              QMessageBox::Ok, QMessageBox::NoButton);
+        QMessageBox::critical(this, tr("Error: "), e.what(), QMessageBox::Ok,
+                              QMessageBox::NoButton);
         quit = true;
     }
     if (!quit) {
         QApplication::restoreOverrideCursor();
         if (m_Ui->checkBoxOpenOnBrowser->isChecked()) {
-            QString url = "file:///" + m_outputFolder + "/" + m_pageName + ".html";
+            QString url =
+                "file:///" + m_outputFolder + "/" + m_pageName + ".html";
             QDesktopServices::openUrl(QUrl(url));
         }
     }
@@ -104,8 +107,7 @@ void ExportToHtmlDialog::onExportButtonClicked()
     accept();
 }
 
-void ExportToHtmlDialog::onEditPageNameFinished()
-{
+void ExportToHtmlDialog::onEditPageNameFinished() {
     m_pageName = m_Ui->lineEditPageName->text();
     QFileInfo qfi = QFileInfo(m_pageName);
     m_pageName = qfi.baseName();
@@ -114,31 +116,26 @@ void ExportToHtmlDialog::onEditPageNameFinished()
     check_enable_export();
 }
 
-void ExportToHtmlDialog::onEditOutputFolderFinished()
-{
+void ExportToHtmlDialog::onEditOutputFolderFinished() {
     m_outputFolder = m_Ui->lineEditOutputFolder->text();
     QFileInfo qfi = QFileInfo(m_outputFolder);
     if (!m_outputFolder.isEmpty() && !qfi.isDir())
-        QMessageBox::critical(this, tr("Error: "), m_outputFolder + tr(" must be a directory.") ,
+        QMessageBox::critical(this, tr("Error: "),
+                              m_outputFolder + tr(" must be a directory."),
                               QMessageBox::Ok, QMessageBox::NoButton);
     else
         check_enable_export();
 }
 
-void ExportToHtmlDialog::onEditImagesFolderFinished()
-{
+void ExportToHtmlDialog::onEditImagesFolderFinished() {
     m_imagesFolder = m_Ui->lineEditImagesFolder->text();
     check_enable_export();
 }
 
-void ExportToHtmlDialog::check_enable_export()
-{
+void ExportToHtmlDialog::check_enable_export() {
     m_Ui->ExportButton->setEnabled(
-            (!m_Ui->lineEditPageName->text().isEmpty()) &&
-            (!m_Ui->lineEditOutputFolder->text().isEmpty()));
+        (!m_Ui->lineEditPageName->text().isEmpty()) &&
+        (!m_Ui->lineEditOutputFolder->text().isEmpty()));
 }
 
-ExportToHtmlDialog::~ExportToHtmlDialog()
-{
-}
-
+ExportToHtmlDialog::~ExportToHtmlDialog() {}

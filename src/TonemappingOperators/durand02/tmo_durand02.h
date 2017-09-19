@@ -37,8 +37,7 @@
 
 #include <Libpfs/array2d_fwd.h>
 
-namespace pfs
-{
+namespace pfs {
 class Progress;
 }
 
@@ -54,12 +53,12 @@ class Progress;
 //! \param sigma_r sigma for range kernel
 //! \param baseContrast contrast of the base layer
 //! \param color_correction enable automatic color correction
-//! \param downsample down sampling factor for speeding up fast-bilateral (1..20)
+//! \param downsample down sampling factor for speeding up fast-bilateral
+//! (1..20)
 //!
-void tmo_durand02(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
-                  float sigma_s, float sigma_r, float baseContrast, int downsample,
-                  bool color_correction /*= true*/,
+void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
+                  float sigma_s, float sigma_r, float baseContrast,
+                  int downsample, bool color_correction /*= true*/,
                   pfs::Progress &ph);
 
-
-#endif // TMO_DURAND02_H
+#endif  // TMO_DURAND02_H

@@ -29,22 +29,21 @@
 
 #include "SimplePreviewLabel.h"
 
-class PreviewFrame : public QFrame
-{
+class PreviewFrame : public QFrame {
     Q_OBJECT
 
-public:
+   public:
     PreviewFrame(QWidget *parent = 0);
     ~PreviewFrame();
 
-    void addLabel(SimplePreviewLabel* label);
-    SimplePreviewLabel* getLabel(int index) { return m_labels[index]; }
+    void addLabel(SimplePreviewLabel *label);
+    SimplePreviewLabel *getLabel(int index) { return m_labels[index]; }
     int getSelectedLabel() { return m_index; }
 
-public slots:
+   public slots:
     void selectLabel(int index);
 
-protected:
+   protected:
     QList<SimplePreviewLabel *> m_labels;
     int m_index;
     FlowLayout *m_flowLayout;

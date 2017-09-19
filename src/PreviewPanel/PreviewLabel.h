@@ -24,54 +24,51 @@
 #ifndef PREVIEWLABEL_IMPL_H
 #define PREVIEWLABEL_IMPL_H
 
+#include <QImage>
 #include <QLabel>
 #include <QMouseEvent>
-#include <QImage>
 
 #include "Core/TonemappingOptions.h"
 
-class PreviewLabel : public QLabel
-{
+class PreviewLabel : public QLabel {
     Q_OBJECT
 
-public:
+   public:
     PreviewLabel(QWidget *parent = 0, TMOperator tm_operator = mantiuk06);
-    PreviewLabel(QWidget *parent = 0, TonemappingOptions *tonemappingOptions = 0, int index = -1);
+    PreviewLabel(QWidget *parent = 0,
+                 TonemappingOptions *tonemappingOptions = 0, int index = -1);
     ~PreviewLabel();
 
     void setTonemappingOptions(TonemappingOptions *);
-    TonemappingOptions* getTonemappingOptions();
+    TonemappingOptions *getTonemappingOptions();
     void setComment(QString);
     QString getComment();
     void setIndex(int);
 
-public Q_SLOTS:
+   public Q_SLOTS:
     void assignNewQImage(QSharedPointer<QImage> new_qimage);
 
-protected:
+   protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
 
-signals:
-    void clicked(TonemappingOptions*);
+   signals:
+    void clicked(TonemappingOptions *);
     void clicked(int);
 
-private:
-    TonemappingOptions* m_TMOptions;
+   private:
+    TonemappingOptions *m_TMOptions;
     int m_index;
     QString m_comment;
     bool m_isFromPanel;
 };
 
-inline TonemappingOptions* PreviewLabel::getTonemappingOptions()
-{
+inline TonemappingOptions *PreviewLabel::getTonemappingOptions() {
     return m_TMOptions;
 }
 
-inline void PreviewLabel::setTonemappingOptions(TonemappingOptions *tmopts)
-{
-    if (m_TMOptions)
-        delete m_TMOptions;
+inline void PreviewLabel::setTonemappingOptions(TonemappingOptions *tmopts) {
+    if (m_TMOptions) delete m_TMOptions;
     m_TMOptions = new TonemappingOptions(*tmopts);
 }
 #endif

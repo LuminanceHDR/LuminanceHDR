@@ -26,10 +26,10 @@
 #ifndef PFS_IO_PFSWRITER_H
 #define PFS_IO_PFSWRITER_H
 
-#include <string>
-#include <Libpfs/params.h>
-#include <Libpfs/io/ioexception.h>
 #include <Libpfs/io/framewriter.h>
+#include <Libpfs/io/ioexception.h>
+#include <Libpfs/params.h>
+#include <string>
 
 namespace pfs {
 class Frame;
@@ -37,13 +37,13 @@ class Frame;
 namespace io {
 
 class PfsWriter : public FrameWriter {
-public:
-    PfsWriter(const std::string& filename);
+   public:
+    PfsWriter(const std::string &filename);
 
-    bool write(const pfs::Frame& frame, const pfs::Params& params);
+    bool write(const pfs::Frame &frame, const pfs::Params &params);
 };
 
-} // io
-} // pfs
+}  // io
+}  // pfs
 
-#endif //  PFS_IO_PFSWRITER_H
+#endif  //  PFS_IO_PFSWRITER_H

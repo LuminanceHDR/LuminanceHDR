@@ -31,32 +31,30 @@
 #ifndef IMAGEHDRVIEWER_H
 #define IMAGEHDRVIEWER_H
 
-#include <iostream>
-#include <QImage>
 #include <QComboBox>
+#include <QImage>
+#include <QKeyEvent>
 #include <QLabel>
 #include <QScopedPointer>
-#include <QKeyEvent>
+#include <iostream>
 
 #include "GenericViewer.h"
 
 // Forward declaration
-namespace pfs
-{
+namespace pfs {
 class Frame;
 }
 
 class LuminanceRangeWidget;
 
-class HdrViewer : public GenericViewer
-{
+class HdrViewer : public GenericViewer {
     Q_OBJECT
 
-public:
-    HdrViewer(pfs::Frame* frame, QWidget* parent = 0, bool ns = false);
+   public:
+    HdrViewer(pfs::Frame *frame, QWidget *parent = 0, bool ns = false);
     virtual ~HdrViewer();
 
-    LuminanceRangeWidget* lumRange();
+    LuminanceRangeWidget *lumRange();
 
     QString getFileNamePostFix();
     QString getExifComment();
@@ -73,27 +71,27 @@ public:
 
     RGBMappingType getLuminanceMappingMethod();
 
-public Q_SLOTS:
+   public Q_SLOTS:
     void updateRangeWindow();
     int getLumMappingMethod();
-    void setLumMappingMethod( int method );
+    void setLumMappingMethod(int method);
 
-protected Q_SLOTS:
+   protected Q_SLOTS:
     virtual void updatePixmap();
 
-protected:
+   protected:
     // Methods
     virtual void retranslateUi();
     void setRangeWindow(float min, float max);
     void keyPressEvent(QKeyEvent *event);
 
     // UI
-    LuminanceRangeWidget* m_lumRange;
-    QComboBox* m_mappingMethodCB;
-    QLabel* m_mappingMethodLabel;
-    QLabel* m_histLabel;
+    LuminanceRangeWidget *m_lumRange;
+    QComboBox *m_mappingMethodCB;
+    QLabel *m_mappingMethodLabel;
+    QLabel *m_histLabel;
 
-private:
+   private:
     void initUi();
     void refreshPixmap();
 
@@ -101,12 +99,9 @@ private:
     float m_minValue;
     float m_maxValue;
 
-    QImage* mapFrameToImage(pfs::Frame* in_frame);
+    QImage *mapFrameToImage(pfs::Frame *in_frame);
 };
 
-inline bool HdrViewer::isHDR()
-{
-    return true;
-}
+inline bool HdrViewer::isHDR() { return true; }
 
 #endif

@@ -25,36 +25,35 @@
 #ifndef TMOPROGRESSINDICATOR
 #define TMOPROGRESSINDICATOR
 
-#include <QWidget>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QProgressBar>
 #include <QPushButton>
-#include <QHBoxLayout>
+#include <QWidget>
 
-class TMOProgressIndicator : public QWidget
-{
+class TMOProgressIndicator : public QWidget {
     Q_OBJECT
 
-public:
+   public:
     TMOProgressIndicator(QWidget *parent = 0);
     ~TMOProgressIndicator();
     bool isTerminated();
     void reset();
     void requestTermination() { emit terminate(true); }
 
-public slots:
+   public slots:
     void setValue(int);
     void setMaximum(int);
     void setMinimum(int);
     void terminated();
 
-private:
-    QHBoxLayout*    m_hbl;
-    QProgressBar*   m_progressBar;
-    QPushButton*    m_abortButton;
-    bool            m_isTerminated;
+   private:
+    QHBoxLayout *m_hbl;
+    QProgressBar *m_progressBar;
+    QPushButton *m_abortButton;
+    bool m_isTerminated;
 
-signals:
+   signals:
     void terminate(bool);
 };
 

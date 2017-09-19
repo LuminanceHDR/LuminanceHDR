@@ -29,25 +29,23 @@
 #ifndef GANG_H
 #define GANG_H
 
-#include <QSlider>
-#include <QDoubleSpinBox>
 #include <QCheckBox>
-#include <QRadioButton>
+#include <QDoubleSpinBox>
 #include <QList>
+#include <QRadioButton>
+#include <QSlider>
 
 class TmoSettingsList;
 
-class Gang : public QObject
-{
+class Gang : public QObject {
     Q_OBJECT
-public:
+   public:
     friend class TmoSettings;
 
-    Gang(QSlider* s = 0, QDoubleSpinBox* dsb = 0,
-         QCheckBox *cbx1 = 0, QCheckBox *cbx2 = 0,
-         QRadioButton *rb1 = 0, QRadioButton *rb2 = 0,
-         const float minv = 0.0, const float maxv = 0.0,
-         const float vv = 0.0, const bool logs = false);
+    Gang(QSlider *s = 0, QDoubleSpinBox *dsb = 0, QCheckBox *cbx1 = 0,
+         QCheckBox *cbx2 = 0, QRadioButton *rb1 = 0, QRadioButton *rb2 = 0,
+         const float minv = 0.0, const float maxv = 0.0, const float vv = 0.0,
+         const bool logs = false);
     ~Gang();
 
     float v() const;
@@ -59,14 +57,14 @@ public:
     int v2p(const float x) const;
     void setDefault();
     bool changed() const;
-    QString flag(const QString& f) const;
-    QString fname(const QString& f) const;
+    QString flag(const QString &f) const;
+    QString fname(const QString &f) const;
     void setupUndo();
     void undo();
     void redo();
     void updateUndoState();
 
-protected slots:
+   protected slots:
     void sliderMoved(int p);
     void sliderValueChanged(int p);
     void spinboxValueChanged(double);
@@ -75,12 +73,12 @@ protected slots:
     void radioButton1Checked(bool);
     void radioButton2Checked(bool);
 
-signals:
+   signals:
     void finished();
     void enableUndo(bool);
     void enableRedo(bool);
 
-private:
+   private:
     QSlider *s;
     QDoubleSpinBox *dsb;
     QCheckBox *cbx1;
@@ -109,34 +107,30 @@ private:
     TmoSettingsList *tmoSettingsList;
 };
 
-inline float Gang::v() const
-{ return value; }
+inline float Gang::v() const { return value; }
 
-inline bool Gang::isCheckBox1Checked() const
-{ return isCbx1Checked; }
+inline bool Gang::isCheckBox1Checked() const { return isCbx1Checked; }
 
-inline bool Gang::isCheckBox2Checked() const
-{ return isCbx2Checked; }
+inline bool Gang::isCheckBox2Checked() const { return isCbx2Checked; }
 
-inline bool Gang::isRadioButton1Checked() const
-{ return isRb1Checked; }
+inline bool Gang::isRadioButton1Checked() const { return isRb1Checked; }
 
-inline bool Gang::isRadioButton2Checked() const
-{ return isRb2Checked; }
+inline bool Gang::isRadioButton2Checked() const { return isRb2Checked; }
 
-inline bool Gang::changed() const
-{ return changed_; }
+inline bool Gang::changed() const { return changed_; }
 
 //
-//==================================== Undo/Redo ===================================================
+//==================================== Undo/Redo
+//===================================================
 //
 // TmoSettings stores current applied settings
 //
 class TmoSettings {
-public:
+   public:
     TmoSettings(Gang *gangPtr, float, bool, bool, bool, bool);
     void apply() const;
-protected:
+
+   protected:
     Gang *gangPtr;
     bool isCbx1Checked;
     bool isCbx2Checked;
@@ -146,16 +140,16 @@ protected:
 };
 
 class TmoSettingsList : public QList<TmoSettings> {
-public:
+   public:
     TmoSettingsList();
     ~TmoSettingsList();
     void previous();
     void next();
     int index();
     void append(const TmoSettings &value);
-private:
+
+   private:
     int m_index;
 };
 
 #endif
-

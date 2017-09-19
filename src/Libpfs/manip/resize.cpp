@@ -24,12 +24,11 @@
 //! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <cmath>
-#include <cassert>
-#include <iostream>
 #include <algorithm>
-#include <numeric>
+#include <cassert>
 #include <cmath>
+#include <iostream>
+#include <numeric>
 
 #include "resize.h"
 
@@ -37,39 +36,36 @@
 
 #include "Libpfs/frame.h"
 
-namespace pfs
-{
+namespace pfs {
 
-
-Frame* resize(Frame* frame, int xSize, InterpolationMethod m)
-{
+Frame *resize(Frame *frame, int xSize, InterpolationMethod m) {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
 
     int new_x = xSize;
-    int new_y = (int)((float)frame->getHeight() * (float)xSize / (float)frame->getWidth());
+    int new_y = (int)((float)frame->getHeight() * (float)xSize /
+                      (float)frame->getWidth());
 
-    pfs::Frame *resizedFrame = new pfs::Frame( new_x, new_y );
+    pfs::Frame *resizedFrame = new pfs::Frame(new_x, new_y);
 
-    const ChannelContainer& channels = frame->getChannels();
-    for ( ChannelContainer::const_iterator it = channels.begin();
-          it != channels.end();
-          ++it)
-    {
-        pfs::Channel* newCh = resizedFrame->createChannel( (*it)->getName() );
+    const ChannelContainer &channels = frame->getChannels();
+    for (ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end(); ++it) {
+        pfs::Channel *newCh = resizedFrame->createChannel((*it)->getName());
 
         resize(*it, newCh, m);
     }
-    pfs::copyTags( frame, resizedFrame );
+    pfs::copyTags(frame, resizedFrame);
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
-    std::cout << "resizeFrame() = " << f_timer.get_time() << " msec" << std::endl;
+    std::cout << "resizeFrame() = " << f_timer.get_time() << " msec"
+              << std::endl;
 #endif
 
     return resizedFrame;
 }
 
-} // pfs
+}  // pfs

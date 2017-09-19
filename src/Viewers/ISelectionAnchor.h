@@ -25,30 +25,42 @@
 #ifndef ISELECTIONANCHOR_H
 #define ISELECTIONANCHOR_H
 
-#include <QObject>
+#include <QColor>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
-#include <QGraphicsTextItem>
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
-#include <QColor>
+#include <QGraphicsTextItem>
+#include <QObject>
 #include <QPainter>
 #include <QPen>
 #include <QPointF>
 
 #define ANCHOR_SIZE (8)
 
-enum AnchorPosition {TOP_LEFT, TOP, TOP_RIGHT, LEFT, RIGHT, BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT};
-enum AnchorMouseState {MOUSE_BUTTON_RELEASED, MOUSE_BUTTON_PRESSED, MOUSE_MOVING};
+enum AnchorPosition {
+    TOP_LEFT,
+    TOP,
+    TOP_RIGHT,
+    LEFT,
+    RIGHT,
+    BOTTOM_LEFT,
+    BOTTOM,
+    BOTTOM_RIGHT
+};
+enum AnchorMouseState {
+    MOUSE_BUTTON_RELEASED,
+    MOUSE_BUTTON_PRESSED,
+    MOUSE_MOVING
+};
 
-class ISelectionAnchor: public QGraphicsItem
-{
-
-public:
-    explicit ISelectionAnchor(AnchorPosition position, QGraphicsItem *parent = 0);
+class ISelectionAnchor : public QGraphicsItem {
+   public:
+    explicit ISelectionAnchor(AnchorPosition position,
+                              QGraphicsItem *parent = 0);
 
     // allows the owner to find out which coner this is
-    inline AnchorPosition  getCorner() { return mPosition; }
+    inline AnchorPosition getCorner() { return mPosition; }
     // allows the owner to record the current mouse state
     inline void setMouseState(AnchorPosition position) { mPosition = position; }
     // allows the owner to get the current mouse state
@@ -56,28 +68,29 @@ public:
 
     qreal getAnchorSize() { return mSize; }
 
-private:
-
-    // must be re-implemented in this class to provide the diminsions of the box to the QGraphicsView
+   private:
+    // must be re-implemented in this class to provide the diminsions of the box
+    // to the QGraphicsView
     virtual QRectF boundingRect() const;
     // must be re-implemented here to pain the box on the paint-event
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    virtual void paint(QPainter *painter,
+                       const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     // must be re-implemented to handle mouse hover enter events
-    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     // must be re-implemented to handle mouse hover leave events
-    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
+    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
     // once the hover event handlers are implemented in this class,
     // the mouse events must allow be implemented because of
     // some linkage issue - apparrently there is some connection
     // between the hover events and mouseMove/Press/Release
     // events which triggers a vtable issue
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
-    //virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent * event);
-    //virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * event);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    // virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    // virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     // the hover event handlers will toggle this between red and black
     QColor mAnchorColor;
@@ -87,4 +100,4 @@ private:
     AnchorMouseState mMouseState;
 };
 
-#endif // ISELECTIONANCHOR_H
+#endif  // ISELECTIONANCHOR_H

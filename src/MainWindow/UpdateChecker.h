@@ -24,30 +24,29 @@
 #define UPDATECHECKER_IMPL_H
 
 #include <QDialog>
-#include <QStringList>
-#include <QSystemTrayIcon>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QStringList>
+#include <QSystemTrayIcon>
 
-class UpdateChecker : public QObject
-{
+class UpdateChecker : public QObject {
     Q_OBJECT
-public:
+   public:
     explicit UpdateChecker(QWidget *parent);
     virtual ~UpdateChecker();
 
-public slots:
+   public slots:
     void trayMessageClicked() const;
 
-protected slots:
-    void requestFinished(QNetworkReply*);
+   protected slots:
+    void requestFinished(QNetworkReply *);
 
-signals:
+   signals:
     void updateAvailable();
 
-private:
-    QSystemTrayIcon* m_tray;
-    QNetworkAccessManager* m_networkManager;
+   private:
+    QSystemTrayIcon *m_tray;
+    QNetworkAccessManager *m_networkManager;
 
     QString m_latestUrl;
     QString m_version;

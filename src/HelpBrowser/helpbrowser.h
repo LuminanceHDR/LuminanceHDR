@@ -50,6 +50,7 @@
 #define HELPBROWSER_H
 
 #include <QAction>
+#include <QEvent>
 #include <QItemSelection>
 #include <QList>
 #include <QMainWindow>
@@ -58,12 +59,11 @@
 #include <QPair>
 #include <QString>
 #include <QToolBar>
+#include <QTreeWidgetItem>
 #include <QUrl>
 #include <QVariant>
 #include <QWidget>
 #include <QXmlInputSource>
-#include <QEvent>
-#include <QTreeWidgetItem>
 //#include <QTextEdit>
 #include <QTextBrowser>
 
@@ -82,30 +82,32 @@ struct histd2 {
 };
 
 namespace Ui {
-    class HelpBrowser;
+class HelpBrowser;
 }
 
-class HelpBrowser : public QMainWindow
-{
+class HelpBrowser : public QMainWindow {
     Q_OBJECT
 
-public:
-    explicit HelpBrowser(QWidget* parent);
-    HelpBrowser(QWidget* parent, const QString& caption, const QString& guiLangage=QStringLiteral("en"), const QString& jumpToSection=QLatin1String(""), const QString& jumpToFile=QLatin1String(""));
+   public:
+    explicit HelpBrowser(QWidget *parent);
+    HelpBrowser(QWidget *parent, const QString &caption,
+                const QString &guiLangage = QStringLiteral("en"),
+                const QString &jumpToSection = QLatin1String(""),
+                const QString &jumpToFile = QLatin1String(""));
     ~HelpBrowser();
 
-
-    /*! \brief History menu. It's public because of history reader - separate class */
-    QMenu* histMenu;
+    /*! \brief History menu. It's public because of history reader - separate
+     * class */
+    QMenu *histMenu;
     /*! \brief Mapping the documents for history. */
-    QMap<QAction*, histd2> mHistory;
+    QMap<QAction *, histd2> mHistory;
     /*! \brief Set text to the browser
     \param str a QString with text (html) */
-    void setText(const QString& str);
+    void setText(const QString &str);
 
-protected:
-    virtual void changeEvent(QEvent* e);
-    void closeEvent(QCloseEvent * event);
+   protected:
+    virtual void changeEvent(QEvent *e);
+    void closeEvent(QCloseEvent *event);
 
     void setupLocalUI();
     /*! \brief Reads saved bookmarks from external file */
@@ -114,38 +116,44 @@ protected:
     It uses directory-recursion. I hope that the documentation will have
     only 2-3 level dir structure so it doesn't matter.
     \author Petr Vanek <petr@yarpen.cz> */
-    void searchingInDirectory(const QString&);
+    void searchingInDirectory(const QString &);
 
     /*! \brief Tell the user there is no help available */
     void displayNoHelp();
 
     HelpSideBar *helpSideBar;
     qreal zoomFactor;
-    //! \brief Selected language is here. If there is no docs for this language, "en" is used.
+    //! \brief Selected language is here. If there is no docs for this language,
+    //! "en" is used.
     QString language;
-    //! \brief QString holding location of menu.xml we are using, we load the help files from here
+    //! \brief QString holding location of menu.xml we are using, we load the
+    //! help
+    //! files from here
     QString finalBaseDir;
     /*! \brief Text to be found in document */
     QString findText;
 
-    ScHelpTreeModel* menuModel;
+    ScHelpTreeModel *menuModel;
     QMap<QString, QString> quickHelpIndex;
-    QMap<QString, QPair<QString, QString> > bookmarkIndex;
+    QMap<QString, QPair<QString, QString>> bookmarkIndex;
 
-    // I need to keep this around because page()->toHtml( <callback> ) is asynchronous
-    //QSharedPointer<QTextDocument> m_textDocument;
+    // I need to keep this around because page()->toHtml( <callback> ) is
+    // asynchronous
+    // QSharedPointer<QTextDocument> m_textDocument;
     QSharedPointer<QTextBrowser> m_textBrowser;
 
-protected slots:
+   protected slots:
     virtual void languageChange();
-    void histChosen(QAction* i);
-    void jumpToHelpSection(const QString& jumpToSection, const QString& jumpToFile=QLatin1String(""));
-    void loadHelp(const QString& filename);
+    void histChosen(QAction *i);
+    void jumpToHelpSection(const QString &jumpToSection,
+                           const QString &jumpToFile = QLatin1String(""));
+    void loadHelp(const QString &filename);
     void loadMenu();
     void showLinkContents(const QString &link);
 
     /*! \brief Load doc file when user select filename in content view. */
-    void itemSelected(const QItemSelection & selected, const QItemSelection & deselected);
+    void itemSelected(const QItemSelection &selected,
+                      const QItemSelection &deselected);
 
     /*! \brief Load doc file when user select filename in search view. */
     void itemSearchSelected(QTreeWidgetItem *, int);
@@ -215,14 +223,12 @@ protected slots:
 
     /*! \brief Restore Default Cursor */
     void loadFinished(bool);
-    void linkHovered (const QString &);
-signals:
+    void linkHovered(const QString &);
+   signals:
     void closed();
 
-protected:
+   protected:
     QScopedPointer<Ui::HelpBrowser> m_Ui;
-
 };
 
-#endif // HELPBROWSER_H
-
+#endif  // HELPBROWSER_H

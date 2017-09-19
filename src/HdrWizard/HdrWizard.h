@@ -24,12 +24,12 @@
 #ifndef HDRWIZARD_IMPL_H
 #define HDRWIZARD_IMPL_H
 
-#include <QDialog>
-#include <QString>
-#include <QVector>
 #include <QDebug>
+#include <QDialog>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QString>
+#include <QVector>
 
 #include "Common/LuminanceOptions.h"
 #include "HdrWizard/HdrCreationManager.h"
@@ -38,23 +38,22 @@ namespace Ui {
 class HdrWizard;
 }
 
-class HdrWizard : public QDialog
-{
+class HdrWizard : public QDialog {
     Q_OBJECT
-private:
+   private:
     // members ... private functions are below
     QScopedPointer<Ui::HdrWizard> m_Ui;
     QScopedPointer<HdrCreationManager> m_hdrCreationManager;
 
     QFutureWatcher<void> m_futureWatcher;
-    QFuture<pfs::Frame*> m_future;
+    QFuture<pfs::Frame *> m_future;
 
     LuminanceOptions luminance_options;
 
     QStringList m_inputFilesName;
 
     // the new hdr, returned by the HdrCreationManager class
-    pfs::Frame* m_pfsFrameHDR;
+    pfs::Frame *m_pfsFrameHDR;
 
     // hdr creation parameters
     QVector<FusionOperatorConfig> m_customConfig;
@@ -65,38 +64,37 @@ private:
     bool m_processing;
     ProgressHelper m_ph;
 
-public:
-    HdrWizard(QWidget *parent,
-              const QStringList &files,
+   public:
+    HdrWizard(QWidget *parent, const QStringList &files,
               const QStringList &inputFilesName,
               const QVector<float> &inputExpoTimes);
     ~HdrWizard();
 
     //! \brief get the current PFS Frame
-    pfs::Frame* getPfsFrameHDR() { return m_pfsFrameHDR; }
+    pfs::Frame *getPfsFrameHDR() { return m_pfsFrameHDR; }
 
     //! \brief return the caption text
     QString getCaptionTEXT();
     QStringList getInputFilesNames();
 
-protected:
+   protected:
     void resizeEvent(QResizeEvent *);
     void keyPressEvent(QKeyEvent *);
     void dragEnterEvent(QDragEnterEvent *);
     void dropEvent(QDropEvent *);
     void setEVsValues();
 
-private:
+   private:
     void updateTableGrid();
-    void enableNextOrWarning(const QStringList& filesWithoutExif);
+    void enableNextOrWarning(const QStringList &filesWithoutExif);
     void updateLabelMaybeNext(size_t numFilesWithoutExif);
 
-signals:
+   signals:
     void setValue(int value);
     void setRange(int min, int max);
 
-private slots:
-    void loadInputFiles(const QStringList& files);
+   private slots:
+    void loadInputFiles(const QStringList &files);
     void loadInputFilesDone();
 
     void loadImagesButtonClicked();
@@ -108,10 +106,10 @@ private slots:
     void updateEVSlider(int newValue);
     void updateEVSpinBox(double newValue);
 
-private slots:
+   private slots:
     // void fileLoaded(int index, const QString& fname, float expotime);
     // void finishedLoadingInputFiles(const QStringList& NoExifFiles);
-    void errorWhileLoading(const QString& errormessage);
+    void errorWhileLoading(const QString &errormessage);
 
     // void updateGraphicalEVvalue(float expotime, int index_in_table);
 

@@ -28,11 +28,11 @@
 #ifndef COMMANDLINE_H
 #define COMMANDLINE_H
 
+#include <QDir>
+#include <QProcess>
+#include <QScopedPointer>
 #include <QString>
 #include <QStringList>
-#include <QProcess>
-#include <QDir>
-#include <QScopedPointer>
 
 #include <Core/TonemappingOptions.h>
 #include <HdrWizard/HdrCreationManager.h>
@@ -40,14 +40,13 @@
 #include <Libpfs/params.h>
 #include "ezETAProgressBar.hpp"
 
-class CommandLineInterfaceManager : public QObject
-{
+class CommandLineInterfaceManager : public QObject {
     Q_OBJECT
-public:
+   public:
     CommandLineInterfaceManager(const int argc, char **argv);
     int execCommandLineParams();
 
-private:
+   private:
     const int argc;
     char **argv;
 
@@ -57,11 +56,7 @@ private:
         UNKNOWN_MODE
     } operationMode;
 
-    enum align_mode {
-        AIS_ALIGN,
-        MTB_ALIGN,
-        NO_ALIGN
-    } alignMode;
+    enum align_mode { AIS_ALIGN, MTB_ALIGN, NO_ALIGN } alignMode;
 
     QList<float> ev;
     QScopedPointer<HdrCreationManager> hdrCreationManager;
@@ -98,7 +93,7 @@ private:
     void generateHTML();
     void startTonemap();
 
-private slots:
+   private slots:
     void finishedLoadingInputFiles();
     void ais_failed(QProcess::ProcessError);
     void errorWhileLoading(const QString &);
@@ -109,7 +104,7 @@ private slots:
     void readData(const QByteArray &);
     void tonemapFailed(const QString &);
 
-signals:
+   signals:
     void finishedParsing();
 };
 

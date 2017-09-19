@@ -22,29 +22,27 @@
 #ifndef LIBHDR_FUSION_WEIGHTS_H
 #define LIBHDR_FUSION_WEIGHTS_H
 
-#include <limits>
 #include <array>
-#include <string>
 #include <cassert>
+#include <limits>
+#include <string>
 
 namespace libhdr {
 namespace fusion {
 
-enum WeightFunctionType
-{
+enum WeightFunctionType {
     WEIGHT_TRIANGULAR = 0,
     WEIGHT_GAUSSIAN = 1,
     WEIGHT_PLATEAU = 2,
     WEIGHT_FLAT = 3
 };
 
-class WeightFunction
-{
-public:
+class WeightFunction {
+   public:
     static const size_t NUM_BINS = (1 << 12);
     typedef std::array<float, NUM_BINS> WeightContainer;
 
-    static WeightFunctionType fromString(const std::string& type);
+    static WeightFunctionType fromString(const std::string &type);
 
     static size_t getIdx(float sample);
 
@@ -55,12 +53,12 @@ public:
     float operator()(float input) const { return getWeight(input); }
 
     void setType(WeightFunctionType type);
-    WeightFunctionType getType() const  { return m_type; }
+    WeightFunctionType getType() const { return m_type; }
 
-    float minTrustedValue() const       { return m_minTrustedValue; }
-    float maxTrustedValue() const       { return m_maxTrustedValue; }
+    float minTrustedValue() const { return m_minTrustedValue; }
+    float maxTrustedValue() const { return m_maxTrustedValue; }
 
-private:
+   private:
     WeightFunctionType m_type;
     WeightContainer m_weights;
 
@@ -68,36 +66,34 @@ private:
     float m_maxTrustedValue;
 };
 
-inline
-size_t WeightFunction::getIdx(float sample)
+inline size_t WeightFunction::getIdx(float sample)
 //{ return size_t(sample*(NUM_BINS - 1) + 0.45f); } TODO: check this one
-{ return size_t(sample*(NUM_BINS - 1)); }
-
-inline
-float WeightFunction::getWeight(float input) const
 {
+    return size_t(sample * (NUM_BINS - 1));
+}
+
+inline float WeightFunction::getWeight(float input) const {
     assert(input >= 0.f);
     assert(input <= 1.f);
 
     return m_weights[getIdx(input)];
 }
 
-inline
-WeightFunction::WeightContainer WeightFunction::getWeights() const
-{
+inline WeightFunction::WeightContainer WeightFunction::getWeights() const {
     return m_weights;
 }
 
-}   // fusion
-}   // libhdr
+}  // fusion
+}  // libhdr
 
 //! \brief Load weighting function
 //!
 //! \param file file handle to save response curve
 //! \param w [out] weights (array size of M)
 //! \param M number of camera output levels
-//! \return false means file has different output levels or is wrong for some other reason
-bool weightsLoad(FILE* file, float* w, int M);
+//! \return false means file has different output levels or is wrong for some
+//! other reason
+bool weightsLoad(FILE *file, float *w, int M);
 
 //! \brief Save weighting function
 //!
@@ -105,6 +101,6 @@ bool weightsLoad(FILE* file, float* w, int M);
 //! \param w weights (array size of M)
 //! \param M number of camera output levels
 //! \param name matrix name for use in Octave or Matlab
-void weightsSave(FILE* file, const float* w, int M, const char* name);
+void weightsSave(FILE *file, const float *w, int M, const char *name);
 
-#endif // LIBHDR_FUSION_WEIGHTS_H
+#endif  // LIBHDR_FUSION_WEIGHTS_H

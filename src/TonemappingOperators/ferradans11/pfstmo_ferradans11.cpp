@@ -31,18 +31,17 @@
  */
 #include <sstream>
 
-#include "tmo_ferradans11.h"
+#include "Libpfs/exception.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/gamma.h"
-#include "Libpfs/exception.h"
 #include "Libpfs/progress.h"
+#include "tmo_ferradans11.h"
 
-void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, pfs::Progress &ph)
-{
-
-    //--- default tone mapping parameters;
-    //float rho = -2;
-    //float inv_alpha = 5;
+void pfstmo_ferradans11(pfs::Frame &frame, float opt_rho, float opt_inv_alpha,
+                        pfs::Progress &ph) {
+//--- default tone mapping parameters;
+// float rho = -2;
+// float inv_alpha = 5;
 
 #ifndef NDEBUG
     std::stringstream ss;
@@ -53,27 +52,22 @@ void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, p
 #endif
 
     pfs::Channel *inR, *inG, *inB;
-    frame.getXYZChannels( inR, inG, inB );
+    frame.getXYZChannels(inR, inG, inB);
     //---
 
-    if( inR==NULL || inG==NULL || inB==NULL)
-      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    if (inR == NULL || inG == NULL || inB == NULL)
+        throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
 
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
-    //TODO Check why gamma is 1/4 of gamma in pfstools
-    //pfs::applyGamma(&frame, 0.25f);
+    // TODO Check why gamma is 1/4 of gamma in pfstools
+    // pfs::applyGamma(&frame, 0.25f);
 
     // tone mapping
-    try
-    {
+    try {
         tmo_ferradans11(*inR, *inG, *inB, opt_rho, opt_inv_alpha, ph);
-    }
-    catch(...)
-    {
-        throw pfs::Exception( "Tonemapping Failed!" );
+    } catch (...) {
+        throw pfs::Exception("Tonemapping Failed!");
     }
 
-    if ( !ph.canceled() )
-        ph.setValue(100);
+    if (!ph.canceled()) ph.setValue(100);
 }
-

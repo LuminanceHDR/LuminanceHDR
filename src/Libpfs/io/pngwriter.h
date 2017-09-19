@@ -30,34 +30,33 @@
 #ifndef PNGWRITER_H
 #define PNGWRITER_H
 
-#include <string>
 #include <memory>
+#include <string>
 
-#include <Libpfs/params.h>
-#include <Libpfs/io/ioexception.h>
 #include <Libpfs/io/framewriter.h>
+#include <Libpfs/io/ioexception.h>
+#include <Libpfs/params.h>
 
 namespace pfs {
 namespace io {
 
 class PngWriterImpl;
 
-class PngWriter : public FrameWriter
-{
-public:
-    explicit PngWriter(const std::string& filename);
+class PngWriter : public FrameWriter {
+   public:
+    explicit PngWriter(const std::string &filename);
     PngWriter();
     ~PngWriter();
 
-    bool write(const pfs::Frame& frame, const pfs::Params& params);
+    bool write(const pfs::Frame &frame, const pfs::Params &params);
 
     size_t getFileSize() const;
 
-private:
+   private:
     std::unique_ptr<PngWriterImpl> m_impl;
 };
 
-}   // io
-}   // pfs
+}  // io
+}  // pfs
 
 #endif

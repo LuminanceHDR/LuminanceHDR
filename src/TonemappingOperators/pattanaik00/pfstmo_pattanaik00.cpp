@@ -33,23 +33,21 @@
 
 #include "tmo_pattanaik00.h"
 
-#include <iostream>
-#include <cmath>
 #include <algorithm>
+#include <cmath>
+#include <iostream>
 
-#include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/exception.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 
-namespace
-{
-void multiplyChannels( pfs::Array2Df& X, pfs::Array2Df& Y, pfs::Array2Df& Z, float mult )
-{
+namespace {
+void multiplyChannels(pfs::Array2Df &X, pfs::Array2Df &Y, pfs::Array2Df &Z,
+                      float mult) {
     int size = Y.getCols() * Y.getRows();
 
-    for ( int i=0 ; i<size; i++ )
-    {
+    for (int i = 0; i < size; i++) {
         X(i) *= mult;
         Y(i) *= mult;
         Z(i) *= mult;
@@ -57,18 +55,16 @@ void multiplyChannels( pfs::Array2Df& X, pfs::Array2Df& Y, pfs::Array2Df& Z, flo
 }
 }
 
-void pfstmo_pattanaik00(pfs::Frame& frame,
-                        bool local, float multiplier,
+void pfstmo_pattanaik00(pfs::Frame &frame, bool local, float multiplier,
                         float Acone, float Arod, bool autolum,
-                        pfs::Progress &ph)
-{
+                        pfs::Progress &ph) {
     //--- default tone mapping parameters;
     const bool timedependence = false;
-    //bool local = false;
-    //float multiplier = 1.0f;
-    //Acone = -1.0f;
-    //Arod  = -1.0f;
-    float fps = 16.0f; //not used
+    // bool local = false;
+    // float multiplier = 1.0f;
+    // Acone = -1.0f;
+    // Arod  = -1.0f;
+    float fps = 16.0f;  // not used
 
 #ifndef NDEBUG
     std::cout << "pfstmo_pattanaik00 (";
@@ -82,53 +78,45 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
     std::unique_ptr<VisualAdaptationModel> am(new VisualAdaptationModel());
 
     pfs::Channel *X, *Y, *Z;
-    frame.getXYZChannels( X, Y, Z );
+    frame.getXYZChannels(X, Y, Z);
     //---
 
-    if ( Y==NULL || X==NULL || Z==NULL)
-    {
-        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    if (Y == NULL || X == NULL || Z == NULL) {
+        throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
     // adaptation model
-    if ( multiplier != 1.0f ) {
-        multiplyChannels(*X, *Y, *Z, multiplier );
+    if (multiplier != 1.0f) {
+        multiplyChannels(*X, *Y, *Z, multiplier);
     }
 
-    if( !local )
-    {
-        if( !timedependence )
-        {
-            if( !autolum )
+    if (!local) {
+        if (!timedependence) {
+            if (!autolum)
                 am->setAdaptation(Acone, Arod);
             else
                 am->setAdaptation(*Y);
-        }
-        else
-            am->calculateAdaptation(*Y, 1.0f/fps);
+        } else
+            am->calculateAdaptation(*Y, 1.0f / fps);
     }
     // tone mapping
     int w = Y->getWidth();
     int h = Y->getHeight();
 
-    pfs::Array2Df R(w,h);
-    pfs::Array2Df G(w,h);
-    pfs::Array2Df B(w,h);
+    pfs::Array2Df R(w, h);
+    pfs::Array2Df G(w, h);
+    pfs::Array2Df B(w, h);
 
-    pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, &R, &G, &B );
-    try
-    {
-        tmo_pattanaik00( R, G, B, *Y, am.get(), local, ph );
+    pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, &R, &G, &B);
+    try {
+        tmo_pattanaik00(R, G, B, *Y, am.get(), local, ph);
+    } catch (...) {
+        throw pfs::Exception("Tonemapping Failed!");
     }
-    catch(...)
-    {
-        throw pfs::Exception( "Tonemapping Failed!" );
-    }
-    pfs::transformColorSpace( pfs::CS_RGB, &R, &G, &B, pfs::CS_XYZ, X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, &R, &G, &B, pfs::CS_XYZ, X, Y, Z);
 
-    if (!ph.canceled())
-    {
+    if (!ph.canceled()) {
         ph.setValue(100);
     }
 }

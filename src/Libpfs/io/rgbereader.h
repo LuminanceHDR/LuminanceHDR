@@ -39,26 +39,23 @@
 namespace pfs {
 namespace io {
 
-enum Colorspace {RGB, XYZ};
+enum Colorspace { RGB, XYZ };
 
-class RGBEReader : public FrameReader
-{
-public:
-    RGBEReader(const std::string& filename);
+class RGBEReader : public FrameReader {
+   public:
+    RGBEReader(const std::string &filename);
 
-    bool isOpen() const
-    { return m_file; }
+    bool isOpen() const { return m_file; }
 
     void open();
     void close();
     void read(pfs::Frame &frame, const pfs::Params &params);
 
-private:
+   private:
     utils::ScopedStdIoFile m_file;
     float m_exposure;
     Colorspace m_colorspace;
 };
-
 }
 }
 

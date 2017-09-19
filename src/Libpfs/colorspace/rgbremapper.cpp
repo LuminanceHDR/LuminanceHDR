@@ -32,52 +32,46 @@
 #include <cmath>
 #include "arch/math.h"
 
-namespace
-{
-const float GAMMA_1_4 = 1.0f/1.4f;
-const float GAMMA_1_8 = 1.0f/1.8f;
-const float GAMMA_2_2 = 1.0f/2.2f;
-const float GAMMA_2_6 = 1.0f/2.6f;
+namespace {
+const float GAMMA_1_4 = 1.0f / 1.4f;
+const float GAMMA_1_8 = 1.0f / 1.8f;
+const float GAMMA_2_2 = 1.0f / 2.2f;
+const float GAMMA_2_6 = 1.0f / 2.6f;
 }
 
-float RemapperBase::toLinear(float sample)
-{ return sample; }
+float RemapperBase::toLinear(float sample) { return sample; }
 
-float RemapperBase::toGamma14(float sample)
-{ return std::pow(sample, GAMMA_1_4); }
+float RemapperBase::toGamma14(float sample) {
+    return std::pow(sample, GAMMA_1_4);
+}
 
-float RemapperBase::toGamma18(float sample)
-{ return std::pow(sample, GAMMA_1_8); }
+float RemapperBase::toGamma18(float sample) {
+    return std::pow(sample, GAMMA_1_8);
+}
 
-float RemapperBase::toGamma22(float sample)
-{ return std::pow(sample, GAMMA_2_2); }
+float RemapperBase::toGamma22(float sample) {
+    return std::pow(sample, GAMMA_2_2);
+}
 
-float RemapperBase::toGamma26(float sample)
-{ return std::pow(sample, GAMMA_2_6); }
+float RemapperBase::toGamma26(float sample) {
+    return std::pow(sample, GAMMA_2_6);
+}
 
-float RemapperBase::toLog(float sample)
-{ return std::pow(sample, 1.f/GAMMA_2_2); }
+float RemapperBase::toLog(float sample) {
+    return std::pow(sample, 1.f / GAMMA_2_2);
+}
 
-const RemapperBase::MappingFunc RemapperBase::s_callbacks[] =
-{
-    &toLinear,
-    &toGamma14,
-    &toGamma18,
-    &toGamma22,
-    &toGamma26,
-    &toLog
-};
+const RemapperBase::MappingFunc RemapperBase::s_callbacks[] = {
+    &toLinear, &toGamma14, &toGamma18, &toGamma22, &toGamma26, &toLog};
 
 Remapper<uint8_t>::Remapper(RGBMappingType mappingMethod)
-    : m_mappingMethod(mappingMethod)
-{
+    : m_mappingMethod(mappingMethod) {
     assert(mappingMethod >= 0);
     assert(mappingMethod < 6);
 
     MappingFunc callback(s_callbacks[mappingMethod]);
 
-    for (int idx = 0; idx < 256; ++idx)
-    {
-        m_lut[idx] = 255.f * callback(float(idx)/255.f);
+    for (int idx = 0; idx < 256; ++idx) {
+        m_lut[idx] = 255.f * callback(float(idx) / 255.f);
     }
 }

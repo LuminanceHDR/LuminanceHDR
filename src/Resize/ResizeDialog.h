@@ -27,31 +27,31 @@
 #include <QDialog>
 
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
 namespace Ui {
-    class ResizeDialog;
+class ResizeDialog;
 }
 
-class ResizeDialog : public QDialog
-{
-Q_OBJECT
-public:
+class ResizeDialog : public QDialog {
+    Q_OBJECT
+   public:
     ResizeDialog(QWidget *parent, pfs::Frame *orig);
     ~ResizeDialog();
-    pfs::Frame* getResizedFrame();
-public slots:
+    pfs::Frame *getResizedFrame();
+   public slots:
     void scaledPressed();
     void switch_px_percentage(int);
     void update_heightSpinBox();
     void update_widthSpinBox();
     void defaultpressed();
-private:
-    pfs::Frame* m_original;
-    pfs::Frame* m_resized;
-    int orig_width,orig_height;
-    int resized_width,resized_height;
+
+   private:
+    pfs::Frame *m_original;
+    pfs::Frame *m_resized;
+    int orig_width, orig_height;
+    int resized_width, resized_height;
     void updatelabel();
     int rh_from_rw();
     int rw_from_rh();

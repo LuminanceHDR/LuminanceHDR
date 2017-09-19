@@ -26,32 +26,30 @@
 #define THRESHOLDWIDGET_H
 
 #include <QFrame>
-#include <QKeyEvent>
 #include <QHideEvent>
+#include <QKeyEvent>
 
-namespace Ui
-{
-    class ThresholdWidget;
+namespace Ui {
+class ThresholdWidget;
 }
 
-class ThresholdWidget : public QFrame
-{
+class ThresholdWidget : public QFrame {
     Q_OBJECT
 
-public:
-    ThresholdWidget(QWidget *parent = 0, Qt::WindowFlags flags=Qt::Popup);
+   public:
+    ThresholdWidget(QWidget *parent = 0, Qt::WindowFlags flags = Qt::Popup);
     ~ThresholdWidget();
     float threshold() const;
 
-protected:
+   protected:
     void keyPressEvent(QKeyEvent *event);
     void hideEvent(QHideEvent *event);
     QScopedPointer<Ui::ThresholdWidget> m_Ui;
 
-Q_SIGNALS:
+   Q_SIGNALS:
     void ready();
 
-protected Q_SLOTS:
+   protected Q_SLOTS:
     void on_thresholdDoubleSpinBox_valueChanged(double value);
     void on_thresholdHorizontalSlider_valueChanged(int pos);
 };

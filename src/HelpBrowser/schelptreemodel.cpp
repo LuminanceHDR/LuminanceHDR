@@ -33,178 +33,180 @@
     models.
 */
 
-#include <QtWidgets>
 #include <QDomDocument>
 #include <QFile>
+#include <QtWidgets>
 
 #include "schelptreemodel.h"
 
-ScHelpTreeModel::ScHelpTreeModel(const QString &dataFile, const QString &col1name, const QString &col2name, QMap<QString, QString>* indexToBuild, QObject *parent)
-    : TreeModel(parent)
-{
+ScHelpTreeModel::ScHelpTreeModel(const QString &dataFile,
+                                 const QString &col1name,
+                                 const QString &col2name,
+                                 QMap<QString, QString> *indexToBuild,
+                                 QObject *parent)
+    : TreeModel(parent) {
     QList<QVariant> rootData;
     rootData << col1name << col2name;
     rootItem = new TreeItem(rootData);
-    if (!dataFile.isEmpty())
-        setupModelData(dataFile, rootItem, indexToBuild);
+    if (!dataFile.isEmpty()) setupModelData(dataFile, rootItem, indexToBuild);
 }
 
-void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, QMap<QString, QString>* indexToBuild)
-{
-    QFile file( dataFile );
-    if ( !file.open( QIODevice::ReadOnly ) )
-        return;
-    QDomDocument doc( QStringLiteral("menuentries") );
-    if ( !doc.setContent( &file ) )
-    {
+void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent,
+                                     QMap<QString, QString> *indexToBuild) {
+    QFile file(dataFile);
+    if (!file.open(QIODevice::ReadOnly)) return;
+    QDomDocument doc(QStringLiteral("menuentries"));
+    if (!doc.setContent(&file)) {
         file.close();
         return;
     }
     file.close();
 
-    QList<TreeItem*> parents;
+    QList<TreeItem *> parents;
     QList<int> indentations;
     parents << parent;
     indentations << 0;
     QDomElement docElem = doc.documentElement();
     QDomNode n = docElem.firstChild();
-//    bool haveTutorials=false;
+    //    bool haveTutorials=false;
     QList<QVariant> columnData;
-    int position=0;
-    while( !n.isNull() )
-    {
-        QDomElement e = n.toElement(); // try to convert the node to an element.
-        if( !e.isNull() )
-        {
-            if (e.hasAttribute( QStringLiteral("text") ) && e.hasAttribute( QStringLiteral("file") ))
-            {
-                QDomAttr textAttr = e.attributeNode( QStringLiteral("text") );
-                QDomAttr fileAttr = e.attributeNode( QStringLiteral("file") );
+    int position = 0;
+    while (!n.isNull()) {
+        QDomElement e =
+            n.toElement();  // try to convert the node to an element.
+        if (!e.isNull()) {
+            if (e.hasAttribute(QStringLiteral("text")) &&
+                e.hasAttribute(QStringLiteral("file"))) {
+                QDomAttr textAttr = e.attributeNode(QStringLiteral("text"));
+                QDomAttr fileAttr = e.attributeNode(QStringLiteral("file"));
                 columnData.clear();
-                columnData << textAttr.value() <<  fileAttr.value();
-                if (position > indentations.last())
-                {
-                    // The last child of the current parent is now the new parent
+                columnData << textAttr.value() << fileAttr.value();
+                if (position > indentations.last()) {
+                    // The last child of the current parent is now the new
+                    // parent
                     // unless the current parent has no children.
 
-                    if (parents.last()->childCount() > 0)
-                    {
-                        parents << parents.last()->child(parents.last()->childCount()-1);
+                    if (parents.last()->childCount() > 0) {
+                        parents << parents.last()->child(
+                            parents.last()->childCount() - 1);
                         indentations << position;
                     }
-                }
-                else
-                {
-                    while (position < indentations.last() && parents.count() > 0) {
+                } else {
+                    while (position < indentations.last() &&
+                           parents.count() > 0) {
                         parents.pop_back();
                         indentations.pop_back();
                     }
                 }
                 // Append a new item to the current parent's list of children.
-                parents.last()->appendChild(new TreeItem(columnData, parents.last()));
+                parents.last()->appendChild(
+                    new TreeItem(columnData, parents.last()));
                 if (indexToBuild)
                     indexToBuild->insert(textAttr.value(), fileAttr.value());
             }
 
-            QDomNodeList nl=n.childNodes();
-            if (nl.count()>0)
-                position=1;
-            for(int i=0 ; i<= nl.count() ; i++)
-            {
-                QDomNode child=nl.item(i);
-                if (child.isElement())
-                {
+            QDomNodeList nl = n.childNodes();
+            if (nl.count() > 0) position = 1;
+            for (int i = 0; i <= nl.count(); i++) {
+                QDomNode child = nl.item(i);
+                if (child.isElement()) {
                     QDomElement ec = child.toElement();
-                    if (!ec.isNull())
-                    {
-                        if (ec.hasAttribute( QStringLiteral("text") ) && ec.hasAttribute( QStringLiteral("file") ))
-                        {
-                            QDomAttr textAttr = ec.attributeNode( QStringLiteral("text") );
-                            QDomAttr fileAttr = ec.attributeNode( QStringLiteral("file") );
+                    if (!ec.isNull()) {
+                        if (ec.hasAttribute(QStringLiteral("text")) &&
+                            ec.hasAttribute(QStringLiteral("file"))) {
+                            QDomAttr textAttr =
+                                ec.attributeNode(QStringLiteral("text"));
+                            QDomAttr fileAttr =
+                                ec.attributeNode(QStringLiteral("file"));
                             columnData.clear();
-                            columnData << textAttr.value() <<  fileAttr.value();
-                            if (position > indentations.last())
-                            {
-                                // The last child of the current parent is now the new parent
+                            columnData << textAttr.value() << fileAttr.value();
+                            if (position > indentations.last()) {
+                                // The last child of the current parent is now
+                                // the new parent
                                 // unless the current parent has no children.
 
-                                if (parents.last()->childCount() > 0)
-                                {
-                                    parents << parents.last()->child(parents.last()->childCount()-1);
+                                if (parents.last()->childCount() > 0) {
+                                    parents << parents.last()->child(
+                                        parents.last()->childCount() - 1);
                                     indentations << position;
                                 }
-                            }
-                            else
-                            {
-                                while (position < indentations.last() && parents.count() > 0) {
+                            } else {
+                                while (position < indentations.last() &&
+                                       parents.count() > 0) {
                                     parents.pop_back();
                                     indentations.pop_back();
                                 }
                             }
-                            // Append a new item to the current parent's list of children.
-                            parents.last()->appendChild(new TreeItem(columnData, parents.last()));
+                            // Append a new item to the current parent's list of
+                            // children.
+                            parents.last()->appendChild(
+                                new TreeItem(columnData, parents.last()));
                             if (indexToBuild)
-                                indexToBuild->insert(textAttr.value(), fileAttr.value());
+                                indexToBuild->insert(textAttr.value(),
+                                                     fileAttr.value());
                         }
-                        //3rd level
-                        QDomNodeList nl2=child.childNodes();
-                        if (nl2.count()>0)
-                            position=2;
-                        for(int i2=0 ; i2<= nl2.count() ; i2++)
-                        {
-                            QDomNode childchild=nl2.item(i2);
-                            if (childchild.isElement())
-                            {
+                        // 3rd level
+                        QDomNodeList nl2 = child.childNodes();
+                        if (nl2.count() > 0) position = 2;
+                        for (int i2 = 0; i2 <= nl2.count(); i2++) {
+                            QDomNode childchild = nl2.item(i2);
+                            if (childchild.isElement()) {
                                 QDomElement ecc = childchild.toElement();
-                                if (!ecc.isNull())
-                                {
-                                    QDomAttr textAttr = ecc.attributeNode( QStringLiteral("text") );
-                                    QDomAttr fileAttr = ecc.attributeNode( QStringLiteral("file") );
+                                if (!ecc.isNull()) {
+                                    QDomAttr textAttr = ecc.attributeNode(
+                                        QStringLiteral("text"));
+                                    QDomAttr fileAttr = ecc.attributeNode(
+                                        QStringLiteral("file"));
                                     columnData.clear();
-                                    columnData << textAttr.value() <<  fileAttr.value();
-                                    if (position > indentations.last())
-                                    {
-                                        // The last child of the current parent is now the new parent
-                                        // unless the current parent has no children.
+                                    columnData << textAttr.value()
+                                               << fileAttr.value();
+                                    if (position > indentations.last()) {
+                                        // The last child of the current parent
+                                        // is now the new
+                                        // parent
+                                        // unless the current parent has no
+                                        // children.
 
-                                        if (parents.last()->childCount() > 0)
-                                        {
-                                            parents << parents.last()->child(parents.last()->childCount()-1);
+                                        if (parents.last()->childCount() > 0) {
+                                            parents << parents.last()->child(
+                                                parents.last()->childCount() -
+                                                1);
                                             indentations << position;
                                         }
-                                    }
-                                    else
-                                    {
-                                        while (position < indentations.last() && parents.count() > 0) {
+                                    } else {
+                                        while (position < indentations.last() &&
+                                               parents.count() > 0) {
                                             parents.pop_back();
                                             indentations.pop_back();
                                         }
                                     }
-                                    // Append a new item to the current parent's list of children.
-                                    parents.last()->appendChild(new TreeItem(columnData, parents.last()));
+                                    // Append a new item to the current parent's
+                                    // list of children.
+                                    parents.last()->appendChild(new TreeItem(
+                                        columnData, parents.last()));
                                     if (indexToBuild)
-                                        indexToBuild->insert(textAttr.value(), fileAttr.value());
+                                        indexToBuild->insert(textAttr.value(),
+                                                             fileAttr.value());
                                 }
                             }
                         }
-                        position=1;
+                        position = 1;
                     }
                 }
             }
-            position=0;
+            position = 0;
         }
         n = n.nextSibling();
     }
 }
 
-void ScHelpTreeModel::addRow(const QString& s1, const QString& s2, int /*i*/)
-{
-    QList<TreeItem*> parents;
+void ScHelpTreeModel::addRow(const QString &s1, const QString &s2, int /*i*/) {
+    QList<TreeItem *> parents;
     QList<int> indentations;
     parents << rootItem;
     if (parents.last()->childCount() > 0)
-        parents << parents.last()->child(parents.last()->childCount()-1);
+        parents << parents.last()->child(parents.last()->childCount() - 1);
     QList<QVariant> columnData;
-    columnData << s1 << s2;// << i;
+    columnData << s1 << s2;  // << i;
     parents.last()->appendChild(new TreeItem(columnData, parents.last()));
 }

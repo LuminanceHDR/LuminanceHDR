@@ -39,8 +39,8 @@
 #include <QObject>
 #include <QString>
 
-#include <Libpfs/params.h>
 #include <Libpfs/colorspace/rgbremapper_fwd.h>
+#include <Libpfs/params.h>
 
 namespace pfs {
 class Frame;
@@ -50,60 +50,58 @@ class GenericViewer;
 class TonemappingOptions;
 class LuminanceOptions;
 
-int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
+int progress_cb(void *data, enum LibRaw_progress p, int iteration,
+                int expected);
 
 pfs::Params getRawSettings();
-pfs::Params getRawSettings(const LuminanceOptions& opts);
+pfs::Params getRawSettings(const LuminanceOptions &opts);
 
-class IOWorker : public QObject
-{
+class IOWorker : public QObject {
     Q_OBJECT
 
-private:
-    friend
-    int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
+   private:
+    friend int progress_cb(void *data, enum LibRaw_progress p, int iteration,
+                           int expected);
 
     void get_frame(QString fname);
     void emitNextStep(int iteration);
     void emitMaximumValue(int iteration);
 
-public:
-    IOWorker(QObject* parent = 0);
+   public:
+    IOWorker(QObject *parent = 0);
     ~IOWorker();
 
-public Q_SLOTS:
-    pfs::Frame* read_hdr_frame(const QString& filename);
+   public Q_SLOTS:
+    pfs::Frame *read_hdr_frame(const QString &filename);
 
-    bool write_hdr_frame(pfs::Frame *frame, const QString& filename,
-                         const pfs::Params& params = pfs::Params());
-    bool write_hdr_frame(GenericViewer* frame, const QString& filename,
-                         const pfs::Params& params = pfs::Params());
+    bool write_hdr_frame(pfs::Frame *frame, const QString &filename,
+                         const pfs::Params &params = pfs::Params());
+    bool write_hdr_frame(GenericViewer *frame, const QString &filename,
+                         const pfs::Params &params = pfs::Params());
 
-    bool write_ldr_frame(pfs::Frame* frame,
-                         const QString& filename,
-                         const QString& inputFileName,
-                         const QVector<float>& expoTimes,
-                         TonemappingOptions* tmopts = NULL,
-                         const pfs::Params& params = pfs::Params());
+    bool write_ldr_frame(pfs::Frame *frame, const QString &filename,
+                         const QString &inputFileName,
+                         const QVector<float> &expoTimes,
+                         TonemappingOptions *tmopts = NULL,
+                         const pfs::Params &params = pfs::Params());
 
-    bool write_ldr_frame(GenericViewer* frame,
-                         const QString& filename,
-                         const QString& inputFileName,
-                         const QVector<float>& expoTimes,
-                         TonemappingOptions* tmopts = NULL,
-                         const pfs::Params& params = pfs::Params());
+    bool write_ldr_frame(GenericViewer *frame, const QString &filename,
+                         const QString &inputFileName,
+                         const QVector<float> &expoTimes,
+                         TonemappingOptions *tmopts = NULL,
+                         const pfs::Params &params = pfs::Params());
 
-signals:
-    void read_hdr_failed(const QString&);
-    void read_hdr_success(pfs::Frame*, const QString&);
+   signals:
+    void read_hdr_failed(const QString &);
+    void read_hdr_success(pfs::Frame *, const QString &);
 
-    void write_hdr_failed(const QString&);
-    void write_hdr_success(pfs::Frame*, const QString&);
-    void write_hdr_success(GenericViewer*, const QString&);
+    void write_hdr_failed(const QString &);
+    void write_hdr_success(pfs::Frame *, const QString &);
+    void write_hdr_success(GenericViewer *, const QString &);
 
-    void write_ldr_failed(const QString&);
-    void write_ldr_success(pfs::Frame*, const QString&);
-    void write_ldr_success(GenericViewer*, const QString&);
+    void write_ldr_failed(const QString &);
+    void write_ldr_success(pfs::Frame *, const QString &);
+    void write_ldr_success(GenericViewer *, const QString &);
 
     void setMaximum(int);
     void setValue(int);
@@ -112,4 +110,4 @@ signals:
     void IO_finish();
 };
 
-#endif // IOWORKER_H
+#endif  // IOWORKER_H

@@ -34,85 +34,86 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDockWidget>
+#include <QFutureWatcher>
 #include <QMainWindow>
 #include <QMap>
-#include <QString>
-#include <QStringList>
+#include <QProgressBar>
+#include <QScopedPointer>
+#include <QScrollArea>
 #include <QSignalMapper>
 #include <QSplitter>
+#include <QString>
+#include <QStringList>
 #include <QTabWidget>
-#include <QDockWidget>
 #include <QThread>
-#include <QProgressBar>
-#include <QScrollArea>
-#include <QScopedPointer>
-#include <QFutureWatcher>
 
-#include "Common/global.h"
 #include "Common/LuminanceOptions.h"
+#include "Common/global.h"
 
 #define MAX_RECENT_FILES (5)
 
 // Forward declaration
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 
 namespace pfs {
-    class Frame;            // #include "Libpfs/frame.h"
+class Frame;  // #include "Libpfs/frame.h"
 }
 
-class IOWorker;             // #include "Core/IOWorker.h"
+class IOWorker;  // #include "Core/IOWorker.h"
 class GenericViewer;
 class LdrViewer;
 class HdrViewer;
-class PreviewPanel;         // #include "PreviewPanel/PreviewPanel.h"
-class HelpBrowser;          // #include "HelpBrowser/helpbrowser.h"
-class TMOProgressIndicator; // #include "TonemappingPanel/TMOProgressIndicator.h"
-class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
-class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
+class PreviewPanel;          // #include "PreviewPanel/PreviewPanel.h"
+class HelpBrowser;           // #include "HelpBrowser/helpbrowser.h"
+class TMOProgressIndicator;  // #include
+                             // "TonemappingPanel/TMOProgressIndicator.h"
+class TonemappingPanel;      // #include "TonemappingPanel/TonemappingPanel.h"
+class TonemappingOptions;    // #include "Core/TonemappingOptions.h"
 class TMWorker;
 
+class UpdateChecker;  // #include "MainWindow/UpdateChecker.h"
 
-class UpdateChecker;        // #include "MainWindow/UpdateChecker.h"
-
-class MainWindow: public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+   public:
     MainWindow(QWidget *parent = 0);
     // Constructor loading file inside
-    MainWindow(pfs::Frame* curr_frame, const QString& new_fname,
-        const QStringList& inputFileNames, bool needSaving = false, QWidget *parent = 0);
+    MainWindow(pfs::Frame *curr_frame, const QString &new_fname,
+               const QStringList &inputFileNames, bool needSaving = false,
+               QWidget *parent = 0);
     ~MainWindow();
 
-public Q_SLOTS:
+   public Q_SLOTS:
 
     // I/O
-    void save_hdr_success(GenericViewer* saved_hdr, const QString& fname);
-    void save_hdr_failed(const QString& fname);
-    void save_ldr_success(GenericViewer* saved_ldr, const QString& fname);
-    void save_ldr_failed(const QString& fname);
+    void save_hdr_success(GenericViewer *saved_hdr, const QString &fname);
+    void save_hdr_failed(const QString &fname);
+    void save_ldr_success(GenericViewer *saved_ldr, const QString &fname);
+    void save_ldr_failed(const QString &fname);
 
-    void load_failed(const QString&);
-    void load_success(pfs::Frame* new_hdr_frame, const QString& new_fname,
-                      const QStringList& inputFileNames = QStringList(), bool needSaving = false);
+    void load_failed(const QString &);
+    void load_success(pfs::Frame *new_hdr_frame, const QString &new_fname,
+                      const QStringList &inputFileNames = QStringList(),
+                      bool needSaving = false);
 
     void ioBegin();
     void ioEnd();
 
     void setMainWindowModified(bool b);
 
-    void openFile(const QString& file);
-    void openFiles(const QStringList& files);
+    void openFile(const QString &file);
+    void openFiles(const QStringList &files);
 
-protected Q_SLOTS:
+   protected Q_SLOTS:
 
     void on_fileNewAction_triggered();
-    void createNewHdr(const QStringList& files);
+    void createNewHdr(const QStringList &files);
 
-    //for File->Open, it then calls loadFile()
+    // for File->Open, it then calls loadFile()
     void on_fileOpenAction_triggered();
     void on_fileSaveAsAction_triggered();
     void on_fileSaveAllAction_triggered();
@@ -143,7 +144,7 @@ protected Q_SLOTS:
     void on_fitToWindowAct_triggered();
     void on_actionFill_to_Window_triggered();
     void on_normalSizeAct_triggered();
-    void updateMagnificationButtons(GenericViewer*);
+    void updateMagnificationButtons(GenericViewer *);
 
     void on_documentationAction_triggered();
     void enterWhatsThis();
@@ -173,7 +174,7 @@ protected Q_SLOTS:
     void on_actionAbout_Luminance_triggered();
 
     void updateActions(int w);
-    void setActiveMainWindow(QWidget* w);
+    void setActiveMainWindow(QWidget *w);
 
     void cropToSelection();
     void enableCrop(bool);
@@ -190,9 +191,9 @@ protected Q_SLOTS:
     void tonemapEnd();
     void tonemapImage(TonemappingOptions *opts);
     void exportImage(TonemappingOptions *opts);
-    void addLdrFrame(pfs::Frame*, TonemappingOptions*);
-    //void addLDRResult(QImage*, quint16*);
-    void tonemapFailed(const QString&);
+    void addLdrFrame(pfs::Frame *, TonemappingOptions *);
+    // void addLDRResult(QImage*, quint16*);
+    void tonemapFailed(const QString &);
 
     // Export queue
     void exportBegin();
@@ -200,7 +201,7 @@ protected Q_SLOTS:
 
     // lock functionalities
     void on_actionLock_toggled(bool);
-    void syncViewers(GenericViewer*);
+    void syncViewers(GenericViewer *);
 
     void showPreviewPanel(bool b);
 
@@ -223,18 +224,18 @@ protected Q_SLOTS:
     void reparentViewer(GenericViewer *g_v);
     void showNextViewer(GenericViewer *g_v);
     void showPreviousViewer(GenericViewer *g_v);
-    void setSyncViewers(GenericViewer*);
+    void setSyncViewers(GenericViewer *);
 
     // Online Docs, Website, GitHub
     void on_actionOnline_Documentation_triggered();
     void on_actionDevelopers_Website_triggered();
     void on_actionLuminance_HDR_Website_triggered();
 
-Q_SIGNALS:
+   Q_SIGNALS:
     // update HDR
-    void updatedHDR(pfs::Frame*);
+    void updatedHDR(pfs::Frame *);
 
-protected:
+   protected:
     QSplitter *m_centralwidget_splitter;
     QSplitter *m_bottom_splitter;
 
@@ -246,20 +247,23 @@ protected:
     QDialog *splash;
 
     // Recent Files Management
-    QAction* recentFileActs[MAX_RECENT_FILES];
+    QAction *recentFileActs[MAX_RECENT_FILES];
     QAction *separatorRecentFiles;
 
     // Open MainWindows Handling
-    QList<QAction*> openMainWindows;
+    QList<QAction *> openMainWindows;
 
     //! \brief contains the file names of the images loaded by the wizard,
     //! they are used to copy EXIF tags to saved LDR images
     QStringList m_inputFilesName;
 
-    //! \brief contain output file name prefix in the form 1st bracketed file name "-" last bracketed file name
+    //! \brief contain output file name prefix in the form 1st bracketed file
+    //! name
+    //! "-" last bracketed file name
     QString m_outputFileNamePrefix;
 
-    //! \brief contain Hdr creation model to use as suffix in HDR output file name
+    //! \brief contain Hdr creation model to use as suffix in HDR output file
+    //! name
     QString m_HdrCaption;
 
     //! \brief this contains the exposure times of the images to write to LDR
@@ -269,9 +273,9 @@ protected:
     //! \group Event handler
     virtual void dragEnterEvent(QDragEnterEvent *);
     virtual void dropEvent(QDropEvent *);
-    virtual void changeEvent(QEvent* event);
+    virtual void changeEvent(QEvent *event);
     virtual void closeEvent(QCloseEvent *);
-    virtual bool event(QEvent * event);
+    virtual bool event(QEvent *event);
     //!
 
     void dispatchrotate(bool clockwise);
@@ -282,8 +286,8 @@ protected:
 
     struct {
         bool is_hdr_ready;
-        GenericViewer* curr_tm_frame;
-        TonemappingOptions* curr_tm_options;
+        GenericViewer *curr_tm_frame;
+        TonemappingOptions *curr_tm_options;
     } tm_status;
     int num_ldr_generated;
     int curr_num_ldr_open;
@@ -313,11 +317,9 @@ protected:
     QScrollArea *m_PreviewscrollArea;
     PreviewPanel *m_PreviewPanel;
 
-
-private:
+   private:
     // UI declaration
     QScopedPointer<Ui::MainWindow> m_Ui;
-
 
     // Tone Mapping Panel
     TonemappingPanel *m_tonemapPanel;
@@ -325,17 +327,17 @@ private:
     // I/O
     QThread *m_IOThread;
     IOWorker *m_IOWorker;
-    QProgressBar* m_ProgressBar;
+    QProgressBar *m_ProgressBar;
 
     // TM thread
-    QThread* m_TMThread;
-    TMWorker* m_TMWorker;
-    TMOProgressIndicator* m_TMProgressBar;
+    QThread *m_TMThread;
+    TMWorker *m_TMWorker;
+    TMOProgressIndicator *m_TMProgressBar;
 
     // Export queue
-    QThread* m_QueueThread;
-    TMWorker* m_QueueWorker;
-    TMOProgressIndicator* m_QueueProgressBar;
+    QThread *m_QueueThread;
+    TMWorker *m_QueueWorker;
+    TMOProgressIndicator *m_QueueProgressBar;
 
     int m_exportQueueSize;
 
@@ -346,13 +348,14 @@ private:
     GenericViewer *m_viewerToProcess;
     bool m_processingAWB;
     int m_firstWindow;
-    int m_winId; // unique MainWindow identifier
+    int m_winId;  // unique MainWindow identifier
 
-    static int sm_NumMainWindows; //number of active MainWindows
-    static int sm_counter; // Always increases
+    static int sm_NumMainWindows;  // number of active MainWindows
+    static int sm_counter;         // Always increases
     static QScopedPointer<UpdateChecker> sm_updateChecker;
-    static QMap<int, MainWindow *> sm_mainWindowMap; //maps m_winId with MainWindow "this" ponter
-    static HelpBrowser* sm_helpBrowser;
+    static QMap<int, MainWindow *>
+        sm_mainWindowMap;  // maps m_winId with MainWindow "this" ponter
+    static HelpBrowser *sm_helpBrowser;
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

@@ -32,16 +32,15 @@ extern const float rgb2yuvMat[3][3];
 extern const float yuv2rgbMat[3][3];
 
 struct ConvertRGB2YUV {
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
 };
 
 struct ConvertYUV2RGB {
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
 };
-
 }
 }
 
-#endif // PFS_COLORSPACE_YUV_H
+#endif  // PFS_COLORSPACE_YUV_H

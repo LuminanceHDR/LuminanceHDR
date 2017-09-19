@@ -37,12 +37,11 @@
 typedef unsigned char Trgbe;
 
 //! \name RGB values and their exponent
-struct Trgbe_pixel
-{
+struct Trgbe_pixel {
     Trgbe r;
     Trgbe g;
     Trgbe b;
     Trgbe e;
 };
 
-#endif // PFS_IO_RGBECOMMON_H
+#endif  // PFS_IO_RGBECOMMON_H

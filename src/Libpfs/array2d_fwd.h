@@ -24,13 +24,12 @@
 #ifndef PFS_ARRAY2D_FWD_H
 #define PFS_ARRAY2D_FWD_H
 
-namespace pfs
-{
+namespace pfs {
 template <typename Type>
 class Array2D;
 
 //! \brief typedef provided for backward compatibility with the old API
 typedef Array2D<float> Array2Df;
-} // namespace pfs
+}  // namespace pfs
 
 #endif /* PFS_ARRAY2D_FWD_H */

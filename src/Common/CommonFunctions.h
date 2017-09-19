@@ -24,18 +24,17 @@
 #ifndef COMMONFUNCTIONS_H
 #define COMMONFUNCTIONS_H
 
-#include <QString>
 #include <QImage>
+#include <QString>
 
 #include <HdrCreation/fusionoperator.h>
 #include <HdrWizard/HdrCreationItem.h>
 #include <Libpfs/utils/minmax.h>
 
-void computeAutolevels(const QImage* data, const float threshold, float &minL, float &maxL, float &gammaL);
+void computeAutolevels(const QImage *data, const float threshold, float &minL,
+                       float &maxL, float &gammaL);
 
-inline
-void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
-{
+inline void rgb2hsl(float r, float g, float b, float &h, float &s, float &l) {
     float v, m, vm, r2, g2, b2;
     h = 0.0f;
     s = 0.0f;
@@ -44,21 +43,17 @@ void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
     pfs::utils::minmax(r, g, b, m, v);
 
     l = (m + v) / 2.0f;
-    if (l <= 0.0f)
-        return;
+    if (l <= 0.0f) return;
     vm = v - m;
     s = vm;
-    //if (s >= 0.0f)
-    if (s > 0.0f)
-    {
+    // if (s >= 0.0f)
+    if (s > 0.0f) {
         float div = (l <= 0.5f) ? (v + m) : (2.0f - v - m);
 
         assert(div != 0.f);
 
         s /= div;
-    }
-    else
-    {
+    } else {
         return;
     }
     r2 = (v - r) / vm;
@@ -73,60 +68,56 @@ void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
     h /= 6.0f;
 }
 
-inline
-void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
-{
+inline void hsl2rgb(float h, float sl, float l, float &r, float &g, float &b) {
     float v;
     r = l;
     g = l;
     b = l;
     v = (l <= 0.5f) ? (l * (1.0f + sl)) : (l + sl - l * sl);
-    if (v > 0.0f)
-    {
+    if (v > 0.0f) {
         float m;
         float sv;
         int sextant;
         float fract, vsf, mid1, mid2;
         m = l + l - v;
-        sv = (v - m ) / v;
+        sv = (v - m) / v;
         h *= 6.0f;
         sextant = (int)h;
         fract = h - sextant;
         vsf = v * sv * fract;
         mid1 = m + vsf;
         mid2 = v - vsf;
-        switch (sextant)
-        {
-        case 0:
-            r = v;
-            g = mid1;
-            b = m;
-            break;
-        case 1:
-            r = mid2;
-            g = v;
-            b = m;
-            break;
-        case 2:
-            r = m;
-            g = v;
-            b = mid1;
-            break;
-        case 3:
-            r = m;
-            g = mid2;
-            b = v;
-            break;
-        case 4:
-            r = mid1;
-            g = m;
-            b = v;
-            break;
-        case 5:
-            r = v;
-            g = m;
-            b = mid2;
-            break;
+        switch (sextant) {
+            case 0:
+                r = v;
+                g = mid1;
+                b = m;
+                break;
+            case 1:
+                r = mid2;
+                g = v;
+                b = m;
+                break;
+            case 2:
+                r = m;
+                g = v;
+                b = mid1;
+                break;
+            case 3:
+                r = m;
+                g = mid2;
+                b = v;
+                break;
+            case 4:
+                r = mid1;
+                g = m;
+                b = v;
+                break;
+            case 5:
+                r = v;
+                g = m;
+                b = mid2;
+                break;
         }
     }
 }
@@ -134,12 +125,14 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
 struct ConvertToQRgb {
     float gamma;
     explicit ConvertToQRgb(float gamma = 1.0f);
-    void operator()(float r, float g, float b, QRgb& rgb) const;
+    void operator()(float r, float g, float b, QRgb &rgb) const;
 };
 
 struct LoadFile {
-    explicit LoadFile(bool fromFITS = false) : m_datamax(0.f), m_datamin(0.f) { m_fromFITS = fromFITS; }
-    void operator()(HdrCreationItem& currentItem);
+    explicit LoadFile(bool fromFITS = false) : m_datamax(0.f), m_datamin(0.f) {
+        m_fromFITS = fromFITS;
+    }
+    void operator()(HdrCreationItem &currentItem);
     float normalize(float);
     float m_datamax;
     float m_datamin;
@@ -151,12 +144,13 @@ struct SaveFile {
     float m_minLum;
     float m_maxLum;
     bool m_deflateCompression;
-    SaveFile(int mode, float minLum = 0.0f, float maxLum = 1.0f, bool deflateCompression = true);
-    void operator()(HdrCreationItem& currentItem);
+    SaveFile(int mode, float minLum = 0.0f, float maxLum = 1.0f,
+             bool deflateCompression = true);
+    void operator()(HdrCreationItem &currentItem);
 };
 
 struct RefreshPreview {
-    void operator()(HdrCreationItem& currentItem);
+    void operator()(HdrCreationItem &currentItem);
 };
 
 QString getQString(libhdr::fusion::FusionOperator fo);

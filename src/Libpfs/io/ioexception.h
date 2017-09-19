@@ -27,47 +27,31 @@
 namespace pfs {
 namespace io {
 
-class InvalidFile : public Exception
-{
-public:
-    InvalidFile(const std::string& message)
-        : Exception(message)
-    {}
+class InvalidFile : public Exception {
+   public:
+    InvalidFile(const std::string &message) : Exception(message) {}
 };
 
-class InvalidHeader : public Exception
-{
-public:
-    InvalidHeader(const std::string& message)
-        : Exception(message)
-    {}
+class InvalidHeader : public Exception {
+   public:
+    InvalidHeader(const std::string &message) : Exception(message) {}
 };
 
-class ReadException : public Exception
-{
-public:
-    ReadException(const std::string& message)
-        : Exception(message)
-    {}
+class ReadException : public Exception {
+   public:
+    ReadException(const std::string &message) : Exception(message) {}
 };
 
-class WriteException : public Exception
-{
-public:
-    WriteException(const std::string& message)
-        : Exception(message)
-    {}
+class WriteException : public Exception {
+   public:
+    WriteException(const std::string &message) : Exception(message) {}
 };
 
-class UnsupportedFormat : public Exception
-{
-public:
-    UnsupportedFormat(const std::string& message)
-        : Exception(message)
-    {}
+class UnsupportedFormat : public Exception {
+   public:
+    UnsupportedFormat(const std::string &message) : Exception(message) {}
 };
-
 }
 }
 
-#endif // PFS_IO_IOEXCEPTION_H
+#endif  // PFS_IO_IOEXCEPTION_H
