@@ -211,7 +211,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
     po::options_description tmo_mantiuk08(tr(" Mantiuk 08").toUtf8().constData());
     tmo_mantiuk08.add_options()
         ("tmoM08ColorSaturation", po::value<float>(&tmopts->operator_options.mantiuk08options.colorsaturation),  tr("color saturation FLOAT").toUtf8().constData())
-        ("tmoM08ConstrastEnh", po::value<float>(&tmopts->operator_options.mantiuk08options.contrastenhancement),  tr("contrast enhancement FLOAT").toUtf8().constData())
+        ("tmoM08ContrastEnh", po::value<float>(&tmopts->operator_options.mantiuk08options.contrastenhancement),  tr("contrast enhancement FLOAT").toUtf8().constData())
         ("tmoM08LuminanceLvl", po::value<float>(&tmopts->operator_options.mantiuk08options.luminancelevel),  tr("luminance level FLOAT").toUtf8().constData())
         ("tmoM08SetLuminance", po::value<bool>(&tmopts->operator_options.mantiuk08options.setluminance), tr("enable luminance level true|false").toUtf8().constData())
     ;
