@@ -44,7 +44,7 @@ void TonemappingOptions::setDefaultTonemapParameters()
     operator_options.mantiuk06options.contrastfactor = MANTIUK06_CONTRAST_FACTOR;
     operator_options.mantiuk06options.saturationfactor = MANTIUK06_SATURATION_FACTOR;
     operator_options.mantiuk06options.detailfactor = MANTIUK06_DETAIL_FACTOR;
-    operator_options.mantiuk06options.contrastequalization = MANTIUK06_CONSTRAST_EQUALIZATION;
+    operator_options.mantiuk06options.contrastequalization = MANTIUK06_CONTRAST_EQUALIZATION;
 
     // Mantiuk08
     operator_options.mantiuk08options.colorsaturation = MANTIUK08_COLOR_SATURATION;

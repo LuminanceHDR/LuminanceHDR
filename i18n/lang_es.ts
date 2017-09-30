@@ -5356,7 +5356,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/SavedParametersDialog.cpp" line="115"/>
         <source>Contrast Factor</source>
-        <translation>Facto de Constraste</translation>
+        <translation>Facto de Contraste</translation>
     </message>
     <message>
         <location filename="../src/Common/SavedParametersDialog.cpp" line="116"/>
@@ -5755,7 +5755,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="807"/>
         <source>Contrast Factor</source>
-        <translation>Facto de Constraste</translation>
+        <translation>Facto de Contraste</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="829"/>
