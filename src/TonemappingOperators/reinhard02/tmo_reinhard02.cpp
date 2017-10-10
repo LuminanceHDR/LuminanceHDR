@@ -367,7 +367,7 @@ double Reinhard02::pyramid_lookup(unsigned int x, unsigned int y, int level) {
 
     /* Level 0 is a special case, the value is just the image */
     if (level == 0) {
-        if ((x < 0) || (y < 0) || (x >= m_width) || (y >= m_height))
+        if ((x >= m_width) || (y >= m_height))
             return (0.0);
         else
             return (m_luminance[y][x]);
@@ -381,7 +381,7 @@ double Reinhard02::pyramid_lookup(unsigned int x, unsigned int y, int level) {
     // x = x >> level;
     // y = y >> level;
 
-    if ((x < 0) || (y < 0) || (x >= s) || (y >= s))
+    if ((x >= s) || (y >= s))
         return (0.0);
     else
         return (Pyramid[level][y][x]);
