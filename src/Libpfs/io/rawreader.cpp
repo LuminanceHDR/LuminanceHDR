@@ -37,7 +37,7 @@
 using namespace pfs;
 
 #ifndef NDEBUG
-#define PRINT_DEBUG(str) std::cerr << "TiffReader: " << str << std::endl
+#define PRINT_DEBUG(str) std::cerr << "RAWReader: " << str << std::endl
 #else
 #define PRINT_DEBUG(str)
 #endif
@@ -425,21 +425,13 @@ void RAWReader::read(Frame &frame, const Params &params) {
     RAWReaderParams p;
     p.parse(params);
 
-    // std::cout << p << std::endl;
-
     setParams(m_processor, p);
-    // m_processor.set_progress_handler(cb, callback_data);
 
     open();
 
     if (m_processor.unpack() != LIBRAW_SUCCESS) {
         m_processor.recycle();
         throw pfs::io::ReadException("Error Unpacking RAW File");
-    }
-
-    if (m_processor.dcraw_process() != LIBRAW_SUCCESS) {
-        m_processor.recycle();
-        throw pfs::io::ReadException("Error Processing RAW File");
     }
 
 #ifndef NDEBUG
@@ -452,6 +444,11 @@ void RAWReader::read(Frame &frame, const Params &params) {
     PRINT_DEBUG("Aperture: " << P2.aperture);
     PRINT_DEBUG("Focal Length: " << P2.focal_len);
 #endif
+
+    if (m_processor.dcraw_process() != LIBRAW_SUCCESS) {
+        m_processor.recycle();
+        throw pfs::io::ReadException("Error Processing RAW File");
+    }
 
     libraw_processed_image_t *image = m_processor.dcraw_make_mem_image();
 
