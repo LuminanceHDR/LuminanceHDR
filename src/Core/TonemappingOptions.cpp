@@ -34,9 +34,9 @@
 #include <QTextStream>
 #include <climits>
 
-#include "Common/config.h"
-#include "Core/TonemappingOptions.h"
-#include "TonemappingOperators/pfstmdefaultparams.h"
+#include <Common/config.h>
+#include <Core/TonemappingOptions.h>
+#include <TonemappingOperators/pfstmdefaultparams.h>
 
 void TonemappingOptions::setDefaultTonemapParameters() {
     // Mantiuk06
@@ -114,6 +114,7 @@ void TonemappingOptions::setDefaultParameters() {
     xsize_percent = 100;
     quality = 100;
     pregamma = 1.0f;
+    postsaturation = 1.0f;
     tonemapSelection = false;
     tmoperator = mantiuk06;
 
@@ -638,6 +639,8 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
                 value.toFloat();
         } else if (field == QLatin1String("PREGAMMA")) {
             toreturn->pregamma = value.toFloat();
+        } else if (field == QLatin1String("SATURATION")) {
+            toreturn->postsaturation = value.toFloat();
         } else {
             delete toreturn;
             throw(QApplication::tr(

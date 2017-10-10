@@ -50,8 +50,8 @@
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/exif/exifdata.hpp>
-#include "CommonFunctions.h"
-#include "LuminanceOptions.h"
+#include <Common/CommonFunctions.h>
+#include <Common/LuminanceOptions.h>
 
 #include <boost/algorithm/minmax_element.hpp>
 

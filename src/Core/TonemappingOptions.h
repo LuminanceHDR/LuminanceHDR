@@ -58,6 +58,7 @@ class TonemappingOptions {
     int xsize;          // this parameter should be coming from the frame
     int quality;
     float pregamma;
+    float postsaturation;
     bool tonemapSelection;  // we should let do this thing to the tonemapping
                             // thread
     TMOperator tmoperator;

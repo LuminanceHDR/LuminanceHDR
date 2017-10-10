@@ -36,15 +36,13 @@
 #include <QScopedPointer>
 #include <QString>
 
-#include "Core/IOWorker.h"
-#include "Libpfs/frame.h"
-
-#include "Common/LuminanceOptions.h"
-#include "Core/TonemappingOptions.h"
-#include "Exif/ExifOperations.h"
-#include "Fileformat/pfsoutldrimage.h"
-#include "Viewers/GenericViewer.h"
-
+#include <Core/IOWorker.h>
+#include <Libpfs/frame.h>
+#include <Common/LuminanceOptions.h>
+#include <Core/TonemappingOptions.h>
+#include <Exif/ExifOperations.h>
+#include <Fileformat/pfsoutldrimage.h>
+#include <Viewers/GenericViewer.h>
 #include <Libpfs/io/exrwriter.h>  // default for HDR saving
 #include <Libpfs/io/framereaderfactory.h>
 #include <Libpfs/io/framewriterfactory.h>

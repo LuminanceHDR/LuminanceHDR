@@ -30,8 +30,8 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-#include "SavedParametersDialog.h"
-#include "ui_SavedParametersDialog.h"
+#include <Common/SavedParametersDialog.h>
+#include <Common/ui_SavedParametersDialog.h>
 
 SavedParametersDialog::SavedParametersDialog(QWidget *parent)
     : QDialog(parent),
@@ -171,6 +171,7 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent)
             break;
     }
     model->setHeaderData(col++, Qt::Horizontal, tr("Pre-gamma"));
+    model->setHeaderData(col++, Qt::Horizontal, tr("Post-saturation"));
     model->setHeaderData(col++, Qt::Horizontal, tr("Comment"));
 
     m_Ui->tableView->setModel(model);

@@ -1,7 +1,7 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Franco Comida
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,41 +17,27 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Franco Comida <fcomida@users.sourceforge.net>
- *
  */
 
-#ifndef SAVEDPARAMETERSDIALOG_H
-#define SAVEDPARAMETERSDIALOG_H
+//! \brief Saturation enhancement function
+//! \author Franco Comida <francocomida@users.sourceforge.net>
 
-#include <QDialog>
-#include <QSqlTableModel>
+#ifndef PFS_COLORSPACE_SATURATION_H
+#define PFS_COLORSPACE_SATURATION_H
 
-#include <Core/TonemappingOptions.h>
+namespace pfs {
+namespace colorspace {
 
-namespace Ui {
-class SavedParametersDialog;
-}
-
-class SavedParametersDialog : public QDialog {
-    Q_OBJECT
-
-   public:
-    //! \brief Default constructor
-    explicit SavedParametersDialog(QWidget *parent = 0);
-
-    //! \brief Specialized ctor
-    SavedParametersDialog(TMOperator op, QWidget *parent = 0);
-
-    ~SavedParametersDialog();
-
-    QModelIndex getCurrentIndex();
-    QModelIndexList getSelectedRows();
-    QSqlQueryModel *getModel();
-
-   protected:
-    QSqlQueryModel *model;
-    QScopedPointer<Ui::SavedParametersDialog> m_Ui;
+struct ChangeSaturation {
+    ChangeSaturation(float m): multiplier(m) {};
+    //! \brief multiply sample saturation by multiplier
+    void operator()(float i1, float i2, float i3, float &o1, float &o2,
+                    float &o3) const;
+    float multiplier;
 };
-#endif
+
+}  // colorspace
+}  // pfs
+
+#include <Libpfs/colorspace/saturation.hxx>  // inline functions or template
+#endif                                // PFS_COLORSPACE_SATURATION_H

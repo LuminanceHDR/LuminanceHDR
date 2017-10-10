@@ -1,7 +1,7 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Franco Comida
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,41 +17,28 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Franco Comida <fcomida@users.sourceforge.net>
- *
  */
 
-#ifndef SAVEDPARAMETERSDIALOG_H
-#define SAVEDPARAMETERSDIALOG_H
+//! \brief Saturation enhancement function
+//! \author Franco Comida <francocomida@users.sourceforge.net>
 
-#include <QDialog>
-#include <QSqlTableModel>
+#ifndef PFS_COLORSPACE_SATURATION_HXX
+#define PFS_COLORSPACE_SATURATION_HXX
 
-#include <Core/TonemappingOptions.h>
+#include <Common/CommonFunctions.h>
+#include <Libpfs/colorspace/saturation.h>
 
-namespace Ui {
-class SavedParametersDialog;
+namespace pfs {
+namespace colorspace {
+
+inline void ChangeSaturation::operator()(float i1, float i2, float i3, float &o1,
+                                        float &o2, float &o3) const {
+    float h, s, l;
+    rgb2hsl(i1, i2, i3, h, s, l);
+    hsl2rgb(h, multiplier*s, l, o1, o2, o3);
 }
 
-class SavedParametersDialog : public QDialog {
-    Q_OBJECT
+}
+}
 
-   public:
-    //! \brief Default constructor
-    explicit SavedParametersDialog(QWidget *parent = 0);
-
-    //! \brief Specialized ctor
-    SavedParametersDialog(TMOperator op, QWidget *parent = 0);
-
-    ~SavedParametersDialog();
-
-    QModelIndex getCurrentIndex();
-    QModelIndexList getSelectedRows();
-    QSqlQueryModel *getModel();
-
-   protected:
-    QSqlQueryModel *model;
-    QScopedPointer<Ui::SavedParametersDialog> m_Ui;
-};
-#endif
+#endif  // PFS_COLORSPACE_SATURATION_HXX

@@ -30,10 +30,10 @@
 
 #include <QStatusBar>
 
-#include "Core/TonemappingOptions.h"
-#include "Libpfs/frame.h"
-#include "PreviewPanel/PreviewPanel.h"
-#include "ThresholdWidget.h"
+#include <Core/TonemappingOptions.h>
+#include <Libpfs/frame.h>
+#include <PreviewPanel/PreviewPanel.h>
+#include <TonemappingPanel/ThresholdWidget.h>
 
 class Gang;
 class QtWaitingSpinner;
@@ -71,7 +71,9 @@ class TonemappingPanel : public QWidget {
         // reinhard05
         *brightnessGang, *chromaticGang, *lightGang,
         //
-        *pregammaGang;
+        *pregammaGang,
+        //
+        *postsaturationGang;
 
     TMOperator currentTmoOperator;
     TonemappingOptions *toneMappingOptions;
@@ -100,6 +102,7 @@ class TonemappingPanel : public QWidget {
    protected Q_SLOTS:
     virtual void changeEvent(QEvent *event);
     void on_pregammadefault_clicked();
+    void on_postsaturationdefault_clicked();
     void on_defaultButton_clicked();
     void on_applyButton_clicked();
     void on_undoButton_clicked();

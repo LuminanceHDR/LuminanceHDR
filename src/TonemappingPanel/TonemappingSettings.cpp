@@ -22,22 +22,19 @@
  *
  */
 
-#include <QDebug>
-
 #include <QScrollArea>
 #include <QSqlRecord>
 
 #include <algorithm>
 
-#include "Core/TonemappingOptions.h"
-#include "PreviewPanel/PreviewLabel.h"
-#include "TonemappingSettings.h"
-#include "ui_TonemappingSettings.h"
+#include <Core/TonemappingOptions.h>
+#include <PreviewPanel/PreviewLabel.h>
+#include <TonemappingPanel/TonemappingSettings.h>
+#include <TonemappingPanel/ui_TonemappingSettings.h>
 
 namespace  // anoymous namespace
 {
 const int PREVIEW_WIDTH = PREVIEW_WIDTH;
-const int PREVIEW_HEIGHT = 100;
 
 bool compareByComment(PreviewLabel *l1, PreviewLabel *l2) {
     QString s1 = l1->getComment(), s2 = l2->getComment();
@@ -470,10 +467,12 @@ void TonemappingSettings::fillCommonValues(TonemappingOptions *tmOptions,
                                            TMOperator tOperator,
                                            const QSqlRecord &record) {
     float pregamma = record.value(QStringLiteral("pregamma")).toFloat();
+    float postsaturation = record.value(QStringLiteral("postsaturation")).toFloat();
 
     tmOptions->origxsize = origxsize;
     tmOptions->xsize = previewWidth;
     tmOptions->pregamma = pregamma;
+    tmOptions->postsaturation = postsaturation;
     tmOptions->tmoperator = tOperator;
 }
 

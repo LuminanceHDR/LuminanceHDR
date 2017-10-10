@@ -1,7 +1,8 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Franco Comida
+ * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,41 +18,25 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Franco Comida <fcomida@users.sourceforge.net>
- *
  */
 
-#ifndef SAVEDPARAMETERSDIALOG_H
-#define SAVEDPARAMETERSDIALOG_H
+#ifndef PFS_SATURATION_H
+#define PFS_SATURATION_H
 
-#include <QDialog>
-#include <QSqlTableModel>
+#include "Libpfs/array2d_fwd.h"
 
-#include <Core/TonemappingOptions.h>
+//! \brief Apply saturation correction the the pfs stream
+//! \author Rafal Mantiuk <mantiuk@mpi-sb.mpg.de>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-namespace Ui {
-class SavedParametersDialog;
+namespace pfs {
+class Frame;
+
+//! \brief Apply \c saturation correction on the input \c frame
+void applySaturation(pfs::Frame *frame, float multiplier);
+
+//! \brief Apply saturation correction on the input \c array
+void applySaturation(pfs::Array2Df *R, pfs::Array2Df *G, pfs::Array2Df *B, float multiplier);
 }
 
-class SavedParametersDialog : public QDialog {
-    Q_OBJECT
-
-   public:
-    //! \brief Default constructor
-    explicit SavedParametersDialog(QWidget *parent = 0);
-
-    //! \brief Specialized ctor
-    SavedParametersDialog(TMOperator op, QWidget *parent = 0);
-
-    ~SavedParametersDialog();
-
-    QModelIndex getCurrentIndex();
-    QModelIndexList getSelectedRows();
-    QSqlQueryModel *getModel();
-
-   protected:
-    QSqlQueryModel *model;
-    QScopedPointer<Ui::SavedParametersDialog> m_Ui;
-};
-#endif
+#endif  // PFS_SATURATION_H

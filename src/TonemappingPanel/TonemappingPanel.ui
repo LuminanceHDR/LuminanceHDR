@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>511</width>
-    <height>590</height>
+    <width>515</width>
+    <height>602</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -296,21 +296,9 @@
      <property name="title">
       <string>Process</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <property name="leftMargin">
-       <number>4</number>
-      </property>
-      <property name="topMargin">
-       <number>4</number>
-      </property>
-      <property name="rightMargin">
-       <number>4</number>
-      </property>
-      <property name="bottomMargin">
-       <number>4</number>
-      </property>
+     <layout class="QGridLayout" name="gridLayout_17">
       <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout_17">
+       <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="sizePolicy">
@@ -320,7 +308,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Result Si&amp;ze</string>
+           <string>Res&amp;ult Size</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -336,7 +324,133 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="sizeComboBox"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="addCustomSizeButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>31</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="toolTip">
+           <string>Set Custom Output Size</string>
+          </property>
+          <property name="whatsThis">
+           <string>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="icon">
+           <iconset theme="list-add">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>10</width>
+            <height>10</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="pregammaLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Gamma applied before tonemapping</string>
+          </property>
+          <property name="text">
+           <string>Pre-ga&amp;mma</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="margin">
+           <number>1</number>
+          </property>
+          <property name="indent">
+           <number>-1</number>
+          </property>
+          <property name="buddy">
+           <cstring>pregammaSlider</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSlider" name="pregammaSlider">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="2">
+         <widget class="QToolButton" name="pregammadefault">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>31</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore pregamma's default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset theme="edit-undo">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>10</width>
+            <height>10</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
          <widget class="QDoubleSpinBox" name="pregammadsb">
           <property name="toolTip">
            <string>Gamma applied before tonemapping</string>
@@ -364,164 +478,82 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="pregammaLabel">
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Pos&amp;t-saturation</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="buddy">
+           <cstring>postsaturationSlider</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSlider" name="postsaturationSlider">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QToolButton" name="postsaturationdefault">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>31</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="toolTip">
-           <string>Gamma applied before tonemapping</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore post-saturation's default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
-           <string>Pre-&amp;gamma</string>
+           <string notr="true"/>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <property name="icon">
+           <iconset theme="edit-undo">
+            <normaloff>.</normaloff>.</iconset>
           </property>
-          <property name="margin">
-           <number>1</number>
-          </property>
-          <property name="indent">
-           <number>-1</number>
-          </property>
-          <property name="buddy">
-           <cstring>pregammaSlider</cstring>
+          <property name="iconSize">
+           <size>
+            <width>10</width>
+            <height>10</height>
+           </size>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QSlider" name="pregammaSlider">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="pregammadefault">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>31</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Restore pregamma's default value (1)</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset theme="edit-undo">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>10</width>
-              <height>10</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QComboBox" name="sizeComboBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Size of the resulting LDR image</string>
-            </property>
-            <property name="whatsThis">
-             <string>Here you can choose the size of the resulting LDR image.</string>
-            </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::NoInsert</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="addCustomSizeButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>31</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="sizeIncrement">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="toolTip">
-             <string>Set Custom Output Size</string>
-            </property>
-            <property name="whatsThis">
-             <string>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="icon">
-             <iconset theme="list-add">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>10</width>
-              <height>10</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
+        <item row="2" column="3">
+         <widget class="QDoubleSpinBox" name="postsaturationdsb">
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::NoButtons</enum>
+          </property>
+          <property name="maximum">
+           <double>10.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.100000000000000</double>
+          </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -804,13 +836,16 @@
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Contrast Factor</string>
+               <string>Co&amp;ntrast Factor</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>contrastFactorSlider</cstring>
               </property>
              </widget>
             </item>
@@ -826,13 +861,16 @@
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Saturation Factor</string>
+               <string>Saturat&amp;ion Factor</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>saturationFactorSlider</cstring>
               </property>
              </widget>
             </item>
@@ -954,13 +992,16 @@
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Detail Factor</string>
+               <string>&amp;Detail Factor</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>detailFactorSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1084,13 +1125,16 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Predefined Display</string>
+               <string>Predefined &amp;Display</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>displayComboBox</cstring>
               </property>
              </widget>
             </item>
@@ -1133,13 +1177,16 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Color Saturation</string>
+               <string>Co&amp;lor Saturation</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>colorSaturationSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1152,13 +1199,16 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Contrast Enhancement</string>
+               <string>Co&amp;ntrast Enhancement</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>contrastEnhancementSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1200,13 +1250,16 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>Luminance Level</string>
+               <string>Lum&amp;inance Level</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>luminanceLevelSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1366,13 +1419,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Alpha</string>
+               <string>A&amp;lpha</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>alphaSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1443,6 +1499,9 @@ Luminace Level</string>
               <property name="wordWrap">
                <bool>true</bool>
               </property>
+              <property name="buddy">
+               <cstring>betaSlider</cstring>
+              </property>
              </widget>
             </item>
             <item row="1" column="1">
@@ -1498,13 +1557,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Color Saturation</string>
+               <string>Color Saturat&amp;ion</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>saturation2Slider</cstring>
               </property>
              </widget>
             </item>
@@ -1558,13 +1620,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Noise Reduction</string>
+               <string>&amp;Noise Reduction</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>noiseSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1680,10 +1745,13 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Inverse Alpha</string>
+               <string>&amp;Inverse Alpha</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>inv_alphaSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1700,6 +1768,9 @@ Luminace Level</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>rhoSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1799,13 +1870,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Bias</string>
+               <string>B&amp;ias</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>biasSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1901,13 +1975,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Spatial Kernel Sigma</string>
+               <string>Spatial &amp;Kernel Sigma</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>spatialSlider</cstring>
               </property>
              </widget>
             </item>
@@ -1961,13 +2038,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Range Kernel Sigma</string>
+               <string>Range Kerne&amp;l Sigma</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>rangeSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2037,13 +2117,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Base Contrast</string>
+               <string>Base Co&amp;ntrast</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>baseSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2117,13 +2200,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Key Value</string>
+               <string>&amp;Key Value</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>keySlider</cstring>
               </property>
              </widget>
             </item>
@@ -2174,13 +2260,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Phi</string>
+               <string>Ph&amp;i</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>phiSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2309,13 +2398,16 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Range</string>
+               <string>Ra&amp;nge</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>range2Slider</cstring>
               </property>
              </widget>
             </item>
@@ -2331,10 +2423,13 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Lower Scale</string>
+               <string>&amp;Lower Scale</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>lowerSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2407,6 +2502,9 @@ Luminace Level</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>upperSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2523,10 +2621,13 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>Brightness</string>
+               <string>Br&amp;ightness</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>brightnessSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2601,13 +2702,16 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>Chromatic Adaptation</string>
+               <string>Chromatic A&amp;daptation</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>chromaticAdaptSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2676,13 +2780,16 @@ Luminace Level</string>
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Light Adaptation</string>
+               <string>&amp;Light Adaptation</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>lightAdaptSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2793,13 +2900,16 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>Local Contrast Threshold</string>
+               <string>&amp;Local Contrast Threshold</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>contrastSlider</cstring>
               </property>
              </widget>
             </item>
@@ -2896,13 +3006,16 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>Equation Number</string>
+               <string>Equation &amp;Number</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>eq2RadioButton</cstring>
               </property>
              </widget>
             </item>
@@ -3002,13 +3115,16 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>Multiplier</string>
+               <string>Mu&amp;ltiplier</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>multiplierSlider</cstring>
               </property>
              </widget>
             </item>
@@ -3121,7 +3237,13 @@ Luminace Level</string>
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="maximum">
-               <number>100</number>
+               <number>1000</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="pageStep">
+               <number>10</number>
               </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -3152,13 +3274,16 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>Cone Level</string>
+               <string>Co&amp;ne Level</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>coneSlider</cstring>
               </property>
              </widget>
             </item>
@@ -3173,11 +3298,14 @@ Luminace Level</string>
               <property name="buttonSymbols">
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
+              <property name="decimals">
+               <number>5</number>
+              </property>
               <property name="maximum">
                <double>1.000000000000000</double>
               </property>
               <property name="singleStep">
-               <double>0.100000000000000</double>
+               <double>0.010000000000000</double>
               </property>
               <property name="value">
                <double>0.500000000000000</double>
@@ -3208,13 +3336,16 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>Rod Level</string>
+               <string>Ro&amp;d Level</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>rodSlider</cstring>
               </property>
              </widget>
             </item>
@@ -3233,7 +3364,13 @@ Luminace Level</string>
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="maximum">
-               <number>100</number>
+               <number>1000</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="pageStep">
+               <number>10</number>
               </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -3251,11 +3388,14 @@ Luminace Level</string>
               <property name="buttonSymbols">
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
+              <property name="decimals">
+               <number>5</number>
+              </property>
               <property name="maximum">
                <double>1.000000000000000</double>
               </property>
               <property name="singleStep">
-               <double>0.100000000000000</double>
+               <double>0.010000000000000</double>
               </property>
               <property name="value">
                <double>0.500000000000000</double>
@@ -3540,10 +3680,6 @@ Luminace Level</string>
   <tabstop>loadsettingsbutton</tabstop>
   <tabstop>saveButton</tabstop>
   <tabstop>loadButton</tabstop>
-  <tabstop>sizeComboBox</tabstop>
-  <tabstop>addCustomSizeButton</tabstop>
-  <tabstop>pregammaSlider</tabstop>
-  <tabstop>pregammadefault</tabstop>
   <tabstop>pregammadsb</tabstop>
  </tabstops>
  <resources>

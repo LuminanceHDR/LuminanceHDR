@@ -23,7 +23,7 @@
  *
  */
 
-#include "Core/TMWorker.h"
+#include <Core/TMWorker.h>
 
 #ifdef QT_DEBUG
 #include <QDebug>
@@ -31,18 +31,17 @@
 #include <QDir>
 #include <QVector>
 
-#include "Core/IOWorker.h"
-
-#include "Libpfs/frame.h"
-#include "Libpfs/manip/copy.h"
-#include "Libpfs/manip/cut.h"
-#include "Libpfs/manip/gamma.h"
-#include "Libpfs/manip/resize.h"
-#include "Libpfs/params.h"
-#include "Libpfs/tm/TonemapOperator.h"
-
-#include "Common/ProgressHelper.h"
-#include "Core/TonemappingOptions.h"
+#include <Core/IOWorker.h>
+#include <Libpfs/frame.h>
+#include <Libpfs/manip/copy.h>
+#include <Libpfs/manip/cut.h>
+#include <Libpfs/manip/gamma.h>
+#include <Libpfs/manip/resize.h>
+#include <Libpfs/manip/saturation.h>
+#include <Libpfs/params.h>
+#include <Libpfs/tm/TonemapOperator.h>
+#include <Common/ProgressHelper.h>
+#include <Core/TonemappingOptions.h>
 
 TMWorker::TMWorker(QObject *parent)
     : QObject(parent), m_Callback(new ProgressHelper) {
@@ -205,8 +204,12 @@ pfs::Frame *TMWorker::preprocessFrame(pfs::Frame *input_frame,
     return working_frame;
 }
 
-void TMWorker::postprocessFrame(pfs::Frame *, TonemappingOptions *) {
+void TMWorker::postprocessFrame(pfs::Frame *working_frame, TonemappingOptions *tm_options) {
     // auto-level?
     // black-point?
     // white-point?
+    if (tm_options->postsaturation != 1.0) {
+        pfs::applySaturation(working_frame, tm_options->postsaturation);
+    }
+
 }

@@ -28,10 +28,9 @@
 #include <QDialog>
 #include <QSqlTableModel>
 
-#include "Core/TonemappingOptions.h"
-
-#include "Libpfs/frame.h"
-#include "PreviewSettings/PreviewSettings.h"
+#include <Core/TonemappingOptions.h>
+#include <Libpfs/frame.h>
+#include <PreviewSettings/PreviewSettings.h>
 
 namespace Ui {
 class TonemappingSettings;

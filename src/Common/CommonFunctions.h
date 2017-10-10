@@ -50,7 +50,10 @@ inline void rgb2hsl(float r, float g, float b, float &h, float &s, float &l) {
     if (s > 0.0f) {
         float div = (l <= 0.5f) ? (v + m) : (2.0f - v - m);
 
-        assert(div != 0.f);
+        //assert(div != 0.f);
+
+        if(fabs(div) < 1.e-15)
+            div = 1.e-15;
 
         s /= div;
     } else {

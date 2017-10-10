@@ -29,8 +29,8 @@
 #include <QObject>
 #include <QString>
 
-#include "Common/global.h"
-#include "Libpfs/params.h"
+#include <Common/global.h>
+#include <Libpfs/params.h>
 
 // Forward declaration
 namespace pfs {
