@@ -29,11 +29,12 @@
  * $Id: display_adaptive_tmo.h,v 1.12 2009/02/23 18:46:36 rafm Exp $
  */
 
-#include "display_function.h"
-#include "display_size.h"
+#include <memory>
 
-#include "Libpfs/pfs.h"
-#include "TonemappingOperators/pfstmo.h"
+#include <TonemappingOperators/mantiuk08/display_function.h>
+#include <TonemappingOperators/mantiuk08/display_size.h>
+#include <Libpfs/pfs.h>
+#include <TonemappingOperators/pfstmo.h>
 
 namespace pfs {
 class Progress;
@@ -61,7 +62,7 @@ class datmoToneCurve {
 class datmoTCFilter {
     int sz;
     size_t pos;
-    float y_min, y_max, fps;
+    float y_min, y_max;
 
     double *t_filter_a, *t_filter_b;
 

@@ -1113,7 +1113,7 @@ double t_filter_b_60fps[] = {0.0000170396779801130, 0.0000511190339403389,
                              0.0000511190339403389, 0.0000170396779801130};
 
 datmoTCFilter::datmoTCFilter(float fps, float y_min, float y_max)
-    : y_min(y_min), y_max(y_max), fps(fps) {
+    : y_min(y_min), y_max(y_max) {
     assert(fps == 25 || fps == 30 || fps == 60);
     if (fps == 60) {
         t_filter_a = t_filter_a_60fps;
