@@ -54,7 +54,6 @@ void resetTonemappingOptions(TonemappingOptions *tm_options,
                              const pfs::Frame *frame) {
     tm_options->origxsize = frame->getWidth();
     tm_options->xsize = frame->getWidth();
-    // tm_options->pregamma           = 1.0f;  //TODO check this
     tm_options->tonemapSelection = false;
 }
 
