@@ -30,7 +30,7 @@
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/numeric.h>
 
-#include <boost/limits.hpp>
+#include <limits>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/bounds.hpp>
 #include <cassert>
@@ -56,6 +56,7 @@ using namespace pfs;
 using namespace std;
 using namespace utils;
 using namespace colorspace;
+using namespace boost::math;
 
 namespace libhdr {
 namespace fusion {
@@ -70,7 +71,7 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #endif
     assert(images.size() != 0);
 
-    std::vector<float> times;
+    vector<float> times;
 
     const int W = images[0].frame()->getWidth();
     const int H = images[0].frame()->getHeight();
@@ -109,8 +110,8 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
             cmax[c] = *max_element(Ch[c]->begin(), Ch[c]->end());
             cmin[c] = *min_element(Ch[c]->begin(), Ch[c]->end());
         }
-        float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
-        float Min = std::min(cmin[0], std::min(cmin[1], cmin[2]));
+        float Max = max(cmax[0], max(cmax[1], cmax[2]));
+        float Min = min(cmin[0], min(cmin[1], cmin[2]));
 
         for (int c = 0; c < channels; c++) {
             transform(Ch[c]->begin(), Ch[c]->end(), Ch[c]->begin(),
@@ -153,174 +154,31 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
         transform(resultCh[c]->begin(), resultCh[c]->end(),
                   resultCh[c]->begin(), expf);
     }
+#pragma omp parallel for
+    for (int c = 0; c < channels; c++) {
+        replace_if(resultCh[c]->begin(), resultCh[c]->end(),
+                   not1(ref(isnormal<float>)), numeric_limits<float>::min());
+    }
     float cmax[3];
 #pragma omp parallel for
     for (int c = 0; c < channels; c++) {
         cmax[c] = *max_element(resultCh[c]->begin(), resultCh[c]->end());
     }
-    float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
+    float Max = max(cmax[0], max(cmax[1], cmax[2]));
+
 #pragma omp parallel for
     for (int c = 0; c < channels; c++) {
-        replace_if(resultCh[c]->begin(), resultCh[c]->end(),
-                   std::not1(std::ref(boost::math::isnormal<float>)), Max);
+        replace(resultCh[c]->begin(), resultCh[c]->end(),
+                   numeric_limits<float>::min(), Max);
     }
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
-    std::cout << "MergeDebevec = " << f_timer.get_time() << " msec"
-              << std::endl;
+    cout << "MergeDebevec = " << f_timer.get_time() << " msec"
+              << endl;
 #endif
 }
 
-/*
-struct ColorData {
-    ColorData()
-        : numerator_(0.f)
-        , denominator_(0.f)
-        , blackValue_(0.f)
-        , whiteValue_(1.f)
-    {}
-
-    float value() {
-        return ((denominator_ != 0.0f) ? numerator_/denominator_ : 0.0f);
-    }
-
-    float numerator_;
-    float denominator_;
-
-    float blackValue_;
-    float whiteValue_;
-};
-
-void DebevecOperator::computeFusion(ResponseCurve& response, WeightFunction&
-weight,
-                                    const vector<FrameEnhanced> &frames,
-                                    pfs::Frame &frame)
-{
-    assert(frames.size());
-
-    size_t numExposures = frames.size();
-    Frame tempFrame ( frames[0].frame()->getWidth(),
-frames[0].frame()->getHeight() );
-
-    Channel* outputRed;
-    Channel* outputGreen;
-    Channel* outputBlue;
-    tempFrame.createXYZChannels(outputRed, outputGreen, outputBlue);
-
-    DataList redChannels(numExposures);
-    DataList greenChannels(numExposures);
-    DataList blueChannels(numExposures);
-
-    fillDataLists(frames, redChannels, greenChannels, blueChannels);
-
-    size_t saturatedPixels = 0;
-    float maxAllowedValue = weight.maxTrustedValue();
-    float minAllowedValue = weight.minTrustedValue();
-
-#pragma omp parallel for
-    for (int idx = 0; idx < tempFrame.size(); ++idx)
-    {
-        // data...
-        ColorData redData;
-        ColorData greenData;
-        ColorData blueData;
-
-        float maxAvgLum = boost::numeric::bounds<float>::lowest();
-        float minAvgLum = boost::numeric::bounds<float>::highest();
-
-        // for all exposures
-        for (int exp = 0; exp < numExposures; ++exp)
-        {
-            // average luminance for this exposure
-            float avgLum    = frames[exp].averageLuminance();
-            // pick the 3 channel values
-            float red       = redChannels[exp][idx];
-            float green     = greenChannels[exp][idx];
-            float blue      = blueChannels[exp][idx];
-
-            float w_red     = weight(red);
-            float w_green   = weight(green);
-            float w_blue    = weight(blue);
-
-            // if at least one of the color channel's values are in the bright
-            // "untrusted zone" and we have min exposure time
-            // check red channel
-            if ( (avgLum < minAvgLum) &&
-                 ((red > maxAllowedValue) || (green > maxAllowedValue) || (blue
-> maxAllowedValue)) )
-            {
-                minAvgLum               = avgLum;
-                redData.blackValue_     = red;
-                greenData.blackValue_   = green;
-                blueData.blackValue_    = blue;
-            }
-
-            // if at least one of the color channel's values are in the dim
-            // "not-trusted zone" and we have max exposure time
-            if ( (avgLum > maxAvgLum) &&
-                 ((red < minAllowedValue) || (green < minAllowedValue) || (blue
-< minAllowedValue)) )
-            {
-                maxAvgLum               = avgLum;
-                redData.whiteValue_     = red;
-                greenData.whiteValue_   = green;
-                blueData.whiteValue_    = blue;
-            }
-
-            float w_average = (w_red + w_green + w_blue)/3.0f;
-            redData.numerator_      += (w_average * response(red))/avgLum;
-            redData.denominator_    += w_average;
-            greenData.numerator_    += (w_average * response(green))/avgLum;
-            greenData.denominator_  += w_average;
-            blueData.numerator_     += (w_average * response(blue))/avgLum;
-            blueData.denominator_   += w_average;
-        }
-        // END for all the exposures
-
-        if ( (redData.denominator_ == 0.f) || (greenData.denominator_ == 0.f) ||
-(blueData.denominator_ == 0.f) ) {
-            ++saturatedPixels;
-
-            if ( maxAvgLum > boost::numeric::bounds<float>::lowest() )
-            {
-                redData.numerator_      = response(redData.blackValue_) /
-maxAvgLum;
-                greenData.numerator_    = response(greenData.blackValue_) /
-maxAvgLum;
-                blueData.numerator_     = response(blueData.blackValue_) /
-maxAvgLum;
-
-                redData.denominator_    = 1.f;
-                greenData.denominator_  = 1.f;
-                blueData.denominator_   = 1.f;
-            }
-
-            if ( minAvgLum < boost::numeric::bounds<float>::highest() )
-            {
-                redData.numerator_      = response(redData.whiteValue_) /
-minAvgLum;
-                greenData.numerator_    = response(greenData.whiteValue_) /
-minAvgLum;
-                blueData.numerator_     = response(blueData.whiteValue_) /
-minAvgLum;
-
-                redData.denominator_    = 1.f;
-                greenData.denominator_  = 1.f;
-                blueData.denominator_   = 1.f;
-            }
-        }
-
-        (*outputRed)(idx)   = redData.value();
-        (*outputGreen)(idx) = greenData.value();
-        (*outputBlue)(idx)  = blueData.value();
-    }
-
-    PRINT_DEBUG("Saturated pixels: " << saturatedPixels);
-
-    frame.swap( tempFrame );
-}
-*/
 
 }  // libhdr
 }  // fusion

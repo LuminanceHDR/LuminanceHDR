@@ -105,7 +105,7 @@ void fillResponseGamma(ResponseCurve::ResponseContainer &response) {
 
 // I use a namespace to avoid name collision
 namespace details_log10 {
-const float s_mid = 0.5f;
+//const float s_mid = 0.5f;
 const float s_norm = 0.0625f;
 // the value 8.f is s_mid/s_norm. The actual formula is 10^((i - mid)/norm)
 const float s_inverseMaxValue =

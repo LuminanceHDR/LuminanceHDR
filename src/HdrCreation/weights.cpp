@@ -40,12 +40,12 @@ static const float s_triangularThreshold = 2.0f / WeightFunction::NUM_BINS;
 
 static float getWeightTriangular(float input) {
     // ignore very low weights
-    if ((input < s_triangularThreshold) ||
-        (input > (1.f - s_triangularThreshold))) {
+    if (input < s_triangularThreshold ||
+        input > 1.0f - s_triangularThreshold) {
         return 0.f;
     }
     float half = 0.5f;
-    return input < half ? 2 * input : 2.0f * (1.0f - input);
+    return input < half ? 2.0f * input : 2.0f * (1.0f - input);
 }
 
 static void fillWeightTriangular(WeightFunction::WeightContainer &weight) {
@@ -69,12 +69,11 @@ static const float s_mu = 0.5f;
 
 static float getWeightGaussian(float input) {
     // ignore very low weights
-    if ((input < s_gaussianThreshold) ||
-        (input > (1.f - s_gaussianThreshold))) {
+    if (input < s_gaussianThreshold ||
+        input > 1.0f - s_gaussianThreshold) {
         return 0.f;
     }
-
-    return (exp(-32.0f * (input - s_mu) * (input - s_mu)));
+    return exp(-32.0f * (input - s_mu) * (input - s_mu));
 }
 
 static void fillWeightGaussian(WeightFunction::WeightContainer &weight) {
@@ -96,7 +95,8 @@ static const float s_plateauThreshold = 0.00025f;
 }
 
 static float getWeightPlateau(float input) {
-    if ((input < s_plateauThreshold) || (input > (1.f - s_plateauThreshold))) {
+    if ((input < s_plateauThreshold) ||
+        (input > (1.f - s_plateauThreshold))) {
         return 0.f;
     }
 
