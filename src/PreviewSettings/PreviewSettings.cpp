@@ -52,7 +52,6 @@ void resetTonemappingOptions(TonemappingOptions *tm_options,
                              const pfs::Frame *frame) {
     tm_options->origxsize = frame->getWidth();
     tm_options->xsize = frame->getWidth();
-    tm_options->pregamma = 1.0f;
     tm_options->tonemapSelection = false;
 }
 
@@ -191,7 +190,7 @@ QSize PreviewSettings::getLabelSize() {
 
 void PreviewSettings::addPreviewLabel(PreviewLabel *label) {
     TonemappingOptions *opts = label->getTonemappingOptions();
-    QString text = opts->getCaption(false, QStringLiteral("\n"));
+    QString text = opts->getCaption(true, QStringLiteral("\n"));
 
     if (label->actions().isEmpty()) {
         QAction *pAction = new QAction(tr("Load settings"), label);
