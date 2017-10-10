@@ -68,10 +68,9 @@ class GaussLookup {
     float *gauss;
     float maxVal;
     float scaleFactor;
-    int N;
 
    public:
-    GaussLookup(float sigma, int N) : N(N) {
+    GaussLookup(float sigma, int N) {
         float sigma2Sqr = 2.0f * sigma * sigma;
         maxVal = sqrt(-logf(0.01f) * sigma2Sqr);
         gauss = new float[N];
