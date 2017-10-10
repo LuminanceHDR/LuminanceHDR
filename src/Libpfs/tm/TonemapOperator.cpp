@@ -272,8 +272,8 @@ struct TonemapOperatorPattanaik00
             pfstmo_pattanaik00(
                 workingframe, opts->operator_options.pattanaikoptions.local,
                 opts->operator_options.pattanaikoptions.multiplier,
-                opts->operator_options.pattanaikoptions.cone * 1000,
-                opts->operator_options.pattanaikoptions.rod * 1000,
+                opts->operator_options.pattanaikoptions.cone, // * 1000,
+                opts->operator_options.pattanaikoptions.rod, // * 1000,
                 opts->operator_options.pattanaikoptions.autolum, ph);
         } catch (...) {
             throw std::runtime_error("Pattanaik: Tonemap Failed");
