@@ -26,7 +26,21 @@
 
 class FFTW_MUTEX {
    public:
-    static boost::mutex fftw_mutex;
+    static boost::mutex fftw_mutex_global;
+    static boost::mutex fftw_mutex_ag;
+    static boost::mutex fftw_mutex_fattal_1;
+    static boost::mutex fftw_mutex_fattal_2;
+    static boost::mutex fftw_mutex_fattal_3;
+    static boost::mutex fftw_mutex_fattal_4;
+    static boost::mutex fftw_mutex_ferradans_1;
+    static boost::mutex fftw_mutex_ferradans_2;
+    static boost::mutex fftw_mutex_ferradans_3;
+    static boost::mutex fftw_mutex_ferradans_4;
+    static boost::mutex fftw_mutex_ferradans_5;
+    static boost::mutex fftw_mutex_ferradans_6;
+    static boost::mutex fftw_mutex_ferradans_7;
+    static boost::mutex fftw_mutex_durand_1;
+    static boost::mutex fftw_mutex_durand_2;
 };
 
 void init_fftw();

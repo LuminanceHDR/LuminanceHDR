@@ -62,17 +62,17 @@ class GaussianBlur {
         int ox = nx;
         int oy = ny / 2 + 1;  // saves half of the data
         const int osize = ox * oy;
-        FFTW_MUTEX::fftw_mutex.lock();
+        FFTW_MUTEX::fftw_mutex_durand_1.lock();
         source = (float *)fftwf_malloc(sizeof(float) * nx * 2 * (ny / 2 + 1));
         freq = (fftwf_complex *)fftwf_malloc(sizeof(fftwf_complex) * osize);
         if (source == NULL || freq == NULL) {
             std::bad_alloc excep;
-            FFTW_MUTEX::fftw_mutex.unlock();
+            FFTW_MUTEX::fftw_mutex_durand_1.unlock();
             throw excep;
         }
         fplan_fw = fftwf_plan_dft_r2c_2d(nx, ny, source, freq, FFTW_ESTIMATE);
         fplan_in = fftwf_plan_dft_c2r_2d(nx, ny, freq, source, FFTW_ESTIMATE);
-        FFTW_MUTEX::fftw_mutex.unlock();
+        FFTW_MUTEX::fftw_mutex_durand_1.unlock();
     }
 
     void blur(const pfs::Array2Df &I, pfs::Array2Df &J) {
@@ -111,12 +111,12 @@ class GaussianBlur {
     }
 
     ~GaussianBlur() {
-        FFTW_MUTEX::fftw_mutex.lock();
+        FFTW_MUTEX::fftw_mutex_durand_2.lock();
         fftwf_free(source);
         fftwf_free(freq);
         fftwf_destroy_plan(fplan_fw);
         fftwf_destroy_plan(fplan_in);
-        FFTW_MUTEX::fftw_mutex.unlock();
+        FFTW_MUTEX::fftw_mutex_durand_2.unlock();
     }
 };
 
