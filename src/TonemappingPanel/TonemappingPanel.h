@@ -149,6 +149,7 @@ class TonemappingPanel : public QWidget {
     bool doAutoLevels();
     float getAutoLevelsThreshold();
     void setExportQueueSize(int);
+    QString & getDatabaseConnection();
 
    public Q_SLOTS:
     void setEnabled(bool);
@@ -166,6 +167,8 @@ class TonemappingPanel : public QWidget {
     void onUndoRedo(bool undo);
 
     QtWaitingSpinner *m_spinner;
+    static int sm_counter;
+    QString m_databaseconnection;
 };
 
 #endif

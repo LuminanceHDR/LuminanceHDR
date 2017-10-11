@@ -46,8 +46,8 @@
 #include <Exif/ExifOperations.h>
 #include <OsIntegration/osintegration.h>
 
-BatchTMDialog::BatchTMDialog(QWidget *p)
-    : QDialog(p), m_Ui(new Ui::BatchTMDialog), m_abort(false) {
+BatchTMDialog::BatchTMDialog(QWidget *p, QSqlDatabase db)
+    : QDialog(p), m_Ui(new Ui::BatchTMDialog), m_abort(false), m_db(db) {
     m_Ui->setupUi(this);
 
     if (!QIcon::hasThemeIcon(QStringLiteral("vcs-added")))
@@ -538,14 +538,13 @@ void BatchTMDialog::abort() {
 }
 
 void BatchTMDialog::updateWidth(int newWidth_in_percent) {
-    TonemappingOptions *opt;
-    foreach (opt, m_tm_options_list) {
+    foreach (TonemappingOptions *opt, m_tm_options_list) {
         opt->xsize_percent = newWidth_in_percent;
     }
 }
 
 void BatchTMDialog::from_database() {
-    SavedParametersDialog dialog(this);
+    SavedParametersDialog dialog(m_db, this);
     if (dialog.exec()) {
         QSqlQueryModel *model = dialog.getModel();
         QModelIndexList mil = dialog.getSelectedRows();
@@ -558,11 +557,11 @@ void BatchTMDialog::from_database() {
                              .value(QStringLiteral("operator"))
                              .toString();
 
-            QSqlTableModel *temp_model = new QSqlTableModel;
+            QSqlTableModel *temp_model = new QSqlTableModel(nullptr, m_db);
             temp_model->setTable(tmOperator);
             temp_model->select();
             QSqlQuery query("SELECT * from " + tmOperator +
-                            " WHERE comment = '" + comment + "'");
+                            " WHERE comment = '" + comment + "'", m_db);
 
             TonemappingOptions *tm_opt = new TonemappingOptions;
             if (tmOperator == QLatin1String("ashikhmin")) {

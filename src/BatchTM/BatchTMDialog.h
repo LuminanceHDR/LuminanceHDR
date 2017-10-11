@@ -36,6 +36,7 @@
 #include <QStringListModel>
 #include <QVector>
 #include <QtGui/QCloseEvent>
+#include <QtSql/QSqlDatabase>
 
 #include "LibpfsAdditions/formathelper.h"
 
@@ -54,7 +55,7 @@ class BatchTMDialog : public QDialog {
     QScopedPointer<Ui::BatchTMDialog> m_Ui;
 
    public:
-    BatchTMDialog(QWidget *parent = 0);
+    BatchTMDialog(QWidget *parent = 0, QSqlDatabase db = QSqlDatabase::database());
     ~BatchTMDialog();
 
     // protected:
@@ -115,6 +116,7 @@ class BatchTMDialog : public QDialog {
     bool m_is_batch_running;
     bool *m_available_threads;
     bool m_abort;
+    QSqlDatabase m_db;
     int m_next_hdr_file;
 
     pfsadditions::FormatHelper m_formatHelper;

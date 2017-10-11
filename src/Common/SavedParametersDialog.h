@@ -39,10 +39,7 @@ class SavedParametersDialog : public QDialog {
 
    public:
     //! \brief Default constructor
-    explicit SavedParametersDialog(QWidget *parent = 0);
-
-    //! \brief Specialized ctor
-    SavedParametersDialog(TMOperator op, QWidget *parent = 0);
+    explicit SavedParametersDialog(QSqlDatabase &db, QWidget *parent = 0);
 
     ~SavedParametersDialog();
 
@@ -51,7 +48,8 @@ class SavedParametersDialog : public QDialog {
     QSqlQueryModel *getModel();
 
    protected:
-    QSqlQueryModel *model;
+    QSqlQueryModel *m_model;
+    QSqlDatabase m_db;
     QScopedPointer<Ui::SavedParametersDialog> m_Ui;
 };
 #endif

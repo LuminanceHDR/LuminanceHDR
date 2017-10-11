@@ -40,7 +40,7 @@ class TonemappingSettings : public QDialog {
     Q_OBJECT
 
    public:
-    TonemappingSettings(QWidget *parent = 0, pfs::Frame *frame = NULL);
+    TonemappingSettings(QWidget *parent = 0, pfs::Frame *frame = NULL, QString databaseconnection = "");
     ~TonemappingSettings();
     TonemappingOptions *getTonemappingOptions();
     bool wantsTonemap() { return m_wantsTonemap; }
@@ -53,6 +53,7 @@ class TonemappingSettings : public QDialog {
     int m_currentIndex;
     QList<PreviewLabel *> m_previewLabelList;
     bool m_wantsTonemap;
+    QString m_databaseconnection;
     QScopedPointer<Ui::TonemappingSettings> m_Ui;
 
    protected Q_SLOTS:

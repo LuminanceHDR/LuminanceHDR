@@ -43,7 +43,6 @@
 #include <QTextStream>
 
 #include <Common/LuminanceOptions.h>
-#include <Common/SavedParametersDialog.h>
 #include <Common/config.h>
 #include <PreviewPanel/PreviewLabel.h>
 #include <TonemappingOperators/pfstmdefaultparams.h>
@@ -56,6 +55,8 @@
 
 #include <contrib/qtwaitingspinner/QtWaitingSpinner.h>
 
+int TonemappingPanel::sm_counter = 0;
+
 TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
                                    QWidget *parent)
     : QWidget(parent),
@@ -66,6 +67,10 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
       m_thd(new ThresholdWidget(this)),
       m_Ui(new Ui::TonemappingPanel) {
     m_Ui->setupUi(this);
+
+    sm_counter++;
+
+    m_databaseconnection = QStringLiteral("connection_") + QString("%1").arg(sm_counter);
 
     connect(m_thd.data(), &ThresholdWidget::ready, this,
             &TonemappingPanel::thresholdReady);
@@ -317,7 +322,7 @@ TonemappingPanel::~TonemappingPanel() {
     qDeleteAll(toneMappingOptionsToDelete);
 
     if (m_mainWinNumber == 0) {
-        QSqlDatabase db = QSqlDatabase::database();
+        QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
         db.close();
     }
 }
@@ -330,7 +335,8 @@ void TonemappingPanel::changeEvent(QEvent *event) {
 void TonemappingPanel::createDatabase() {
     LuminanceOptions options;
 
-    QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
+    QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"),
+            m_databaseconnection);
     db.setDatabaseName(options.getDatabaseFileName());
     db.setHostName(QStringLiteral("localhost"));
     bool ok = db.open();
@@ -343,7 +349,7 @@ void TonemappingPanel::createDatabase() {
             QMessageBox::Ok, QMessageBox::NoButton);
         return;
     }
-    QSqlQuery query;
+    QSqlQuery query(db);
     // Mantiuk 06
     bool res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean "
@@ -1376,7 +1382,7 @@ void TonemappingPanel::saveParameters() {
 }
 
 void TonemappingPanel::loadParameters() {
-    TonemappingSettings dialog(this, m_currentFrame);
+    TonemappingSettings dialog(this, m_currentFrame, m_databaseconnection);
 
     if (dialog.exec()) {
         LuminanceOptions *luminance_options = new LuminanceOptions;
@@ -1650,7 +1656,7 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization,
                                           float saturationFactor,
                                           float detailFactor, QString comment) {
     qDebug() << "TonemappingPanel::execMantiuk06Query";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1677,7 +1683,7 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation,
                                           bool manualLuminanceLevel,
                                           QString comment) {
     qDebug() << "TonemappingPanel::execMantiuk08Query";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1702,7 +1708,7 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation,
 void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct,
                                           QString comment) {
     qDebug() << "TonemappingPanel::execAshikhminQuery";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1721,7 +1727,7 @@ void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct,
 
 void TonemappingPanel::execDragoQuery(float bias, QString comment) {
     qDebug() << "TonemappingPanel::execDragoQuery";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1739,7 +1745,7 @@ void TonemappingPanel::execDragoQuery(float bias, QString comment) {
 void TonemappingPanel::execDurandQuery(float spatial, float range, float base,
                                        QString comment) {
     qDebug() << "TonemappingPanel::execDurandQuery";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1761,7 +1767,7 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta,
                                        float noiseReduction, bool oldFattal,
                                        QString comment) {
     qDebug() << "TonemappingPanel::execFattalQuery";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1785,7 +1791,7 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta,
 void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha,
                                           QString comment) {
     qDebug() << "TonemappingPanel::execFerradansQuery";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1804,7 +1810,7 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone,
                                           float rod, float multiplier,
                                           QString comment) {
     qDebug() << "TonemappingPanel::execPattanaikQuery";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1830,7 +1836,7 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi,
                                            int range, int lower, int upper,
                                            QString comment) {
     qDebug() << "TonemappingPanel::execReinhard02Query";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -1857,7 +1863,7 @@ void TonemappingPanel::execReinhard05Query(float brightness,
                                            float lightAdaptation,
                                            QString comment) {
     qDebug() << "TonemappingPanel::execReinhard05Query";
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
@@ -2273,5 +2279,9 @@ void TonemappingPanel::thresholdReady() {
     m_autolevelThreshold = m_thd->threshold();
     m_thd->hide();
     emit autoLevels(doAutoLevels(), m_autolevelThreshold);
+}
+
+QString & TonemappingPanel::getDatabaseConnection() {
+    return m_databaseconnection;
 }
 // ------------------------- // END FILE
