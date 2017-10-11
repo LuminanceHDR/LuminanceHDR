@@ -97,7 +97,9 @@ GenericViewer::GenericViewer(pfs::Frame *frame, QWidget *parent, bool ns)
             &GenericViewer::startDragging);
 }
 
-GenericViewer::~GenericViewer() {}
+GenericViewer::~GenericViewer() {
+    blockSignals(true);
+}
 
 void GenericViewer::retranslateUi() {
     mCornerButton->setToolTip(tr("Pan the image to a region"));
