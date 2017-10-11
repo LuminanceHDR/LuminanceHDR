@@ -113,9 +113,9 @@ void solve_pde_dct(Array2Df &F, Array2Df &U) {
         }
     }
 
-    FFTW_MUTEX::fftw_mutex_ag.lock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(p);
-    FFTW_MUTEX::fftw_mutex_ag.unlock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "solve_pde_dct = " << stop_watch.get_time() << " msec"

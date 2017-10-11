@@ -29,25 +29,15 @@
 using namespace std;
 
 boost::mutex FFTW_MUTEX::fftw_mutex_global;
-boost::mutex FFTW_MUTEX::fftw_mutex_ag;
-boost::mutex FFTW_MUTEX::fftw_mutex_fattal_1;
-boost::mutex FFTW_MUTEX::fftw_mutex_fattal_2;
-boost::mutex FFTW_MUTEX::fftw_mutex_fattal_3;
-boost::mutex FFTW_MUTEX::fftw_mutex_fattal_4;
-boost::mutex FFTW_MUTEX::fftw_mutex_ferradans_1;
-boost::mutex FFTW_MUTEX::fftw_mutex_ferradans_2;
-boost::mutex FFTW_MUTEX::fftw_mutex_ferradans_3;
-boost::mutex FFTW_MUTEX::fftw_mutex_ferradans_4;
-boost::mutex FFTW_MUTEX::fftw_mutex_ferradans_5;
-boost::mutex FFTW_MUTEX::fftw_mutex_ferradans_6;
-boost::mutex FFTW_MUTEX::fftw_mutex_ferradans_7;
-boost::mutex FFTW_MUTEX::fftw_mutex_durand_1;
-boost::mutex FFTW_MUTEX::fftw_mutex_durand_2;
+boost::mutex FFTW_MUTEX::fftw_mutex_plan;
+boost::mutex FFTW_MUTEX::fftw_mutex_destroy_plan;
+boost::mutex FFTW_MUTEX::fftw_mutex_alloc;
+boost::mutex FFTW_MUTEX::fftw_mutex_free;
 
 void init_fftw() {
+    FFTW_MUTEX::fftw_mutex_global.lock();
     static bool is_init_threads = false;
     // activate parallel execution of fft routines
-    FFTW_MUTEX::fftw_mutex_global.lock();
     if (!is_init_threads) {
         fftwf_init_threads();
 #ifdef _OPENMP

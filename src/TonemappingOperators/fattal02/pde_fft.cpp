@@ -121,16 +121,16 @@ void transform_ev2normal(pfs::Array2Df &A, pfs::Array2Df &T) {
 
     // executes 2d discrete cosine transform
     fftwf_plan p;
-    FFTW_MUTEX::fftw_mutex_fattal_1.lock();
+    FFTW_MUTEX::fftw_mutex_plan.lock();
     p = fftwf_plan_r2r_2d(height, width, A.data(), T.data(), FFTW_REDFT00,
                           FFTW_REDFT00, FFTW_ESTIMATE);
-    FFTW_MUTEX::fftw_mutex_fattal_1.unlock();
+    FFTW_MUTEX::fftw_mutex_plan.unlock();
 
     fftwf_execute(p);
 
-    FFTW_MUTEX::fftw_mutex_fattal_2.lock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(p);
-    FFTW_MUTEX::fftw_mutex_fattal_2.unlock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 }
 
 // returns T = EVy^-1 * A * (EVx^-1)^tr
@@ -141,16 +141,16 @@ void transform_normal2ev(pfs::Array2Df &A, pfs::Array2Df &T) {
 
     // executes 2d discrete cosine transform
     fftwf_plan p;
-    FFTW_MUTEX::fftw_mutex_fattal_3.lock();
+    FFTW_MUTEX::fftw_mutex_plan.lock();
     p = fftwf_plan_r2r_2d(height, width, A.data(), T.data(), FFTW_REDFT00,
                           FFTW_REDFT00, FFTW_ESTIMATE);
-    FFTW_MUTEX::fftw_mutex_fattal_3.unlock();
+    FFTW_MUTEX::fftw_mutex_plan.unlock();
 
     fftwf_execute(p);
 
-    FFTW_MUTEX::fftw_mutex_fattal_4.lock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(p);
-    FFTW_MUTEX::fftw_mutex_fattal_4.unlock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 
     // need to scale the output matrix to get the right transform
     for (int y = 0; y < height; y++)

@@ -410,7 +410,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
         med[color] = medval(RGB[color], length);
     }
 
-    FFTW_MUTEX::fftw_mutex_ferradans_1.lock();
+    FFTW_MUTEX::fftw_mutex_alloc.lock();
     float *RGB0 = fftwf_alloc_real(length);
     float *u0 = fftwf_alloc_real(length);
     float *u2 = fftwf_alloc_real(length);
@@ -419,7 +419,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
     float *u5 = fftwf_alloc_real(length);
     float *u6 = fftwf_alloc_real(length);
     float *u7 = fftwf_alloc_real(length);
-    FFTW_MUTEX::fftw_mutex_ferradans_1.unlock();
+    FFTW_MUTEX::fftw_mutex_alloc.unlock();
 
     copy(RGB[0], RGB[0] + length, RGB0);
     copy(RGB[0], RGB[0] + length, u0);
@@ -430,7 +430,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
     copy(RGB[0], RGB[0] + length, u6);
     copy(RGB[0], RGB[0] + length, u7);
 
-    FFTW_MUTEX::fftw_mutex_ferradans_2.lock();
+    FFTW_MUTEX::fftw_mutex_plan.lock();
     fftwf_complex *U =
         (fftwf_complex *)fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pU = fftwf_plan_dft_r2c_2d(fil, col, u0, U, FFTW_ESTIMATE);
@@ -498,7 +498,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
 
     float alpha = min(col, fil) / invalpha;
     float *g = fftwf_alloc_real(length);
-    FFTW_MUTEX::fftw_mutex_ferradans_2.unlock();
+    FFTW_MUTEX::fftw_mutex_plan.unlock();
     nucleo_gaussiano(g, fil, col, alpha);
     escala(g, length, 1.f, 0.f);
 
@@ -510,17 +510,17 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
     float w = (1.0f / suma);
     vsmul(g, w, g, length);
 
-    FFTW_MUTEX::fftw_mutex_ferradans_3.lock();
+    FFTW_MUTEX::fftw_mutex_plan.lock();
     fftwf_complex *G =
         (fftwf_complex *)fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pG = fftwf_plan_dft_r2c_2d(fil, col, g, G, FFTW_ESTIMATE);
-    FFTW_MUTEX::fftw_mutex_ferradans_3.unlock();
+    FFTW_MUTEX::fftw_mutex_plan.unlock();
     fftwf_execute(pG);
-    FFTW_MUTEX::fftw_mutex_ferradans_4.lock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(pG);
 
     fftwf_free(g);
-    FFTW_MUTEX::fftw_mutex_ferradans_4.unlock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 
     ph.setValue(30);
     if (ph.canceled()) {
@@ -530,7 +530,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
         delete[] RGB[0];
         delete[] RGB[1];
         delete[] RGB[2];
-        FFTW_MUTEX::fftw_mutex_ferradans_5.lock();
+        FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
         fftwf_destroy_plan(pU);
         fftwf_destroy_plan(pU2);
         fftwf_destroy_plan(pU3);
@@ -579,7 +579,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
         fftwf_free(U5G);
         fftwf_free(U6G);
         fftwf_free(U7G);
-        FFTW_MUTEX::fftw_mutex_ferradans_5.unlock();
+        FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
         return;
     }
     float delta = 0.f, oldDifference = 0.f;
@@ -688,7 +688,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
         oldDifference = difference;
         if (iteration > 1) ph.setValue(30 + 69 / (steps + 1));
     }
-    FFTW_MUTEX::fftw_mutex_ferradans_6.lock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(pU);
     fftwf_destroy_plan(pU2);
     fftwf_destroy_plan(pU3);
@@ -737,7 +737,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
     fftwf_free(U5G);
     fftwf_free(U6G);
     fftwf_free(U7G);
-    FFTW_MUTEX::fftw_mutex_ferradans_6.unlock();
+    FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 
     ph.setValue(90);
 #pragma omp parallel for
@@ -754,9 +754,9 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
     delete[] RGB[0];
     delete[] RGB[1];
     delete[] RGB[2];
-    FFTW_MUTEX::fftw_mutex_ferradans_7.lock();
+    FFTW_MUTEX::fftw_mutex_free.lock();
     fftwf_free(G);
-    FFTW_MUTEX::fftw_mutex_ferradans_7.unlock();
+    FFTW_MUTEX::fftw_mutex_free.unlock();
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     cout << endl;
