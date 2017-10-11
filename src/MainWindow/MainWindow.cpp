@@ -175,7 +175,7 @@ GenericViewer::ViewerMode getCurrentViewerMode(
     if (curr_tab_widget.count() <= 0) {
         return GenericViewer::FIT_WINDOW;
     } else {
-        GenericViewer *g_v = (GenericViewer *)curr_tab_widget.currentWidget();
+        GenericViewer *g_v = qobject_cast<GenericViewer *>(curr_tab_widget.currentWidget());
         return g_v->getViewerMode();
     }
 }
@@ -654,10 +654,10 @@ void MainWindow::on_fileSaveAllAction_triggered() {
 
         for (int i = 0; i < m_tabwidget->count(); i++) {
             QWidget *wgt = m_tabwidget->widget(i);
-            GenericViewer *g_v = (GenericViewer *)wgt;
+            GenericViewer *g_v = qobject_cast<GenericViewer *>(wgt);
 
             if (!g_v->isHDR()) {
-                LdrViewer *l_v = dynamic_cast<LdrViewer *>(g_v);
+                LdrViewer *l_v = qobject_cast<LdrViewer *>(g_v);
 
                 QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
                 QString outfname = LuminanceOptions().getDefaultPathLdrOut() +
@@ -686,7 +686,7 @@ void MainWindow::on_fileSaveAllAction_triggered() {
 void MainWindow::on_fileSaveAsAction_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
     if (g_v->isHDR()) {
         // In this case I'm saving an HDR
         QString fname = getHdrFileNameFromSaveDialog(
@@ -705,16 +705,16 @@ void MainWindow::on_fileSaveAsAction_triggered() {
             p.set("tiff_mode", t.getTiffWriterMode());
         }
 
-        // CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v),
+        // CALL m_IOWorker->write_hdr_frame(qobject_cast<HdrViewer*>(g_v),
         // fname);
         QMetaObject::invokeMethod(
             m_IOWorker, "write_hdr_frame", Qt::QueuedConnection,
-            Q_ARG(GenericViewer *, dynamic_cast<HdrViewer *>(g_v)),
+            Q_ARG(GenericViewer *, qobject_cast<HdrViewer *>(g_v)),
             Q_ARG(QString, fname), Q_ARG(pfs::Params, p));
     } else {
         // In this case I'm saving an LDR
 
-        LdrViewer *l_v = dynamic_cast<LdrViewer *>(g_v);
+        LdrViewer *l_v = qobject_cast<LdrViewer *>(g_v);
 
         if (l_v == nullptr) return;
 
@@ -813,7 +813,7 @@ void MainWindow::save_ldr_failed(const QString &fname) {
 void MainWindow::on_actionSave_Hdr_Preview_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     if (!g_v->isHDR()) return;
     try {
@@ -847,7 +847,7 @@ void MainWindow::updateActions(int w) {
     qDebug() << "MainWindow::updateActions(" << w << ")";
 #endif
     bool hasImage = w >= 0;
-    GenericViewer *g_v = hasImage ? (GenericViewer *)m_tabwidget->widget(w) : 0;
+    GenericViewer *g_v = hasImage ? qobject_cast<GenericViewer *>(m_tabwidget->widget(w)) : 0;
     bool isHdr = g_v ? g_v->isHDR() : false;
     bool isLdr = g_v ? !g_v->isHDR() : false;
     LuminanceOptions luminance_opts;
@@ -897,7 +897,7 @@ void MainWindow::on_rotatecw_triggered() { dispatchrotate(true); }
 void MainWindow::dispatchrotate(bool clockwise) {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *curr_g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *curr_g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     m_Ui->rotateccw->setEnabled(false);
     m_Ui->rotatecw->setEnabled(false);
@@ -925,7 +925,7 @@ void MainWindow::dispatchrotate(bool clockwise) {
 void MainWindow::on_actionResizeHDR_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *curr_g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *curr_g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     ResizeDialog *resizedialog = new ResizeDialog(this, curr_g_v->getFrame());
     if (resizedialog->exec() == QDialog::Accepted) {
@@ -950,7 +950,7 @@ void MainWindow::on_actionResizeHDR_triggered() {
 void MainWindow::on_actionExportToHTML_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *curr_g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *curr_g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
     ExportToHtmlDialog *exportDialog =
         new ExportToHtmlDialog(this, curr_g_v->getFrame());
 
@@ -968,7 +968,7 @@ void MainWindow::on_actionSupported_Cameras_triggered() {
 void MainWindow::on_action_Projective_Transformation_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *curr_g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *curr_g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     ProjectionsDialog *projTranfsDialog =
         new ProjectionsDialog(this, curr_g_v->getFrame());
@@ -994,48 +994,48 @@ void MainWindow::on_action_Projective_Transformation_triggered() {
 void MainWindow::on_Decrease_exposure_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
-    HdrViewer *curr_hdr_v = dynamic_cast<HdrViewer *>(g_v);
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
+    HdrViewer *curr_hdr_v = qobject_cast<HdrViewer *>(g_v);
     if (curr_hdr_v != nullptr) curr_hdr_v->lumRange()->decreaseExposure();
 }
 
 void MainWindow::on_Extend_dynamic_range_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
-    HdrViewer *curr_hdr_v = dynamic_cast<HdrViewer *>(g_v);
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
+    HdrViewer *curr_hdr_v = qobject_cast<HdrViewer *>(g_v);
     if (curr_hdr_v != nullptr) curr_hdr_v->lumRange()->extendRange();
 }
 
 void MainWindow::on_Fit_to_dynamic_range_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
-    HdrViewer *curr_hdr_v = dynamic_cast<HdrViewer *>(g_v);
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
+    HdrViewer *curr_hdr_v = qobject_cast<HdrViewer *>(g_v);
     if (curr_hdr_v != nullptr) curr_hdr_v->lumRange()->fitToDynamicRange();
 }
 
 void MainWindow::on_Increase_exposure_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
-    HdrViewer *curr_hdr_v = dynamic_cast<HdrViewer *>(g_v);
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
+    HdrViewer *curr_hdr_v = qobject_cast<HdrViewer *>(g_v);
     if (curr_hdr_v != nullptr) curr_hdr_v->lumRange()->increaseExposure();
 }
 
 void MainWindow::on_Shrink_dynamic_range_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
-    HdrViewer *curr_hdr_v = dynamic_cast<HdrViewer *>(g_v);
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
+    HdrViewer *curr_hdr_v = qobject_cast<HdrViewer *>(g_v);
     if (curr_hdr_v != nullptr) curr_hdr_v->lumRange()->shrinkRange();
 }
 
 void MainWindow::on_Low_dynamic_range_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
-    HdrViewer *curr_hdr_v = dynamic_cast<HdrViewer *>(g_v);
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
+    HdrViewer *curr_hdr_v = qobject_cast<HdrViewer *>(g_v);
     if (curr_hdr_v != nullptr) curr_hdr_v->lumRange()->lowDynamicRange();
 }
 
@@ -1043,46 +1043,41 @@ void MainWindow::on_Low_dynamic_range_triggered() {
 void MainWindow::on_zoomInAct_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     g_v->zoomIn();
-    // updateMagnificationButtons(g_v);
 }
 
 void MainWindow::on_zoomOutAct_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     g_v->zoomOut();
-    // updateMagnificationButtons(g_v);
 }
 
 void MainWindow::on_fitToWindowAct_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     g_v->fitToWindow();
-    // updateMagnificationButtons(g_v);
 }
 
 void MainWindow::on_actionFill_to_Window_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     g_v->fillToWindow();
-    // updateMagnificationButtons(g_v);
 }
 
 void MainWindow::on_normalSizeAct_triggered() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     g_v->normalSize();
-    // updateMagnificationButtons(g_v);
 }
 // Zoom = Viewers (END)
 
@@ -1410,7 +1405,7 @@ void MainWindow::on_actionBatch_HDR_triggered() {
 }
 
 void MainWindow::on_actionBatch_Tone_Mapping_triggered() {
-    BatchTMDialog *batchdialog = new BatchTMDialog(this);
+    BatchTMDialog *batchdialog = new BatchTMDialog(this, QSqlDatabase::database(m_tonemapPanel->getDatabaseConnection()));
     batchdialog->exec();
     delete batchdialog;
 }
@@ -1418,7 +1413,7 @@ void MainWindow::on_actionBatch_Tone_Mapping_triggered() {
 void MainWindow::cropToSelection() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *curr_g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *curr_g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     if (!curr_g_v->isHDR()) return;
     if (!curr_g_v->hasSelection()) return;
@@ -1445,7 +1440,7 @@ void MainWindow::enableCrop(bool isReady) {
 void MainWindow::disableCrop() {
     if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer *curr_g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *curr_g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
 
     if (!curr_g_v->isHDR()) return;
 
@@ -1521,7 +1516,7 @@ bool MainWindow::maybeSave() {
                     // executed
                     // fully?
                     return m_IOWorker->write_hdr_frame(
-                        dynamic_cast<HdrViewer *>(tm_status.curr_tm_frame),
+                        qobject_cast<HdrViewer *>(tm_status.curr_tm_frame),
                         fname);
                 } else {
                     return false;
@@ -1696,7 +1691,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts) {
     } else
         opts->tonemapSelection = false;
 
-    HdrViewer *hdr_viewer = dynamic_cast<HdrViewer *>(tm_status.curr_tm_frame);
+    HdrViewer *hdr_viewer = qobject_cast<HdrViewer *>(tm_status.curr_tm_frame);
     if (hdr_viewer) {
 #ifdef QT_DEBUG
         qDebug() << "MainWindow(): emit getTonemappedFrame()";
@@ -1712,7 +1707,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts) {
 }
 
 void MainWindow::exportImage(TonemappingOptions *opts) {
-    HdrViewer *hdr_viewer = dynamic_cast<HdrViewer *>(tm_status.curr_tm_frame);
+    HdrViewer *hdr_viewer = qobject_cast<HdrViewer *>(tm_status.curr_tm_frame);
     if (hdr_viewer) {
         Params params = pfsadditions::FormatHelper::getParamsFromSettings(
             KEY_FILEFORMAT_QUEUE, false);
@@ -1801,7 +1796,7 @@ void MainWindow::tonemapFailed(const QString &error_msg) {
  */
 void MainWindow::on_actionLock_toggled(bool /*toggled*/) {
     if (m_Ui->actionLock->isChecked() && m_tabwidget->count()) {
-        syncViewers((GenericViewer *)m_tabwidget->currentWidget());
+        syncViewers(qobject_cast<GenericViewer *>(m_tabwidget->currentWidget()));
     }
 }
 
@@ -1810,18 +1805,14 @@ void MainWindow::syncViewers(GenericViewer *sender) {
     if (!m_Ui->actionLock->isChecked()) return;
 
     for (int idx = 0; idx < m_tabwidget->count(); idx++) {
-        GenericViewer *viewer = (GenericViewer *)m_tabwidget->widget(idx);
+        GenericViewer *viewer = qobject_cast<GenericViewer *>(m_tabwidget->widget(idx));
         if (viewer == nullptr)
             return;  // this happens when a tab is removed and sync viewers is
                      // active,
                      // fixes a crash
         if (sender != viewer) {
             viewer->blockSignals(true);
-            // disconnect(viewer,SIGNAL(changed(GenericViewer
-            // *)),this,SLOT(syncViewers(GenericViewer *)));
             viewer->syncViewer(sender);
-            // connect(viewer,SIGNAL(changed(GenericViewer
-            // *)),this,SLOT(syncViewers(GenericViewer *)));
             viewer->blockSignals(false);
         }
     }
@@ -1883,21 +1874,22 @@ void MainWindow::updatePreviews(bool b, float th) {
 }
 
 void MainWindow::updateMagnificationButtons(GenericViewer *c_v) {
-    bool hasImage = c_v != nullptr;
-    bool isNormalSize = c_v && c_v->isNormalSize();
-    bool isFilledToWindow = c_v && c_v->isFilledToWindow();
-    bool isFittedToWindow = c_v && c_v->isFittedToWindow();
+    if (c_v == nullptr) return;
+    bool isNormalSize = c_v->isNormalSize();
+    bool isFilledToWindow = c_v->isFilledToWindow();
+    bool isFittedToWindow = c_v->isFittedToWindow();
 
-    m_Ui->zoomInAct->setEnabled(hasImage &&
-                                (isFilledToWindow || isFittedToWindow));
-    m_Ui->zoomOutAct->setEnabled(hasImage && !isFittedToWindow);
+    m_Ui->zoomInAct->setChecked(isFilledToWindow || isFittedToWindow);
+    m_Ui->zoomInAct->setEnabled(isFilledToWindow || isFittedToWindow);
+    m_Ui->zoomOutAct->setChecked(isFittedToWindow);
+    m_Ui->zoomOutAct->setEnabled(!isFittedToWindow);
 
-    m_Ui->normalSizeAct->setChecked(hasImage && isNormalSize);
-    m_Ui->normalSizeAct->setEnabled(hasImage && !isNormalSize);
-    m_Ui->fitToWindowAct->setChecked(hasImage && isFittedToWindow);
-    m_Ui->fitToWindowAct->setEnabled(hasImage && !isFittedToWindow);
-    m_Ui->actionFill_to_Window->setChecked(hasImage && isFilledToWindow);
-    m_Ui->actionFill_to_Window->setEnabled(hasImage && !isFilledToWindow);
+    m_Ui->normalSizeAct->setChecked(isNormalSize);
+    m_Ui->normalSizeAct->setEnabled(!isNormalSize);
+    m_Ui->fitToWindowAct->setChecked(isFittedToWindow);
+    m_Ui->fitToWindowAct->setEnabled(!isFittedToWindow);
+    m_Ui->actionFill_to_Window->setChecked(isFilledToWindow);
+    m_Ui->actionFill_to_Window->setEnabled(!isFilledToWindow);
 }
 
 void MainWindow::on_actionRemove_Tab_triggered() {
@@ -1910,7 +1902,7 @@ void MainWindow::removeTab(int t) {
 #endif
     if (t < 0) return;
 
-    GenericViewer *w = (GenericViewer *)m_tabwidget->widget(t);
+    GenericViewer *w = qobject_cast<GenericViewer *>(m_tabwidget->widget(t));
     w->blockSignals(true);
     if (w->isHDR()) {
         bool doClose = false;
@@ -2043,7 +2035,7 @@ void MainWindow::clearRecentFileActions() {
 
 void MainWindow::on_actionFix_Histogram_toggled(bool checked) {
     if (checked) {
-        GenericViewer *current = (GenericViewer *)m_tabwidget->currentWidget();
+        GenericViewer *current = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
         if (current == nullptr) return;
         if (current->isHDR()) return;
 
@@ -2083,7 +2075,7 @@ void MainWindow::on_actionWhite_Balance_triggered() {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_Ui->actionWhite_Balance->setEnabled(false);
     m_processingAWB = true;
-    m_viewerToProcess = (GenericViewer *)m_tabwidget->currentWidget();
+    m_viewerToProcess = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
     m_tabwidget->setTabEnabled(m_tabwidget->currentIndex(), false);
 
     Frame *frame = m_viewerToProcess->getFrame();
@@ -2107,10 +2099,10 @@ void MainWindow::whiteBalanceDone() {
 }
 
 void MainWindow::on_actionSoft_Proofing_toggled(bool doProof) {
-    GenericViewer *current = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *current = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
     if (current == nullptr) return;
     if (current->isHDR()) return;
-    LdrViewer *viewer = (LdrViewer *)current;
+    LdrViewer *viewer = static_cast<LdrViewer *>(current);
     if (doProof) {
 #ifdef QT_DEBUG
         qDebug() << "MainWindow:: do soft proofing";
@@ -2127,10 +2119,10 @@ void MainWindow::on_actionSoft_Proofing_toggled(bool doProof) {
 }
 
 void MainWindow::on_actionGamut_Check_toggled(bool doGamut) {
-    GenericViewer *current = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *current = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
     if (current == nullptr) return;
     if (current->isHDR()) return;
-    LdrViewer *viewer = (LdrViewer *)current;
+    LdrViewer *viewer = static_cast<LdrViewer *>(current);
     if (doGamut) {
 #ifdef QT_DEBUG
         qDebug() << "MainWindow:: do gamut check";
@@ -2148,7 +2140,7 @@ void MainWindow::on_actionGamut_Check_toggled(bool doGamut) {
 
 void MainWindow::updateSoftProofing(int i) {
     QWidget *wgt = m_tabwidget->widget(i);
-    GenericViewer *g_v = (GenericViewer *)wgt;
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(wgt);
 
     if (g_v == nullptr) return;
     if (!g_v->isHDR()) {
@@ -2192,7 +2184,7 @@ void MainWindow::on_actionShow_Full_Screen_toggled(bool b) {
 void MainWindow::on_actionShow_Image_Full_Screen_triggered() {
     m_viewerIndex = m_tabwidget->currentIndex();
     m_tabText = m_tabwidget->tabText(m_viewerIndex);
-    GenericViewer *g_v = (GenericViewer *)m_tabwidget->currentWidget();
+    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
     g_v->setParent(0);
     g_v->showFullScreen();
 }
@@ -2235,6 +2227,7 @@ void MainWindow::showPreviousViewer(GenericViewer *g_v) {
 }
 
 void MainWindow::setSyncViewers(GenericViewer *g_v) {
+    if (g_v == nullptr) return;
     m_Ui->actionLock->setChecked(!m_Ui->actionLock->isChecked());
     if (m_Ui->actionLock->isChecked() && (m_tabwidget->count() - 1)) {
         syncViewers(g_v);
