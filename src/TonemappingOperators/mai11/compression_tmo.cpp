@@ -81,7 +81,7 @@ class UniformArrayLUT {
         }
     }
 
-    UniformArrayLUT() : lut_size(0), delta(0.), own_y_i(false), y_i(NULL) {}
+    UniformArrayLUT() : start_v(0.), lut_size(0), delta(0.), own_y_i(false), y_i(NULL) {}
 
     UniformArrayLUT(const UniformArrayLUT &other)
         : start_v(other.start_v), lut_size(other.lut_size), delta(other.delta) {
@@ -91,12 +91,14 @@ class UniformArrayLUT {
     }
 
     UniformArrayLUT &operator=(const UniformArrayLUT &other) {
-        this->lut_size = other.lut_size;
-        this->delta = other.delta;
-        this->start_v = other.start_v;
-        this->y_i = new double[lut_size];
-        own_y_i = true;
-        memcpy(this->y_i, other.y_i, lut_size * sizeof(double));
+        if (&other != this) {
+            this->lut_size = other.lut_size;
+            this->delta = other.delta;
+            this->start_v = other.start_v;
+            this->y_i = new double[lut_size];
+            own_y_i = true;
+            memcpy(this->y_i, other.y_i, lut_size * sizeof(double));
+        }
         return *this;
     }
 

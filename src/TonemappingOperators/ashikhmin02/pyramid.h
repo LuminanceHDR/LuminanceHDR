@@ -30,13 +30,14 @@
 
 #include <stdio.h>
 
-#include "Libpfs/array2d_fwd.h"
+#include <Libpfs/array2d.h>
+#include <Libpfs/array2d_fwd.h>
+
+using namespace pfs;
 
 class Pyramid {  // each level of a Gaussian pyramid
    public:
-    Pyramid() {
-        flag = 0;
-        GP = NULL;
+    Pyramid() : width(0), height(0), size(0), kernel_size(0), lambda(0.), GP(NULL), flag(0) {
     };
 
     ~Pyramid(){

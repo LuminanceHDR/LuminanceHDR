@@ -42,7 +42,7 @@
 #if defined(WIN32) || defined(__APPLE__)
 #include <QCoreApplication>
 #endif
-#include "hdrhtml-path.hxx"
+#include "HdrHTML/hdrhtml-path.hxx"
 
 #include <QImage>
 #include <QString>
@@ -163,7 +163,7 @@ class UniformArrayLUT {
         }
     }
 
-    UniformArrayLUT() : y_i(NULL), x_i(0), lut_size(0), delta(0.) {}
+    UniformArrayLUT() : y_i(NULL), x_i(0), lut_size(0), delta(0.), own_y_i(false) {}
 
     UniformArrayLUT(const UniformArrayLUT &other)
         : y_i(NULL),
@@ -252,7 +252,7 @@ class ArrayLUT {
         }
     }
 
-    ArrayLUT() : x_i(0), y_i(0), lut_size(0) {}
+    ArrayLUT() : x_i(0), y_i(0), lut_size(0), own_y_i(false) {}
 
     ArrayLUT(const ArrayLUT &other) : x_i(other.x_i), lut_size(other.lut_size) {
         this->y_i = new Ty[lut_size];
