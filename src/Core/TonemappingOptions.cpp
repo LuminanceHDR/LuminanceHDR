@@ -639,7 +639,7 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
                 value.toFloat();
         } else if (field == QLatin1String("PREGAMMA")) {
             toreturn->pregamma = value.toFloat();
-        } else if (field == QLatin1String("SATURATION")) {
+        } else if (field == QLatin1String("POSTSATURATION")) {
             toreturn->postsaturation = value.toFloat();
         } else {
             delete toreturn;
