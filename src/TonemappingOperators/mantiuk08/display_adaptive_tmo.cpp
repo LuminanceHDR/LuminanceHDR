@@ -68,6 +68,13 @@
 #define MIN_PHVAL 1e-8f  // Minimum value allowed in HDR images
 #define MAX_PHVAL 1e8f   // Maximum value allowed in HDR images
 
+void my_gsl_error_handler (const char * reason,
+              const char * file,
+              int line,
+              int gsl_errno) {
+    throw pfs::Exception(reason);
+}
+
 /**
  *  Simple RAII wrapper for gsl_matrix
  */
@@ -106,7 +113,7 @@ class auto_cqpminimizer {
 
 // =============== Tone-curve filtering ==============
 
-datmoToneCurve::datmoToneCurve() : own_y_i(false), x_i(NULL), y_i(NULL) {}
+datmoToneCurve::datmoToneCurve() : own_y_i(false), size(0), x_i(NULL), y_i(NULL) {}
 
 datmoToneCurve::~datmoToneCurve() { free(); }
 
@@ -202,7 +209,7 @@ class UniformArrayLUT {
         }
     }
 
-    UniformArrayLUT() : x_i(0), lut_size(0), delta(0.), y_i(0) {}
+    UniformArrayLUT() : x_i(0), lut_size(0), delta(0.), own_y_i(0), y_i(0) {}
 
     UniformArrayLUT(const UniformArrayLUT &other)
         : x_i(other.x_i), lut_size(other.lut_size), delta(other.delta) {
@@ -212,12 +219,14 @@ class UniformArrayLUT {
     }
 
     UniformArrayLUT &operator=(const UniformArrayLUT &other) {
-        this->lut_size = other.lut_size;
-        this->delta = other.delta;
-        this->x_i = other.x_i;
-        this->y_i = new double[lut_size];
-        own_y_i = true;
-        memcpy(this->y_i, other.y_i, lut_size * sizeof(double));
+        if (&other != this) {
+            this->lut_size = other.lut_size;
+            this->delta = other.delta;
+            this->x_i = other.x_i;
+            this->y_i = new double[lut_size];
+            own_y_i = true;
+            memcpy(this->y_i, other.y_i, lut_size * sizeof(double));
+        }
 
         return *this;
     }
@@ -341,7 +350,7 @@ class conditional_density : public datmoConditionalDensity {
 
     double *C;  // Conditional probability function
 
-    conditional_density(const float pix_per_deg = 30.f) : g_max(0.7f) {
+    conditional_density(const float pix_per_deg = 30.f) : g_max(0.7f), total(0) {
         x_count = X_COUNT;
         g_count = round_int(g_max / delta) * 2 + 1;
 
@@ -393,6 +402,7 @@ double conditional_density::x_scale[X_COUNT] = {
 
 std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
     int width, int height, const float *L, pfs::Progress &ph) {
+    gsl_set_error_handler (my_gsl_error_handler);
     ph.setValue(0);
 
     pfs::Array2Df buf_1(width, height);
