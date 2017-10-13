@@ -133,72 +133,37 @@ int CommandLineInterfaceManager::execCommandLineParams() {
                                      .arg(argv[0])
                                      .toUtf8()
                                      .constData());
-    desc.add_options()("help,h", tr("Display this help.").toUtf8().constData())(
-        "version,V", tr("Display program version.").toUtf8().constData())(
-        "verbose,v",
-        tr("Print more messages during execution.").toUtf8().constData())(
-        "cameras,c",
-        tr("Print a list of all supported cameras.").toUtf8().constData())(
-        "align,a", po::value<std::string>(),
-        tr("[AIS|MTB]   Align Engine to use during HDR creation (default: no "
-           "alignment).")
-            .toUtf8()
-            .constData())(
-        "ev,e", po::value<std::string>(),
-        tr("EV1,EV2,... Specify numerical EV values (as many as INPUTFILES).")
-            .toUtf8()
-            .constData())(
-        "savealigned,d", po::value<std::string>(),
-        tr("prefix Save aligned images to files which names start with prefix")
-            .toUtf8()
-            .constData())
+    desc.add_options()("help,h", tr("Display this help.").toUtf8().constData())
+        ("version,V", tr("Display program version.").toUtf8().constData())
+        ("verbose,v", tr("Print more messages during execution.").toUtf8().constData())
+        ("cameras,c", tr("Print a list of all supported cameras.").toUtf8().constData())
+        ("align,a", po::value<std::string>(), tr("[AIS|MTB]   Align Engine to use during HDR creation (default: no "
+           "alignment).").toUtf8().constData())
+        ("ev,e", po::value<std::string>(), tr("EV1,EV2,... Specify numerical EV values (as many as INPUTFILES).")
+            .toUtf8().constData())
+        ("savealigned,d", po::value<std::string>(), tr("prefix Save aligned images to files which names start with prefix")
+            .toUtf8().constData())
         //
-        ("load,l", po::value<std::string>(),
-         tr("HDR_FILE Load an HDR instead of creating a new one.")
-             .toUtf8()
-             .constData())(
-            "save,s", po::value<std::string>(),
-            tr("HDR_FILE Save to a HDR file format. (default: don't save)")
-                .toUtf8()
-                .constData())("gamma,g", po::value<float>(&tmopts->pregamma),
-                              tr("VALUE        Gamma value to use during tone "
-                                 "mapping. (default: 1) ")
-                                  .toUtf8()
-                                  .constData())(
-            "resize,r", po::value<int>(&tmopts->xsize),
-            tr("VALUE       Width you want to resize your HDR to (resized "
-               "before "
-               "gamma and tone mapping)")
-                .toUtf8()
-                .constData())
+        ("load,l", po::value<std::string>(), tr("HDR_FILE Load an HDR instead of creating a new one.")
+            .toUtf8().constData())
+        ("save,s", po::value<std::string>(), tr("HDR_FILE Save to a HDR file format. (default: don't save)")
+            .toUtf8().constData())
+        ("gamma,g", po::value<float>(&tmopts->pregamma),
+            tr("VALUE        Gamma value to use during tone mapping. (default: 1) ").toUtf8().constData())
+        ("saturation,S", po::value<float>(&tmopts->postsaturation),
+            tr("VALUE        Saturation value to use after tone mapping. (default: 1) ").toUtf8().constData())
+        ("resize,r", po::value<int>(&tmopts->xsize), tr("VALUE       Width you want to resize your HDR to (resized "
+            "before gamma and tone mapping)").toUtf8().constData())
 
-            ("output,o", po::value<std::string>(),
-             tr("LDR_FILE    File name you want to save your tone mapped LDR "
-                "to.")
-                 .toUtf8()
-                 .constData())("autoag,t", po::value<float>(&threshold),
-                               tr("THRESHOLD   Enable auto anti-ghosting with "
-                                  "given threshold. (0.0-1.0)")
-                                   .toUtf8()
-                                   .constData())(
-                "autolevels,b",
-                tr("Apply autolevels correction after tonemapping.")
-                    .toUtf8()
-                    .constData())(
-                "createwebpage,w",
-                tr("Enable generation of a webpage with embedded HDR viewer.")
-                    .toUtf8()
-                    .constData())(
-                "proposedldrname,p", po::value<std::string>(&ldrExtension),
-                tr("FILE_EXTENSION   Save LDR file with a name of the form "
-                   "first-last_tmparameters.extension.")
-                    .toUtf8()
-                    .constData())(
-                "proposedhdrname,z", po::value<std::string>(&hdrExtension),
-                tr("FILE_EXTENSION   Save HDR file with a name of the form "
-                   "first-last_HdrCreationModel.extension.")
-                    .toUtf8()
-                    .constData());
+        ("output,o", po::value<std::string>(), tr("LDR_FILE    File name you want to save your tone mapped LDR to.")
+            .toUtf8().constData())("autoag,t", po::value<float>(&threshold), tr("THRESHOLD   Enable auto anti-ghosting with "
+            "given threshold. (0.0-1.0)").toUtf8().constData())
+        ("autolevels,b", tr("Apply autolevels correction after tonemapping.").toUtf8().constData())
+        ("createwebpage,w", tr("Enable generation of a webpage with embedded HDR viewer.").toUtf8().constData())
+        ("proposedldrname,p", po::value<std::string>(&ldrExtension), tr("FILE_EXTENSION   Save LDR file with a name of the form "
+            "first-last_tmparameters.extension.").toUtf8().constData())
+        ("proposedhdrname,z", po::value<std::string>(&hdrExtension), tr("FILE_EXTENSION   Save HDR file with a name of the form "
+            "first-last_HdrCreationModel.extension.").toUtf8().constData());
 
     po::options_description hdr_desc(
         tr("HDR creation parameters  - you must either load an existing HDR "
@@ -1004,6 +969,10 @@ void CommandLineInterfaceManager::startTonemap() {
             computeAutolevels(temp_qimage.data(), 0.985f, minL, maxL, gammaL);
             pfs::gammaAndLevels(tm_frame.data(), minL, maxL, 0.f, 1.f, gammaL);
         }
+        if (tmopts->postsaturation != 1)
+            printIfVerbose(tr("\nApplying saturation enhancement %1.").arg(tmopts->postsaturation),
+                           verbose);
+
         // Create an ad-hoc IOWorker to save the file
         if (IOWorker().write_ldr_frame(
                 tm_frame.data(), saveLdrFilename, inputfname,
