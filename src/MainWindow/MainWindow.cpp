@@ -1819,16 +1819,11 @@ void MainWindow::syncViewers(GenericViewer *sender) {
 }
 
 void MainWindow::showPreviewPanel(bool b) {
-    m_Ui->actionRealtimePreviews->setEnabled(b);
+    if (m_Ui->actionRealtimePreviews->isChecked())
+        setRealtimePreviewsActive(b);
     if (b) {
         if (tm_status.is_hdr_ready) {
             m_PreviewscrollArea->show();
-            if (m_Ui->actionRealtimePreviews->isChecked()) {
-                connect(m_Ui->actionRealtimePreviews, &QAction::toggled,
-                        m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
-                m_tonemapPanel->setRealtimePreviews(true);
-            }
-
             // ask panel to refresh itself
             m_PreviewPanel->setAutolevels(
                 m_tonemapPanel->doAutoLevels(),
@@ -1847,11 +1842,8 @@ void MainWindow::showPreviewPanel(bool b) {
         }
     } else {
         m_PreviewscrollArea->hide();
-        m_tonemapPanel->setRealtimePreviews(false);
 
         // disconnect signals
-        disconnect(m_Ui->actionRealtimePreviews, &QAction::toggled,
-                   m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame *)), m_PreviewPanel,
                    SLOT(updatePreviews(pfs::Frame *)));
         disconnect(m_PreviewPanel, &PreviewPanel::startTonemapping, this,
@@ -2254,6 +2246,20 @@ void MainWindow::on_actionLuminance_HDR_Website_triggered() {
 }
 
 void MainWindow::setRealtimePreviewsActive(bool b) {
+    m_Ui->actionRealtimePreviews->setEnabled(b || m_Ui->actionShowPreviewPanel->isChecked());
+    m_tonemapPanel->setRealtimePreviews(b);
+    if (b) {
+        connect(m_Ui->actionRealtimePreviews, &QAction::toggled,
+                m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
+        connect(m_Ui->actionRealtimePreviews, &QAction::toggled,
+                   m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
+    }
+    else {
+        disconnect(m_Ui->actionRealtimePreviews, &QAction::toggled,
+                m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
+        disconnect(m_Ui->actionRealtimePreviews, &QAction::toggled,
+                   m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
+    }
     LuminanceOptions().setRealtimePreviewsActive(b);
 }
 
