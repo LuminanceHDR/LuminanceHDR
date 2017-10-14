@@ -5,10 +5,32 @@
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
  * $Id: tmo_reinhard02.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
+ *
+ * This file is a part of LuminanceHDR package, based on pfstmo.
+ * ----------------------------------------------------------------------
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * ----------------------------------------------------------------------
+ *
+ * Adapted to Luminance HDR
+ * @author Franco Comida <francocomida@gmail.com>
+ *
  */
 
-#ifndef _tmo_reinhard02_h_
-#define _tmo_reinhard02_h_
+#ifndef TMO_REINHARD02_H
+#define TMO_REINHARD02_H
 
 #include <fftw3.h>
 #include <boost/thread/mutex.hpp>
@@ -18,38 +40,6 @@
 namespace pfs {
 class Progress;
 }
-
-/**
- * Used to achieve temporal coherence
- */
-template <class T>
-class TemporalSmoothVariable {
-    //  const int hist_length = 100;
-    T value;
-
-    T getThreshold(T luminance) { return 0.01 * luminance; }
-
-   public:
-    TemporalSmoothVariable() : value(-1) {}
-
-    void set(T new_value) {
-        if (value == -1)
-            value = new_value;
-        else {
-            T delta = new_value - value;
-            const T threshold = getThreshold((new_value + value) / 2);
-            if (delta > threshold)
-                delta = threshold;
-            else if (delta < -threshold)
-                delta = -threshold;
-            value += delta;
-        }
-    }
-
-    T get() const { return value; }
-};
-
-static TemporalSmoothVariable<float> avg_luminance, max_luminance;
 
 //--- from defines.h
 typedef struct { int xmax, ymax; /* image dimensions */ } CVTS;
@@ -83,7 +73,6 @@ class Reinhard02 {
     void tmo_reinhard02();
 
    private:
-    TemporalSmoothVariable<float> m_avg_luminance, m_max_luminance;
     CVTS m_cvts;
     COLOR **m_image;
     float m_sigma_0, m_sigma_1;
@@ -107,27 +96,22 @@ class Reinhard02 {
 
     float m_k;
     fftwf_complex **m_filter_fft;
+    float **m_filter_fft_real;
     fftwf_complex *m_image_fft;
+    float *m_image_fft_real;
     float ***m_convolved_image;
-
-    static boost::mutex sm_mutex;
 
     float bessel(float);
     float kaiserbessel(float, float, float);
     float get_maxvalue();
     void tonemap_image();
-    void clamp_image();
     float log_average();
     void scale_to_midtone();
     void copy_luminance();
-    void dynamic_range();
-    void compute_fft(fftwf_complex *, int, int);
-    void compute_inverse_fft(fftwf_complex *, int, int);
     void gaussian_filter(fftwf_complex *, float, float);
     void build_gaussian_fft();
     void build_image_fft();
     void convolve_filter(int, fftwf_complex *);
     void compute_fourier_convolution();
 };
-
-#endif /* _tmo_reinhard02_h_ */
+#endif // TMO_REINHARD02_H
