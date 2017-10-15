@@ -96,9 +96,8 @@ class Reinhard02 {
 
     float m_k;
     fftwf_complex **m_filter_fft;
-    float **m_filter_fft_real;
     fftwf_complex *m_image_fft;
-    float *m_image_fft_real;
+    fftwf_complex *m_convolution_fft;
     float ***m_convolved_image;
 
     float bessel(float);
