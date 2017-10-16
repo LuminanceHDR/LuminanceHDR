@@ -67,7 +67,7 @@ void DonationDialog::showDonationDialog() {
 
 void DonationDialog::openDonationPage() {
     QDesktopServices::openUrl(
-        QUrl(QStringLiteral("https://www.paypal.com/cgi-bin/"
-                            "webscr?cmd=_s-xclick&hosted_button_id="
-                            "77BSTWEH7447C")));  // davideanastasia
+        QUrl(QStringLiteral("https://www.paypal.com/cgi-bin/\
+                            webscr?cmd=_s-xclick&hosted_button_id=\
+                            77BSTWEH7447C")));  // davideanastasia
 }

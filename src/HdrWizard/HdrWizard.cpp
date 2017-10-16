@@ -333,8 +333,8 @@ void HdrWizard::updateTableGrid() {
         float normalizedEV = item.getEV() - m_hdrCreationManager->getEVOffset();
 
         qDebug() << QStringLiteral(
-                        "HdrWizard::updateTableGrid(): Fill row %1: "
-                        "%2 %3 EV (%4 EV)")
+                        "HdrWizard::updateTableGrid(): Fill row %1: \
+                        %2 %3 EV (%4 EV)")
                         .arg(counter)
                         .arg(item.filename())
                         .arg(item.getEV())

@@ -352,66 +352,66 @@ void TonemappingPanel::createDatabase() {
     QSqlQuery query(db);
     // Mantiuk 06
     bool res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean "
-        "NOT "
-        "NULL, contrastFactor real, saturationFactor real, detailFactor real, "
-        "pregamma real, postsaturation real, comment varchar(150));"));
+        " CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean \
+        NOT \
+        NULL, contrastFactor real, saturationFactor real, detailFactor real, \
+        pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Mantiuk 08
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, "
-        "contrastEnhancement real, luminanceLevel real, manualLuminanceLevel "
-        "boolean NOT NULL, pregamma real, postsaturation real, comment varchar(150));"));
+        " CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, \
+        contrastEnhancement real, luminanceLevel real, manualLuminanceLevel \
+        boolean NOT NULL, pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Ashikhmin
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 "
-        "boolean NOT NULL, lct real, pregamma real, postsaturation real, comment varchar(150));"));
+        " CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 \
+        boolean NOT NULL, lct real, pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Drago
     res = query.exec(
-        QStringLiteral(" CREATE TABLE IF NOT EXISTS drago (bias real, "
-                       "pregamma real, postsaturation real, comment varchar(150));"));
+        QStringLiteral(" CREATE TABLE IF NOT EXISTS drago (bias real, \
+                       pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Durand
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS durand (spatial real, range "
-        "real, base real, pregamma real, postsaturation real, comment varchar(150));"));
+        " CREATE TABLE IF NOT EXISTS durand (spatial real, range \
+        real, base real, pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Fattal
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, "
-        "colorSaturation real, noiseReduction real, oldFattal boolean NOT "
-        "NULL, "
-        "pregamma real, postsaturation real, comment varchar(150));"));
+        " CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, \
+        colorSaturation real, noiseReduction real, oldFattal boolean NOT \
+        NULL, \
+        pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Fattal
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS ferradans (rho real, "
-        "inv_alpha real, pregamma real, postsaturation real, comment varchar(150));"));
+        " CREATE TABLE IF NOT EXISTS ferradans (rho real, \
+        inv_alpha real, pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Pattanaik
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean "
-        "NOT NULL, local boolean NOT NULL, cone real, rod real, "
-        "multiplier real, pregamma real, postsaturation real, comment varchar(150));"));
+        " CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean \
+        NOT NULL, local boolean NOT NULL, cone real, rod real, \
+        multiplier real, pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Reinhard02
     res = query.exec(
-        QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean "
-                       "NOT NULL, key real, phi real, range int, lower int, "
-                       "upper int, pregamma real, postsaturation real, comment varchar(150));"));
+        QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean \
+                       NOT NULL, key real, phi real, range int, lower int, \
+                       upper int, pregamma real, postsaturation real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Reinhard05
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, "
-        "chromaticAdaptation real, lightAdaptation real, pregamma "
-        "real, comment varchar(150));"));
+        " CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, \
+        chromaticAdaptation real, lightAdaptation real, pregamma \
+        real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Hdr creation custom config parameters
     res = query.exec(QStringLiteral(
-        "CREATE TABLE IF NOT EXISTS parameters (weight integer, response "
-        "integer, model integer, filename varchar(150));"));
+        "CREATE TABLE IF NOT EXISTS parameters (weight integer, response \
+        integer, model integer, filename varchar(150));"));
     if (res == false) qDebug() << query.lastError();
 }
 
@@ -1661,10 +1661,10 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, "
-        "saturationFactor, detailFactor, pregamma, postsaturation, comment) "
-        "VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, "
-        ":detailFactor, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, \
+        saturationFactor, detailFactor, pregamma, postsaturation, comment) \
+        VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, \
+        :detailFactor, :pregamma, :postsaturation, :comment)");
     query.bindValue(QStringLiteral(":contrastEqualization"),
                     contrastEqualization);
     query.bindValue(QStringLiteral(":contrastFactor"), contrastFactor);
@@ -1688,10 +1688,10 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, "
-        "luminanceLevel, manualLuminanceLevel, pregamma, postsaturation, comment) "
-        "VALUES (:colorSaturation, :contrastEnhancement, :luminanceLevel, "
-        ":manualLuminanceLevel, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, \
+        luminanceLevel, manualLuminanceLevel, pregamma, postsaturation, comment) \
+        VALUES (:colorSaturation, :contrastEnhancement, :luminanceLevel, \
+        :manualLuminanceLevel, :pregamma, :postsaturation, :comment)");
     query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
     query.bindValue(QStringLiteral(":contrastEnhancement"),
                     contrastEnhancement);
@@ -1713,8 +1713,8 @@ void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO ashikhmin (simple, eq2, lct, pregamma, postsaturation, comment) "
-        "VALUES (:simple, :eq2, :lct, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO ashikhmin (simple, eq2, lct, pregamma, postsaturation, comment) \
+        VALUES (:simple, :eq2, :lct, :pregamma, :postsaturation, :comment)");
     query.bindValue(QStringLiteral(":simple"), simple);
     query.bindValue(QStringLiteral(":eq2"), eq2);
     query.bindValue(QStringLiteral(":lct"), lct);
@@ -1732,8 +1732,8 @@ void TonemappingPanel::execDragoQuery(float bias, QString comment) {
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO drago (bias, pregamma, postsaturation, comment) "
-        "VALUES (:bias, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO drago (bias, pregamma, postsaturation, comment) \
+        VALUES (:bias, :pregamma, :postsaturation, :comment)");
     query.bindValue(QStringLiteral(":bias"), bias);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
@@ -1750,8 +1750,8 @@ void TonemappingPanel::execDurandQuery(float spatial, float range, float base,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO durand (spatial, range, base, pregamma, postsaturation, comment) "
-        "VALUES (:spatial, :range, :base, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO durand (spatial, range, base, pregamma, postsaturation, comment) \
+        VALUES (:spatial, :range, :base, :pregamma, :postsaturation, :comment)");
     query.bindValue(QStringLiteral(":spatial"), spatial);
     query.bindValue(QStringLiteral(":base"), base);
     query.bindValue(QStringLiteral(":range"), range);
@@ -1772,10 +1772,10 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, "
-        "oldFattal, pregamma, postsaturation, comment) "
-        "VALUES (:alpha, :beta, :colorSaturation, :noiseReduction, :oldFattal, "
-        ":pregamma, :postsaturation, :comment)");
+        "INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, \
+        oldFattal, pregamma, postsaturation, comment) \
+        VALUES (:alpha, :beta, :colorSaturation, :noiseReduction, :oldFattal, \
+        :pregamma, :postsaturation, :comment)");
     query.bindValue(QStringLiteral(":alpha"), alpha);
     query.bindValue(QStringLiteral(":beta"), beta);
     query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
@@ -1796,8 +1796,8 @@ void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO ferradans (rho, inv_alpha, pregamma, postsaturation, comment) "
-        "VALUES (:rho, :inv_alpha, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO ferradans (rho, inv_alpha, pregamma, postsaturation, comment) \
+        VALUES (:rho, :inv_alpha, :pregamma, :postsaturation, :comment)");
     query.bindValue(QStringLiteral(":rho"), rho);
     query.bindValue(QStringLiteral(":inv_alpha"), inv_alpha);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
@@ -1815,11 +1815,11 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, "
-        "pregamma, postsaturation, "
-        "comment) "
-        "VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, :postsaturation, "
-        ":comment)");
+        "INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, \
+        pregamma, postsaturation, \
+        comment) \
+        VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, :postsaturation, \
+        :comment)");
     query.bindValue(QStringLiteral(":autolum"), autolum);
     query.bindValue(QStringLiteral(":local"), local);
     query.bindValue(QStringLiteral(":cone"), cone);
@@ -1841,10 +1841,10 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, "
-        "pregamma, postsaturation, comment) "
-        "VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, :postsaturation, "
-        ":comment)");
+        "INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, \
+        pregamma, postsaturation, comment) \
+        VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, :postsaturation, \
+        :comment)");
     query.bindValue(QStringLiteral(":scales"), scales);
     query.bindValue(QStringLiteral(":key"), key);
     query.bindValue(QStringLiteral(":phi"), phi);
@@ -1868,11 +1868,11 @@ void TonemappingPanel::execReinhard05Query(float brightness,
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
     query.prepare(
-        "INSERT INTO reinhard05 (brightness, chromaticAdaptation, "
-        "lightAdaptation, pregamma, postsaturation, comment) "
-        "VALUES (:brightness, :chromaticAdaptation, "
-        ":lightAdaptation, :pregamma, :postsaturation, "
-        ":comment)");
+        "INSERT INTO reinhard05 (brightness, chromaticAdaptation, \
+        lightAdaptation, pregamma, postsaturation, comment) \
+        VALUES (:brightness, :chromaticAdaptation, \
+        :lightAdaptation, :pregamma, :postsaturation, \
+        :comment)");
     query.bindValue(QStringLiteral(":brightness"), brightness);
     query.bindValue(QStringLiteral(":chromaticAdaptation"),
                     chromaticAdaptation);

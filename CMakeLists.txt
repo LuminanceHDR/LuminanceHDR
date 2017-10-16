@@ -18,7 +18,9 @@ IF(TIMER_PROFILING)
 ENDIF()
 
 # ======== Enable GNU gsl inline code =======
-ADD_DEFINITIONS(-DHAVE_INLINE )
+if(UNIX OR APPLE) # Visual Studio doesn't like this
+    ADD_DEFINITIONS(-DHAVE_INLINE )
+ENDIF()
 
 # ======== Has branch prediction =======
 include( CheckCXXSourceCompiles )

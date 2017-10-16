@@ -131,14 +131,14 @@ void HdrCreationManager::loadFiles(const QStringList &filenames) {
         // has the file been inserted already?
         if (it == m_data.end()) {
             qDebug() << QStringLiteral(
-                            "HdrCreationManager::loadFiles(): "
-                            "Schedule loading for %1")
+                            "HdrCreationManager::loadFiles(): \
+                            Schedule loading for %1")
                             .arg(filename);
             m_tmpdata.push_back(HdrCreationItem(filename));
         } else {
             qDebug() << QStringLiteral(
-                            "HdrCreationManager::loadFiles(): %1 "
-                            "has already been loaded")
+                            "HdrCreationManager::loadFiles(): %1 \
+                            has already been loaded")
                             .arg(filename);
         }
     }
@@ -153,8 +153,8 @@ void HdrCreationManager::loadFiles(const QStringList &filenames) {
 }
 
 void HdrCreationManager::loadFilesDone() {
-    qDebug() << "HdrCreationManager::loadFilesDone(): Data loaded ... move to "
-                "internal structure!";
+    qDebug() << "HdrCreationManager::loadFilesDone(): Data loaded ... move to \
+                internal structure!";
     if (m_futureWatcher.isCanceled())  // LoadFile() threw an exception
     {
         emit errorWhileLoading(
@@ -179,8 +179,8 @@ void HdrCreationManager::loadFilesDone() {
     for (const auto &hdrCreationItem : m_tmpdata) {
         if (hdrCreationItem.isValid()) {
             qDebug() << QStringLiteral(
-                            "HdrCreationManager::loadFilesDone(): "
-                            "Insert data for %1")
+                            "HdrCreationManager::loadFilesDone(): \
+                            Insert data for %1")
                             .arg(hdrCreationItem.filename());
             m_data.push_back(hdrCreationItem);
         }

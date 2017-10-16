@@ -115,9 +115,9 @@ void UMessageBox::about(QWidget *parent) {
                "%2here%3",
                "%2 and %3 are html tags")
                 .arg(QStringLiteral("<html>"),
-                     QStringLiteral("<a "
-                                    "href=\"http://www.gnu.org/licenses/"
-                                    "old-licenses/gpl-2.0.txt\">"),
+                     QStringLiteral("<a \
+                                    href=\"http://www.gnu.org/licenses/ \
+                                    old-licenses/gpl-2.0.txt\">"),
                      QStringLiteral("</a></html>")));
     }
     bool changelog_file_not_found = true;
@@ -142,9 +142,9 @@ void UMessageBox::about(QWidget *parent) {
                "%2here%3",
                "%2 and %3 are html tags")
                 .arg(QStringLiteral("<html>"),
-                     QStringLiteral("<a "
-                                    "href=\"http://qtpfsgui.sourceforge.net/"
-                                    "updater/Changelog\">"),
+                     QStringLiteral("<a \
+                                    href=\"http://qtpfsgui.sourceforge.net/ \
+                                    updater/Changelog\">"),
                      QStringLiteral("</a></html>")));
     }
     about->show();
