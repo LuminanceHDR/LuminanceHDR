@@ -136,7 +136,6 @@ void Reinhard02::gaussian_filter(fftwf_complex *filter, float scale, float k) {
     float a = 1.f / (k * scale);
     float c = 1.f / 4.f;
 
-#pragma omp parallel for
     for (y = 0; y < m_cvts.ymax; y++) {
         y1 = (y >= m_cvts.ymax / 2) ? y - m_cvts.ymax : y;
         s = erf(a * (y1 - .5f)) - erf(a * (y1 + .5f));
@@ -176,7 +175,6 @@ void Reinhard02::build_gaussian_fft() {
         fftwf_destroy_plan(p);
         FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 
-#pragma omp parallel for
         for (i = 0; i < length; i++) {
             m_filter_fft[scale][i][0] *= fft_scale;
             m_filter_fft[scale][i][1] *= fft_scale;
@@ -196,7 +194,6 @@ void Reinhard02::build_image_fft() {
     fprintf(stderr, "Computing image FFT\n");
 #endif
 
-#pragma omp parallel for
     for (y = 0; y < m_cvts.ymax; y++)
         for (x = 0; x < m_cvts.xmax; x++)
             m_image_fft[y * m_cvts.xmax + x][0] = m_luminance[y][x];
@@ -212,7 +209,7 @@ void Reinhard02::build_image_fft() {
     FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(p);
     FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
-#pragma omp parallel for
+
     for (i = 0; i < length; i++) {
         m_image_fft[i][0] *= fft_scale;
         m_image_fft[i][1] *= fft_scale;
@@ -222,7 +219,6 @@ void Reinhard02::build_image_fft() {
 void Reinhard02::convolve_filter(int scale, fftwf_complex *convolution_fft) {
     int i, x, y;
 
-#pragma omp parallel for
     for (i = 0; i < m_cvts.xmax * m_cvts.ymax; i++) {
         convolution_fft[i][0] = m_image_fft[i][0] * m_filter_fft[scale][i][0] +
                                 m_image_fft[i][1] * m_filter_fft[scale][i][1];
@@ -293,14 +289,12 @@ void Reinhard02::tonemap_image() {
         Lmax2 *= Lmax2;
     }
 
-#pragma omp parallel for
     for (y = 0; y < m_cvts.ymax; y++)
         for (x = 0; x < m_cvts.xmax; x++) {
             if (m_use_scales) {
                 prefscale = m_range - 1;
                 for (scale = 0; scale < m_range - 1; scale++)
-                    if (scale >= PyramidHeight ||
-                        fabs(ACTIVITY(x, y, scale)) > m_threshold) {
+                    if (fabs(ACTIVITY(x, y, scale)) > m_threshold) {
                         prefscale = scale;
                         break;
                     }
@@ -320,7 +314,6 @@ float Reinhard02::log_average() {
     int x, y;
     float sum = 0.;
 
-#pragma omp parallel for shared(m_luminance) reduction(+:sum)
     for (y = 0; y < m_cvts.ymax; y++)
         for (x = 0; x < m_cvts.xmax; x++)
             sum += logf(0.00001f + m_luminance[y][x]);
@@ -362,7 +355,6 @@ void Reinhard02::scale_to_midtone() {
 void Reinhard02::copy_luminance() {
     int x, y;
 
-#pragma omp parallel for
     for (x = 0; x < m_cvts.xmax; x++)
         for (y = 0; y < m_cvts.ymax; y++) m_luminance[y][x] = m_image[y][x][0];
 }
@@ -399,15 +391,11 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
       m_range(num),
       m_scale_low(low),
       m_scale_high(high),
-      m_temporal_coherent(temporal_coherent),
       m_alpha(2.f),
       m_bbeta(0.f),
       m_threshold(0.05f),
-      m_ph(ph),
-      Pyramid(0),
-      PyramidHeight(0),
-      PyramidWidth0(0),
-      m_k(1.f / (2.f * 1.4142136f))
+      m_k(1.f / (2.f * 1.4142136f)),
+      m_ph(ph)
 {
 
     m_cvts.xmax = m_Y->getCols();
@@ -501,7 +489,6 @@ void Reinhard02::tmo_reinhard02() {
     if (m_ph.canceled()) goto end;
 
     // saving image
-#pragma omp parallel for
     for (y = 0; y < m_cvts.ymax; y++)
         for (x = 0; x < m_cvts.xmax; x++)
             (*m_L)(x, y) = m_image[y][x][0];

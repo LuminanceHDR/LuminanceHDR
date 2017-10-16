@@ -84,17 +84,12 @@ class Reinhard02 {
     bool m_use_border;
     float m_key, m_phi, m_white;
     int m_range, m_scale_low, m_scale_high;
-    bool m_temporal_coherent;
     const float m_alpha;
     float m_bbeta;
     float m_threshold;
+    float m_k;
     pfs::Progress &m_ph;
 
-    float ***Pyramid;
-    int PyramidHeight;
-    int PyramidWidth0;
-
-    float m_k;
     fftwf_complex **m_filter_fft;
     fftwf_complex *m_image_fft;
     fftwf_complex *m_convolution_fft;
