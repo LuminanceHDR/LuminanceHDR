@@ -275,8 +275,8 @@ const QString TonemappingOptions::getPostfix() {
             if (operator_options.reinhard02options.scales) {
                 postfix += QStringLiteral("_scales_");
                 postfix += QStringLiteral("range_%1_").arg(range);
-                postfix += QStringLiteral("lower%1_").arg(lower);
-                postfix += QStringLiteral("upper%1").arg(upper);
+                postfix += QStringLiteral("lower_%1_").arg(lower);
+                postfix += QStringLiteral("upper_%1").arg(upper);
             }
         } break;
         case reinhard05: {
@@ -293,6 +293,7 @@ const QString TonemappingOptions::getPostfix() {
                 QStringLiteral("light_adaptation_%1").arg(lightAdaptation);
         } break;
     }
+    postfix += QStringLiteral("_postsaturation_%1").arg(postsaturation);
     return postfix;
 }
 
@@ -465,6 +466,9 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
                            .arg(lightAdaptation);
         } break;
     }
+    caption += includePregamma
+            ? separator + QString(QObject::tr("PostSaturation=%1")).arg(postsaturation)
+            : QString();
     return caption;
 }
 
