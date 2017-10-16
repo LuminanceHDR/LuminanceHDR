@@ -677,7 +677,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
 
     if (loadHdrFilename.isEmpty() && inputFiles.size() == 0) {
         cout << cmdvisible_options << endl;
-        return EXIT_SUCCESS;
+        exit(0); // Exit here instead of returning to main complicating main code
     }
 
     QTimer::singleShot(0, this,
