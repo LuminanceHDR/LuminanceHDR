@@ -677,12 +677,12 @@ directory must exist.  Useful to avoid clutter in the current directory. \
 
     if (loadHdrFilename.isEmpty() && inputFiles.size() == 0) {
         cout << cmdvisible_options << endl;
-        return 1;
+        return EXIT_SUCCESS;
     }
 
     QTimer::singleShot(0, this,
                        &CommandLineInterfaceManager::execCommandLineParamsSlot);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void CommandLineInterfaceManager::execCommandLineParamsSlot() {
