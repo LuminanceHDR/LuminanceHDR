@@ -119,6 +119,7 @@ HdrWizard::HdrWizard(QWidget *p, const QStringList &files,
 
     m_Ui->progressBar->hide();
     m_Ui->textEdit->hide();
+    m_Ui->HideLogButton->hide();
 
     if (files.size()) {
         m_Ui->pagestack->setCurrentIndex(0);
@@ -126,61 +127,6 @@ HdrWizard::HdrWizard(QWidget *p, const QStringList &files,
         QMetaObject::invokeMethod(this, "loadInputFiles", Qt::QueuedConnection,
                                   Q_ARG(QStringList, files));
     }
-
-    // Same code as the one in BatchHDRDialog!!! TODO: put everything in the
-    // same
-    // place :(
-    /*
-    QSqlQueryModel model;
-    model.setQuery("SELECT * FROM parameters");
-    for (int i = 0; i < model.rowCount(); i++) {
-        m_Ui->predefConfigsComboBox->addItem(tr("Custom config %1").arg(i+1));
-        int weight_ = model.record(i).value("weight").toInt();
-        int response_ = model.record(i).value("response").toInt();
-        int model_ = model.record(i).value("model").toInt();
-        QString filename_ = model.record(i).value("filename").toString();
-        FusionOperatorConfig ct;
-        switch (weight_) {
-            case 0:
-                ct.weights = TRIANGULAR;
-                break;
-            case 1:
-                ct.weights = GAUSSIAN;
-                break;
-            case 2:
-                ct.weights = PLATEAU;
-                break;
-        }
-        switch (response_) {
-            case 0:
-                ct.response_curve = FROM_FILE;
-                ct.LoadCurveFromFilename = filename_;
-                ct.SaveCurveToFilename = "";
-                break;
-            case 1:
-                ct.response_curve = LINEAR;
-                break;
-            case 2:
-                ct.response_curve = GAMMA;
-                break;
-            case 3:
-                ct.response_curve = LOG10;
-                break;
-            case 4:
-                ct.response_curve = FROM_ROBERTSON;
-                break;
-        }
-        switch (model_) {
-            case 0:
-                ct.model = DEBEVEC;
-                break;
-            case 1:
-                ct.model = ROBERTSON;
-                break;
-        }
-        m_customConfig.push_back(ct);
-    }
-    */
 }
 
 HdrWizard::~HdrWizard() {
@@ -190,26 +136,16 @@ HdrWizard::~HdrWizard() {
 }
 
 void HdrWizard::setupConnections() {
-    // connect(&m_ioFutureWatcher, SIGNAL(finished()), this,
-    // SLOT(loadInputFilesDone()));
 
     connect(m_hdrCreationManager.data(),
             &HdrCreationManager::finishedLoadingFiles, this,
             &HdrWizard::loadInputFilesDone);
-    // connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()),
-    // m_Ui->progressBar, SLOT(show()), Qt::DirectConnection);
-    // connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()),
-    // m_Ui->progressBar, SLOT(reset()));
-    // connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()),
-    // m_Ui->progressBar, SLOT(hide()), Qt::DirectConnection);
-
     connect(m_hdrCreationManager.data(),
             &HdrCreationManager::progressRangeChanged, this,
             &HdrWizard::setRange, Qt::DirectConnection);
     connect(m_hdrCreationManager.data(),
             &HdrCreationManager::progressValueChanged, this,
             &HdrWizard::setValue, Qt::DirectConnection);
-
     connect(this, &HdrWizard::setValue, m_Ui->progressBar,
             &QProgressBar::setValue, Qt::DirectConnection);
     connect(this, &HdrWizard::setRange, m_Ui->progressBar,
@@ -239,12 +175,6 @@ void HdrWizard::setupConnections() {
             &HdrWizard::updateEVSlider);
     connect(m_Ui->ImageEVdsb, SIGNAL(valueChanged(double)), this,
             SLOT(updateEVSpinBox(double)));
-    /*
-    connect(m_Ui->ais_radioButton, SIGNAL(clicked()), this,
-    SLOT(alignSelectionClicked()));
-    connect(m_Ui->mtb_radioButton, SIGNAL(clicked()), this,
-    SLOT(alignSelectionClicked()));
-    */
     connect(m_Ui->profileComboBox, SIGNAL(activated(int)), this,
             SLOT(predefConfigsComboBoxActivated(int)));
     connect(m_Ui->customConfigCheckBox, &QAbstractButton::toggled, this,
@@ -258,18 +188,8 @@ void HdrWizard::setupConnections() {
     connect(m_Ui->modelComboBox, SIGNAL(activated(int)), this,
             SLOT(modelComboBoxActivated(int)));
 
-    /*
-    connect(m_hdrCreationManager.data(), SIGNAL(fileLoaded(int,QString,float)),
-    this, SLOT(fileLoaded(int,QString,float)));
-    connect(m_hdrCreationManager.data(),
-    SIGNAL(finishedLoadingInputFiles(QStringList)), this,
-    SLOT(finishedLoadingInputFiles(QStringList)));
-    */
     connect(m_hdrCreationManager.data(), &HdrCreationManager::errorWhileLoading,
             this, &HdrWizard::errorWhileLoading);
-    // connect(m_hdrCreationManager.data(),
-    // SIGNAL(expotimeValueChanged(float,int)), this,
-    // SLOT(updateGraphicalEVvalue(float,int)));
     connect(m_hdrCreationManager.data(), &HdrCreationManager::finishedAligning,
             this, &HdrWizard::finishedAligning);
     connect(m_hdrCreationManager.data(), &HdrCreationManager::ais_failed, this,
@@ -277,14 +197,12 @@ void HdrWizard::setupConnections() {
     connect(m_hdrCreationManager.data(), &HdrCreationManager::aisDataReady,
             this, &HdrWizard::writeAisData);
 
-    // connect(this, SIGNAL(rejected()), m_hdrCreationManager.data(),
-    // SLOT(removeTempFiles()));
-    // connect(this, SIGNAL(rejected()), OsIntegration::getInstancePtr(),
-    // SLOT(setProgressValue(-1)), Qt::DirectConnection);
     connect(m_Ui->threshold_horizontalSlider, &QAbstractSlider::valueChanged,
             this, &HdrWizard::updateThresholdSlider);
     connect(m_Ui->threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this,
             SLOT(updateThresholdSpinBox(double)));
+    connect(m_Ui->HideLogButton, SIGNAL(clicked(bool)),
+            this, SLOT(updateHideLogButtonText(bool)));
 }
 
 void HdrWizard::loadImagesButtonClicked() {
@@ -594,9 +512,6 @@ void HdrWizard::enableNextOrWarning(const QStringList &filesWithoutExif) {
             "two sets of images via the "
             "<b>Tools->Copy Exif Data...</b> menu item.");
 
-        // "<ul><li>Shutter Speed (seconds)</li>"
-        // "<li>Aperture (f-number)</li></ul>"
-
         QApplication::restoreOverrideCursor();
         if (luminance_options.isShowMissingEVsWarning()) {
             QMessageBox msgBox;
@@ -610,8 +525,6 @@ void HdrWizard::enableNextOrWarning(const QStringList &filesWithoutExif) {
                 luminance_options.setShowMissingEVsWarning(false);
         }
         setEVsValues();
-        // QMessageBox::warning(this, tr("EXIF data not found"),
-        // warningMessage);
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     }
     updateLabelMaybeNext(filesWithoutExif.size());
@@ -629,15 +542,6 @@ void HdrWizard::updateLabelMaybeNext(size_t numFilesWithoutExif) {
             tr("<center><font color=\"#ffaa00\"><h3><b>Please check that "
                "all exposure values are correct before "
                "proceedings.</h3></font></center>"));
-
-        /*
-        m_Ui->confirmloadlabel->setText(
-                    tr("<center><h3><b>To proceed you need to manually " \
-                       "set the exposure values.<br><font
-        color=\"#FF0000\">%1</font> " \
-                       "values still required.</b></h3></center>")
-                    .arg(numFilesWithoutExif));
-        */
     }
 }
 
@@ -671,10 +575,6 @@ void HdrWizard::finishedAligning(int exitcode) {
     m_Ui->textEdit->hide();
     QApplication::restoreOverrideCursor();
     if (exitcode != 0) {
-        /*
-        QMessageBox::warning(this, tr("Error..."),
-                             tr("align_image_stack failed to align images."));
-        */
         ais_failed(QProcess::UnknownError);
         return;
     }
@@ -724,6 +624,7 @@ void HdrWizard::ais_failed(QProcess::ProcessError e) {
     m_Ui->NextFinishButton->setEnabled(true);
     m_Ui->alignGroupBox->setEnabled(true);
     m_Ui->alignCheckBox->setChecked(false);
+    m_Ui->HideLogButton->hide();
     m_Ui->NextFinishButton->setEnabled(true);
     m_Ui->confirmloadlabel->setText("<center><h3><b>" +
                                     tr("Now click on next button") +
@@ -743,6 +644,7 @@ void HdrWizard::NextFinishButtonClicked() {
             // now align, if requested
             if (m_Ui->alignCheckBox->isChecked()) {
                 QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+                m_Ui->HideLogButton->show();
                 m_Ui->confirmloadlabel->setText("<center><h3><b>" +
                                                 tr("Aligning...") +
                                                 "</b></h3></center>");
@@ -760,8 +662,6 @@ void HdrWizard::NextFinishButtonClicked() {
                 m_Ui->progressBar->setMinimum(0);
                 m_Ui->progressBar->show();
                 if (m_Ui->ais_radioButton->isChecked()) {
-                    // m_Ui->progressBar->setRange(0,100);
-                    // m_Ui->progressBar->setValue(0);
                     m_Ui->textEdit->show();
                     m_hdrCreationManager->set_ais_crop_flag(
                         m_Ui->autoCropCheckBox->isChecked());
@@ -852,23 +752,10 @@ void HdrWizard::autoAntighostingFinished() {
 
 void HdrWizard::currentPageChangedInto(int newindex) {
     // predefined configs page
-    // m_Ui->textEdit->hide();
     if (newindex == 1) {
-        // m_hdrCreationManager->removeTempFiles();
         m_Ui->NextFinishButton->setText(tr("&Finish"));
         // when at least 2 LDR or MDR inputs perform Manual Alignment
         int num_images = m_hdrCreationManager->getData().size();
-        /*
-                if (m_hdrCreationManager->inputImageType() ==
-           HdrCreationManager::LDR_INPUT_TYPE)
-                    numldrs = m_hdrCreationManager->getLDRList().size();
-                else
-                    numldrs = m_hdrCreationManager->getMDRList().size();
-
-                qDebug() << "numldrs = " << numldrs;
-        */
-        // if (m_hdrCreationManager->inputImageType() ==
-        // HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
         if (m_Ui->checkBoxEditingTools->isChecked() && num_images >= 2) {
             this->setDisabled(true);
             EditingTools *editingtools =
@@ -1207,4 +1094,8 @@ void HdrWizard::setEVsValues() {
     m_Ui->EVSlider->setValue((int)100.f * minEV);
     m_Ui->ImageEVdsb->blockSignals(oldState);
     updateLabelMaybeNext(1);
+}
+
+void HdrWizard::updateHideLogButtonText(bool b) {
+    b ? m_Ui->HideLogButton->setText(tr("Show Log")) : m_Ui->HideLogButton->setText(tr("Hide Log"));
 }

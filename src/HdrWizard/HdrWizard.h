@@ -143,6 +143,7 @@ class HdrWizard : public QDialog {
     void createHdr();
     void createHdrFinished();
     void autoAntighostingFinished();
+    void updateHideLogButtonText(bool);
 };
 
 #endif
