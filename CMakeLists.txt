@@ -316,7 +316,7 @@ ELSEIF(WIN32)
     qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 
     # Link libraries
-    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS} "-L/usr/lib64/nvidia-bumblebee -lOpenCL")
+    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS})
     TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
 
 ENDIF()
