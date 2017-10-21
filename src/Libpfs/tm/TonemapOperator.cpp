@@ -178,7 +178,7 @@ struct TonemapOperatorDrago03
     }
 };
 
-class TonemapOperatorDurand02
+struct TonemapOperatorDurand02
     : public TonemapOperatorRegister<durand, TonemapOperatorDurand02> {
     void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
                       pfs::Progress &ph) {
@@ -195,7 +195,7 @@ class TonemapOperatorDurand02
     }
 };
 
-struct TonemapOperatorReinhard02
+class TonemapOperatorReinhard02
     : public TonemapOperatorRegister<reinhard02, TonemapOperatorReinhard02> {
     void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
                       pfs::Progress &ph) {
@@ -206,6 +206,7 @@ struct TonemapOperatorReinhard02
         workingframe.getXYZChannels(X, Y, Z);
         pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z);
 
+        m_mutex.lock();
         try {
             pfstmo_reinhard02(
                 workingframe, opts->operator_options.reinhard02options.key,
@@ -215,12 +216,19 @@ struct TonemapOperatorReinhard02
                 opts->operator_options.reinhard02options.upper,
                 opts->operator_options.reinhard02options.scales, ph);
         } catch (...) {
+            m_mutex.unlock();
             throw std::runtime_error("Reinhard02: Tonemap Failed");
         }
+        m_mutex.unlock();
 
         pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, pfs::CS_SRGB, X, Y, Z);
     }
+
+private:
+    static boost::mutex m_mutex;
 };
+
+boost::mutex TonemapOperatorReinhard02::m_mutex;
 
 struct TonemapOperatorReinhard05
     : public TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05> {

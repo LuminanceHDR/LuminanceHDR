@@ -164,16 +164,16 @@ void Reinhard02::build_gaussian_fft() {
         gaussian_filter(m_filter_fft[scale], S_I(scale), m_k);
 
         fftwf_plan p;
-        FFTW_MUTEX::fftw_mutex_plan.lock();
+        //FFTW_MUTEX::fftw_mutex_plan.lock();
         p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_filter_fft[scale], m_filter_fft[scale], -1,
         FFTW_ESTIMATE);
-        FFTW_MUTEX::fftw_mutex_plan.unlock();
+        //FFTW_MUTEX::fftw_mutex_plan.unlock();
 
         fftwf_execute(p);
 
-        FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
+        //FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
         fftwf_destroy_plan(p);
-        FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
+        //FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 
         for (i = 0; i < length; i++) {
             m_filter_fft[scale][i][0] *= fft_scale;
@@ -199,16 +199,16 @@ void Reinhard02::build_image_fft() {
             m_image_fft[y * m_cvts.xmax + x][0] = m_luminance[y][x];
 
     fftwf_plan p;
-    FFTW_MUTEX::fftw_mutex_plan.lock();
+    //FFTW_MUTEX::fftw_mutex_plan.lock();
     p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_image_fft, m_image_fft, -1,
         FFTW_ESTIMATE);
-    FFTW_MUTEX::fftw_mutex_plan.unlock();
+    //FFTW_MUTEX::fftw_mutex_plan.unlock();
 
     fftwf_execute(p);
 
-    FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
+    //FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(p);
-    FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
+    //FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 
     for (i = 0; i < length; i++) {
         m_image_fft[i][0] *= fft_scale;
@@ -226,16 +226,16 @@ void Reinhard02::convolve_filter(int scale, fftwf_complex *convolution_fft) {
                                 m_image_fft[i][1] * m_filter_fft[scale][i][0];
     }
     fftwf_plan p;
-    FFTW_MUTEX::fftw_mutex_plan.lock();
+    //FFTW_MUTEX::fftw_mutex_plan.lock();
     p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, convolution_fft, convolution_fft, 1,
         FFTW_ESTIMATE);
-    FFTW_MUTEX::fftw_mutex_plan.unlock();
+    //FFTW_MUTEX::fftw_mutex_plan.unlock();
 
     fftwf_execute(p);
 
-    FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
+    //FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(p);
-    FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
+    //FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
     i = 0;
     for (y = 0; y < m_cvts.ymax; y++)
         for (x = 0; x < m_cvts.xmax; x++)
@@ -397,7 +397,6 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
       m_k(1.f / (2.f * 1.4142136f)),
       m_ph(ph)
 {
-
     m_cvts.xmax = m_Y->getCols();
     m_cvts.ymax = m_Y->getRows();
 
@@ -408,7 +407,7 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
 
     m_bbeta = bessel(boost::math::float_constants::pi * m_alpha);
 
-    FFTW_MUTEX::fftw_mutex_alloc.lock();
+    //FFTW_MUTEX::fftw_mutex_alloc.lock();
     m_luminance = (float **)malloc(m_cvts.ymax * sizeof(float *));
     m_image = (COLOR **)malloc(m_cvts.ymax * sizeof(COLOR *));
     for (int y = 0; y < m_cvts.ymax; y++) {
@@ -429,10 +428,11 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
         }
         m_convolution_fft = (fftwf_complex *)fftwf_alloc_complex(m_cvts.xmax * m_cvts.ymax);
     }
-    FFTW_MUTEX::fftw_mutex_alloc.unlock();
+    //FFTW_MUTEX::fftw_mutex_alloc.unlock();
 }
 
 Reinhard02::~Reinhard02() {
+
     for (int y = 0; y < m_cvts.ymax; y++) {
         free(m_luminance[y]);
         free(m_image[y]);
@@ -440,7 +440,7 @@ Reinhard02::~Reinhard02() {
     free(m_luminance);
     free(m_image);
     if (m_use_scales) {
-        FFTW_MUTEX::fftw_mutex_free.lock();
+        //FFTW_MUTEX::fftw_mutex_free.lock();
         for (int scale = 0; scale < m_range; scale++) {
             fftwf_free(m_filter_fft[scale]);
             for (int x = 0; x < m_cvts.xmax; x++) {
@@ -450,7 +450,7 @@ Reinhard02::~Reinhard02() {
         free(m_convolved_image);
         fftwf_free(m_convolution_fft);
         fftwf_free(m_image_fft);
-        FFTW_MUTEX::fftw_mutex_free.unlock();
+        //FFTW_MUTEX::fftw_mutex_free.unlock();
     }
 }
 
@@ -459,6 +459,7 @@ void Reinhard02::tmo_reinhard02() {
     msec_timer stop_watch;
     stop_watch.start();
 #endif
+
     m_ph.setValue(0);
 
     int x, y;

@@ -25,6 +25,16 @@
 //! \author Giuseppe Rota <grota@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
+
+#include <boost/compute/core.hpp>
+#include <boost/compute/algorithm/transform.hpp>
+#include <boost/compute/container/vector.hpp>
+#include <boost/compute/functional/math.hpp>
+#include <boost/compute/functional/bind.hpp>
+#include <boost/compute/lambda/functional.hpp>
+#include <boost/compute/lambda/placeholders.hpp>
+#include <boost/compute/types/struct.hpp>
+
 #include "HdrCreation/debevec.h"
 #include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/utils/msec_timer.h>
@@ -58,6 +68,9 @@ using namespace utils;
 using namespace colorspace;
 using namespace boost::math;
 
+namespace compute = boost::compute;
+using boost::compute::lambda::_1;
+
 namespace libhdr {
 namespace fusion {
 
@@ -65,11 +78,18 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
                                     WeightFunction &weight,
                                     const vector<FrameEnhanced> &images,
                                     pfs::Frame &frame) {
+#define TIMER_PROFILING
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
     assert(images.size() != 0);
+
+    compute::device device = compute::system::default_device();
+    compute::context context(device);
+    compute::command_queue queue(context, device);
+
+    std::cout << " (platform: " << device.platform().name() << ")" << std::endl;
 
     vector<float> times;
 
@@ -90,19 +110,28 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     Channel *Ch[3];
     frame.createXYZChannels(Ch[0], Ch[1], Ch[2]);
     Array2Df *resultCh[channels] = {Ch[0], Ch[1], Ch[2]};
-#pragma omp parallel for
+
+    compute::vector<float> resultCh_c[channels] { compute::vector<float>(W*H, context),
+                                                  compute::vector<float>(W*H, context),
+                                                  compute::vector<float>(W*H, context) };
     for (int c = 0; c < channels; c++) {
-        resultCh[c]->fill(0.f);
+        compute::fill(resultCh_c[c].begin(), resultCh_c[c].end(), 0.f, queue);
     }
-    Array2Df weight_sum(W, H);
-    weight_sum.fill(0.f);
+    compute::vector<float> weight_sum_c(W*H, context);
+    compute::fill(weight_sum_c.begin(), weight_sum_c.end(), 0.f, queue);
 
     int length = images.size();
-#pragma omp parallel for
     for (int i = 0; i < length; i++) {
         Channel *Ch[channels];
         images[i].frame()->getXYZChannels(Ch[0], Ch[1], Ch[2]);
         Array2Df *imagesCh[channels] = {Ch[0], Ch[1], Ch[2]};
+        compute::vector<float> imagesCh_c[channels] = {compute::vector<float>(W*H, context),
+                                                       compute::vector<float>(W*H, context),
+                                                       compute::vector<float>(W*H, context)};
+
+        for (int c = 0; c < channels; c++) {
+            compute::copy(imagesCh[c]->begin(), imagesCh[c]->end(), imagesCh_c[c].begin(), queue);
+        }
 
         float cmax[3];
         float cmin[3];
@@ -118,42 +147,70 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
                       Normalizer(Min, Max));
         }
 
-        Array2Df temp_array(W, H);
+        compute::vector<float> temp_array_c(W*H, context);
         Array2Df splitted[channels] = {Array2Df(W, H), Array2Df(W, H),
                                        Array2Df(W, H)};
-        Array2Df response_img[channels] = {Array2Df(W, H), Array2Df(W, H),
-                                           Array2Df(W, H)};
-        Array2Df w(W, H);
+        compute::vector<float> splitted_c[channels] = {compute::vector<float>(W*H, context),
+                                                       compute::vector<float>(W*H, context),
+                                                       compute::vector<float>(W*H, context)};
+        compute::vector<float> response_img_c[channels] = {compute::vector<float>(W*H, context),
+                                                       compute::vector<float>(W*H, context),
+                                                       compute::vector<float>(W*H, context)};
+        compute::vector<float> w_c(W*H, context);
+        compute::fill(w_c.begin(), w_c.end(), 0.f, queue);
+
         for (int c = 0; c < channels; c++) {
             for (size_t k = 0; k < size; k++) {
                 splitted[c](k) = weight((*imagesCh[c])(k));
             }
-            vadd(&w, &splitted[c], &w, size);
         }
-        vmul_scalar(&w, 1.f / channels, &w, size);
+        for (int c = 0; c < channels; c++) {
+            compute::copy(splitted[c].begin(), splitted[c].end(), splitted_c[c].begin(), queue);
+            compute::transform(w_c.begin(), w_c.end(), splitted_c[c].begin(), w_c.begin(), compute::plus<float>(), queue);
+        }
+
+        compute::transform(w_c.begin(), w_c.end(), w_c.begin(), _1 / 3.f, queue);
+
+        vector<float> tmp[channels] = {vector<float>(size), vector<float>(size), vector<float>(size)};
         for (int c = 0; c < channels; c++) {
             for (size_t k = 0; k < size; k++) {
-                (response_img[c])(k) = logf(response((*imagesCh[c])(k)));
+                tmp[c][k] = logf(response((*imagesCh[c])(k)));
             }
         }
         for (int c = 0; c < channels; c++) {
-            vsum_scalar(&response_img[c], -logf(times.at((int)i)),
-                        &response_img[c], size);
-            vmul(&w, &response_img[c], &temp_array, size);
-            vadd(resultCh[c], &temp_array, resultCh[c], size);
+            compute::copy(tmp[c].begin(), tmp[c].end(), response_img_c[c].begin(), queue);
         }
-        vadd(&weight_sum, &w, &weight_sum, size);
+        for (int c = 0; c < channels; c++) {
+            float l = -logf(times.at((int)i));
+            compute::transform(response_img_c[c].begin(), response_img_c[c].end(),
+                    response_img_c[c].begin(), _1 + l, queue);
+            compute::transform(response_img_c[c].begin(), response_img_c[c].end(), w_c.begin(), temp_array_c.begin(),
+                    compute::multiplies<float>(), queue);
+            compute::transform(resultCh_c[c].begin(), resultCh_c[c].end(), temp_array_c.begin(), resultCh_c[c].begin(),
+                    compute::plus<float>(), queue);
+        }
+        compute::transform(weight_sum_c.begin(), weight_sum_c.end(), w_c.begin(), weight_sum_c.begin(),
+                    compute::plus<float>(), queue);
     }
-    vdiv_scalar(&weight_sum, 1.0f, &weight_sum, size);
-#pragma omp parallel for
+    compute::transform(weight_sum_c.begin(), weight_sum_c.end(), weight_sum_c.begin(), 1.f / _1, queue);
+
     for (int c = 0; c < channels; c++) {
-        vmul(resultCh[c], &weight_sum, resultCh[c], size);
+        compute::transform(weight_sum_c.begin(), weight_sum_c.end(), resultCh_c[c].begin(), resultCh_c[c].begin(),
+                    compute::multiplies<float>(), queue);
     }
-#pragma omp parallel for
     for (int c = 0; c < channels; c++) {
-        transform(resultCh[c]->begin(), resultCh[c]->end(),
-                  resultCh[c]->begin(), expf);
+        compute::transform(
+                        resultCh_c[c].begin(),
+                        resultCh_c[c].end(),
+                        resultCh_c[c].begin(),
+                        compute::exp<float>(),
+                        queue
+                      );
+        compute::copy(
+                resultCh_c[c].begin(), resultCh_c[c].end(), resultCh[c]->begin(), queue
+                );
     }
+
 #pragma omp parallel for
     for (int c = 0; c < channels; c++) {
         replace_if(resultCh[c]->begin(), resultCh[c]->end(),

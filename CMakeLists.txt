@@ -12,6 +12,7 @@ include(build_files/Modules/Version.cmake)
 include(build_files/Modules/GlobalSettings.cmake)
 include(build_files/Modules/CompilerSettings.cmake)
 include(build_files/Modules/Internationalization.cmake)
+include(/usr/local/lib/cmake/BoostCompute/BoostComputeConfig.cmake)
 
 IF(TIMER_PROFILING)
     ADD_DEFINITIONS(-DTIMER_PROFILING)
@@ -315,7 +316,7 @@ ELSEIF(WIN32)
     qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 
     # Link libraries
-    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS} "-L/usr/lib64/nvidia-bumblebee -lOpenCL")
     TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
 
 ENDIF()

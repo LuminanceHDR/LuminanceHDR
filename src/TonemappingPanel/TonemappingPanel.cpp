@@ -195,9 +195,9 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
             &QWidget::setEnabled);
 
     coneGang = new Gang(m_Ui->coneSlider, m_Ui->conedsb, NULL, NULL, NULL, NULL,
-                        1e-3, 1.f, PATTANAIK00_CONE, true);
+                        1e-3, 30.f, PATTANAIK00_CONE, true);
     rodGang = new Gang(m_Ui->rodSlider, m_Ui->roddsb, NULL, NULL, NULL, NULL,
-                       1e-3, 1.f, PATTANAIK00_ROD, true);
+                       1e-3, 30.f, PATTANAIK00_ROD, true);
     autoYGang = new Gang(NULL, NULL, m_Ui->autoYcheckbox);
     pattalocalGang = new Gang(NULL, NULL, m_Ui->pattalocal);
 
