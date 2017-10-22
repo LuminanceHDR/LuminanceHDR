@@ -30,9 +30,22 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
 
+#include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/compute/core.hpp>
+#include <boost/compute/closure.hpp>
+#include <boost/compute/algorithm/transform.hpp>
+#include <boost/compute/algorithm/accumulate.hpp>
+#include <boost/compute/algorithm/replace.hpp>
+#include <boost/compute/algorithm/minmax_element.hpp>
+#include <boost/compute/container/vector.hpp>
+#include <boost/compute/functional/math.hpp>
+#include <boost/compute/lambda/functional.hpp>
+#include <boost/compute/lambda/placeholders.hpp>
+
 #include "tmo_reinhard05.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
+#include <Libpfs/utils/msec_timer.h>
 
 #include <assert.h>
 #include <algorithm>
@@ -42,20 +55,26 @@
 #include <numeric>
 
 using namespace std;
+namespace compute = boost::compute;
+using boost::compute::lambda::_1;
+using boost::compute::lambda::_2;
 
 namespace {
-class LuminanceEqualization {
-   private:
+class LuminanceEqualization
+{
+private:
     static const float DISPL_F;
 
-   public:
-    LuminanceEqualization()
-        : min_lum_(numeric_limits<float>::max()),
-          max_lum_(-numeric_limits<float>::max()),
-          avg_lum_(0.0f),
-          adapted_lum_(0.0f) {}
+public:
+    LuminanceEqualization():
+        min_lum_( numeric_limits<float>::max() ),
+        max_lum_( -numeric_limits<float>::max() ),
+        avg_lum_( 0.0f ),
+        adapted_lum_( 0.0f )
+    {}
 
-    void operator()(const float &value) {
+    void operator() (const float& value)
+    {
         min_lum_ = std::min(min_lum_, value);
         max_lum_ = std::max(max_lum_, value);
         avg_lum_ += value;
@@ -70,21 +89,11 @@ class LuminanceEqualization {
 
 const float LuminanceEqualization::DISPL_F = 2.3e-5f;
 
-void computeAverage(const float *samples, size_t numSamples, float &average) {
+void computeAverage(const float* samples, size_t numSamples, float& average)
+{
     float summation = accumulate(samples, samples + numSamples, 0.0f);
-    average = summation / numSamples;
+    average = summation/numSamples;
 }
-
-class Normalizer {
-   private:
-    const float &min_;
-    const float &max_;
-
-   public:
-    Normalizer(const float &min, const float &max) : min_(min), max_(max) {}
-
-    void operator()(float &value) { value = (value - min_) / (max_ - min_); }
-};
 
 struct LuminanceProperties {
     float max;
@@ -96,97 +105,89 @@ struct LuminanceProperties {
     float imageBrightness;
 };
 
-void computeLuminanceProperties(const float *samples, size_t numSamples,
-                                LuminanceProperties &luminanceProperties,
-                                const Reinhard05Params &params) {
+void computeLuminanceProperties(const float* samples,
+                                size_t numSamples,
+                                LuminanceProperties& luminanceProperties,
+                                const Reinhard05Params& params)
+{
     // equalization parameters for the Luminance Channel
-    LuminanceEqualization lum_eq =
-        for_each(samples, samples + numSamples, LuminanceEqualization());
+    LuminanceEqualization lum_eq = for_each(samples, samples + numSamples, LuminanceEqualization());
 
     luminanceProperties.max = std::log(lum_eq.max_lum_);
     luminanceProperties.min = std::log(lum_eq.min_lum_);
-    luminanceProperties.adaptedAverage = lum_eq.adapted_lum_ / numSamples;
-    luminanceProperties.average = lum_eq.avg_lum_ / numSamples;
+    luminanceProperties.adaptedAverage = lum_eq.adapted_lum_/numSamples;
+    luminanceProperties.average = lum_eq.avg_lum_/numSamples;
+
 
     // image key (k)
-    luminanceProperties.imageKey =
-        (luminanceProperties.max - luminanceProperties.adaptedAverage) /
-        (luminanceProperties.max - luminanceProperties.min);
+    luminanceProperties.imageKey = (luminanceProperties.max - luminanceProperties.adaptedAverage) / (luminanceProperties.max - luminanceProperties.min);
     // image contrast based on key value (f)
-    luminanceProperties.imageContrast =
-        0.3f + 0.7f * std::pow(luminanceProperties.imageKey, 1.4f);
+    luminanceProperties.imageContrast = 0.3f + 0.7f*std::pow(luminanceProperties.imageKey, 1.4f);
     // image brightness (m?)
     luminanceProperties.imageBrightness = std::exp(-params.m_brightness);
 }
 
-class ChannelTransformation {
-   public:
-    ChannelTransformation(float &min_sample, float &max_sample,
-                          const float &channelAverage,
-                          const Reinhard05Params &params,
-                          const LuminanceProperties &lumProps)
-        : min_sample_(min_sample),
-          max_sample_(max_sample),
-          channelAverage_(channelAverage),
-          params_(params),
-          lumProps_(lumProps) {}
-
-    float operator()(float ch_sample, const float y_sample) {
-        if (y_sample != 0.0f && ch_sample != 0.0f) {
-            // local light adaptation
-            float Il = (params_.m_chromaticAdaptation * ch_sample) +
-                       ((1.f - params_.m_chromaticAdaptation) * y_sample);
-            // global light adaptation
-            float Ig =
-                (params_.m_chromaticAdaptation * channelAverage_) +
-                ((1.f - params_.m_chromaticAdaptation) * lumProps_.average);
-            // interpolated light adaptation
-            float Ia = (params_.m_lightAdaptation * Il) +
-                       ((1.f - params_.m_lightAdaptation) * Ig);
-            // photoreceptor equation
-            ch_sample /= ch_sample + std::pow(lumProps_.imageBrightness * Ia,
-                                              lumProps_.imageContrast);
-
-            max_sample_ = std::max(ch_sample, max_sample_);
-            min_sample_ = std::min(ch_sample, min_sample_);
-        }
-        return ch_sample;
-    }
-
-   private:
-    // output
-    float &min_sample_;
-    float &max_sample_;
-
-    const float &channelAverage_;
-    const Reinhard05Params &params_;
-    const LuminanceProperties &lumProps_;
-};
-
-inline void transformChannel(const float *samplesChannel,
-                             const float *samplesLuminance,
-                             float *outputSamples, size_t numSamples,
+inline void transformChannel_c(compute::vector<float> &samplesChannel,
+                             const compute::vector<float> &samplesLuminance,
+                             compute::vector<float> &outputSamples, size_t numSamples,
                              float channelAverage,
                              const Reinhard05Params &params,
                              const LuminanceProperties &lumProps,
-                             float &minSample, float &maxSample) {
-    transform(samplesChannel, samplesChannel + numSamples, samplesLuminance,
-              outputSamples,
-              ChannelTransformation(minSample, maxSample, channelAverage,
-                                    params, lumProps));
+                             compute::context &context,
+                             compute::command_queue &queue) {
+    float chromaticAdaptation_c = params.m_chromaticAdaptation;
+    float channelAverage_c = channelAverage;
+    float average_c = lumProps.average;
+    float lightAdaptation_c = params.m_lightAdaptation;
+    float imageBrightness_c = lumProps.imageBrightness;
+    float imageContrast_c = lumProps.imageContrast;
+
+    float compl_chromaticAdaptation_c = 1.f - chromaticAdaptation_c;
+    float compl_lightAdaptation_c = 1.f - lightAdaptation_c;
+
+    float Ig = (chromaticAdaptation_c * channelAverage_c) + (compl_chromaticAdaptation_c * average_c);
+    compute::vector<float> Il(numSamples, context);
+    compute::replace(samplesChannel.begin(), samplesChannel.end(), 0.0f, 0.01f, queue);
+    compute::transform(samplesChannel.begin(), samplesChannel.end(), samplesLuminance.begin(), Il.begin(),
+            lightAdaptation_c * ((chromaticAdaptation_c * _1) + (compl_chromaticAdaptation_c * _2)) +
+            (compl_lightAdaptation_c * Ig) , queue);
+    compute::transform(samplesChannel.begin(), samplesChannel.end(), Il.begin(), outputSamples.begin(),
+            _1 /(_1 + pow(imageBrightness_c * _2, imageContrast_c)), queue);
 }
 
-void normalizeChannel(float *samples, size_t numSamples, float min, float max) {
-    for_each(samples, samples + numSamples, Normalizer(min, max));
+inline void normalizeChannel_c(compute::vector<float> &samples, float min, float max, compute::command_queue &queue) {
+    float range = max - min;
+    compute::transform(samples.begin(), samples.end(), samples.begin(), (_1 - min)/range, queue);
 }
 }
 
+#define TIMER_PROFILING
 void tmo_reinhard05(size_t width, size_t height, float *nR, float *nG,
                     float *nB, const float *nY, const Reinhard05Params &params,
                     pfs::Progress &ph) {
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+
+    compute::device device = compute::system::default_device();
+    compute::context context(device);
+    compute::command_queue queue(context, device);
+
+    std::cout << " (platform: " << device.platform().name() << ")" << std::endl;
+
     float Cav[] = {0.0f, 0.0f, 0.0f};
 
     const size_t imSize = width * height;
+
+    compute::vector<float> nR_c(imSize, context);
+    compute::vector<float> nG_c(imSize, context);
+    compute::vector<float> nB_c(imSize, context);
+    compute::vector<float> nY_c(imSize, context);
+    compute::copy(nR, nR + imSize, nR_c.begin(), queue);
+    compute::copy(nG, nG + imSize, nG_c.begin(), queue);
+    compute::copy(nB, nB + imSize, nB_c.begin(), queue);
+    compute::copy(nY, nY + imSize, nY_c.begin(), queue);
 
     computeAverage(nR, imSize, Cav[0]);
     computeAverage(nG, imSize, Cav[1]);
@@ -196,36 +197,53 @@ void tmo_reinhard05(size_t width, size_t height, float *nR, float *nG,
     computeLuminanceProperties(nY, imSize, luminanceProperties, params);
 
     // output
-    float max_col = std::numeric_limits<float>::min();
-    float min_col = std::numeric_limits<float>::max();
+    float max_col;
+    float min_col;
 
     // transform Red Channel
-    transformChannel(nR, nY, nR, imSize, Cav[0], params, luminanceProperties,
-                     min_col, max_col);
-    ph.setValue(22);
+    transformChannel_c(nR_c, nY_c, nR_c, imSize, Cav[0], params, luminanceProperties,
+                       context, queue);
 
     // transform Green Channel
-    transformChannel(nG, nY, nG, imSize, Cav[1], params, luminanceProperties,
-                     min_col, max_col);
-    ph.setValue(44);
+    transformChannel_c(nG_c, nY_c, nG_c, imSize, Cav[1], params, luminanceProperties,
+                       context, queue);
 
     // transform Blue Channel
-    transformChannel(nB, nY, nB, imSize, Cav[2], params, luminanceProperties,
-                     min_col, max_col);
-    ph.setValue(66);
+    transformChannel_c(nB_c, nY_c, nB_c, imSize, Cav[2], params, luminanceProperties,
+                       context, queue);
 
-    if (!ph.canceled()) {
-        //--- normalize intensities
-        // normalize RED channel
-        normalizeChannel(nR, imSize, min_col, max_col);
-        ph.setValue(77);  // done!
+    auto minmaxR = compute::minmax_element(nR_c.begin(), nR_c.end(), queue);
+    auto minmaxG = compute::minmax_element(nG_c.begin(), nG_c.end(), queue);
+    auto minmaxB = compute::minmax_element(nB_c.begin(), nB_c.end(), queue);
 
-        // normalize GREEN channel
-        normalizeChannel(nG, imSize, min_col, max_col);
-        ph.setValue(88);
+    float minR = *minmaxR.first;
+    float minG = *minmaxG.first;
+    float minB = *minmaxB.first;
 
-        // normalize BLUE channel
-        normalizeChannel(nB, imSize, min_col, max_col);
-        ph.setValue(99);
-    }
+    float maxR = *minmaxR.second;
+    float maxG = *minmaxG.second;
+    float maxB = *minmaxB.second;
+
+    min_col = std::min(minR, std::min(minG, minB));
+    max_col = std::max(maxR, std::max(maxG, maxB));
+
+    //--- normalize intensities
+    // normalize RED channel
+    normalizeChannel_c(nR_c, min_col, max_col, queue);
+
+    // normalize GREEN channel
+    normalizeChannel_c(nG_c, min_col, max_col, queue);
+
+    // normalize BLUE channel
+    normalizeChannel_c(nB_c, min_col, max_col, queue);
+
+    compute::copy(nR_c.begin(), nR_c.end(), nR, queue);
+    compute::copy(nG_c.begin(), nG_c.end(), nG, queue);
+    compute::copy(nB_c.begin(), nB_c.end(), nB, queue);
+
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    cout << "reinhard05 = " << f_timer.get_time() << " msec"
+              << endl;
+#endif
 }
