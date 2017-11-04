@@ -31,7 +31,6 @@
 #include <Libpfs/utils/numeric.h>
 
 #include <limits>
-#include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/bounds.hpp>
 #include <cassert>
 #include <cfloat>
