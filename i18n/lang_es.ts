@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
 <context>
     <name>AboutLuminance</name>
     <message>
@@ -5524,7 +5522,7 @@ Error: %1</translation>
     <message>
         <location filename="../src/Common/SavedParametersDialog.cpp" line="126"/>
         <source>Contrast Factor</source>
-        <translation>Facto de Constraste</translation>
+        <translation>Facto de Contraste</translation>
     </message>
     <message>
         <location filename="../src/Common/SavedParametersDialog.cpp" line="128"/>
@@ -6078,7 +6076,7 @@ Error: %1</translation>
     </message>
     <message>
         <source>Contrast Factor</source>
-        <translation type="vanished">Facto de Constraste</translation>
+        <translation>Facto de Contraste</translation>
     </message>
     <message>
         <source>Saturation Factor</source>

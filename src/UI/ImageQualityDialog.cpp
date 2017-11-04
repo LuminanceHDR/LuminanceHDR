@@ -21,8 +21,8 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
-#include "ImageQualityDialog.h"
-#include "ui_ImageQualityDialog.h"
+#include "UI/ImageQualityDialog.h"
+#include "UI/ui_ImageQualityDialog.h"
 
 #include <QBuffer>
 #include <QByteArray>

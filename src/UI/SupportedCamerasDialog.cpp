@@ -21,11 +21,11 @@
  * @author Franco Comida <francocomida@users.sourceforge.net>
  */
 
-#include "SupportedCamerasDialog.h"
 #include <boost/foreach.hpp>
+#include "UI/SupportedCamerasDialog.h"
+#include "UI/ui_SupportedCamerasDialog.h"
 #include "Common/GitSHA1.h"
 #include "Common/config.h"
-#include "ui_SupportedCamerasDialog.h"
 
 #ifdef __APPLE__
 #include <libraw.h>

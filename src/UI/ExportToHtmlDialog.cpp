@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QUrl>
 
+#include "UI/ui_ExportToHtmlDialog.h"
 #include "HdrHTML/pfsouthdrhtml.h"
 #include "Libpfs/exception.h"
 #include "Libpfs/frame.h"

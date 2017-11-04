@@ -20,8 +20,8 @@
  *
  */
 
-#include "TiffModeDialog.h"
-#include "ui_TiffModeDialog.h"
+#include "UI/TiffModeDialog.h"
+#include "UI/ui_TiffModeDialog.h"
 
 namespace {
 const static QString TIFF_MODE_HDR_KEY =

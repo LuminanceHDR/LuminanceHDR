@@ -24,8 +24,8 @@
 #include <QtConcurrentRun>
 #include <boost/bind.hpp>
 
-#include "ProjectionsDialog.h"
-#include "ui_ProjectionsDialog.h"
+#include "Projection/ProjectionsDialog.h"
+#include "Projection/ui_ProjectionsDialog.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/projection.h"

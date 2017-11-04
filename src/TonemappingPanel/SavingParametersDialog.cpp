@@ -22,8 +22,8 @@
  *
  */
 
-#include "SavingParametersDialog.h"
 #include "TonemappingPanel/ui_SavingParametersDialog.h"
+#include "TonemappingPanel/SavingParametersDialog.h"
 
 SavingParameters::SavingParameters(QWidget *parent)
     : QDialog(parent), m_Ui(new Ui::SavingParameters) {

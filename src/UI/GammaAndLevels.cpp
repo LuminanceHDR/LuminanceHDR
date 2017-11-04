@@ -30,7 +30,7 @@
 #include <cmath>
 
 #include "UI/GammaAndLevels.h"
-#include "ui_GammaAndLevels.h"
+#include "UI/ui_GammaAndLevels.h"
 
 namespace {
 static inline int clamp(const float &v, const float &minV, const float &maxV) {

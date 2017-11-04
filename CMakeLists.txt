@@ -35,24 +35,18 @@ endif( HAS_BRANCH_PREDICTION )
 
 # find and setup Qt5 for this project
 
-# Tell CMake to run moc when necessary:
-  #set(CMAKE_AUTOMOC ON)
-  # As moc files are generated in the binary dir, tell CMake
-  # to always look for includes there:
-  #set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Concurrent REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5WebEngineCore REQUIRED)
+find_package(Qt5Core             REQUIRED)
+find_package(Qt5Concurrent       REQUIRED)
+find_package(Qt5Widgets          REQUIRED)
+find_package(Qt5Gui              REQUIRED)
+find_package(Qt5WebEngineCore    REQUIRED)
 find_package(Qt5WebEngineWidgets REQUIRED)
-find_package(Qt5Xml REQUIRED)
-find_package(Qt5Sql REQUIRED)
-find_package(Qt5Svg REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
-find_package(Qt5PrintSupport REQUIRED)
+find_package(Qt5Xml              REQUIRED)
+find_package(Qt5Sql              REQUIRED)
+find_package(Qt5Svg              REQUIRED)
+find_package(Qt5Network          REQUIRED)
+find_package(Qt5LinguistTools    REQUIRED)
+find_package(Qt5PrintSupport     REQUIRED)
 IF(WIN32)
     find_package(Qt5WinExtras)
 ENDIF()
@@ -63,7 +57,7 @@ IF(WIN32)
 ENDIF(WIN32)
 
 set(LIBS ${LIBS}
-    ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTNETWORK_LIBRARIES}
+    ${QT_QTCORE_LIBRARIES}     ${QT_QTGUI_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}
     ${QT_QTWEBENGINE_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
 
 FIND_PACKAGE(Git)
@@ -217,58 +211,78 @@ SET(LUMINANCE_FILES
     ${LUMINANCE_HDR_RCCS_SRCS}
     ${LUMINANCE_QM})
 
-# Apple Mac OS X
+# MacOSX
 IF(APPLE)
     SET(CMAKE_INSTALL_PREFIX "/Applications")
 
     # Set Bundle settings
-    set(MACOSX_BUNDLE_INFO_STRING "${LHDR_NAME} ${LHDR_VERSION}")
-    set(MACOSX_BUNDLE_BUNDLE_VERSION "${LHDR_NAME} ${LHDR_VERSION}")
-    set(MACOSX_BUNDLE_LONG_VERSION_STRING "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_INFO_STRING          "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_BUNDLE_VERSION       "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_LONG_VERSION_STRING  "${LHDR_NAME} ${LHDR_VERSION}")
     set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${LHDR_VERSION}")
-    set(MACOSX_BUNDLE_VERSION "${LHDR_VERSION}")
-    set(MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
-    set(MACOSX_BUNDLE_ICON "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
-    set(MACOSX_BUNDLE_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources")
-    set(MACOSX_BUNDLE_GUI_IDENTIFIER "${LHDR_DOMAIN_SECOND}.${LHDR_DOMAIN_FIRST}")
-    set(MACOSX_BUNDLE_BUNDLE_NAME "${LHDR_NAME}")
+    set(MACOSX_BUNDLE_VERSION              "${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_ICON_FILE            "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
+    set(MACOSX_BUNDLE_ICON                 "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
+    set(MACOSX_BUNDLE_RESOURCES            "${CMAKE_CURRENT_BINARY_DIR}/${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources")
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER       "${LHDR_DOMAIN_SECOND}.${LHDR_DOMAIN_FIRST}")
+    set(MACOSX_BUNDLE_BUNDLE_NAME          "${LHDR_NAME}")
 
     configure_file( ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/Info.plist.in
                     ${CMAKE_BINARY_DIR}/Info.plist )
-    configure_file( ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/create-dmg.sh.in
-                    ${CMAKE_BINARY_DIR}/create-dmg.sh )
 
     # icon files to copy in the bundle
     SET(OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
     # include the icns files in the target
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
 
-    # Build project
-    # SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
-    ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES}) # luminance-hdr
+    # Build project (bundle and luminance-hdr-cli)
+    # SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build # leave comment, it may be useful in future
+    ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES})
+    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES} )
     set_property(TARGET ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTY OUTPUT_NAME ${LHDR_OSX_EXECUTABLE_NAME})
-    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
+    set_property(TARGET   luminance-hdr-cli           PROPERTY RUNTIME_OUTPUT_DIRECTORY ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS)
 
+    # Mac bundle magic
     SET_TARGET_PROPERTIES( ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTIES MACOSX_BUNDLE_INFO_PLIST
                            "${CMAKE_BINARY_DIR}/Info.plist" )
 
     # set where in the bundle to put the icns files
-    SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES}  PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     # set where in the bundle to put the translation files
-    SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
+    SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM}    PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QT_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
 
-    INSTALL(TARGETS ${LHDR_OSX_EXECUTABLE_TARGET} luminance-hdr-cli
-            BUNDLE DESTINATION . COMPONENT Runtime
-            RUNTIME DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS COMPONENT Runtime)
-
+    # QT magic
     qt5_use_modules(${LHDR_OSX_EXECUTABLE_TARGET} Core Gui Widgets)
     qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 
-
     # Link libraries
     TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} ${LUMINANCE_MODULES_GUI} ${LIBS})
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli             ${LUMINANCE_MODULES_CLI} ${LIBS})
+
+    # Copy align_image_stack into bundle/Contents/MacOS
+    FILE(COPY
+    	${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/align_image_stack
+    	DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS
+    	FILE_PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE WORLD_EXECUTE
+    )
+
+    # Copy help/icons/hdrhtml and qt.conf to bundle resources
+    FILE(COPY "${CMAKE_SOURCE_DIR}/help"    DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
+    FILE(COPY "${CMAKE_SOURCE_DIR}/icons"   DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
+    FILE(COPY "${CMAKE_SOURCE_DIR}/hdrhtml" DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
+    FILE(COPY "${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/qt.conf"
+                                            DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
+
+    # Copy Licence/README/Authors/Changelog to top of bundle
+    FILE(COPY
+         ${CMAKE_SOURCE_DIR}/AUTHORS
+         ${CMAKE_SOURCE_DIR}/README.md
+         ${CMAKE_SOURCE_DIR}/LICENSE
+         ${CMAKE_SOURCE_DIR}/Changelog
+         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app
+    )
+
 # Unix
 ELSEIF(UNIX)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES})
@@ -293,7 +307,7 @@ ELSEIF(UNIX)
 
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/program-icons/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
-    INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.appdata.xml DESTINATION share/appdata) #appstream 
+    INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.appdata.xml DESTINATION share/appdata) #appstream
     INSTALL(FILES
     ${CMAKE_SOURCE_DIR}/AUTHORS
     ${CMAKE_SOURCE_DIR}/README.md

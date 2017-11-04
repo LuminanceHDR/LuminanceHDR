@@ -31,8 +31,8 @@
 #include "Common/global.h"
 #include "Exif/ExifOperations.h"
 
-#include "TransplantExifDialog.h"
-#include "ui_TransplantExifDialog.h"
+#include "TransplantExif/TransplantExifDialog.h"
+#include "TransplantExif/ui_TransplantExifDialog.h"
 
 TransplantExifDialog::TransplantExifDialog(QWidget *p)
     : QDialog(p),

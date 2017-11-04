@@ -26,6 +26,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 
+#include "MainWindow/ui_DonationDialog.h"
 #include "Common/LuminanceOptions.h"
 #include "ui_DonationDialog.h"
 

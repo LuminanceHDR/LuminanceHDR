@@ -21,8 +21,8 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
-#include "HelpSideBar.h"
-#include "ui_HelpSideBar.h"
+#include "HelpBrowser/HelpSideBar.h"
+#include "HelpBrowser/ui_HelpSideBar.h"
 
 HelpSideBar::HelpSideBar(const QString &title, QWidget *parent,
                          Qt::WindowFlags flags)
