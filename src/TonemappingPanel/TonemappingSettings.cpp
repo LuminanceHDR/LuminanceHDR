@@ -470,11 +470,13 @@ void TonemappingSettings::fillCommonValues(TonemappingOptions *tmOptions,
                                            const QSqlRecord &record) {
     float pregamma = record.value(QStringLiteral("pregamma")).toFloat();
     float postsaturation = record.value(QStringLiteral("postsaturation")).toFloat();
+    float postgamma = record.value(QStringLiteral("postgamma")).toFloat();
 
     tmOptions->origxsize = origxsize;
     tmOptions->xsize = previewWidth;
     tmOptions->pregamma = pregamma;
     tmOptions->postsaturation = postsaturation;
+    tmOptions->postgamma = postgamma;
     tmOptions->tmoperator = tOperator;
 }
 

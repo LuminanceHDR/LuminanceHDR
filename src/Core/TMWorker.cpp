@@ -211,5 +211,8 @@ void TMWorker::postprocessFrame(pfs::Frame *working_frame, TonemappingOptions *t
     if (tm_options->postsaturation != 1.0) {
         pfs::applySaturation(working_frame, tm_options->postsaturation);
     }
+    if (tm_options->postgamma != 1.0) {
+        pfs::applyGamma(working_frame, tm_options->postgamma);
+    }
 
 }

@@ -73,6 +73,8 @@ class TonemappingPanel : public QWidget {
         //
         *pregammaGang,
         //
+        *postgammaGang,
+        //
         *postsaturationGang;
 
     TMOperator currentTmoOperator;
@@ -102,6 +104,7 @@ class TonemappingPanel : public QWidget {
    protected Q_SLOTS:
     virtual void changeEvent(QEvent *event);
     void on_pregammadefault_clicked();
+    void on_postgammadefault_clicked();
     void on_postsaturationdefault_clicked();
     void on_defaultButton_clicked();
     void on_applyButton_clicked();

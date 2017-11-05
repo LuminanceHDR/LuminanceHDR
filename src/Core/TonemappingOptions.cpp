@@ -114,6 +114,7 @@ void TonemappingOptions::setDefaultParameters() {
     xsize_percent = 100;
     quality = 100;
     pregamma = 1.0f;
+    postgamma = 1.0f;
     postsaturation = 1.0f;
     tonemapSelection = false;
     tmoperator = mantiuk06;
@@ -294,6 +295,7 @@ const QString TonemappingOptions::getPostfix() {
         } break;
     }
     postfix += QStringLiteral("_postsaturation_%1").arg(postsaturation);
+    postfix += QStringLiteral("_postgamma_%1").arg(postgamma);
     return postfix;
 }
 
@@ -467,7 +469,8 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
         } break;
     }
     caption += includePregamma
-            ? separator + QString(QObject::tr("PostSaturation=%1")).arg(postsaturation)
+            ? separator + QString(QObject::tr("PostSaturation=%1")).arg(postsaturation) +
+              separator + QString(QObject::tr("PostGamma=%1")).arg(postgamma)
             : QString();
     return caption;
 }
@@ -643,6 +646,8 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
                 value.toFloat();
         } else if (field == QLatin1String("PREGAMMA")) {
             toreturn->pregamma = value.toFloat();
+        } else if (field == QLatin1String("POSTGAMMA")) {
+            toreturn->postgamma = value.toFloat();
         } else if (field == QLatin1String("POSTSATURATION")) {
             toreturn->postsaturation = value.toFloat();
         } else {

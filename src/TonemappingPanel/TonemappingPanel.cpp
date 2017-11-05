@@ -239,6 +239,10 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
     pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb, NULL, NULL,
                             NULL, NULL, 0, 5.f, true);
 
+    // postgamma
+    postgammaGang = new Gang(m_Ui->postgammaSlider, m_Ui->postgammadsb, NULL, NULL,
+                            NULL, NULL, 0, 5.f, true);
+
     // postsaturation
     postsaturationGang = new Gang(m_Ui->postsaturationSlider, m_Ui->postsaturationdsb, NULL, NULL,
                             NULL, NULL, 0, 10.f, true);
@@ -316,6 +320,7 @@ TonemappingPanel::~TonemappingPanel() {
     delete chromaticGang;
     delete lightGang;
     delete pregammaGang;
+    delete postgammaGang;
     delete postsaturationGang;
     delete m_spinner;
 
@@ -355,58 +360,58 @@ void TonemappingPanel::createDatabase() {
         " CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean \
         NOT \
         NULL, contrastFactor real, saturationFactor real, detailFactor real, \
-        pregamma real, postsaturation real, comment varchar(150));"));
+        pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Mantiuk 08
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, \
         contrastEnhancement real, luminanceLevel real, manualLuminanceLevel \
-        boolean NOT NULL, pregamma real, postsaturation real, comment varchar(150));"));
+        boolean NOT NULL, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Ashikhmin
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 \
-        boolean NOT NULL, lct real, pregamma real, postsaturation real, comment varchar(150));"));
+        boolean NOT NULL, lct real, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Drago
     res = query.exec(
         QStringLiteral(" CREATE TABLE IF NOT EXISTS drago (bias real, \
-                       pregamma real, postsaturation real, comment varchar(150));"));
+                       pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Durand
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS durand (spatial real, range \
-        real, base real, pregamma real, postsaturation real, comment varchar(150));"));
+        real, base real, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Fattal
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, \
         colorSaturation real, noiseReduction real, oldFattal boolean NOT \
         NULL, \
-        pregamma real, postsaturation real, comment varchar(150));"));
+        pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Fattal
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS ferradans (rho real, \
-        inv_alpha real, pregamma real, postsaturation real, comment varchar(150));"));
+        inv_alpha real, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Pattanaik
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean \
         NOT NULL, local boolean NOT NULL, cone real, rod real, \
-        multiplier real, pregamma real, postsaturation real, comment varchar(150));"));
+        multiplier real, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Reinhard02
     res = query.exec(
         QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean \
                        NOT NULL, key real, phi real, range int, lower int, \
-                       upper int, pregamma real, postsaturation real, comment varchar(150));"));
+                       upper int, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Reinhard05
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, \
         chromaticAdaptation real, lightAdaptation real, pregamma \
-        real, comment varchar(150));"));
+        real, postsaturation real, postgamma real, comment varchar(150));"));
     if (res == false) qDebug() << query.lastError();
     // Hdr creation custom config parameters
     res = query.exec(QStringLiteral(
@@ -541,6 +546,10 @@ void TonemappingPanel::on_pregammadefault_clicked() {
     pregammaGang->setDefault();
 }
 
+void TonemappingPanel::on_postgammadefault_clicked() {
+    postgammaGang->setDefault();
+}
+
 void TonemappingPanel::on_postsaturationdefault_clicked() {
     postsaturationGang->setDefault();
 }
@@ -572,6 +581,7 @@ void TonemappingPanel::fillToneMappingOptions(bool exportMode) {
         toneMappingOptions->xsize = 0;
     }
     toneMappingOptions->pregamma = pregammaGang->v();
+    toneMappingOptions->postgamma = postgammaGang->v();
     toneMappingOptions->postsaturation = postsaturationGang->v();
     // toneMappingOptions->tonemapSelection = checkBoxSelection->isChecked();
     // toneMappingOptions->tonemapOriginal = checkBoxOriginal->isChecked();
@@ -972,6 +982,7 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
     }
     out << "PREGAMMA=" << pregammaGang->v() << endl;
     out << "POSTSATURATION=" << postsaturationGang->v() << endl;
+    out << "POSTGAMMA=" << postgammaGang->v() << endl;
     file.close();
 }
 
@@ -1167,6 +1178,8 @@ void TonemappingPanel::fromTxt2Gui() {
             m_Ui->pregammaSlider->setValue(pregammaGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("POSTSATURATION")) {
             m_Ui->postsaturationSlider->setValue(postsaturationGang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("POSTGAMMA")) {
+            m_Ui->postgammaSlider->setValue(postgammaGang->v2p(value.toFloat()));
         }
     }
 }
@@ -1199,56 +1212,12 @@ void TonemappingPanel::setEnabled(bool b) {
         m_Ui->redoButton->setEnabled(false);
     }
     m_Ui->tonemapGroupBox->setEnabled(b);
-    m_Ui->groupSaveLoadTMOsetting->setEnabled(b);
-    m_Ui->groupBoxExport->setEnabled(b);
-    m_Ui->pregammaGroup->setEnabled(b);
+    m_Ui->processingToolBox->setEnabled(b);
 
     m_Ui->applyButton->setEnabled(b);
-    m_Ui->queueButton->setEnabled(b);
-    m_Ui->lblOpenQueue->setVisible(b);
     m_Ui->replaceLdrCheckBox->setEnabled(b);
     m_Ui->autoLevelsCheckBox->setEnabled(b);
     m_Ui->toolButtonThreshold->setEnabled(b);
-    /*
-        // Operator select
-        m_Ui->cmbOperators->setEnabled(b);
-        m_Ui->stackedWidget_operators->setEnabled(b);
-
-        // Load/Store/Reset
-        m_Ui->loadsettingsbutton->setEnabled(b);
-        m_Ui->savesettingsbutton->setEnabled(b);
-        m_Ui->defaultButton->setEnabled(b);
-        // Size
-        m_Ui->sizeComboBox->setEnabled(b);
-        m_Ui->addCustomSizeButton->setEnabled(b);
-
-        // Gamma
-        m_Ui->pregammadefault->setEnabled(b);
-        m_Ui->pregammaSlider->setEnabled(b);
-        m_Ui->pregammadsb->setEnabled(b);
-
-        // Tonemap
-        m_Ui->applyButton->setEnabled(b);
-        m_Ui->queueButton->setEnabled(b);
-        m_Ui->lblOpenQueue->setVisible(b);
-
-        // DB
-        m_Ui->loadButton->setEnabled(b);
-        m_Ui->saveButton->setEnabled(b);
-
-        //m_Ui->qualityHS->setEnabled(b);
-        //m_Ui->qualitySB->setEnabled(b);
-
-        m_Ui->replaceLdrCheckBox->setEnabled(b);
-        m_Ui->autoLevelsCheckBox->setEnabled(b);
-
-        // Labels
-        m_Ui->lblOperators->setEnabled(b);
-        m_Ui->groupSaveLoadTMOsetting->setEnabled(b);
-        m_Ui->label->setEnabled(b);
-        m_Ui->pregammaLabel->setEnabled(b);
-        m_Ui->pregammaGroup->setEnabled(b);
-    */
 }
 
 void TonemappingPanel::updatedHDR(pfs::Frame *f) {
@@ -1421,6 +1390,8 @@ void TonemappingPanel::loadParameters() {
         float pregamma;
         // Post-saturation
         float postsaturation;
+        // Post-gamma
+        float postgamma;
 
         switch (tmopts->tmoperator) {
             case ashikhmin:
@@ -1430,6 +1401,7 @@ void TonemappingPanel::loadParameters() {
                 lct = tmopts->operator_options.ashikhminoptions.lct;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->simpleCheckBox->setChecked(simple);
                 if (eq2)
                     m_Ui->eq2RadioButton->setChecked(true);
@@ -1441,18 +1413,23 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case drago:
                 m_Ui->stackedWidget_operators->setCurrentIndex(drago);
                 bias = tmopts->operator_options.dragooptions.bias;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->biasSlider->setValue(bias);
                 m_Ui->biasdsb->setValue(bias);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case durand:
                 m_Ui->stackedWidget_operators->setCurrentIndex(durand);
@@ -1461,6 +1438,7 @@ void TonemappingPanel::loadParameters() {
                 base = tmopts->operator_options.durandoptions.base;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->spatialSlider->setValue(spatial);
                 m_Ui->spatialdsb->setValue(spatial);
                 m_Ui->rangeSlider->setValue(range);
@@ -1471,6 +1449,8 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case fattal:
                 m_Ui->stackedWidget_operators->setCurrentIndex(fattal);
@@ -1482,6 +1462,7 @@ void TonemappingPanel::loadParameters() {
                 fftsolver = tmopts->operator_options.fattaloptions.fftsolver;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->alphaSlider->setValue(alpha);
                 m_Ui->alphadsb->setValue(alpha);
                 m_Ui->betaSlider->setValue(beta);
@@ -1495,6 +1476,8 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case ferradans:
                 m_Ui->stackedWidget_operators->setCurrentIndex(ferradans);
@@ -1502,6 +1485,7 @@ void TonemappingPanel::loadParameters() {
                 inv_alpha = tmopts->operator_options.ferradansoptions.inv_alpha;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->rhoSlider->setValue(rho);
                 m_Ui->rhodsb->setValue(rho);
                 m_Ui->inv_alphaSlider->setValue(inv_alpha);
@@ -1510,15 +1494,20 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case mai:
                 m_Ui->stackedWidget_operators->setCurrentIndex(mai);
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case mantiuk06:
                 m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk06);
@@ -1532,6 +1521,7 @@ void TonemappingPanel::loadParameters() {
                     tmopts->operator_options.mantiuk06options.detailfactor;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->contrastEqualizCheckBox->setChecked(contrastEqualization);
                 m_Ui->contrastFactorSlider->setValue(contrastFactor);
                 m_Ui->contrastFactordsb->setValue(contrastFactor);
@@ -1543,6 +1533,8 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case mantiuk08:
                 m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk08);
@@ -1556,6 +1548,7 @@ void TonemappingPanel::loadParameters() {
                     tmopts->operator_options.mantiuk08options.setluminance;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->colorSaturationSlider->setValue(colorSaturation);
                 m_Ui->colorSaturationDSB->setValue(colorSaturation);
                 m_Ui->contrastEnhancementSlider->setValue(contrastEnhancement);
@@ -1567,6 +1560,8 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case pattanaik:
                 m_Ui->stackedWidget_operators->setCurrentIndex(pattanaik);
@@ -1578,6 +1573,7 @@ void TonemappingPanel::loadParameters() {
                 local = tmopts->operator_options.pattanaikoptions.local;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->multiplierSlider->setValue(multiplier);
                 m_Ui->multiplierdsb->setValue(multiplier);
                 m_Ui->coneSlider->setValue(cone);
@@ -1590,6 +1586,8 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case reinhard02:
                 m_Ui->stackedWidget_operators->setCurrentIndex(reinhard02);
@@ -1601,6 +1599,7 @@ void TonemappingPanel::loadParameters() {
                 upper = tmopts->operator_options.reinhard02options.upper;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->usescalescheckbox->setChecked(scales);
                 m_Ui->keySlider->setValue(key);
                 m_Ui->keydsb->setValue(key);
@@ -1616,6 +1615,8 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
             case reinhard05:
                 m_Ui->stackedWidget_operators->setCurrentIndex(reinhard05);
@@ -1627,6 +1628,7 @@ void TonemappingPanel::loadParameters() {
                     tmopts->operator_options.reinhard05options.lightAdaptation;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
                 m_Ui->brightnessSlider->setValue(brightness);
                 m_Ui->brightnessdsb->setValue(brightness);
                 m_Ui->chromaticAdaptSlider->setValue(chromaticAdaptation);
@@ -1637,6 +1639,8 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
                 m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
                 break;
         }
         if (dialog.wantsTonemap()) {
@@ -1660,11 +1664,12 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, \
-        saturationFactor, detailFactor, pregamma, postsaturation, comment) \
+        saturationFactor, detailFactor, pregamma, postsaturation, postgamma, comment) \
         VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, \
-        :detailFactor, :pregamma, :postsaturation, :comment)");
+        :detailFactor, :pregamma, :postsaturation, :postgamma, :comment)");
     query.bindValue(QStringLiteral(":contrastEqualization"),
                     contrastEqualization);
     query.bindValue(QStringLiteral(":contrastFactor"), contrastFactor);
@@ -1672,6 +1677,7 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization,
     query.bindValue(QStringLiteral(":detailFactor"), detailFactor);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1687,11 +1693,12 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, \
-        luminanceLevel, manualLuminanceLevel, pregamma, postsaturation, comment) \
+        luminanceLevel, manualLuminanceLevel, pregamma, postsaturation, postgamma, comment) \
         VALUES (:colorSaturation, :contrastEnhancement, :luminanceLevel, \
-        :manualLuminanceLevel, :pregamma, :postsaturation, :comment)");
+        :manualLuminanceLevel, :pregamma, :postsaturation, :postgamma, :comment)");
     query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
     query.bindValue(QStringLiteral(":contrastEnhancement"),
                     contrastEnhancement);
@@ -1700,6 +1707,7 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation,
                     manualLuminanceLevel);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1712,14 +1720,16 @@ void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO ashikhmin (simple, eq2, lct, pregamma, postsaturation, comment) \
-        VALUES (:simple, :eq2, :lct, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO ashikhmin (simple, eq2, lct, pregamma, postsaturation, postgamma, comment) \
+        VALUES (:simple, :eq2, :lct, :pregamma, :postsaturation, :postgamma, :comment)");
     query.bindValue(QStringLiteral(":simple"), simple);
     query.bindValue(QStringLiteral(":eq2"), eq2);
     query.bindValue(QStringLiteral(":lct"), lct);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1731,12 +1741,14 @@ void TonemappingPanel::execDragoQuery(float bias, QString comment) {
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO drago (bias, pregamma, postsaturation, comment) \
-        VALUES (:bias, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO drago (bias, pregamma, postsaturation, postgamma, comment) \
+        VALUES (:bias, :pregamma, :postsaturation, :postgamma, :comment)");
     query.bindValue(QStringLiteral(":bias"), bias);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1749,14 +1761,16 @@ void TonemappingPanel::execDurandQuery(float spatial, float range, float base,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO durand (spatial, range, base, pregamma, postsaturation, comment) \
-        VALUES (:spatial, :range, :base, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO durand (spatial, range, base, pregamma, postsaturation, postgamma, comment) \
+        VALUES (:spatial, :range, :base, :pregamma, :postsaturation, :postgamma, :comment)");
     query.bindValue(QStringLiteral(":spatial"), spatial);
     query.bindValue(QStringLiteral(":base"), base);
     query.bindValue(QStringLiteral(":range"), range);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1771,11 +1785,12 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, \
-        oldFattal, pregamma, postsaturation, comment) \
+        oldFattal, pregamma, postsaturation, postgamma, comment) \
         VALUES (:alpha, :beta, :colorSaturation, :noiseReduction, :oldFattal, \
-        :pregamma, :postsaturation, :comment)");
+        :pregamma, :postsaturation, :postgamma, :comment)");
     query.bindValue(QStringLiteral(":alpha"), alpha);
     query.bindValue(QStringLiteral(":beta"), beta);
     query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
@@ -1783,6 +1798,7 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta,
     query.bindValue(QStringLiteral(":oldFattal"), oldFattal);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1795,13 +1811,15 @@ void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO ferradans (rho, inv_alpha, pregamma, postsaturation, comment) \
-        VALUES (:rho, :inv_alpha, :pregamma, :postsaturation, :comment)");
+        "INSERT INTO ferradans (rho, inv_alpha, pregamma, postsaturation, postgamma, comment) \
+        VALUES (:rho, :inv_alpha, :pregamma, :postsaturation, :postgamma, :comment)");
     query.bindValue(QStringLiteral(":rho"), rho);
     query.bindValue(QStringLiteral(":inv_alpha"), inv_alpha);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1814,11 +1832,12 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, \
-        pregamma, postsaturation, \
+        pregamma, postsaturation, postgamma, \
         comment) \
-        VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, :postsaturation, \
+        VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, :postsaturation, :postgamma, \
         :comment)");
     query.bindValue(QStringLiteral(":autolum"), autolum);
     query.bindValue(QStringLiteral(":local"), local);
@@ -1827,6 +1846,7 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone,
     query.bindValue(QStringLiteral(":multiplier"), multiplier);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1840,10 +1860,11 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, \
-        pregamma, postsaturation, comment) \
-        VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, :postsaturation, \
+        pregamma, postsaturation, postgamma, comment) \
+        VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, :postsaturation, :postgamma, \
         :comment)");
     query.bindValue(QStringLiteral(":scales"), scales);
     query.bindValue(QStringLiteral(":key"), key);
@@ -1853,6 +1874,7 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi,
     query.bindValue(QStringLiteral(":upper"), upper);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1867,11 +1889,12 @@ void TonemappingPanel::execReinhard05Query(float brightness,
     QSqlQuery query(db);
     float pregamma = m_Ui->pregammadsb->value();
     float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO reinhard05 (brightness, chromaticAdaptation, \
-        lightAdaptation, pregamma, postsaturation, comment) \
+        lightAdaptation, pregamma, postsaturation, postgamma, comment) \
         VALUES (:brightness, :chromaticAdaptation, \
-        :lightAdaptation, :pregamma, :postsaturation, \
+        :lightAdaptation, :pregamma, :postsaturation, :postgamma, \
         :comment)");
     query.bindValue(QStringLiteral(":brightness"), brightness);
     query.bindValue(QStringLiteral(":chromaticAdaptation"),
@@ -1879,6 +1902,7 @@ void TonemappingPanel::execReinhard05Query(float brightness,
     query.bindValue(QStringLiteral(":lightAdaptation"), lightAdaptation);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
@@ -1980,6 +2004,18 @@ void TonemappingPanel::updatePreviews(double v) {
                 TonemappingOptions *tmopts =
                     new TonemappingOptions(*toneMappingOptions);  // make a copy
                 tmopts->pregamma = v;
+                m_previewPanel->getLabel(i)->setTonemappingOptions(tmopts);
+                m_previewPanel->updatePreviews(m_currentFrame, i);
+            }
+            updateCurrentTmoOperator(index);
+        } else if (eventSender == m_Ui->postgammadsb) {
+            int maxIndex = m_Ui->stackedWidget_operators->count();
+            for (int i = 0; i < maxIndex; i++) {
+                updateCurrentTmoOperator(i);
+                fillToneMappingOptions(false);
+                TonemappingOptions *tmopts =
+                    new TonemappingOptions(*toneMappingOptions);  // make a copy
+                tmopts->postgamma = v;
                 m_previewPanel->getLabel(i)->setTonemappingOptions(tmopts);
                 m_previewPanel->updatePreviews(m_currentFrame, i);
             }
@@ -2153,6 +2189,8 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
 
         // GLOBAL Pregamma
         connect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->postgammadsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
         connect(m_Ui->postsaturationdsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));

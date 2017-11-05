@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>515</width>
-    <height>602</height>
+    <height>626</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -24,543 +24,7 @@
     <normaloff>:/icons/luminance-hdr.png</normaloff>:/icons/luminance-hdr.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_13">
-   <item row="2" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QGroupBox" name="groupSaveLoadTMOsetting">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="whatsThis">
-        <string>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</string>
-       </property>
-       <property name="title">
-        <string>Tone Mapping Settings</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_4">
-        <property name="leftMargin">
-         <number>4</number>
-        </property>
-        <property name="topMargin">
-         <number>4</number>
-        </property>
-        <property name="rightMargin">
-         <number>4</number>
-        </property>
-        <property name="bottomMargin">
-         <number>4</number>
-        </property>
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_24">
-          <item row="0" column="0">
-           <widget class="QToolButton" name="savesettingsbutton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>33</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Save current parameters to a text file</string>
-            </property>
-            <property name="whatsThis">
-             <string>Save current parameters (pregamma and TMO) to a text file.</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-save">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QToolButton" name="loadsettingsbutton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>33</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Load an existing text file containing pregamma and TMO settings</string>
-            </property>
-            <property name="whatsThis">
-             <string>Load an existing text file containing pregamma and TMO settings.</string>
-            </property>
-            <property name="icon">
-             <iconset theme="document-open">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QToolButton" name="saveButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>33</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Save current parameters</string>
-            </property>
-            <property name="icon">
-             <iconset theme="edit-download">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::MinimumExpanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="4">
-           <widget class="QToolButton" name="loadButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>33</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Load saved parameters</string>
-            </property>
-            <property name="icon">
-             <iconset theme="cloud-upload">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBoxExport">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="title">
-        <string>Export</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_25">
-        <property name="verticalSpacing">
-         <number>6</number>
-        </property>
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QToolButton" name="queueButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Fast export</string>
-            </property>
-            <property name="icon">
-             <iconset theme="folder-pictures">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblOpenQueue">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Opens the current export direcotory. This can be changed in the preferences!</string>
-            </property>
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="openExternalLinks">
-             <bool>false</bool>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::LinksAccessibleByMouse</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="frameSpinner">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::MinimumExpanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="lblQueueSize">
-          <property name="text">
-           <string notr="true"/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="4" column="0">
-    <widget class="QGroupBox" name="pregammaGroup">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="whatsThis">
-      <string>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</string>
-     </property>
-     <property name="title">
-      <string>Process</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_17">
-      <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Res&amp;ult Size</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-          <property name="margin">
-           <number>1</number>
-          </property>
-          <property name="buddy">
-           <cstring>sizeComboBox</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="sizeComboBox"/>
-        </item>
-        <item row="0" column="2">
-         <widget class="QToolButton" name="addCustomSizeButton">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>31</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="sizeIncrement">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="cursor">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
-          <property name="toolTip">
-           <string>Set Custom Output Size</string>
-          </property>
-          <property name="whatsThis">
-           <string>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="icon">
-           <iconset theme="list-add">
-            <normaloff>.</normaloff>.</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>10</width>
-            <height>10</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="pregammaLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>Gamma applied before tonemapping</string>
-          </property>
-          <property name="text">
-           <string>Pre-ga&amp;mma</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-          <property name="margin">
-           <number>1</number>
-          </property>
-          <property name="indent">
-           <number>-1</number>
-          </property>
-          <property name="buddy">
-           <cstring>pregammaSlider</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QSlider" name="pregammaSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QToolButton" name="pregammadefault">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>31</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore pregamma's default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset theme="edit-undo">
-            <normaloff>.</normaloff>.</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>10</width>
-            <height>10</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QDoubleSpinBox" name="pregammadsb">
-          <property name="toolTip">
-           <string>Gamma applied before tonemapping</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="decimals">
-           <number>2</number>
-          </property>
-          <property name="minimum">
-           <double>0.100000000000000</double>
-          </property>
-          <property name="maximum">
-           <double>5.000000000000000</double>
-          </property>
-          <property name="singleStep">
-           <double>0.100000000000000</double>
-          </property>
-          <property name="value">
-           <double>1.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>Pos&amp;t-saturation</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-          <property name="buddy">
-           <cstring>postsaturationSlider</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QSlider" name="postsaturationSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QToolButton" name="postsaturationdefault">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>31</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore post-saturation's default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string notr="true"/>
-          </property>
-          <property name="icon">
-           <iconset theme="edit-undo">
-            <normaloff>.</normaloff>.</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>10</width>
-            <height>10</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QDoubleSpinBox" name="postsaturationdsb">
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <double>10.000000000000000</double>
-          </property>
-          <property name="singleStep">
-           <double>0.100000000000000</double>
-          </property>
-          <property name="value">
-           <double>1.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="6" column="0">
+   <item row="3" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_38">
      <item>
       <widget class="QPushButton" name="applyButton">
@@ -2191,89 +1655,7 @@ Luminace Level</string>
           </property>
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_22">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_key">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>&amp;Key Value</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>keySlider</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QSlider" name="keySlider">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QDoubleSpinBox" name="keydsb">
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="maximum">
-               <double>1.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.010000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.180000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_phi">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Ph&amp;i</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-              <property name="buddy">
-               <cstring>phiSlider</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
+            <item row="1" column="2">
              <widget class="QSlider" name="phiSlider">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -2292,7 +1674,23 @@ Luminace Level</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="2">
+            <item row="6" column="3">
+             <spacer name="verticalSpacer_8">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::MinimumExpanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="4">
              <widget class="QDoubleSpinBox" name="phidsb">
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -2311,26 +1709,107 @@ Luminace Level</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
-             <widget class="QCheckBox" name="usescalescheckbox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item row="3" column="4">
+             <widget class="QDoubleSpinBox" name="range2dsb">
+              <property name="enabled">
+               <bool>false</bool>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>28</height>
-               </size>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
-              <property name="text">
-               <string>Use Scales</string>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>0</number>
+              </property>
+              <property name="minimum">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>32.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>8.000000000000000</double>
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
+            <item row="0" column="4">
+             <widget class="QDoubleSpinBox" name="keydsb">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.180000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="4">
+             <widget class="QDoubleSpinBox" name="lowerdsb">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>0</number>
+              </property>
+              <property name="minimum">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>10.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="4">
+             <widget class="QDoubleSpinBox" name="upperdsb">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>0</number>
+              </property>
+              <property name="minimum">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>43.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
              <widget class="QSlider" name="range2Slider">
               <property name="enabled">
                <bool>false</bool>
@@ -2361,36 +1840,8 @@ Luminace Level</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="2">
-             <widget class="QDoubleSpinBox" name="range2dsb">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="decimals">
-               <number>0</number>
-              </property>
-              <property name="minimum">
-               <double>1.000000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>32.000000000000000</double>
-              </property>
-              <property name="value">
-               <double>8.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_range">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_phi">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -2398,7 +1849,7 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Ra&amp;nge</string>
+               <string>Ph&amp;i</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2407,7 +1858,29 @@ Luminace Level</string>
                <bool>true</bool>
               </property>
               <property name="buddy">
-               <cstring>range2Slider</cstring>
+               <cstring>phiSlider</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_key">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>&amp;Key Value</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>keySlider</cstring>
               </property>
              </widget>
             </item>
@@ -2433,7 +1906,26 @@ Luminace Level</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1">
+            <item row="0" column="2">
+             <widget class="QSlider" name="keySlider">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
              <widget class="QSlider" name="lowerSlider">
               <property name="enabled">
                <bool>false</bool>
@@ -2458,34 +1950,6 @@ Luminace Level</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="2">
-             <widget class="QDoubleSpinBox" name="lowerdsb">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="decimals">
-               <number>0</number>
-              </property>
-              <property name="minimum">
-               <double>1.000000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>100.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>10.000000000000000</double>
-              </property>
-              <property name="value">
-               <double>1.000000000000000</double>
-              </property>
-             </widget>
-            </item>
             <item row="5" column="0">
              <widget class="QLabel" name="label_upperscale">
               <property name="enabled">
@@ -2498,7 +1962,7 @@ Luminace Level</string>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Upper Scale</string>
+               <string>Upper Sca&amp;le</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2508,7 +1972,7 @@ Luminace Level</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="1">
+            <item row="5" column="2">
              <widget class="QSlider" name="upperSlider">
               <property name="enabled">
                <bool>false</bool>
@@ -2533,46 +1997,56 @@ Luminace Level</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="2">
-             <widget class="QDoubleSpinBox" name="upperdsb">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::NoButtons</enum>
-              </property>
-              <property name="decimals">
-               <number>0</number>
-              </property>
-              <property name="minimum">
-               <double>1.000000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>100.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>1.000000000000000</double>
-              </property>
-              <property name="value">
-               <double>43.000000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <spacer name="verticalSpacer_8">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
+            <item row="3" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QCheckBox" name="usescalescheckbox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::RightToLeft</enum>
+                </property>
+                <property name="text">
+                 <string>Use Scales</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_range">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>           Ra&amp;nge</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+                <property name="buddy">
+                 <cstring>range2Slider</cstring>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -2900,7 +2374,7 @@ Luminace Level</string>
                </size>
               </property>
               <property name="text">
-               <string>&amp;Local Contrast Threshold</string>
+               <string>Local Contrast Threshol&amp;d</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3606,6 +3080,705 @@ Luminace Level</string>
      </layout>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QToolBox" name="processingToolBox">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>503</width>
+        <height>187</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>Processing</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="pregammaGroup">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="whatsThis">
+          <string>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</string>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_17">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>Pos&amp;t-saturation</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>postsaturationSlider</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSlider" name="pregammaSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QDoubleSpinBox" name="pregammadsb">
+              <property name="toolTip">
+               <string>Gamma applied before tonemapping</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>5.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QToolButton" name="pregammadefault">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>31</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore pregamma's default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset theme="edit-undo">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>10</width>
+                <height>10</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="sizeComboBox"/>
+            </item>
+            <item row="2" column="3">
+             <widget class="QDoubleSpinBox" name="postsaturationdsb">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <double>10.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSlider" name="postsaturationSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QToolButton" name="postsaturationdefault">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>31</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore post-saturation's default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset theme="edit-undo">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>10</width>
+                <height>10</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Res&amp;ult Size</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="margin">
+               <number>1</number>
+              </property>
+              <property name="buddy">
+               <cstring>sizeComboBox</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QToolButton" name="addCustomSizeButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>31</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="sizeIncrement">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="toolTip">
+               <string>Set Custom Output Size</string>
+              </property>
+              <property name="whatsThis">
+               <string>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="icon">
+               <iconset theme="list-add">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>10</width>
+                <height>10</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="pregammaLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Gamma applied before tonemapping</string>
+              </property>
+              <property name="text">
+               <string>Pre-ga&amp;mma</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="margin">
+               <number>1</number>
+              </property>
+              <property name="indent">
+               <number>-1</number>
+              </property>
+              <property name="buddy">
+               <cstring>pregammaSlider</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_12">
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="text">
+               <string>Post-gamma</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QDoubleSpinBox" name="postgammadsb">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <double>10.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QSlider" name="postgammaSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QToolButton" name="postgammadefault">
+              <property name="minimumSize">
+               <size>
+                <width>31</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore postgamma's default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset theme="edit-undo">
+                <normaloff>../../../../../</normaloff>../../../../../</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>10</width>
+                <height>10</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>503</width>
+        <height>178</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>Settings</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_29">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QGroupBox" name="groupSaveLoadTMOsetting">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="whatsThis">
+            <string>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</string>
+           </property>
+           <property name="title">
+            <string>Tone Mapping Settings</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_24">
+            <property name="leftMargin">
+             <number>4</number>
+            </property>
+            <property name="topMargin">
+             <number>4</number>
+            </property>
+            <property name="rightMargin">
+             <number>4</number>
+            </property>
+            <property name="bottomMargin">
+             <number>4</number>
+            </property>
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_25">
+              <item row="0" column="1">
+               <widget class="QToolButton" name="savesettingsbutton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>33</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Save current parameters to a text file</string>
+                </property>
+                <property name="whatsThis">
+                 <string>Save current parameters (pregamma and TMO) to a text file.</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-save">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QToolButton" name="loadsettingsbutton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>33</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Load an existing text file containing pregamma and TMO settings</string>
+                </property>
+                <property name="whatsThis">
+                 <string>Load an existing text file containing pregamma and TMO settings.</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="document-open">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <spacer name="horizontalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="0" column="5">
+               <widget class="QToolButton" name="loadButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>33</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Load saved parameters</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="cloud-upload">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QToolButton" name="saveButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>33</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Save current parameters</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="edit-download">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::MinimumExpanding</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="0" column="6">
+               <spacer name="horizontalSpacer_7">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBoxExport">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>Export</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_28">
+            <property name="verticalSpacing">
+             <number>6</number>
+            </property>
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QToolButton" name="queueButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>33</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Fast export</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="folder-pictures">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonTextBesideIcon</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lblOpenQueue">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string>Opens the current export direcotory. This can be changed in the preferences!</string>
+                </property>
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="openExternalLinks">
+                 <bool>false</bool>
+                </property>
+                <property name="textInteractionFlags">
+                 <set>Qt::LinksAccessibleByMouse</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="frameSpinner">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+               </layout>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::MinimumExpanding</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="lblQueueSize">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -3643,16 +3816,10 @@ Luminace Level</string>
   <tabstop>spatialdsb</tabstop>
   <tabstop>rangeSlider</tabstop>
   <tabstop>rangedsb</tabstop>
-  <tabstop>keySlider</tabstop>
   <tabstop>keydsb</tabstop>
-  <tabstop>phiSlider</tabstop>
   <tabstop>phidsb</tabstop>
-  <tabstop>usescalescheckbox</tabstop>
-  <tabstop>range2Slider</tabstop>
   <tabstop>range2dsb</tabstop>
-  <tabstop>lowerSlider</tabstop>
   <tabstop>lowerdsb</tabstop>
-  <tabstop>upperSlider</tabstop>
   <tabstop>upperdsb</tabstop>
   <tabstop>brightnessSlider</tabstop>
   <tabstop>brightnessdsb</tabstop>
@@ -3676,11 +3843,6 @@ Luminace Level</string>
   <tabstop>defaultButton</tabstop>
   <tabstop>undoButton</tabstop>
   <tabstop>redoButton</tabstop>
-  <tabstop>savesettingsbutton</tabstop>
-  <tabstop>loadsettingsbutton</tabstop>
-  <tabstop>saveButton</tabstop>
-  <tabstop>loadButton</tabstop>
-  <tabstop>pregammadsb</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
@@ -3693,12 +3855,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>103</y>
+     <x>177</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>177</x>
+     <y>208</y>
     </hint>
    </hints>
   </connection>
@@ -3709,12 +3871,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>103</y>
+     <x>177</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
-     <x>85</x>
-     <y>105</y>
+     <x>71</x>
+     <y>208</y>
     </hint>
    </hints>
   </connection>
@@ -3725,12 +3887,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>103</y>
+     <x>177</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>177</x>
+     <y>243</y>
     </hint>
    </hints>
   </connection>
@@ -3741,12 +3903,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>103</y>
+     <x>177</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>501</x>
+     <y>208</y>
     </hint>
    </hints>
   </connection>
@@ -3757,12 +3919,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>103</y>
+     <x>177</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
-     <x>85</x>
-     <y>105</y>
+     <x>71</x>
+     <y>243</y>
     </hint>
    </hints>
   </connection>
@@ -3773,12 +3935,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>103</y>
+     <x>177</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>501</x>
+     <y>243</y>
     </hint>
    </hints>
   </connection>
@@ -3789,12 +3951,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>245</x>
+     <y>207</y>
     </hint>
     <hint type="destinationlabel">
-     <x>74</x>
-     <y>105</y>
+     <x>87</x>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -3805,12 +3967,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>245</x>
+     <y>207</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>501</x>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -3821,12 +3983,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>245</x>
+     <y>207</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>245</x>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -3847,66 +4009,18 @@ Luminace Level</string>
    </hints>
   </connection>
   <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>upperSlider</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>simpleCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>contrastSlider</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>255</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lowerSlider</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_upperscale</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>74</x>
-     <y>105</y>
+     <x>255</x>
+     <y>181</y>
     </hint>
    </hints>
   </connection>
@@ -3917,92 +4031,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>255</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
-     <x>79</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>upperdsb</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>range2Slider</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lowerdsb</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>range2dsb</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_range</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>74</x>
-     <y>105</y>
+     <x>92</x>
+     <y>181</y>
     </hint>
    </hints>
   </connection>
@@ -4023,34 +4057,18 @@ Luminace Level</string>
    </hints>
   </connection>
   <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_lowerscale</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>74</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>simpleCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>contrastdsb</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>255</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>501</x>
+     <y>181</y>
     </hint>
    </hints>
   </connection>
@@ -4061,12 +4079,156 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>107</y>
+     <x>177</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>103</y>
+     <x>177</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_range</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>166</x>
+     <y>156</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_lowerscale</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>136</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_upperscale</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>range2Slider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lowerSlider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>262</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>upperSlider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>154</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>range2dsb</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>476</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lowerdsb</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>204</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>upperdsb</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>476</x>
+     <y>226</y>
     </hint>
    </hints>
   </connection>

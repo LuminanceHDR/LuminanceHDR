@@ -152,6 +152,8 @@ int CommandLineInterfaceManager::execCommandLineParams() {
             tr("VALUE        Gamma value to use during tone mapping. (default: 1) ").toUtf8().constData())
         ("saturation,S", po::value<float>(&tmopts->postsaturation),
             tr("VALUE        Saturation value to use after tone mapping. (default: 1) ").toUtf8().constData())
+        ("postgamma,G", po::value<float>(&tmopts->postgamma),
+            tr("VALUE        Gamma value to use after tone mapping. (default: 1) ").toUtf8().constData())
         ("resize,r", po::value<int>(&tmopts->xsize), tr("VALUE       Width you want to resize your HDR to (resized "
             "before gamma and tone mapping)").toUtf8().constData())
 
@@ -971,6 +973,9 @@ void CommandLineInterfaceManager::startTonemap() {
         }
         if (tmopts->postsaturation != 1)
             printIfVerbose(tr("\nApplying saturation enhancement %1.").arg(tmopts->postsaturation),
+                           verbose);
+        if (tmopts->postgamma != 1)
+            printIfVerbose(tr("\nApplying post-gamma %1.").arg(tmopts->postgamma),
                            verbose);
 
         // Create an ad-hoc IOWorker to save the file
