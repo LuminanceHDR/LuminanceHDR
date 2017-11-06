@@ -360,59 +360,150 @@ void TonemappingPanel::createDatabase() {
         " CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean \
         NOT \
         NULL, contrastFactor real, saturationFactor real, detailFactor real, \
-        pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+        pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM mantiuk06; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE mantiuk06 ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE mantiuk06 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Mantiuk 08
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, \
         contrastEnhancement real, luminanceLevel real, manualLuminanceLevel \
-        boolean NOT NULL, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+        boolean NOT NULL, pregamma real, comment varchar(150), \
+        postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM mantiuk08; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE mantiuk08 ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE mantiuk08 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Ashikhmin
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 \
-        boolean NOT NULL, lct real, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+        boolean NOT NULL, lct real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM ashikhmin; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE ashikhmin ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE ashikhmin ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Drago
     res = query.exec(
         QStringLiteral(" CREATE TABLE IF NOT EXISTS drago (bias real, \
-                       pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+                       pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM drago; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE drago ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE drago ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Durand
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS durand (spatial real, range \
-        real, base real, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+        real, base real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM durand; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE durand ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE durand ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Fattal
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, \
         colorSaturation real, noiseReduction real, oldFattal boolean NOT \
         NULL, \
-        pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+        pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM fattal; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE fattal ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE fattal ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Fattal
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS ferradans (rho real, \
-        inv_alpha real, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+        inv_alpha real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM ferradans; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE ferradans ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE ferradans ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Pattanaik
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean \
         NOT NULL, local boolean NOT NULL, cone real, rod real, \
-        multiplier real, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+        multiplier real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM pattanaik; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE pattanaik ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE pattanaik ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Reinhard02
     res = query.exec(
         QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean \
                        NOT NULL, key real, phi real, range int, lower int, \
-                       upper int, pregamma real, postsaturation real, postgamma real, comment varchar(150));"));
+                       upper int, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM reinhard02; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE reinhard02 ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE reinhard02 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Reinhard05
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, \
         chromaticAdaptation real, lightAdaptation real, pregamma \
-        real, postsaturation real, postgamma real, comment varchar(150));"));
+        real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM reinhard05; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE reinhard05 ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE reinhard05 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Hdr creation custom config parameters
     res = query.exec(QStringLiteral(
         "CREATE TABLE IF NOT EXISTS parameters (weight integer, response \
@@ -1667,18 +1758,18 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization,
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, \
-        saturationFactor, detailFactor, pregamma, postsaturation, postgamma, comment) \
+        saturationFactor, detailFactor, pregamma, comment, postsaturation, postgamma) \
         VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, \
-        :detailFactor, :pregamma, :postsaturation, :postgamma, :comment)");
+        :detailFactor, :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":contrastEqualization"),
                     contrastEqualization);
     query.bindValue(QStringLiteral(":contrastFactor"), contrastFactor);
     query.bindValue(QStringLiteral(":saturationFactor"), saturationFactor);
     query.bindValue(QStringLiteral(":detailFactor"), detailFactor);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1696,9 +1787,9 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation,
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, \
-        luminanceLevel, manualLuminanceLevel, pregamma, postsaturation, postgamma, comment) \
+        luminanceLevel, manualLuminanceLevel, pregamma, comment, postsaturation, postgamma) \
         VALUES (:colorSaturation, :contrastEnhancement, :luminanceLevel, \
-        :manualLuminanceLevel, :pregamma, :postsaturation, :postgamma, :comment)");
+        :manualLuminanceLevel, :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
     query.bindValue(QStringLiteral(":contrastEnhancement"),
                     contrastEnhancement);
@@ -1706,9 +1797,9 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation,
     query.bindValue(QStringLiteral(":manualLuminanceLevel"),
                     manualLuminanceLevel);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1722,15 +1813,15 @@ void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct,
     float postsaturation = m_Ui->postsaturationdsb->value();
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO ashikhmin (simple, eq2, lct, pregamma, postsaturation, postgamma, comment) \
-        VALUES (:simple, :eq2, :lct, :pregamma, :postsaturation, :postgamma, :comment)");
+        "INSERT INTO ashikhmin (simple, eq2, lct, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:simple, :eq2, :lct, :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":simple"), simple);
     query.bindValue(QStringLiteral(":eq2"), eq2);
     query.bindValue(QStringLiteral(":lct"), lct);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1743,13 +1834,13 @@ void TonemappingPanel::execDragoQuery(float bias, QString comment) {
     float postsaturation = m_Ui->postsaturationdsb->value();
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO drago (bias, pregamma, postsaturation, postgamma, comment) \
-        VALUES (:bias, :pregamma, :postsaturation, :postgamma, :comment)");
+        "INSERT INTO drago (bias, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:bias, :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":bias"), bias);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1763,15 +1854,15 @@ void TonemappingPanel::execDurandQuery(float spatial, float range, float base,
     float postsaturation = m_Ui->postsaturationdsb->value();
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO durand (spatial, range, base, pregamma, postsaturation, postgamma, comment) \
-        VALUES (:spatial, :range, :base, :pregamma, :postsaturation, :postgamma, :comment)");
+        "INSERT INTO durand (spatial, range, base, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:spatial, :range, :base, :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":spatial"), spatial);
     query.bindValue(QStringLiteral(":base"), base);
     query.bindValue(QStringLiteral(":range"), range);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1788,18 +1879,18 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta,
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, \
-        oldFattal, pregamma, postsaturation, postgamma, comment) \
+        oldFattal, pregamma, comment, postsaturation, postgamma) \
         VALUES (:alpha, :beta, :colorSaturation, :noiseReduction, :oldFattal, \
-        :pregamma, :postsaturation, :postgamma, :comment)");
+        :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":alpha"), alpha);
     query.bindValue(QStringLiteral(":beta"), beta);
     query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
     query.bindValue(QStringLiteral(":noiseReduction"), noiseReduction);
     query.bindValue(QStringLiteral(":oldFattal"), oldFattal);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1813,14 +1904,14 @@ void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha,
     float postsaturation = m_Ui->postsaturationdsb->value();
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO ferradans (rho, inv_alpha, pregamma, postsaturation, postgamma, comment) \
-        VALUES (:rho, :inv_alpha, :pregamma, :postsaturation, :postgamma, :comment)");
+        "INSERT INTO ferradans (rho, inv_alpha, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:rho, :inv_alpha, :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":rho"), rho);
     query.bindValue(QStringLiteral(":inv_alpha"), inv_alpha);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1835,19 +1926,19 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone,
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, \
-        pregamma, postsaturation, postgamma, \
-        comment) \
-        VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, :postsaturation, :postgamma, \
-        :comment)");
+        pregamma, \
+        comment, postsaturation, postgamma) \
+        VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, \
+        :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":autolum"), autolum);
     query.bindValue(QStringLiteral(":local"), local);
     query.bindValue(QStringLiteral(":cone"), cone);
     query.bindValue(QStringLiteral(":rod"), rod);
     query.bindValue(QStringLiteral(":multiplier"), multiplier);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1863,8 +1954,8 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi,
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, \
-        pregamma, postsaturation, postgamma, comment) \
-        VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, :postsaturation, :postgamma, \
+        pregamma, comment, postsaturation, postgamma) \
+        VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, \
         :comment)");
     query.bindValue(QStringLiteral(":scales"), scales);
     query.bindValue(QStringLiteral(":key"), key);
@@ -1873,9 +1964,9 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi,
     query.bindValue(QStringLiteral(":lower"), lower);
     query.bindValue(QStringLiteral(":upper"), upper);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -1892,18 +1983,18 @@ void TonemappingPanel::execReinhard05Query(float brightness,
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
         "INSERT INTO reinhard05 (brightness, chromaticAdaptation, \
-        lightAdaptation, pregamma, postsaturation, postgamma, comment) \
+        lightAdaptation, pregamma, comment, postsaturation, postgamma) \
         VALUES (:brightness, :chromaticAdaptation, \
-        :lightAdaptation, :pregamma, :postsaturation, :postgamma, \
-        :comment)");
+        :lightAdaptation, :pregamma, \
+        :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":brightness"), brightness);
     query.bindValue(QStringLiteral(":chromaticAdaptation"),
                     chromaticAdaptation);
     query.bindValue(QStringLiteral(":lightAdaptation"), lightAdaptation);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
     query.bindValue(QStringLiteral(":postgamma"), postgamma);
-    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
@@ -2265,6 +2356,9 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
                    SLOT(updatePreviews(double)));
 
         disconnect(m_Ui->postsaturationdsb, SIGNAL(valueChanged(double)), this,
+                   SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->postgammadsb, SIGNAL(valueChanged(double)), this,
                    SLOT(updatePreviews(double)));
 
         disconnect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged,
