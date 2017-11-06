@@ -216,7 +216,7 @@ const QString TonemappingOptions::getPostfix() {
             float rho = operator_options.ferradansoptions.rho;
             float inv_alpha = operator_options.ferradansoptions.inv_alpha;
             postfix += QStringLiteral("rho_%1_").arg(rho);
-            postfix += QStringLiteral("inv_alpha_%1_").arg(inv_alpha);
+            postfix += QStringLiteral("inv_alpha_%1").arg(inv_alpha);
         } break;
         case mai: {
             postfix += QLatin1String("mai_");
@@ -377,8 +377,7 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
             float inv_alpha = operator_options.ferradansoptions.inv_alpha;
             caption += "Ferrands:" + separator;
             caption += QString(QObject::tr("Rho") + "=%1").arg(rho) + separator;
-            caption += QString(QObject::tr("InvAlpha") + "=%1").arg(inv_alpha) +
-                       separator;
+            caption += QString(QObject::tr("InvAlpha") + "=%1").arg(inv_alpha);
         } break;
         case mai: {
             caption += "Mai:" + separator;
