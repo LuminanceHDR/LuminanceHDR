@@ -10,7 +10,7 @@ SET(FILES_CPP
     ${CMAKE_CURRENT_SOURCE_DIR}/osintegration.cpp
 )
     
-IF(MSVC)
+#IF(MSVC)
     SET(FILES_H
         ${FILES_H}
         ${CMAKE_CURRENT_SOURCE_DIR}/ecwin7.h
@@ -19,7 +19,7 @@ IF(MSVC)
         ${FILES_CPP}
         ${CMAKE_CURRENT_SOURCE_DIR}/ecwin7.cpp
     )
-ENDIF()
+#ENDIF()
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 

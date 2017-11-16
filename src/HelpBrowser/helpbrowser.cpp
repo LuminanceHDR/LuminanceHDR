@@ -172,14 +172,14 @@ HelpBrowser::HelpBrowser(QWidget *parent, const QString & /*caption*/,
     // m_Ui->htmlPage->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
     // connect(m_Ui->htmlPage, SIGNAL(linkClicked(const QUrl &)), this,
     // SLOT(handleExternalLink(const QUrl &)));
-    connect(m_Ui->htmlPage, &QWebEngineView::loadStarted, this,
+    connect(m_Ui->htmlPage, &QWebView::loadStarted, this,
             &HelpBrowser::loadStarted);
-    connect(m_Ui->htmlPage, &QWebEngineView::loadFinished, this,
+    connect(m_Ui->htmlPage, &QWebView::loadFinished, this,
             &HelpBrowser::loadFinished);
     // connect(m_Ui->htmlPage->page(), SIGNAL(linkHovered(const QString &, const
     // QString &, const QString & )), this, SLOT(linkHovered(const QString &,
     // const QString &, const QString & )));
-    connect(m_Ui->htmlPage->page(), &QWebEnginePage::linkHovered, this,
+    connect(m_Ui->htmlPage->page(), &QWebPage::linkHovered, this,
             &HelpBrowser::linkHovered);
 
     language =
@@ -295,9 +295,9 @@ void HelpBrowser::setupLocalUI() {
     connect(m_Ui->goHome, &QAction::triggered, m_Ui->htmlPage,
             &ScTextBrowser::home);
     connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage,
-            &QWebEngineView::back);
+            &QWebView::back);
     connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage,
-            &QWebEngineView::forward);
+            &QWebView::forward);
     connect(m_Ui->zoomIn, &QAction::triggered, this,
             &HelpBrowser::zoomIn_clicked);
     connect(m_Ui->zoomOriginal, &QAction::triggered, this,
@@ -372,7 +372,7 @@ void HelpBrowser::print() {
             this->printAvailable();
             });
     */
-    m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
+//    m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
     this->printAvailable();
 }
 
@@ -394,7 +394,7 @@ void HelpBrowser::printPreview() {
             this->printPreviewAvailable();
             });
     */
-    m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
+//    m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
     this->printPreviewAvailable();
 }
 

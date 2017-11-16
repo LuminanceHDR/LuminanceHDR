@@ -45,9 +45,9 @@ for which a new license (GPL+exception) is in place.
 #define SCTEXTBROWSER_H
 
 #include <QUrl>
-#include <QWebEngineView>
+#include <qwebview>
 
-class ScTextBrowser : public QWebEngineView {
+class ScTextBrowser : public QWebView {
     Q_OBJECT
     QUrl m_home;
 
