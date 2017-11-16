@@ -28,6 +28,7 @@
 #include "HelpBrowser/LuminancePaths.h"
 #include "HelpBrowser/help-path.hxx"
 
+#include <QtGlobal>
 #include <QApplication>
 #include <iostream>
 
@@ -49,10 +50,10 @@ QString LuminancePaths::HelpDir() {
         }
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep +
                                   "../Resources/help/en" + dirsep);
-#elif _WIN32
+#elif Q_OS_WIN
     QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep +
                                   "help" + dirsep);
 // no fall-back

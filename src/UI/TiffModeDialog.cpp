@@ -20,6 +20,8 @@
  *
  */
 
+#include <QtGlobal>
+
 #include "UI/TiffModeDialog.h"
 #include "UI/ui_TiffModeDialog.h"
 
@@ -65,7 +67,7 @@ TiffModeDialog::TiffModeDialog(bool hdrMode, int defaultValue, QWidget *parent)
                     .toInt());
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     this->setWindowModality(
         Qt::WindowModal);  // In OS X, the QMessageBox is modal to the window
 #endif

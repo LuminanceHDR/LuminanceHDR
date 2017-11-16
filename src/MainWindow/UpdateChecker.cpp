@@ -20,6 +20,7 @@
  * @author Daniel Kaneider
  */
 
+#include <QtGlobal>
 #include <QDebug>
 #include <QDesktopServices>
 #include <QDomDocument>
@@ -105,7 +106,7 @@ void UpdateChecker::requestFinished(QNetworkReply *reply) {
 
                 emit updateAvailable();
 
-#if defined(Q_OS_MAC) || defined(Q_OS_X11)
+#if defined(Q_OS_MACOS) || defined(Q_OS_X11)
                 if (UMessageBox::question(
                         msgTitle,
                         msgContent + "\n\n" + tr("Do you want to open the "

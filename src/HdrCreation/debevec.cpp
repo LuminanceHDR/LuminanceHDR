@@ -155,7 +155,7 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     }
 #pragma omp parallel for
     for (int c = 0; c < channels; c++) {
-#ifdef WIN32
+#ifdef Q_OS_WIN
         replace_if(resultCh[c]->begin(), resultCh[c]->end(),
                    not1(ref(isnormal<float>)), numeric_limits<float>::min());
 #else

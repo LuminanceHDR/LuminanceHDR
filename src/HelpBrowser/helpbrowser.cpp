@@ -741,17 +741,9 @@ void HelpBrowser::zoomOut_clicked() {
 }
 
 void HelpBrowser::handleExternalLink(const QUrl &url) {
-    // TODO: Check whether handling these protocol internally has now been fixed
-    // in Windows
     if ((url.scheme() == QLatin1String("http")) ||
         url.scheme() == QLatin1String("https")) {
-        /*
-        #ifdef WIN32
-                QDesktopServices::openUrl(url);
-        #else
-        */
         m_Ui->htmlPage->load(url);
-        //#endif
     } else {
         QApplication::restoreOverrideCursor();
         if (QMessageBox::warning(

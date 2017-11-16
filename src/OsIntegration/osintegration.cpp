@@ -21,6 +21,7 @@
  * @author Daniel Kaneider <danielkaneider@users.sourceforge.net>
  */
 
+#include <QtGlobal>
 #include "osintegration.h"
 
 #include <QSysInfo>
@@ -110,7 +111,7 @@ void OsIntegration::addRecentFile(const QString &filename) {
 }
 
 bool OsIntegration::isRunningOnSameCpuPlatform() {
-#if defined(_WIN32)
+#if defined(Q_OS_WIN)
     // 32-bit programs run on both 32-bit and 64-bit Windows
     // so must sniff
     BOOL f64 = true;

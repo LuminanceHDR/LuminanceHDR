@@ -25,9 +25,10 @@
  * $Id: pfsouthdrhtml.cpp,v 1.5 2010/06/13 14:45:55 rafm Exp $
  */
 
+#include <QtGlobal>
 #include "hdrhtml.h"
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 #include <QCoreApplication>
 #endif
 #include <QObject>
@@ -48,7 +49,7 @@ using namespace std;
 void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
                       string image_dir, string object_output,
                       string html_output, int quality, bool verbose) {
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     const int MAX_LINE_LENGTH = 2048;
     QString p_t = HDRHTMLDIR;
     p_t.append("/hdrhtml_default_templ/hdrhtml_page_templ.html");

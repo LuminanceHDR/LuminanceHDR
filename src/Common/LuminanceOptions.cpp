@@ -29,6 +29,7 @@
  *
  */
 
+#include <QtGlobal>
 #include <QApplication>
 #include <QDate>
 #include <QDebug>
@@ -42,9 +43,9 @@
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
 
-#if defined(WIN32)
+#if defined(Q_OS_WIN)
 const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = "LuminanceHDR";
-#elif defined(__APPLE__)
+#elif defined(Q_OS_MACOS)
 const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER =
     ".config/.LuminanceHDR";
 #else
@@ -164,7 +165,7 @@ QString LuminanceOptions::getDatabaseFileName() {
 }
 
 QString LuminanceOptions::getGuiTheme() {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     return m_settingHolder->value(KEY_GUI_THEME, MAC_THEME).toString();
 #else
     return m_settingHolder->value(KEY_GUI_THEME, "Fusion").toString();

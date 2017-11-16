@@ -26,6 +26,8 @@
  *
  */
 
+#include <QtGlobal>
+
 #include "UI/UMessageBox.h"
 
 #include "Common/GitSHA1.h"
@@ -43,7 +45,7 @@ void UMessageBox::init() {
                     layout->columnCount());
 
     this->setWindowTitle("Luminance HDR " LUMINANCEVERSION);
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     this->setWindowModality(
         Qt::WindowModal);  // In OS X, the QMessageBox is modal to the window
 #endif

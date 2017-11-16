@@ -24,6 +24,7 @@
  *
  */
 
+#include <QtGlobal>
 #include <QColorDialog>
 #include <QDebug>
 #include <QFileDialog>
@@ -43,9 +44,9 @@
 // UI
 #include "Preferences/ui_PreferencesDialog.h"
 
-#ifdef WIN32
+#ifdef Q_OS_WIN
 #define ICC_PATH "C:\\WINDOWS\\system32\\spool\\drivers\\color"
-#elif defined __APPLE__
+#elif defined Q_OS_MACOS
 #define ICC_PATH "/Library/ColorSync/Profiles/"
 #else
 #define ICC_PATH "/usr/share/color/icc"
@@ -128,7 +129,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab)
 
     // for (const QString &style : QStyleFactory::keys())
     foreach (const QString &style, QStyleFactory::keys()) {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
         if (style == "Windows") {
             continue;
         }

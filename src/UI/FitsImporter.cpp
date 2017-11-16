@@ -21,6 +21,7 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
+#include <QtGlobal>
 #include <QDebug>
 #include <QFile>
 #include <QFileDialog>
@@ -72,10 +73,10 @@ FitsImporter::FitsImporter(QWidget *parent)
         m_Ui->pushButtonPreview->setIcon(
             QIcon(":/program-icons/document-preview"));
 
-#ifdef WIN32
+#ifdef Q_OS_WIN
     setWizardStyle(WizardStyle::ModernStyle);
 #endif
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     this->setWindowModality(
         Qt::WindowModal);  // In OS X, the QMessageBox is modal to the window
 #endif

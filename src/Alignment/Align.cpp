@@ -50,7 +50,7 @@ void Align::align_with_ais(bool ais_crop_flag) {
     if (!m_fromCommandLine) {
         m_ais->setWorkingDirectory(m_luminance_options.getTempDir());
     }
-#ifndef WIN32
+#ifndef Q_OS_WIN
     QStringList env = QProcess::systemEnvironment();
     QString separator(QStringLiteral(":"));
     env.replaceInStrings(
@@ -76,7 +76,7 @@ void Align::align_with_ais(bool ais_crop_flag) {
     QFutureWatcher<void> futureWatcher;
 
 // Start the computation.
-#ifdef WIN32
+#ifdef Q_OS_WIN
     const bool deflateCompression =
         false;  // AIS is misconfigured (see hugin bug #1265480)
 #else
@@ -112,7 +112,7 @@ void Align::align_with_ais(bool ais_crop_flag) {
         it.setAlignedFilename(alignedFilename);
     }
     qDebug() << "ais_parameters " << ais_parameters;
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     qDebug() << QCoreApplication::applicationDirPath() + "/align_image_stack";
     m_ais->start(QCoreApplication::applicationDirPath() + "/align_image_stack",
                  ais_parameters);

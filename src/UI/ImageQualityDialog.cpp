@@ -21,6 +21,8 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
+#include <QtGlobal>
+
 #include "UI/ImageQualityDialog.h"
 #include "UI/ui_ImageQualityDialog.h"
 
@@ -66,7 +68,7 @@ ImageQualityDialog::ImageQualityDialog(const pfs::Frame *frame,
         m_ui->fileSizePanel->setVisible(false);
     }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     this->setWindowModality(
         Qt::WindowModal);  // In OS X, the QMessageBox is modal to the window
 #endif

@@ -78,7 +78,7 @@ bool check_db() {
 }
 }
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 void customMessageHandler(QtMsgType type, const QMessageLogContext &context,
                           const QString &msg) {
     QString txt;
@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
-#ifdef WIN32  // TODO: there are problems with HiDPI on X11, let's enable this
+#ifdef Q_OS_WIN  // TODO: there are problems with HiDPI on X11, let's enable this
               // only on Windows by now
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
     Q_INIT_RESOURCE(icons);
     QApplication application(argc, argv);
 
-#ifdef WIN32
+#ifdef Q_OS_WIN
     // qInstallMessageHandler(customMessageHandler);
 
     QIcon::setThemeSearchPaths(QStringList()
@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
                                       QString("/icons/luminance-hdr"));
     QIcon::setThemeName("luminance-hdr");
 #endif
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     QIcon::setThemeSearchPaths(
         QStringList() << QCoreApplication::applicationDirPath() +
                              QString("/../Resources/icons/luminance-hdr"));

@@ -21,13 +21,14 @@
  * @author Franco Comida <francocomida@users.sourceforge.net>
  */
 
+#include <QtGlobal>
 #include <boost/foreach.hpp>
 #include "UI/SupportedCamerasDialog.h"
 #include "UI/ui_SupportedCamerasDialog.h"
 #include "Common/GitSHA1.h"
 #include "Common/config.h"
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
 #include <libraw.h>
 #else
 #include <libraw/libraw.h>

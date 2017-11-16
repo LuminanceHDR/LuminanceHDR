@@ -25,6 +25,7 @@
  * $Id: hdrhtml.cpp,v 1.8 2014/06/16 21:50:08 rafm Exp $
  */
 
+#include <QtGlobal>
 #include "hdrhtml.h"
 
 #include <cassert>
@@ -39,7 +40,7 @@
 
 #include "Libpfs/exception.h"
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 #include <QCoreApplication>
 #endif
 #include "HdrHTML/hdrhtml-path.hxx"
@@ -590,7 +591,7 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
 
     // Load LUT for the basis tone-curves
     ostringstream lut_filename;
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     QString h_t_b = HDRHTMLDIR;
     h_t_b.append("\\hdrhtml_t_b");
     lut_filename << h_t_b.toStdString().c_str() << basis_no + 1 << ".csv";
@@ -802,7 +803,7 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
 
     // Load the table of the opacity coeffcients
     ostringstream lut_filename;
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     QString h_c_b = HDRHTMLDIR;
     h_c_b.append("\\hdrhtml_c_b");
     lut_filename << h_c_b.toStdString().c_str() << image_list.front().basis + 1
