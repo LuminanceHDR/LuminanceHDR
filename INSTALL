@@ -143,7 +143,7 @@ for different versions of Visual Studio) or building every dependency and Lumina
 More information can be found inside build_files/platforms/msvc/README.txt).
 
 It is also possible to build Luminance HDR using msys2/mingw.
-We are currently working at this. Build instructions will follow soon.
+See build_files\platforms\msys2\README.txt for build instructions.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 GNU/Linux:
