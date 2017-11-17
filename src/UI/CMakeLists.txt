@@ -47,7 +47,10 @@ QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 
 ADD_LIBRARY(ui ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H})
-qt5_use_modules(ui Core Concurrent Gui Widgets WebKitWidgets)
-
+IF(MINGW)
+    qt5_use_modules(ui Core Concurrent Gui Widgets WebKitWidgets)
+ELSE()
+    qt5_use_modules(ui Core Concurrent Gui Widgets WebEngineWidgets)
+ENDIF()
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} ${FILES_UI} PARENT_SCOPE)
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} ui PARENT_SCOPE)

@@ -45,9 +45,18 @@ for which a new license (GPL+exception) is in place.
 #define SCTEXTBROWSER_H
 
 #include <QUrl>
-#include <qwebview>
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
+#include <qwebview>
+#else
+#include <QWebEngineView>
+#endif
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
 class ScTextBrowser : public QWebView {
+#else
+class ScTextBrowser : public QWebEngineView {
+#endif
     Q_OBJECT
     QUrl m_home;
 

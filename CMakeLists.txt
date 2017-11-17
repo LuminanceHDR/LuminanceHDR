@@ -39,8 +39,13 @@ find_package(Qt5Core             REQUIRED)
 find_package(Qt5Concurrent       REQUIRED)
 find_package(Qt5Widgets          REQUIRED)
 find_package(Qt5Gui              REQUIRED)
-find_package(Qt5WebKit           REQUIRED)
-find_package(Qt5WebKitWidgets    REQUIRED)
+IF(MINGW)
+    find_package(Qt5WebKit           REQUIRED)
+    find_package(Qt5WebKitWidgets    REQUIRED)
+ELSE()
+    find_package(Qt5WebEngineCore    REQUIRED)
+    find_package(Qt5WebEngineWidgets REQUIRED)
+ENDIF()
 find_package(Qt5Xml              REQUIRED)
 find_package(Qt5Sql              REQUIRED)
 find_package(Qt5Svg              REQUIRED)
@@ -67,48 +72,50 @@ IF(GIT_FOUND)
 ENDIF()
 
 IF(WIN32)
+
     # Windows Section
 
     # to not define min/max macros, which cause troubles with STL and boost
     ADD_DEFINITIONS(-DNOMINMAX)
+    IF(MINGW)
+        find_package(PkgConfig)
+        pkg_check_modules(FFTW3F REQUIRED fftw3f)
+        SET(FFTWF_LIBRARIES "libfftw3f.a")
+        pkg_check_modules(LCMS REQUIRED lcms2>=2.6)
+        pkg_check_modules(LIBRAW REQUIRED libraw)
+        find_package(OpenMP)
+        IF(OPENMP_FOUND)
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -Werror=unknown-pragmas")
+        ENDIF()
+    ELSE()
+        SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
+        SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
+        SET(LCMS2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
 
-    find_package(PkgConfig)
-    pkg_check_modules(FFTW3F REQUIRED fftw3f)
-    pkg_check_modules(LCMS REQUIRED lcms2>=2.6)
-    pkg_check_modules(LIBRAW REQUIRED libraw)
-    find_package(OpenMP)
-    if(OPENMP_FOUND)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -Werror=unknown-pragmas -Wall -Wno-unused-result -Wno-deprecated-declarations")
-    endif()
+        # Enable multi processor compilation
+        ADD_DEFINITIONS(/MP)
 
-#    SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
-#    SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
-#    SET(LCMS2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
+        # Enable SSE2
+        IF(CMAKE_SIZEOF_VOID_P EQUAL 4)
+            # SSE2 is on by default, on x64 platforms
+            ADD_DEFINITIONS(/arch:SSE2)
+        ENDIF()
 
-    # Enable multi processor compilation
-#    ADD_DEFINITIONS(/MP)
+        ADD_DEFINITIONS(-DUNICODE )
+        ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_REENTRANT)
 
-    # Enable SSE2
-#    IF(CMAKE_SIZEOF_VOID_P EQUAL 4)
-#        # SSE2 is on by default, on x64 platforms
-#    	ADD_DEFINITIONS(/arch:SSE2)
-#    ENDIF()
+        SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
+        ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
+        ADD_DEFINITIONS("-DDEMOSAICING_GPL3")
 
-#    ADD_DEFINITIONS(-DUNICODE )
-#    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_REENTRANT)
-    SET(FFTWF_LIBRARIES "libfftw3f.a")
-#
-#    SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
-    ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
-    ADD_DEFINITIONS("-DDEMOSAICING_GPL3")
+        SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
+        ADD_DEFINITIONS(-DCMS_DLL)
+        ADD_DEFINITIONS(-DUSE_LCMS2)
 
-#    SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
-#    ADD_DEFINITIONS(-DCMS_DLL)
-#    ADD_DEFINITIONS(-DUSE_LCMS2)
-
-#    INCLUDE_DIRECTORIES(${LIBRAW_INCLUDE_DIR} "${LIBRAW_INCLUDE_DIR}/libraw")
-#    INCLUDE_DIRECTORIES(${FFTWF_INCLUDE_DIR})
-#    INCLUDE_DIRECTORIES(${LCMS2_INCLUDE_DIR})
+        INCLUDE_DIRECTORIES(${LIBRAW_INCLUDE_DIR} "${LIBRAW_INCLUDE_DIR}/libraw")
+        INCLUDE_DIRECTORIES(${FFTWF_INCLUDE_DIR})
+        INCLUDE_DIRECTORIES(${LCMS2_INCLUDE_DIR})
+    ENDIF()
 ELSE()
     # Unix & Apple part
     FIND_PACKAGE(LibRAW REQUIRED)
@@ -327,43 +334,44 @@ ELSEIF(UNIX)
     INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml DESTINATION share/luminance-hdr) # hdrhtml directory
 # Microsoft Windows
 ELSEIF(WIN32)
-    # icon files to copy in the bundle
-    SET(LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/program-icons/luminance_ico.rc")
+    IF(MINGW)
+        # icon files to copy in the bundle
+        SET(LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/program-icons/luminance_ico.rc")
 
-    # Subsystem console:
-    ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
-    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
+        # Subsystem console:
+        ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
+        ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
 
-    qt5_use_modules(luminance-hdr Core Gui Widgets WinExtras Svg)
-    qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
+        qt5_use_modules(luminance-hdr Core Gui Widgets WinExtras Svg)
+        qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 
-    # link libraries
-    TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
-    TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})
+        # link libraries
+        TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
+        TARGET_LINK_LIBRARIES(luminance-hdr-cli -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
+        TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
+        TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})
 
-    INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
-    INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
-    INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
-    #INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+        INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
+        INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
+        INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+        #INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
 
-    INSTALL(FILES ${CMAKE_SOURCE_DIR}/program-icons/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
-    INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
-    INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.appdata.xml DESTINATION share/appdata) #appstream
-    INSTALL(FILES
-    ${CMAKE_SOURCE_DIR}/AUTHORS
-    ${CMAKE_SOURCE_DIR}/README.md
-    ${CMAKE_SOURCE_DIR}/LICENSE
-    ${CMAKE_SOURCE_DIR}/Changelog
-    DESTINATION share/luminance-hdr) #info files
-    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
-    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml DESTINATION share/luminance-hdr) # hdrhtml directory
-
-#    # Link libraries
-#    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS})
-#    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
-
+        INSTALL(FILES ${CMAKE_SOURCE_DIR}/program-icons/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
+        INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
+        INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.appdata.xml DESTINATION share/appdata) #appstream
+        INSTALL(FILES
+        ${CMAKE_SOURCE_DIR}/AUTHORS
+        ${CMAKE_SOURCE_DIR}/README.md
+        ${CMAKE_SOURCE_DIR}/LICENSE
+        ${CMAKE_SOURCE_DIR}/Changelog
+        DESTINATION share/luminance-hdr) #info files
+        INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
+        INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml DESTINATION share/luminance-hdr) # hdrhtml directory
+    ELSE()
+        # Link libraries
+        TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS})
+        TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
+    ENDIF()
 ENDIF()
 
 # Packaging must go at the bottom

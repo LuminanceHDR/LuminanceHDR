@@ -56,8 +56,11 @@ for which a new license (GPL+exception) is in place.
 
 #include "sctextbrowser.h"
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
 ScTextBrowser::ScTextBrowser(QWidget *parent) : QWebView(parent) {}
-
+#else
+ScTextBrowser::ScTextBrowser(QWidget *parent) : QWebEngineView (parent) {}
+#endif
 void ScTextBrowser::home() {
     if (m_home.isValid()) load(m_home);
 }
