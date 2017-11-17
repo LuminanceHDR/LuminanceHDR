@@ -53,7 +53,7 @@ QString LuminancePaths::HelpDir() {
 #ifdef Q_OS_MACOS
     QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep +
                                   "../Resources/help/en" + dirsep);
-#elif Q_OS_WIN
+#elif defined(Q_OS_WIN)
     QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep +
                                   "help" + dirsep);
 // no fall-back

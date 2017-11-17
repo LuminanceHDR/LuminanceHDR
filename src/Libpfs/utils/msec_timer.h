@@ -45,7 +45,7 @@
 #ifdef WIN_TIMER
 #define _WINSOCKAPI_  // stops windows.h including winsock.h
 #include <windows.h>
-#elif __APPLE__
+#elif defined(__APPLE__)
 #include <mach/mach_time.h>
 #include <stdint.h>
 #else
@@ -60,7 +60,7 @@ class msec_timer {
     LARGE_INTEGER stop_t;
     double wrk_time;
     LARGE_INTEGER freq;
-#elif __APPLE__
+#elif defined(__APPLE__)
     uint64_t start_t;
     uint64_t stop_t;
     uint64_t wrk_time;
