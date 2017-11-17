@@ -10,7 +10,7 @@ SET(FILES_CPP
     ${CMAKE_CURRENT_SOURCE_DIR}/osintegration.cpp
 )
     
-IF(MSVC)
+IF(WIN32)
     SET(FILES_H
         ${FILES_H}
         ${CMAKE_CURRENT_SOURCE_DIR}/ecwin7.h

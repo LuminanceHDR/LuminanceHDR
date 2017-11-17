@@ -28,7 +28,12 @@ QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 
 ADD_LIBRARY(helpbrowser ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H} ${FILES_HXX})
-qt5_use_modules(helpbrowser Core Concurrent Gui Widgets Xml WebEngineCore WebEngineWidgets PrintSupport)
+IF(MINGW)
+    qt5_use_modules(helpbrowser Core Concurrent Gui Widgets Xml WebKit WebKitWidgets PrintSupport)
+ELSE()
+    qt5_use_modules(helpbrowser Core Concurrent Gui Widgets Xml WebEngineCore WebEngineWidgets PrintSupport)
+
+ENDIF()
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} ${FILES_UI} ${FILES_HXX} PARENT_SCOPE)
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} helpbrowser PARENT_SCOPE)

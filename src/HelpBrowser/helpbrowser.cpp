@@ -172,16 +172,39 @@ HelpBrowser::HelpBrowser(QWidget *parent, const QString & /*caption*/,
     // m_Ui->htmlPage->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
     // connect(m_Ui->htmlPage, SIGNAL(linkClicked(const QUrl &)), this,
     // SLOT(handleExternalLink(const QUrl &)));
+#ifdef WIN32
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
+    connect(m_Ui->htmlPage, &QWebView::loadStarted, this,
+            &HelpBrowser::loadStarted);
+    connect(m_Ui->htmlPage, &QWebView::loadFinished, this,
+            &HelpBrowser::loadFinished);
+#else
     connect(m_Ui->htmlPage, &QWebEngineView::loadStarted, this,
             &HelpBrowser::loadStarted);
     connect(m_Ui->htmlPage, &QWebEngineView::loadFinished, this,
             &HelpBrowser::loadFinished);
+#endif
+#else
+    connect(m_Ui->htmlPage, &QWebEngineView::loadStarted, this,
+            &HelpBrowser::loadStarted);
+    connect(m_Ui->htmlPage, &QWebEngineView::loadFinished, this,
+            &HelpBrowser::loadFinished);
+#endif
     // connect(m_Ui->htmlPage->page(), SIGNAL(linkHovered(const QString &, const
     // QString &, const QString & )), this, SLOT(linkHovered(const QString &,
     // const QString &, const QString & )));
+#ifdef WIN32
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
+    connect(m_Ui->htmlPage->page(), &QWebPage::linkHovered, this,
+            &HelpBrowser::linkHovered);
+#else
     connect(m_Ui->htmlPage->page(), &QWebEnginePage::linkHovered, this,
             &HelpBrowser::linkHovered);
-
+#endif
+#else
+    connect(m_Ui->htmlPage->page(), &QWebEnginePage::linkHovered, this,
+            &HelpBrowser::linkHovered);
+#endif
     language =
         guiLanguage.isEmpty() ? QStringLiteral("en") : guiLanguage.left(2);
     finalBaseDir = LuminancePaths::HelpDir();
@@ -294,10 +317,24 @@ void HelpBrowser::setupLocalUI() {
             &HelpBrowser::deleteAllBookmarkButton_clicked);
     connect(m_Ui->goHome, &QAction::triggered, m_Ui->htmlPage,
             &ScTextBrowser::home);
+#ifdef WIN32
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
+    connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage,
+            &QWebView::back);
+    connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage,
+            &QWebView::forward);
+#else
     connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage,
             &QWebEngineView::back);
     connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage,
             &QWebEngineView::forward);
+#endif
+#else
+    connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage,
+            &QWebEngineView::back);
+    connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage,
+            &QWebEngineView::forward);
+#endif
     connect(m_Ui->zoomIn, &QAction::triggered, this,
             &HelpBrowser::zoomIn_clicked);
     connect(m_Ui->zoomOriginal, &QAction::triggered, this,
@@ -372,7 +409,15 @@ void HelpBrowser::print() {
             this->printAvailable();
             });
     */
+#ifdef WIN32
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
+    m_textBrowser->setSource(m_Ui->htmlPage->url());
+#else
     m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
+#endif
+#else
+    m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
+#endif
     this->printAvailable();
 }
 
@@ -394,7 +439,15 @@ void HelpBrowser::printPreview() {
             this->printPreviewAvailable();
             });
     */
+#ifdef WIN32
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
+    m_textBrowser->setSource(m_Ui->htmlPage->url());
+#else
     m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
+#endif
+#else
+    m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
+#endif
     this->printPreviewAvailable();
 }
 
