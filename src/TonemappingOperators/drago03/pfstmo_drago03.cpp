@@ -78,6 +78,7 @@ BENCHFUN
         throw pfs::Exception("Tonemapping Failed!");
     }
 
+#pragma omp parallel for
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
             float yr = Yr(x, y);
