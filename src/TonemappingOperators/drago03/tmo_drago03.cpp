@@ -39,6 +39,7 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
+#include "../../opthelper.h"
 #include "../../sleef.c"
 
 namespace {
@@ -56,10 +57,31 @@ void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
 
     int size = width * height;
 
-    for (int i = 0; i < size; i++) {
-        avLum += xlogf(Y[i] + 1e-4);
-        maxLum = (Y[i] > maxLum) ? Y[i] : maxLum;
+    float eps = 1e-4f;
+#ifdef __SSE2__
+    vfloat epsv = F2V(eps);
+    vfloat maxLumv = ZEROV;
+    vfloat avLumv = ZEROV;
+#endif // __SSE2__
+    for(int i = 0; i < height; ++i) {
+        int j = 0;
+#ifdef __SSE2__
+        for (; j < width - 3; j+=4) {
+            vfloat Ywv = LVFU(Y[i * width + j]);
+            avLumv += xlogf(Ywv + epsv);
+            maxLumv = vmaxf(Ywv, maxLumv);
+        }
+#endif
+        for (; j < width; j++) {
+            float Yw = Y[i * width + j];
+            avLum += xlogf(Yw + eps);
+            maxLum = std::max(Yw, maxLum);
+        }
     }
+#ifdef __SSE2__
+    avLum += vhadd(maxLumv);
+    maxLum += vhmax(maxLumv);
+#endif
     avLum = exp(avLum / size);
 }
 
