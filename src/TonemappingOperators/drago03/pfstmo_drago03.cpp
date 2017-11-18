@@ -38,6 +38,8 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "tmo_drago03.h"
+#define BENCHMARK
+#include "../../StopWatch.h"
 
 void pfstmo_drago03(pfs::Frame &frame, float opt_biasValue, pfs::Progress &ph) {
 #ifndef NDEBUG
@@ -47,7 +49,7 @@ void pfstmo_drago03(pfs::Frame &frame, float opt_biasValue, pfs::Progress &ph) {
     ss << ")";
     std::cout << ss.str() << std::endl;
 #endif
-
+BENCHFUN
     pfs::Channel *X, *Y, *Z;
     frame.getXYZChannels(X, Y, Z);
 
