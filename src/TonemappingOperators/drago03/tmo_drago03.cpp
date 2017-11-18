@@ -39,6 +39,7 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
+#include "../../sleef.c"
 
 namespace {
 inline float biasFunc(float b, float x) {
@@ -56,7 +57,7 @@ void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
     int size = width * height;
 
     for (int i = 0; i < size; i++) {
-        avLum += log(Y[i] + 1e-4);
+        avLum += xlogf(Y[i] + 1e-4);
         maxLum = (Y[i] > maxLum) ? Y[i] : maxLum;
     }
     avLum = exp(avLum / size);
@@ -80,8 +81,7 @@ void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
 
         for (int x = 0, xEnd = Y.getCols(); x < xEnd; x++) {
             float Yw = Y(x, y) / avLum;
-            float interpol =
-                std::log(2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
+            float interpol = xlogf(2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
             // L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
             L(x, y) = (std::log1p(Yw) / interpol) /
                       divider;  // avoid loss of precision
