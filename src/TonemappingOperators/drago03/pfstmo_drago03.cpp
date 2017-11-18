@@ -78,8 +78,8 @@ BENCHFUN
         throw pfs::Exception("Tonemapping Failed!");
     }
 
-    for (int x = 0; x < w; x++) {
-        for (int y = 0; y < h; y++) {
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
             float yr = Yr(x, y);
             float scale = 0.f;
             if (yr != 0.f) {
