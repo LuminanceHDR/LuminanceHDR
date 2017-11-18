@@ -44,7 +44,7 @@
 
 namespace {
 inline float biasFunc(float b, float x) {
-    return std::pow(x, b);  // pow(x, log(bias)/log(0.5))
+    return b == 0.f ? xexpf( x * xlogf(b)) : 1.f;
 }
 
 const float LOG05 = -0.693147f;  // log(0.5)
