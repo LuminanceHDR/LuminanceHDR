@@ -117,13 +117,13 @@ void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
 #ifdef __SSE2__
         for (; x < xEnd - 3; x+=4) {
             vfloat Ywv = LVFU(Y(x, y)) / avLumv;
-            vfloat interpolv = xlogf( twov + eightv * xexpf(biasPv * (xlogf(Ywv) + logmaxLumv)));
+            vfloat interpolv = xlogf( twov + eightv * xexpf(biasPv * (xlogf(Ywv) - logmaxLumv)));
             STVFU(L(x, y), xlogf(Ywv + onev) / (interpolv * dividerv));  // avoid loss of precision
         }
 #endif
         for (; x < xEnd; x++) {
             float Yw = Y(x, y) / avLum;
-            float interpol = xlogf( 2.f + 8.f * xexpf(biasP * (xlogf(Yw) + logmaxLum)));
+            float interpol = xlogf( 2.f + 8.f * xexpf(biasP * (xlogf(Yw) - logmaxLum)));
             L(x, y) = xlogf(Yw + 1.f) / (interpol * divider);  // avoid loss of precision
 
             assert(!boost::math::isnan(L(x, y)));
