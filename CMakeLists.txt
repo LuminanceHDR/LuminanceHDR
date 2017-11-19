@@ -229,7 +229,7 @@ SET(LUMINANCE_FILES
 
 # MacOSX
 IF(APPLE)
-    SET(CMAKE_INSTALL_PREFIX "/Applications")
+    SET(CMAKE_INSTALL_PREFIX ".")
 
     # Set Bundle settings
     set(MACOSX_BUNDLE_INFO_STRING          "${LHDR_NAME} ${LHDR_VERSION}")
