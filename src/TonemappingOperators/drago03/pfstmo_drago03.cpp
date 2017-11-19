@@ -40,6 +40,7 @@
 #include "tmo_drago03.h"
 #define BENCHMARK
 #include "../../StopWatch.h"
+#include "../../opthelper.h"
 
 void pfstmo_drago03(pfs::Frame &frame, float opt_biasValue, pfs::Progress &ph) {
 #ifndef NDEBUG
@@ -80,12 +81,20 @@ BENCHFUN
 
 #pragma omp parallel for
     for (int y = 0; y < h; y++) {
-        for (int x = 0; x < w; x++) {
+        int x = 0;
+#ifdef __SSE2__
+        for (; x < w - 3; x+=4) {
+            vfloat yrv = LVFU(Yr(x, y));
+            vfloat scalev = vselfnotzero(vmaskf_eq(yrv, ZEROV), LVFU(L(x,y)) / yrv);
+
+            STVFU(Yr(x, y), yrv * scalev);
+            STVFU(Xr(x, y), LVFU(Xr(x, y)) * scalev);
+            STVFU(Zr(x, y), LVFU(Zr(x, y)) * scalev);
+        }
+#endif
+        for (; x < w; x++) {
             float yr = Yr(x, y);
-            float scale = 0.f;
-            if (yr != 0.f) {
-                scale = L(x, y) / yr;
-            }
+            float scale = yr != 0.f ? L(x, y) / yr : 0.f;
 
             assert(!boost::math::isnan(scale));
 

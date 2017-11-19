@@ -94,18 +94,40 @@ void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
     maxLum /= avLum;
 
     float divider = std::log10(maxLum + 1.0f);
-    float biasP = (log(bias) / LOG05) * maxLum;
+    float biasP = (log(bias) / LOG05);
+    float logmaxLum = log(maxLum);
 
     // Normal tone mapping of every pixel
+    #pragma omp parallel
+    {
     int yEnd = Y.getRows();
-    #pragma omp parallel for
+    int xEnd = Y.getCols();
+#ifdef __SSE2__
+    vfloat avLumv = F2V(avLum);
+    vfloat onev = F2V(1.f);
+    vfloat twov = F2V(2.f);
+    vfloat eightv = F2V(8.f);
+    vfloat biasPv = F2V(biasP);
+    vfloat logmaxLumv = F2V(logmaxLum);
+    vfloat dividerv = F2V(divider);
+#endif
+    #pragma omp for
     for (int y = 0; y < yEnd; y++) {
-        for (int x = 0, xEnd = Y.getCols(); x < xEnd; x++) {
+        int x = 0;
+#ifdef __SSE2__
+        for (; x < xEnd - 3; x+=4) {
+            vfloat Ywv = LVFU(Y(x, y)) / avLumv;
+            vfloat interpolv = xlogf( twov + eightv * xexpf(biasPv * (xlogf(Ywv) + logmaxLumv)));
+            STVFU(L(x, y), xlogf(Ywv + onev) / (interpolv * dividerv));  // avoid loss of precision
+        }
+#endif
+        for (; x < xEnd; x++) {
             float Yw = Y(x, y) / avLum;
-            float interpol = xlogf(2.0f + xexpf(std::max(biasP, 0.f) *  Yw) * 8.0f);
+            float interpol = xlogf( 2.f + 8.f * xexpf(biasP * (xlogf(Yw) + logmaxLum)));
             L(x, y) = xlogf(Yw + 1.f) / (interpol * divider);  // avoid loss of precision
 
             assert(!boost::math::isnan(L(x, y)));
         }
+    }
     }
 }
