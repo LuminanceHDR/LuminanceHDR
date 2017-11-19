@@ -252,7 +252,7 @@ IF(APPLE)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
 
     # Build project (bundle and luminance-hdr-cli)
-    # SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build # leave comment, it may be useful in future
+    SET( CMAKE_OSX_ARCHITECTURES x86_64 )  # Universal/Generic x86_64 build
     ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES} )
     set_property(TARGET ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTY OUTPUT_NAME ${LHDR_OSX_EXECUTABLE_NAME})
