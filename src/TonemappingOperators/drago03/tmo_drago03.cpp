@@ -79,8 +79,8 @@ void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
         }
     }
 #ifdef __SSE2__
-    avLum += vhadd(maxLumv);
-    maxLum += vhmax(maxLumv);
+    avLum += vhadd(avLumv);
+    maxLum = std::max(maxLum, vhmax(maxLumv));
 #endif
     avLum = exp(avLum / size);
 }
