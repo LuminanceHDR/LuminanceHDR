@@ -57,27 +57,45 @@ void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
 
     int size = width * height;
 
-    float eps = 1e-4f;
 #ifdef __SSE2__
-    vfloat epsv = F2V(eps);
     vfloat maxLumv = ZEROV;
     vfloat avLumv = ZEROV;
 #endif // __SSE2__
+
+#pragma omp parallel
+{
+    float eps = 1e-4f;
+    float avLumThr = 0.f;
+    float maxLumThr = 0.f;
+#ifdef __SSE2__
+    vfloat epsv = F2V(eps);
+    vfloat maxLumThrv = ZEROV;
+    vfloat avLumThrv = ZEROV;
+#endif // __SSE2__
+    #pragma omp for nowait
     for(int i = 0; i < height; ++i) {
         int j = 0;
 #ifdef __SSE2__
         for (; j < width - 3; j+=4) {
             vfloat Ywv = LVFU(Y[i * width + j]);
-            avLumv += xlogf(Ywv + epsv);
-            maxLumv = vmaxf(Ywv, maxLumv);
+            avLumThrv += xlogf(Ywv + epsv);
+            maxLumThrv = vmaxf(Ywv, maxLumThrv);
         }
 #endif
         for (; j < width; j++) {
             float Yw = Y[i * width + j];
-            avLum += xlogf(Yw + eps);
-            maxLum = std::max(Yw, maxLum);
+            avLumThr += xlogf(Yw + eps);
+            maxLumThr = std::max(Yw, maxLumThr);
         }
     }
+#pragma omp critical
+{
+    avLumv += avLumThrv;
+    maxLumv = vmaxf(maxLumv, maxLumThrv);
+    avLum += avLumThr;
+    maxLum = std::max(maxLum, maxLumThr);
+}
+}
 #ifdef __SSE2__
     avLum += vhadd(avLumv);
     maxLum = std::max(maxLum, vhmax(maxLumv));
