@@ -94,19 +94,16 @@ void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
     maxLum /= avLum;
 
     float divider = std::log10(maxLum + 1.0f);
-    float biasP = log(bias) / LOG05;
+    float biasP = (log(bias) / LOG05) * maxLum;
 
     // Normal tone mapping of every pixel
-    for (int y = 0, yEnd = Y.getRows(); y < yEnd; y++) {
-        ph.setValue(100 * y / yEnd);
-        if (ph.canceled()) break;
-
+    int yEnd = Y.getRows();
+    #pragma omp parallel for
+    for (int y = 0; y < yEnd; y++) {
         for (int x = 0, xEnd = Y.getCols(); x < xEnd; x++) {
             float Yw = Y(x, y) / avLum;
-            float interpol = xlogf(2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
-            // L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
-            L(x, y) = (std::log1p(Yw) / interpol) /
-                      divider;  // avoid loss of precision
+            float interpol = xlogf(2.0f + xexpf(std::max(biasP, 0.f) *  Yw) * 8.0f);
+            L(x, y) = xlogf(Yw + 1.f) / (interpol * divider);  // avoid loss of precision
 
             assert(!boost::math::isnan(L(x, y)));
         }
