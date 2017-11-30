@@ -21,30 +21,30 @@
 
 #include <Libpfs/colorspace/rgb.h>
 #include <cmath>
+#include "../../sleef.c"
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
 
 namespace pfs {
 namespace colorspace {
 
-using std::pow;
-
 float ConvertSRGB2RGB::operator()(float sample) const {
     if (sample > 0.04045f) {
-        return pow((sample + 0.055f) * (1.f / 1.055f), 2.4f);
+        return pow_F((sample + 0.055f) * (1.f / 1.055f), 2.4f);
     }
     if (sample >= -0.04045f) {
         return sample * (1.f / 12.92f);
     }
-    return -pow((0.055f - sample) * (1.f / 1.055f), 2.4f);
+    return -pow_F((0.055f - sample) * (1.f / 1.055f), 2.4f);
 }
 
 float ConvertRGB2SRGB::operator()(float sample) const {
     if (sample > 0.0031308f) {
-        return ((1.055f * pow(sample, 1.f / 2.4f)) - 0.055f);
+        return ((1.055f * pow_F(sample, 1.f / 2.4f)) - 0.055f);
     }
     if (sample >= -0.0031308f) {
         return (sample * 12.92f);
     }
-    return ((0.055f - 1.f) * pow(-sample, 1.f / 2.4f) - 0.055f);
+    return ((0.055f - 1.f) * pow_F(-sample, 1.f / 2.4f) - 0.055f);
 }
 }
 }

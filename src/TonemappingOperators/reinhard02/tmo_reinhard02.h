@@ -74,15 +74,14 @@ class Reinhard02 {
 
    private:
     CVTS m_cvts;
-    COLOR **m_image;
+    float **m_image;
     float m_sigma_0, m_sigma_1;
-    float **m_luminance;
     int m_width, m_height;
     const pfs::Array2Df *m_Y;
     pfs::Array2Df *m_L;
     bool m_use_scales;
     bool m_use_border;
-    float m_key, m_phi, m_white;
+    float m_key, m_phi, m_white, m_twopowphi;
     int m_range, m_scale_low, m_scale_high;
     const float m_alpha;
     float m_bbeta;
@@ -101,7 +100,6 @@ class Reinhard02 {
     void tonemap_image();
     float log_average();
     void scale_to_midtone();
-    void copy_luminance();
     void gaussian_filter(fftwf_complex *, float, float);
     void build_gaussian_fft();
     void build_image_fft();
