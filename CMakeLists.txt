@@ -18,7 +18,7 @@ IF(TIMER_PROFILING)
 ENDIF()
 
 # ======== Enable GNU gsl inline code =======
-if(UNIX OR APPLE) # Visual Studio doesn't like this
+IF(UNIX OR APPLE OR MINGW) # Visual Studio doesn't like this
     ADD_DEFINITIONS(-DHAVE_INLINE )
 ENDIF()
 
@@ -335,6 +335,40 @@ ELSEIF(UNIX)
 # Microsoft Windows
 ELSEIF(WIN32)
     IF(MINGW)
+        set (PROJECT_VERSION_MAJOR ${LHDR_VERSION_MAJOR})
+        set (PROJECT_VERSION_MINOR ${LHDR_VERSION_MINOR})
+        set (PROJECT_VERSION_PATCH ${LHDR_VERSION_PATCH})
+        
+        get_target_property(QtCore_location Qt5::Core LOCATION)
+        get_filename_component(libsSrcDir "${QtCore_location}" DIRECTORY)
+        message(STATUS "> Base libs dir:    ${libsSrcDir}")
+        get_filename_component(qt5PluginsSrcDir "${libsSrcDir}/../share/qt5/plugins" ABSOLUTE)
+        message(STATUS "> Qt5 plugins libs: ${qt5PluginsSrcDir}")
+
+
+        if (NOT DEFINED BUNDLE_BASE_INSTALL_DIR)
+            set (BUNDLE_BASE_INSTALL_DIR "${CMAKE_BINARY_DIR}/${LHDR_NAME}-${CMAKE_BUILD_TYPE}")
+        endif (NOT DEFINED BUNDLE_BASE_INSTALL_DIR)
+        set (CMAKE_INSTALL_PREFIX "${BUNDLE_BASE_INSTALL_DIR}")
+
+        set(RELINFO_WITH_ARGS ${CMAKE_COMMAND}
+            -DLHDR_NAME:STRING=${LHDR_NAME}
+            -DLHDR_VERSION:STRING=${LHDR_VERSION}
+            -DLHDR_VERSION_MAJOR:STRING=${LHDR_VERSION_MAJOR}
+            -DLHDR_VERSION_MINOR:STRING=${LHDR_VERSION_MINOR}
+            -DLHDR_VERSION_PATCH:STRING=${LHDR_VERSION_PATCH}
+            -DLHDR_VENDOR:STRING=${LHDR_VENDOR}
+            -DPROJECT_SOURCE_DIR:STRING=${PROJECT_SOURCE_DIR}
+            -DSYSTEM:STRING=Windows
+            -DLIBSSRCDIR:STRING="${libsSrcDir}"
+            -DCMAKE_INSTALL_PREFIX:STRING="${CMAKE_INSTALL_PREFIX}"
+            -DBIT_DEPTH:STRING="${CMAKE_SIZEOF_VOID_P}"
+            -P "${PROJECT_SOURCE_DIR}/build_files/platforms/msys2/UpdateInfo.cmake")
+
+        add_custom_target(prepare_setup
+            COMMAND ${RELINFO_WITH_ARGS}
+            COMMENT "Creating ReleaseInfo and InnoSetup file")
+
         # icon files to copy in the bundle
         SET(LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/program-icons/luminance_ico.rc")
 
@@ -351,22 +385,25 @@ ELSEIF(WIN32)
         TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
         TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})
 
-        INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
-        INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
-        INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
-        #INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+        INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION ./) # main GUI exec
+        INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION ./) # main CLI exec
+        INSTALL(FILES ${LUMINANCE_QM} DESTINATION ./i18n) # i18n
+        #INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION ./i18n) # i18n
 
-        INSTALL(FILES ${CMAKE_SOURCE_DIR}/program-icons/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
-        INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
-        INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.appdata.xml DESTINATION share/appdata) #appstream
-        INSTALL(FILES
-        ${CMAKE_SOURCE_DIR}/AUTHORS
-        ${CMAKE_SOURCE_DIR}/README.md
-        ${CMAKE_SOURCE_DIR}/LICENSE
-        ${CMAKE_SOURCE_DIR}/Changelog
-        DESTINATION share/luminance-hdr) #info files
-        INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
-        INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml DESTINATION share/luminance-hdr) # hdrhtml directory
+        INSTALL(FILES ${qt5PluginsSrcDir}/imageformats/qjpeg.dll DESTINATION ./imageformats/)
+        INSTALL(FILES ${qt5PluginsSrcDir}/imageformats/qsvg.dll DESTINATION ./imageformats/)
+        INSTALL(FILES ${qt5PluginsSrcDir}/platforms/qwindows.dll DESTINATION ./platforms/)
+        INSTALL(FILES ${qt5PluginsSrcDir}/sqldrivers/qsqlite.dll DESTINATION ./sqldrivers/)
+
+        INSTALL(FILES ${CMAKE_SOURCE_DIR}/program-icons/luminance-hdr.png DESTINATION ./icons/hicolor/48x48/apps) # icon
+        INSTALL(FILES ${CMAKE_SOURCE_DIR}/AUTHORS
+                      ${CMAKE_SOURCE_DIR}/README.md
+                      ${CMAKE_SOURCE_DIR}/LICENSE
+                      ${CMAKE_SOURCE_DIR}/Changelog
+                      DESTINATION ./) #info files
+        INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/icons DESTINATION ./) # icons directory
+        INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION ./) # help directory
+        INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml DESTINATION ./) # hdrhtml directory
     ELSE()
         # Link libraries
         TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS})
