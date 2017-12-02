@@ -33,6 +33,11 @@ execute_process(COMMAND ${GIT_CMD} tag --merged HEAD OUTPUT_VARIABLE GIT_TAG WOR
 string(REPLACE "\n" ";" GIT_TAG_LIST "${GIT_TAG}")
 execute_process(COMMAND ${GIT_CMD} rev-list --count HEAD --not ${GIT_TAG_LIST} OUTPUT_VARIABLE GIT_COMMITS_SINCE_TAG OUTPUT_STRIP_TRAILING_WHITESPACE WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
+# Numeric version only. Use it only if you have no choice, because it doesn't tell the branch or commit since tag
+#execute_process(COMMAND ${GIT_CMD} describe --tags --always --abbrev=0 OUTPUT_VARIABLE GIT_DESCRIBE_NUMERIC OUTPUT_STRIP_TRAILING_WHITESPACE WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
+#string(REGEX REPLACE "-.*" "" GIT_DESCRIBE_NUMERIC ${GIT_DESCRIBE_NUMERIC})
+set(GIT_NUMERIC_VERSION_ONLY "${LHDR_VERSION_MAJOR}.${LHDR_VERSION_MINOR}.${LHDR_VERSION_PATCH}")
+
 # Get number of commits since branching.
 # Works when checking out branch, tag or commit.
 execute_process(COMMAND ${GIT_CMD} rev-list --count HEAD --not --tags OUTPUT_VARIABLE GIT_COMMITS_SINCE_BRANCH OUTPUT_STRIP_TRAILING_WHITESPACE WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
@@ -42,6 +47,16 @@ if (GIT_BRANCH STREQUAL "")
     set (GIT_BRANCH "${GIT_DESCRIBE}")
 endif()
 
+# Create numeric version.
+# This version is nonsense, either don't use it at all or use it only where you have no other choice, e.g. Inno Setup's VersionInfoVersion.
+# Strip everything after hyphen, e.g. "5.0-gtk2" -> "5.0", "5.1-rc1" -> "5.1" (ergo BS).
+if (GIT_COMMITS_SINCE_TAG STREQUAL "")
+    set (GIT_NUMERIC_VERSION_BS "0.0.0")
+else ()
+    string(REGEX REPLACE "-.*" "" GIT_NUMERIC_VERSION_BS ${GIT_DESCRIBE})
+    set(GIT_NUMERIC_VERSION_BS "${GIT_NUMERIC_VERSION_BS}.${GIT_COMMITS_SINCE_TAG}")
+endif ()
+
 message(STATUS "Git checkout information:")
 message(STATUS "    Commit description:   ${GIT_DESCRIBE}")
 message(STATUS "    Branch:               ${GIT_BRANCH}")
@@ -49,6 +64,8 @@ message(STATUS "    Commit:               ${GIT_COMMIT}")
 message(STATUS "    Commit date:          ${GIT_COMMIT_DATE}")
 message(STATUS "    Commits since tag:    ${GIT_COMMITS_SINCE_TAG}")
 message(STATUS "    Commits since branch: ${GIT_COMMITS_SINCE_BRANCH}")
+message(STATUS "    Version:              ${GIT_NUMERIC_VERSION_BS}  (unreliable)")
+message(STATUS "    Numeric Version:      ${GIT_NUMERIC_VERSION_ONLY}  (unreliable)")
 
 if (BIT_DEPTH EQUAL 4)
     set(BUILD_BIT_DEPTH 32)
@@ -66,4 +83,4 @@ endif (BIT_DEPTH EQUAL 4)
 # set part of the output archive name
 set(SYSTEM_NAME "WinVista")
 
-configure_file ("${PROJECT_SOURCE_DIR}/build_files/platforms/msys2/WindowsInnoSetup.iss.in" "${CMAKE_BINARY_DIR}/WindowsInnoSetup.iss")
+configure_file ("${PROJECT_SOURCE_DIR}/build_files/platforms/msys2/WindowsInnoSetup.iss.in" "${CMAKE_INSTALL_PREFIX}/WindowsInnoSetup.iss")

@@ -338,31 +338,51 @@ ELSEIF(WIN32)
         set (PROJECT_VERSION_MAJOR ${LHDR_VERSION_MAJOR})
         set (PROJECT_VERSION_MINOR ${LHDR_VERSION_MINOR})
         set (PROJECT_VERSION_PATCH ${LHDR_VERSION_PATCH})
-        
-        get_target_property(QtCore_location Qt5::Core LOCATION)
-        get_filename_component(libsSrcDir "${QtCore_location}" DIRECTORY)
-        message(STATUS "> Base libs dir:    ${libsSrcDir}")
-        get_filename_component(qt5PluginsSrcDir "${libsSrcDir}/../share/qt5/plugins" ABSOLUTE)
-        message(STATUS "> Qt5 plugins libs: ${qt5PluginsSrcDir}")
 
+        find_program(ALIGN_IMAGE_STACK align_image_stack.exe HINTS "${HUGIN_BASE_PATH}" ENV Path ENV ProgramFiles ENV ProgramFiles(x86) PATH_SUFFIXES Hugin/bin bin)
+        # Fail if align_image_stack.exe can't be found
+        if (ALIGN_IMAGE_STACK STREQUAL ALIGN_IMAGE_STACK-NOTFOUND)
+            message(FATAL_ERROR "align_image_stack.exe command not found! Please install Hugin from https://sourceforge.net/projects/hugin/. For non standard base install directory, please define -DHUGIN_BASE_PATH:PATH=xxx in the cmake command line")
+        else ()
+            message(STATUS "align_image_stack.exe command from Hugin install found: ${ALIGN_IMAGE_STACK}")
+        endif ()
 
-        if (NOT DEFINED BUNDLE_BASE_INSTALL_DIR)
-            set (BUNDLE_BASE_INSTALL_DIR "${CMAKE_BINARY_DIR}/${LHDR_NAME}-${CMAKE_BUILD_TYPE}")
-        endif (NOT DEFINED BUNDLE_BASE_INSTALL_DIR)
-        set (CMAKE_INSTALL_PREFIX "${BUNDLE_BASE_INSTALL_DIR}")
+        # ------------------ Find out whether we are building out of source ------------------
+
+        get_filename_component(ABS_SOURCE_DIR "${PROJECT_SOURCE_DIR}" ABSOLUTE)
+        get_filename_component(ABS_BINARY_DIR "${CMAKE_BINARY_DIR}" ABSOLUTE)
+        set(OUT_OF_SOURCE_BUILD TRUE)
+        if(ABS_SOURCE_DIR STREQUAL ABS_BINARY_DIR)
+            set(OUT_OF_SOURCE_BUILD FALSE)
+            message(WARNING "You are performing an in-source build. This is discouraged. For an explanation and the advantages of out-of-source builds, please refer to http://www.cmake.org/Wiki/CMake_FAQ#What_is_an_.22out-of-source.22_build.3F")
+        endif()
+
+        # ------------------------------------------------------------------------------------
+
+        get_target_property(QT_LOCATION Qt5::Core LOCATION)
+        get_filename_component(LIBS_SRC_DIR "${QT_LOCATION}" DIRECTORY)
+        message(STATUS "> Base libs dir:    ${LIBS_SRC_DIR}")
+        get_filename_component(QT5_PLUGINS_SRC_DIR "${LIBS_SRC_DIR}/../share/qt5/plugins" ABSOLUTE)
+        message(STATUS "> Qt5 plugins libs: ${QT5_PLUGINS_SRC_DIR}")
+
+        get_filename_component(PRGFILES_DIR "$ENV{ProgramFiles}" ABSOLUTE)
+        get_filename_component(PRGFILESX86_DIR "$ENV{ProgramFiles(x86)}" ABSOLUTE)
+        if((CMAKE_INSTALL_PREFIX STREQUAL "${PRGFILES_DIR}/Luminance HDR") OR (CMAKE_INSTALL_PREFIX STREQUAL "${PRGFILESX86_DIR}/Luminance HDR"))
+            set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}-build")
+        endif()
 
         set(RELINFO_WITH_ARGS ${CMAKE_COMMAND}
-            -DLHDR_NAME:STRING=${LHDR_NAME}
-            -DLHDR_VERSION:STRING=${LHDR_VERSION}
+            -DLHDR_NAME:STRING="${LHDR_NAME}"
             -DLHDR_VERSION_MAJOR:STRING=${LHDR_VERSION_MAJOR}
             -DLHDR_VERSION_MINOR:STRING=${LHDR_VERSION_MINOR}
             -DLHDR_VERSION_PATCH:STRING=${LHDR_VERSION_PATCH}
             -DLHDR_VENDOR:STRING=${LHDR_VENDOR}
-            -DPROJECT_SOURCE_DIR:STRING=${PROJECT_SOURCE_DIR}
+            -DPROJECT_SOURCE_DIR:STRING="${PROJECT_SOURCE_DIR}"
             -DSYSTEM:STRING=Windows
-            -DLIBSSRCDIR:STRING="${libsSrcDir}"
+            -DLIBSSRCDIR:STRING="${LIBS_SRC_DIR}"
             -DCMAKE_INSTALL_PREFIX:STRING="${CMAKE_INSTALL_PREFIX}"
             -DBIT_DEPTH:STRING="${CMAKE_SIZEOF_VOID_P}"
+            -DALIGN_IMAGE_STACK:STRING="${ALIGN_IMAGE_STACK}"
             -P "${PROJECT_SOURCE_DIR}/build_files/platforms/msys2/UpdateInfo.cmake")
 
         add_custom_target(prepare_setup
@@ -390,10 +410,10 @@ ELSEIF(WIN32)
         INSTALL(FILES ${LUMINANCE_QM} DESTINATION ./i18n) # i18n
         #INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION ./i18n) # i18n
 
-        INSTALL(FILES ${qt5PluginsSrcDir}/imageformats/qjpeg.dll DESTINATION ./imageformats/)
-        INSTALL(FILES ${qt5PluginsSrcDir}/imageformats/qsvg.dll DESTINATION ./imageformats/)
-        INSTALL(FILES ${qt5PluginsSrcDir}/platforms/qwindows.dll DESTINATION ./platforms/)
-        INSTALL(FILES ${qt5PluginsSrcDir}/sqldrivers/qsqlite.dll DESTINATION ./sqldrivers/)
+        INSTALL(FILES ${QT5_PLUGINS_SRC_DIR}/imageformats/qjpeg.dll DESTINATION ./imageformats/)
+        INSTALL(FILES ${QT5_PLUGINS_SRC_DIR}/imageformats/qsvg.dll DESTINATION ./imageformats/)
+        INSTALL(FILES ${QT5_PLUGINS_SRC_DIR}/platforms/qwindows.dll DESTINATION ./platforms/)
+        INSTALL(FILES ${QT5_PLUGINS_SRC_DIR}/sqldrivers/qsqlite.dll DESTINATION ./sqldrivers/)
 
         INSTALL(FILES ${CMAKE_SOURCE_DIR}/program-icons/luminance-hdr.png DESTINATION ./icons/hicolor/48x48/apps) # icon
         INSTALL(FILES ${CMAKE_SOURCE_DIR}/AUTHORS

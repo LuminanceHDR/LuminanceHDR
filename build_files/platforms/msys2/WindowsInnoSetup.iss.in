@@ -19,19 +19,19 @@
 ; The IA-64 architecture is not supported.
 
 #define MyAppName "${LHDR_NAME}"
-#define MyAppVersion "${LHDR_VERSION}"
-#define MyAppVersionNumeric "${LHDR_VERSION_MAJOR}.${LHDR_VERSION_MINOR}.${LHDR_VERSION_PATCH}"
+#define MyAppVersion "${GIT_DESCRIBE}"
+#define MyAppVersionNumeric "${GIT_NUMERIC_VERSION_ONLY}"
 #define MyAppPublisher "${LHDR_VENDOR}"
 #define MyAppURL "http://qtpfsgui.sourceforge.net/"
 #define MyAppExeName "luminance-hdr.exe"
-#define MyBuildBasePath "${CMAKE_INSTALL_PREFIX}"
 #define MySourceBasePath "${PROJECT_SOURCE_DIR}"
-#define MySourceLibsDir "${LIBSSRCDIR}"
+#define MyBitDepth "${BUILD_BIT_DEPTH}"
 #define MyTargetArchitecture "${ARCHITECTURE_ALLOWED}"
 #define MyInstallMode "${INSTALL_MODE}"
-#define MyBitDepth "${BUILD_BIT_DEPTH}"
 #define MySystemName "${SYSTEM_NAME}"
+#define MySourceLibsDir "${LIBSSRCDIR}"
 #define MyBranch "${GIT_BRANCH}"
+#define MyAlignImageStackPath "${ALIGN_IMAGE_STACK}"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -48,10 +48,9 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}\{#MyAppVersion}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-LicenseFile={#MyBuildBasePath}\LICENSE
-OutputDir={#MyBuildBasePath}\..\
-;OutputBaseFilename={#MyAppName}_{#MyAppVersion}_{#MySystemName}_{#MyBitDepth}
-OutputBaseFilename={#MyAppName}_{#MyBranch}_{#MyAppVersion}_{#MySystemName}_{#MyBitDepth}
+LicenseFile=LICENSE
+OutputDir=..\
+OutputBaseFilename=LuminanceHDR_{#MyBranch}_{#MyAppVersion}_{#MySystemName}_{#MyBitDepth}
 SetupIconFile={#MySourceBasePath}\program-icons\luminance.ico
 ;WizardImageFile={#MySourceBasePath}\build_files\platforms\msys2\installerStrip.bmp
 WizardImageBackColor=$2A2A2A
@@ -94,20 +93,21 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 ;Name: regBrowseFolder; Description: "Add ""Browse with RawTherapee"" option to context menu when right-clicking on a folder."; GroupDescription: File extensions:
 [Files]
-Source: "{#MyBuildBasePath}\luminance-hdr*.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyBuildBasePath}\hdrhtml\*"; DestDir: "{app}\hdrhtml\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyBuildBasePath}\help\*"; DestDir: "{app}\help\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyBuildBasePath}\i18n\*"; DestDir: "{app}\i18n\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyBuildBasePath}\icons\*"; DestDir: "{app}\icons\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyBuildBasePath}\imageformats\*"; DestDir: "{app}\imageformats\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyBuildBasePath}\platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyBuildBasePath}\sqldrivers\*"; DestDir: "{app}\sqldrivers\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyBuildBasePath}\AUTHORS"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyBuildBasePath}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyBuildBasePath}\Changelog"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyBuildBasePath}\README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "luminance-hdr*.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "hdrhtml\*"; DestDir: "{app}\hdrhtml\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "help\*"; DestDir: "{app}\help\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "i18n\*"; DestDir: "{app}\i18n\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "icons\*"; DestDir: "{app}\icons\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "imageformats\*"; DestDir: "{app}\imageformats\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "sqldrivers\*"; DestDir: "{app}\sqldrivers\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "AUTHORS"; DestDir: "{app}"; Flags: ignoreversion
+Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Changelog"; DestDir: "{app}"; Flags: ignoreversion
+Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAlignImageStackPath}"; DestDir: "{app}"; Flags: ignoreversion
 
-;---- DLLs !  (the Qt5 plugins dll are already copied in MyBuildBasePath
+;---- DLLs !  (the Qt5 plugins dll are already copied in the base path
 Source: "{#MySourceLibsDir}\qt5concurrent.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\qt5core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\qt5gui.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -167,7 +167,7 @@ Source: "{#MySourceLibsDir}\libbz2-1.dll"; DestDir: "{app}"; Flags: ignoreversio
 Source: "{#MySourceLibsDir}\libintl-8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libpcre-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 
-;Source: "{#MyBuildBasePath}\gdb.exe"; DestDir: "{app}"; Flags: skipifsourcedoesntexist ignoreversion
+;Source: "gdb.exe"; DestDir: "{app}"; Flags: skipifsourcedoesntexist ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
