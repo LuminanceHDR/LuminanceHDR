@@ -35,10 +35,11 @@
 #include "Libpfs/progress.h"
 #include "pyramid.h"
 #include "tmo_ashikhmin02.h"
+#include "../../sleef.c"
 
 #define SMAX 10
-#define LDMAX 500.0
-#define EPSILON 0.00001
+#define LDMAX 500.f
+#define EPSILON 0.00001f
 
 //-------------------------------------------
 
@@ -52,9 +53,9 @@ float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s) {
 
     float dx, dy, omdx, omdy;
     dx = newX - (float)X_int;
-    omdx = 1.0 - dx;
+    omdx = 1.f - dx;
     dy = newY - (float)Y_int;
-    omdy = 1.0 - dy;
+    omdy = 1.f - dy;
 
     int w = myPyramid->p[s - 1].GP->getCols();
     int h = myPyramid->p[s - 1].GP->getRows();
@@ -113,24 +114,20 @@ float LAL(GaussianPyramid *myPyramid, int x, int y, float LOCAL_CONTRAST) {
 
 ////////////////////////////////////////////////////////
 
-float C(float lum_val) {  // linearly approximated TVI function
-    if (lum_val <= 1e-20) return 0.0;
+inline float C(float lum_val) {  // linearly approximated TVI function
+    if (lum_val <= 1e-20f) return 0.f;
 
-    if (lum_val < 0.0034) return lum_val / 0.0014;
+    if (lum_val < 0.0034f) return lum_val / 0.0014f;
 
-    if (lum_val < 1.0) return 2.4483 + log(lum_val / 0.0034) / 0.4027;
+    if (lum_val < 1.f) return 2.4483f + xlogf(lum_val / 0.0034f) / 0.4027f;
 
-    if (lum_val < 7.2444) return 16.5630 + (lum_val - 1.0) / 0.4027;
+    if (lum_val < 7.2444f) return 16.5630f + (lum_val - 1.f) / 0.4027f;
 
-    return 32.0693 + log(lum_val / 7.2444) / 0.0556;
+    return 32.0693f + xlogf(lum_val / 7.2444f) / 0.0556f;
 }
 
-inline float TM(float lum_val, float maxLum, float minLum) {
-    float div = C(maxLum) - C(minLum);
-    if (div != 0.0)
-        return (LDMAX * (C(lum_val) - C(minLum)) / div);
-    else
-        return (LDMAX * (C(lum_val) - C(minLum)) / EPSILON);
+inline float TM(float lum_val, float minLum, float div) {
+    return (LDMAX * (C(lum_val) - C(minLum)) / div);
 }
 
 ////////////////////////////////////////////////////////
@@ -138,6 +135,9 @@ inline float TM(float lum_val, float maxLum, float minLum) {
 void getMaxMin(pfs::Array2Df *lum_map, float &maxLum, float &minLum) {
     maxLum = minLum = 0.0;
 
+#ifdef _OPENMP
+    #pragma omp parallel for reduction(min:minLum) reduction(max:maxLum)
+#endif
     for (unsigned int i = 0; i < lum_map->getCols() * lum_map->getRows(); i++) {
         maxLum = ((*lum_map)(i) > maxLum) ? (*lum_map)(i) : maxLum;
         minLum = ((*lum_map)(i) < minLum) ? (*lum_map)(i) : minLum;
@@ -148,6 +148,9 @@ void Normalize(pfs::Array2Df *lum_map, int nrows, int ncols) {
     float maxLum, minLum;
     getMaxMin(lum_map, maxLum, minLum);
     float range = maxLum - minLum;
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
     for (int y = 0; y < nrows; y++)
         for (int x = 0; x < ncols; x++)
             (*lum_map)(x, y) = ((*lum_map)(x, y) - minLum) / range;
@@ -173,9 +176,15 @@ int tmo_ashikhmin02(pfs::Array2Df *Y, pfs::Array2Df *L, float maxLum,
 
     // apply ToneMapping function only
     if (simple_flag) {
+        float div = C(maxLum) - C(minLum);
+        div = div != 0 ? div : EPSILON;
+
+#ifdef _OPENMP
+        #pragma omp parallel for
+#endif
         for (unsigned int y = 0; y < nrows; y++)
             for (unsigned int x = 0; x < ncols; x++) {
-                (*L)(x, y) = TM((*Y)(x, y), maxLum, minLum);
+                (*L)(x, y) = TM((*Y)(x, y), minLum, div);
 
                 //!! FIX:
                 // to keep output values in range 0.01 - 1
@@ -191,46 +200,70 @@ int tmo_ashikhmin02(pfs::Array2Df *Y, pfs::Array2Df *L, float maxLum,
 
     // LAL calculation
     pfs::Array2Df la(ncols, nrows);
+    int progress = 0;
+    int progressSteps = std::max(nrows / 80, 1u);
+    int phVal = 0;
+    ph.setValue(phVal);
+
+#ifdef _OPENMP
+    #pragma omp parallel for schedule(dynamic,16)
+#endif
     for (unsigned int y = 0; y < nrows; y++) {
-        ph.setValue(100 * y / nrows);
-        if (ph.canceled()) break;
         for (unsigned int x = 0; x < ncols; x++) {
-            la(x, y) = LAL(myPyramid, x, y, lc_value);
-            if (la(x, y) == 0.0) la(x, y) = EPSILON;
+            float lal = LAL(myPyramid, x, y, lc_value);
+            la(x, y) = lal == 0 ? EPSILON : lal;
+        }
+#ifdef _OPENMP
+        #pragma omp critical
+#endif
+        {
+            progress += 1;
+            if((progress % progressSteps) == 0) {
+                phVal ++;
+                ph.setValue(std::min(phVal,80));
+            }
         }
     }
-    delete (myPyramid);
+
+    delete myPyramid;
 
     // TM function
-    pfs::Array2Df tm(ncols, nrows);
-    for (unsigned int y = 0; y < nrows; y++) {
-        ph.setValue(100 * y / nrows);
-        if (ph.canceled()) break;
-        for (unsigned int x = 0; x < ncols; x++)
-            tm(x, y) = TM(la(x, y), maxLum, minLum);
-    }
+    float div = C(maxLum) - C(minLum);
+    div = div != 0 ? div : EPSILON;
+    progressSteps = std::max(nrows / 20, 1u);
     // final computation for each pixel
+#ifdef _OPENMP
+    #pragma omp parallel for schedule(dynamic,16)
+#endif
     for (unsigned int y = 0; y < nrows; y++) {
-        ph.setValue(100 * y / nrows);
-        if (ph.canceled()) break;
         for (unsigned int x = 0; x < ncols; x++) {
             switch (eq) {
                 case 2:
-                    (*L)(x, y) = (*Y)(x, y) * tm(x, y) / la(x, y);
+                    (*L)(x, y) = (*Y)(x, y) * TM(la(x, y), minLum, div) / la(x, y);
                     break;
                 case 4:
                     (*L)(x, y) =
-                        tm(x, y) +
-                        C(tm(x, y)) / C(la(x, y)) * ((*Y)(x, y) - la(x, y));
+                        TM(la(x, y), minLum, div) +
+                        C(TM(la(x, y), minLum, div)) / C(la(x, y)) * ((*Y)(x, y) - la(x, y));
                     break;
-                default: { return 0; }
             }
 
             //!! FIX:
             // to keep output values in range 0.01 - 1
             //(*L)(x,y) /= 100.0f;
         }
+#ifdef _OPENMP
+        #pragma omp critical
+#endif
+        {
+            progress += 1;
+            if((progress % progressSteps) == 0) {
+                phVal ++;
+                ph.setValue(std::min(phVal,100));
+            }
+        }
     }
+
     Normalize(L, nrows, ncols);
 
     return 0;

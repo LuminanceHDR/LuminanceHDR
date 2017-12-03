@@ -38,27 +38,73 @@
 #include "Libpfs/progress.h"
 
 #include "tmo_ashikhmin02.h"
+#define BENCHMARK
+#include "../../StopWatch.h"
+#include "../../sleef.c"
+#include "../../opthelper.h"
 
 namespace {
 void calculateLuminance(pfs::Array2Df *Y, float &avLum, float &maxLum,
                         float &minLum) {
+
     avLum = 0.0f;
     maxLum = 0.0f;
     minLum = 0.0f;
 
-    int size = Y->getCols() * Y->getRows();
+#ifdef _OPENMP
+#pragma omp parallel
+#endif
+{
+    float maxLumThr = 0.f;
+    float minLumThr = 0.f;
+    float avLumThr = 0.f;
 
-    for (int i = 0; i < size; i++) {
-        avLum += log((*Y)(i) + 1e-4);
-        maxLum = ((*Y)(i) > maxLum) ? (*Y)(i) : maxLum;
-        minLum = ((*Y)(i) < minLum) ? (*Y)(i) : minLum;
+#ifdef __SSE2__
+    vfloat maxLumThrv = ZEROV;
+    vfloat minLumThrv = ZEROV;
+    vfloat avLumThrv = ZEROV;
+    vfloat c1v = F2V(1e-4f);
+#endif
+#ifdef _OPENMP
+    #pragma omp for nowait
+#endif
+    for (int y = 0; y < Y->getRows(); ++y) {
+        int x = 0;
+#ifdef __SSE2__
+        for (; x < Y->getCols() - 3; x+=4) {
+            vfloat Yv = LVFU((*Y)(x, y));
+            avLumThrv += xlogf(Yv + c1v);
+            maxLumThrv = vmaxf(Yv, maxLumThrv);
+            minLumThrv = vminf(Yv, minLumThrv);
+        }
+#endif
+        for (; x < Y->getCols(); ++x) {
+            avLumThr += xlogf((*Y)(x, y) + 1e-4f);
+            maxLumThr = std::max((*Y)(x, y), maxLumThr);
+            minLumThr = std::min((*Y)(x, y), minLumThr);
+        }
     }
-    avLum = exp(avLum / size);
+#ifdef _OPENMP
+#pragma omp critical
+#endif
+{
+    avLum += avLumThr;
+    maxLum = std::max(maxLum, maxLumThr);
+    minLum = std::max(minLum, minLumThr);
+#ifdef __SSE2__
+    avLum += vhadd(avLumThrv);
+    maxLum = std::max(maxLum, vhmax(maxLumThrv));
+    minLum = std::max(minLum, vhmin(minLumThrv));
+#endif
+}
+}
+    avLum = exp(avLum / (Y->getRows() * Y->getCols()));
 }
 }
 
 void pfstmo_ashikhmin02(pfs::Frame &frame, bool simple_flag, float lc_value,
                         int eq, pfs::Progress &ph) {
+                            BENCHFUN
 #ifndef NDEBUG
     //--- default tone mapping parameters;
     std::cout << "pfstmo_ashikhmin02 (";
@@ -92,8 +138,11 @@ void pfstmo_ashikhmin02(pfs::Frame &frame, bool simple_flag, float lc_value,
     }
 
     // TODO: this section can be rewritten using SSE Function
-    for (int x = 0; x < w; x++) {
-        for (int y = 0; y < h; y++) {
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
             float scale = L(x, y) / (*Yr)(x, y);
             (*Yr)(x, y) = (*Yr)(x, y) * scale;
             (*Xr)(x, y) = (*Xr)(x, y) * scale;
