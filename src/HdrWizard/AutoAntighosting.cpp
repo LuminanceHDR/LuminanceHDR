@@ -63,14 +63,15 @@ void solve_pde_dct(Array2Df &F, Array2Df &U) {
 
     Array2Df Ftr(width, height);
 
-    fftwf_plan p = NULL;  // Let's see if this blocks compiler warnings
-#pragma omp parallel for private(p) schedule(static)
-    for (int j = 0; j < height; j++) {
-#pragma omp critical(make_plan)
-        p = fftwf_plan_r2r_1d(width, F.data() + width * j,
-                              Ftr.data() + width * j, FFTW_REDFT00,
+    FFTW_MUTEX::fftw_mutex_plan.lock();
+    fftwf_plan p = fftwf_plan_r2r_1d(width, F.data() + width,
+                              Ftr.data() + width, FFTW_REDFT00,
                               FFTW_ESTIMATE);
-        fftwf_execute(p);
+    FFTW_MUTEX::fftw_mutex_plan.unlock();
+
+#pragma omp parallel for
+    for (int j = 0; j < height; j++) {
+        fftwf_execute_r2r(p, F.data() + width * j, Ftr.data() + width * j);
     }
 
 #pragma omp parallel
@@ -101,12 +102,9 @@ void solve_pde_dct(Array2Df &F, Array2Df &U) {
     }
 
     const float invDivisor = 1.0f / (2.0f * (width - 1));
-#pragma omp parallel for schedule(static) lastprivate(p)
+#pragma omp parallel for
     for (int j = 0; j < height; j++) {
-#pragma omp critical(make_plan)
-        p = fftwf_plan_r2r_1d(width, U.data() + width * j, U.data() + width * j,
-                              FFTW_REDFT00, FFTW_ESTIMATE);
-        fftwf_execute(p);
+        fftwf_execute_r2r(p, U.data() + width * j, U.data() + width * j);
 
         for (int i = 0; i < width; i++) {
             U(i, j) *= invDivisor;
@@ -501,7 +499,7 @@ void blendGradients(Array2Df &gradientXBlended, Array2Df &gradientYBlended,
     int height = gradientY.getRows();
 
     int x, y;
-#pragma omp parallel for private(x, y) schedule(static)
+//#pragma omp parallel for private(x, y) schedule(static)
     for (int j = 0; j < height; j++) {
         y = floor(static_cast<float>(j) / gridY);
         for (int i = 0; i < width; i++) {
