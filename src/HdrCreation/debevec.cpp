@@ -30,6 +30,7 @@
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/numeric.h>
 
+#include <QtGlobal>
 #include <limits>
 #include <boost/numeric/conversion/bounds.hpp>
 #include <cassert>
@@ -155,7 +156,10 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     }
 #pragma omp parallel for
     for (int c = 0; c < channels; c++) {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_MACOS)
+        replace_if(resultCh[c]->begin(), resultCh[c]->end(),
+                   [](float f) { return !std::isnormal(f); }, numeric_limits<float>::min());
+#elif defined(Q_OS_WIN)
         replace_if(resultCh[c]->begin(), resultCh[c]->end(),
                    not1(ref(isnormal<float>)), numeric_limits<float>::min());
 #else
