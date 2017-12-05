@@ -353,6 +353,7 @@ ELSEIF(WIN32)
         else ()
             message(STATUS "align_image_stack.exe command from Hugin install found: ${ALIGN_IMAGE_STACK}")
         endif ()
+        get_filename_component(HUGIN_BIN_DIR "${ALIGN_IMAGE_STACK}" DIRECTORY ABSOLUTE)
 
         # ------------------ Find out whether we are building out of source ------------------
 
@@ -373,7 +374,7 @@ ELSEIF(WIN32)
         message(STATUS "> Qt5 plugins libs: ${QT5_PLUGINS_SRC_DIR}")
 
         get_filename_component(PRGFILES_DIR "$ENV{ProgramFiles}" ABSOLUTE)
-        get_filename_component(PRGFILESX86_DIR "$ENV{ProgramFiles(x86)}" ABSOLUTE)
+        get_filename_component(PRGFILESX86_DIR "$ENV{ProgramFiles\(x86\)}" ABSOLUTE)
         if((CMAKE_INSTALL_PREFIX STREQUAL "${PRGFILES_DIR}/Luminance HDR") OR (CMAKE_INSTALL_PREFIX STREQUAL "${PRGFILESX86_DIR}/Luminance HDR"))
             set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}-build")
         endif()
@@ -389,7 +390,7 @@ ELSEIF(WIN32)
             -DLIBSSRCDIR:STRING="${LIBS_SRC_DIR}"
             -DCMAKE_INSTALL_PREFIX:STRING="${CMAKE_INSTALL_PREFIX}"
             -DBIT_DEPTH:STRING="${CMAKE_SIZEOF_VOID_P}"
-            -DALIGN_IMAGE_STACK:STRING="${ALIGN_IMAGE_STACK}"
+            -DHUGIN_BIN_DIR:STRING="${HUGIN_BIN_DIR}"
             -P "${PROJECT_SOURCE_DIR}/build_files/platforms/msys2/UpdateInfo.cmake")
 
         add_custom_target(prepare_setup

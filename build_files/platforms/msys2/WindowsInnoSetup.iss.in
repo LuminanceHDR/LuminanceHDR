@@ -31,7 +31,7 @@
 #define MySystemName "${SYSTEM_NAME}"
 #define MySourceLibsDir "${LIBSSRCDIR}"
 #define MyBranch "${GIT_BRANCH}"
-#define MyAlignImageStackPath "${ALIGN_IMAGE_STACK}"
+#define MyHuginBinPath "${HUGIN_BIN_DIR}"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -50,7 +50,7 @@ DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=LICENSE
 OutputDir=..\
-OutputBaseFilename=LuminanceHDR_{#MyBranch}_{#MyAppVersion}_{#MySystemName}_{#MyBitDepth}
+OutputBaseFilename=Luminance-HDR_{#MyBranch}_{#MyAppVersion}_{#MySystemName}_{#MyBitDepth}
 SetupIconFile={#MySourceBasePath}\program-icons\luminance.ico
 ;WizardImageFile={#MySourceBasePath}\build_files\platforms\msys2\installerStrip.bmp
 WizardImageBackColor=$2A2A2A
@@ -92,6 +92,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 ;Name: "desktopicon\user"; Description: "For the current user only"; GroupDescription: "Additional icons:"; Flags: exclusive unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 ;Name: regBrowseFolder; Description: "Add ""Browse with RawTherapee"" option to context menu when right-clicking on a folder."; GroupDescription: File extensions:
+
 [Files]
 Source: "luminance-hdr*.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "hdrhtml\*"; DestDir: "{app}\hdrhtml\"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -105,7 +106,8 @@ Source: "AUTHORS"; DestDir: "{app}"; Flags: ignoreversion
 Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Changelog"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAlignImageStackPath}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyHuginBinPath}/align_image_stack.exe"; DestDir: "{app}/hugin"; Flags: ignoreversion
+Source: "{#MyHuginBinPath}/*.dll"; Excludes: "wx*.dll"; DestDir: "{app}/hugin"; Flags: ignoreversion
 
 ;---- DLLs !  (the Qt5 plugins dll are already copied in the base path
 Source: "{#MySourceLibsDir}\qt5concurrent.dll"; DestDir: "{app}"; Flags: ignoreversion
