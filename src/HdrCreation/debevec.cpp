@@ -224,7 +224,7 @@ BENCHFUN
 #endif
         for (size_t k = 0; k < size; k++) {
             float val = (*resultCh[c])(k);
-            if(isnormal(val)) {
+            if(std::isnormal(val)) {
                 max = std::max(max, val);
             }
         }
@@ -239,7 +239,7 @@ BENCHFUN
 #endif
         for (size_t k = 0; k < size; k++) {
             float val = (*resultCh[c])(k);
-            if(!isnormal(val)) {
+            if(!std::isnormal(val)) {
                 (*resultCh[c])(k) = Max;
             }
         }
