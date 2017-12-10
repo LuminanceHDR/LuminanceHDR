@@ -1,9 +1,9 @@
-PROJECT("Luminance HDR") # luminance-hdr)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
-#CMAKE_POLICY(SET CMP0043 OLD)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.3)
+CMAKE_POLICY(SET CMP0025 NEW)
 CMAKE_POLICY(SET CMP0043 NEW)
 CMAKE_POLICY(SET CMP0054 NEW)
 CMAKE_POLICY(SET CMP0053 NEW)
+PROJECT("Luminance HDR")
 
 # set include path for FindXXX.cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/build_files/Modules")
@@ -230,7 +230,7 @@ SET(LUMINANCE_FILES
 
 # MacOSX
 IF(APPLE)
-    SET(CMAKE_INSTALL_PREFIX "/Applications")
+    SET(CMAKE_INSTALL_PREFIX ".")
 
     # Set Bundle settings
     set(MACOSX_BUNDLE_INFO_STRING          "${LHDR_NAME} ${LHDR_VERSION}")
@@ -253,7 +253,7 @@ IF(APPLE)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
 
     # Build project (bundle and luminance-hdr-cli)
-    # SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build # leave comment, it may be useful in future
+    SET( CMAKE_OSX_ARCHITECTURES x86_64 )  # Universal/Generic x86_64 build
     ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES} )
     set_property(TARGET ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTY OUTPUT_NAME ${LHDR_OSX_EXECUTABLE_NAME})
@@ -276,7 +276,14 @@ IF(APPLE)
     # Link libraries
     TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} ${LUMINANCE_MODULES_GUI} ${LIBS})
     TARGET_LINK_LIBRARIES(luminance-hdr-cli             ${LUMINANCE_MODULES_CLI} ${LIBS})
-
+    
+    # Rename generated executable binary to luminance-hdr
+    add_custom_command(
+    TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
+    POST_BUILD
+    COMMAND mv ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/${LHDR_OSX_EXECUTABLE_NAME} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr
+    )
+    
     # Copy align_image_stack into bundle/Contents/MacOS
     FILE(COPY
     	${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/align_image_stack

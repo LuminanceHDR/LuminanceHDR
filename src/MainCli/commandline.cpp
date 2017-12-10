@@ -835,13 +835,13 @@ void CommandLineInterfaceManager::saveHDR() {
         } else {
             if (isProposedHdrName) {
                 caption = QString(
-                    tr("Weights: ") +
+                    QStringLiteral("Weights= ") +
                     getQString(
                         hdrCreationManager->getWeightFunction().getType()) +
-                    tr(" - Response curve: ") +
+                    QStringLiteral(" - Response curve= ") +
                     getQString(
                         hdrCreationManager->getResponseCurve().getType()) +
-                    tr(" - Model: ") +
+                    QStringLiteral(" - Model= ") +
                     getQString(hdrCreationManager->getFusionOperator()));
 
                 QFileInfo fi1(inputFiles.first());

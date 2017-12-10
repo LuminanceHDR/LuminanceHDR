@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleIconFile</key>
-	<string>luminance.icns</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleGetInfoString</key>
-	<string>Created by Davide Anastasia &lt;davideanastasia@users.sourceforge.net&gt;</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleExecutable</key>
-        <string>@LHDR_OSX_EXECUTABLE_NAME@</string>
-	<key>CFBundleIdentifier</key>
+    <dict>
+        <key>CFBundleIconFile</key>
+        <string>luminance.icns</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>CFBundleGetInfoString</key>
+        <string>Created by Davide Anastasia &lt;davideanastasia@users.sourceforge.net&gt;</string>
+        <key>CFBundleSignature</key>
+        <string>????</string>
+        <key>CFBundleExecutable</key>
+        <string>luminance-hdr</string>
+        <key>CFBundleIdentifier</key>
         <string>@LHDR_DOMAIN_SECOND@.@LHDR_DOMAIN_FIRST@</string>
-	<key>NOTE</key>
-	<string>Created by Davide Anastasia &lt;davideanastasia@users.sourceforge.net&gt;</string>
-</dict>
+        <key>CFBundleDisplayName</key>
+        <string>@LHDR_NAME@</string>
+        <key>CFBundleName</key>
+        <string>@LHDR_NAME@</string>
+        <key>LSMinimumSystemVersion</key>
+        <string>@CMAKE_OSX_DEPLOYMENT_TARGET@</string>
+        <key>NOTE</key>
+        <string>Created by Davide Anastasia &lt;davideanastasia@users.sourceforge.net&gt;</string>
+    </dict>
 </plist>

@@ -938,11 +938,11 @@ void HdrWizard::modelComboBoxActivated(int from_gui) {
 
 QString HdrWizard::getCaptionTEXT() {
     return QString(
-        tr("Weights: ") +
+        QStringLiteral("Weights= ") +
         getQString(m_hdrCreationManager->getWeightFunction().getType()) +
-        tr(" - Response curve: ") +
+        QStringLiteral(" - Response curve= ") +
         getQString(m_hdrCreationManager->getResponseCurve().getType()) +
-        tr(" - Model: ") +
+        QStringLiteral(" - Model= ") +
         getQString(m_hdrCreationManager->getFusionOperator()));
 }
 
