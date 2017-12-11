@@ -51,6 +51,10 @@
 #include <Libpfs/progress.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <TonemappingOperators/pfstmo.h>
+#define BENCHMARK
+#include "../../StopWatch.h"
+#include "../../sleef.c"
+#include "../../opthelper.h"
 
 /*
 static int       width, height, scale;
@@ -73,16 +77,16 @@ static CVTS      cvts             = {0, 0};
 
 static bool temporal_coherent;
 */
-
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
 #define V1(x, y, i) (m_convolved_image[i][x][y])
 
 #define SIGMA_I(i) \
     (m_sigma_0 + ((float)i / (float)m_range) * (m_sigma_1 - m_sigma_0))
-#define S_I(i) (expf(SIGMA_I(i)))
+#define S_I(i) (xexpf(SIGMA_I(i)))
 #define V2(x, y, i) (V1(x, y, i + 1))
 #define ACTIVITY(x, y, i)          \
     ((V1(x, y, i) - V2(x, y, i)) / \
-     (((m_key * powf(2.f, m_phi)) / (S_I(i) * S_I(i))) + V1(x, y, i)))
+     (((m_key * m_twopowphi) / rtengine::SQR(S_I(i))) + V1(x, y, i)))
 
 //
 // Kaiser-Bessel stuff
@@ -131,16 +135,16 @@ float Reinhard02::kaiserbessel(float x, float y, float M) {
 
 // Compute Gaussian blurred images
 void Reinhard02::gaussian_filter(fftwf_complex *filter, float scale, float k) {
-    int x, y;
-    float x1, y1, s;
-    float a = 1.f / (k * scale);
-    float c = 1.f / 4.f;
 
-    for (y = 0; y < m_cvts.ymax; y++) {
-        y1 = (y >= m_cvts.ymax / 2) ? y - m_cvts.ymax : y;
-        s = erf(a * (y1 - .5f)) - erf(a * (y1 + .5f));
-        for (x = 0; x < m_cvts.xmax; x++) {
-            x1 = (x >= m_cvts.xmax / 2) ? x - m_cvts.xmax : x;
+    const float a = 1.f / (k * scale);
+    const float c = 1.f / 4.f;
+
+#pragma omp parallel for
+    for (int y = 0; y < m_cvts.ymax; y++) {
+        float y1 = (y >= m_cvts.ymax / 2) ? y - m_cvts.ymax : y;
+        float s = erf(a * (y1 - .5f)) - erf(a * (y1 + .5f));
+        for (int x = 0; x < m_cvts.xmax; x++) {
+            float x1 = (x >= m_cvts.xmax / 2) ? x - m_cvts.xmax : x;
             filter[y * m_cvts.xmax + x][0] =
                 s * (erf(a * (x1 - .5f)) - erf(a * (x1 + .5f))) * c;
             filter[y * m_cvts.xmax + x][1] = 0.f;
@@ -149,9 +153,6 @@ void Reinhard02::gaussian_filter(fftwf_complex *filter, float scale, float k) {
 }
 
 void Reinhard02::build_gaussian_fft() {
-    int i;
-    int length = m_cvts.xmax * m_cvts.ymax;
-    float fft_scale = 1.f / sqrt((float)length);
 
     for (int scale = 0; scale < m_range; scale++) {
 #ifndef NDEBUG
@@ -161,13 +162,25 @@ void Reinhard02::build_gaussian_fft() {
 #endif
 
         m_ph.setValue(30 + 40 * scale / m_range);
-        gaussian_filter(m_filter_fft[scale], S_I(scale), m_k);
-
         fftwf_plan p;
         FFTW_MUTEX::fftw_mutex_plan.lock();
-        p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_filter_fft[scale], m_filter_fft[scale], -1,
-        FFTW_ESTIMATE);
+        // test for available wisdom
+        p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_filter_fft[scale], m_filter_fft[scale], -1, FFTW_WISDOM_ONLY);
+        if(!p) {
+            // no wisdom available, load wisdom from file
+            fftwf_import_wisdom_from_filename("lhdrwisdom.fftw");
+            // test again for wisdom
+            p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_filter_fft[scale], m_filter_fft[scale], -1, FFTW_WISDOM_ONLY);
+            if(!p) {
+                // build plan with FFTW_MEASURE
+                p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_filter_fft[scale], m_filter_fft[scale], -1, FFTW_MEASURE);
+                // save the wisdom
+                fftwf_export_wisdom_to_filename("lhdrwisdom.fftw");
+            }
+        }
         FFTW_MUTEX::fftw_mutex_plan.unlock();
+
+        gaussian_filter(m_filter_fft[scale], S_I(scale), m_k);
 
         fftwf_execute(p);
 
@@ -175,10 +188,6 @@ void Reinhard02::build_gaussian_fft() {
         fftwf_destroy_plan(p);
         FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 
-        for (i = 0; i < length; i++) {
-            m_filter_fft[scale][i][0] *= fft_scale;
-            m_filter_fft[scale][i][1] *= fft_scale;
-        }
     }
 #ifndef NDEBUG
     fprintf(stderr, "\n");
@@ -186,6 +195,7 @@ void Reinhard02::build_gaussian_fft() {
 }
 
 void Reinhard02::build_image_fft() {
+
     int i, x, y;
     int length = m_cvts.xmax * m_cvts.ymax;
     float fft_scale = 1.f / sqrt((float)length);
@@ -193,56 +203,81 @@ void Reinhard02::build_image_fft() {
 #ifndef NDEBUG
     fprintf(stderr, "Computing image FFT\n");
 #endif
-
-    for (y = 0; y < m_cvts.ymax; y++)
-        for (x = 0; x < m_cvts.xmax; x++)
-            m_image_fft[y * m_cvts.xmax + x][0] = m_luminance[y][x];
-
     fftwf_plan p;
     FFTW_MUTEX::fftw_mutex_plan.lock();
-    p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_image_fft, m_image_fft, -1,
-        FFTW_ESTIMATE);
+    p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_image_fft, m_image_fft, -1, FFTW_WISDOM_ONLY);
+    if(!p) {
+        // no wisdom available, load wisdom from file
+        fftwf_import_wisdom_from_filename("lhdrwisdom.fftw");
+        // test again for wisdom
+        p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_image_fft, m_image_fft, -1, FFTW_WISDOM_ONLY);
+        if(!p) {
+            // build plan with FFTW_MEASURE
+            p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, m_image_fft, m_image_fft, -1, FFTW_MEASURE);
+            // save the wisdom
+            fftwf_export_wisdom_to_filename("lhdrwisdom.fftw");
+        }
+    }
     FFTW_MUTEX::fftw_mutex_plan.unlock();
+
+    #pragma omp parallel for
+    for (int y = 0; y < m_cvts.ymax; y++)
+        for (int x = 0; x < m_cvts.xmax; x++)
+            m_image_fft[y * m_cvts.xmax + x][0] = m_image[y][x];
 
     fftwf_execute(p);
 
     FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(p);
     FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
-
-    for (i = 0; i < length; i++) {
-        m_image_fft[i][0] *= fft_scale;
-        m_image_fft[i][1] *= fft_scale;
-    }
 }
 
 void Reinhard02::convolve_filter(int scale, fftwf_complex *convolution_fft) {
+
     int i, x, y;
 
-    for (i = 0; i < m_cvts.xmax * m_cvts.ymax; i++) {
-        convolution_fft[i][0] = m_image_fft[i][0] * m_filter_fft[scale][i][0] +
-                                m_image_fft[i][1] * m_filter_fft[scale][i][1];
-        convolution_fft[i][1] = m_image_fft[i][0] * m_filter_fft[scale][i][1] +
-                                m_image_fft[i][1] * m_filter_fft[scale][i][0];
-    }
     fftwf_plan p;
     FFTW_MUTEX::fftw_mutex_plan.lock();
-    p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, convolution_fft, convolution_fft, 1,
-        FFTW_ESTIMATE);
+    p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, convolution_fft, convolution_fft, 1, FFTW_WISDOM_ONLY);
+    if(!p) {
+        // no wisdom available, load wisdom from file
+        fftwf_import_wisdom_from_filename("lhdrwisdom.fftw");
+        // test again for wisdom
+        p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, convolution_fft, convolution_fft, 1, FFTW_WISDOM_ONLY);
+        if(!p) {
+            // build plan with FFTW_MEASURE
+            p = fftwf_plan_dft_2d(m_cvts.ymax, m_cvts.xmax, convolution_fft, convolution_fft, 1, FFTW_MEASURE);
+            // save the wisdom
+            fftwf_export_wisdom_to_filename("lhdrwisdom.fftw");
+        }
+    }
     FFTW_MUTEX::fftw_mutex_plan.unlock();
+
+    int length = m_cvts.xmax * m_cvts.ymax;
+    float fft_scale = 1.f / (float)length;
+
+    #pragma omp parallel for
+    for (int i = 0; i < m_cvts.xmax * m_cvts.ymax; i++) {
+        convolution_fft[i][0] = fft_scale * (m_image_fft[i][0] * m_filter_fft[scale][i][0] +
+                                             m_image_fft[i][1] * m_filter_fft[scale][i][1]);
+        convolution_fft[i][1] = fft_scale * (m_image_fft[i][0] * m_filter_fft[scale][i][1] +
+                                             m_image_fft[i][1] * m_filter_fft[scale][i][0]);
+    }
 
     fftwf_execute(p);
 
     FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(p);
     FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
-    i = 0;
-    for (y = 0; y < m_cvts.ymax; y++)
-        for (x = 0; x < m_cvts.xmax; x++)
-            m_convolved_image[scale][x][y] = m_convolution_fft[i++][0];
+
+#pragma omp parallel for
+    for (int y = 0; y < m_cvts.ymax; y++)
+        for (int x = 0, i = y * m_cvts.xmax; x < m_cvts.xmax; x++, i++)
+            m_convolved_image[scale][x][y] = m_convolution_fft[i][0];
 }
 
 void Reinhard02::compute_fourier_convolution() {
+
     // activate parallel execution of fft routines
     init_fftw();
     //initialise_fft(m_cvts.xmax, m_cvts.ymax);
@@ -268,19 +303,21 @@ void Reinhard02::compute_fourier_convolution() {
 //
 
 float Reinhard02::get_maxvalue() {
-    float max = 0.;
-    int x, y;
 
-    for (y = 0; y < m_cvts.ymax; y++)
-        for (x = 0; x < m_cvts.xmax; x++)
-            max = (max < m_image[y][x][0]) ? m_image[y][x][0] : max;
+    float max = 0.;
+
+    #pragma omp parallel for reduction(max:max)
+    for (int y = 0; y < m_cvts.ymax; y++) {
+        for (int x = 0; x < m_cvts.xmax; x++) {
+            max = (max < m_image[y][x]) ? m_image[y][x] : max;
+        }
+    }
     return max;
 }
 
 void Reinhard02::tonemap_image() {
+
     float Lmax2;
-    int x, y;
-    int scale, prefscale;
 
     if (m_white < 1e20)
         Lmax2 = m_white * m_white;
@@ -289,20 +326,21 @@ void Reinhard02::tonemap_image() {
         Lmax2 *= Lmax2;
     }
 
-    for (y = 0; y < m_cvts.ymax; y++)
-        for (x = 0; x < m_cvts.xmax; x++) {
+#pragma omp parallel for
+    for (int y = 0; y < m_cvts.ymax; y++)
+        for (int x = 0; x < m_cvts.xmax; x++) {
             if (m_use_scales) {
-                prefscale = m_range - 1;
-                for (scale = 0; scale < m_range - 1; scale++)
+                int prefscale = m_range - 1;
+                for (int scale = 0; scale < m_range - 1; scale++)
                     if (fabs(ACTIVITY(x, y, scale)) > m_threshold) {
                         prefscale = scale;
                         break;
                     }
-                m_image[y][x][0] /= 1.f + V1(x, y, prefscale);
+                m_image[y][x] /= 1.f + V1(x, y, prefscale);
             } else
-                m_image[y][x][0] = m_image[y][x][0] *
-                                   (1.f + (m_image[y][x][0] / Lmax2)) /
-                                   (1.f + m_image[y][x][0]);
+                m_image[y][x] = m_image[y][x] *
+                                   (1.f + (m_image[y][x] / Lmax2)) /
+                                   (1.f + m_image[y][x]);
         }
 }
 
@@ -311,52 +349,66 @@ void Reinhard02::tonemap_image() {
 //
 
 float Reinhard02::log_average() {
-    int x, y;
+
     float sum = 0.;
 
-    for (y = 0; y < m_cvts.ymax; y++)
-        for (x = 0; x < m_cvts.xmax; x++)
-            sum += logf(0.00001f + m_luminance[y][x]);
+#pragma omp parallel
+{
+    float sumthr = 0.;
+#ifdef __SSE2__
+    vfloat sumthrv = ZEROV;
+    vfloat c1v = F2V(0.00001f);
+#endif
+#pragma omp for
+    for (int y = 0; y < m_cvts.ymax; y++) {
+        int x = 0;
+#ifdef __SSE2__
+        for (; x < m_cvts.xmax - 3; x+=4) {
+            sumthrv += xlogf(c1v + LVFU(m_image[y][x]));
+        }
+#endif
+        for (; x < m_cvts.xmax; x++) {
+            sumthr += xlogf(0.00001f + m_image[y][x]);
+        }
+    }
+#pragma omp critical
+{
+    sum += sumthr;
+#ifdef __SSE2__
+    sum += vhadd(sumthrv);
+#endif
+}
+}
     return expf(sum / (float)(m_cvts.xmax * m_cvts.ymax));
 }
 
 void Reinhard02::scale_to_midtone() {
-    int x, y, u, v, d;
-    float factor;
-    float scale_factor;
+
+
     float low_tone = m_key / 3.f;
     int border_size = (m_cvts.xmax < m_cvts.ymax) ? int(m_cvts.xmax / 5.f)
                                                   : int(m_cvts.ymax / 5.f);
     int hw = m_cvts.xmax >> 1;
     int hh = m_cvts.ymax >> 1;
 
-    float avg = log_average();
-
-    scale_factor = 1.0f / avg;
-    for (y = 0; y < m_cvts.ymax; y++)
-        for (x = 0; x < m_cvts.xmax; x++) {
+    float scale_factor = 1.0f / log_average();
+    #pragma omp parallel for
+    for (int y = 0; y < m_cvts.ymax; y++) {
+        for (int x = 0; x < m_cvts.xmax; x++) {
+            float factor;
             if (m_use_border) {
-                u = (x > hw) ? m_cvts.xmax - x : x;
-                v = (y > hh) ? m_cvts.ymax - y : y;
-                d = (u < v) ? u : v;
+                int u = (x > hw) ? m_cvts.xmax - x : x;
+                int v = (y > hh) ? m_cvts.ymax - y : y;
+                int d = (u < v) ? u : v;
                 factor =
                     (d < border_size)
-                        ? (m_key - low_tone) * kaiserbessel(border_size - d, 0,
-                                                            border_size) +
-                              low_tone
+                        ? (m_key - low_tone) * kaiserbessel(border_size - d, 0, border_size) + low_tone
                         : m_key;
             } else
                 factor = m_key;
-            m_image[y][x][0] *= scale_factor * factor;
-            m_luminance[y][x] *= scale_factor * factor;
+            m_image[y][x] *= scale_factor * factor;
         }
-}
-
-void Reinhard02::copy_luminance() {
-    int x, y;
-
-    for (x = 0; x < m_cvts.xmax; x++)
-        for (y = 0; y < m_cvts.ymax; y++) m_luminance[y][x] = m_image[y][x][0];
+    }
 }
 
 /*
@@ -378,7 +430,6 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
     : m_cvts(CVTS()),
       m_sigma_0(0),
       m_sigma_1(0),
-      m_luminance(0),
       m_width(Y->getCols()),
       m_height(Y->getRows()),
       m_Y(Y),
@@ -387,6 +438,7 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
       m_use_border(false),
       m_key(key),
       m_phi(phi),
+      m_twopowphi(pow(2.f,phi)),
       m_white(1e20),
       m_range(num),
       m_scale_low(low),
@@ -408,15 +460,13 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
 
     m_bbeta = bessel(boost::math::float_constants::pi * m_alpha);
 
-    FFTW_MUTEX::fftw_mutex_alloc.lock();
-    m_luminance = (float **)malloc(m_cvts.ymax * sizeof(float *));
-    m_image = (COLOR **)malloc(m_cvts.ymax * sizeof(COLOR *));
+    m_image = (float **)malloc(m_cvts.ymax * sizeof(float *));
     for (int y = 0; y < m_cvts.ymax; y++) {
-        m_luminance[y] = (float *)malloc(m_cvts.xmax * sizeof(float));
-        m_image[y] = (COLOR *)malloc(m_cvts.xmax * sizeof(COLOR));
+        m_image[y] = &(*m_L)(0,y);
     }
     if (use_scales) {
         m_convolved_image = (float ***)malloc(m_range * sizeof(float **));
+        FFTW_MUTEX::fftw_mutex_alloc.lock();
         m_image_fft = (fftwf_complex *)fftwf_alloc_complex(length);
         m_filter_fft = (fftwf_complex **)fftwf_alloc_complex(m_range);
         for (int scale = 0; scale < m_range; scale++) {
@@ -428,50 +478,44 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
                     (float *)malloc(m_cvts.ymax * sizeof(float));
         }
         m_convolution_fft = (fftwf_complex *)fftwf_alloc_complex(m_cvts.xmax * m_cvts.ymax);
+        FFTW_MUTEX::fftw_mutex_alloc.unlock();
     }
-    FFTW_MUTEX::fftw_mutex_alloc.unlock();
 }
 
 Reinhard02::~Reinhard02() {
-    for (int y = 0; y < m_cvts.ymax; y++) {
-        free(m_luminance[y]);
-        free(m_image[y]);
-    }
-    free(m_luminance);
     free(m_image);
     if (m_use_scales) {
         FFTW_MUTEX::fftw_mutex_free.lock();
         for (int scale = 0; scale < m_range; scale++) {
             fftwf_free(m_filter_fft[scale]);
+        }
+        fftwf_free(m_convolution_fft);
+        fftwf_free(m_image_fft);
+        FFTW_MUTEX::fftw_mutex_free.unlock();
+        for (int scale = 0; scale < m_range; scale++) {
             for (int x = 0; x < m_cvts.xmax; x++) {
                 free(m_convolved_image[scale][x]);
             }
         }
         free(m_convolved_image);
-        fftwf_free(m_convolution_fft);
-        fftwf_free(m_image_fft);
-        FFTW_MUTEX::fftw_mutex_free.unlock();
     }
 }
 
 void Reinhard02::tmo_reinhard02() {
+
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
     m_ph.setValue(0);
 
-    int x, y;
     // reading image
-    for (y = 0; y < m_cvts.ymax; y++)
-        for (x = 0; x < m_cvts.xmax; x++) m_image[y][x][0] = (*m_Y)(x, y);
+    #pragma omp parallel for
+    for (int y = 0; y < m_cvts.ymax; y++)
+        for (int x = 0; x < m_cvts.xmax; x++)
+            m_image[y][x] = (*m_Y)(x, y);
 
     m_ph.setValue(10);
-    if (m_ph.canceled()) goto end;
-
-    copy_luminance();
-
-    m_ph.setValue(20);
     if (m_ph.canceled()) goto end;
 
     scale_to_midtone();
@@ -485,20 +529,12 @@ void Reinhard02::tmo_reinhard02() {
 
     tonemap_image();
 
-    m_ph.setValue(98);
-    if (m_ph.canceled()) goto end;
-
-    // saving image
-    for (y = 0; y < m_cvts.ymax; y++)
-        for (x = 0; x < m_cvts.xmax; x++)
-            (*m_L)(x, y) = m_image[y][x][0];
-
-    if (!m_ph.canceled()) m_ph.setValue(100);
+    m_ph.setValue(100);
 
 end:;
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     cout << endl;
-    cout << "tmo_ferradans11 = " << stop_watch.get_time() << " msec" << endl;
+    cout << "tmo_reinhard02 = " << stop_watch.get_time() << " msec" << endl;
 #endif
 }

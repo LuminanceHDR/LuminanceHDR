@@ -39,9 +39,13 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "tmo_reinhard02.h"
+#include "../../opthelper.h"
+#define BENCHMARK
+#include "../../StopWatch.h"
 
 void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,
                        int low, int high, bool use_scales, pfs::Progress &ph) {
+    BENCHFUN
     //--- default tone mapping parameters;
     // float key = 0.18;
     // float phi = 1.0;
@@ -83,19 +87,32 @@ void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,
     }
 
     // TODO: this section can be rewritten using SSE Function
-    for (size_t x = 0; x < w; x++) {
-        for (size_t y = 0; y < h; y++) {
+    // DONE
+
+    #pragma omp parallel for
+    for (size_t y = 0; y < h; y++) {
+        size_t x = 0;
+#ifdef __SSE2__
+        for (; x < w - 3; x+=4) {
+            vfloat yrv = LVFU((*Y)(x, y));
+            vmask selmask = vmaskf_eq(yrv, ZEROV);
+            vfloat scalev = vselfnotzero(selmask, LVFU(L(x, y)) / yrv);
+
+            STVFU((*Y)(x, y), yrv * scalev);
+            STVFU((*X)(x, y), LVFU((*X)(x, y)) * scalev);
+            STVFU((*Z)(x, y), LVFU((*Z)(x, y)) * scalev);
+        }
+#endif
+        for (; x < w; x++) {
             float yr = (*Y)(x, y);
-            float scale = 0.f;
-            if (yr != 0.f) {
-                scale = L(x, y) / yr;
-            }
+            float scale = yr != 0.f ? L(x, y) / yr : 0.f;
 
             (*Y)(x, y) *= scale;
             (*X)(x, y) *= scale;
             (*Z)(x, y) *= scale;
         }
     }
+
     if (!ph.canceled()) {
         ph.setValue(100);
     }
