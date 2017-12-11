@@ -32,6 +32,8 @@
 
 #include <Libpfs/array2d.h>
 #include <Libpfs/array2d_fwd.h>
+#define BENCHMARK
+#include "../../StopWatch.h"
 
 using namespace pfs;
 
@@ -97,6 +99,22 @@ class GaussianPyramid {
         for (int i = 0; i < PYRAMID; i++) delete p[i].GP;
     }
 
+    double NoInterpolateLum(int newX, int newY, Pyramid *pl) {
+
+        double lum;
+
+        if (newX < pl->width - 1 && newY < pl->height - 1)
+            lum = pl->getPixel(newX, newY);
+        else if (newX < pl->width - 1 && newY >= pl->height) {
+            lum = pl->getPixel(newX, pl->height - 1);
+        } else if (newX >= pl->width && newY < pl->height - 1) {
+            lum = pl->getPixel(pl->width - 1, newY);
+        } else
+            lum = pl->getPixel(pl->width - 1, pl->height - 1);
+
+        return lum;
+    }
+
     double InterpolateLum(double newX, double newY, Pyramid *pl) {
         int X_int = (int)newX;
         int Y_int = (int)newY;
@@ -141,23 +159,34 @@ class GaussianPyramid {
                     (double)(p[bottom].kernel_size - p[top].kernel_size) * 0.5;
             int new_w = (int)((double)p[bottom].width * lambda);
             int new_h = (int)((double)p[bottom].height * lambda);
-            initializeNewLevel(i, new_w, new_h, new_kernel_size,
-                               lambda * p[bottom].lambda);
+            initializeNewLevel(i, new_w, new_h, new_kernel_size, lambda * p[bottom].lambda);
 
+#ifdef _OPENMP
+            #pragma omp parallel for schedule(dynamic,16)
+#endif
             for (int y = 0; y < p[i].height; y++) {
                 for (int x = 0; x < p[i].width; x++) {
                     // top
-                    double newX = (int)((double)x * 1 / 2 / lambda);
-                    double newY = (int)((double)y * 1 / 2 / lambda);
+                    int newX = x / (lambda + lambda);
+                    int newY = y / (lambda + lambda);
+                    double top_lum = NoInterpolateLum(newX, newY, &p[top]);
+
+                    // bottom
+                    newX = (int)((double)x / lambda);
+                    newY = (int)((double)y / lambda);
+                    double bottom_lum = NoInterpolateLum(newX, newY, &p[bottom]);
+
+/* old implementation. It casts the values to int and calls InterPolateLum, where no interpolation is made because the values are int => nonsense
+                    int newX = (int)((double)x / (lambda + lambda));
+                    int newY = (int)((double)y / (lambda + lambda));
                     double top_lum = InterpolateLum(newX, newY, &p[top]);
 
                     // bottom
                     newX = (int)((double)x / lambda);
                     newY = (int)((double)y / lambda);
                     double bottom_lum = InterpolateLum(newX, newY, &p[bottom]);
-
-                    (*p[i].GP)(x, y) =
-                        (1.0 - lambda) * top_lum + lambda * bottom_lum;
+*/
+                    (*p[i].GP)(x, y) = (1.0 - lambda) * top_lum + lambda * bottom_lum;
                 }
             }
         }
@@ -191,6 +220,9 @@ class GaussianPyramid {
 
         // apply 5*5 kernel
         int X, Y;
+#ifdef _OPENMP
+        #pragma omp parallel for private(X,Y)
+#endif
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
                 double sum = 0.0;
