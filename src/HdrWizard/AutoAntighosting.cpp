@@ -502,7 +502,7 @@ void blendGradients(Array2Df &gradientXBlended, Array2Df &gradientYBlended,
 
     int x, y;
 #pragma omp parallel for private(x, y) schedule(static)
-    for (int j = 0; j < height; j++) {
+    for (int j = 0; j < height - 1; j++) {
         y = floor(static_cast<float>(j) / gridY);
         for (int i = 0; i < width; i++) {
             x = floor(static_cast<float>(i) / gridX);
