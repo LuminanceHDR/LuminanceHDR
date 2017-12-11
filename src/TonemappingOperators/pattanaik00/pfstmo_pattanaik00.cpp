@@ -41,6 +41,8 @@
 #include "Libpfs/exception.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
+#define BENCHMARK
+#include "../../StopWatch.h"
 
 namespace {
 void multiplyChannels(pfs::Array2Df &X, pfs::Array2Df &Y, pfs::Array2Df &Z,
@@ -58,6 +60,7 @@ void multiplyChannels(pfs::Array2Df &X, pfs::Array2Df &Y, pfs::Array2Df &Z,
 void pfstmo_pattanaik00(pfs::Frame &frame, bool local, float multiplier,
                         float Acone, float Arod, bool autolum,
                         pfs::Progress &ph) {
+BENCHFUN
     //--- default tone mapping parameters;
     const bool timedependence = false;
     // bool local = false;
@@ -109,6 +112,7 @@ void pfstmo_pattanaik00(pfs::Frame &frame, bool local, float multiplier,
     pfs::Array2Df B(w, h);
 
     pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, &R, &G, &B);
+
     try {
         tmo_pattanaik00(R, G, B, *Y, am.get(), local, ph);
     } catch (...) {
