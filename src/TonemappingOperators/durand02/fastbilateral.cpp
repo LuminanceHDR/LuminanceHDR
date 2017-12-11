@@ -29,9 +29,6 @@
 
 #include <cmath>
 
-#include <fftw3.h>
-
-#include <Common/init_fftw.h>
 #include <Libpfs/array2d.h>
 #include <Libpfs/progress.h>
 #include "fastbilateral.h"
@@ -43,82 +40,17 @@
 #define likely(x) (x)
 #define unlikely(x) (x)
 #endif
+#define BENCHMARK
+#include "../../StopWatch.h"
+#include "../../sleef.c"
+#include "../../opthelper.h"
+#include "../../gauss.h"
 
 using namespace std;
 
 // TODO: use spatial convolution rather than FFT, should be much
 // faster except for a very large kernels
-class GaussianBlur {
-    float *source;
-    fftwf_complex *freq;
-    fftwf_plan fplan_fw;
-    fftwf_plan fplan_in;
-
-    float sigma;
-
-   public:
-    GaussianBlur(int nx, int ny, float sigma) : sigma(sigma) {
-        init_fftw();
-        int ox = nx;
-        int oy = ny / 2 + 1;  // saves half of the data
-        const int osize = ox * oy;
-        FFTW_MUTEX::fftw_mutex_plan.lock();
-        source = (float *)fftwf_malloc(sizeof(float) * nx * 2 * (ny / 2 + 1));
-        freq = (fftwf_complex *)fftwf_malloc(sizeof(fftwf_complex) * osize);
-        if (source == NULL || freq == NULL) {
-            std::bad_alloc excep;
-            FFTW_MUTEX::fftw_mutex_plan.unlock();
-            throw excep;
-        }
-        fplan_fw = fftwf_plan_dft_r2c_2d(nx, ny, source, freq, FFTW_ESTIMATE);
-        fplan_in = fftwf_plan_dft_c2r_2d(nx, ny, freq, source, FFTW_ESTIMATE);
-        FFTW_MUTEX::fftw_mutex_plan.unlock();
-    }
-
-    void blur(const pfs::Array2Df &I, pfs::Array2Df &J) {
-        int x, y;
-
-        int nx = I.getCols();
-        int ny = I.getRows();
-        int nsize = nx * ny;
-
-        int ox = nx;
-        int oy = ny / 2 + 1;  // saves half of the data
-
-        for (y = 0; y < ny; y++)
-            for (x = 0; x < nx; x++) source[x * ny + y] = I(x, y);
-
-        fftwf_execute(fplan_fw);
-
-        // filter
-        float sig = nx / (2.0f * sigma);
-        float sig2 = 2.0f * sig * sig;
-        for (x = 0; x < ox / 2; x++)
-            for (y = 0; y < oy; y++) {
-                float d2 = x * x + y * y;
-                float kernel = exp(-d2 / sig2);
-
-                freq[x * oy + y][0] *= kernel;
-                freq[x * oy + y][1] *= kernel;
-                freq[(ox - x - 1) * oy + y][0] *= kernel;
-                freq[(ox - x - 1) * oy + y][1] *= kernel;
-            }
-
-        fftwf_execute(fplan_in);
-
-        for (x = 0; x < nx; x++)
-            for (y = 0; y < ny; y++) J(x, y) = source[x * ny + y] / nsize;
-    }
-
-    ~GaussianBlur() {
-        FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
-        fftwf_free(source);
-        fftwf_free(freq);
-        fftwf_destroy_plan(fplan_fw);
-        fftwf_destroy_plan(fplan_in);
-        FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
-    }
-};
+// DONE
 
 // According to the original paper, downsampling can be used to speed
 // up computation. However, downsampling cannot be mathematically
@@ -235,35 +167,22 @@ void fastBilateralFilter(const pfs::Array2Df &I, pfs::Array2Df &J,
     // find range of values in the input array
     float maxI = I(0);
     float minI = I(0);
+#ifdef _OPENMP
+    #pragma omp parallel for reduction(min:minI) reduction(max:maxI)
+#endif
     for (int i = 0; i < size; i++) {
         float v = I(i);
-        if (unlikely(v > maxI)) maxI = v;
-        if (unlikely(v < minI)) minI = v;
+        maxI = std::max(maxI, v);
+        minI = std::min(minI, v);
         J(i) = 0.0f;  // zero output
     }
 
-    pfs::Array2Df *JJ;
-    //  if( downsample != 1 )
-    //    JJ = new pfs::Array2D(w,h);
-
-    //  w /= downsample;
-    //  h /= downsample;
-
-    int sizeZ = w * h;
-    //  pfs::Array2D* Iz = new pfs::Array2D(w,h);
-    //  downsampleArray(I,Iz);
-    const pfs::Array2Df *Iz = &I;
-    //  sigma_s /= downsample;
-
     pfs::Array2Df jJ(w, h);
     pfs::Array2Df jG(w, h);
-    pfs::Array2Df jK(w, h);
     pfs::Array2Df jH(w, h);
 
     const int NB_SEGMENTS = (int)ceil((maxI - minI) / sigma_r);
     float stepI = (maxI - minI) / NB_SEGMENTS;
-
-    GaussianBlur gaussian_blur(w, h, sigma_s);
 
     // piecewise bilateral
     for (int j = 0; j < NB_SEGMENTS; j++) {
@@ -272,57 +191,99 @@ void fastBilateralFilter(const pfs::Array2Df &I, pfs::Array2Df &J,
 
         float jI = minI + j * stepI;  // current intensity value
 
-        for (int i = 0; i < sizeZ; i++) {
-            float dI = (*Iz)(i)-jI;
-            jG(i) = exp(-(dI * dI) / (sigma_r * sigma_r));
-            jH(i) = jG(i) * I(i);
+#ifdef _OPENMP
+#pragma omp parallel
+#endif
+{
+#ifdef __SSE2__
+        vfloat sqrsigma_rv = F2V(sigma_r * sigma_r);
+        vfloat jIv = F2V(jI);
+#endif
+#ifdef _OPENMP
+        #pragma omp for
+#endif
+        for (int i = 0; i < h; i++) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w-3; j+=4) {
+                vfloat Iv = LVFU(I(j, i));
+                vfloat dIv = Iv - jIv;
+                vfloat jGv = xexpf(-(dIv * dIv) / sqrsigma_rv);
+                STVFU(jG(j, i), jGv);
+                STVFU(jH(j, i), jGv * Iv);
+            }
+#endif
+            for (; j < w; j++) {
+                float dI = I(j, i) - jI;
+                jG(j, i) = xexpf(-(dI * dI) / (sigma_r * sigma_r));
+                jH(j, i) = jG(j, i) * I(j, i);
+            }
         }
+}
+        float* gaussRows[h];
 
-        gaussian_blur.blur(jG, jK);
-        gaussian_blur.blur(jH, jH);
+        gaussRows[0] = jG.data();
+        for(int i = 1; i < h; ++i)
+            gaussRows[i] = gaussRows[i - 1] + w;
+#ifdef _OPENMP
+        #pragma omp parallel
+#endif
+        gaussianBlur(gaussRows, gaussRows, w, h, sigma_s);
 
-        //    convolveArray(jG, sigma_s, jK);
-        //    convolveArray(jH, sigma_s, jH);
+        gaussRows[0] = jH.data();
+        for(int i = 1; i < h; ++i)
+            gaussRows[i] = gaussRows[i - 1] + w;
+#ifdef _OPENMP
+        #pragma omp parallel
+#endif
+        gaussianBlur(gaussRows, gaussRows, w, h, sigma_s);
 
-        for (int i = 0; i < sizeZ; i++)
-            if (likely(jK(i) != 0.0f))
-                jJ(i) = jH(i) / jK(i);
-            else
-                jJ(i) = 0.0f;
-
-        //  if( downsample == 1 )
-        JJ = &jJ;  // No upsampling is necessary
-                   //    else
-                   //      upsampleArray(jJ,JJ);
+#ifdef _OPENMP
+        #pragma omp parallel for
+#endif
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                float temp = jG(j, i);
+                jJ(j, i) = temp != 0.f ? jH(j, i) / temp : 0.f;
+            }
+        }
 
         if (j == 0) {
             // if the first segment - to account for the range boundary
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
             for (int i = 0; i < size; i++) {
                 if (likely(I(i) > jI + stepI)) continue;  // wi = 0;
                 if (likely(I(i) > jI)) {
                     float wi = (stepI - (I(i) - jI)) / stepI;
-                    J(i) += (*JJ)(i)*wi;
+                    J(i) += jJ(i)*wi;
                 } else
-                    J(i) += (*JJ)(i);
+                    J(i) += jJ(i);
             }
         } else if (j == NB_SEGMENTS - 1) {
             // if the last segment - to account for the range boundary
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
             for (int i = 0; i < size; i++) {
-                if (likely(I(i) < jI - stepI)) continue;  // wi = 0;
+                if (I(i) < jI - stepI) continue;  // wi = 0;
                 if (likely(I(i) < jI)) {
                     float wi = (stepI - (jI - I(i))) / stepI;
-                    J(i) += (*JJ)(i)*wi;
+                    J(i) += jJ(i)*wi;
                 } else
-                    J(i) += (*JJ)(i);
+                    J(i) += jJ(i);
             }
         } else {
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
             for (int i = 0; i < size; i++) {
-                float wi = (stepI - fabs(I(i) - jI)) / stepI;
-                if (unlikely(wi > 0.0f)) J(i) += (*JJ)(i)*wi;
+                float wi = stepI - fabs(I(i) - jI);// / stepI;
+                if (unlikely(wi > 0.0f)) J(i) += jJ(i)*(wi/stepI);
             }
         }
     }
-
     //  delete Iz;
     //  if( downsample != 1 )
     //    delete JJ;
