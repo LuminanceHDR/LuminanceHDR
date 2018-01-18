@@ -31,6 +31,7 @@
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/numeric.h>
 
+#include <QtGlobal>
 #include <limits>
 #include <boost/numeric/conversion/bounds.hpp>
 #include <cassert>

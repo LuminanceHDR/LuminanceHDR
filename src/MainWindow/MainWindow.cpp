@@ -109,7 +109,7 @@
 namespace {
 QString getLdrFileNameFromSaveDialog(const QString &suggestedFileName,
                                      QWidget *parent = 0) {
-    QString filetypes = QObject::tr("All LDR formats");
+    static QString filetypes = QObject::tr("All LDR formats");
     filetypes += QLatin1String(
         " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM "
         "*.BMP);;");
@@ -123,7 +123,7 @@ QString getLdrFileNameFromSaveDialog(const QString &suggestedFileName,
     QString outputFilename = QFileDialog::getSaveFileName(
         parent, QObject::tr("Save the LDR image as..."),
         LuminanceOptions().getDefaultPathLdrOut() + QDir::separator() +
-            qfi.completeBaseName(),
+            qfi.completeBaseName() + "." + qfi.suffix(),
         filetypes);
 
     if (!outputFilename.isEmpty()) {
@@ -151,7 +151,7 @@ QString getHdrFileNameFromSaveDialog(const QString &suggestedFileName,
     QString outputFilename = QFileDialog::getSaveFileName(
         parent, QObject::tr("Save the HDR image as..."),
         LuminanceOptions().getDefaultPathLdrIn() + QDir::separator() +
-            qfi.completeBaseName(),
+            qfi.completeBaseName() + "." + qfi.suffix(),
         filetypes);
 
     if (!outputFilename.isEmpty()) {
@@ -690,7 +690,7 @@ void MainWindow::on_fileSaveAsAction_triggered() {
     if (g_v->isHDR()) {
         // In this case I'm saving an HDR
         QString fname = getHdrFileNameFromSaveDialog(
-            g_v->getFileName() + "-" + m_HdrCaption, this);
+            g_v->getFileName() + "-" + m_HdrCaption , this);
 
         if (fname.isEmpty()) return;
 
@@ -721,7 +721,7 @@ void MainWindow::on_fileSaveAsAction_triggered() {
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
         QString proposedFileName =
-            ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg.jpg";
+            ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
 
         // QString outputFilename = getLdrFileNameFromSaveDialog(ldr_name + "_"
         // +
