@@ -112,7 +112,9 @@ int main(int argc, char **argv) {
 #ifdef Q_OS_WIN  // TODO: there are problems with HiDPI on X11, let's enable this
               // only on Windows by now
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
 #endif
 
     Q_INIT_RESOURCE(icons);
