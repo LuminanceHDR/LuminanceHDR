@@ -39,7 +39,9 @@
  */
 #include <cmath>
 #include <cstdlib>
+#include <cstring>
 #include "opthelper.h"
+
 
 namespace
 {
