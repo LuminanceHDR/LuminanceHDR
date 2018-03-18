@@ -168,6 +168,7 @@ Source: "{#MySourceLibsDir}\libxslt-1.dll"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#MySourceLibsDir}\libbz2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libintl-8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libpcre-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\libcfitsio-3.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 ;Source: "gdb.exe"; DestDir: "{app}"; Flags: skipifsourcedoesntexist ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
