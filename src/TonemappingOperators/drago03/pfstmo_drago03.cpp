@@ -38,7 +38,6 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "tmo_drago03.h"
-#define BENCHMARK
 #include "../../StopWatch.h"
 #include "../../opthelper.h"
 

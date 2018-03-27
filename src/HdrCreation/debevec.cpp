@@ -40,7 +40,6 @@
 #include <functional>
 #include <iostream>
 #include <vector>
-#define BENCHMARK
 #include "../StopWatch.h"
 #include "../sleef.c"
 #include "../opthelper.h"

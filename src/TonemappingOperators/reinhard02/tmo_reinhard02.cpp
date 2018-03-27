@@ -51,7 +51,6 @@
 #include <Libpfs/progress.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <TonemappingOperators/pfstmo.h>
-#define BENCHMARK
 #include "../../StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
@@ -86,7 +85,7 @@ static bool temporal_coherent;
 #define V2(x, y, i) (V1(x, y, i + 1))
 #define ACTIVITY(x, y, i)          \
     ((V1(x, y, i) - V2(x, y, i)) / \
-     (((m_key * m_twopowphi) / rtengine::SQR(S_I(i))) + V1(x, y, i)))
+     (((m_key * m_twopowphi) / lhdrengine::SQR(S_I(i))) + V1(x, y, i)))
 
 //
 // Kaiser-Bessel stuff

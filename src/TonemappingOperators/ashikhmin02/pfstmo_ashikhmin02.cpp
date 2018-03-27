@@ -38,7 +38,6 @@
 #include "Libpfs/progress.h"
 
 #include "tmo_ashikhmin02.h"
-#define BENCHMARK
 #include "../../StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"

@@ -1,42 +1,28 @@
 /*
- *  This file is part of RawTherapee.
+ *  This file is part of Luminance HDR.
  *
- *  Copyright (c) 2004-2010 Gabor Horvath <hgabor@rawtherapee.com>
- *
- *  RawTherapee is free software: you can redistribute it and/or modify
+ *  Luminance HDR is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
- *  RawTherapee is distributed in the hope that it will be useful,
+ *  Luminance HDR is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with RawTherapee.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *  along with Luminance HDR. If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  This file was copied from RawTherapee on 23 Nov 2017, commit d61df9d.
+ *
+ *  Copyright (c) 2004-2010 Gabor Horvath <hgabor@rawtherapee.com>
+ *  Copyright (c) Ingo Weyrich <heckflosse67@gmx.de>
+*/
+
 #ifndef _GAUSS_H_
 #define _GAUSS_H_
 
-/*
- *  This file is part of RawTherapee.
- *
- *  Copyright (c) 2004-2010 Gabor Horvath <hgabor@rawtherapee.com>
- *
- *  RawTherapee is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  RawTherapee is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with RawTherapee.  If not, see <http://www.gnu.org/licenses/>.
- */
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -631,8 +617,8 @@ template<class T> void gaussianBlurImpl(T** src, T** dst, const int W, const int
             // If src != dst we can take the fast way
             // compute 3x3 kernel values
             double c0 = 1.0;
-            double c1 = exp( -0.5 * (rtengine::SQR(1.0 / sigma)) );
-            double c2 = exp( -rtengine::SQR(1.0 / sigma) );
+            double c1 = exp( -0.5 * (lhdrengine::SQR(1.0 / sigma)) );
+            double c2 = exp( -lhdrengine::SQR(1.0 / sigma) );
 
             // normalize kernel values
             double sum = c0 + 4.0 * (c1 + c2);

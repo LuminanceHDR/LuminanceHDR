@@ -69,7 +69,4 @@
         #define ALIGNED64
         #define ALIGNED16
     #endif
-    #if defined _OPENMP
-        #define _RT_NESTED_OPENMP
-    #endif
 #endif

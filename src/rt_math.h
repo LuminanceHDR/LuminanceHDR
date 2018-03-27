@@ -5,7 +5,7 @@
 #include <cmath>
 #include <cstdint>
 
-namespace rtengine
+namespace lhdrengine
 {
 
 constexpr int MAXVAL = 0xffff;

@@ -43,7 +43,6 @@
 
 #include "fastbilateral.h"
 
-#define BENCHMARK
 #include "../../StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"

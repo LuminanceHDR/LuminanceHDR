@@ -57,7 +57,6 @@
 #include <Libpfs/utils/numeric.h>
 #include <TonemappingOperators/pfstmo.h>
 #include "tmo_ferradans11.h"
-#define BENCHMARK
 #include "../../StopWatch.h"
 #include "../../sleef.c"
 //#include "../../opthelper.h"

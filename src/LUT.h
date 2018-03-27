@@ -1,22 +1,24 @@
 /*
- * LUT.h
- *  This file is part of RawTherapee.
+ *  This file is part of Luminance HDR.
  *
- *  Copyright (c) 2011 Jan Rinze Peterzon (janrinze@gmail.com)
- *
- *  RawTherapee is free software: you can redistribute it and/or modify
+ *  Luminance HDR is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
- *  RawTherapee is distributed in the hope that it will be useful,
+ *  Luminance HDR is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with RawTherapee.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *  along with Luminance HDR. If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  This file was copied from RawTherapee on 23 Nov 2017, commit d61df9d.
+ *
+ *  Copyright (c) 2011 Jan Rinze Peterzon (janrinze@gmail.com)
+ *  Copyright (c) Ingo Weyrich <heckflosse67@gmx.de>
+*/
 
 /*
  *  Declaration of flexible Lookup Tables
@@ -89,7 +91,7 @@ using LUTuc = LUT<uint8_t>;
 
 template<typename T>
 class LUT :
-    public rtengine::NonCopyable
+    public lhdrengine::NonCopyable
 {
 protected:
     // list of variables ordered to improve cache speed
@@ -243,9 +245,7 @@ public:
     LUT<T> & operator+=(LUT<T> &rhs)
     {
         if (rhs.size == this->size) {
-#ifdef _RT_NESTED_OPENMP // temporary solution to fix Issue #3324
             #pragma omp simd
-#endif
 
             for(unsigned int i = 0; i < this->size; i++) {
                 data[i] += rhs.data[i];
@@ -259,9 +259,7 @@ public:
     template<typename U = T, typename = typename std::enable_if<std::is_same<U, float>::value>::type>
     LUT<float> & operator*=(float factor)
     {
-#ifdef _RT_NESTED_OPENMP // temporary solution to fix Issue #3324
         #pragma omp simd
-#endif
 
         for(unsigned int i = 0; i < this->size; i++) {
             data[i] *= factor;
@@ -274,9 +272,7 @@ public:
     template<typename U = T, typename = typename std::enable_if<std::is_same<U, float>::value>::type>
     LUT<float> & operator/=(float divisor)
     {
-#ifdef _RT_NESTED_OPENMP // temporary solution to fix Issue #3324
         #pragma omp simd
-#endif
 
         for(unsigned int i = 0; i < this->size; i++) {
             data[i] /= divisor;
@@ -289,7 +285,7 @@ public:
     // use with integer indices
     T& operator[](int index) const
     {
-        return data[ rtengine::LIM<int>(index, 0, upperBound) ];
+        return data[ lhdrengine::LIM<int>(index, 0, upperBound) ];
     }
 
 #if defined( __SSE2__ ) && defined( __x86_64__ )

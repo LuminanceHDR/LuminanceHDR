@@ -40,7 +40,6 @@
 #include "Libpfs/progress.h"
 #include "tmo_reinhard02.h"
 #include "../../opthelper.h"
-#define BENCHMARK
 #include "../../StopWatch.h"
 
 void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,

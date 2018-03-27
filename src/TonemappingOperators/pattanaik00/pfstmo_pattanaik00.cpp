@@ -41,7 +41,6 @@
 #include "Libpfs/exception.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
-#define BENCHMARK
 #include "../../StopWatch.h"
 
 namespace {

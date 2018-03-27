@@ -32,7 +32,6 @@
 
 #include <Libpfs/array2d.h>
 #include <Libpfs/array2d_fwd.h>
-#define BENCHMARK
 #include "../../StopWatch.h"
 
 using namespace pfs;
