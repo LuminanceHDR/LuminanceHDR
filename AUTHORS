@@ -1,32 +1,42 @@
 If I forgot to add someone to this list please let me know.
 
 Main developers, improvements, bug fixing:
-Davide Anastasia			(Lead Project Mantainer & Mac OS X support)
+
+Davide Anastasia            (Lead Project Mantainer & Mac OS X support)
 <davideanastasia@users.sourceforge.net>
 
-Daniel Kaneider 			(Windows Setup and Optimisation, Head of i18n Support)
+Daniel Kaneider             (Windows Setup and Optimisation, Head of i18n Support)
 <danielkaneider@users.sourceforge.net> 
 
-Franco Comida				(Developer, Linux support, Maintainer Fedora Package)
+Franco Comida               (Developer, Linux support, Maintainer Fedora Package)
 <fcomida@users.sourceforge.net>
 
 Bruce Guenter
 
-Contributors:
-Nicholas Phillips 			(MTB alignment code)
-Douglas E. Warner 			(FC6 packager and bug reports)
-Ignacy Gawedzki 			(tiff ldr bugfixes and suggestion)
-Bertrand Petit 				(FreeBSD patch)
-Sloan Poe 					(found and fixed bug regarding legacy actions signal)
-Alexandre Prokoudine 		(gui improvements, desktop integration)
-Arne Hagenah 				(various suggestions)
-Frank Boehme 				(various suggestions)
-Erik Ouchterlony
+
+Contributors, in last name alphabetical order:
+
+Frank Boehme                (various suggestions)
+Jean-Christophe Frisch
+Ignacy Gawedzki             (tiff ldr bugfixes and suggestion)
+Arne Hagenah                (various suggestions)
+Morgan Hardwood
 Antoine Latter
-Markus Schmaus 				(found and fixed bug in Debevec and Robertson02)
+Erik Ouchterlony
+Bertrand Petit              (FreeBSD patch)
+Nicholas Phillips           (MTB alignment code)
+Sloan Poe                   (found and fixed bug regarding legacy actions signal)
+Alexandre Prokoudine        (gui improvements, desktop integration)
+Markus Schmaus              (found and fixed bug in Debevec and Robertson02)
+Douglas E. Warner           (FC6 packager and bug reports)
+Ingo Weyrich                (speedups, reduction of memory usage, Windows msys2 build instructions)
+
 
 Translators:
+
 http://qtpfsgui.sourceforge.net/?page_id=23
 
+
 Original author:
+
 Giuseppe Rota <grota@sourceforge.net>
