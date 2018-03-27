@@ -58,6 +58,7 @@ void Align::align_with_ais(bool ais_crop_flag) {
         "PATH=\\1" + separator + QCoreApplication::applicationDirPath());
     m_ais->setEnvironment(env);
 #endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     connect(m_ais.data(),
             static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(
                 &QProcess::finished),
@@ -65,6 +66,13 @@ void Align::align_with_ais(bool ais_crop_flag) {
     connect(m_ais.data(), &QProcess::errorOccurred, this,
             &Align::ais_failed_slot);
     connect(m_ais.data(), &QIODevice::readyRead, this, &Align::readData);
+#else
+    connect(m_ais.data(), SIGNAL(finished(int,QProcess::ExitStatus)), this,
+        SLOT(ais_finished(int,QProcess::ExitStatus)));
+    connect(m_ais.data(), SIGNAL(error(QProcess::ProcessError)), this,
+        SLOT(ais_failed_slot(QProcess::ProcessError)));
+    connect(m_ais.data(), SIGNAL(readyRead()), this, SLOT(readData()));
+#endif
 
     QStringList ais_parameters =
         m_luminance_options.getAlignImageStackOptions();

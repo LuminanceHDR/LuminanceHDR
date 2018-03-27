@@ -39,10 +39,12 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
+#include "../../opthelper.h"
+#include "../../sleef.c"
 
 namespace {
 inline float biasFunc(float b, float x) {
-    return std::pow(x, b);  // pow(x, log(bias)/log(0.5))
+    return b == 0.f ? xexpf( x * xlogf(b)) : 1.f;
 }
 
 const float LOG05 = -0.693147f;  // log(0.5)
@@ -55,10 +57,49 @@ void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
 
     int size = width * height;
 
-    for (int i = 0; i < size; i++) {
-        avLum += log(Y[i] + 1e-4);
-        maxLum = (Y[i] > maxLum) ? Y[i] : maxLum;
+#ifdef __SSE2__
+    vfloat maxLumv = ZEROV;
+    vfloat avLumv = ZEROV;
+#endif // __SSE2__
+
+#pragma omp parallel
+{
+    float eps = 1e-4f;
+    float avLumThr = 0.f;
+    float maxLumThr = 0.f;
+#ifdef __SSE2__
+    vfloat epsv = F2V(eps);
+    vfloat maxLumThrv = ZEROV;
+    vfloat avLumThrv = ZEROV;
+#endif // __SSE2__
+    #pragma omp for nowait
+    for(int i = 0; i < height; ++i) {
+        int j = 0;
+#ifdef __SSE2__
+        for (; j < width - 3; j+=4) {
+            vfloat Ywv = LVFU(Y[i * width + j]);
+            avLumThrv += xlogf(Ywv + epsv);
+            maxLumThrv = vmaxf(Ywv, maxLumThrv);
+        }
+#endif
+        for (; j < width; j++) {
+            float Yw = Y[i * width + j];
+            avLumThr += xlogf(Yw + eps);
+            maxLumThr = std::max(Yw, maxLumThr);
+        }
     }
+#pragma omp critical
+{
+    avLumv += avLumThrv;
+    maxLumv = vmaxf(maxLumv, maxLumThrv);
+    avLum += avLumThr;
+    maxLum = std::max(maxLum, maxLumThr);
+}
+}
+#ifdef __SSE2__
+    avLum += vhadd(avLumv);
+    maxLum = std::max(maxLum, vhmax(maxLumv));
+#endif
     avLum = exp(avLum / size);
 }
 
@@ -71,22 +112,40 @@ void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
     maxLum /= avLum;
 
     float divider = std::log10(maxLum + 1.0f);
-    float biasP = log(bias) / LOG05;
+    float biasP = (log(bias) / LOG05);
+    float logmaxLum = log(maxLum);
 
     // Normal tone mapping of every pixel
-    for (int y = 0, yEnd = Y.getRows(); y < yEnd; y++) {
-        ph.setValue(100 * y / yEnd);
-        if (ph.canceled()) break;
-
-        for (int x = 0, xEnd = Y.getCols(); x < xEnd; x++) {
+    #pragma omp parallel
+    {
+    int yEnd = Y.getRows();
+    int xEnd = Y.getCols();
+#ifdef __SSE2__
+    vfloat avLumv = F2V(avLum);
+    vfloat onev = F2V(1.f);
+    vfloat twov = F2V(2.f);
+    vfloat eightv = F2V(8.f);
+    vfloat biasPv = F2V(biasP);
+    vfloat logmaxLumv = F2V(logmaxLum);
+    vfloat dividerv = F2V(divider);
+#endif
+    #pragma omp for
+    for (int y = 0; y < yEnd; y++) {
+        int x = 0;
+#ifdef __SSE2__
+        for (; x < xEnd - 3; x+=4) {
+            vfloat Ywv = LVFU(Y(x, y)) / avLumv;
+            vfloat interpolv = xlogf( twov + eightv * xexpf(biasPv * (xlogf(Ywv) - logmaxLumv)));
+            STVFU(L(x, y), xlogf(Ywv + onev) / (interpolv * dividerv));  // avoid loss of precision
+        }
+#endif
+        for (; x < xEnd; x++) {
             float Yw = Y(x, y) / avLum;
-            float interpol =
-                std::log(2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
-            // L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
-            L(x, y) = (std::log1p(Yw) / interpol) /
-                      divider;  // avoid loss of precision
+            float interpol = xlogf( 2.f + 8.f * xexpf(biasP * (xlogf(Yw) - logmaxLum)));
+            L(x, y) = xlogf(Yw + 1.f) / (interpol * divider);  // avoid loss of precision
 
             assert(!boost::math::isnan(L(x, y)));
         }
+    }
     }
 }

@@ -39,7 +39,9 @@
 #include "Libpfs/pfs.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
-
+#include "../../sleef.c"
+#include "../../opthelper.h"
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
 /// sensitivity of human visual system
 float n = 0.73f;
 
@@ -62,32 +64,170 @@ const float LOG5 = std::log(5.f);
  * @param Acone [out] calculated adaptation for cones
  * @param Arod [out] calculated adaptation for rods
  */
-void calculateLocalAdaptation(const pfs::Array2Df &Y, int x, int y,
-                              float &Acone, float &Arod) {
+
+
+float pow6(float x) {
+    return (x*x) * (x*x) * (x*x);
+}
+
+vfloat pow6(vfloat x) {
+    return (x*x) * (x*x) * (x*x);
+}
+
+float pow4(float x) {
+    return (x*x) * (x*x);
+}
+
+float pow2(float x) {
+    return (x*x);
+}
+
+float calculateLocalAdaptation(const pfs::Array2Df &Y, int x, int y) {
     int width = Y.getCols();
     int height = Y.getRows();
 
     int kernel_size = 4;
 
-    float logLc = std::log(Y(x, y)) / LOG5;
+    float logLc = xlogf(Y(x, y)) / LOG5;
 
     float pix_num = 0.0;
     float pix_sum = 0.0;
-    for (int kx = -kernel_size; kx <= kernel_size; kx++)
-        for (int ky = -kernel_size; ky <= kernel_size; ky++)
+
+    // we have to calculate the expensive f(x) = exp( -pow( log(element) / c1 - c2, 6)) for the elements which are marked with a 1 in the following matrix
+    // without SSE this are 49 f(x) calculations
+    // the current SSE implementation needs only 14 f(x) calculations (13 is also possible, but I've been lazy) and has no branches
+    //
+    // 0 0 0 0 1 0 0 0 0
+    // 0 0 1 1 1 1 1 0 0
+    // 0 1 1 1 1 1 1 1 0
+    // 0 1 1 1 1 1 1 1 0
+    // 1 1 1 1 1 1 1 1 1
+    // 0 1 1 1 1 1 1 1 0
+    // 0 1 1 1 1 1 1 1 0
+    // 0 0 1 1 1 1 1 0 0
+    // 0 0 0 0 1 0 0 0 0
+
+#ifdef __SSE2__
+    if(x >= 4 && x < width -4 && y > 4 && y < height - 4) {
+        vfloat pix_numv = ZEROV;
+        vfloat pix_sumv = ZEROV;
+        vfloat log5v = F2V(LOG5);
+        vfloat logLcv = F2V(logLc);
+        {
+            vfloat Lv = _mm_set_ps(Y(x, y - 4), Y(x + 2, y - 3), Y(x + 2, y + 3),Y(x, y + 4));
+            vfloat wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+        }
+        {
+            vfloat Lv = LVFU(Y(x - 2, y - 3));
+            vfloat wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+        }
+        {
+            vfloat Lv = LVFU(Y(x - 3, y - 2));
+            vfloat wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+            Lv = LVFU(Y(x + 1, y - 2));
+            wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            wv = (vfloat)vandi(vint(wv), _mm_set_epi32(0,0xffffffff,0xffffffff,0xffffffff));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+
+        }
+        {
+            vfloat Lv = LVFU(Y(x - 3, y - 1));
+            vfloat wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+            Lv = LVFU(Y(x + 1, y - 1));
+            wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            wv = (vfloat)vandi(vint(wv), _mm_set_epi32(0,0xffffffff,0xffffffff,0xffffffff));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+
+        }
+        {
+            vfloat Lv = LVFU(Y(x - 4, y));
+            vfloat wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+            Lv = LVFU(Y(x, y));
+            wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+            float L = Y(x + 4, y);
+            float w = xexpf(-pow6(xlogf(L) / LOG5 - logLc));
+            pix_sum += w * L;
+            pix_num += w;
+
+        }
+        {
+            vfloat Lv = LVFU(Y(x - 3, y + 1));
+            vfloat wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+            Lv = LVFU(Y(x + 1, y + 1));
+            wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            wv = (vfloat)vandi(vint(wv), _mm_set_epi32(0,0xffffffff,0xffffffff,0xffffffff));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+
+        }
+        {
+            vfloat Lv = LVFU(Y(x - 3, y + 2));
+            vfloat wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+            Lv = LVFU(Y(x + 1, y + 2));
+            wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            wv = (vfloat)vandi(vint(wv), _mm_set_epi32(0,0xffffffff,0xffffffff,0xffffffff));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+
+        }
+        {
+            vfloat Lv = LVFU(Y(x - 2, y + 3));
+            vfloat wv = xexpf(-pow6(xlogf(Lv) / log5v - logLcv));
+            pix_sumv += wv * Lv;
+            pix_numv += wv;
+        }
+        pix_sum += vhadd(pix_sumv);
+        pix_num += vhadd(pix_numv);
+
+    } else {
+        for (int ky = -kernel_size; ky <= kernel_size; ky++) {
+            for (int kx = -kernel_size; kx <= kernel_size; kx++) {
+                if ((kx * kx + ky * ky) <= (kernel_size * kernel_size) &&
+                    x + kx > 0 && x + kx < width && y + ky > 0 && y + ky < height) {
+                    float L = Y(x + kx, y + ky);
+                    float w = xexpf(-pow6(xlogf(L) / LOG5 - logLc));
+                    pix_sum += w * L;
+                    pix_num += w;
+                }
+            }
+        }
+    }
+
+#else
+    for (int ky = -kernel_size; ky <= kernel_size; ky++) {
+        for (int kx = -kernel_size; kx <= kernel_size; kx++) {
             if ((kx * kx + ky * ky) <= (kernel_size * kernel_size) &&
                 x + kx > 0 && x + kx < width && y + ky > 0 && y + ky < height) {
                 float L = Y(x + kx, y + ky);
-                float w = std::exp(
-                    -std::pow(std::fabs(std::log(L) / LOG5 - logLc), 6.0f));
+                float w = xexpf(-pow6(xlogf(L) / LOG5 - logLc));
                 pix_sum += w * L;
                 pix_num += w;
             }
-
+        }
+    }
+#endif
     if (pix_num > 0.0) {
-        Acone = Arod = (pix_sum / pix_num);
+        return pix_sum / pix_num;
     } else {
-        Acone = Arod = Y(x, y);
+        return Y(x, y);
     }
 }
 }
@@ -96,6 +236,7 @@ void calculateLocalAdaptation(const pfs::Array2Df &Y, int x, int y,
 void tmo_pattanaik00(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
                      const pfs::Array2Df &Y, VisualAdaptationModel *am,
                      bool local, pfs::Progress &ph) {
+
     ///--- initialization of parameters
     /// cones level of adaptation
     float Acone = am->getAcone();
@@ -183,22 +324,29 @@ void tmo_pattanaik00(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 
     int im_width = Y.getCols();
     int im_height = Y.getRows();
-    for (int x = 0; x < im_width; x++) {
-        ph.setValue(100 * x / im_width);
-        if (ph.canceled()) break;
-        for (int y = 0; y < im_height; y++) {
+    int progress = 0;
+    const int progressSteps = std::max(im_height / 98, 1);
+    int phVal = 0;
+    ph.setValue(phVal);
+    const float dsbydw = display_sigma / display_white;
+
+#ifdef _OPENMP
+    #pragma omp parallel for firstprivate(Bcone, Brod, sigma_cone, sigma_rod) schedule(dynamic,16)
+#endif
+    for (int y = 0; y < im_height; y++) {
+        for (int x = 0; x < im_width; x++) {
             float l = Y(x, y);
             float r = R(x, y) / l;
             float g = G(x, y) / l;
             float b = B(x, y) / l;
 
             if (local) {
-                calculateLocalAdaptation(Y, x, y, Acone, Arod);
-                Bcone = 2e6 / (2e6 + Acone);
-                Brod = 0.04f / (0.04f + Arod);
+                float adapt = calculateLocalAdaptation(Y, x, y);
+                Bcone = 2e6 / (2e6 + adapt);
+                Brod = 0.04f / (0.04f + adapt);
 
-                sigma_cone = sigma_response_cone(Acone);
-                sigma_rod = sigma_response_rod(Arod);
+                sigma_cone = sigma_response_cone(adapt);
+                sigma_rod = sigma_response_rod(adapt);
             }
 
             // receptor responses
@@ -210,8 +358,7 @@ void tmo_pattanaik00(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
                 Rcone /= Rlum;
             }
 
-            float Scolor = (Bcone * pow(sigma_cone, n) * n * pow(l, n)) /
-                           pow(pow(l, n) + pow(sigma_cone, n), 2);
+            float Scolor = (Bcone * pow_F(sigma_cone, n) * n * pow_F(l, n)) / pow2(pow_F(l, n) + pow_F(sigma_cone, n));
             Scolor /= S_d;
 
             // appearance model
@@ -219,19 +366,30 @@ void tmo_pattanaik00(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
             Ra = (Ra < 1.0f) ? ((Ra > 0.0f) ? Ra : 0.0f) : 0.9999999f;
 
             // inverse display model
-            float I =
-                display_sigma * pow(Ra / (1.0f - Ra), 1.0f / n) / display_white;
+            float I = dsbydw * pow_F(Ra / (1.0f - Ra), 1.0f / n);
 
             // apply new luminance
-            r = pow(r, Scolor) * I * Rcone + I * Rrod;
-            g = pow(g, Scolor) * I * Rcone + I * Rrod;
-            b = pow(b, Scolor) * I * Rcone + I * Rrod;
+            r = I * (pow_F(r, Scolor) * Rcone + Rrod);
+            g = I * (pow_F(g, Scolor) * Rcone + Rrod);
+            b = I * (pow_F(b, Scolor) * Rcone + Rrod);
 
             R(x, y) = (r < 1.0f) ? ((r > 0.0f) ? r : 0.0f) : 1.0f;
             G(x, y) = (g < 1.0f) ? ((g > 0.0f) ? g : 0.0f) : 1.0f;
             B(x, y) = (b < 1.0f) ? ((b > 0.0f) ? b : 0.0f) : 1.0f;
         }
+#ifdef _OPENMP
+    #pragma omp critical
+#endif
+    {
+        progress += 1;
+        if((progress % progressSteps) == 0) {
+            phVal ++;
+            ph.setValue(std::min(phVal,98));
+        }
     }
+
+    }
+    ph.setValue(98);
 }
 
 ///////////////////////////////////////////////////////////
@@ -244,13 +402,8 @@ float sigma_response_rod(float I) {
     //   3800*pow(j,2.0f)*5*I+0.2*pow(1-pow(j,2.0f),4.0f)*pow(5*I,1.0f/6.0f);
     //   float sigma_rod = pow(2,1.0f/n) / fls * I;
 
-    float j = 1.0f / (5 * 1e4 * I + 1);
-    float j2 = j * j;
-
-    float sigma_rod =
-        (2.5874f * I) /
-        (19000.0f * j2 * I + 0.2615f * pow(1.0f - j2, 4) * pow(I, 1.0f / 6.0f));
-    return sigma_rod;
+    float j2 = pow2(1.0f / (5e4f * I + 1));
+    return (2.5874f * I) / (19000.0f * j2 * I + 0.2615f * pow4(1.0f - j2) * std::sqrt(xcbrtf(I)));
 }
 
 float sigma_response_cone(float I) {
@@ -261,16 +414,12 @@ float sigma_response_cone(float I) {
     //     + 0.1f*pow(1.0f-pow(k,4.0f),2.0f)*pow(5*I,1.0f/3.0f);
     //   float sigma_cone = pow(2.0f,1.0f/n) / fl * (5.0f*I);
 
-    float k = 1.0f / (5.0f * I + 1);
-    float k4 = pow(k, 4.0f);
-    float sigma_cone =
-        (12.9223f * I) /
-        (k4 * I + 0.171 * pow(1.0f - k4, 2) * powf(I, 1.0f / 3.0f));
-    return sigma_cone;
+    float k4 = pow4(1.0f / (5.0f * I + 1));
+    return (12.9223f * I) / (k4 * I + 0.171f * pow2(1.0f - k4) * xcbrtf(I));
 }
 
 float model_response(float I, float sigma) {
-    return pow(I, n) / (pow(I, n) + pow(sigma, n));
+    return pow_F(I, n) / (pow_F(I, n) + pow_F(sigma, n));
 }
 
 VisualAdaptationModel::VisualAdaptationModel() { setAdaptation(60.0f, 60.0f); }
@@ -292,14 +441,14 @@ void VisualAdaptationModel::calculateAdaptation(float Gcone, float Grod,
     in = Gcone;
     out = Acone;
     delta_out = in - out;
-    f = (1.0f - exp(-dt / t0cone));
+    f = (1.0f - xexpf(-dt / t0cone));
     Acone += f * delta_out;
 
     // Arod
     in = Grod;
     out = Arod;
     delta_out = in - out;
-    f = (1.0f - exp(-dt / t0rod));
+    f = (1.0f - xexpf(-dt / t0rod));
     Arod += f * delta_out;
 
     // Calculation of Bcone & Brod
@@ -339,11 +488,42 @@ void VisualAdaptationModel::setAdaptation(const pfs::Array2Df &Y) {
 }
 
 float VisualAdaptationModel::calculateLogAvgLuminance(const pfs::Array2Df &Y) {
+
     float avLum = 0.0f;
 
     int size = Y.getCols() * Y.getRows();
-    for (int i = 0; i < size; i++) {
-        avLum += std::log(Y(i) + 1e-4);
+#ifdef _OPENMP
+    #pragma omp parallel
+#endif
+{
+    float avLumThr = 0.f;
+#ifdef __SSE2__
+    vfloat avLumThrv = ZEROV;
+    vfloat c1v = F2V(1e-4f);
+#endif
+#ifdef _OPENMP
+    #pragma omp for nowait
+#endif
+    for (int y = 0; y < Y.getRows(); ++y) {
+        int x = 0;
+#ifdef __SSE2__
+        for (; x < Y.getCols() - 3; x+=4) {
+            avLumThrv += xlogf(LVFU(Y(x,y)) + c1v);
+        }
+#endif
+        for (; x < Y.getCols(); ++x) {
+            avLumThr += xlogf(Y(x,y) + 1e-4f);
+        }
     }
-    return std::exp(avLum / size) - 1e-4;
+#ifdef _OPENMP
+#pragma omp critical
+#endif
+{
+    avLum += avLumThr;
+#ifdef __SSE2__
+    avLum += vhadd(avLumThrv);
+#endif
+}
+}
+    return xexpf(avLum / size) - 1e-4;
 }

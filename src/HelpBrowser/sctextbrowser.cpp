@@ -56,12 +56,8 @@ for which a new license (GPL+exception) is in place.
 
 #include "sctextbrowser.h"
 
-#ifdef WIN32
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
+#ifdef USE_DEPRECATED_QTWEBKIT
 ScTextBrowser::ScTextBrowser(QWidget *parent) : QWebView(parent) {}
-#else
-ScTextBrowser::ScTextBrowser(QWidget *parent) : QWebEngineView (parent) {}
-#endif
 #else
 ScTextBrowser::ScTextBrowser(QWidget *parent) : QWebEngineView (parent) {}
 #endif

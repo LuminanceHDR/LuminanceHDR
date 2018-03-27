@@ -46,22 +46,14 @@ for which a new license (GPL+exception) is in place.
 
 #include <QUrl>
 
-#ifdef WIN32
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
-#include <qwebview>
-#else
-#include <QWebEngineView>
-#endif
+#ifdef USE_DEPRECATED_QTWEBKIT
+#include <QWebView>
 #else
 #include <QWebEngineView>
 #endif
 
-#ifdef WIN32
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 2)
+#ifdef USE_DEPRECATED_QTWEBKIT
 class ScTextBrowser : public QWebView {
-#else
-class ScTextBrowser : public QWebEngineView {
-#endif
 #else
 class ScTextBrowser : public QWebEngineView {
 #endif

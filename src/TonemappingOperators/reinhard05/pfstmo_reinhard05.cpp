@@ -41,10 +41,12 @@
 #include "Libpfs/exception.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
+#include "../../StopWatch.h"
 
 void pfstmo_reinhard05(pfs::Frame &frame, float brightness,
                        float chromaticadaptation, float lightadaptation,
                        pfs::Progress &ph) {
+BENCHFUN
 //--- default tone mapping parameters;
 // float brightness = 0.0f;
 // float chromaticadaptation = 0.5f;
