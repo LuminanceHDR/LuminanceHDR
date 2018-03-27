@@ -2,7 +2,6 @@
 CMakeLists.txt.user
 /.settings
 **.rule
-CMakeLists.txt.user.2.6pre1
 /.cproject
 .idea
 .swo
@@ -10,3 +9,4 @@ CMakeLists.txt.user.2.6pre1
 *.kdev4
 tags
 Build
+build
