@@ -1,7 +1,7 @@
 # Luminance HDR
 ===============
 
-Copyright (C) 2010-2017
+Copyright (C) 2010-2018
 
  - Davide Anastasia <davideanastasia@users.sourceforge.net>
  - Franco Comida <fcomida@users.sourceforge.net>
