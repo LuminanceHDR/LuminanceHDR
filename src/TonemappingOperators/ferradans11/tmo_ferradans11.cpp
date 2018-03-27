@@ -559,7 +559,7 @@ BENCHFUN
     }
     float delta = 0.f, oldDifference = 0.f;
     int steps;
-    StopWatch StopW("main ferradans loop");
+
     while (difference > threshold_diff) {
         if (ph.canceled()) {
             break;
@@ -640,7 +640,7 @@ BENCHFUN
         oldDifference = difference;
         if (iteration > 1) ph.setValue(30 + 69 / (steps + 1));
     }
-    StopW.stop();
+
     FFTW_MUTEX::fftw_mutex_destroy_plan.lock();
     fftwf_destroy_plan(pU);
     fftwf_destroy_plan(pU2);
