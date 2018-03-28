@@ -25,11 +25,7 @@
 #include <boost/math/constants/constants.hpp>
 #include "copy.h"
 #include "resize.h"
-
-#define PI4_Af 0.78515625f
-#define PI4_Bf 0.00024127960205078125f
-#define PI4_Cf 6.3329935073852539062e-07f
-#define PI4_Df 4.9604681473525147339e-10f
+#include "../../sleef.c"
 
 namespace pfs {
 namespace detail {
@@ -37,39 +33,6 @@ namespace detail {
 //! \author Franco Comida <fcomida@users.sourceforge.net>
 //! \note Code derived from RawTherapee
 //! https://github.com/Beep6581/RawTherapee/blob/dev/rtengine/ipresize.cc
-const float RT_1_PI =
-    2.0f * (float)boost::math::double_constants::one_div_two_pi;
-
-inline float xrintf(float x) {
-    return x < 0 ? (int)(x - 0.5f) : (int)(x + 0.5f);
-}
-
-inline float mlaf(float x, float y, float z) { return x * y + z; }
-
-inline float xsinf(float d) {
-    int q;
-    float u, s;
-
-    q = (int)xrintf(d * RT_1_PI);
-
-    d = mlaf(q, -PI4_Af * 4, d);
-    d = mlaf(q, -PI4_Bf * 4, d);
-    d = mlaf(q, -PI4_Cf * 4, d);
-    d = mlaf(q, -PI4_Df * 4, d);
-
-    s = d * d;
-
-    if ((q & 1) != 0) d = -d;
-
-    u = 2.6083159809786593541503e-06f;
-    u = mlaf(u, s, -0.0001981069071916863322258f);
-    u = mlaf(u, s, 0.00833307858556509017944336f);
-    u = mlaf(u, s, -0.166666597127914428710938f);
-
-    u = mlaf(s, u * d, d);
-
-    return u;
-}
 
 static inline float Lanc(float x, float a) {
     if (x * x < 1e-6f) {
