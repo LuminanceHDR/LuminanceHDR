@@ -43,6 +43,13 @@
 #include "Libpfs/progress.h"
 #include "Libpfs/utils/msec_timer.h"
 #include "TonemappingOperators/pfstmo.h"
+#include "../../sleef.c"
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+#define BENCHMARK
+#include "StopWatch.h"
+#include "opthelper.h"
 
 #include "pde.h"
 #include "tmo_fattal02.h"
@@ -76,6 +83,7 @@ using namespace utils;
 //--------------------------------------------------------------------
 
 void downSample(const pfs::Array2Df &A, pfs::Array2Df &B) {
+
     const int width = B.getCols();
     const int height = B.getRows();
 
@@ -99,34 +107,62 @@ void gaussianBlur(const pfs::Array2Df &I, pfs::Array2Df &L) {
     const int width = I.getCols();
     const int height = I.getRows();
 
+    if (width < 3 || height < 3) {
+        if (&I != &L) {
+            for (int i = 0, n = width * height; i < n; ++i) {
+                L (i) = I (i);
+            }
+        }
+
+        return;
+    }
+
     pfs::Array2Df T(width, height);
 
     //--- X blur
-    //#pragma omp parallel for shared(I, T)
-    for (int y = 0; y < height; y++) {
-        for (int x = 1; x < width - 1; x++) {
-            float t = 2.f * I(x, y);
-            t += I(x - 1, y);
-            t += I(x + 1, y);
-            T(x, y) = t * 0.25f;  // t / 4.f;
+    #pragma omp parallel for
+
+    for ( int y = 0 ; y < height ; y++ ) {
+        for ( int x = 1 ; x < width - 1 ; x++ ) {
+            float t = 2.f * I (x, y);
+            t += I (x - 1, y);
+            t += I (x + 1, y);
+            T (x, y) = t * 0.25f; // t / 4.f;
         }
-        T(0, y) = (3.f * I(0, y) + I(1, y)) * 0.25f;  // / 4.f;
-        T(width - 1, y) =
-            (3.f * I(width - 1, y) + I(width - 2, y)) * 0.25f;  // / 4.f;
+
+        T (0, y) = ( 3.f * I (0, y) + I (1, y) ) * 0.25f; // / 4.f;
+        T (width - 1, y) = ( 3.f * I (width - 1, y) + I (width - 2, y) ) * 0.25f; // / 4.f;
     }
 
     //--- Y blur
-    //#pragma omp parallel for shared(T, L)
-    for (int x = 0; x < width; x++) {
-        for (int y = 1; y < height - 1; y++) {
-            float t = 2.f * T(x, y);
-            t += T(x, y - 1);
-            t += T(x, y + 1);
-            L(x, y) = t * 0.25f;  // t/4.0f;
+    #pragma omp parallel for
+
+    for ( int x = 0 ; x < width - 7 ; x += 8 ) {
+        for ( int y = 1 ; y < height - 1 ; y++ ) {
+            for (int xx = 0; xx < 8; ++xx) {
+                float t = 2.f * T (x + xx, y);
+                t += T (x + xx, y - 1);
+                t += T (x + xx, y + 1);
+                L (x + xx, y) = t * 0.25f; // t/4.0f;
+            }
         }
-        L(x, 0) = (3.f * T(x, 0) + T(x, 1)) * 0.25f;  // / 4.0f;
-        L(x, height - 1) =
-            (3.f * T(x, height - 1) + T(x, height - 2)) * 0.25f;  // / 4.0f;
+
+        for (int xx = 0; xx < 8; ++xx) {
+            L (x + xx, 0) = ( 3.f * T (x + xx, 0) + T (x + xx, 1) ) * 0.25f; // / 4.0f;
+            L (x + xx, height - 1) = ( 3.f * T (x + xx, height - 1) + T (x + xx, height - 2) ) * 0.25f; // / 4.0f;
+        }
+    }
+
+    for ( int x = width - (width % 8) ; x < width ; x++ ) {
+        for ( int y = 1 ; y < height - 1 ; y++ ) {
+            float t = 2.f * T (x, y);
+            t += T (x, y - 1);
+            t += T (x, y + 1);
+            L (x, y) = t * 0.25f; // t/4.0f;
+        }
+
+        L (x, 0) = ( 3.f * T (x, 0) + T (x, 1) ) * 0.25f; // / 4.0f;
+        L (x, height - 1) = ( 3.f * T (x, height - 1) + T (x, height - 2) ) * 0.25f; // / 4.0f;
     }
 }
 
@@ -157,12 +193,13 @@ void createGaussianPyramids(pfs::Array2Df &H, pfs::Array2Df **pyramids,
 //--------------------------------------------------------------------
 
 float calculateGradients(pfs::Array2Df &H, pfs::Array2Df &G, int k) {
+
     const int width = H.getCols();
     const int height = H.getRows();
     const float divider = pow(2.0f, k + 1);
-    float avgGrad = 0.0f;
+    double avgGrad = 0.0f; // use double precision for large summations
 
-    //#pragma omp parallel for shared(G,H) reduction(+:avgGrad)
+    #pragma omp parallel for reduction(+:avgGrad)
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             float gx, gy;
@@ -191,6 +228,7 @@ float calculateGradients(pfs::Array2Df &H, pfs::Array2Df &G, int k) {
 //--------------------------------------------------------------------
 
 void upSample(const pfs::Array2Df &A, pfs::Array2Df &B) {
+
     const int width = B.getCols();
     const int height = B.getRows();
     const int awidth = A.getCols();
@@ -225,6 +263,7 @@ void upSample(const pfs::Array2Df &A, pfs::Array2Df &B) {
 void calculateFiMatrix(pfs::Array2Df &FI, pfs::Array2Df *gradients[],
                        float avgGrad[], int nlevels, int detail_level,
                        float alfa, float beta, float noise, bool newfattal) {
+
     int width = gradients[nlevels - 1]->getCols();
     int height = gradients[nlevels - 1]->getRows();
     pfs::Array2Df **fi = new pfs::Array2Df *[nlevels];
@@ -247,7 +286,7 @@ void calculateFiMatrix(pfs::Array2Df &FI, pfs::Array2Df *gradients[],
             // DEBUG_STR << "calculateFiMatrix: apply gradient to level " << k
             // <<
             // endl;
-            //#pragma omp parallel for shared(fi,avgGrad)
+            #pragma omp parallel for
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     float grad = ((*gradients[k])(x, y) < 1e-4f)
@@ -285,19 +324,138 @@ void calculateFiMatrix(pfs::Array2Df &FI, pfs::Array2Df *gradients[],
     delete[] fi;
 }
 
-inline void findMaxMinPercentile(const pfs::Array2Df &I, float minPrct,
-                                 float &minLum, float maxPrct, float &maxLum) {
-    using namespace std;
+void findMinMaxPercentile(const float* data, size_t size, float minPrct, float& minOut, float maxPrct, float& maxOut, bool multithread)
+{
+    // Copyright (c) 2017 Ingo Weyrich <heckflosse67@gmx.de>
+    // We need to find the (minPrct*size) smallest value and the (maxPrct*size) smallest value in data.
+    // We use a histogram based search for speed and to reduce memory usage.
+    // Memory usage of this method is histoSize * sizeof(uint32_t) * (t + 1) byte,
+    // where t is the number of threads and histoSize is in [1;65536].
+    // Processing time is O(n) where n is size of the input array.
+    // It scales well with multiple threads if the size of the input array is large.
+    // The current implementation is not guaranteed to work correctly if size > 2^32 (4294967296).
 
-    const int size = I.getRows() * I.getCols();
-    const float *data = I.data();
-    std::vector<float> vI;
+    assert(minPrct <= maxPrct);
 
-    copy(data, data + size, back_inserter(vI));
-    sort(vI.begin(), vI.end());
+    if (size == 0) {
+        return;
+    }
 
-    minLum = vI.at(int(minPrct * vI.size()));
-    maxLum = vI.at(int(maxPrct * vI.size()));
+    size_t numThreads = 1;
+#ifdef _OPENMP
+    // Because we have an overhead in the critical region of the main loop for each thread
+    // we make a rough calculation to reduce the number of threads for small data size.
+    // This also works fine for the minmax loop.
+    if (multithread) {
+        const size_t maxThreads = omp_get_max_threads();
+        while (size > numThreads * numThreads * 16384 && numThreads < maxThreads) {
+            ++numThreads;
+        }
+    }
+#endif
+
+    // We need min and max value of data to calculate the scale factor for the histogram
+    float minVal = data[0];
+    float maxVal = data[0];
+#ifdef _OPENMP
+    #pragma omp parallel for reduction(min:minVal) reduction(max:maxVal) num_threads(numThreads)
+#endif
+    for (size_t i = 1; i < size; ++i) {
+        minVal = std::min(minVal, data[i]);
+        maxVal = std::max(maxVal, data[i]);
+    }
+
+    if (std::fabs(maxVal - minVal) == 0.f) { // fast exit, also avoids division by zero in calculation of scale factor
+        minOut = maxOut = minVal;
+        return;
+    }
+
+    // Caution: Currently this works correctly only for histoSize in range[1;65536].
+    // For small data size (i.e. thumbnails) we reduce the size of the histogram to the size of data.
+    const unsigned int histoSize = std::min<size_t>(65536, size);
+
+    // calculate scale factor to use full range of histogram
+    const float scale = (histoSize - 1) / (maxVal - minVal);
+
+    // We need one main histogram
+    std::vector<uint32_t> histo(histoSize, 0);
+
+    if (numThreads == 1) {
+        // just one thread => use main histogram
+        for (size_t i = 0; i < size; ++i) {
+            // we have to subtract minVal and multiply with scale to get the data in [0;histosize] range
+            histo[static_cast<uint16_t>(scale * (data[i] - minVal))]++;
+        }
+    } else {
+#ifdef _OPENMP
+    #pragma omp parallel num_threads(numThreads)
+#endif
+        {
+            // We need one histogram per thread
+            std::vector<uint32_t> histothr(histoSize, 0);
+
+#ifdef _OPENMP
+            #pragma omp for nowait
+#endif
+            for (size_t i = 0; i < size; ++i) {
+                // we have to subtract minVal and multiply with scale to get the data in [0;histosize] range
+                histothr[static_cast<uint16_t>(scale * (data[i] - minVal))]++;
+            }
+
+#ifdef _OPENMP
+            #pragma omp critical
+#endif
+            {
+                // add per thread histogram to main histogram
+#ifdef _OPENMP
+                #pragma omp simd
+#endif
+
+                for (size_t i = 0; i < histoSize; ++i) {
+                    histo[i] += histothr[i];
+                }
+            }
+        }
+    }
+
+    size_t k = 0;
+    size_t count = 0;
+
+    // find (minPrct*size) smallest value
+    const float threshmin = minPrct * size;
+    while (count < threshmin) {
+        count += histo[k++];
+    }
+
+    if (k > 0) { // interpolate
+        const size_t count_ = count - histo[k - 1];
+        const float c0 = count - threshmin;
+        const float c1 = threshmin - count_;
+        minOut = (c1 * k + c0 * (k - 1)) / (c0 + c1);
+    } else {
+        minOut = k;
+    }
+    // go back to original range
+    minOut /= scale;
+    minOut += minVal;
+
+    // find (maxPrct*size) smallest value
+    const float threshmax = maxPrct * size;
+    while (count < threshmax) {
+        count += histo[k++];
+    }
+
+    if (k > 0) { // interpolate
+        const size_t count_ = count - histo[k - 1];
+        const float c0 = count - threshmax;
+        const float c1 = threshmax - count_;
+        maxOut = (c1 * k + c0 * (k - 1)) / (c0 + c1);
+    } else {
+        maxOut = k;
+    }
+    // go back to original range
+    maxOut /= scale;
+    maxOut += minVal;
 }
 
 void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
@@ -334,15 +492,32 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
     // find max & min values, normalize to range 0..100 and take logarithm
     float minLum = Y(0, 0);
     float maxLum = Y(0, 0);
+
     for (int i = 0; i < size; i++) {
         minLum = (Y(i) < minLum) ? Y(i) : minLum;
         maxLum = (Y(i) > maxLum) ? Y(i) : maxLum;
     }
+
     pfs::Array2Df H(width, height);
-    //#pragma omp parallel for private(i) shared(H, Y, maxLum)
-    for (int i = 0; i < size; i++) {
-        H(i) = logf(100.0f * Y(i) / maxLum + 1e-4);
-    }
+
+#ifdef __SSE2__
+    const vfloat maxLumv = F2V(maxLum);
+    const vfloat c100v = F2V(100.f);
+    const vfloat epsv = F2V(1e-4f);
+#endif
+        #pragma omp parallel for
+        for (int i = 0; i < height; ++i) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < width - 3; j += 4) {
+                STVFU(H(j, i), xlogf(c100v * LVFU(Y(j, i)) / maxLumv + epsv));
+            }
+#endif
+            for (; j < width; ++j) {
+                H(j, i) = xlogf(100.0f * Y(j, i) / maxLum + 1e-4f);
+            }
+        }
+
     ph.setValue(4);
 
     // create gaussian pyramids
@@ -396,7 +571,9 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
     // boundary conditions, so we need to adjust the assembly of the right hand
     // side accordingly (basically fft solver assumes U(-1) = U(1), whereas zero
     // Neumann conditions assume U(-1)=U(0)), see also divergence calculation
+
     if (fftsolver)
+        #pragma omp parallel for
         for (size_t y = 0; y < height; y++)
             for (size_t x = 0; x < width; x++) {
                 // sets index+1 based on the boundary assumption H(N+1)=H(N-1)
@@ -410,6 +587,7 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
                     (H(x, yp1) - H(x, y)) * 0.5 * (FI(x, yp1) + FI(x, y));
             }
     else
+        #pragma omp parallel for
         for (size_t y = 0; y < height; y++)
             for (size_t x = 0; x < width; x++) {
                 int s, e;
@@ -419,13 +597,16 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
                 Gx(x, y) = (H(e, y) - H(x, y)) * FI(x, y);
                 Gy(x, y) = (H(x, s) - H(x, y)) * FI(x, y);
             }
+
     ph.setValue(18);
 
     //   dumpPFS( "Gx.pfs", Gx, "Y" );
     //   dumpPFS( "Gy.pfs", Gy, "Y" );
 
     // calculate divergence
+
     pfs::Array2Df DivG(width, height);
+    #pragma omp parallel for
     for (size_t y = 0; y < height; ++y) {
         for (size_t x = 0; x < width; ++x) {
             DivG(x, y) = Gx(x, y) + Gy(x, y);
@@ -438,6 +619,7 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
             }
         }
     }
+
     ph.setValue(20);
     if (ph.canceled()) {
         return;
@@ -461,8 +643,20 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
             return;
         }
 
-        for (size_t idx = 0; idx < height * width; ++idx) {
-            L(idx) = expf(gamma * U(idx));
+#ifdef __SSE2__
+        const vfloat gammav = F2V(gamma);
+#endif
+        #pragma omp parallel for
+        for (int i = 0; i < height; ++i) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < width - 3; j += 4) {
+                STVFU(L(j, i), xexpf(gammav * LVFU(U(j, i))));
+            }
+#endif
+            for (; j < width; ++j) {
+                L(j, i) = xexpf(gamma * U(j, i));
+            }
         }
     }
     ph.setValue(95);
@@ -471,7 +665,8 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
     float cut_min = 0.01f * black_point;
     float cut_max = 1.0f - 0.01f * white_point;
     assert(cut_min >= 0.0f && (cut_max <= 1.0f) && (cut_min < cut_max));
-    findMaxMinPercentile(L, cut_min, minLum, cut_max, maxLum);
+    findMinMaxPercentile(L.data(), width * height, cut_min, minLum, cut_max, maxLum, true);
+
     for (size_t idx = 0; idx < height * width; ++idx) {
         L(idx) = (L(idx) - minLum) / (maxLum - minLum);
         if (L(idx) <= 0.0f) {
@@ -479,6 +674,7 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
         }
         // note, we intentionally do not cut off values > 1.0
     }
+
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     cout << endl;
