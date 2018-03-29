@@ -42,6 +42,8 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/utils/numeric.h"
 #include "Libpfs/utils/sse.h"
+#include "../../sleef.c"
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
 
 using namespace pfs;
 
@@ -528,12 +530,12 @@ TransformToR::TransformToR(float detailFactor)
 float TransformToR::operator()(float currG) const {
     if (currG < 0.0f) {
         // G to W
-        currG = std::pow(10, (-currG) * m_detailFactor) - 1.0f;
+        currG = pow_F(10, (-currG) * m_detailFactor) - 1.0f;
         // W to RESP
         return -lookup_table(LOOKUP_W_TO_R, W_table, R_table, currG);
     } else {
         // G to W
-        currG = std::pow(10, currG * m_detailFactor) - 1.0f;
+        currG = pow_F(10, currG * m_detailFactor) - 1.0f;
         // W to RESP
         return lookup_table(LOOKUP_W_TO_R, W_table, R_table, currG);
     }
@@ -605,7 +607,7 @@ static const float b = 0.537756f;
 
 float calculateScaleFactor(float g) {
 #if 1
-    return 1.0 / (a * std::pow(std::max(detectT, std::fabs(g)), b));
+    return 1.0 / (a * pow_F(std::max(detectT, std::fabs(g)), b));
 #else
     if (std::fabs(G[i]) < GFIXATE)
         C[i] = 1.0f / EDGE_WEIGHT;

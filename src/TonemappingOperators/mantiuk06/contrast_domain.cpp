@@ -85,6 +85,10 @@
 #include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/utils/numeric.h"
 #include "Libpfs/utils/sse.h"
+#include "Libpfs/rt_algo.h"
+#include "../../StopWatch.h"
+#include "../../sleef.c"
+#include "../../opthelper.h"
 
 using namespace pfs;
 
@@ -112,6 +116,7 @@ const int NUM_BACKWARDS_CEILING = 3;
 
 void lincg(PyramidT &pyramid, PyramidT &pC, const Array2Df &b, Array2Df &x,
            const int itmax, const float tol, Progress &ph) {
+BENCHFUN
     float rdotr_curr;
     float rdotr_prev;
     float rdotr_best;
@@ -143,14 +148,15 @@ void lincg(PyramidT &pyramid, PyramidT &pC, const Array2Df &b, Array2Df &x,
     std::copy(x.begin(), x.end(), x_best.begin());  // x_best = x
 
     const float irdotr = rdotr_curr;
-    const float percent_sf = 100.0f / std::log(tol2 * bnrm2 / irdotr);
+    int phvalue = ph.value() + 8;
+    const float percent_sf = (100.0f - phvalue) / std::log(tol2 * bnrm2 / irdotr);
 
     int iter = 0;
     int num_backwards = 0;
     for (; iter < itmax; ++iter) {
         // TEST
         ph.setValue(
-            static_cast<int>(std::log(rdotr_curr / irdotr) * percent_sf));
+            static_cast<int>(phvalue + std::max(std::log(rdotr_curr / irdotr) * percent_sf, 0.f)));
         // User requested abort
         if (ph.canceled() && iter > 0) {
             break;
@@ -365,22 +371,8 @@ void normalizeLuminanceAndRGB(Array2Df &R, Array2Df &G, Array2Df &B,
 void denormalizeLuminance(Array2Df &Y) {
     const size_t size = Y.size();
 
-    std::vector<float> temp(size);
-    std::copy(Y.begin(), Y.end(), temp.begin());
-
-    std::sort(temp.begin(), temp.end());
-
-    float trim = (size - 1) * CUT_MARGIN * 0.01f;
-    float delta = trim - std::floor(trim);
-    const float lumMin =
-        temp[static_cast<size_t>(std::floor(trim))] * delta +
-        temp[static_cast<size_t>(std::ceil(trim))] * (1.0f - delta);
-
-    trim = (size - 1) * (100.0f - CUT_MARGIN) * 0.01f;
-    delta = trim - std::floor(trim);
-    const float lumMax =
-        temp[static_cast<size_t>(std::floor(trim))] * delta +
-        temp[static_cast<size_t>(std::ceil(trim))] * (1.0f - delta);
+    float lumMin, lumMax;
+    lhdrengine::findMinMaxPercentile(Y.data(), size, CUT_MARGIN * 0.01f, lumMin, 1.f - CUT_MARGIN * 0.01f, lumMax, true);
 
     const float lumRange = 1.f / (lumMax - lumMin) * DISP_DYN_RANGE;
 
@@ -391,28 +383,59 @@ void denormalizeLuminance(Array2Df &Y) {
 }
 
 template <typename T>
-inline T decode(const T &value) {
-    if (value <= 0.0031308f) {
-        return (value * 12.92f);
+inline T fastDecode(const T &value) {
+    if (value <= -5.766466716f) {
+        return (xexpf(value) * 12.92f);
     }
-    return (1.055f * std::pow(value, 1.f / 2.4f) - 0.055f);
+    return (1.055f * xexpf(1.f / 2.4f * value) - 0.055f);
 }
+
+#ifdef __SSE2__
+inline vfloat fastDecode(const vfloat &valuev, const vfloat &c0, const vfloat &c1, const vfloat &c2, const vfloat &c3, const vfloat &c4) {
+    vmask selmask = vmaskf_le(valuev, c0);
+    vfloat tempv = vself(selmask, valuev, valuev * c1);
+    tempv = xexpf(tempv);
+    return vself(selmask, tempv * c2, tempv * c3 - c4);
+}
+#endif
 
 void denormalizeRGB(Array2Df &R, Array2Df &G, Array2Df &B, const Array2Df &Y,
                     float saturationFactor) {
+BENCHFUN
     const int size = static_cast<int>(Y.size());
+    const float log10 = std::log(10.f);
 
+#ifdef __SSE2__
+    const vfloat log10v = F2V(log10);
+    const vfloat saturationFactorv = F2V(saturationFactor);
+    const vfloat c0 = F2V(-5.7664667f);
+    const vfloat c1 = F2V(0.416666667f);
+    const vfloat c2 = F2V(12.92f);
+    const vfloat c3 = F2V(1.055f);
+    const vfloat c4 = F2V(0.055f);
+
+#endif
 /* Transform to sRGB */
 #pragma omp parallel for
-    for (int j = 0; j < size; j++) {
-        float myY = std::pow(10.f, Y(j));
-        R(j) = decode(std::pow(R(j), saturationFactor) * myY);
-        G(j) = decode(std::pow(G(j), saturationFactor) * myY);
-        B(j) = decode(std::pow(B(j), saturationFactor) * myY);
+    for (int i = 0; i < Y.getRows(); ++i) {
+        int j = 0;
+#ifdef __SSE2__
+        for (; j < Y.getCols() - 3; j += 4) {
+            vfloat myYv = LVFU(Y(j, i)) * log10v;
+            STVFU(R(j, i), fastDecode(saturationFactorv * xlogf(LVFU(R(j, i))) + myYv, c0, c1, c2, c3, c4));
+            STVFU(G(j, i), fastDecode(saturationFactorv * xlogf(LVFU(G(j, i))) + myYv, c0, c1, c2, c3, c4));
+            STVFU(B(j, i), fastDecode(saturationFactorv * xlogf(LVFU(B(j, i))) + myYv, c0, c1, c2, c3, c4));
+        }
+#endif
+        for (; j < Y.getCols(); ++j) {
+            float myY = Y(j, i) * log10;
+            R(j, i) = fastDecode(saturationFactor * xlogf(R(j, i)) + myY);
+            G(j, i) = fastDecode(saturationFactor * xlogf(G(j, i)) + myY);
+            B(j, i) = fastDecode(saturationFactor * xlogf(B(j, i)) + myY);
+        }
     }
 }
 }
-
 // tone mapping
 int tmo_mantiuk06_contmap(Array2Df &R, Array2Df &G, Array2Df &B, Array2Df &Y,
                           const float contrastFactor,
@@ -429,16 +452,26 @@ int tmo_mantiuk06_contmap(Array2Df &R, Array2Df &G, Array2Df &B, Array2Df &Y,
     const size_t c = R.getCols();
     // const size_t n = r*c;
 
+//    StopWatch Stop1("normalizeLuminanceAndRGB");
     normalizeLuminanceAndRGB(R, G, B, Y);
-
+    ph.setValue(2);
+//    Stop1.stop();
     // create pyramid
+//    StopWatch Stop2("PyramidT");
     PyramidT pp(r, c);
+    ph.setValue(6);
+//    Stop2.stop();
     // calculate gradients for pyramid (Y won't be changed)
+//    StopWatch Stop3("computeGradients");
     pp.computeGradients(Y);
+//    Stop3.stop();
     // transform gradients to R
+//    StopWatch Stop4("transformToR");
     pp.transformToR(detailfactor);
-
+    ph.setValue(13);
+//    Stop4.stop();
     // Contrast map
+//    StopWatch Stop5("contrastFactor");
     if (contrastFactor > 0.0f) {
         // Contrast mapping
         pp.scale(contrastFactor);
@@ -446,11 +479,16 @@ int tmo_mantiuk06_contmap(Array2Df &R, Array2Df &G, Array2Df &B, Array2Df &Y,
         // Contrast equalization
         contrastEqualization(pp, -contrastFactor);
     }
-
+//    Stop5.stop();
     // transform R to gradients
+//    StopWatch Stop7("transformToG");
     pp.transformToG(detailfactor);
+    ph.setValue(40);
+//    Stop7.stop();
     // transform gradients to luminance Y (pp -> Y)
+//    StopWatch Stop8("transformToLuminance");
     transformToLuminance(pp, Y, itmax, tol, ph);
+//    Stop8.stop();
 
     denormalizeLuminance(Y);
     denormalizeRGB(R, G, B, Y, saturationFactor);
