@@ -46,7 +46,6 @@
 #include "../../sleef.c"
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
 
-#define BENCHMARK
 #include "StopWatch.h"
 
 namespace {
