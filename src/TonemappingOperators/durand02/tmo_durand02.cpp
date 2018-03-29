@@ -38,6 +38,7 @@
 #include <vector>
 
 #include "Libpfs/array2d.h"
+#include "Libpfs/rt_algo.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
 
@@ -47,95 +48,12 @@
 #include "../../sleef.c"
 #include "../../opthelper.h"
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
-#include "LUT.h"
 
 namespace {
 /**
  * @brief Find minimum and maximum value skipping the extreems
  *
  */
-inline void findMaxMinPercentile(pfs::Array2Df *I, float minPrct, float maxPrct,
-                                 float &minLum, float &maxLum) {
-
-    int size = I->getRows() * I->getCols();
-    const float* data = I->data();
-
-    float minval = data[0];
-    float maxval = data[0];
-#ifdef _OPENMP
-    #pragma omp parallel for reduction(min:minval) reduction(max:maxval)
-#endif
-    for (int i = 1; i < size; ++i) {
-        minval = std::min(minval, data[i]);
-        maxval = std::max(maxval, data[i]);
-    }
-
-    float offset = minval < 0.f ? -minval : 0.f;
-    float scale = 65535.f / (maxval + offset);
-
-    // we need to find the (minPrct*size) smallest value and the (maxPrct*size) smallest value in I
-    // We use a histogram based search for speed and to reduce memory usage
-    // memory usage of this method is 65536 * sizeof(float) * (t + 1) byte, where t is the number of threads
-
-    // We need one global histogram
-    LUTu histo (65536, LUT_CLIP_BELOW | LUT_CLIP_ABOVE);
-    histo.clear();
-#ifdef _OPENMP
-    #pragma omp parallel
-#endif
-    {
-        // We need one histogram per thread
-        LUTu histothr (65536, LUT_CLIP_BELOW | LUT_CLIP_ABOVE);
-        histothr.clear();
-
-#ifdef _OPENMP
-        #pragma omp for nowait
-#endif
-
-        for (int i = 0; i < size; ++i) {
-            // values are in [0;1] range, so we have to multiply with 65535 to get the histogram index
-            histothr[ (unsigned int) (scale * (data[i] + offset))]++;
-        }
-
-#ifdef _OPENMP
-        #pragma omp critical
-#endif
-        // add per thread histogram to global histogram
-        histo += histothr;
-    }
-
-    int k = 0;
-    int count = 0;
-
-    // find (minPrct*size) smallest value
-    while (count < minPrct * size) {
-        count += histo[k++];
-    }
-
-    if (k > 0) { // interpolate
-        int count_ = count - histo[k - 1];
-        float c0 = count - minPrct * size;
-        float c1 = minPrct * size - count_;
-        minLum = (c1 * k + c0 * (k - 1)) / ((c0 + c1) * scale);
-    } else {
-        minLum = k / scale;
-    }
-    minLum -= offset;
-    // find (maxPrct*size) smallest value
-    while (count < maxPrct * size) {
-        count += histo[k++];
-    }
-
-    if (k > 0) { // interpolate
-        int count_ = count - histo[k - 1];
-        float c0 = count - maxPrct * size;
-        float c1 = maxPrct * size - count_;
-        maxLum = (c1 * k + c0 * (k - 1)) / ((c0 + c1) * scale);
-    } else {
-        maxLum = k / scale;
-    }
-    maxLum -= offset;
-}
 
 template <typename T>
 inline T decode(const T &value) {
@@ -279,7 +197,7 @@ BENCHFUN
     //!! FIX: find minimum and maximum luminance, but skip 1% of outliers
     float maxB;
     float minB;
-    findMaxMinPercentile(&BASE, 0.01f, 0.99f, minB, maxB);
+    lhdrengine::findMinMaxPercentile(BASE.data(), w * h, 0.01f, minB, 0.99f, maxB, true);
 
     float compressionfactor = baseContrast / (maxB - minB);
     float compressionfactorm1 = compressionfactor - 1.f;

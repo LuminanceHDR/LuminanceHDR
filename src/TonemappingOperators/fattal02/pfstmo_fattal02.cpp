@@ -131,6 +131,7 @@ BENCHFUN
                 arrayBlue(j, i) = pow_F(std::max(arrayBlue(j, i) / y, 0.f), opt_saturation) * l;
             }
         }
+
         ph.setValue(100);
     }
 }

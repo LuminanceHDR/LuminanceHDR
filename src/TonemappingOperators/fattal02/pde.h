@@ -53,7 +53,7 @@ void solve_pde_multigrid(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph);
  * @param U [out] solution
  * @param adjust_bound, adjust boundary values of F to make pde solvable
  */
-void solve_pde_fft(pfs::Array2Df &F, pfs::Array2Df &U, pfs::Progress &ph,
+void solve_pde_fft(pfs::Array2Df &F, pfs::Array2Df &U, pfs::Array2Df &F_tr, pfs::Progress &ph,
                    bool adjust_bound = false);
 
 /**
