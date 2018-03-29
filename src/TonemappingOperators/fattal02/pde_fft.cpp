@@ -220,7 +220,8 @@ void make_compatible_boundary(pfs::Array2Df &F)
 // not modified and the equation might not have a solution but an
 // approximate solution with a minimum error is then calculated
 // double precision version
-void solve_pde_fft(pfs::Array2Df &F, pfs::Array2Df &U, pfs::Progress &ph,
+
+void solve_pde_fft(pfs::Array2Df &F, pfs::Array2Df &U, pfs::Array2Df &F_tr, pfs::Progress &ph,
                    bool adjust_bound) {
     ph.setValue(20);
     // DEBUG_STR << "solve_pde_fft: solving Laplace U = F ..." << std::endl;
@@ -243,7 +244,6 @@ void solve_pde_fft(pfs::Array2Df &F, pfs::Array2Df &U, pfs::Progress &ph,
 
     // transforms F into eigenvector space: Ftr =
     // DEBUG_STR << "solve_pde_fft: transform F to ev space (fft)" << std::endl;
-    pfs::Array2Df F_tr(width, height);
     transform_normal2ev(F, F_tr);
     // TODO: F no longer needed so could release memory, but as it is an
     // input parameter we won't do that
@@ -257,24 +257,22 @@ void solve_pde_fft(pfs::Array2Df &F, pfs::Array2Df &U, pfs::Progress &ph,
 
     // in the eigenvector space the solution is very simple
     // DEBUG_STR << "solve_pde_fft: solve in eigenvector space" << std::endl;
-    pfs::Array2Df U_tr(width, height);
     std::vector<double> l1 = get_lambda(height);
     std::vector<double> l2 = get_lambda(width);
+    #pragma omp parallel for
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            if (x == 0 && y == 0)
-                U_tr(x, y) =
-                    0.0;  // any value ok, only adds a const to the solution
-            else
-                U_tr(x, y) = F_tr(x, y) / (l1[y] + l2[x]);
+            F_tr(x, y) = F_tr(x, y) / (l1[y] + l2[x]);
         }
     }
+    F_tr(0, 0) = 0.f; // any value ok, only adds a const to the solution
+
     ph.setValue(55);
 
-    // transforms U_tr back to the normal space
-    // DEBUG_STR << "solve_pde_fft: transform U_tr to normal space (fft)" <<
+    // transforms F_tr back to the normal space
+    // DEBUG_STR << "solve_pde_fft: transform F_tr to normal space (fft)" <<
     // std::endl;
-    transform_ev2normal(U_tr, U);
+    transform_ev2normal(F_tr, U);
     ph.setValue(85);
 
     // the solution U as calculated will satisfy something like int U = 0
@@ -284,11 +282,16 @@ void solve_pde_fft(pfs::Array2Df &F, pfs::Array2Df &U, pfs::Progress &ph,
     // (not really needed but good for numerics as we later take exp(U))
     // DEBUG_STR << "solve_pde_fft: removing constant from solution" <<
     // std::endl;
-    double max = 0.0;
-    for (int i = 0; i < width * height; i++)
-        if (max < U(i)) max = U(i);
+    float max = 0.f;
+    for (int i = 0; i < width * height; i++) {
+        if (max < U(i)) {
+            max = U(i);
+        }
+    }
 
-    for (int i = 0; i < width * height; i++) U(i) -= max;
+    for (int i = 0; i < width * height; i++) {
+        U(i) -= max;
+    }
 
     // fft parallel threads cleanup, better handled outside this function?
     // fftwf_cleanup_threads();

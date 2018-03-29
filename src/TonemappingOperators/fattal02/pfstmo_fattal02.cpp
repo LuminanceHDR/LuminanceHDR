@@ -42,6 +42,11 @@
 #include "Libpfs/exception.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
+#include "../../opthelper.h"
+#include "../../sleef.c"
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
+
+#include "StopWatch.h"
 
 namespace {
 const float epsilon = 1e-4f;
@@ -50,6 +55,7 @@ const float epsilon = 1e-4f;
 void pfstmo_fattal02(pfs::Frame &frame, float opt_alpha, float opt_beta,
                      float opt_saturation, float opt_noise, bool newfattal,
                      bool fftsolver, int detail_level, pfs::Progress &ph) {
+BENCHFUN
     if (fftsolver) {
         // opt_alpha = 1.f;
         newfattal = true;  // let's make sure, prudence is never enough!
@@ -100,15 +106,29 @@ void pfstmo_fattal02(pfs::Frame &frame, float opt_alpha, float opt_beta,
         pfs::Array2Df &arrayGreen = *G;
         pfs::Array2Df &arrayBlue = *B;
 
-        for (int i = 0; i < w * h; i++) {
-            float y = std::max(Yr(i), epsilon);
-            float l = std::max(L(i), epsilon);
-            arrayRed(i) =
-                std::pow(std::max(arrayRed(i) / y, 0.f), opt_saturation) * l;
-            arrayGreen(i) =
-                std::pow(std::max(arrayGreen(i) / y, 0.f), opt_saturation) * l;
-            arrayBlue(i) =
-                std::pow(std::max(arrayBlue(i) / y, 0.f), opt_saturation) * l;
+#ifdef __SSE2__
+        const vfloat epsilonv = F2V(epsilon);
+        const vfloat opt_saturationv = F2V(opt_saturation);
+#endif
+        #pragma omp parallel for
+        for (int i = 0; i < h; ++i) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                vfloat yv = vmaxf(LVFU(Yr(j, i)), epsilonv);
+                vfloat lv = vmaxf(LVFU(L(j, i)), epsilonv);
+                STVFU(arrayRed(j, i), pow_F(vmaxf(LVFU(arrayRed(j, i)) / yv, ZEROV), opt_saturationv) * lv);
+                STVFU(arrayGreen(j, i), pow_F(vmaxf(LVFU(arrayGreen(j, i)) / yv, ZEROV), opt_saturationv) * lv);
+                STVFU(arrayBlue(j, i), pow_F(vmaxf(LVFU(arrayBlue(j, i)) / yv, ZEROV), opt_saturationv) * lv);
+            }
+#endif
+            for (; j < w; ++j) {
+                float y = std::max(Yr(j, i), epsilon);
+                float l = std::max(L(j, i), epsilon);
+                arrayRed(j, i) = pow_F(std::max(arrayRed(j, i) / y, 0.f), opt_saturation) * l;
+                arrayGreen(j, i) = pow_F(std::max(arrayGreen(j, i) / y, 0.f), opt_saturation) * l;
+                arrayBlue(j, i) = pow_F(std::max(arrayBlue(j, i) / y, 0.f), opt_saturation) * l;
+            }
         }
 
         ph.setValue(100);
