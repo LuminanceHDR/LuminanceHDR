@@ -26,6 +26,8 @@
 //! of the Mantiuk06 operator found in PFSTMO. However, the actual
 //! implementation found in this file (and its .cpp file) is based on STL
 //! containers
+#define BENCHMARK
+#include "../../StopWatch.h"
 
 #include "pyramid.h"
 
@@ -178,6 +180,7 @@ void PyramidT::transformToR(float detailFactor) {
 }
 
 void PyramidT::transformToG(float detailFactor) {
+BENCHFUN
     PyramidContainer::iterator itCurr = m_pyramid.begin();
     PyramidContainer::iterator itEnd = m_pyramid.end();
 
@@ -544,7 +547,7 @@ float TransformToG::operator()(float currR) const {
     // RESP to W
     currR = lookup_table(LOOKUP_W_TO_R, R_table, W_table, mult * currR);
     // W to G
-    return mult * std::log1p(currR) * m_detailFactor;  // avoid loss of precision
+    return mult * xlogf(1.f + currR) * m_detailFactor;
 }
 
 //! \brief calculate divergence of two gradient maps (Gx and Gy)
