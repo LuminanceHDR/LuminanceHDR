@@ -528,17 +528,11 @@ TransformToR::TransformToR(float detailFactor)
 
 // transform gradient G to R
 float TransformToR::operator()(float currG) const {
-    if (currG < 0.0f) {
-        // G to W
-        currG = pow_F(10, (-currG) * m_detailFactor) - 1.0f;
-        // W to RESP
-        return -lookup_table(LOOKUP_W_TO_R, W_table, R_table, currG);
-    } else {
-        // G to W
-        currG = pow_F(10, currG * m_detailFactor) - 1.0f;
-        // W to RESP
-        return lookup_table(LOOKUP_W_TO_R, W_table, R_table, currG);
-    }
+    const float mult = copysign(1.f, currG);
+    // G to W
+    currG = pow_F(10, (mult * currG) * m_detailFactor) - 1.0f;
+    // W to RESP
+    return mult * lookup_table(LOOKUP_W_TO_R, W_table, R_table, currG);
 }
 
 TransformToG::TransformToG(float detailFactor)
@@ -546,19 +540,11 @@ TransformToG::TransformToG(float detailFactor)
 
 // transform from R to G
 float TransformToG::operator()(float currR) const {
-    if (currR < 0.0f) {
-        // RESP to W
-        currR = lookup_table(LOOKUP_W_TO_R, R_table, W_table, -currR);
-        // W to G
-        // return -std::log(currR + 1.0f) * m_detailFactor;
-        return -std::log1p(currR) * m_detailFactor;  // avoid loss of precision
-    } else {
-        // RESP to W
-        currR = lookup_table(LOOKUP_W_TO_R, R_table, W_table, currR);
-        // W to G
-        // return std::log(currR + 1.0f) * m_detailFactor;
-        return std::log1p(currR) * m_detailFactor;  // avoid loss of precision
-    }
+    const float mult = copysign(1.f, currR);
+    // RESP to W
+    currR = lookup_table(LOOKUP_W_TO_R, R_table, W_table, mult * currR);
+    // W to G
+    return mult * std::log1p(currR) * m_detailFactor;  // avoid loss of precision
 }
 
 //! \brief calculate divergence of two gradient maps (Gx and Gy)
