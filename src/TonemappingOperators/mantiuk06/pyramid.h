@@ -145,25 +145,4 @@ void calculateGradients(const float *inputData, PyramidS &gradient);
 //
 void calculateAndAddDivergence(const PyramidS &G, float *divG);
 
-//! \brief compute a scale factor based on the input \a g value
-float calculateScaleFactor(float g);
-
-//! \brief transform gradient \a G to R
-struct TransformToR {
-    TransformToR(float detailFactor);
-    float operator()(float currG) const;
-
-   private:
-    float m_detailFactor;
-};
-
-//! \brief transform from \a R to G
-struct TransformToG {
-    TransformToG(float detailFactor);
-    float operator()(float currR) const;
-
-   private:
-    float m_detailFactor;
-};
-
 #endif  // MANTIUK06_PYRAMID_H

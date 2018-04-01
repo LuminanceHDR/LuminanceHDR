@@ -46,6 +46,7 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/pfs.h"
 #include "Libpfs/progress.h"
+#include "StopWatch.h"
 
 //--- default tone mapping parameters;
 // float scaleFactor = 0.1f;
@@ -61,6 +62,7 @@ const float tol = 5e-3f;
 void pfstmo_mantiuk06(pfs::Frame &frame, float scaleFactor,
                       float saturationFactor, float detailFactor, bool cont_eq,
                       pfs::Progress &ph) {
+BENCHFUN
 #ifndef NDEBUG
     std::stringstream ss;
 
