@@ -55,7 +55,6 @@
 
 #include <boost/algorithm/minmax_element.hpp>
 #include <omp.h>
-#define BENCHMARK
 #include "../StopWatch.h"
 
 using namespace std;
