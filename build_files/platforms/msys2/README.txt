@@ -20,14 +20,9 @@ find_dependency(Qt5Network 5.10.1 EXACT)
 
 run the following commands in msys2 shell
 
-cmake -G "MSYS Makefiles" ..
-make
+cmake -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE="Release" ..
+make install
 
-Now you should have a luminance-hdr.exe in your build folder.
+Now you should have a luminance-hdr.exe.
 try running it using
-./luminance-hdr
-
-It still has some missing icons.
-
-make install does not work currently because it wants to installs to C:/Program Files (x86)/Luminance HDR which is not desired for a 64bit executable
-I will see how to fix that later
+Release-build/luminance-hdr
