@@ -68,6 +68,8 @@
 #include <iostream>
 #include <vector>
 
+#include "../../StopWatch.h"
+
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -86,7 +88,6 @@
 #include "Libpfs/utils/numeric.h"
 #include "Libpfs/utils/sse.h"
 #include "Libpfs/rt_algo.h"
-#include "../../StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
 
