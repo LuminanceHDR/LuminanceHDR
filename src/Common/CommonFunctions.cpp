@@ -54,16 +54,51 @@
 #include <Common/LuminanceOptions.h>
 
 #include <boost/algorithm/minmax_element.hpp>
+#include <omp.h>
+#include "../StopWatch.h"
 
 using namespace std;
 using namespace pfs;
 using namespace pfs::io;
 using namespace libhdr::fusion;
 
-static void build_histogram(valarray<float> &hist, const valarray<int> &src) {
+static void build_histogram(valarray<float> &hist, const valarray<uint8_t> &src) {
     const int size = src.size();
+
+    size_t numThreads = 1;
+
+#ifdef _OPENMP
+    // Because we have an overhead in the critical region of the main loop for each thread
+    // we make a rough calculation to reduce the number of threads for small data size.
+    const size_t maxThreads = omp_get_max_threads();
+    while (size > numThreads * numThreads * 16384 && numThreads < maxThreads) {
+        ++numThreads;
+    }
+#endif
+
+    // Original version used a valarray<float>
+    // We use a valarray<uint32_t>, because incrementing a float value of 0.f by 1.f saturates at 16777215.f
+    valarray<uint32_t> histInt(0u, hist.size());
+
+#pragma omp parallel num_threads(numThreads)
+{
+    valarray<uint32_t> histThr(0u, hist.size());
+
+    #pragma omp for nowait
     for (int i = 0; i < size; i++) {
-        hist[src[i]] += 1.f;
+        histThr[src[i]]++;
+    }
+
+    // add per thread histogram to global histogram
+    #pragma omp critical
+    for(int i = 0; i < hist.size(); i++) {
+        histInt[i] += histThr[i];
+    }
+}
+
+    // copy to float histogram
+    for(int i = 0; i < hist.size(); i++) {
+        hist[i] = histInt[i];
     }
 
     // find max
@@ -149,6 +184,7 @@ static void compute_histogram_minmax(const valarray<float> &hist,
 
 void computeAutolevels(const QImage *data, const float threshold,
                        float &minHist, float &maxHist, float &gamma) {
+    BENCHFUN
     const int COLOR_DEPTH = 256;
     const QRgb *src = reinterpret_cast<const QRgb *>(data->bits());
     const int width = data->width();
@@ -161,21 +197,24 @@ void computeAutolevels(const QImage *data, const float threshold,
     float minB, maxB;
 
     // Convert to lightness
-    valarray<int> lightness(ELEMENTS);
+    valarray<uint8_t> lightness(ELEMENTS);
 
+    #pragma omp parallel for
     for (int i = 0; i < ELEMENTS; i++) {
         lightness[i] = QColor::fromRgb(src[i]).toHsl().lightness();
     }
+
     // Build histogram
     valarray<float> histL(0.f, COLOR_DEPTH);
     build_histogram(histL, lightness);
     compute_histogram_minmax(histL, threshold, minL, maxL);
 
     // get Red, Gree, Blue
-    valarray<int> red(ELEMENTS);
-    valarray<int> green(ELEMENTS);
-    valarray<int> blue(ELEMENTS);
+    valarray<uint8_t> red(ELEMENTS);
+    valarray<uint8_t> green(ELEMENTS);
+    valarray<uint8_t> blue(ELEMENTS);
 
+    #pragma omp parallel for
     for (int i = 0; i < ELEMENTS; i++) {
         red[i] = qRed(src[i]);
         green[i] = qGreen(src[i]);
