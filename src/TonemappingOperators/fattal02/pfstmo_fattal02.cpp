@@ -46,8 +46,6 @@
 #include "../../sleef.c"
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
 
-#include "StopWatch.h"
-
 namespace {
 const float epsilon = 1e-4f;
 }
@@ -55,7 +53,7 @@ const float epsilon = 1e-4f;
 void pfstmo_fattal02(pfs::Frame &frame, float opt_alpha, float opt_beta,
                      float opt_saturation, float opt_noise, bool newfattal,
                      bool fftsolver, int detail_level, pfs::Progress &ph) {
-BENCHFUN
+
     if (fftsolver) {
         // opt_alpha = 1.f;
         newfattal = true;  // let's make sure, prudence is never enough!

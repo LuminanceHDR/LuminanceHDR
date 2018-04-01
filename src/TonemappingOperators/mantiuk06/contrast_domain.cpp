@@ -68,8 +68,6 @@
 #include <iostream>
 #include <vector>
 
-#include "../../StopWatch.h"
-
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -117,7 +115,7 @@ const int NUM_BACKWARDS_CEILING = 3;
 
 void lincg(PyramidT &pyramid, PyramidT &pC, const Array2Df &b, Array2Df &x,
            const int itmax, const float tol, Progress &ph) {
-BENCHFUN
+
     float rdotr_curr;
     float rdotr_prev;
     float rdotr_best;
@@ -402,7 +400,7 @@ inline vfloat fastDecode(const vfloat &valuev, const vfloat &c0, const vfloat &c
 
 void denormalizeRGB(Array2Df &R, Array2Df &G, Array2Df &B, const Array2Df &Y,
                     float saturationFactor) {
-BENCHFUN
+
     const int size = static_cast<int>(Y.size());
     const float log10 = std::log(10.f);
 
@@ -453,26 +451,21 @@ int tmo_mantiuk06_contmap(Array2Df &R, Array2Df &G, Array2Df &B, Array2Df &Y,
     const size_t c = R.getCols();
     // const size_t n = r*c;
 
-//    StopWatch Stop1("normalizeLuminanceAndRGB");
     normalizeLuminanceAndRGB(R, G, B, Y);
     ph.setValue(2);
-//    Stop1.stop();
+
     // create pyramid
-//    StopWatch Stop2("PyramidT");
     PyramidT pp(r, c);
     ph.setValue(6);
-//    Stop2.stop();
+
     // calculate gradients for pyramid (Y won't be changed)
-//    StopWatch Stop3("computeGradients");
     pp.computeGradients(Y);
-//    Stop3.stop();
+
     // transform gradients to R
-//    StopWatch Stop4("transformToR");
     pp.transformToR(detailfactor);
     ph.setValue(13);
-//    Stop4.stop();
+
     // Contrast map
-//    StopWatch Stop5("contrastFactor");
     if (contrastFactor > 0.0f) {
         // Contrast mapping
         pp.scale(contrastFactor);
@@ -480,17 +473,13 @@ int tmo_mantiuk06_contmap(Array2Df &R, Array2Df &G, Array2Df &B, Array2Df &Y,
         // Contrast equalization
         contrastEqualization(pp, -contrastFactor);
     }
-//    Stop5.stop();
+
     // transform R to gradients
-//    StopWatch Stop7("transformToG");
     pp.transformToG(detailfactor);
     ph.setValue(40);
-//    Stop7.stop();
-    // transform gradients to luminance Y (pp -> Y)
-//    StopWatch Stop8("transformToLuminance");
-    transformToLuminance(pp, Y, itmax, tol, ph);
-//    Stop8.stop();
 
+    // transform gradients to luminance Y (pp -> Y)
+    transformToLuminance(pp, Y, itmax, tol, ph);
     denormalizeLuminance(Y);
     denormalizeRGB(R, G, B, Y, saturationFactor);
 

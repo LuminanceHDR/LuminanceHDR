@@ -48,7 +48,6 @@
 #ifdef _OPENMP
 #include <omp.h>
 #endif
-#include "StopWatch.h"
 #include "opthelper.h"
 
 #include "pde.h"

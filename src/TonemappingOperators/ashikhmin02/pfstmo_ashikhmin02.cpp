@@ -38,7 +38,6 @@
 #include "Libpfs/progress.h"
 
 #include "tmo_ashikhmin02.h"
-#include "../../StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
 
@@ -103,7 +102,7 @@ void calculateLuminance(pfs::Array2Df *Y, float &avLum, float &maxLum,
 
 void pfstmo_ashikhmin02(pfs::Frame &frame, bool simple_flag, float lc_value,
                         int eq, pfs::Progress &ph) {
-                            BENCHFUN
+
 #ifndef NDEBUG
     //--- default tone mapping parameters;
     std::cout << "pfstmo_ashikhmin02 (";

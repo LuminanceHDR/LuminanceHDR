@@ -51,7 +51,6 @@
 #include <Libpfs/progress.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <TonemappingOperators/pfstmo.h>
-#include "../../StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
 

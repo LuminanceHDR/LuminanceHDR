@@ -40,7 +40,6 @@
 #include <functional>
 #include <iostream>
 #include <vector>
-#include "../StopWatch.h"
 #include "../sleef.c"
 #include "../opthelper.h"
 #ifdef _OPENMP
@@ -68,7 +67,7 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
                                     WeightFunction &weight,
                                     const vector<FrameEnhanced> &images,
                                     pfs::Frame &frame) {
-BENCHFUN
+
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();

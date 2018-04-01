@@ -40,7 +40,6 @@
 #define likely(x) (x)
 #define unlikely(x) (x)
 #endif
-#include "../../StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
 #include "../../gauss.h"

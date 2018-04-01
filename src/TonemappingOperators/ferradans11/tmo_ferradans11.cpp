@@ -57,9 +57,7 @@
 #include <Libpfs/utils/numeric.h>
 #include <TonemappingOperators/pfstmo.h>
 #include "tmo_ferradans11.h"
-#include "../../StopWatch.h"
 #include "../../sleef.c"
-//#include "../../opthelper.h"
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
 
 using namespace std;
@@ -280,7 +278,7 @@ void fftshift(float a[], int fil, int col) {
 
 void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
                      float rho, float invalpha, pfs::Progress &ph) {
-BENCHFUN
+
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();

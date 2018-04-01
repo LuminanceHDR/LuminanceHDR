@@ -55,7 +55,6 @@
 
 #include <boost/algorithm/minmax_element.hpp>
 #include <omp.h>
-#include "../StopWatch.h"
 
 using namespace std;
 using namespace pfs;
@@ -184,7 +183,7 @@ static void compute_histogram_minmax(const valarray<float> &hist,
 
 void computeAutolevels(const QImage *data, const float threshold,
                        float &minHist, float &maxHist, float &gamma) {
-    BENCHFUN
+
     const int COLOR_DEPTH = 256;
     const QRgb *src = reinterpret_cast<const QRgb *>(data->bits());
     const int width = data->width();

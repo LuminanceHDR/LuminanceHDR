@@ -44,7 +44,6 @@
 
 #include "fastbilateral.h"
 
-#include "../../StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
@@ -100,7 +99,7 @@ R output = r*exp(log(output intensity)), etc.
 void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
                   float sigma_s, float sigma_r, float baseContrast,
                   int downsample, bool color_correction, pfs::Progress &ph) {
-BENCHFUN
+
     int w = R.getCols();
     int h = R.getRows();
     int size = w * h;
