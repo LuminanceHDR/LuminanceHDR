@@ -46,7 +46,6 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/pfs.h"
 #include "Libpfs/progress.h"
-#define BENCHMARK
 #include "StopWatch.h"
 
 //--- default tone mapping parameters;
