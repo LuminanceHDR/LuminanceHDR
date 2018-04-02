@@ -72,6 +72,9 @@
 #include <omp.h>
 #endif
 
+#include "../../sleef.c"
+#include "../../opthelper.h"
+
 #include "TonemappingOperators/pfstmo.h"
 #include "arch/malloc.h"
 #include "arch/math.h"
@@ -86,8 +89,6 @@
 #include "Libpfs/utils/numeric.h"
 #include "Libpfs/utils/sse.h"
 #include "Libpfs/rt_algo.h"
-#include "../../sleef.c"
-#include "../../opthelper.h"
 
 using namespace pfs;
 
