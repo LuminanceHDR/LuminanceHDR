@@ -56,6 +56,7 @@
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/numeric.h>
 #include <TonemappingOperators/pfstmo.h>
+#include "Common/LuminanceOptions.h"
 #include "tmo_ferradans11.h"
 #include "../../sleef.c"
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
@@ -430,14 +431,14 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
     fftwf_plan pU = fftwf_plan_dft_r2c_2d(fil, col, u0, U, FFTW_WISDOM_ONLY);
     if(!pU) {
         // no wisdom available, load wisdom from file
-        fftwf_import_wisdom_from_filename("lhdrwisdom.fftw");
+        fftwf_import_wisdom_from_filename(LuminanceOptions().getFftwWisdomFileName().toStdString().c_str());
         // test again for wisdom
         pU = fftwf_plan_dft_r2c_2d(fil, col, u0, U, FFTW_WISDOM_ONLY);
         if(!pU) {
             // build plan with FFTW_MEASURE
             pU = fftwf_plan_dft_r2c_2d(fil, col, u0, U, FFTW_MEASURE);
             // save the wisdom
-            fftwf_export_wisdom_to_filename("lhdrwisdom.fftw");
+            fftwf_export_wisdom_to_filename(LuminanceOptions().getFftwWisdomFileName().toStdString().c_str());
         }
     }
 
@@ -467,7 +468,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
         // build plan with FFTW_MEASURE
         pinvU = fftwf_plan_dft_c2r_2d(fil, col, U, iu, FFTW_MEASURE);
         // save the wisdom
-        fftwf_export_wisdom_to_filename("lhdrwisdom.fftw");
+        fftwf_export_wisdom_to_filename(LuminanceOptions().getFftwWisdomFileName().toStdString().c_str());
     }
 
     fftwf_plan pinvU2 = fftwf_plan_dft_c2r_2d(fil, col, U2, u2, FFTW_WISDOM_ONLY);

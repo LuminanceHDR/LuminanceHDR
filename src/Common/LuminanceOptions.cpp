@@ -164,6 +164,19 @@ QString LuminanceOptions::getDatabaseFileName() {
     return filename;
 }
 
+QString LuminanceOptions::getFftwWisdomFileName() {
+    QString filename;
+    if (LuminanceOptions::isCurrentPortableMode) {
+        filename = QDir::currentPath();
+    } else {
+        filename = QDir(QDir::homePath()).absolutePath() + "/" +
+                   LUMINANCE_HDR_HOME_FOLDER;
+    }
+    filename += QLatin1String("/lhdrwisdom.fftw");
+
+    return filename;
+}
+
 QString LuminanceOptions::getGuiTheme() {
 #ifdef Q_OS_MACOS
     return m_settingHolder->value(KEY_GUI_THEME, MAC_THEME).toString();

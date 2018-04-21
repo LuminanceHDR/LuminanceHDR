@@ -56,6 +56,7 @@ class LuminanceOptions : public QObject {
     bool doShowWindowsOnWindows64Message();
 
     QString getDatabaseFileName();
+    QString getFftwWisdomFileName();
     void setPortableMode(bool isPortable);
 
     bool checkForUpdate();
