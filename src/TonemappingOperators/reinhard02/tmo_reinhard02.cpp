@@ -54,6 +54,10 @@
 #include "Common/LuminanceOptions.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
+#ifdef TIMER_PROFILING
+#define BENCHMARK
+#endif
+#include "../../StopWatch.h"
 
 /*
 static int       width, height, scale;
@@ -77,7 +81,7 @@ static CVTS      cvts             = {0, 0};
 static bool temporal_coherent;
 */
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
-#define V1(x, y, i) (m_convolved_image[i][x][y])
+#define V1(x, y, i) (m_convolved_image[i][y][x])
 
 #define SIGMA_I(i) \
     (m_sigma_0 + ((float)i / (float)m_range) * (m_sigma_1 - m_sigma_0))
@@ -136,7 +140,7 @@ float Reinhard02::kaiserbessel(float x, float y, float M) {
 void Reinhard02::gaussian_filter(fftwf_complex *filter, float scale, float k) {
 
     const float a = 1.f / (k * scale);
-    const float c = 1.f / 4.f;
+    constexpr float c = 1.f / 4.f;
 
 #pragma omp parallel for
     for (int y = 0; y < m_cvts.ymax; y++) {
@@ -272,7 +276,7 @@ void Reinhard02::convolve_filter(int scale, fftwf_complex *convolution_fft) {
 #pragma omp parallel for
     for (int y = 0; y < m_cvts.ymax; y++)
         for (int x = 0, i = y * m_cvts.xmax; x < m_cvts.xmax; x++, i++)
-            m_convolved_image[scale][x][y] = m_convolution_fft[i][0];
+            m_convolved_image[scale][y][x] = m_convolution_fft[i][0];
 }
 
 void Reinhard02::compute_fourier_convolution() {
@@ -469,12 +473,11 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
         m_image_fft = (fftwf_complex *)fftwf_alloc_complex(length);
         m_filter_fft = (fftwf_complex **)fftwf_alloc_complex(m_range);
         for (int scale = 0; scale < m_range; scale++) {
-            m_convolved_image[scale] =
-                (float **)malloc(m_cvts.xmax * sizeof(float *));
             m_filter_fft[scale] = (fftwf_complex *)fftwf_alloc_complex(length);
-            for (int x = 0; x < m_cvts.xmax; x++)
-                m_convolved_image[scale][x] =
-                    (float *)malloc(m_cvts.ymax * sizeof(float));
+            m_convolved_image[scale] = (float **)malloc(m_cvts.ymax * sizeof(float *));
+            m_convolved_image[scale][0] = (float *)malloc(length * sizeof(float));
+            for (int y = 1; y < m_cvts.ymax; y++)
+                m_convolved_image[scale][y] = m_convolved_image[scale][0] + y * m_cvts.xmax;
         }
         m_convolution_fft = (fftwf_complex *)fftwf_alloc_complex(m_cvts.xmax * m_cvts.ymax);
         FFTW_MUTEX::fftw_mutex_alloc.unlock();
@@ -492,20 +495,14 @@ Reinhard02::~Reinhard02() {
         fftwf_free(m_image_fft);
         FFTW_MUTEX::fftw_mutex_free.unlock();
         for (int scale = 0; scale < m_range; scale++) {
-            for (int x = 0; x < m_cvts.xmax; x++) {
-                free(m_convolved_image[scale][x]);
-            }
+            free(m_convolved_image[scale][0]);
         }
         free(m_convolved_image);
     }
 }
 
 void Reinhard02::tmo_reinhard02() {
-
-#ifdef TIMER_PROFILING
-    msec_timer stop_watch;
-    stop_watch.start();
-#endif
+BENCHFUN
     m_ph.setValue(0);
 
     // reading image
@@ -531,9 +528,4 @@ void Reinhard02::tmo_reinhard02() {
     m_ph.setValue(100);
 
 end:;
-#ifdef TIMER_PROFILING
-    stop_watch.stop_and_update();
-    cout << endl;
-    cout << "tmo_reinhard02 = " << stop_watch.get_time() << " msec" << endl;
-#endif
 }
