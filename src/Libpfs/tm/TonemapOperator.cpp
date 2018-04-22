@@ -218,7 +218,7 @@ struct TonemapOperatorReinhard02
             throw std::runtime_error("Reinhard02: Tonemap Failed");
         }
 
-        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, pfs::CS_SRGB, X, Y, Z);
+        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z);
     }
 };
 
