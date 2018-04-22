@@ -28,6 +28,9 @@
  *
  * $Id: display_function.cpp,v 1.3 2008/06/16 18:42:58 rafm Exp $
  */
+#include "../../sleef.c"
+#include "../../opthelper.h"
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
 
 #include <boost/math/constants/constants.hpp>
 
@@ -88,7 +91,7 @@ void DisplayFunctionGGBA::print(FILE *fh) {
 float DisplayFunctionGGBA::inv_display(float L) {
     if (L < L_offset) L = L_offset;
     if (L > (L_offset + L_max)) L = L_offset + L_max;
-    return powf((L - L_offset) / (L_max - L_black), 1 / gamma);
+    return pow_F((L - L_offset) / (L_max - L_black), 1 / gamma);
 }
 
 float DisplayFunctionGGBA::display(float pix) {
@@ -96,21 +99,21 @@ float DisplayFunctionGGBA::display(float pix) {
     return pow(pix, gamma) * (L_max - L_black) + L_offset;
 }
 
-#ifdef LUMINANCE_USE_SSE
+#ifdef __SSE2__
 
-v4sf DisplayFunctionGGBA::inv_display(v4sf L) {
-    const v4sf voffset = _mm_set1_ps(L_offset);
-    const v4sf vmax = _mm_set1_ps(L_max);
-    L = _mm_max_ps(L, voffset);
-    L = _mm_min_ps(L, voffset + vmax);
-    return _mm_pow_ps((L - voffset) / (vmax - _mm_set1_ps(L_black)),
-                      _mm_set1_ps(1.0f / gamma));
+vfloat DisplayFunctionGGBA::inv_display(vfloat L) {
+    const vfloat voffset = F2V(L_offset);
+    const vfloat vmax = F2V(L_max);
+    L = vmaxf(L, voffset);
+    L = vminf(L, voffset + vmax);
+    return pow_F((L - voffset) / (vmax - F2V(L_black)),
+                      F2V(1.0f / gamma));
 }
 
-v4sf DisplayFunctionGGBA::display(v4sf pix) {
-    return _mm_pow_ps(pix, _mm_set1_ps(gamma)) *
-               (_mm_set1_ps(L_max) - _mm_set1_ps(L_black)) +
-           _mm_set1_ps(L_offset);
+vfloat DisplayFunctionGGBA::display(vfloat pix) {
+    return pow_F(pix, F2V(gamma)) *
+               (F2V(L_max) - F2V(L_black)) +
+           F2V(L_offset);
 }
 
 #endif

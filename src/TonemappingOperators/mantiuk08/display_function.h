@@ -33,6 +33,7 @@
 #define DISPLAY_FUNCTION_H
 
 #include <cstdio>
+#include "../../opthelper.h"
 
 #include <Libpfs/exception.h>
 #include "Libpfs/utils/sse.h"
@@ -48,9 +49,9 @@ class DisplayFunction {
      */
     virtual float display(float pix) = 0;
 
-#ifdef LUMINANCE_USE_SSE
-    virtual v4sf inv_display(v4sf L) = 0;
-    virtual v4sf display(v4sf L) = 0;
+#ifdef __SSE2__
+    virtual vfloat inv_display(vfloat L) = 0;
+    virtual vfloat display(vfloat L) = 0;
 #endif
 
     virtual void print(FILE *fh) = 0;
@@ -72,9 +73,9 @@ class DisplayFunctionGGBA : public DisplayFunction {
     float inv_display(float L);
     float display(float pix);
 
-#ifdef LUMINANCE_USE_SSE
-    virtual v4sf inv_display(v4sf L);
-    virtual v4sf display(v4sf L);
+#ifdef __SSE2__
+    virtual vfloat inv_display(vfloat L);
+    virtual vfloat display(vfloat L);
 #endif
 
     void print(FILE *fh);

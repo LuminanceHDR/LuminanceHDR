@@ -40,12 +40,15 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "display_adaptive_tmo.h"
+#define BENCHMARK
+#include "StopWatch.h"
 
 using namespace std;
 
 void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
                       float contrast_enhance_factor, float white_y,
                       bool setluminance, pfs::Progress &ph) {
+BENCHFUN
     //--- default tone mapping parameters;
     // float contrast_enhance_factor = 1.f;
     // float saturation_factor = 1.f;
