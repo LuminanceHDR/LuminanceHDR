@@ -42,7 +42,6 @@
 #include <omp.h>
 #endif
 
-#include "StopWatch.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
@@ -57,7 +56,6 @@
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/progress.h"
-#include "Libpfs/utils/sse.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x) __builtin_expect((x), 1)
@@ -67,8 +65,8 @@
 #define unlikely(x) (x)
 #endif
 
-// Computing Conditional Density takes about 90% of the time
-#define PROGRESS_CDF 90
+// Computing Conditional Density takes about 50% of the time
+#define PROGRESS_CDF 40
 
 #define MIN_PHVAL 1e-8f  // Minimum value allowed in HDR images
 #define MAX_PHVAL 1e8f   // Maximum value allowed in HDR images
@@ -155,15 +153,14 @@ static inline float safe_log10(float x, const float min_x = MIN_PHVAL,
         return log10(x);
 }
 
-#ifdef LUMINANCE_USE_SSE
+#ifdef __SSE2__
 
-#define LOG2_10 3.3219280948874f
-#define LOG2_10__1 (1.0f / LOG2_10)
-static inline v4sf safe_log10(v4sf x, const float min_x = MIN_PHVAL,
-                              const float max_x = MAX_PHVAL) {
-    x = _mm_max_ps(x, _mm_set1_ps(min_x));
-    x = _mm_min_ps(x, _mm_set1_ps(max_x));
-    return _mm_log2_ps(x) * _mm_set1_ps(LOG2_10__1);
+#define LOGE_10 2.3025850929940456840179914546844f
+#define LOGE_10__1 (1.0f / LOGE_10)
+static inline vfloat safe_log10(vfloat x, const float min_x = MIN_PHVAL, const float max_x = MAX_PHVAL) {
+    x = vmaxf(x, F2V(min_x));
+    x = vminf(x, F2V(max_x));
+    return xlogfNoCheck(x) * F2V(LOGE_10__1);
 }
 
 #endif
@@ -442,14 +439,14 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
 
 // Compute log10 of an image
 #pragma omp parallel for default(none) shared(LP_high_raw, L)
-#ifndef LUMINANCE_USE_SSE
+#ifndef __SSE2__
     for (int i = 0; i < pix_count; i++)
         LP_high_raw[i] = safe_log10(L[i], min_val);
 #else
     for (int i = 0; i < pix_count - 3; i += 4)
-        _mm_store_ps(&LP_high_raw[i], safe_log10(_mm_load_ps(&L[i]), min_val));
-    // In case pix_count%4 > 0
-    for (int i = pix_count - 3; i < pix_count; i++)
+        STVFU(LP_high_raw[i], safe_log10(LVFU(L[i]), min_val));
+    // Remaining pixels
+    for (int i = pix_count - (pix_count % 4); i < pix_count; i++)
         LP_high_raw[i] = safe_log10(L[i], min_val);
 #endif
 
