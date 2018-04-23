@@ -31,6 +31,8 @@
  * $Id: pfstmo_mantiuk08.cpp,v 1.19 2013/12/28 14:00:54 rafm Exp $
  */
 
+#define BENCHMARK
+#include "StopWatch.h"
 #include <sstream>
 
 #include "Libpfs/colorspace/colorspace.h"
@@ -42,6 +44,7 @@
 using namespace mai;
 
 void pfstmo_mai11(pfs::Frame &frame, pfs::Progress &ph) {
+BENCHFUN
 #ifndef NDEBUG
     std::stringstream ss;
     ss << "pfstmo_mai11 (";
