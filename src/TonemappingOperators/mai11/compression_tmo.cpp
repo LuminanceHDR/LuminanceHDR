@@ -34,6 +34,8 @@
 #ifdef _OPENMP
 #include <omp.h>
 #endif
+#include "opthelper.h"
+#include "sleef.c"
 
 #include <math.h>
 #include <string.h>
@@ -147,14 +149,30 @@ class ImgHistogram {
         std::fill(bins, bins + bin_count, 0);
 
         int pp_count = 0;
+
+#pragma omp parallel
+{
+        int *binsThr = new int[bin_count];
+        std::fill(binsThr, binsThr + bin_count, 0);
+
+        int pp_countThr = 0;
+        #pragma omp for nowait
         for (size_t pp = 0; pp < pixel_count; pp++) {
             int bin_index = (img[pp] - L_min) / delta;
             // ignore anything outside the range
             if (bin_index < 0 || bin_index >= bin_count) continue;
-            bins[bin_index]++;
-            pp_count++;
+            binsThr[bin_index]++;
+            pp_countThr++;
         }
-
+        #pragma omp critical
+        {
+            pp_count += pp_countThr;
+            for (int bb = 0; bb < bin_count; bb++) {
+                bins[bb] += binsThr[bb];
+            }
+            delete [] binsThr;
+        }
+}
         for (int bb = 0; bb < bin_count; bb++) {
             p[bb] = (double)bins[bb] / (double)pp_count;
         }
@@ -162,8 +180,11 @@ class ImgHistogram {
 };
 
 inline float safelog10f(float x) {
-    if (unlikely(x < 1e-5f)) return -5.f;
-    return log10f(x);
+    return xlogf(std::max(x, 1e-5f)) * 0.43429448190325182765112891891661f;
+}
+
+inline vfloat safelog10f(vfloat xv, vfloat log10v, vfloat minv) {
+    return xlogf(vmaxf(xv, minv)) * log10v;
 }
 
 void CompressionTMO::tonemap(const float *R_in, const float *G_in, float *B_in,
@@ -181,11 +202,25 @@ void CompressionTMO::tonemap(const float *R_in, const float *G_in, float *B_in,
     ph.setValue(0);
     // Compute log of Luminance
     float *logL = new float[pix_count];
-    //    std::unique_ptr<float[]> logL(new float[pix_count]);
+
+#ifdef __SSE2__
+    const vfloat log10v = F2V(0.43429448190325182765112891891661f);
+    const vfloat minv = F2V(1e-5f);
+    #pragma omp parallel for
+    for (size_t pp = 0; pp < pix_count - 3; pp += 4) {
+        STVFU(logL[pp], safelog10f(LVFU(L_in[pp]), log10v, minv));
+    }
+
+    for (size_t pp = pix_count - (pix_count % 4); pp < pix_count; pp++) {
+        logL[pp] = safelog10f(L_in[pp]);
+    }
+#else
+    #pragma omp parallel for
     for (size_t pp = 0; pp < pix_count; pp++) {
         logL[pp] = safelog10f(L_in[pp]);
     }
 
+#endif
     ImgHistogram H;
     H.compute(logL, pix_count);
 
@@ -197,29 +232,16 @@ void CompressionTMO::tonemap(const float *R_in, const float *G_in, float *B_in,
     double *s = new double[H.bin_count];
     {
         double d = 0;
-#pragma omp parallel for reduction(+ : d)
+
         for (int bb = 0; bb < H.bin_count; bb++) {
-            if (ph.canceled()) {
-                canceled = true;
-#ifndef WIN32
-                bb = H.bin_count;
-#endif
-            }
-            d += pow(H.p[bb], 1. / 3.);
+            d += cbrt(H.p[bb]);
         }
-        if (canceled) goto end;
+
         d *= H.delta;
-#pragma omp parallel for
+
         for (int bb = 0; bb < H.bin_count; bb++) {
-            if (ph.canceled()) {
-                canceled = true;
-#ifndef WIN32
-                bb = H.bin_count;
-#endif
-            }
-            s[bb] = pow(H.p[bb], 1. / 3.) / d;
+            s[bb] = cbrt(H.p[bb]) / d;
         }
-        if (canceled) goto end;
     }
     ph.setValue(33);
 
@@ -245,28 +267,28 @@ void CompressionTMO::tonemap(const float *R_in, const float *G_in, float *B_in,
 
     // Create a tone-curve
     lut.y_i[0] = 0;
-    //#pragma omp parallel for private (bb)
     for (int bb = 1; bb < H.bin_count; bb++) {
-        if (ph.canceled()) {
-            canceled = true;
-            bb = H.bin_count;
-        }
         lut.y_i[bb] = lut.y_i[bb - 1] + s[bb] * H.delta;
     }
-    if (canceled) goto end;
     ph.setValue(66);
+
 // Apply the tone-curve
+
 #pragma omp parallel for
     for (int pp = 0; pp < static_cast<int>(pix_count); pp++) {
-        if (ph.canceled()) {
-            canceled = true;
-#ifndef WIN32
-            pp = pix_count;
-#endif
-        }
+#ifdef __SSE2__
+        vfloat rgbv = _mm_set_ps(R_in[pp], G_in[pp], B_in[pp], 0);
+        rgbv = safelog10f(rgbv, log10v, minv);
+        float temp[4];
+        STVFU(temp[0], rgbv);
+        R_out[pp] = lut.interp(temp[3]);
+        G_out[pp] = lut.interp(temp[2]);
+        B_out[pp] = lut.interp(temp[1]);
+#else
         R_out[pp] = lut.interp(safelog10f(R_in[pp]));
         G_out[pp] = lut.interp(safelog10f(G_in[pp]));
         B_out[pp] = lut.interp(safelog10f(B_in[pp]));
+#endif
     }
     ph.setValue(99);
 end:
