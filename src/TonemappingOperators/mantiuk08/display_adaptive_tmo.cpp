@@ -42,6 +42,10 @@
 #include <omp.h>
 #endif
 
+#include "../../sleef.c"
+#include "../../opthelper.h"
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
+
 #include "display_adaptive_tmo.h"
 
 #include <gsl/gsl_blas.h>
@@ -52,7 +56,6 @@
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/progress.h"
-#include "Libpfs/utils/sse.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x) __builtin_expect((x), 1)
@@ -62,8 +65,8 @@
 #define unlikely(x) (x)
 #endif
 
-// Computing Conditional Density takes about 90% of the time
-#define PROGRESS_CDF 90
+// Computing Conditional Density takes about 50% of the time
+#define PROGRESS_CDF 40
 
 #define MIN_PHVAL 1e-8f  // Minimum value allowed in HDR images
 #define MAX_PHVAL 1e8f   // Maximum value allowed in HDR images
@@ -150,15 +153,14 @@ static inline float safe_log10(float x, const float min_x = MIN_PHVAL,
         return log10(x);
 }
 
-#ifdef LUMINANCE_USE_SSE
+#ifdef __SSE2__
 
-#define LOG2_10 3.3219280948874f
-#define LOG2_10__1 (1.0f / LOG2_10)
-static inline v4sf safe_log10(v4sf x, const float min_x = MIN_PHVAL,
-                              const float max_x = MAX_PHVAL) {
-    x = _mm_max_ps(x, _mm_set1_ps(min_x));
-    x = _mm_min_ps(x, _mm_set1_ps(max_x));
-    return _mm_log2_ps(x) * _mm_set1_ps(LOG2_10__1);
+#define LOGE_10 2.3025850929940456840179914546844f
+#define LOGE_10__1 (1.0f / LOGE_10)
+static inline vfloat safe_log10(vfloat x, const float min_x = MIN_PHVAL, const float max_x = MAX_PHVAL) {
+    x = vmaxf(x, F2V(min_x));
+    x = vminf(x, F2V(max_x));
+    return xlogfNoCheck(x) * F2V(LOGE_10__1);
 }
 
 #endif
@@ -308,10 +310,25 @@ static void compute_gaussian_level(const int width, const int height,
             temp_raw[r * width + c] = sum;
         }
     }
-
 // Filter columns
 #pragma omp parallel for default(none) shared(temp_raw, out_raw, kernel)
-    for (int c = 0; c < width; c++) {
+    // process 8 columns per iteration for better usage of cpu cache
+    for (int c = 0; c < width - 7; c+=8) {
+        for (int r = 0; r < height; r++) {
+            float sum[8] = {};
+            for(int cc = 0; cc < 8; ++cc) {
+                for (int j = 0; j < kernel_len; j++) {
+                    int l = (j - kernel_len_2) * step + r;
+                    if (unlikely(l < 0)) l = -l;
+                    if (unlikely(l >= height)) l = 2 * height - 2 - l;
+                    sum[cc] += temp_raw[l * width + c + cc] * kernel[j];
+                }
+                out_raw[r * width + c + cc] = sum[cc];
+            }
+        }
+    }
+    // remaining columns
+    for (int c = width - (width % 8); c < width; c++) {
         for (int r = 0; r < height; r++) {
             float sum = 0;
             for (int j = 0; j < kernel_len; j++) {
@@ -422,14 +439,14 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
 
 // Compute log10 of an image
 #pragma omp parallel for default(none) shared(LP_high_raw, L)
-#ifndef LUMINANCE_USE_SSE
+#ifndef __SSE2__
     for (int i = 0; i < pix_count; i++)
         LP_high_raw[i] = safe_log10(L[i], min_val);
 #else
     for (int i = 0; i < pix_count - 3; i += 4)
-        _mm_store_ps(&LP_high_raw[i], safe_log10(_mm_load_ps(&L[i]), min_val));
-    // In case pix_count%4 > 0
-    for (int i = pix_count - 3; i < pix_count; i++)
+        STVFU(LP_high_raw[i], safe_log10(LVFU(L[i]), min_val));
+    // Remaining pixels
+    for (int i = pix_count - (pix_count % 4); i < pix_count; i++)
         LP_high_raw[i] = safe_log10(L[i], min_val);
 #endif
 
@@ -449,9 +466,14 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
         const int gi_tp = C->g_count / 2 + 1;
         const int gi_tn = C->g_count / 2 - 1;
         const int gi_t = C->g_count / 2;
-        // Can't parallelize this loop due to the increments on shared data
-        // at the end, and making those increments critical sections makes
-        // things worse.
+
+#pragma omp parallel
+{
+        double *Cthr = new double[C->x_count * C->g_count];
+        for(int c = 0; c < C->x_count * C->g_count; c++) {
+            Cthr[c] = 0;
+        }
+        #pragma omp for nowait
         for (int i = 0; i < pix_count; i++) {
             float g = (*LP_high)(i) - (*LP_low)(i);  // Compute band-pass
             int x_i = round_int(((*LP_low)(i)-C->l_min) / C->delta);
@@ -464,13 +486,24 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
 
             if (g > thr && g < C->delta / 2) {
                 // above the threshold +
-                (*C)(x_i, gi_tp, f)++;
+                Cthr[gi_tp * C->x_count + x_i]++;
             } else if (g < -thr && g > -C->delta / 2) {
                 // above the threshold -
-                (*C)(x_i, gi_tn, f)++;
-            } else
-                (*C)(x_i, g_i, f)++;
+                Cthr[gi_tn * C->x_count + x_i]++;
+            } else {
+                Cthr[g_i * C->x_count + x_i]++;
+            }
         }
+        #pragma omp critical
+        {
+            for(int g = 0; g < C->g_count; g++) {
+                for(int x = 0; x < C->x_count; x++) {
+                    (*C)(x, g, f) += Cthr[g * C->x_count + x];
+                }
+            }
+            delete [] Cthr;
+        }
+}
 
         for (int i = 0; i < C->x_count; i++) {
             // Special case: flat field and no gradients
@@ -1074,32 +1107,31 @@ int datmo_apply_tone_curve_cc(float *R_out, float *G_out, float *B_out,
     cc_lut.y_i[tc->size - 1] = 1;
 
     const long pix_count = width * height;
-
 #pragma omp parallel for default(none) \
     shared(R_in, G_in, B_in, L_in, R_out, G_out, B_out, tc_lut, cc_lut, df)
     for (long i = 0; i < pix_count; i++) {
         float L_fix = clamp_channel(L_in[i]);
-        const float L_out = tc_lut.interp(log10(L_fix));
-        const float s = cc_lut.interp(log10(L_fix));  // color correction
-#ifdef LUMINANCE_USE_SSE
-        v4sf vec =
-            _mm_set_ps(R_in[i], G_in[i], B_in[i], 0) / _mm_set1_ps(L_fix);
-        vec = _mm_max_ps(vec, _mm_set1_ps(MIN_PHVAL));
-        vec = _mm_pow_ps(vec, _mm_set1_ps(s));
-        vec = vec * _mm_set1_ps(L_out);
+        const float l10 = log10(L_fix);
+        const float L_out = tc_lut.interp(l10);
+        const float s = cc_lut.interp(l10);  // color correction
+#ifdef __SSE2__
+        vfloat vec = _mm_set_ps(R_in[i], G_in[i], B_in[i], 0) / F2V(L_fix);
+        vec = vmaxf(vec, F2V(MIN_PHVAL));
+        vec = pow_F(vec, F2V(s));
+        vec = vec * F2V(L_out);
         vec = df->inv_display(vec);
         float tmp[4];
-        _mm_store_ps(tmp, vec);
+        STVFU(tmp[0], vec);
         R_out[i] = tmp[3];
         G_out[i] = tmp[2];
         B_out[i] = tmp[1];
 #else
         R_out[i] =
-            df->inv_display(powf(clamp_channel(R_in[i] / L_fix), s) * L_out);
+            df->inv_display(pow_F(clamp_channel(R_in[i] / L_fix), s) * L_out);
         G_out[i] =
-            df->inv_display(powf(clamp_channel(G_in[i] / L_fix), s) * L_out);
+            df->inv_display(pow_F(clamp_channel(G_in[i] / L_fix), s) * L_out);
         B_out[i] =
-            df->inv_display(powf(clamp_channel(B_in[i] / L_fix), s) * L_out);
+            df->inv_display(pow_F(clamp_channel(B_in[i] / L_fix), s) * L_out);
 #endif
     }
 
