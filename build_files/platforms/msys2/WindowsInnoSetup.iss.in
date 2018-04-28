@@ -153,11 +153,11 @@ Source: "{#MySourceLibsDir}\libimath-2_2.dll"; DestDir: "{app}"; Flags: ignoreve
 Source: "{#MySourceLibsDir}\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libjasper-4.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\liblzma-5.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\libicuin58.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\libicuuc58.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\libicuin*.dll"; Excludes: "libicuind*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\libicuuc*.dll"; Excludes: "libicuucd*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libpcre2-16-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libharfbuzz-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\libicudt58.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\libicudt*.dll"; Excludes: "libicudtd*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libfreetype-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libglib-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libgraphite2.dll"; DestDir: "{app}"; Flags: ignoreversion
