@@ -109,7 +109,7 @@
 namespace {
 QString getLdrFileNameFromSaveDialog(const QString &suggestedFileName,
                                      QWidget *parent = 0) {
-    static QString filetypes = QObject::tr("All LDR formats");
+    QString filetypes = QObject::tr("All LDR formats");
     filetypes += QLatin1String(
         " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM "
         "*.BMP);;");
