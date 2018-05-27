@@ -28,10 +28,11 @@ QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 
 ADD_LIBRARY(helpbrowser ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H} ${FILES_HXX})
+TARGET_LINK_LIBRARIES(helpbrowser Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::Xml Qt5::PrintSupport)
 IF(Qt5WebEngineCore_FOUND)
-    qt5_use_modules(helpbrowser Core Concurrent Gui Widgets Xml WebEngineCore WebEngineWidgets PrintSupport)
+    TARGET_LINK_LIBRARIES(helpbrowser Qt5::WebEngineCore Qt5::WebEngineWidgets)
 ELSE()
-    qt5_use_modules(helpbrowser Core Concurrent Gui Widgets Xml WebKit WebKitWidgets PrintSupport)
+    TARGET_LINK_LIBRARIES(helpbrowser Qt5::WebKit Qt5::WebKitWidgets)
 ENDIF()
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} ${FILES_UI} ${FILES_HXX} PARENT_SCOPE)

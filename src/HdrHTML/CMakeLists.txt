@@ -13,7 +13,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrhtml.cpp)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 ADD_LIBRARY(hdrhtml ${FILES_H} ${FILES_CPP})
-qt5_use_modules(hdrhtml Core Gui)
+TARGET_LINK_LIBRARIES(hdrhtml Qt5::Core Qt5::Gui)
 
 SET(FILES_CLI_H
 ${CMAKE_CURRENT_SOURCE_DIR}/hdrhtml.h)
@@ -23,7 +23,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/hdrhtml.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrhtml.cpp)
 
 ADD_LIBRARY(hdrhtml-cli ${FILES_CLI_H} ${FILES_CLI_CPP})
-qt5_use_modules(hdrhtml-cli Core Gui)
+TARGET_LINK_LIBRARIES(hdrhtml-cli Qt5::Core Qt5::Gui)
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE}
     ${FILES_CPP} ${FILES_H}
