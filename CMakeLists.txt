@@ -277,13 +277,13 @@ IF(APPLE)
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QT_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
 
     # QT magic
-    qt5_use_modules(${LHDR_OSX_EXECUTABLE_TARGET} Core Gui Widgets)
-    qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
+    TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} Qt5::Core Qt5::Gui Qt5::Widgets)
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt5::Core Qt5::Gui Qt5::Widgets)
 
     # Link libraries
     TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} ${LUMINANCE_MODULES_GUI} ${LIBS})
     TARGET_LINK_LIBRARIES(luminance-hdr-cli             ${LUMINANCE_MODULES_CLI} ${LIBS})
-    
+
     # Rename generated executable binary to luminance-hdr
     add_custom_command(
     TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
@@ -321,14 +321,11 @@ ELSEIF(UNIX)
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
 
-    qt5_use_modules(luminance-hdr Core Gui Widgets)
-    qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
-
     # link libraries
     TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
     TARGET_LINK_LIBRARIES(luminance-hdr-cli -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
-    TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS} Qt5::Core Qt5::Gui Qt5::Widgets)
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS} Qt5::Core Qt5::Gui Qt5::Widgets)
 
     # make install directivies
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
@@ -412,8 +409,8 @@ ELSEIF(WIN32)
         ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
         ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
 
-        qt5_use_modules(luminance-hdr Core Gui Widgets WinExtras Svg)
-        qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
+        TARGET_LINK_LIBRARIES(luminance-hdr Qt5::Core Qt5::Gui Qt5::Widgets Qt5::WinExtras Qt5::Svg)
+        TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt5::Core Qt5::Gui Qt5::Widgets)
 
         # link libraries
         TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)

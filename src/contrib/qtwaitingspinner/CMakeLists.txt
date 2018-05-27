@@ -11,6 +11,6 @@ QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 #QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 
 ADD_LIBRARY(qtwaitingspinner ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H})
-qt5_use_modules(qtwaitingspinner Core Gui Widgets)
+TARGET_LINK_LIBRARIES(qtwaitingspinner Qt5::Core Qt5::Gui Qt5::Widgets)
 
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} qtwaitingspinner PARENT_SCOPE)
