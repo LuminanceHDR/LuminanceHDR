@@ -10,8 +10,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 
 ADD_LIBRARY(main_cli ${FILES_H} ${FILES_HPP} ${FILES_CPP} ${FILES_MOC})
-#qt5_use_modules(main_cli Core Gui Widgets)
-qt5_use_modules(main_cli Core Gui)
+#TARGET_LINK_LIBRARIES(main_cli Qt5::Core Qt5::Gui Qt5::Widgets)
+TARGET_LINK_LIBRARIES(main_cli Qt5::Core Qt5::Gui)
 
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} PARENT_SCOPE)

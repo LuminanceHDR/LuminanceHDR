@@ -5,7 +5,7 @@ ADD_EXECUTABLE(WhiteBalance
     WhiteBalanceMain.cpp
     ${FILES_MOC})
 
-qt5_use_modules(WhiteBalance Core Gui Widgets)
+TARGET_LINK_LIBRARIES(WhiteBalance Qt5::Core Qt5::Gui Qt5::Widgets)
 
 # Link sub modules
 IF(MSVC OR APPLE)

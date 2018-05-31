@@ -26,7 +26,7 @@ QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 QT5_WRAP_CPP(FILES_MOC ${FILES_H_QT})
 
 ADD_LIBRARY(hdrwizard ${FILES_H} ${FILES_H_QT} ${FILES_CPP} ${FILES_CPP_QT} ${FILES_MOC} ${FILES_UI_H})
-qt5_use_modules(hdrwizard Core Concurrent Gui Widgets Sql)
+TARGET_LINK_LIBRARIES(hdrwizard Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::Sql)
 
 SET(FILES_CLI_H
 ${CMAKE_CURRENT_SOURCE_DIR}/HdrCreationItem.h
@@ -48,7 +48,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/HdrCreationManager.cpp)
 
 QT5_WRAP_CPP(FILES_CLI_MOC ${FILES_CLI_H_QT})
 ADD_LIBRARY(hdrwizard-cli ${FILES_CLI_H} ${FILES_CLI_H_QT} ${FILES_CLI_CPP} ${FILES_CLI_CPP_QT} ${FILES_CLI_MOC})
-qt5_use_modules(hdrwizard-cli Core Concurrent Gui Widgets Sql)
+TARGET_LINK_LIBRARIES(hdrwizard-cli Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::Sql)
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE}
     ${FILES_CPP_QT} ${FILES_H_QT}

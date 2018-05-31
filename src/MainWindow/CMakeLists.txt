@@ -22,7 +22,7 @@ QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 
 ADD_LIBRARY(mainwindow ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H})
-qt5_use_modules(mainwindow Core Gui Widgets Xml Network Concurrent)
+TARGET_LINK_LIBRARIES(mainwindow Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Xml Qt5::Network Qt5::Concurrent)
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} ${FILES_UI} PARENT_SCOPE)
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} mainwindow PARENT_SCOPE)

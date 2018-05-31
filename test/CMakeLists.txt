@@ -55,7 +55,7 @@ ADD_LIBRARY(ContrastDomain STATIC
 ADD_LIBRARY(PrintArray2D STATIC
     PrintArray2D.cpp PrintArray2D.h)
 
-qt5_use_modules(ContrastDomain Core)
+TARGET_LINK_LIBRARIES(ContrastDomain Qt5::Core)
 
 
 # Mantiuk06
@@ -74,7 +74,7 @@ ELSE()
         ${CMAKE_THREAD_LIBS_INIT}
         ${LIBS} -lrt)
 ENDIF()
-qt5_use_modules(TestMantiuk06Basic Core)
+TARGET_LINK_LIBRARIES(TestMantiuk06Basic Qt5::Core)
 
 ADD_TEST(TestMantiuk06Basic TestMantiuk06Basic)
 
@@ -94,7 +94,7 @@ ELSE()
         ${CMAKE_THREAD_LIBS_INIT}
         ${LIBS} -lrt)
 ENDIF()
-qt5_use_modules(TestMantiuk06Pyramid Core)
+TARGET_LINK_LIBRARIES(TestMantiuk06Pyramid Qt5::Core)
 ADD_TEST(TestMantiuk06Pyramid TestMantiuk06Pyramid)
 
 ADD_EXECUTABLE(TestVex TestVex.cpp)
@@ -146,7 +146,7 @@ TARGET_LINK_LIBRARIES(TestFloatRgb common fileformat pfs
     ${CMAKE_THREAD_LIBS_INIT}
     ${LIBS})
 ADD_TEST(TestFloatRgb TestFloatRgb)
-qt5_use_modules(TestFloatRgb Core Gui Widgets)
+TARGET_LINK_LIBRARIES(TestFloatRgb Qt5::Core Qt5::Gui Qt5::Widgets)
 
 ADD_EXECUTABLE(TestMTB TestMTB.cpp)
 TARGET_LINK_LIBRARIES(TestMTB common pfs hdrcreation
@@ -161,7 +161,7 @@ ADD_TEST(TestMinMax TestMinMax)
 
 ADD_EXECUTABLE(TestImageQualityDialog TestImageQualityDialog.cpp)
 TARGET_LINK_LIBRARIES(TestImageQualityDialog ui fileformat pfs common ${LIBS})
-qt5_use_modules(TestImageQualityDialog Core Gui Widgets)
+TARGET_LINK_LIBRARIES(TestImageQualityDialog Qt5::Core Qt5::Gui Qt5::Widgets)
 
 ADD_EXECUTABLE(TestHdrCreationWizard TestHdrCreationWizard.cpp)
 IF(APPLE OR MSVC)
@@ -172,7 +172,7 @@ ELSEIF(UNIX)
     -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group
     ${LIBS})
 ENDIF()
-qt5_use_modules(TestHdrCreationWizard Core Gui Widgets)
+TARGET_LINK_LIBRARIES(TestHdrCreationWizard Qt5::Core Qt5::Gui Qt5::Widgets)
 
 ADD_EXECUTABLE(TestFusionOperator TestFusionOperator.cpp)
 IF(APPLE OR MSVC)
@@ -184,7 +184,7 @@ TARGET_LINK_LIBRARIES(TestFusionOperator
     ${Boost_PROGRAM_OPTIONS_LIBRARY}
     -Xlinker --start-group ${LUMINANCE_MODULES_CLI} ${LUMINANCE_MODULES_GUI} -Xlinker --end-group ${LIBS})
 ENDIF()
-qt5_use_modules(TestFusionOperator Core Gui Widgets)
+TARGET_LINK_LIBRARIES(TestFusionOperator Qt5::Core Qt5::Gui Qt5::Widgets)
 
 ADD_EXECUTABLE(TestPoissonSolver TestPoissonSolver.cpp)
 TARGET_LINK_LIBRARIES(TestPoissonSolver hdrwizard pfs pfstmo 
