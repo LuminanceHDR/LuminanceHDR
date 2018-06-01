@@ -27,7 +27,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 
-ADD_LIBRARY(helpbrowser ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H} ${FILES_HXX})
+ADD_LIBRARY(helpbrowser STATIC ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H} ${FILES_HXX})
 IF(Qt5WebEngineCore_FOUND)
     TARGET_LINK_LIBRARIES(helpbrowser Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::Xml Qt5::WebEngineCore Qt5::WebEngineWidgets Qt5::PrintSupport)
 ELSE()
