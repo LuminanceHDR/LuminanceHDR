@@ -217,7 +217,7 @@ void PyramidT::computeScaleFactors(PyramidT &result) const {
 
     while (inCurr != inEnd) {
         #pragma omp parallel for
-        for(int i = 0; i < inCurr->getRows(); i++) {
+        for(size_t i = 0; i < inCurr->getRows(); i++) {
             PyramidS::const_iterator currGxy = inCurr->row_begin(i);
             PyramidS::const_iterator endGxy = inCurr->row_end(i);
             PyramidS::iterator currGxyOut = outCurr->row_begin(i);
@@ -240,7 +240,7 @@ void PyramidT::transformToR(float detailFactor) {
 
     while (itCurr != itEnd) {
         #pragma omp parallel for
-        for(int i = 0; i < itCurr->getRows(); i++) {
+        for(size_t i = 0; i < itCurr->getRows(); i++) {
             PyramidS::iterator currGxy = itCurr->row_begin(i);
             PyramidS::iterator endGxy = itCurr->row_end(i);
 
@@ -260,7 +260,7 @@ void PyramidT::transformToG(float detailFactor) {
 
     while (itCurr != itEnd) {
         #pragma omp parallel for
-        for(int i = 0; i < itCurr->getRows(); i++) {
+        for(size_t i = 0; i < itCurr->getRows(); i++) {
             PyramidS::iterator currGxy = itCurr->row_begin(i);
             PyramidS::iterator endGxy = itCurr->row_end(i);
 

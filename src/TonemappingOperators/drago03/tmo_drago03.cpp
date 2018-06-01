@@ -73,8 +73,8 @@ void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
     vfloat avLumThrv = ZEROV;
 #endif // __SSE2__
     #pragma omp for nowait
-    for(int i = 0; i < height; ++i) {
-        int j = 0;
+    for(size_t i = 0; i < height; ++i) {
+        size_t j = 0;
 #ifdef __SSE2__
         for (; j < width - 3; j+=4) {
             vfloat Ywv = LVFU(Y[i * width + j]);

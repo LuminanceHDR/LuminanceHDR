@@ -402,7 +402,6 @@ inline vfloat fastDecode(const vfloat &valuev, const vfloat &c0, const vfloat &c
 void denormalizeRGB(Array2Df &R, Array2Df &G, Array2Df &B, const Array2Df &Y,
                     float saturationFactor) {
 
-    const int size = static_cast<int>(Y.size());
     const float log10 = std::log(10.f);
 
 #ifdef __SSE2__
@@ -417,8 +416,8 @@ void denormalizeRGB(Array2Df &R, Array2Df &G, Array2Df &B, const Array2Df &Y,
 #endif
 /* Transform to sRGB */
 #pragma omp parallel for
-    for (int i = 0; i < Y.getRows(); ++i) {
-        int j = 0;
+    for (size_t i = 0; i < Y.getRows(); ++i) {
+        size_t j = 0;
 #ifdef __SSE2__
         for (; j < Y.getCols() - 3; j += 4) {
             vfloat myYv = LVFU(Y(j, i)) * log10v;

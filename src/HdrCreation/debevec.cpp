@@ -163,7 +163,6 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
             for (size_t k = 0; k < size; k++) {
                 (response_img)(k) = response((*imagesCh[c])(k));
             }
-            size_t k = 0;
 #ifdef __SSE2__
             vfloat caddv = F2V(cadd);
 #ifdef _OPENMP

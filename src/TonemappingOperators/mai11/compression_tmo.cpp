@@ -197,8 +197,6 @@ void CompressionTMO::tonemap(const float *R_in, const float *G_in, float *B_in,
 #endif
     const size_t pix_count = width * height;
 
-    bool canceled = false;
-
     ph.setValue(0);
     // Compute log of Luminance
     float *logL = new float[pix_count];
@@ -291,7 +289,6 @@ void CompressionTMO::tonemap(const float *R_in, const float *G_in, float *B_in,
 #endif
     }
     ph.setValue(99);
-end:
     delete[] s;
     delete[] logL;
 

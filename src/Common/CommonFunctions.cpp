@@ -62,7 +62,7 @@ using namespace pfs::io;
 using namespace libhdr::fusion;
 
 static void build_histogram(valarray<float> &hist, const valarray<uint8_t> &src) {
-    const int size = src.size();
+    const size_t size = src.size();
 
     size_t numThreads = 1;
 
@@ -84,19 +84,19 @@ static void build_histogram(valarray<float> &hist, const valarray<uint8_t> &src)
     valarray<uint32_t> histThr(0u, hist.size());
 
     #pragma omp for nowait
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         histThr[src[i]]++;
     }
 
     // add per thread histogram to global histogram
     #pragma omp critical
-    for(int i = 0; i < hist.size(); i++) {
+    for(size_t i = 0; i < hist.size(); i++) {
         histInt[i] += histThr[i];
     }
 }
 
     // copy to float histogram
-    for(int i = 0; i < hist.size(); i++) {
+    for(size_t i = 0; i < hist.size(); i++) {
         hist[i] = histInt[i];
     }
 

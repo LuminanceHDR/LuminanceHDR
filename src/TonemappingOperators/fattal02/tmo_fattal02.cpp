@@ -147,7 +147,6 @@ void createGaussianPyramids(pfs::Array2Df &H, pfs::Array2Df **pyramids,
 
     int width = H.getCols();
     int height = H.getRows();
-    const int size = width * height;
 
     pfs::Array2Df *L = new pfs::Array2Df(width, height);
     gaussianBlur(*pyramids[0], *L);
@@ -310,13 +309,13 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
         MSIZE = 8;
     }
 
-    int size = width * height;
+    size_t size = width * height;
 
     // find max & min values, normalize to range 0..100 and take logarithm
     float minLum = Y(0, 0);
     float maxLum = Y(0, 0);
 
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         minLum = (Y(i) < minLum) ? Y(i) : minLum;
         maxLum = (Y(i) > maxLum) ? Y(i) : maxLum;
     }
@@ -329,8 +328,8 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
     const vfloat epsv = F2V(1e-4f);
 #endif
         #pragma omp parallel for
-        for (int i = 0; i < height; ++i) {
-            int j = 0;
+        for (size_t i = 0; i < height; ++i) {
+            size_t j = 0;
 #ifdef __SSE2__
             for (; j < width - 3; j += 4) {
                 STVFU(H(j, i), xlogf(c100v * LVFU(Y(j, i)) / maxLumv + epsv));
@@ -464,8 +463,8 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
         const vfloat gammav = F2V(gamma);
 #endif
         #pragma omp parallel for
-        for (int i = 0; i < height; ++i) {
-            int j = 0;
+        for (size_t i = 0; i < height; ++i) {
+            size_t j = 0;
 #ifdef __SSE2__
             for (; j < width - 3; j += 4) {
                 STVFU(L(j, i), xexpf(gammav * LVFU(U(j, i))));

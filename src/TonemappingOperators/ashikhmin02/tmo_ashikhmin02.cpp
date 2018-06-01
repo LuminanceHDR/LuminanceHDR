@@ -43,13 +43,13 @@
 
 //-------------------------------------------
 
-float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s) {
+float calc_LAL_interpolated(GaussianPyramid *myPyramid, size_t x, size_t y, int s) {
     float ratio = myPyramid->p[s - 1].lambda;
 
     float newX = (float)x * ratio;
     float newY = (float)y * ratio;
-    int X_int = (int)newX;
-    int Y_int = (int)newY;
+    size_t X_int = (size_t)newX;
+    size_t Y_int = (size_t)newY;
 
     float dx, dy, omdx, omdy;
     dx = newX - (float)X_int;
@@ -57,8 +57,8 @@ float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s) {
     dy = newY - (float)Y_int;
     omdy = 1.f - dy;
 
-    int w = myPyramid->p[s - 1].GP->getCols();
-    int h = myPyramid->p[s - 1].GP->getRows();
+    size_t w = myPyramid->p[s - 1].GP->getCols();
+    size_t h = myPyramid->p[s - 1].GP->getRows();
 
     float g;
     if (X_int < w - 1 && Y_int < h - 1) {

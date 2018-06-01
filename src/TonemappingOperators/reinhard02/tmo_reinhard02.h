@@ -81,7 +81,7 @@ class Reinhard02 {
     pfs::Array2Df *m_L;
     bool m_use_scales;
     bool m_use_border;
-    float m_key, m_phi, m_white, m_twopowphi;
+    float m_key, m_phi, m_twopowphi, m_white;
     int m_range, m_scale_low, m_scale_high;
     const float m_alpha;
     float m_bbeta;

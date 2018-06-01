@@ -199,10 +199,6 @@ void Reinhard02::build_gaussian_fft() {
 
 void Reinhard02::build_image_fft() {
 
-    int i, x, y;
-    int length = m_cvts.xmax * m_cvts.ymax;
-    float fft_scale = 1.f / sqrt((float)length);
-
 #ifndef NDEBUG
     fprintf(stderr, "Computing image FFT\n");
 #endif
@@ -236,8 +232,6 @@ void Reinhard02::build_image_fft() {
 }
 
 void Reinhard02::convolve_filter(int scale, fftwf_complex *convolution_fft) {
-
-    int i, x, y;
 
     fftwf_plan p;
     FFTW_MUTEX::fftw_mutex_plan.lock();
