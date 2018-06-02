@@ -1,3 +1,9 @@
+Changes 2.5.2
+NEW: Post processing gamma and saturation
+* great speedup and better memory usage for all tonemapping operators
+* speedup for hdr creation
+* usual bug fixing
+
 Changes 2.5.1
 NEW: Selectable threshold for adjusting levels
 NEW: Optional Lanczos interpolation
