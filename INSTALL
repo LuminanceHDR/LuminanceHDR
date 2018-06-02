@@ -161,9 +161,9 @@ must be compiled from source.
 
 Qt5 which must be downloaded from the official website of the Qt project.
 
-If you install Qt/5.9 into ~/Qt/5.9, generate the project with:
+If you install Qt/5.11.0 into ~/Qt/5.11.0, generate the project with:
 
-$ export QT=~/Qt/5.9/clang_64
+$ export QT=~/Qt/5.11.0/clang_64
 $ cd LuminanceHDR
 $ mkdir build
 $ cd build
@@ -198,7 +198,7 @@ If you wish to build with an earlier version of the MacOS-X Platform SDK (eg 10.
 |   https://github.com/phracker/MacOSX-SDKs/releases |
 +----------------------------------------------------+
 
-$ export QT=~/Qt/5.9/clang_64
+$ export QT=~/Qt/5.11.0/clang_64
 $ export MACOSX_DEPLOYMENT_TARGET="10.9"
 $ export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"
 $ cmake .. -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk" \
