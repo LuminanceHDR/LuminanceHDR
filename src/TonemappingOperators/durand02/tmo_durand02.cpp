@@ -149,7 +149,9 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 #endif
 {
     min_pos = std::min(min_pos, min_posthr);
+#ifdef __SSE2__
     min_posv = vminf(min_posv, min_posthrv);
+#endif
 }
 }
     min_pos = std::min(min_pos, vhmin(min_posv));

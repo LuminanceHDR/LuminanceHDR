@@ -90,8 +90,10 @@ void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
     }
 #pragma omp critical
 {
+#ifdef __SSE2__
     avLumv += avLumThrv;
     maxLumv = vmaxf(maxLumv, maxLumThrv);
+#endif
     avLum += avLumThr;
     maxLum = std::max(maxLum, maxLumThr);
 }

@@ -70,9 +70,11 @@ float pow6(float x) {
     return (x*x) * (x*x) * (x*x);
 }
 
+#ifdef __SSE2__
 vfloat pow6(vfloat x) {
     return (x*x) * (x*x) * (x*x);
 }
+#endif
 
 float pow4(float x) {
     return (x*x) * (x*x);
