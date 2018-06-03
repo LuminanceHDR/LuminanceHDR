@@ -458,11 +458,11 @@ void BatchHDRDialog::createHdrFinished() {
     QString outName;
     QString suffix = m_Ui->formatComboBox->currentText();
     QString caption = QString(
-        QStringLiteral("Weights= ") +
+        QObject::tr("Weights= ") +
         getQString(m_hdrCreationManager->getWeightFunction().getType()) +
-        QStringLiteral(" - Response curve= ") +
+        QObject::tr(" - Response curve= ") +
         getQString(m_hdrCreationManager->getResponseCurve().getType()) +
-        QStringLiteral(" - Model= ") +
+        QObject::tr(" - Model= ") +
         getQString(m_hdrCreationManager->getFusionOperator()));
 
     if (m_Ui->proposedFilenameCheckBox->isChecked()) {
