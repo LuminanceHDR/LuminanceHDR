@@ -108,7 +108,9 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
     pfs::Array2Df BASE(w, h);    // base layer
 
     float min_pos = 1e10f;  // minimum positive value (to avoid log(0))
+#ifdef __SSE2__
     vfloat min_posv = F2V(1e10f);
+#endif
 
 #ifdef _OPENMP
 #pragma omp parallel
@@ -154,7 +156,9 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 #endif
 }
 }
+#ifdef __SSE2__
     min_pos = std::min(min_pos, vhmin(min_posv));
+#endif
 
 #ifdef _OPENMP
 #pragma omp parallel
