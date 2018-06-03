@@ -183,9 +183,11 @@ inline float safelog10f(float x) {
     return xlogf(std::max(x, 1e-5f)) * 0.43429448190325182765112891891661f;
 }
 
+#ifdef __SSE2__
 inline vfloat safelog10f(vfloat xv, vfloat log10v, vfloat minv) {
     return xlogf(vmaxf(xv, minv)) * log10v;
 }
+#endif
 
 void CompressionTMO::tonemap(const float *R_in, const float *G_in, float *B_in,
                              int width, int height, float *R_out, float *G_out,
