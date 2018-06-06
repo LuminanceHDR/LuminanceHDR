@@ -98,9 +98,12 @@ HdrWizard::HdrWizard(QWidget *p, const QStringList &files,
     : QDialog(p),
       m_Ui(new Ui::HdrWizard),
       m_hdrCreationManager(new HdrCreationManager),
+      m_pfsFrameHDR(nullptr),
       m_doAutoAntighosting(false),
       m_doManualAntighosting(false),
-      m_processing(false) {
+      m_processing(false),
+      m_isConfigChanged(false),
+      m_hdrPreview(new HdrPreview(0)) {
     m_Ui->setupUi(this);
 
     if (!QIcon::hasThemeIcon(QStringLiteral("edit-clear-list")))
@@ -637,6 +640,23 @@ void HdrWizard::customConfigCheckBoxToggled(bool wantCustom) {
     }
 }
 
+void HdrWizard::on_hdrPreviewButton_clicked() {
+    showHDR();
+}
+
+void HdrWizard::on_hdrPreviewCheckBox_stateChanged(int state) {
+    if (state == Qt::Checked) {
+        m_Ui->NextFinishButton->setText(tr("Compute"));
+    }
+    else {
+        m_Ui->NextFinishButton->setText(tr("Finish"));
+    }
+}
+
+void HdrWizard::showHDR() {
+    m_hdrPreview->exec();
+}
+
 void HdrWizard::NextFinishButtonClicked() {
     int currentpage = m_Ui->pagestack->currentIndex();
     switch (currentpage) {
@@ -674,80 +694,129 @@ void HdrWizard::NextFinishButtonClicked() {
             m_Ui->pagestack->setCurrentIndex(1);
         } break;
         case 1: {
-            m_processing = true;
-            repaint();
-            QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
-            m_Ui->NextFinishButton->setEnabled(false);
-            m_Ui->cancelButton->setEnabled(false);
-
-            if (m_Ui->autoAG_checkBox->isChecked() &&
-                !m_Ui->checkBoxEditingTools->isChecked()) {
-                int num_images = m_hdrCreationManager->getData().size();
-                QList<QPair<int, int>> HV_offsets;
-                for (int i = 0; i < num_images; i++) {
-                    HV_offsets.append(qMakePair(0, 0));
-                }
-                float patchesPercent;
-                m_agGoodImageIndex = m_hdrCreationManager->computePatches(
-                    m_Ui->threshold_doubleSpinBox->value(), m_patches,
-                    patchesPercent, HV_offsets);
-                m_doAutoAntighosting = true;
+            if (m_pfsFrameHDR == nullptr || m_isConfigChanged) {
+                startComputation();
             }
-            if (m_doAutoAntighosting) {
-                int h0;
-                m_hdrCreationManager->getAgData(m_patches, h0);
-                m_future = QtConcurrent::run(boost::bind(
-                    &HdrCreationManager::doAntiGhosting,
-                    m_hdrCreationManager.data(), m_patches, h0, false,
-                    &m_ph));  // false means auto anti-ghosting
-                connect(&m_futureWatcher, &QFutureWatcherBase::finished, this,
-                        &HdrWizard::autoAntighostingFinished,
-                        Qt::DirectConnection);
-                m_Ui->progressBar->show();
-                m_futureWatcher.setFuture(m_future);
-            } else if (m_doManualAntighosting) {
-                m_future = QtConcurrent::run(
-                    boost::bind(&HdrCreationManager::doAntiGhosting,
-                                m_hdrCreationManager.data(), m_patches,
-                                m_agGoodImageIndex, true,
-                                &m_ph));  // true means manual anti-ghosting
-                connect(&m_futureWatcher, &QFutureWatcherBase::finished, this,
-                        &HdrWizard::autoAntighostingFinished,
-                        Qt::DirectConnection);
-                m_Ui->progressBar->show();
-                m_futureWatcher.setFuture(m_future);
-            } else {
-                createHdr();
+            else if (!m_Ui->hdrPreviewCheckBox->isChecked()) {
+                accept();
+            }
+            else {
+                showHDR();
             }
         }
     }
 }
 
+void HdrWizard::startComputation() {
+    m_processing = true;
+    repaint();
+    QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+    m_Ui->NextFinishButton->setEnabled(false);
+    m_Ui->cancelButton->setEnabled(false);
+
+    if (m_Ui->autoAG_checkBox->isChecked() &&
+        !m_Ui->checkBoxEditingTools->isChecked()) {
+        int num_images = m_hdrCreationManager->getData().size();
+        QList<QPair<int, int>> HV_offsets;
+        for (int i = 0; i < num_images; i++) {
+            HV_offsets.append(qMakePair(0, 0));
+        }
+        float patchesPercent;
+        m_agGoodImageIndex = m_hdrCreationManager->computePatches(
+            m_Ui->threshold_doubleSpinBox->value(), m_patches,
+            patchesPercent, HV_offsets);
+        m_doAutoAntighosting = true;
+    }
+    if (m_doAutoAntighosting) {
+        int h0;
+        m_hdrCreationManager->getAgData(m_patches, h0);
+        m_future = QtConcurrent::run(boost::bind(
+            &HdrCreationManager::doAntiGhosting,
+            m_hdrCreationManager.data(), m_patches, h0, false,
+            &m_ph));  // false means auto anti-ghosting
+        if (m_pfsFrameHDR == nullptr) {
+            connect(&m_futureWatcher, &QFutureWatcherBase::finished, this,
+                    &HdrWizard::autoAntighostingFinished,
+                    Qt::DirectConnection);
+        }
+        m_Ui->progressBar->show();
+        m_futureWatcher.setFuture(m_future);
+    } else if (m_doManualAntighosting) {
+        m_future = QtConcurrent::run(
+            boost::bind(&HdrCreationManager::doAntiGhosting,
+                        m_hdrCreationManager.data(), m_patches,
+                        m_agGoodImageIndex, true,
+                        &m_ph));  // true means manual anti-ghosting
+        if (m_pfsFrameHDR == nullptr) {
+            connect(&m_futureWatcher, &QFutureWatcherBase::finished, this,
+                    &HdrWizard::autoAntighostingFinished,
+                    Qt::DirectConnection);
+        }
+        m_Ui->progressBar->show();
+        m_futureWatcher.setFuture(m_future);
+    } else {
+        createHdr();
+    }
+}
+
 void HdrWizard::createHdr() {
+    m_Ui->NextFinishButton->setEnabled(false);
+    m_Ui->cancelButton->setEnabled(false);
+
     m_future = QtConcurrent::run(boost::bind(&HdrCreationManager::createHdr,
                                              m_hdrCreationManager.data()));
 
-    connect(&m_futureWatcher, &QFutureWatcherBase::finished, this,
-            &HdrWizard::createHdrFinished, Qt::DirectConnection);
+    if (m_pfsFrameHDR == nullptr) {
+        connect(&m_futureWatcher, &QFutureWatcherBase::finished, this,
+                &HdrWizard::createHdrFinished, Qt::DirectConnection);
+    }
     m_futureWatcher.setFuture(m_future);
 }
 
 void HdrWizard::createHdrFinished() {
-    m_pfsFrameHDR = m_future.result();
+    m_isConfigChanged = false;
+    m_processing = false;
+    m_Ui->NextFinishButton->setEnabled(true);
+    m_Ui->cancelButton->setEnabled(true);
+    m_Ui->hdrPreviewButton->setEnabled(true);
+
+    m_pfsFrameHDR.reset(m_future.result());
     OsIntegration::getInstance().setProgress(-1);
     QApplication::restoreOverrideCursor();
-    accept();
+
+    if (m_Ui->hdrPreviewCheckBox->isChecked() ) {
+        m_hdrPreview->setFrame(m_pfsFrameHDR);
+        m_hdrPreview->exec();
+    }
+    else {
+        accept();
+    }
 }
 
 void HdrWizard::autoAntighostingFinished() {
-    m_pfsFrameHDR = m_future.result();
+    m_isConfigChanged = false;
+    m_processing = false;
+    m_Ui->NextFinishButton->setEnabled(true);
+    m_Ui->cancelButton->setEnabled(true);
+    m_Ui->hdrPreviewButton->setEnabled(true);
+
+    m_pfsFrameHDR.reset(m_future.result());
     m_Ui->progressBar->hide();
     OsIntegration::getInstance().setProgress(-1);
     QApplication::restoreOverrideCursor();
-    if (m_pfsFrameHDR == NULL)
+    /*
+    if (m_pfsFrameHDR == nullptr)
         QDialog::reject();
     else
         accept();
+    */
+    if (m_Ui->hdrPreviewCheckBox->isChecked() ) {
+        m_hdrPreview->setFrame(m_pfsFrameHDR);
+        m_hdrPreview->exec();
+    }
+    else {
+        accept();
+    }
 }
 
 void HdrWizard::currentPageChangedInto(int newindex) {
@@ -845,7 +914,8 @@ void updateHdrCreationManagerWeight(HdrCreationManager &manager,
 }
 
 void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui) {
-    const FusionOperatorConfig *cfg = NULL;
+    m_isConfigChanged = true;
+    const FusionOperatorConfig *cfg = nullptr;
 
     if (index_from_gui <= 5) {
         cfg = &predef_confs[index_from_gui];
@@ -869,11 +939,13 @@ void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui) {
 }
 
 void HdrWizard::weightingFunctionComboBoxActivated(int from_gui) {
+    m_isConfigChanged = true;
     updateHdrCreationManagerWeight(*m_hdrCreationManager,
                                    weights_in_gui[from_gui]);
 }
 
 void HdrWizard::responseCurveComboBoxActivated(int from_gui) {
+    m_isConfigChanged = true;
     ResponseCurveType rc = responses_in_gui[from_gui];
 
     if (rc == RESPONSE_CUSTOM) {
@@ -922,6 +994,7 @@ void HdrWizard::responseCurveComboBoxActivated(int from_gui) {
 
 void HdrWizard::modelComboBoxActivated(int from_gui) {
     qDebug() << "void HdrWizard::modelComboBoxActivated(int from_gui)";
+    m_isConfigChanged = true;
     FusionOperator fo = models_in_gui[from_gui];
 
     updateHdrCreationManagerModel(*m_hdrCreationManager, fo);

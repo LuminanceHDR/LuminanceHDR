@@ -162,6 +162,7 @@ class GenericViewer : public QWidget {
     //! set a new reference frame to be shown in the viewport
     //! previous frame gets DELETED!
     void setFrame(pfs::Frame *new_frame, TonemappingOptions *tmopts = NULL);
+    void setFrameShared(std::shared_ptr<pfs::Frame> new_frame);
 
    protected Q_SLOTS:
     /*virtual*/ void slotPanIconSelectionMoved(QRect);
@@ -201,7 +202,7 @@ class GenericViewer : public QWidget {
     float getScaleFactor();
 
     bool mNeedsSaving;
-    std::unique_ptr<pfs::Frame> mFrame;
+    std::shared_ptr<pfs::Frame> mFrame;
 
     QAction *m_actionClose;
 

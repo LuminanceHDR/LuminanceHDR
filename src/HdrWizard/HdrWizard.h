@@ -31,6 +31,8 @@
 #include <QString>
 #include <QVector>
 
+#include "HdrPreview.h"
+#include "Libpfs/manip/copy.h"
 #include "Common/LuminanceOptions.h"
 #include "HdrWizard/HdrCreationManager.h"
 
@@ -53,7 +55,7 @@ class HdrWizard : public QDialog {
     QStringList m_inputFilesName;
 
     // the new hdr, returned by the HdrCreationManager class
-    pfs::Frame *m_pfsFrameHDR;
+    std::shared_ptr<pfs::Frame> m_pfsFrameHDR;
 
     // hdr creation parameters
     QVector<FusionOperatorConfig> m_customConfig;
@@ -62,6 +64,8 @@ class HdrWizard : public QDialog {
     bool m_doManualAntighosting;
     int m_agGoodImageIndex;
     bool m_processing;
+    bool m_isConfigChanged;
+    QScopedPointer<HdrPreview> m_hdrPreview;
     ProgressHelper m_ph;
 
    public:
@@ -71,7 +75,7 @@ class HdrWizard : public QDialog {
     ~HdrWizard();
 
     //! \brief get the current PFS Frame
-    pfs::Frame *getPfsFrameHDR() { return m_pfsFrameHDR; }
+    pfs::Frame *getPfsFrameHDR() { pfs::Frame *toReturn = pfs::copy(m_pfsFrameHDR.get()); return toReturn; }
 
     //! \brief return the caption text
     QString getCaptionTEXT();
@@ -140,10 +144,15 @@ class HdrWizard : public QDialog {
     void updateThresholdSlider(int);
     void updateThresholdSpinBox(double);
 
+    void startComputation();
     void createHdr();
     void createHdrFinished();
     void autoAntighostingFinished();
     void updateHideLogButtonText(bool);
+    void showHDR();
+
+    void on_hdrPreviewButton_clicked();
+    void on_hdrPreviewCheckBox_stateChanged(int state);
 };
 
 #endif

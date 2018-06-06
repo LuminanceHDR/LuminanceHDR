@@ -66,6 +66,8 @@ HdrViewer::HdrViewer(pfs::Frame *frame, QWidget *parent, bool ns)
       m_maxValue(1.f) {
     initUi();
 
+    if (frame != nullptr)
+    {
     // I prefer to do everything by hand, so the flow of the calls is clear
     m_lumRange->blockSignals(true);
 
@@ -82,6 +84,7 @@ HdrViewer::HdrViewer(pfs::Frame *frame, QWidget *parent, bool ns)
 
     updateView();
     m_lumRange->blockSignals(false);
+    }
 }
 
 void HdrViewer::initUi() {

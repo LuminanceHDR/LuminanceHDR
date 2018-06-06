@@ -353,6 +353,16 @@ int GenericViewer::getHeight() {
         return 0;
 }
 
+void GenericViewer::setFrameShared(std::shared_ptr<pfs::Frame> new_frame) {
+    mFrame.swap(new_frame);
+
+    // call virtual protected function
+    updatePixmap();
+
+    // reset boundaries
+    updateView();
+}
+
 void GenericViewer::setFrame(pfs::Frame *new_frame,
                              TonemappingOptions *tmopts) {
     mFrame.reset(new_frame);

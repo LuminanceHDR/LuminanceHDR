@@ -17,7 +17,7 @@
    <iconset resource="../../icons.qrc">
     <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_11">
+  <layout class="QGridLayout" name="gridLayout_5">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_9">
      <property name="leftMargin">
@@ -640,30 +640,231 @@ p, li { white-space: pre-wrap; }
         </layout>
        </widget>
        <widget class="QWidget" name="chooseHDRconfig">
-        <layout class="QGridLayout" name="gridLayout_5">
+        <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0">
           <widget class="QGroupBox" name="groupBox_2">
            <property name="title">
             <string>[2/2] Choose Settings for HDR Creation</string>
            </property>
-           <layout class="QFormLayout" name="formLayout">
-            <property name="verticalSpacing">
-             <number>15</number>
-            </property>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="7" column="2">
+             <widget class="QPushButton" name="pushButtonSaveSettings">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Save Settings</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <widget class="QLineEdit" name="CurveFileNameSaveLineEdit">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>240</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="saveRespCurveFileButton">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Save As...</string>
+                </property>
+                <property name="autoDefault">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="modelLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>HDR Creation Model</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
+             <widget class="QLineEdit" name="RespCurveFileLoadedLineEdit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>240</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="responseCurveOutputFileLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Response Curve Output File</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="weightFunctionLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Weighting Function</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="responseCurveInputFileLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Response Curve Input File</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="QComboBox" name="responseCurveComboBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>250</width>
+                <height>0</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>Linear</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gamma</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Log</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>sRGB</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Custom</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QComboBox" name="weightFunctionComboBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>250</width>
+                <height>0</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>Triangular</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gaussian</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Plateau</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Flat</string>
+               </property>
+              </item>
+             </widget>
+            </item>
             <item row="0" column="0">
              <widget class="QLabel" name="profileLabel">
               <property name="text">
                <string>Profile</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item row="4" column="0">
+             <widget class="QLabel" name="responseCurveLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Response Curve</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
              <widget class="QComboBox" name="profileComboBox">
               <property name="minimumSize">
                <size>
@@ -710,7 +911,7 @@ p, li { white-space: pre-wrap; }
               </item>
              </widget>
             </item>
-            <item row="1" column="1">
+            <item row="1" column="2">
              <widget class="QCheckBox" name="customConfigCheckBox">
               <property name="toolTip">
                <string>Use this only if the default profiles above do not yield good results</string>
@@ -723,17 +924,7 @@ p, li { white-space: pre-wrap; }
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="modelLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>HDR Creation Model</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
+            <item row="2" column="2">
              <widget class="QComboBox" name="modelComboBox">
               <property name="enabled">
                <bool>false</bool>
@@ -761,191 +952,24 @@ p, li { white-space: pre-wrap; }
               </item>
              </widget>
             </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="weightFunctionLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Weighting Function</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QComboBox" name="weightFunctionComboBox">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
+            <item row="8" column="2">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
-               <property name="text">
-                <string>Triangular</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Gaussian</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Plateau</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Flat</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="responseCurveLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Response Curve</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QComboBox" name="responseCurveComboBox">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <item>
-               <property name="text">
-                <string>Linear</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Gamma</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Log</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>sRGB</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Custom</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="responseCurveInputFileLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Response Curve Input File</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QLineEdit" name="RespCurveFileLoadedLineEdit">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>240</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="responseCurveOutputFileLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Response Curve Output File</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <item>
-               <widget class="QLineEdit" name="CurveFileNameSaveLineEdit">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>240</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="saveRespCurveFileButton">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
+               <widget class="QCheckBox" name="hdrPreviewCheckBox">
                 <property name="text">
-                 <string>Save As...</string>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
+                 <string>show result</string>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
-            <item row="7" column="1">
-             <widget class="QPushButton" name="pushButtonSaveSettings">
+            <item row="8" column="0">
+             <widget class="QPushButton" name="hdrPreviewButton">
               <property name="enabled">
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>Save Settings</string>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
+               <string>Show HDR</string>
               </property>
              </widget>
             </item>
@@ -1079,12 +1103,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>106</x>
-     <y>41</y>
+     <x>290</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>70</x>
-     <y>41</y>
+     <x>96</x>
+     <y>177</y>
     </hint>
    </hints>
   </connection>
@@ -1095,12 +1119,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>106</x>
-     <y>41</y>
+     <x>290</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>70</x>
-     <y>41</y>
+     <x>96</x>
+     <y>213</y>
     </hint>
    </hints>
   </connection>
@@ -1111,12 +1135,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>106</x>
-     <y>41</y>
+     <x>290</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>100</x>
-     <y>41</y>
+     <x>284</x>
+     <y>79</y>
     </hint>
    </hints>
   </connection>
@@ -1127,12 +1151,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>106</x>
-     <y>41</y>
+     <x>290</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>69</x>
-     <y>41</y>
+     <x>95</x>
+     <y>79</y>
     </hint>
    </hints>
   </connection>
@@ -1163,7 +1187,7 @@ p, li { white-space: pre-wrap; }
      <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>400</x>
+     <x>398</x>
      <y>316</y>
     </hint>
    </hints>
@@ -1179,7 +1203,7 @@ p, li { white-space: pre-wrap; }
      <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>150</x>
+     <x>149</x>
      <y>345</y>
     </hint>
    </hints>
@@ -1195,8 +1219,8 @@ p, li { white-space: pre-wrap; }
      <y>313</y>
     </hint>
     <hint type="destinationlabel">
-     <x>505</x>
-     <y>348</y>
+     <x>502</x>
+     <y>349</y>
     </hint>
    </hints>
   </connection>
@@ -1239,12 +1263,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>106</x>
-     <y>41</y>
+     <x>290</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>70</x>
-     <y>41</y>
+     <x>96</x>
+     <y>141</y>
     </hint>
    </hints>
   </connection>
@@ -1255,12 +1279,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>41</y>
+     <x>295</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>261</x>
-     <y>41</y>
+     <x>445</x>
+     <y>177</y>
     </hint>
    </hints>
   </connection>
@@ -1271,12 +1295,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>41</y>
+     <x>295</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>261</x>
-     <y>41</y>
+     <x>445</x>
+     <y>141</y>
     </hint>
    </hints>
   </connection>
@@ -1287,12 +1311,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>41</y>
+     <x>295</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>261</x>
-     <y>41</y>
+     <x>445</x>
+     <y>213</y>
     </hint>
    </hints>
   </connection>
@@ -1303,12 +1327,12 @@ p, li { white-space: pre-wrap; }
    <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>41</y>
+     <x>295</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>41</y>
+     <x>295</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
