@@ -311,7 +311,7 @@ IF(APPLE)
          ${CMAKE_SOURCE_DIR}/README.md
          ${CMAKE_SOURCE_DIR}/LICENSE
          ${CMAKE_SOURCE_DIR}/Changelog
-         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app
+         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
     )
 
 # Unix
