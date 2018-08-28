@@ -5,3 +5,10 @@ The goal is for certain files from RawTherapee to be drop-in compatible with thi
 This is version 0.1.0, which furnishes the following routines:
 
 * amaze_demosaic_RT
+
+Build instructions:
+
+1. Make a subdirectory named `build`, and `cd` to that directory.
+2. Run `cmake ..`
+3. Run `make`
+4. Run `make install` as root.
