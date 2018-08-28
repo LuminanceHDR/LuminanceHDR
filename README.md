@@ -12,3 +12,5 @@ Build instructions:
 2. Run `cmake ..`
 3. Run `make`
 4. Run `make install` as root.
+
+Include `-lrtprocess`, and `#include "rawimagesource.h"` to use this library.

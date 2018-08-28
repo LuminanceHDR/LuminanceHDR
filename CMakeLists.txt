@@ -13,3 +13,4 @@ add_library(rtprocess SHARED ${SOURCES})
 
 #set location for library installation
 install(TARGETS rtprocess DESTINATION /usr/lib)
+install(FILES "src/rawimagesource.h" DESTINATION /usr/include)
