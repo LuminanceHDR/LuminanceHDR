@@ -314,6 +314,12 @@ IF(APPLE)
          DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
     )
 
+    # Copy align_image_stack dependencies to bundle
+    FILE(COPY
+         ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/Libraries
+         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
+    )
+
 # Unix
 ELSEIF(UNIX)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES})
