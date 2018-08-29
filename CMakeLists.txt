@@ -13,4 +13,12 @@ add_library(rtprocess SHARED ${SOURCES})
 
 #set location for library installation
 install(TARGETS rtprocess DESTINATION /usr/lib)
-install(FILES "src/rawimagesource.h" DESTINATION /usr/include)
+install(FILES "src/array2D.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/helpersse2.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/median.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/mytime.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/noncopyable.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/opthelper.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/rawimagesource.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/rt_math.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/StopWatch.h" DESTINATION /usr/include/rtprocess)

@@ -13,4 +13,4 @@ Build instructions:
 3. Run `make`
 4. Run `make install` as root.
 
-Include `-lrtprocess`, and `#include "rawimagesource.h"` to use this library.
+Include `-lrtprocess`, and `#include <rtprocess/rawimagesource.h>` to use this library.
