@@ -13,4 +13,12 @@ Build instructions:
 3. Run `make`
 4. Run `make install` as root.
 
+Build instructions for Windows msys2 environment:
+
+1. Make a subdirectory named `build`, and `cd` to that directory.
+2. Run `cmake -G "MSYS Makefiles" ..`
+3. Run `make`
+4. Run `make install`.
+
+
 Include `-lrtprocess`, and `#include <rtprocess/rawimagesource.h>` to use this library.
