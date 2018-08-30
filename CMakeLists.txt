@@ -2,6 +2,15 @@ cmake_minimum_required(VERSION 2.8.9)
 project(rtprocess)
 set(CMAKE_BUILD_TYPE Release)
 
+option(OPTION_OMP "Build with OpenMP support" ON)
+
+if(OPTION_OMP)
+    find_package(OpenMP)
+    if(OPENMP_FOUND)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -Werror=unknown-pragmas")
+    endif()
+endif()
+
 #bring headers into the project
 include_directories(src)
 
