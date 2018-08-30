@@ -11,7 +11,7 @@
 // code dated: May 27, 2010
 // latest modification: Ingo Weyrich, January 25, 2016
 //
-//  amaze_interpolate_RT.cc is free software: you can redistribute it and/or modify
+//  amaze.cc is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
@@ -26,37 +26,29 @@
 //
 ////////////////////////////////////////////////////////////////
 
-#include "rawimagesource.h"
-#include "rt_math.h"
-#include "sleef.c"
-#include "opthelper.h"
-#include "median.h"
-#include "StopWatch.h"
+#include "../rawimagesource.h"
+#include "../rt_math.h"
+#include "../sleef.c"
+#include "../opthelper.h"
+#include "../median.h"
+#include "../StopWatch.h"
 
 namespace
 {
-unsigned fc( unsigned cfa[2][2], unsigned row, unsigned col)
+unsigned fc(unsigned cfa[2][2], unsigned row, unsigned col)
 {
     return cfa[row & 1][col & 1];
 }
 }
 
-
 namespace rtengine
 {
 
-void RawImageSource::amaze_demosaic_RT(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, unsigned cfarray[2][2], std::function<bool(double)> setProgCancel, double initGain, int border, int W, int H)
+void RawImageSource::amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, unsigned cfarray[2][2], std::function<bool(double)> setProgCancel, double initGain, int border, int W, int H)
 {
     BENCHFUN
 
     volatile double progress = 0.0;
-
-    /*
-    if (plistener) {
-        plistener->setProgressStr (Glib::ustring::compose(M("TP_RAW_DMETHOD_PROGRESSBAR"), RAWParams::BayerSensor::getMethodString(RAWParams::BayerSensor::Method::AMAZE)));
-        plistener->setProgress (0.0);
-    }
-    */
     setProgCancel(progress);
 
     const int width = winw, height = winh;
@@ -72,7 +64,7 @@ void RawImageSource::amaze_demosaic_RT(int winx, int winy, int winw, int winh, c
     // We assure that Tile size is a multiple of 32 in the range [96;992]
     constexpr int ts = (AMAZETS & 992) < 96 ? 96 : (AMAZETS & 992);
     constexpr int tsh = ts / 2; // half of Tile size
-
+ 
     //offset of R pixel within a Bayer quartet
     int ex, ey;
 
@@ -1574,19 +1566,16 @@ void RawImageSource::amaze_demosaic_RT(int winx, int winy, int winw, int winh, c
                     }
                 }
 
-                //if(plistener) {
-                if(true) {
-                    progresscounter++;
+                progresscounter++;
 
-                    if(progresscounter % 32 == 0) {
+                if(progresscounter % 32 == 0) {
 #ifdef _OPENMP
-                        #pragma omp critical (amazeprogress)
+                    #pragma omp critical (amazeprogress)
 #endif
-                        {
-                            progress += (double)32 * ((ts - 32) * (ts - 32)) / (height * width);
-                            progress = progress > 1.0 ? 1.0 : progress;
-                            setProgCancel(progress);
-                        }
+                    {
+                        progress += (double)32 * ((ts - 32) * (ts - 32)) / (height * width);
+                        progress = progress > 1.0 ? 1.0 : progress;
+                        setProgCancel(progress);
                     }
                 }
             }
@@ -1596,13 +1585,10 @@ void RawImageSource::amaze_demosaic_RT(int winx, int winy, int winw, int winh, c
         free(buffer);
     }
     if(border < 4) {
-        border_interpolate2(W, H, 3, rawData, red, green, blue, cfarray);
+        bayerborder_demosaic(W, H, 3, rawData, red, green, blue, cfarray);
     }
 
-    //if(plistener) {
-    if(true) {
-        setProgCancel(1.0);
-    }
+    setProgCancel(1.0);
 
 }
 }

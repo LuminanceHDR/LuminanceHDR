@@ -6,7 +6,7 @@ set(CMAKE_BUILD_TYPE Release)
 include_directories(src)
 
 #get source files
-file(GLOB SOURCES "src/*.cc")
+file(GLOB SOURCES "src/demosaic/*.cc")
 
 #generate shared library
 add_library(rtprocess SHARED ${SOURCES})
