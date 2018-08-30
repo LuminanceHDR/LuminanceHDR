@@ -20,9 +20,11 @@
 #ifndef _RAWIMAGESOURCE_
 #define _RAWIMAGESOURCE_
 
-#include "array2D.h"
+#include <array>
 #include <iostream>
 #include <functional>
+
+#include "array2D.h"
 
 namespace rtengine
 {
@@ -30,10 +32,10 @@ namespace rtengine
 class RawImageSource
 {
 public:
-    void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, unsigned cfarray[2][2], std::function<bool(double)>, double initGain, int border, int W, int H);
+    void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const std::array<std::array<unsigned, 2>, 2> &cfarray, const std::function<bool(double)>, double initGain, int border, int W, int H);
 
 protected:
-    void bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, unsigned cfarray[2][2]);
+    void bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const std::array<std::array<unsigned, 2>, 2> &cfarray);
     void xtransborder_demosaic(int winw, int winh, int border, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, int xtrans[6][6]);
 };
 }//namespace

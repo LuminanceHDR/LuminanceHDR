@@ -22,7 +22,7 @@
 
 namespace
 {
-unsigned fc(unsigned cfa[2][2], unsigned row, unsigned col)
+unsigned fc(const std::array<std::array<unsigned, 2>, 2> &cfa, unsigned row, unsigned col)
 {
     return cfa[row & 1][col & 1];
 }
@@ -33,7 +33,7 @@ using namespace std;
 namespace rtengine
 {
 
-void RawImageSource::bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, unsigned cfarray[2][2])
+void RawImageSource::bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const std::array<std::array<unsigned, 2>, 2> &cfarray)
 {
     int bord = lborders;
     int width = winw;

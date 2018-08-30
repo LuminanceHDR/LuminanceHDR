@@ -35,7 +35,7 @@
 
 namespace
 {
-unsigned fc(unsigned cfa[2][2], unsigned row, unsigned col)
+unsigned fc(const std::array<std::array<unsigned, 2>, 2> &cfa, unsigned row, unsigned col)
 {
     return cfa[row & 1][col & 1];
 }
@@ -44,7 +44,7 @@ unsigned fc(unsigned cfa[2][2], unsigned row, unsigned col)
 namespace rtengine
 {
 
-void RawImageSource::amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, unsigned cfarray[2][2], std::function<bool(double)> setProgCancel, double initGain, int border, int W, int H)
+void RawImageSource::amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const std::array<std::array<unsigned, 2>, 2> &cfarray, const std::function<bool(double)> setProgCancel, double initGain, int border, int W, int H)
 {
     BENCHFUN
 
