@@ -16,7 +16,7 @@ Build instructions:
 Build instructions for Windows msys2 environment:
 
 1. Make a subdirectory named `build`, and `cd` to that directory.
-2. Run `cmake -G "MSYS Makefiles" ..`
+2. Run `cmake -G "MSYS Makefiles" -DCMAKE_INSTALL_PREFIX="$MSYSTEM_PREFIX" ..`
 3. Run `make`
 4. Run `make install`.
 
