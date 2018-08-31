@@ -22,7 +22,7 @@
 
 namespace
 {
-unsigned fc(const std::array<std::array<unsigned, 2>, 2> &cfa, unsigned row, unsigned col)
+unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
 {
     return cfa[row & 1][col & 1];
 }
