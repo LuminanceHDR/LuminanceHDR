@@ -22,6 +22,7 @@ if(WIN32)
 #generate static library
 add_library(rtprocess STATIC ${SOURCES})
 install(TARGETS rtprocess DESTINATION lib)
+install(FILES "pkgconfig/msys2/rtprocess.pc" DESTINATION lib/pkgconfig)
 install(FILES "src/array2D.h" DESTINATION include/rtprocess)
 install(FILES "src/noncopyable.h" DESTINATION include/rtprocess)
 install(FILES "src/rawimagesource.h" DESTINATION include/rtprocess)
