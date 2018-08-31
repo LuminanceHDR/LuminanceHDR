@@ -17,16 +17,18 @@ include_directories(src)
 #get source files
 file(GLOB SOURCES "src/demosaic/*.cc")
 
-#generate shared library
-add_library(rtprocess SHARED ${SOURCES})
-
 #set location for library installation
 if(WIN32)
+#generate static library
+add_library(rtprocess STATIC ${SOURCES})
 install(TARGETS rtprocess DESTINATION lib)
+install(FILES "pkgconfig/msys2/rtprocess.pc" DESTINATION lib/pkgconfig)
 install(FILES "src/array2D.h" DESTINATION include/rtprocess)
 install(FILES "src/noncopyable.h" DESTINATION include/rtprocess)
 install(FILES "src/rawimagesource.h" DESTINATION include/rtprocess)
 else()
+#generate shared library
+add_library(rtprocess SHARED ${SOURCES})
 install(TARGETS rtprocess DESTINATION /usr/lib)
 install(FILES "src/array2D.h" DESTINATION /usr/include/rtprocess)
 install(FILES "src/noncopyable.h" DESTINATION /usr/include/rtprocess)

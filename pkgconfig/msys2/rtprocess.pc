@@ -1,0 +1,9 @@
+prefix=/mingw64
+libdir=/mingw64/lib
+includedir=/mingw64/include
+
+Name: rtprocess
+Description: A raw preprocessing and demosaic library
+Version: 0.1.0
+Libs: -L${libdir} -llibrtprocess
+Cflags: -I${includedir} -I${includedir}/librtprocess
