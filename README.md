@@ -4,7 +4,7 @@ The goal is for certain files from RawTherapee to be drop-in compatible with thi
 
 This is version 0.1.0, which furnishes the following routines:
 
-* amaze_demosaic_RT
+* amaze_demosaic
 
 Build instructions:
 
