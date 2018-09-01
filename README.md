@@ -21,4 +21,4 @@ Build instructions for Windows msys2 environment:
 4. Run `make install`.
 
 
-Include `-lrtprocess`, and `#include <rtprocess/rawimagesource.h>` to use this library.
+Include `-lrtprocess`, and `#include <rtprocess/librtprocess.h>` to use this library.
