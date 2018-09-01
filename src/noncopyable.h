@@ -19,7 +19,7 @@
 
 #pragma once
 
-namespace rtengine
+namespace librtprocess
 {
 
 class NonCopyable

@@ -17,16 +17,22 @@
  * along with librtprocess.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#ifndef _LIBRTPROCESS_
+#define _LIBRTPROCESS_
 
 #include <array>
+#include <functional>
 
-#include "librtprocess.h"
+#include "array2D.h"
+
+using ColorFilterArray = std::array<std::array<unsigned, 2>, 2>;
 
 namespace librtprocess
 {
 
-    void bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray);
-    void xtransborder_demosaic(int winw, int winh, int border, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, int xtrans[6][6]);
+    void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale = 65535.f, float outputScale = 65535.f);
 
 }//namespace
+
+
+#endif
