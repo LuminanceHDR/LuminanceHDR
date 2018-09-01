@@ -70,7 +70,7 @@
 
 template<typename T>
 class array2D :
-    public rtengine::NonCopyable
+    public librtprocess::NonCopyable
 {
 
 private:

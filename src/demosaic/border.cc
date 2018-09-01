@@ -30,10 +30,10 @@ unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
 
 using namespace std;
 
-namespace rtengine
+namespace librtprocess
 {
 
-void RawImageSource::bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray)
+void bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray)
 {
     int bord = lborders;
     int width = winw;
@@ -190,7 +190,7 @@ void RawImageSource::bayerborder_demosaic(int winw, int winh, int lborders, cons
 
 #define fcol(row,col) xtrans[(row)%6][(col)%6]
 
-void RawImageSource::xtransborder_demosaic(int winw, int winh, int border, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, int xtrans[6][6])
+void xtransborder_demosaic(int winw, int winh, int border, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, int xtrans[6][6])
 {
     const int height = winh, width = winw;
 

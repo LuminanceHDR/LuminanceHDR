@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <array>
 
-namespace rtengine
+namespace librtprocess
 {
 
 constexpr int MAXVAL = 0xffff;
