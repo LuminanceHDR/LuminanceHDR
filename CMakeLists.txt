@@ -15,7 +15,7 @@ endif()
 include_directories(src)
 
 #get source files
-file(GLOB SOURCES "src/demosaic/*.cc")
+file(GLOB_RECURSE SOURCES "src/*.cc")
 
 #set location for library installation
 if(WIN32)
