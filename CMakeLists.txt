@@ -30,6 +30,7 @@ else()
 #generate shared library
 add_library(rtprocess SHARED ${SOURCES})
 install(TARGETS rtprocess DESTINATION /usr/lib)
+install(FILES "pkgconfig/linux/rtprocess.pc" DESTINATION /usr/lib/pkgconfig)
 install(FILES "src/array2D.h" DESTINATION /usr/include/rtprocess)
 install(FILES "src/noncopyable.h" DESTINATION /usr/include/rtprocess)
 install(FILES "src/librtprocess.h" DESTINATION /usr/include/rtprocess)
