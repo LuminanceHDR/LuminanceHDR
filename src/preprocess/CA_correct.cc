@@ -29,7 +29,7 @@
 #include "StopWatch.h"
 namespace {
 
-bool LinEqSolve(int nDim, double* pfMatr, double* pfVect, double* pfSolution)
+bool LinEqSolve(int nDim, double* pfMatr, double* pfVect, std::array<double, 16> &pfSolution)
 {
 //==============================================================================
 // return 1 if system not solving, 0 if system solved
@@ -117,7 +117,7 @@ namespace librtprocess
 {
 
 
-bool CA_correct(int W, int H, const bool autoCA, const double cared, const double cablue, const double caautostrength, array2D<float> &rawData, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double *fitParamsTransfer, bool fitParamsIn, bool fitParamsOut)
+bool CA_correct(int W, int H, const bool autoCA, const double cared, const double cablue, array2D<float> &rawData, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn)
 {
 // multithreaded and vectorized by Ingo Weyrich
     constexpr int ts = 128;
@@ -162,19 +162,6 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
     // Because we can't break parallel processing, we need a switch do handle the errors
     bool processpasstwo = true;
 
-    double fitparams[2][2][16];
-    const bool fitParamsSet = fitParamsTransfer && fitParamsIn;
-    if(autoCA && fitParamsSet) {
-        // use stored parameters
-        int index = 0;
-        for(int c = 0; c < 2; ++c) {
-            for(int d = 0; d < 2; ++d) {
-                for(int e = 0; e < 16; ++e) {
-                    fitparams[c][d][e] = fitParamsTransfer[index++];
-                }
-            }
-        }
-    }
     //order of 2d polynomial fit (polyord), and numpar=polyord^2
     int polyord = 4, numpar = 16;
 
@@ -196,7 +183,7 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
         // assign working space
         constexpr int buffersize = sizeof(float) * ts * ts + 8 * sizeof(float) * ts * tsh + 8 * 64 + 63;
         constexpr int buffersizePassTwo = sizeof(float) * ts * ts + 4 * sizeof(float) * ts * tsh + 4 * 64 + 63;
-        char * const bufferThr = (char *) malloc((autoCA && !fitParamsSet) ? buffersize : buffersizePassTwo);
+        char * const bufferThr = (char *) malloc((autoCA && !fitParamsIn) ? buffersize : buffersizePassTwo);
 
         char * const data = (char*)( ( uintptr_t(bufferThr) + uintptr_t(63)) / 64 * 64);
 
@@ -208,7 +195,7 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
         rgb[1]         = (float (*)) (data + sizeof(float) * ts * tsh + 1 * 64);
         rgb[2]         = (float (*)) (data + sizeof(float) * (ts * ts + ts * tsh) + 2 * 64);
 
-        if (autoCA && !fitParamsSet) {
+        if (autoCA && !fitParamsIn) {
             //high pass filter for R/B in vertical direction
             float *rbhpfh  = (float (*)) (data + 2 * sizeof(float) * ts * ts + 3 * 64);
             //high pass filter for R/B in horizontal direction
@@ -700,7 +687,7 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
                                 }
 
                                 //now prepare coefficient matrix; use only data points within caautostrength/2 std devs of zero
-                                if (SQR(bstemp[0]) > caautostrength * blockvar[0][c] || SQR(bstemp[1]) > caautostrength * blockvar[1][c]) {
+                                if (SQR(bstemp[0]) > 8.f * blockvar[0][c] || SQR(bstemp[1]) > 8.f * blockvar[1][c]) {
                                     continue;
                                 }
 
@@ -748,7 +735,7 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
                         //fit parameters to blockshifts
                         for (int c = 0; c < 2; c++)
                             for (int dir = 0; dir < 2; dir++) {
-                                if (!LinEqSolve(numpar, polymat[c][dir], shiftmat[c][dir], fitparams[c][dir])) {
+                                if (!LinEqSolve(numpar, polymat[c][dir], shiftmat[c][dir], fitParams[c][dir])) {
                                     printf("CA correction pass failed -- can't solve linear equations for colour %d direction %d...\n", c, dir);
                                     processpasstwo = false;
                                 }
@@ -966,10 +953,10 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
                         for (int i = 0; i < polyord; i++) {
                             double powHblock = powVblock;
                             for (int j = 0; j < polyord; j++) {
-                                lblockshifts[0][0] += powHblock * fitparams[0][0][polyord * i + j];
-                                lblockshifts[0][1] += powHblock * fitparams[0][1][polyord * i + j];
-                                lblockshifts[1][0] += powHblock * fitparams[1][0][polyord * i + j];
-                                lblockshifts[1][1] += powHblock * fitparams[1][1][polyord * i + j];
+                                lblockshifts[0][0] += powHblock * fitParams[0][0][polyord * i + j];
+                                lblockshifts[0][1] += powHblock * fitParams[0][1][polyord * i + j];
+                                lblockshifts[1][0] += powHblock * fitParams[1][0][polyord * i + j];
+                                lblockshifts[1][1] += powHblock * fitParams[1][1][polyord * i + j];
                                 powHblock *= hblock;
                             }
                             powVblock *= vblock;
@@ -1183,22 +1170,10 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
         free(bufferThr);
     }
 
-    if(autoCA && fitParamsTransfer && fitParamsOut) {
-        // store calculated parameters
-        int index = 0;
-        for(int c = 0; c < 2; ++c) {
-            for(int d = 0; d < 2; ++d) {
-                for(int e = 0; e < 16; ++e) {
-                    fitParamsTransfer[index++] = fitparams[c][d][e];
-                }
-            }
-        }
-    }
-
     free(buffer);
 
     setProgCancel(1.0);
 
-    return true;
+    return processpasstwo;
 }
 }
