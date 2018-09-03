@@ -2,9 +2,10 @@ This is a project that aims to make some of RawTherapee's highly optimized raw p
 
 The goal is for certain files from RawTherapee to be drop-in compatible with this library. Thus, any changes necessary for use in this project must also be made upstream in RawTherapee.
 
-This is version 0.1.0, which furnishes the following routines:
+This is version 0.2.0, which furnishes the following routines:
 
 * amaze_demosaic
+* CA_correct
 
 Build instructions:
 
