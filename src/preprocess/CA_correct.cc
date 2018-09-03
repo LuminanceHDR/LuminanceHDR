@@ -117,7 +117,7 @@ namespace librtprocess
 {
 
 
-float* CA_correct(int W, int H, const bool autoCA, const double cared, const double cablue, const double caautostrength, array2D<float> &rawData, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double *fitParamsTransfer, bool fitParamsIn, bool fitParamsOut, float *buffer, bool freeBuffer)
+bool CA_correct(int W, int H, const bool autoCA, const double cared, const double cablue, const double caautostrength, array2D<float> &rawData, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double *fitParamsTransfer, bool fitParamsIn, bool fitParamsOut)
 {
 // multithreaded and vectorized by Ingo Weyrich
     constexpr int ts = 128;
@@ -130,7 +130,7 @@ float* CA_correct(int W, int H, const bool autoCA, const double cared, const dou
         for(int j = 0; j < 2; j++)
             if(fc(cfarray, i, j) == 3) {
                 printf("CA correction supports only RGB Colour filter arrays\n");
-                return buffer;
+                return false;
             }
 
     double progress = 0.0;
@@ -147,9 +147,8 @@ float* CA_correct(int W, int H, const bool autoCA, const double cared, const dou
     const int hblsz = ceil((float)(width + border2) / (ts - border2) + 2 + hz1);
 
     //temporary array to store simple interpolation of G
-    if (!buffer) {
-        buffer = static_cast<float*>(malloc ((height * width + vblsz * hblsz * (2 * 2 + 1)) * sizeof(float)));
-    }
+    float *buffer = static_cast<float*>(malloc ((height * width + vblsz * hblsz * (2 * 2 + 1)) * sizeof(float)));
+
     float *Gtmp = buffer;
     float *RawDataTmp = buffer + (height * width) / 2;
 
@@ -1196,13 +1195,10 @@ float* CA_correct(int W, int H, const bool autoCA, const double cared, const dou
         }
     }
 
-    if(freeBuffer) {
-        free(buffer);
-        buffer = nullptr;
-    }
+    free(buffer);
 
     setProgCancel(1.0);
 
-    return buffer;
+    return true;
 }
 }
