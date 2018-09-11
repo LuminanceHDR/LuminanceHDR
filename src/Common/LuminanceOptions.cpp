@@ -118,7 +118,7 @@ void LuminanceOptions::setPortableMode(bool isPortable) {
             QGuiApplication::applicationDirPath() + QStringLiteral("/../../../.LuminanceHDR");
         QFile settingsDir(settingsDirName);
         if (!settingsDir.exists()) {
-            QDir settingsPath(QGuiApplication::applicationDirPath() + QStringLiteral("/../../"));
+            QDir settingsPath(QGuiApplication::applicationDirPath() + QStringLiteral("/../../../"));
             settingsPath.mkpath(settingsDirName);
         }
 #endif
