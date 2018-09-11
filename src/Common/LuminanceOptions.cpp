@@ -176,16 +176,15 @@ QString LuminanceOptions::getDatabaseFileName() {
     QString filename;
     if (LuminanceOptions::isCurrentPortableMode) {
         filename = QGuiApplication::applicationDirPath();
+#ifdef Q_OS_MACOS
+        filename += QLatin1String("/../../../.LuminanceHDR");
+        filename = QDir::cleanPath(filename);
+#endif
     } else {
         filename = QDir(QDir::homePath()).absolutePath() + "/" +
                    LUMINANCE_HDR_HOME_FOLDER;
     }
-#ifdef Q_OS_MACOS
-    filename += QLatin1String("/../../../.LuminanceHDR/saved_parameters.db");
-    filename = QDir::cleanPath(filename);
-#else
     filename += QLatin1String("/saved_parameters.db");
-#endif
 
     return filename;
 }
