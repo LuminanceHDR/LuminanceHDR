@@ -136,14 +136,19 @@ int main(int argc, char **argv) {
 #endif
 
     LuminanceOptions::isCurrentPortableMode =
+#ifdef Q_OS_MACOS
+        QDir(QGuiApplication::applicationDirPath())
+            .exists(QStringLiteral("../../../.LuminanceHDR/PortableMode.txt"));
+#else
         QDir(QGuiApplication::applicationDirPath())
             .exists(QStringLiteral("PortableMode.txt"));
+#endif
     LuminanceOptions::checkHomeFolder();
 
     if (LuminanceOptions::isCurrentPortableMode) {
         QSettings::setDefaultFormat(QSettings::IniFormat);
         QSettings::setPath(QSettings::IniFormat, QSettings::UserScope,
-                           QDir::currentPath());
+                           QGuiApplication::applicationDirPath());
     }
 
     LuminanceOptions::conditionallyDoUpgrade();

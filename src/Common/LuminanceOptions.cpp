@@ -113,9 +113,21 @@ void LuminanceOptions::setPortableMode(bool isPortable) {
         }
         delete oldSettings;
 
+#ifdef Q_OS_MACOS
+        QString settingsDirName =
+            QGuiApplication::applicationDirPath() + QStringLiteral("/../../../.LuminanceHDR");
+        QFile settingsDir(settingsDirName);
+        if (!settingsDir.exists()) {
+            QDir settingsPath(QGuiApplication::applicationDirPath() + QStringLiteral("/../../"));
+            settingsPath.mkpath(settingsDirName);
+        }
+#endif
         QString filePath =
-            QDir(QApplication::applicationDirPath())
-                .relativeFilePath(QStringLiteral("PortableMode.txt"));
+#ifdef Q_OS_MACOS
+            QGuiApplication::applicationDirPath() + QStringLiteral("/../../../.LuminanceHDR/PortableMode.txt");
+#else
+            QGuiApplication::applicationDirPath() + QStringLiteral("/PortableMode.txt");
+#endif
         QFile file(filePath);
         if (isPortable && !file.exists()) {
             if (file.open(QIODevice::WriteOnly)) file.close();
@@ -135,11 +147,20 @@ void LuminanceOptions::setUpdateChecked() {
 }
 
 void LuminanceOptions::initSettings() {
-    if (LuminanceOptions::isCurrentPortableMode)
+    if (LuminanceOptions::isCurrentPortableMode) {
+        QString iniFile =
+#ifdef Q_OS_MACOS
+            QGuiApplication::applicationDirPath() + QStringLiteral("/../../../.LuminanceHDR/settings.ini");
+        iniFile = QDir::cleanPath(iniFile);
+#else
+            QGuiApplication::applicationDirPath() + QStringLiteral("/settings.ini");
+#endif
         m_settingHolder =
-            new QSettings(QStringLiteral("settings.ini"), QSettings::IniFormat);
-    else
+            new QSettings( iniFile, QSettings::IniFormat);
+    }
+    else {
         m_settingHolder = new QSettings();
+    }
 }
 
 void LuminanceOptions::setValue(const QString &key, const QVariant &value) {
@@ -154,12 +175,17 @@ QVariant LuminanceOptions::value(const QString &key,
 QString LuminanceOptions::getDatabaseFileName() {
     QString filename;
     if (LuminanceOptions::isCurrentPortableMode) {
-        filename = QDir::currentPath();
+        filename = QGuiApplication::applicationDirPath();
     } else {
         filename = QDir(QDir::homePath()).absolutePath() + "/" +
                    LUMINANCE_HDR_HOME_FOLDER;
     }
+#ifdef Q_OS_MACOS
+    filename += QLatin1String("/../../../.LuminanceHDR/saved_parameters.db");
+    filename = QDir::cleanPath(filename);
+#else
     filename += QLatin1String("/saved_parameters.db");
+#endif
 
     return filename;
 }
@@ -167,7 +193,7 @@ QString LuminanceOptions::getDatabaseFileName() {
 QString LuminanceOptions::getFftwWisdomFileName() {
     QString filename;
     if (LuminanceOptions::isCurrentPortableMode) {
-        filename = QDir::currentPath();
+        filename = QGuiApplication::applicationDirPath();
     } else {
         filename = QDir(QDir::homePath()).absolutePath() + "/" +
                    LUMINANCE_HDR_HOME_FOLDER;
