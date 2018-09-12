@@ -117,7 +117,7 @@ namespace librtprocess
 {
 
 
-bool CA_correct(int W, int H, const bool autoCA, const double cared, const double cablue, array2D<float> &rawData, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale, float outputScale)
+bool CA_correct(int winx, int winy, int winw, int winh, const bool autoCA, const double cared, const double cablue, array2D<float> &rawData, array2D<float> &rawDataOut, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale, float outputScale)
 {
 // multithreaded and vectorized by Ingo Weyrich
     constexpr int ts = 128;
@@ -137,6 +137,8 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
     setProgCancel(progress);
 
     // local variables
+    const int W = rawData.width();
+    const int H = rawData.height();
     const int width = W + (W & 1), height = H;
     constexpr int border = 8;
     constexpr int border2 = 16;
@@ -150,7 +152,7 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
     float *buffer = static_cast<float*>(malloc ((height * width + vblsz * hblsz * (2 * 2 + 1)) * sizeof(float)));
 
     float *Gtmp = buffer;
-    float *RawDataTmp = buffer + (height * width) / 2;
+    float *RawDataTmp = buffer + (winh * winw) / 2;
 
     //block CA shift values and weight assigned to block
     float *const blockwt = buffer + (height * width);
@@ -755,14 +757,18 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
             float *gshift  = (float (*)) (data + 2 * sizeof(float) * ts * ts + sizeof(float) * ts * tsh + 4 * 64); // there is no overlap in buffer usage => share
             #pragma omp for schedule(dynamic) collapse(2) nowait
 
-            for (int top = -border; top < height; top += ts - border2)
-                for (int left = -border; left < width - (W & 1); left += ts - border2) {
+            //for (int top = -border; top < height; top += ts - border2)
+            //    for (int left = -border; left < width - (W & 1); left += ts - border2) {
+            for (int top = winy-border; top < winy+winh; top += ts - border2)
+              for (int left = winx-border; left < winx+winw; left += ts - border2) {
                     memset(bufferThr, 0, buffersizePassTwo);
                     float lblockshifts[2][2];
                     const int vblock = ((top + border) / (ts - border2)) + 1;
                     const int hblock = ((left + border) / (ts - border2)) + 1;
-                    const int bottom = min(top + ts, height + border);
-                    const int right  = min(left + ts, width - (W & 1) + border);
+                    //const int bottom = min(top + ts, height + border);
+                    //const int right  = min(left + ts, width - (W & 1) + border);
+                    const int bottom = min(top + ts, winy + winh + border);
+                    const int right  = min(left + ts, winx + winw + border);
                     const int rr1 = bottom - top;
                     const int cc1 = right - left;
 
@@ -1123,14 +1129,16 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
                         int c = fc(cfarray, rr + top, left + border + (fc(cfarray, rr + top, 2) & 1));
                         int row = rr + top;
                         int cc = border + (fc(cfarray, rr, 2) & 1);
-                        int indx = (row * width + cc + left) >> 1;
+                        //int indx = (row * width + cc + left) >> 1;
+                        int indx = ((row-winy) * winw + cc + left - winx) >> 1;
+                        int indx_max = ((row-winy) * winw + cc1 - border + left - winx) >> 1;
                         int indx1 = (rr * ts + cc) >> 1;
-#ifdef __SSE2__
+#ifdef __SSE2___
                         for (; indx < (row * width + cc1 - border - 7 + left) >> 1; indx+=4, indx1 += 4) {
                             STVFU(RawDataTmp[indx], coutScalev * LVFU(rgb[c][indx1]));
                         }
 #endif
-                        for (; indx < (row * width + cc1 - border + left) >> 1; indx++, indx1++) {
+                        for (; indx < indx_max /*(row * width + cc1 - border + left) >> 1*/; indx++, indx1++) {
                             RawDataTmp[indx] = outputScale * rgb[c][indx1];
                         }
                     }
@@ -1154,16 +1162,23 @@ bool CA_correct(int W, int H, const bool autoCA, const double cared, const doubl
 // copy temporary image matrix back to image matrix
             #pragma omp for
 
-            for(int row = 0; row < height; row++) {
-                int col = fc(cfarray, row, 0) & 1;
-                int indx = (row * width + col) >> 1;
+            //for(int row = 0; row < height; row++) {
+            for(int row = 0; row < winh; row++) {
+                //int col = fc(cfarray, row, 0) & 1;
+                //int indx = (row * width + col) >> 1;
+                int col = fc(cfarray, row+winy, 0) & 1;
+                int indx = (row * winw + col) >> 1;
 #ifdef __SSE2__
-                for(; col < width - 7; col += 8, indx += 4) {
-                    STC2VFU(rawData[row][col], LVFU(RawDataTmp[indx]));
+                //for(; col < width - 7; col += 8, indx += 4) {
+                for(; col < winw - 7; col += 8, indx += 4) {
+                    //STC2VFU(rawData[row][col], LVFU(RawDataTmp[indx]));
+                    STC2VFU(rawDataOut[row+winy][col+winx], LVFU(RawDataTmp[indx]));
                 }
 #endif
-                for(; col < width - (W & 1); col += 2, indx++) {
-                    rawData[row][col] = RawDataTmp[indx];
+                //for(; col < width - (W & 1); col += 2, indx++) {
+                for(; col < winw; col += 2, indx++) {
+                    //rawData[row][col] = RawDataTmp[indx];
+                    rawDataOut[row+winy][col+winx] = RawDataTmp[indx];
                 }
             }
 

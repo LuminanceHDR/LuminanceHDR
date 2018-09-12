@@ -53,7 +53,7 @@ namespace librtprocess
   };
 
     void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale = 65535.f, float outputScale = 65535.f);
-    bool CA_correct(int W, int H, const bool autoCA, const double cared, const double cablue, array2D<float> &rawData, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale = 65535.f, float outputScale = 65535.f);
+    bool CA_correct(int winx, int winy, int winw, int winh, const bool autoCA, const double cared, const double cablue, array2D<float> &rawData, array2D<float> &rawDataOut, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale = 65535.f, float outputScale = 65535.f);
 
 }//namespace
 
