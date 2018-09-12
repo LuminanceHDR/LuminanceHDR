@@ -1133,11 +1133,13 @@ bool CA_correct(int winx, int winy, int winw, int winh, const bool autoCA, const
                         int indx = ((row-winy) * winw + cc + left - winx) >> 1;
                         int indx_max = ((row-winy) * winw + cc1 - border + left - winx) >> 1;
                         int indx1 = (rr * ts + cc) >> 1;
-#ifdef __SSE2___
+/*
+#ifdef __SSE2__
                         for (; indx < (row * width + cc1 - border - 7 + left) >> 1; indx+=4, indx1 += 4) {
                             STVFU(RawDataTmp[indx], coutScalev * LVFU(rgb[c][indx1]));
                         }
 #endif
+*/
                         for (; indx < indx_max /*(row * width + cc1 - border + left) >> 1*/; indx++, indx1++) {
                             RawDataTmp[indx] = outputScale * rgb[c][indx1];
                         }
@@ -1168,6 +1170,7 @@ bool CA_correct(int winx, int winy, int winw, int winh, const bool autoCA, const
                 //int indx = (row * width + col) >> 1;
                 int col = fc(cfarray, row+winy, 0) & 1;
                 int indx = (row * winw + col) >> 1;
+/*
 #ifdef __SSE2__
                 //for(; col < width - 7; col += 8, indx += 4) {
                 for(; col < winw - 7; col += 8, indx += 4) {
@@ -1175,6 +1178,7 @@ bool CA_correct(int winx, int winy, int winw, int winh, const bool autoCA, const
                     STC2VFU(rawDataOut[row+winy][col+winx], LVFU(RawDataTmp[indx]));
                 }
 #endif
+*/
                 //for(; col < width - (W & 1); col += 2, indx++) {
                 for(; col < winw; col += 2, indx++) {
                     //rawData[row][col] = RawDataTmp[indx];
