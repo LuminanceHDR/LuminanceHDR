@@ -117,7 +117,7 @@ namespace librtprocess
 {
 
 
-bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const double cared, const double cablue, bool avoidColourshift, float **rawData, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale, float outputScale)
+bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const double cared, const double cablue, bool avoidColourshift, float **rawDataIn, float **rawDataOut, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale, float outputScale)
 {
 // multithreaded and vectorized by Ingo Weyrich
     constexpr int ts = 128;
@@ -144,7 +144,17 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
         #pragma omp parallel for
         for (int i = 0; i < H; ++i) {
             for (int j = fc(cfarray, i, 0) & 1; j < W; j += 2) {
-                (*oldraw)[i][j / 2] = rawData[i][j];
+                (*oldraw)[i][j / 2] = rawDataIn[i][j];
+            }
+        }
+    }
+
+    if (rawDataOut && rawDataOut != rawDataIn) {
+        // copy raw values before ca correction
+        #pragma omp parallel for
+        for (int i = 0; i < H; ++i) {
+            for (int j = 0; j < W; ++j) {
+                rawDataOut[i][j] = rawDataIn[i][j];
             }
         }
     }
@@ -277,15 +287,15 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
 #ifdef __SSE2__
                             int c0 = fc(cfarray, rr, cc);
                             if(c0 == 1) {
-                                rgb[c0][rr * ts + cc] = rawData[row][col] / inputScale;
+                                rgb[c0][rr * ts + cc] = rawDataOut[row][col] / inputScale;
                                 cc++;
                                 col++;
                                 c0 = fc(cfarray, rr, cc);
                             }
                             int indx1 = rr * ts + cc;
                             for (; cc < ccmax - 7; cc+=8, col+=8, indx1 += 8) {
-                                vfloat val1 = LVFU(rawData[row][col]) / cinScalev;
-                                vfloat val2 = LVFU(rawData[row][col + 4]) / cinScalev;
+                                vfloat val1 = LVFU(rawDataOut[row][col]) / cinScalev;
+                                vfloat val2 = LVFU(rawDataOut[row][col + 4]) / cinScalev;
                                 vfloat nonGreenv = _mm_shuffle_ps(val1,val2,_MM_SHUFFLE( 2,0,2,0 ));
                                 STVFU(rgb[c0][indx1 >> 1], nonGreenv);
                                 STVFU(rgb[1][indx1], val1);
@@ -295,7 +305,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (; cc < ccmax; cc++, col++) {
                                 int c = fc(cfarray, rr, cc);
                                 int indx1 = rr * ts + cc;
-                                rgb[c][indx1 >> ((c & 1) ^ 1)] = rawData[row][col] / inputScale;
+                                rgb[c][indx1 >> ((c & 1) ^ 1)] = rawDataOut[row][col] / inputScale;
                             }
                         }
 
@@ -313,7 +323,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < border; rr++)
                                 for (int cc = ccmin; cc < ccmax; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][((rrmax + rr)*ts + cc) >> ((c & 1) ^ 1)] = rawData[(height - rr - 2)][left + cc] / inputScale;
+                                    rgb[c][((rrmax + rr)*ts + cc) >> ((c & 1) ^ 1)] = rawDataOut[(height - rr - 2)][left + cc] / inputScale;
                                 }
                         }
 
@@ -329,7 +339,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = rrmin; rr < rrmax; rr++)
                                 for (int cc = 0; cc < border; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][(rr * ts + ccmax + cc) >> ((c & 1) ^ 1)] = rawData[(top + rr)][(width - cc - 2)] / inputScale;
+                                    rgb[c][(rr * ts + ccmax + cc) >> ((c & 1) ^ 1)] = rawDataOut[(top + rr)][(width - cc - 2)] / inputScale;
                                 }
                         }
 
@@ -338,7 +348,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < border; rr++)
                                 for (int cc = 0; cc < border; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][(rr * ts + cc) >> ((c & 1) ^ 1)] = rawData[border2 - rr][border2 - cc] / inputScale;
+                                    rgb[c][(rr * ts + cc) >> ((c & 1) ^ 1)] = rawDataOut[border2 - rr][border2 - cc] / inputScale;
                                 }
                         }
 
@@ -346,7 +356,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < border; rr++)
                                 for (int cc = 0; cc < border; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][((rrmax + rr)*ts + ccmax + cc) >> ((c & 1) ^ 1)] = rawData[(height - rr - 2)][(width - cc - 2)] / inputScale;
+                                    rgb[c][((rrmax + rr)*ts + ccmax + cc) >> ((c & 1) ^ 1)] = rawDataOut[(height - rr - 2)][(width - cc - 2)] / inputScale;
                                 }
                         }
 
@@ -354,7 +364,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < border; rr++)
                                 for (int cc = 0; cc < border; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][(rr * ts + ccmax + cc) >> ((c & 1) ^ 1)] = rawData[(border2 - rr)][(width - cc - 2)] / inputScale;
+                                    rgb[c][(rr * ts + ccmax + cc) >> ((c & 1) ^ 1)] = rawDataOut[(border2 - rr)][(width - cc - 2)] / inputScale;
                                 }
                         }
 
@@ -362,7 +372,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < border; rr++)
                                 for (int cc = 0; cc < border; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][((rrmax + rr)*ts + cc) >> ((c & 1) ^ 1)] = rawData[(height - rr - 2)][(border2 - cc)] / inputScale;
+                                    rgb[c][((rrmax + rr)*ts + cc) >> ((c & 1) ^ 1)] = rawDataOut[(height - rr - 2)][(border2 - cc)] / inputScale;
                                 }
                         }
 
@@ -817,7 +827,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
 #ifdef __SSE2__
                             int c = fc(cfarray, rr, cc);
                             if(c & 1) {
-                                rgb[1][indx1] = rawData[row][col] / inputScale;
+                                rgb[1][indx1] = rawDataOut[row][col] / inputScale;
                                 indx++;
                                 indx1++;
                                 cc++;
@@ -825,8 +835,8 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                                 c = fc(cfarray, rr, cc);
                             }
                             for (; cc < ccmax - 7; cc += 8, col += 8, indx += 8, indx1 += 8) {
-                                vfloat val1v = LVFU(rawData[row][col]) / cinscalev;
-                                vfloat val2v = LVFU(rawData[row][col + 4]) / cinscalev;
+                                vfloat val1v = LVFU(rawDataOut[row][col]) / cinscalev;
+                                vfloat val2v = LVFU(rawDataOut[row][col + 4]) / cinscalev;
                                 STVFU(rgb[c][indx1 >> 1], _mm_shuffle_ps(val1v, val2v, _MM_SHUFFLE(2, 0, 2, 0)));
                                 vfloat gtmpv = LVFU(Gtmp[indx >> 1]);
                                 STVFU(rgb[1][indx1], vself(gmask, PERMUTEPS(gtmpv, _MM_SHUFFLE(1, 1, 0, 0)), val1v));
@@ -835,7 +845,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
 #endif
                             for (; cc < ccmax; cc++, col++, indx++, indx1++) {
                                 int c = fc(cfarray, rr, cc);
-                                rgb[c][indx1 >> ((c & 1) ^ 1)] = rawData[row][col] / inputScale;
+                                rgb[c][indx1 >> ((c & 1) ^ 1)] = rawDataOut[row][col] / inputScale;
 
                                 if ((c & 1) == 0) {
                                     rgb[1][indx1] = Gtmp[indx >> 1];
@@ -857,7 +867,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < std::min(border, rr1 - rrmax); rr++)
                                 for (int cc = ccmin; cc < ccmax; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][((rrmax + rr)*ts + cc) >> ((c & 1) ^ 1)] = (rawData[(height - rr - 2)][left + cc]) / inputScale;
+                                    rgb[c][((rrmax + rr)*ts + cc) >> ((c & 1) ^ 1)] = (rawDataOut[(height - rr - 2)][left + cc]) / inputScale;
                                     if ((c & 1) == 0) {
                                         rgb[1][(rrmax + rr)*ts + cc] = Gtmp[((height - rr - 2) * width + left + cc) >> 1];
                                     }
@@ -877,7 +887,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = rrmin; rr < rrmax; rr++)
                                 for (int cc = 0; cc < std::min(border, cc1 - ccmax); cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][(rr * ts + ccmax + cc) >> ((c & 1) ^ 1)] = (rawData[(top + rr)][(width - cc - 2)]) / inputScale;
+                                    rgb[c][(rr * ts + ccmax + cc) >> ((c & 1) ^ 1)] = (rawDataOut[(top + rr)][(width - cc - 2)]) / inputScale;
                                     if ((c & 1) == 0) {
                                         rgb[1][rr * ts + ccmax + cc] = Gtmp[((top + rr) * width + (width - cc - 2)) >> 1];
                                     }
@@ -889,7 +899,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < border; rr++)
                                 for (int cc = 0; cc < border; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][(rr * ts + cc) >> ((c & 1) ^ 1)] = (rawData[border2 - rr][border2 - cc]) / inputScale;
+                                    rgb[c][(rr * ts + cc) >> ((c & 1) ^ 1)] = (rawDataOut[border2 - rr][border2 - cc]) / inputScale;
                                     if ((c & 1) == 0) {
                                         rgb[1][rr * ts + cc] = Gtmp[((border2 - rr) * width + border2 - cc) >> 1];
                                     }
@@ -900,7 +910,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < std::min(border, rr1 - rrmax); rr++)
                                 for (int cc = 0; cc < std::min(border, cc1 - ccmax); cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][((rrmax + rr)*ts + ccmax + cc) >> ((c & 1) ^ 1)] = (rawData[(height - rr - 2)][(width - cc - 2)]) / inputScale;
+                                    rgb[c][((rrmax + rr)*ts + ccmax + cc) >> ((c & 1) ^ 1)] = (rawDataOut[(height - rr - 2)][(width - cc - 2)]) / inputScale;
                                     if ((c & 1) == 0) {
                                         rgb[1][(rrmax + rr)*ts + ccmax + cc] = Gtmp[((height - rr - 2) * width + (width - cc - 2)) >> 1];
                                     }
@@ -911,7 +921,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < border; rr++)
                                 for (int cc = 0; cc < std::min(border, cc1 - ccmax); cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][(rr * ts + ccmax + cc) >> ((c & 1) ^ 1)] = (rawData[(border2 - rr)][(width - cc - 2)]) / inputScale;
+                                    rgb[c][(rr * ts + ccmax + cc) >> ((c & 1) ^ 1)] = (rawDataOut[(border2 - rr)][(width - cc - 2)]) / inputScale;
                                     if ((c & 1) == 0) {
                                         rgb[1][rr * ts + ccmax + cc] = Gtmp[((border2 - rr) * width + (width - cc - 2)) >> 1];
                                     }
@@ -922,7 +932,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int rr = 0; rr < std::min(border, rr1 - rrmax); rr++)
                                 for (int cc = 0; cc < border; cc++) {
                                     int c = fc(cfarray, rr, cc);
-                                    rgb[c][((rrmax + rr)*ts + cc) >> ((c & 1) ^ 1)] = (rawData[(height - rr - 2)][(border2 - cc)]) / inputScale;
+                                    rgb[c][((rrmax + rr)*ts + cc) >> ((c & 1) ^ 1)] = (rawDataOut[(height - rr - 2)][(border2 - cc)]) / inputScale;
                                     if ((c & 1) == 0) {
                                         rgb[1][(rrmax + rr)*ts + cc] = Gtmp[((height - rr - 2) * width + (border2 - cc)) >> 1];
                                     }
@@ -1194,11 +1204,11 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                     int indx = (row * width + col) >> 1;
 #ifdef __SSE2__
                     for(; col < width - 7; col += 8, indx += 4) {
-                        STC2VFU(rawData[row][col], LVFU(RawDataTmp[indx]));
+                        STC2VFU(rawDataOut[row][col], LVFU(RawDataTmp[indx]));
                     }
 #endif
                     for(; col < width - (W & 1); col += 2, indx++) {
-                        rawData[row][col] = RawDataTmp[indx];
+                        rawDataOut[row][col] = RawDataTmp[indx];
                     }
                 }
 
@@ -1227,7 +1237,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                     int j = firstCol;
 #ifdef __SSE2__
                     for (; j < W - 7; j += 8) {
-                        const vfloat newvals = LC2VFU(rawData[i][j]);
+                        const vfloat newvals = LC2VFU(rawDataOut[i][j]);
                         const vfloat oldvals = LVFU((*oldraw)[i][j / 2]);
                         vfloat factors = oldvals / newvals;
                         factors = vself(vmaskf_le(newvals, onev), onev, factors);
@@ -1236,7 +1246,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                     }
 #endif
                     for (; j < W; j += 2) {
-                        (*nonGreen)[i/2][j/2] = (rawData[i][j] <= 1.f || (*oldraw)[i][j / 2] <= 1.f) ? 1.f : librtprocess::LIM((*oldraw)[i][j / 2] / rawData[i][j], 0.5f, 2.f);
+                        (*nonGreen)[i/2][j/2] = (rawDataOut[i][j] <= 1.f || (*oldraw)[i][j / 2] <= 1.f) ? 1.f : librtprocess::LIM((*oldraw)[i][j / 2] / rawDataOut[i][j], 0.5f, 2.f);
                     }
                 }
 
@@ -1275,7 +1285,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                     const int colour = fc(cfarray, i, firstCol);
                     const array2D<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
                     for (int j = firstCol; j < W; j += 2) {
-                        rawData[i][j] *= (*nonGreen)[i/2][j/2];
+                        rawDataOut[i][j] *= (*nonGreen)[i/2][j/2];
                     }
                 }
             }
