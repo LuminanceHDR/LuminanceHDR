@@ -1283,6 +1283,12 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
     }
     free(buffer);
 
+    if (avoidColourshift) {
+        delete oldraw;
+        delete redFactor;
+        delete blueFactor;
+    }
+
     setProgCancel(1.0);
 
     return processpasstwo;
