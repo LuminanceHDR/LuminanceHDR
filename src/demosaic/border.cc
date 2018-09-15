@@ -33,7 +33,7 @@ using namespace std;
 namespace librtprocess
 {
 
-void bayerborder_demosaic(int winw, int winh, int lborders, float **rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray)
+void bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray)
 {
     int bord = lborders;
     int width = winw;
@@ -190,7 +190,7 @@ void bayerborder_demosaic(int winw, int winh, int lborders, float **rawData, flo
 
 #define fcol(row,col) xtrans[(row)%6][(col)%6]
 
-void xtransborder_demosaic(int winw, int winh, int border, float **rawData, float **red, float **green, float **blue, int xtrans[6][6])
+void xtransborder_demosaic(int winw, int winh, int border, const float * const *rawData, float **red, float **green, float **blue, int xtrans[6][6])
 {
     const int height = winh, width = winw;
 

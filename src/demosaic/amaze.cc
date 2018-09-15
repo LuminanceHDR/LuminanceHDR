@@ -47,7 +47,7 @@ unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
 namespace librtprocess
 {
 
-void amaze_demosaic(int winx, int winy, int winw, int winh, float **rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
+void amaze_demosaic(int winx, int winy, int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
 {
     BENCHFUN
 

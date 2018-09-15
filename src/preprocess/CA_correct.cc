@@ -118,7 +118,7 @@ namespace librtprocess
 {
 
 
-bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const double cared, const double cablue, bool avoidColourshift, float **rawDataIn, float **rawDataOut, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale, float outputScale)
+bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const double cared, const double cablue, bool avoidColourshift, const float * const *rawDataIn, float **rawDataOut, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale, float outputScale)
 {
 // multithreaded and vectorized by Ingo Weyrich
     constexpr int ts = 128;
