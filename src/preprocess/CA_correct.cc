@@ -23,7 +23,8 @@
 ////////////////////////////////////////////////////////////////
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-#include "rawimagesource.h"
+#include "librtprocess.h"
+#include "array2D.h"
 #include "rt_math.h"
 #include "median.h"
 #include "StopWatch.h"

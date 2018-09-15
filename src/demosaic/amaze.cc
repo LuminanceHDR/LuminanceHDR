@@ -29,7 +29,7 @@
 #include <algorithm>
 #include <array>
 
-#include "../rawimagesource.h"
+#include "../librtprocess.h"
 #include "../rt_math.h"
 #include "../sleef.c"
 #include "../opthelper.h"
@@ -47,7 +47,7 @@ unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
 namespace librtprocess
 {
 
-void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
+void amaze_demosaic(int winx, int winy, int winw, int winh, float **rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
 {
     BENCHFUN
 

@@ -23,14 +23,14 @@
 #include <array>
 #include <functional>
 
-#include "array2D.h"
-
 using ColorFilterArray = std::array<std::array<unsigned, 2>, 2>;
 using CaFitParams = std::array<std::array<std::array<double, 16>, 2>, 2>;
+
 namespace librtprocess
 {
-
-    void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale = 65535.f, float outputScale = 65535.f);
+    void bayerborder_demosaic(int winw, int winh, int lborders, float **rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray);
+    void xtransborder_demosaic(int winw, int winh, int border, float **rawData, float **red, float **green, float **blue, int xtrans[6][6]);
+    void amaze_demosaic(int winx, int winy, int winw, int winh, float **rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale = 65535.f, float outputScale = 65535.f);
     bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const double cared, const double cablue, bool avoidColourshift, float **rawDataIn, float **rawDataOut, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale = 65535.f, float outputScale = 65535.f);
 
     enum eGaussType {GAUSS_STANDARD, GAUSS_MULT, GAUSS_DIV};
