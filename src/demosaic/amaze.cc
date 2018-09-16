@@ -28,6 +28,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cstring>
 
 #include "../librtprocess.h"
 #include "../rt_math.h"
