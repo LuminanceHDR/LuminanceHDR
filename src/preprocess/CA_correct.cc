@@ -194,7 +194,6 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
 
     const bool fitParamsSet = fitParamsIn && iterations < 2;
 
-    constexpr float eps = 1e-5f, eps2 = 1e-10f; //tolerance to avoid dividing by zero
     for (size_t it = 0; it < iterations && processpasstwo; ++it) {
         float blockave[2][2] = {};
         float blocksqave[2][2] = {};
