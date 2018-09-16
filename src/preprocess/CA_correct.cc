@@ -1,11 +1,11 @@
 ////////////////////////////////////////////////////////////////
 //
-//      Chromatic Aberration Auto-correction
+//  Chromatic Aberration correction on raw bayer cfa data
 //
-//      copyright (c) 2008-2010  Emil Martinec <ejmartin@uchicago.edu>
+//  copyright (c) 2008-2010 Emil Martinec <ejmartin@uchicago.edu>
+//  copyright (c) for improvements (speedups, iterated correction and avoid colour shift) 2018 Ingo Weyrich <heckflosse67@gmx.de>
 //
-//
-// code dated: November 26, 2010
+//  code dated: September 8, 2018
 //
 //  CA_correct_RT.cc is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -14,20 +14,20 @@
 //
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 ////////////////////////////////////////////////////////////////
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 #include "librtprocess.h"
 #include "array2D.h"
 #include "rt_math.h"
 #include "median.h"
 #include "StopWatch.h"
+
 namespace {
 
 bool LinEqSolve(int nDim, double* pfMatr, double* pfVect, std::array<double, 16> &pfSolution)
@@ -104,7 +104,6 @@ bool LinEqSolve(int nDim, double* pfMatr, double* pfVect, std::array<double, 16>
     return true;
 }
 //end of linear equation solver
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
 {
@@ -117,8 +116,23 @@ using namespace std;
 namespace librtprocess
 {
 
-
-bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const double cared, const double cablue, bool avoidColourshift, const float * const *rawDataIn, float **rawDataOut, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale, float outputScale)
+bool CA_correct(
+    int W,
+    int H,
+    const bool autoCA,
+    size_t autoIterations,
+    const double cared,
+    const double cablue,
+    bool avoidColourshift,
+    const float * const *rawDataIn,
+    float **rawDataOut,
+    const ColorFilterArray &cfarray,
+    const std::function<bool(double)> &setProgCancel,
+    CaFitParams &fitParams,
+    bool fitParamsIn,
+    float inputScale,
+    float outputScale
+)
 {
 // multithreaded and vectorized by Ingo Weyrich
     constexpr int ts = 128;
@@ -127,12 +141,14 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
     constexpr int v1 = ts, v2 = 2 * ts, v3 = 3 * ts, v4 = 4 * ts; //, p1=-ts+1, p2=-2*ts+2, p3=-3*ts+3, m1=ts+1, m2=2*ts+2, m3=3*ts+3;
 
     // Test for RGB cfa
-    for(int i = 0; i < 2; i++)
-        for(int j = 0; j < 2; j++)
+    for(int i = 0; i < 2; i++) {
+        for(int j = 0; j < 2; j++) {
             if(fc(cfarray, i, j) == 3) {
-                printf("CA correction supports only RGB Colour filter arrays\n");
+                std::cout << "CA correction supports only RGB Colour filter arrays" << std::endl;
                 return false;
             }
+        }
+    }
 
     array2D<float>* redFactor = nullptr;
     array2D<float>* blueFactor = nullptr;
@@ -309,7 +325,6 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             }
                         }
 
-                        // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                         //fill borders
                         if (rrmin > 0) {
                             for (int rr = 0; rr < border; rr++)
@@ -377,7 +392,6 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                         }
 
                         //end of border fill
-                        // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                         //end of initialization
 
 
@@ -436,7 +450,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             }
 
                         }
-                        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 #ifdef __SSE2__
                         vfloat zd25v = F2V(0.25f);
 #endif
@@ -661,12 +675,10 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                                 blockvar[dir][c] = blocksqave[dir][c] / blockdenom[dir][c] - SQR(blockave[dir][c] / blockdenom[dir][c]);
                             } else {
                                 processpasstwo = false;
-                                printf ("blockdenom vanishes \n");
+                                std::cout << "blockdenom vanishes" << std::endl;
                                 break;
                             }
                         }
-
-                    // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
                     //now prepare for CA correction pass
                     //first, fill border blocks of blockshift array
@@ -764,7 +776,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
 
                             if (numblox[1] < 10) {
 
-                                printf ("numblox = %d \n", numblox[1]);
+                                std::cout << "numblox = " << numblox[1] << std::endl;
                                 processpasstwo = false;
                             }
                         }
@@ -775,7 +787,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                             for (int c = 0; c < 2; c++)
                                 for (int dir = 0; dir < 2; dir++) {
                                     if (!LinEqSolve(numpar, polymat[c][dir], shiftmat[c][dir], fitParams[c][dir])) {
-                                        printf("CA correction pass failed -- can't solve linear equations for colour %d direction %d...\n", c, dir);
+                                        std::cout << "CA correction pass failed -- can't solve linear equations for colour %d direction " << c << std::endl;
                                         processpasstwo = false;
                                     }
                                 }
@@ -852,7 +864,7 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                                 }
                             }
                         }
-                        // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
                         //fill borders
                         if (rrmin > 0) {
                             for (int rr = 0; rr < border; rr++)
@@ -940,7 +952,6 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                         }
 
                         //end of border fill
-                        // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
                         if (!autoCA || fitParamsSet) {
 #ifdef __SSE2__
