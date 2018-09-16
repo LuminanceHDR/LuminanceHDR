@@ -30,12 +30,12 @@
 #include <array>
 #include <cstring>
 
-#include "../librtprocess.h"
-#include "../rt_math.h"
-#include "../sleef.c"
-#include "../opthelper.h"
-#include "../median.h"
-#include "../StopWatch.h"
+#include "librtprocess.h"
+#include "rt_math.h"
+#include "sleef.c"
+#include "opthelper.h"
+#include "median.h"
+#include "StopWatch.h"
 
 namespace
 {

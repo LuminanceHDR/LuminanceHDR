@@ -13,10 +13,10 @@ endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 
 # Stop compilation on typos such as std:swap (missing colon will be detected as unused label):
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=unused-label")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=unused-label -O3")
 
 #bring headers into the project
-include_directories(src)
+include_directories(src/include)
 
 #get source files
 file(GLOB_RECURSE SOURCES "src/*.cc")
@@ -27,11 +27,11 @@ if(WIN32)
 add_library(rtprocess STATIC ${SOURCES})
 install(TARGETS rtprocess DESTINATION lib)
 install(FILES "pkgconfig/msys2/rtprocess.pc" DESTINATION lib/pkgconfig)
-install(FILES "src/librtprocess.h" DESTINATION include/rtprocess)
+install(FILES "src/include/librtprocess.h" DESTINATION include/rtprocess)
 else()
 #generate shared library
 add_library(rtprocess SHARED ${SOURCES})
 install(TARGETS rtprocess DESTINATION /usr/lib)
 install(FILES "pkgconfig/linux/rtprocess.pc" DESTINATION /usr/lib/pkgconfig)
-install(FILES "src/librtprocess.h" DESTINATION /usr/include/rtprocess)
+install(FILES "src/include/librtprocess.h" DESTINATION /usr/include/rtprocess)
 endif()

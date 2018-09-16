@@ -18,7 +18,7 @@
  */
 #include <algorithm>
 
-#include "../librtprocess.h"
+#include "librtprocess.h"
 
 namespace
 {
