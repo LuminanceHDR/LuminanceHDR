@@ -1204,11 +1204,11 @@ bool CA_correct(int W, int H, const bool autoCA, size_t autoIterations, const do
                     int col = fc(cfarray, row, 0) & 1;
                     int indx = (row * width + col) >> 1;
 #ifdef __SSE2__
-                    for(; col < width - 7; col += 8, indx += 4) {
+                    for (; col < width - 7 - (3 * (W & 1)); col += 8, indx += 4) {
                         STC2VFU(rawDataOut[row][col], LVFU(RawDataTmp[indx]));
                     }
 #endif
-                    for(; col < width - (W & 1); col += 2, indx++) {
+                    for (; col < width - (3 * (W & 1)); col += 2, indx++) {
                         rawDataOut[row][col] = RawDataTmp[indx];
                     }
                 }
