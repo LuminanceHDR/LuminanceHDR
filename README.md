@@ -1,7 +1,8 @@
 This is a project that aims to make some of RawTherapee's highly optimized raw processing routines readily available for other FOSS photo editing software.
 
 The goal is to move certain source files from RawTherapee into this library.
-Thus, any changes to the source can be done herea nd will be used by the projects which use librtprocess.
+Thus, any changes to the source can be done here and will be used by the projects which use librtprocess.
+
 librtprocess currently is maintained by developers of the following projects:
 
 Filmulator https://github.com/CarVac/filmulator-gui
