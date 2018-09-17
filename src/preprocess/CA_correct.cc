@@ -117,8 +117,10 @@ namespace librtprocess
 {
 
 bool CA_correct(
-    int W,
-    int H,
+    int winx,
+    int winy,
+    int winw,
+    int winh,
     const bool autoCA,
     size_t autoIterations,
     const double cared,
@@ -150,6 +152,10 @@ bool CA_correct(
         }
     }
 
+    // local variables
+    const int W = winw - winx;
+    const int H = winh - winy;
+
     array2D<float>* redFactor = nullptr;
     array2D<float>* blueFactor = nullptr;
     array2D<float>* oldraw = nullptr;
@@ -161,7 +167,7 @@ bool CA_correct(
         #pragma omp parallel for
         for (int i = 0; i < H; ++i) {
             for (int j = fc(cfarray, i, 0) & 1; j < W; j += 2) {
-                (*oldraw)[i][j / 2] = rawDataIn[i][j];
+                (*oldraw)[i][j / 2] = rawDataIn[i + winy][j + winx];
             }
         }
     }
@@ -171,7 +177,7 @@ bool CA_correct(
         #pragma omp parallel for
         for (int i = 0; i < H; ++i) {
             for (int j = 0; j < W; ++j) {
-                rawDataOut[i][j] = rawDataIn[i][j];
+                rawDataOut[i + winy][j + winx] = rawDataIn[i + winy][j + winx];
             }
         }
     }
@@ -179,7 +185,6 @@ bool CA_correct(
     double progress = 0.0;
     setProgCancel(progress);
 
-    // local variables
     const int width = W + (W & 1), height = H;
     constexpr int border = 8;
     constexpr int border2 = 16;
@@ -193,7 +198,7 @@ bool CA_correct(
     float *buffer = static_cast<float*>(malloc ((height * width + vblsz * hblsz * (2 * 2 + 1)) * sizeof(float)));
 
     float *Gtmp = buffer;
-    float *RawDataTmp = buffer + (height * width) / 2;
+    float *RawDataTmp = buffer + (winh * winw) / 2;
 
     //block CA shift values and weight assigned to block
     float *const blockwt = buffer + (height * width);
@@ -806,14 +811,14 @@ bool CA_correct(
                 float *gshift  = (float (*)) (data + 2 * sizeof(float) * ts * ts + sizeof(float) * ts * tsh + 4 * 64); // there is no overlap in buffer usage => share
                 #pragma omp for schedule(dynamic) collapse(2) nowait
 
-                for (int top = -border; top < height; top += ts - border2)
-                    for (int left = -border; left < width - (W & 1); left += ts - border2) {
+                for (int top = winy-border; top < winy+winh; top += ts - border2)
+                  for (int left = winx-border; left < winx+winw; left += ts - border2) {
                         memset(bufferThr, 0, buffersizePassTwo);
                         float lblockshifts[2][2];
                         const int vblock = ((top + border) / (ts - border2)) + 1;
                         const int hblock = ((left + border) / (ts - border2)) + 1;
-                        const int bottom = min(top + ts, height + border);
-                        const int right  = min(left + ts, width - (W & 1) + border);
+                        const int bottom = min(top + ts, winy + winh + border);
+                        const int right  = min(left + ts, winx + winw - (W & 1) + border);
                         const int rr1 = bottom - top;
                         const int cc1 = right - left;
 
@@ -1179,14 +1184,14 @@ bool CA_correct(
                             int c = fc(cfarray, rr + top, left + border + (fc(cfarray, rr + top, 2) & 1));
                             int row = rr + top;
                             int cc = border + (fc(cfarray, rr, 2) & 1);
-                            int indx = (row * width + cc + left) >> 1;
+                            int indx = ((row-winy) * winw + cc + left - winx) >> 1;
                             int indx1 = (rr * ts + cc) >> 1;
 #ifdef __SSE2__
-                            for (; indx < (row * width + cc1 - border - 7 + left) >> 1; indx+=4, indx1 += 4) {
+                            for (; indx < ((row-winy) * winw + cc1 - border - 7 + left - winx) >> 1; indx+=4, indx1 += 4) {
                                 STVFU(RawDataTmp[indx], coutScalev * LVFU(rgb[c][indx1]));
                             }
 #endif
-                            for (; indx < (row * width + cc1 - border + left) >> 1; indx++, indx1++) {
+                            for (; indx < ((row-winy) * winw + cc1 - border + left - winx) >> 1; indx++, indx1++) {
                                 RawDataTmp[indx] = outputScale * rgb[c][indx1];
                             }
                         }
@@ -1210,24 +1215,24 @@ bool CA_correct(
                 // copy temporary image matrix back to image matrix
                 #pragma omp for
 
-                for(int row = 0; row < height; row++) {
-                    int col = fc(cfarray, row, 0) & 1;
-                    int indx = (row * width + col) >> 1;
+                for(int row = 0; row < winh; row++) {
+                    int col = fc(cfarray, row + winy, winx) & 1;
+                    int indx = (row * winw + col) >> 1;
 #ifdef __SSE2__
-                    for (; col < width - 7 - (3 * (W & 1)); col += 8, indx += 4) {
-                        STC2VFU(rawDataOut[row][col], LVFU(RawDataTmp[indx]));
+                    for (; col < winw - 7 - (3 * (W & 1)); col += 8, indx += 4) {
+                        STC2VFU(rawDataOut[row + winy][col + winx], LVFU(RawDataTmp[indx]));
                     }
 #endif
-                    for (; col < width - (3 * (W & 1)); col += 2, indx++) {
-                        rawDataOut[row][col] = RawDataTmp[indx];
+                    for (; col < winw - (3 * (W & 1)); col += 2, indx++) {
+                        rawDataOut[row + winy][col + winx] = RawDataTmp[indx];
                     }
                 }
-
             }
 
             // clean up
             free(bufferThr);
         }
+
         if (avoidColourshift) {
             // to avoid or at least reduce the colour shift caused by raw ca correction we compute the per pixel difference factors
             // of red and blue channel and apply a gaussian blur to them.
@@ -1241,23 +1246,23 @@ bool CA_correct(
                 const vfloat zd5v = F2V(0.5f);
 #endif
                 #pragma omp for
-                for (int i = 0; i < H; ++i) {
-                    const int firstCol = fc(cfarray, i, 0) & 1;
+                for (int i = winy; i < winh; ++i) {
+                    const int firstCol = winx + (fc(cfarray, i, winx) & 1);
                     const int colour = fc(cfarray, i, firstCol);
                     const array2D<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
                     int j = firstCol;
 #ifdef __SSE2__
-                    for (; j < W - 7; j += 8) {
+                    for (; j < winw - 7; j += 8) {
                         const vfloat newvals = LC2VFU(rawDataOut[i][j]);
-                        const vfloat oldvals = LVFU((*oldraw)[i][j / 2]);
+                        const vfloat oldvals = LVFU((*oldraw)[i - winy][(j - winx) / 2]);
                         vfloat factors = oldvals / newvals;
                         factors = vself(vmaskf_le(newvals, onev), onev, factors);
                         factors = vself(vmaskf_le(oldvals, onev), onev, factors);
-                        STVFU((*nonGreen)[i/2][j/2], LIMV(factors, zd5v, twov));
+                        STVFU((*nonGreen)[(i - winy) / 2][(j - winx) / 2], LIMV(factors, zd5v, twov));
                     }
 #endif
-                    for (; j < W; j += 2) {
-                        (*nonGreen)[i/2][j/2] = (rawDataOut[i][j] <= 1.f || (*oldraw)[i][j / 2] <= 1.f) ? 1.f : librtprocess::LIM((*oldraw)[i][j / 2] / rawDataOut[i][j], 0.5f, 2.f);
+                    for (; j < winw; j += 2) {
+                        (*nonGreen)[(i - winy) / 2][(j - winx) / 2] = (rawDataOut[i][j] <= 1.f || (*oldraw)[i - winy][(j - winx) / 2] <= 1.f) ? 1.f : librtprocess::LIM((*oldraw)[i - winy][(j - winx) / 2] / rawDataOut[i][j], 0.5f, 2.f);
                     }
                 }
 
@@ -1265,18 +1270,18 @@ bool CA_correct(
                 {
                     if (H % 2) {
                         // odd height => factors for one channel are not set in last row => use values of preceding row
-                        const int firstCol = fc(cfarray, 0, 0) & 1;
-                        const int colour = fc(cfarray, 0, firstCol);
+                        const int firstCol = winx + (fc(cfarray, winy, winx) & 1);
+                        const int colour = fc(cfarray, winy, firstCol);
                         const array2D<float>* nonGreen = colour == 0 ? blueFactor : redFactor;
-                        for (int j = 0; j < (W + 1) / 2; ++j) {
+                        for (int j = winx; j < (winw + 1) / 2; ++j) {
                             (*nonGreen)[(H + 1) / 2 - 1][j] = (*nonGreen)[(H + 1) / 2 - 2][j];
                         }
                     }
 
                     if (W % 2) {
                         // odd width => factors for one channel are not set in last column => use value of preceding column
-                        const int ngRow = 1 - (fc(cfarray, 0, 0) & 1);
-                        const int ngCol = fc(cfarray, ngRow, 0) & 1;
+                        const int ngRow = winy + (1 - (fc(cfarray, winy, winx) & 1));
+                        const int ngCol = winx + (fc(cfarray, ngRow, winx) & 1);
                         const int colour = fc(cfarray, ngRow, ngCol);
                         const array2D<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
                         for (int i = 0; i < (H + 1) / 2; ++i) {
@@ -1291,11 +1296,11 @@ bool CA_correct(
 
                 // apply correction factors to avoid (reduce) colour shift
                 #pragma omp for
-                for (int i = 0; i < H; ++i) {
-                    const int firstCol = fc(cfarray, i, 0) & 1;
+                for (int i = winy; i < winh; ++i) {
+                    const int firstCol = winx + (fc(cfarray, i, winx) & 1);
                     const int colour = fc(cfarray, i, firstCol);
                     const array2D<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
-                    for (int j = firstCol; j < W; j += 2) {
+                    for (int j = firstCol; j < winw; j += 2) {
                         rawDataOut[i][j] *= (*nonGreen)[i/2][j/2];
                     }
                 }
