@@ -68,13 +68,16 @@
 
 #include "noncopyable.h"
 
+namespace librtprocess
+{
+
 template<typename T>
 class array2D :
     public librtprocess::NonCopyable
 {
 
 private:
-    int x, y, owner;
+    int x, y, owner, offset_x, offset_y;
     unsigned int flags;
     T ** ptr;
     T * data;
@@ -113,7 +116,7 @@ public:
     // use as empty declaration, resize before use!
     // very useful as a member object
     array2D() :
-        x(0), y(0), owner(0), flags(0), ptr(nullptr), data(nullptr), lock(false)
+        x(0), y(0), offset_x(0), offset_y(0), owner(0), flags(0), ptr(nullptr), data(nullptr), lock(false)
     {
         //printf("got empty array2D init\n");
     }
@@ -127,6 +130,7 @@ public:
         owner = 1;
         x = w;
         y = h;
+        offset_x = offset_y = 0;
         ptr = new T*[h];
 
         for (int i = 0; i < h; i++) {
@@ -156,6 +160,7 @@ public:
 
         x = w;
         y = h;
+        offset_x = offset_y = 0;
         ptr = new T*[h];
 
         for (int i = 0; i < h; i++) {
@@ -171,6 +176,46 @@ public:
         }
     }
 
+    // creator type 3
+    array2D(int w, int h, int rw, int rh, T * source, int rowstride,
+        int offsx=0, int offsy=0, unsigned int flgs = 0)
+    {
+        flags = flgs;
+        //if (lock) { printf("array2D attempt to overwrite data\n");raise(SIGSEGV);}
+        lock = flags & ARRAY2D_LOCK_DATA;
+        // when by reference
+        // TODO: improve this code with ar_realloc()
+        owner = (flags & ARRAY2D_BYREFERENCE) ? 0 : 1;
+
+        if (owner) {
+            data = new T[rh * rw];
+        } else {
+            data = nullptr;
+        }
+
+        x = w;
+        y = h;
+        offset_x = offsx;
+        offset_y = offsy;
+        ptr = new T*[rh];
+        T* sptr = source;
+
+        for (int i = 0; i < rh; i++) {
+            if (owner) {
+                ptr[i] = data + i * rw;
+
+                for (int j = 0; j < rw; j++) {
+                    ptr[i][j] = sptr[j];
+                }
+                ptr[i] -= offsx;
+            } else {
+                ptr[i] = sptr - offsx;
+            }
+            sptr += rowstride;
+        }
+        ptr -= offsy;
+    }
+
     // destructor
     ~array2D()
     {
@@ -184,7 +229,7 @@ public:
         }
 
         if (ptr) {
-            delete[] ptr;
+            delete[] (ptr+offset_y);
         }
     }
 
@@ -196,7 +241,7 @@ public:
         }
 
         if (ptr) {
-            delete [] ptr;
+            delete[] (ptr+offset_y);
             ptr = nullptr;
         }
     }
@@ -267,16 +312,16 @@ public:
         ar_realloc(w, h);
         memcpy(data, copy, w * h * sizeof(T));
     }
-    int width()
+    int width() const
     {
         return x;
     }
-    int height()
+    int height() const
     {
         return y;
     }
 
-    operator bool()
+    operator bool() const
     {
         return (x > 0 && y > 0);
     }
@@ -307,4 +352,7 @@ public:
         return list[index];
     }
 };
+
+}//namespace
+
 #endif /* array2D_H_ */

@@ -55,6 +55,8 @@ void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float>
     setProgCancel(progress);
 
     const int width = winw, height = winh;
+    const int raw_width = rawData.width();
+    const int raw_height = rawData.height();
     const float clip_pt = 1.0 / initGain;
     const float clip_pt8 = 0.8 / initGain;
 
@@ -199,8 +201,10 @@ void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float>
                 // min and max row/column in the tile
                 int rrmin = top < winy ? 16 : 0;
                 int ccmin = left < winx ? 16 : 0;
-                int rrmax = bottom > (winy + height) ? winy + height - top : rr1;
-                int ccmax = right > (winx + width) ? winx + width - left : cc1;
+                //int rrmax = bottom > (winy + height) ? winy + height - top : rr1;
+                int rrmax = bottom > (raw_height) ? winy + height - top : rr1;
+                //int ccmax = right > (winx + width) ? winx + width - left : cc1;
+                int ccmax = right > (raw_width) ? winx + width - left : cc1;
 
                 // rgb from input CFA data
                 // rgb values should be floating point number between 0 and 1
