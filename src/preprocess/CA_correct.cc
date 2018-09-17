@@ -105,7 +105,7 @@ bool LinEqSolve(int nDim, double* pfMatr, double* pfVect, std::array<double, 16>
 //end of linear equation solver
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-unsigned fc(const librtprocess::ColorFilterArray &cfa, unsigned row, unsigned col)
+unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
 {
     return cfa[row & 1][col & 1];
 }
