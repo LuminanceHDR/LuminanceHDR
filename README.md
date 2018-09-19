@@ -22,14 +22,14 @@ This is version 0.3.0, which furnishes the following routines:
 Build instructions:
 
 1. Make a subdirectory named `build`, and `cd` to that directory.
-2. Run `cmake ..`
+2. Run `cmake ..` (or `cmake -DVERBOSE=ON ..` to build in verbose mode)
 3. Run `make`
 4. Run `make install` as root.
 
 Build instructions for Windows msys2 environment:
 
 1. Make a subdirectory named `build`, and `cd` to that directory.
-2. Run `cmake -G "MSYS Makefiles" -DCMAKE_INSTALL_PREFIX="$MSYSTEM_PREFIX" ..`
+2. Run `cmake -G "MSYS Makefiles" -DCMAKE_INSTALL_PREFIX="$MSYSTEM_PREFIX" ..` (or `cmake -G "MSYS Makefiles" -DCMAKE_INSTALL_PREFIX="$MSYSTEM_PREFIX" -DVERBOSE=ON ..` to build in verbose mode)
 3. Run `make`
 4. Run `make install`.
 

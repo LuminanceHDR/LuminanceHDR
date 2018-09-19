@@ -15,6 +15,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 # Stop compilation on typos such as std:swap (missing colon will be detected as unused label):
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=unused-label -O3")
 
+option(VERBOSE "Build in verbose mode" OFF)
+if(VERBOSE)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBENCHMARK -DVERBOSE")
+endif()
+
 #bring headers into the project
 include_directories(src/include)
 

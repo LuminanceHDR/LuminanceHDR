@@ -136,6 +136,7 @@ bool CA_correct(
     float outputScale
 )
 {
+    BENCHFUN
 // multithreaded and vectorized by Ingo Weyrich
     constexpr int ts = 128;
     constexpr int tsh = ts / 2;

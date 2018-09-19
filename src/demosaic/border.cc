@@ -19,6 +19,7 @@
 #include <algorithm>
 
 #include "librtprocess.h"
+#include "StopWatch.h"
 
 namespace
 {
@@ -35,6 +36,7 @@ namespace librtprocess
 
 void bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray)
 {
+    BENCHFUN
     int bord = lborders;
     int width = winw;
     int height = winh;
@@ -192,6 +194,7 @@ void bayerborder_demosaic(int winw, int winh, int lborders, const float * const 
 
 void xtransborder_demosaic(int winw, int winh, int border, const float * const *rawData, float **red, float **green, float **blue, int xtrans[6][6])
 {
+    BENCHFUN
     const int height = winh, width = winw;
 
     for (int row = 0; row < height; row++)
