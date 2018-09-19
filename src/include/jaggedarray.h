@@ -21,18 +21,18 @@
 
 #include <cstring>
 
-#include "noncopyable.h"
-
 namespace librtprocess
 {
 
 // These emulate a jagged array, but use only 2 allocations instead of 1 + H.
 
 template<typename T>
-class JaggedArray :
-    public NonCopyable
+class JaggedArray
 {
 public:
+    explicit JaggedArray(const JaggedArray&) = delete;
+    JaggedArray& operator =(const JaggedArray&) = delete;
+
     JaggedArray(std::size_t width, std::size_t height, bool init_zero = false) :
         array(
             [width, height, init_zero]() -> T**
