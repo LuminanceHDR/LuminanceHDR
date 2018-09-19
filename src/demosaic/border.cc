@@ -18,7 +18,8 @@
  */
 #include <algorithm>
 
-#include "../rawimagesource.h"
+#include "librtprocess.h"
+#include "StopWatch.h"
 
 namespace
 {
@@ -33,8 +34,9 @@ using namespace std;
 namespace librtprocess
 {
 
-void bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray)
+void bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray)
 {
+    BENCHFUN
     int bord = lborders;
     int width = winw;
     int height = winh;
@@ -190,8 +192,9 @@ void bayerborder_demosaic(int winw, int winh, int lborders, const array2D<float>
 
 #define fcol(row,col) xtrans[(row)%6][(col)%6]
 
-void xtransborder_demosaic(int winw, int winh, int border, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, int xtrans[6][6])
+void xtransborder_demosaic(int winw, int winh, int border, const float * const *rawData, float **red, float **green, float **blue, int xtrans[6][6])
 {
+    BENCHFUN
     const int height = winh, width = winw;
 
     for (int row = 0; row < height; row++)

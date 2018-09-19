@@ -28,13 +28,14 @@
 
 #include <algorithm>
 #include <array>
+#include <cstring>
 
-#include "../rawimagesource.h"
-#include "../rt_math.h"
-#include "../sleef.c"
-#include "../opthelper.h"
-#include "../median.h"
-#include "../StopWatch.h"
+#include "librtprocess.h"
+#include "rt_math.h"
+#include "sleef.c"
+#include "opthelper.h"
+#include "median.h"
+#include "StopWatch.h"
 
 namespace
 {
@@ -47,7 +48,7 @@ unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
 namespace librtprocess
 {
 
-void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float> &rawData, array2D<float> &red, array2D<float> &green, array2D<float> &blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
+void amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
 {
     BENCHFUN
 
@@ -55,8 +56,6 @@ void amaze_demosaic(int winx, int winy, int winw, int winh, const array2D<float>
     setProgCancel(progress);
 
     const int width = winw, height = winh;
-    const int raw_width = rawData.width();
-    const int raw_height = rawData.height();
     const float clip_pt = 1.0 / initGain;
     const float clip_pt8 = 0.8 / initGain;
 
