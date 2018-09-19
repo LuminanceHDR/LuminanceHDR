@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "array2D.h"
+#include "jaggedarray.h"
 #include "rt_math.h"
 #include "opthelper.h"
 
@@ -36,7 +36,7 @@ template<class T, class A> void boxblur (T** src, A** dst, int radx, int rady, i
 {
     //box blur image; box range = (radx,rady)
 
-    array2D<float> buffer(W, H);
+    JaggedArray<float> buffer(W, H);
     float* temp = buffer;
 
     if (radx == 0) {

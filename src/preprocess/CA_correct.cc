@@ -23,7 +23,7 @@
 ////////////////////////////////////////////////////////////////
 
 #include "librtprocess.h"
-#include "array2D.h"
+#include "jaggedarray.h"
 #include "rt_math.h"
 #include "median.h"
 #include "StopWatch.h"
@@ -156,13 +156,13 @@ bool CA_correct(
     const int W = winw - winx;
     const int H = winh - winy;
 
-    array2D<float>* redFactor = nullptr;
-    array2D<float>* blueFactor = nullptr;
-    array2D<float>* oldraw = nullptr;
+    JaggedArray<float>* redFactor = nullptr;
+    JaggedArray<float>* blueFactor = nullptr;
+    JaggedArray<float>* oldraw = nullptr;
     if (avoidColourshift) {
-        redFactor = new array2D<float>((W+1)/2, (H+1)/2);
-        blueFactor = new array2D<float>((W+1)/2, (H+1)/2);
-        oldraw = new array2D<float>((W + 1) / 2, H);
+        redFactor = new JaggedArray<float>((W+1)/2, (H+1)/2);
+        blueFactor = new JaggedArray<float>((W+1)/2, (H+1)/2);
+        oldraw = new JaggedArray<float>((W + 1) / 2, H);
         // copy raw values before ca correction
         #pragma omp parallel for
         for (int i = 0; i < H; ++i) {
@@ -1249,7 +1249,7 @@ bool CA_correct(
                 for (int i = winy; i < winh; ++i) {
                     const int firstCol = winx + (fc(cfarray, i, winx) & 1);
                     const int colour = fc(cfarray, i, firstCol);
-                    const array2D<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
+                    JaggedArray<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
                     int j = firstCol;
 #ifdef __SSE2__
                     for (; j < winw - 7; j += 8) {
@@ -1272,7 +1272,7 @@ bool CA_correct(
                         // odd height => factors for one channel are not set in last row => use values of preceding row
                         const int firstCol = winx + (fc(cfarray, winy, winx) & 1);
                         const int colour = fc(cfarray, winy, firstCol);
-                        const array2D<float>* nonGreen = colour == 0 ? blueFactor : redFactor;
+                        JaggedArray<float>* nonGreen = colour == 0 ? blueFactor : redFactor;
                         for (int j = winx; j < (winw + 1) / 2; ++j) {
                             (*nonGreen)[(H + 1) / 2 - 1][j] = (*nonGreen)[(H + 1) / 2 - 2][j];
                         }
@@ -1283,7 +1283,7 @@ bool CA_correct(
                         const int ngRow = winy + (1 - (fc(cfarray, winy, winx) & 1));
                         const int ngCol = winx + (fc(cfarray, ngRow, winx) & 1);
                         const int colour = fc(cfarray, ngRow, ngCol);
-                        const array2D<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
+                        JaggedArray<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
                         for (int i = 0; i < (H + 1) / 2; ++i) {
                             (*nonGreen)[i][(W + 1) / 2 - 1] = (*nonGreen)[i][(W + 1) / 2 - 2];
                         }
@@ -1299,7 +1299,7 @@ bool CA_correct(
                 for (int i = winy; i < winh; ++i) {
                     const int firstCol = winx + (fc(cfarray, i, winx) & 1);
                     const int colour = fc(cfarray, i, firstCol);
-                    const array2D<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
+                    JaggedArray<float>* nonGreen = colour == 0 ? redFactor : blueFactor;
                     for (int j = firstCol; j < winw; j += 2) {
                         rawDataOut[i][j] *= (*nonGreen)[i/2][j/2];
                     }
