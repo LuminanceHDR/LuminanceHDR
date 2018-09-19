@@ -33,8 +33,9 @@ Build instructions for Windows msys2 environment:
 3. Run `make`
 4. Run `make install`.
 
-Optional
+Optional switches to be included in the `cmake` command:
 
-1. To build in verbose mode, include `-DVERBOSE=ON` in the cmake command
+1. To build in verbose mode, include `-DVERBOSE=ON`
+2. If you make your own builds, include `-DPROC_TARGET_NUMBER=2` for maximum speed. Keep in mind that this build will only work on the machine you built it.
 
 Include `-lrtprocess`, and `#include <rtprocess/librtprocess.h>` to use this library.

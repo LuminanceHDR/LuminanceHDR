@@ -20,25 +20,44 @@ if(VERBOSE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBENCHMARK -DVERBOSE")
 endif()
 
+# By default we don't use a specific processor target, so PROC_TARGET_NUMBER is set to 0.
+# Specify other values to optimize for specific processor architecture as listed in ProcessorTargets.cmake:
+set(PROC_TARGET_NUMBER 0 CACHE STRING "Selected target processor from the list taken from ProcessorTargets.cmake")
+# Loads the ProcessorTargets list:
+include(ProcessorTargets.cmake)
+set(PROC_FLAGS "" CACHE STRING "Target processor related build/link flags")
+if(NOT(PROC_TARGET_NUMBER EQUAL 0))
+    set(PROC_FLAGS ${PROC_TARGET_${PROC_TARGET_NUMBER}_FLAGS})
+endif()
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PROC_FLAGS}")
+
 #bring headers into the project
 include_directories(src/include)
 
 #get source files
 file(GLOB_RECURSE SOURCES "src/*.cc")
 
-#set location for library installation
 if(WIN32)
-#generate static library
-add_library(rtprocess STATIC ${SOURCES})
-install(TARGETS rtprocess DESTINATION lib)
-install(FILES "pkgconfig/msys2/rtprocess.pc" DESTINATION lib/pkgconfig)
-install(FILES "src/include/librtprocess.h" DESTINATION include/rtprocess)
-install(FILES "src/include/jaggedarray.h" DESTINATION include/rtprocess)
+    set(INSTALL_PREFIX "")
+    set(PC_PREFIX "mingw64")
+    set(LIBRARY_TYPE "STATIC")
 else()
-#generate shared library
-add_library(rtprocess SHARED ${SOURCES})
-install(TARGETS rtprocess DESTINATION /usr/lib)
-install(FILES "pkgconfig/linux/rtprocess.pc" DESTINATION /usr/lib/pkgconfig)
-install(FILES "src/include/librtprocess.h" DESTINATION /usr/include/rtprocess)
-install(FILES "src/include/jaggedarray.h" DESTINATION /usr/include/rtprocess)
+    set(INSTALL_PREFIX "/usr/")
+    set(PC_PREFIX "usr")
+    set(LIBRARY_TYPE "SHARED")
 endif()
+
+#create rtprocess.pc
+file(READ pkgconfig/rtprocessin.pc RTPROCESSIN)
+file(WRITE pkgconfig/rtprocess.pc "prefix=/${PC_PREFIX}")
+file(APPEND pkgconfig/rtprocess.pc ${RTPROCESSIN})
+
+
+
+#set location for library installation
+add_library(rtprocess ${LIBRARY_TYPE} ${SOURCES})
+install(TARGETS rtprocess DESTINATION ${INSTALL_PREFIX}lib)
+install(FILES "pkgconfig/rtprocess.pc" DESTINATION ${INSTALL_PREFIX}lib/pkgconfig)
+install(FILES "src/include/librtprocess.h" DESTINATION ${INSTALL_PREFIX}include/rtprocess)
+install(FILES "src/include/jaggedarray.h" DESTINATION ${INSTALL_PREFIX}include/rtprocess)
