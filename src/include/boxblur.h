@@ -36,8 +36,7 @@ template<class T, class A> void boxblur (T** src, A** dst, int radx, int rady, i
 {
     //box blur image; box range = (radx,rady)
 
-    JaggedArray<float> buffer(W, H);
-    float* temp = buffer;
+    float* temp = new float[W * H];
 
     if (radx == 0) {
 #ifdef _OPENMP
@@ -116,6 +115,8 @@ template<class T, class A> void boxblur (T** src, A** dst, int radx, int rady, i
             }
         }
     }
+
+    delete [] temp;
 }
 
 template<class T, class A> void boxblur (T** src, A** dst, T* buffer, int radx, int rady, int W, int H)
