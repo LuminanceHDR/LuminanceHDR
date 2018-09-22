@@ -5,11 +5,15 @@ Thus, any changes to the source can be done here and will be used by the project
 
 librtprocess currently is maintained by developers of the following projects:
 
-Filmulator https://github.com/CarVac/filmulator-gui
-HdrMerge https://github.com/jcelaya/hdrmerge
-LumincanceHdr https://github.com/LuminanceHDR/LuminanceHDR
-PhotoFlow https://github.com/aferrero2707/PhotoFlow
-RawTherapee https://github.com/Beep6581/RawTherapee
+. Filmulator https://github.com/CarVac/filmulator-gui
+
+. HDRMerge https://github.com/jcelaya/hdrmerge
+
+. LumincanceHdr https://github.com/LuminanceHDR/LuminanceHDR
+
+. PhotoFlow https://github.com/aferrero2707/PhotoFlow
+
+. RawTherapee https://github.com/Beep6581/RawTherapee
 
 ... the latter is where currently all the code comes from ;-)
 
