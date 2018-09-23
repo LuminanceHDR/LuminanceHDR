@@ -9,7 +9,7 @@ librtprocess currently is maintained by developers of the following projects:
 
 . HDRMerge https://github.com/jcelaya/hdrmerge
 
-. LumincanceHdr https://github.com/LuminanceHDR/LuminanceHDR
+. LuminanceHdr https://github.com/LuminanceHDR/LuminanceHDR
 
 . PhotoFlow https://github.com/aferrero2707/PhotoFlow
 
