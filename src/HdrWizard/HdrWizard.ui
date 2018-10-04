@@ -646,7 +646,7 @@ p, li { white-space: pre-wrap; }
            <property name="title">
             <string>[2/2] Choose Settings for HDR Creation</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout">
+           <layout class="QGridLayout" name="gridLayout2">
             <item row="7" column="2">
              <widget class="QPushButton" name="pushButtonSaveSettings">
               <property name="enabled">
