@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>626</height>
+    <width>523</width>
+    <height>633</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -208,6 +208,11 @@
             <string>Mai</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>Ferwerda</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item row="0" column="0">
@@ -300,7 +305,7 @@
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Co&amp;ntrast Factor</string>
+               <string>&amp;Contrast Factor</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2977,6 +2982,198 @@ Luminace Level</string>
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="page_ferwerda">
+         <layout class="QGridLayout" name="gridLayout_31">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_30">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_brightness_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>&amp;Multiplier</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>brightnessSlider</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSlider" name="ferwerdaMultiplierSlider">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>2000</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="pageStep">
+               <number>10</number>
+              </property>
+              <property name="value">
+               <number>1000</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QDoubleSpinBox" name="ferwerdaMultiplierDsb">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>3</number>
+              </property>
+              <property name="minimum">
+               <double>0.001000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>2.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_saturation_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>A&amp;daptation Luminance</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>chromaticAdaptSlider</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSlider" name="adaptationLuminanceSlider">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+              <property name="value">
+               <number>500</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QDoubleSpinBox" name="adaptationLuminanceDsb">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>3</number>
+              </property>
+              <property name="minimum">
+               <double>0.001000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.500000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <spacer name="verticalSpacer_11">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::MinimumExpanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item>
@@ -2997,7 +3194,7 @@ Luminace Level</string>
           </property>
           <property name="icon">
            <iconset theme="edit-undo">
-            <normaloff>.</normaloff>.</iconset>
+            <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -3039,7 +3236,7 @@ Luminace Level</string>
           </property>
           <property name="icon">
            <iconset theme="go-previous">
-            <normaloff>.</normaloff>.</iconset>
+            <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -3068,7 +3265,7 @@ Luminace Level</string>
           </property>
           <property name="icon">
            <iconset theme="go-next">
-            <normaloff>.</normaloff>.</iconset>
+            <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -3099,8 +3296,8 @@ Luminace Level</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>503</width>
-        <height>187</height>
+        <width>511</width>
+        <height>184</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3203,7 +3400,7 @@ Luminace Level</string>
               </property>
               <property name="icon">
                <iconset theme="edit-undo">
-                <normaloff>.</normaloff>.</iconset>
+                <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3270,7 +3467,7 @@ Luminace Level</string>
               </property>
               <property name="icon">
                <iconset theme="edit-undo">
-                <normaloff>.</normaloff>.</iconset>
+                <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3345,7 +3542,7 @@ Luminace Level</string>
               </property>
               <property name="icon">
                <iconset theme="list-add">
-                <normaloff>.</normaloff>.</iconset>
+                <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3367,7 +3564,7 @@ Luminace Level</string>
                <string>Gamma applied before tonemapping</string>
               </property>
               <property name="text">
-               <string>Pre-ga&amp;mma</string>
+               <string>Pre-&amp;gamma</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3438,7 +3635,7 @@ Luminace Level</string>
               </property>
               <property name="icon">
                <iconset theme="edit-undo">
-                <normaloff>../../../../../</normaloff>../../../../../</iconset>
+                <normaloff>../../../../../../../..</normaloff>../../../../../../../..</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3460,8 +3657,8 @@ Luminace Level</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>503</width>
-        <height>178</height>
+        <width>272</width>
+        <height>173</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3524,7 +3721,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="document-save">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                </widget>
               </item>
@@ -3550,7 +3747,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="document-open">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                </widget>
               </item>
@@ -3592,7 +3789,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="cloud-upload">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                </widget>
               </item>
@@ -3615,7 +3812,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="edit-download">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                </widget>
               </item>
@@ -3689,7 +3886,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="folder-pictures">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                 <property name="toolButtonStyle">
                  <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -3951,12 +4148,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>207</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>87</x>
-     <y>246</y>
+     <x>99</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -3967,12 +4164,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>207</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>501</x>
-     <y>246</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -3983,12 +4180,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>207</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>245</x>
-     <y>246</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4095,12 +4292,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>155</y>
+     <x>63</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>166</x>
-     <y>156</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4111,12 +4308,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>84</x>
-     <y>158</y>
+     <x>96</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>136</x>
-     <y>199</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4127,12 +4324,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>168</y>
+     <x>63</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>126</x>
-     <y>242</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4143,12 +4340,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>64</x>
-     <y>150</y>
+     <x>76</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>299</x>
-     <y>157</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4159,12 +4356,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>91</x>
-     <y>158</y>
+     <x>103</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>262</x>
-     <y>200</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4175,12 +4372,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
-     <y>154</y>
+     <x>69</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>233</x>
-     <y>230</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4191,12 +4388,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>50</x>
-     <y>159</y>
+     <x>62</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>476</x>
-     <y>160</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4207,12 +4404,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>50</x>
-     <y>163</y>
+     <x>62</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>459</x>
-     <y>204</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4223,12 +4420,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>41</x>
-     <y>160</y>
+     <x>53</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>476</x>
-     <y>226</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>

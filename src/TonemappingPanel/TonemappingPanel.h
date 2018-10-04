@@ -70,6 +70,8 @@ class TonemappingPanel : public QWidget {
         *keyGang, *phiGang, *range2Gang, *lowerGang, *upperGang, *usescalesGang,
         // reinhard05
         *brightnessGang, *chromaticGang, *lightGang,
+        // ferwerda96
+        *ferwerdamultiplierGang, *adaptationGang,
         //
         *pregammaGang,
         //
@@ -131,6 +133,7 @@ class TonemappingPanel : public QWidget {
     void execDurandQuery(float, float, float, QString);
     void execFattalQuery(float, float, float, float, bool, QString);
     void execFerradansQuery(float, float, QString);
+    void execFerwerdaQuery(float, float, QString);
     void execPattanaikQuery(bool, bool, float, float, float, QString);
     void execReinhard02Query(bool, float, float, int, int, int, QString);
     void execReinhard05Query(float, float, float, QString);

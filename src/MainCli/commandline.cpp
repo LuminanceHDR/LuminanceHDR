@@ -237,7 +237,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
                                          .constData());
     tmo_desc.add_options()(
         "tmo", po::value<std::string>(),
-        tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|\
+        tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|ferwerda|pattanaik|reinhard02|reinhard05|\
                 mai|mantiuk06|mantiuk08] (Default is mantiuk06)")
             .toUtf8()
             .constData())("tmofile", po::value<std::string>(),
@@ -272,6 +272,15 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         "tmoFerInvAlpha",
         po::value<float>(&tmopts->operator_options.ferradansoptions.inv_alpha),
         tr("inv_alpha FLOAT").toUtf8().constData());
+    po::options_description tmo_ferwerda(
+        tr(" Ferwerda").toUtf8().constData());
+    tmo_ferwerda.add_options()(
+        "tmoFerwerdaMul",
+        po::value<float>(&tmopts->operator_options.ferwerdaoptions.multiplier),
+        tr("mul FLOAT").toUtf8().constData())(
+        "tmoFerwerdaAdaptLum",
+        po::value<float>(&tmopts->operator_options.ferwerdaoptions.adaptationluminance),
+        tr("adapt_lum FLOAT").toUtf8().constData());
     po::options_description tmo_mantiuk06(
         tr(" Mantiuk 06").toUtf8().constData());
     tmo_mantiuk06.add_options()(
@@ -393,6 +402,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
 
     tmo_desc.add(tmo_fattal);
     tmo_desc.add(tmo_ferradans);
+    tmo_desc.add(tmo_ferwerda);
     tmo_desc.add(tmo_mantiuk06);
     tmo_desc.add(tmo_mantiuk08);
     tmo_desc.add(tmo_durand);
@@ -559,6 +569,8 @@ directory must exist.  Useful to avoid clutter in the current directory. \
                 tmopts->tmoperator = fattal;
             else if (strcmp(value, "ferradans") == 0)
                 tmopts->tmoperator = ferradans;
+            else if (strcmp(value, "ferwerda") == 0)
+                tmopts->tmoperator = ferwerda;
             else if (strcmp(value, "mai") == 0)
                 tmopts->tmoperator = mai;
             else if (strcmp(value, "pattanaik") == 0)

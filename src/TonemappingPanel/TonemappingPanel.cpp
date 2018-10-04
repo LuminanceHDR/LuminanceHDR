@@ -235,6 +235,20 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
         new Gang(m_Ui->lightAdaptSlider, m_Ui->lightAdaptdsb, NULL, NULL, NULL,
                  NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
 
+    // ferwerda96
+    ferwerdamultiplierGang =
+        new Gang(m_Ui->ferwerdaMultiplierSlider, m_Ui->ferwerdaMultiplierDsb, NULL, NULL, NULL,
+                 NULL, 0.001f, 2.f, FERWERDA96_MULTIPLIER);
+
+    connect(ferwerdamultiplierGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(ferwerdamultiplierGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
+
+    adaptationGang =
+        new Gang(m_Ui->adaptationLuminanceSlider, m_Ui->adaptationLuminanceDsb, NULL,
+                 NULL, NULL, NULL, 0.001f, 1.f, FERWERDA96_ADAPTATION_LUMINANCE);
+
     // pregamma
     pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb, NULL, NULL,
                             NULL, NULL, 0, 5.f, true);
@@ -319,6 +333,8 @@ TonemappingPanel::~TonemappingPanel() {
     delete brightnessGang;
     delete chromaticGang;
     delete lightGang;
+    delete ferwerdamultiplierGang;
+    delete adaptationGang;
     delete pregammaGang;
     delete postgammaGang;
     delete postsaturationGang;
@@ -445,7 +461,7 @@ void TonemappingPanel::createDatabase() {
         res = query.exec(QStringLiteral(
                 " ALTER TABLE fattal ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
     }
-    // Fattal
+    // Ferradans
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS ferradans (rho real, \
         inv_alpha real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
@@ -458,6 +474,20 @@ void TonemappingPanel::createDatabase() {
                 " ALTER TABLE ferradans ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
         res = query.exec(QStringLiteral(
                 " ALTER TABLE ferradans ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
+    // Ferwerda
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS ferwersa (maxlum real, \
+        adaptlum real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
+    if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM ferwerda; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE ferwerda ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE ferwerda ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
     }
     // Pattanaik
     res = query.exec(QStringLiteral(
@@ -586,6 +616,10 @@ void TonemappingPanel::on_defaultButton_clicked() {
             chromaticGang->setDefault();
             lightGang->setDefault();
             break;
+        case ferwerda:
+            ferwerdamultiplierGang->setDefault();
+            adaptationGang->setDefault();
+            break;
     }
 }
 
@@ -629,6 +663,9 @@ void TonemappingPanel::updateUndoState() {
             break;
         case reinhard05:
             brightnessGang->updateUndoState();
+            break;
+        case ferwerda:
+            ferwerdamultiplierGang->updateUndoState();
             break;
     }
 }
@@ -784,6 +821,13 @@ void TonemappingPanel::fillToneMappingOptions(bool exportMode) {
             toneMappingOptions->operator_options.reinhard05options
                 .lightAdaptation = lightGang->v();
             break;
+        case ferwerda:
+            toneMappingOptions->tmoperator = ferwerda;
+            toneMappingOptions->operator_options.ferwerdaoptions.multiplier =
+                ferwerdamultiplierGang->v();
+            toneMappingOptions->operator_options.ferwerdaoptions
+                .adaptationluminance = adaptationGang->v();
+            break;
     }
 }
 
@@ -845,6 +889,10 @@ void TonemappingPanel::setupUndo() {
             brightnessGang->setupUndo();
             chromaticGang->setupUndo();
             lightGang->setupUndo();
+            break;
+        case ferwerda:
+            ferwerdamultiplierGang->setupUndo();
+            adaptationGang->setupUndo();
             break;
     }
 }
@@ -913,6 +961,10 @@ void TonemappingPanel::onUndoRedo(bool undo) {
             (brightnessGang->*redoUndo)();
             (chromaticGang->*redoUndo)();
             (lightGang->*redoUndo)();
+            break;
+        case ferwerda:
+            (ferwerdamultiplierGang->*redoUndo)();
+            (adaptationGang->*redoUndo)();
             break;
     }
 }
@@ -1023,6 +1075,11 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
             << "Ferradans11" << endl;
         out << "RHO=" << rhoGang->v() << endl;
         out << "INV_ALPHA=" << inv_alphaGang->v() << endl;
+    } else if (current_page == m_Ui->page_ferwerda) {
+        out << "TMO="
+            << "Ferwerda96" << endl;
+        out << "MAX_LUMINANCE=" << ferwerdamultiplierGang->v() << endl;
+        out << "ADAPTATION_LUMINANCE=" << adaptationGang->v() << endl;
     } else if (current_page == m_Ui->page_mai) {
         out << "TMO="
             << "Mai11" << endl;
@@ -1157,6 +1214,10 @@ void TonemappingPanel::fromTxt2Gui() {
                 m_Ui->stackedWidget_operators->setCurrentWidget(
                     m_Ui->page_ferradans);
                 tmo = QStringLiteral("Ferradans11");
+            } else if (value == QLatin1String("Ferwerda96")) {
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_ferwerda);
+                tmo = QStringLiteral("Ferwerda96");
             } else if (value == QLatin1String("Mai11")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mai);
                 tmo = QStringLiteral("Mai11");
@@ -1228,6 +1289,11 @@ void TonemappingPanel::fromTxt2Gui() {
         } else if (field == QLatin1String("INV_ALPHA")) {
             m_Ui->inv_alphaSlider->setValue(
                 inv_alphaGang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("MAX_LUMINANCE")) {
+            m_Ui->ferwerdaMultiplierSlider->setValue(ferwerdamultiplierGang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("ADAPTATION_LUMINANCE")) {
+            m_Ui->adaptationLuminanceSlider->setValue(
+                adaptationGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("MULTIPLIER")) {
             m_Ui->multiplierSlider->setValue(
                 multiplierGang->v2p(value.toFloat()));
@@ -1358,6 +1424,9 @@ void TonemappingPanel::saveParameters() {
         int irange, lower, upper;
         // Reinhard 05
         float brightness, chromaticAdaptation, lightAdaptation;
+        // Ferwerda 96
+        float maxLuminance, adaptationLuminance;
+
 
         QString comment = dialog.getComment();
 
@@ -1437,6 +1506,11 @@ void TonemappingPanel::saveParameters() {
                 execReinhard05Query(brightness, chromaticAdaptation,
                                     lightAdaptation, comment);
                 break;
+            case ferwerda:
+                maxLuminance = ferwerdamultiplierGang->v();
+                adaptationLuminance = adaptationGang->v();
+                execFerwerdaQuery(maxLuminance, adaptationLuminance, comment);
+                break;
         }
     }
 }
@@ -1477,6 +1551,9 @@ void TonemappingPanel::loadParameters() {
         int irange, lower, upper;
         // Reinhard 05
         float brightness, chromaticAdaptation, lightAdaptation;
+        // Ferwerda 96
+        float maxLuminance, adaptationLuminance;
+
         // Pre-gamma
         float pregamma;
         // Post-saturation
@@ -1733,6 +1810,26 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->postgammaSlider->setValue(postgamma);
                 m_Ui->postgammadsb->setValue(postgamma);
                 break;
+            case ferwerda:
+                m_Ui->stackedWidget_operators->setCurrentIndex(ferwerda);
+                maxLuminance =
+                    tmopts->operator_options.ferwerdaoptions.multiplier;
+                adaptationLuminance = tmopts->operator_options.ferwerdaoptions
+                                          .adaptationluminance;
+                pregamma = tmopts->pregamma;
+                postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
+                m_Ui->ferwerdaMultiplierSlider->setValue(maxLuminance);
+                m_Ui->ferwerdaMultiplierDsb->setValue(maxLuminance);
+                m_Ui->adaptationLuminanceSlider->setValue(adaptationLuminance);
+                m_Ui->adaptationLuminanceDsb->setValue(adaptationLuminance);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
+                m_Ui->postsaturationSlider->setValue(postsaturation);
+                m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
+                break;
         }
         if (dialog.wantsTonemap()) {
             TonemappingOptions *t = new TonemappingOptions(*tmopts);
@@ -1915,6 +2012,28 @@ void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha,
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
+
+void TonemappingPanel::execFerwerdaQuery(float maxlum, float adaptlum,
+                                          QString comment) {
+    qDebug() << "TonemappingPanel::execFerwerdaQuery";
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
+    QSqlQuery query(db);
+    float pregamma = m_Ui->pregammadsb->value();
+    float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
+    query.prepare(
+        "INSERT INTO ferwerda (maxlum, adaptlum, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:maxlum, :adaptlum, :pregamma, :comment, :postsaturation, :postgamma)");
+    query.bindValue(QStringLiteral(":maxlum"), maxlum);
+    query.bindValue(QStringLiteral(":inv_alpha"), adaptlum);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
+    query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
+    bool res = query.exec();
+    if (res == false) qDebug() << query.lastError();
+}
+
 void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone,
                                           float rod, float multiplier,
                                           QString comment) {
@@ -2045,6 +2164,11 @@ void TonemappingPanel::updatePreviews(double v) {
         tmopts->operator_options.ferradansoptions.rho = v;
     else if (eventSender == m_Ui->inv_alphadsb)
         tmopts->operator_options.ferradansoptions.inv_alpha = v;
+    // Ferwerda
+    else if (eventSender == m_Ui->ferwerdaMultiplierDsb)
+        tmopts->operator_options.ferwerdaoptions.multiplier = v;
+    else if (eventSender == m_Ui->adaptationLuminanceDsb)
+        tmopts->operator_options.ferwerdaoptions.adaptationluminance = v;
     // Drago
     else if (eventSender == m_Ui->biasdsb)
         tmopts->operator_options.dragooptions.bias = v;
@@ -2224,6 +2348,12 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
         connect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
 
+        // Ferwerda
+        connect(m_Ui->ferwerdaMultiplierDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->adaptationLuminanceDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
         // Drago
         connect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
@@ -2313,6 +2443,11 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
                    SLOT(updatePreviews(double)));
         disconnect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this,
                    SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->ferwerdaMultiplierDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->adaptationLuminanceDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
 
         disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,
                    SLOT(updatePreviews(double)));

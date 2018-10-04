@@ -69,6 +69,10 @@ void TonemappingOptions::setDefaultTonemapParameters() {
     operator_options.ferradansoptions.rho = FERRADANS11_RHO;
     operator_options.ferradansoptions.inv_alpha = FERRADANS11_INV_ALPHA;
 
+    // Ferwerda
+    operator_options.ferwerdaoptions.multiplier = FERWERDA96_MULTIPLIER;
+    operator_options.ferwerdaoptions.adaptationluminance = FERWERDA96_ADAPTATION_LUMINANCE;
+
     // Drago
     operator_options.dragooptions.bias = DRAGO03_BIAS;
 
@@ -149,6 +153,8 @@ char TonemappingOptions::getRatingForOperator() {
             return 'J';
         case mai:
             return 'K';
+        case ferwerda:
+            return 'L';
     }
     return ' ';
 }
@@ -217,6 +223,13 @@ const QString TonemappingOptions::getPostfix() {
             float inv_alpha = operator_options.ferradansoptions.inv_alpha;
             postfix += QStringLiteral("rho_%1_").arg(rho);
             postfix += QStringLiteral("inv_alpha_%1").arg(inv_alpha);
+        } break;
+        case ferwerda: {
+            postfix += QLatin1String("ferwerda_");
+            float maxlum = operator_options.ferwerdaoptions.multiplier;
+            float adaptlum = operator_options.ferwerdaoptions.adaptationluminance;
+            postfix += QStringLiteral("max_luminance_%1_").arg(maxlum);
+            postfix += QStringLiteral("adaptation_luminance_%1").arg(adaptlum);
         } break;
         case mai: {
             postfix += QLatin1String("mai_");
@@ -379,6 +392,13 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
             caption += QString(QObject::tr("Rho") + "=%1").arg(rho) + separator;
             caption += QString(QObject::tr("InvAlpha") + "=%1").arg(inv_alpha);
         } break;
+        case ferwerda: {
+            float maxlum = operator_options.ferwerdaoptions.multiplier;
+            float adaptlum = operator_options.ferwerdaoptions.adaptationluminance;
+            caption += "Ferwerda:" + separator;
+            caption += QString(QObject::tr("MaxLuminance") + "=%1").arg(maxlum) + separator;
+            caption += QString(QObject::tr("AdaptationLuminance") + "=%1").arg(adaptlum);
+        } break;
         case mai: {
             caption += "Mai:" + separator;
         } break;
@@ -527,6 +547,9 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
             } else if (value == QLatin1String("Ferradans11")) {
                 toreturn->tmoperator = ferradans;
                 tmo = QStringLiteral("Ferradans11");
+            } else if (value == QLatin1String("Ferwerda96")) {
+                toreturn->tmoperator = ferwerda;
+                tmo = QStringLiteral("Ferwerda96");
             } else if (value == QLatin1String("Mai11")) {
                 toreturn->tmoperator = mai;
                 tmo = QStringLiteral("Mai11");
@@ -609,6 +632,11 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
             toreturn->operator_options.ferradansoptions.rho = value.toFloat();
         } else if (field == QLatin1String("INV_ALPHA")) {
             toreturn->operator_options.ferradansoptions.inv_alpha =
+                value.toFloat();
+        } else if (field == QLatin1String("MAX_LUMINANCE")) {
+            toreturn->operator_options.ferwerdaoptions.multiplier = value.toFloat();
+        } else if (field == QLatin1String("ADAPTATION_LUMINANCE")) {
+            toreturn->operator_options.ferwerdaoptions.adaptationluminance =
                 value.toFloat();
         } else if (field == QLatin1String("MULTIPLIER")) {
             toreturn->operator_options.pattanaikoptions.multiplier =
@@ -746,6 +774,13 @@ QString TMOptionsOperations::getExifComment() {
             exif_comment += QLatin1String("Ferrands\nParameters:\n");
             exif_comment += QStringLiteral("Rho: %1\n").arg(rho);
             exif_comment += QStringLiteral("InvAlpha: %1\n").arg(inv_alpha);
+        } break;
+        case ferwerda: {
+            float maxlum = opts->operator_options.ferwerdaoptions.multiplier;
+            float adaptlum = opts->operator_options.ferwerdaoptions.adaptationluminance;
+            exif_comment += QLatin1String("Ferwerda\nParameters:\n");
+            exif_comment += QStringLiteral("MaxLuminance: %1\n").arg(maxlum);
+            exif_comment += QStringLiteral("AdaptationLuminance: %1\n").arg(adaptlum);
         } break;
         case mai: {
             exif_comment += QLatin1String(

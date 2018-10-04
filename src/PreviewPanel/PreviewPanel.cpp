@@ -282,6 +282,16 @@ PreviewPanel::PreviewPanel(QWidget *parent)
                           &PreviewLabel::clicked),
             this, &PreviewPanel::tonemapPreview);
 
+    PreviewLabel *labelFerwerda = new PreviewLabel(this, ferwerda);
+    labelFerwerda->setText(QStringLiteral("Ferwerda"));
+    labelFerwerda->setToolTip(QStringLiteral("Ferwerda"));
+    labelFerwerda->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelFerwerda);
+    connect(labelFerwerda,
+            static_cast<void (PreviewLabel::*)(TonemappingOptions *)>(
+                &PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
+
     FlowLayout *flowLayout = new FlowLayout;
 
     flowLayout->addWidget(labelMantiuk06);
@@ -295,6 +305,7 @@ PreviewPanel::PreviewPanel(QWidget *parent)
     flowLayout->addWidget(labelAshikhmin);
     flowLayout->addWidget(labelPattanaik);
     flowLayout->addWidget(labelMai);
+    flowLayout->addWidget(labelFerwerda);
 
     setLayout(flowLayout);
 }
