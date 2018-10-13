@@ -59,6 +59,8 @@ void pfstmo_ferradans11(pfs::Frame &frame, float opt_rho, float opt_inv_alpha,
                         pfs::Progress &ph);
 void pfstmo_ferwerda96(pfs::Frame &frame, float Ld_Max, float L_da,
                         pfs::Progress &ph);
+void pfstmo_kimkautz08(pfs::Frame &frame, float KK_c1, float KK_c2,
+                        pfs::Progress &ph);
 void pfstmo_mai11(pfs::Frame &frame, pfs::Progress &ph);
 void pfstmo_mantiuk06(pfs::Frame &frame, float scaleFactor,
                       float saturationFactor, float detailFactor, bool cont_eq,

@@ -73,6 +73,10 @@ void TonemappingOptions::setDefaultTonemapParameters() {
     operator_options.ferwerdaoptions.multiplier = FERWERDA96_MULTIPLIER;
     operator_options.ferwerdaoptions.adaptationluminance = FERWERDA96_ADAPTATION_LUMINANCE;
 
+    // KimKautz
+    operator_options.kimkautzoptions.c1 = KIMKAUTZ08_C1;
+    operator_options.kimkautzoptions.c2 = KIMKAUTZ08_C2;
+
     // Drago
     operator_options.dragooptions.bias = DRAGO03_BIAS;
 
@@ -155,6 +159,8 @@ char TonemappingOptions::getRatingForOperator() {
             return 'K';
         case ferwerda:
             return 'L';
+        case kimkautz:
+            return 'M';
     }
     return ' ';
 }
@@ -230,6 +236,13 @@ const QString TonemappingOptions::getPostfix() {
             float adaptlum = operator_options.ferwerdaoptions.adaptationluminance;
             postfix += QStringLiteral("max_luminance_%1_").arg(maxlum);
             postfix += QStringLiteral("adaptation_luminance_%1").arg(adaptlum);
+        } break;
+        case kimkautz: {
+            postfix += QLatin1String("kimkautz_");
+            float c1 = operator_options.kimkautzoptions.c1;
+            float c2 = operator_options.kimkautzoptions.c2;
+            postfix += QStringLiteral("c1_%1").arg(c1);
+            postfix += QStringLiteral("c2_%1").arg(c2);
         } break;
         case mai: {
             postfix += QLatin1String("mai_");
@@ -399,6 +412,13 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
             caption += QString(QObject::tr("MaxLuminance") + "=%1").arg(maxlum) + separator;
             caption += QString(QObject::tr("AdaptationLuminance") + "=%1").arg(adaptlum);
         } break;
+        case kimkautz: {
+            float c1 = operator_options.kimkautzoptions.c1;
+            float c2 = operator_options.kimkautzoptions.c2;
+            caption += "KimKautz:" + separator;
+            caption += QString(QObject::tr("C1") + "=%1").arg(c1) + separator;
+            caption += QString(QObject::tr("C2") + "=%1").arg(c2) + separator;
+        } break;
         case mai: {
             caption += "Mai:" + separator;
         } break;
@@ -550,6 +570,9 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
             } else if (value == QLatin1String("Ferwerda96")) {
                 toreturn->tmoperator = ferwerda;
                 tmo = QStringLiteral("Ferwerda96");
+            } else if (value == QLatin1String("KimKautz08")) {
+                toreturn->tmoperator = kimkautz;
+                tmo = QStringLiteral("KimKautz08");
             } else if (value == QLatin1String("Mai11")) {
                 toreturn->tmoperator = mai;
                 tmo = QStringLiteral("Mai11");
@@ -638,6 +661,10 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
         } else if (field == QLatin1String("ADAPTATION_LUMINANCE")) {
             toreturn->operator_options.ferwerdaoptions.adaptationluminance =
                 value.toFloat();
+        } else if (field == QLatin1String("KK_C1")) {
+            toreturn->operator_options.kimkautzoptions.c1 = value.toFloat();
+        } else if (field == QLatin1String("KK_C2")) {
+            toreturn->operator_options.kimkautzoptions.c2 = value.toFloat();
         } else if (field == QLatin1String("MULTIPLIER")) {
             toreturn->operator_options.pattanaikoptions.multiplier =
                 value.toFloat();
@@ -781,6 +808,13 @@ QString TMOptionsOperations::getExifComment() {
             exif_comment += QLatin1String("Ferwerda\nParameters:\n");
             exif_comment += QStringLiteral("MaxLuminance: %1\n").arg(maxlum);
             exif_comment += QStringLiteral("AdaptationLuminance: %1\n").arg(adaptlum);
+        } break;
+        case kimkautz: {
+            float c1 = opts->operator_options.kimkautzoptions.c1;
+            float c2 = opts->operator_options.kimkautzoptions.c2;
+            exif_comment += QLatin1String("KimKautz\nParameters:\n");
+            exif_comment += QStringLiteral("C1: %1\n").arg(c1);
+            exif_comment += QStringLiteral("C2: %1\n").arg(c2);
         } break;
         case mai: {
             exif_comment += QLatin1String(

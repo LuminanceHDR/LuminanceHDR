@@ -43,8 +43,8 @@ SavedParametersDialog::SavedParametersDialog(QSqlDatabase &db, QWidget *parent)
     QString sqlQuery;
     sqlQuery += QLatin1String(
         "SELECT comment, 'ashikhmin' AS operator FROM ashikhmin UNION ");
-    sqlQuery +=
-        QLatin1String("SELECT comment, 'drago' AS operator FROM drago UNION ");
+    sqlQuery += QLatin1String(
+        "SELECT comment, 'drago' AS operator FROM drago UNION ");
     sqlQuery += QLatin1String(
         "SELECT comment, 'durand' AS operator FROM durand UNION ");
     sqlQuery += QLatin1String(
@@ -60,7 +60,11 @@ SavedParametersDialog::SavedParametersDialog(QSqlDatabase &db, QWidget *parent)
     sqlQuery += QLatin1String(
         "SELECT comment, 'reinhard02' AS operator FROM reinhard02 UNION ");
     sqlQuery += QLatin1String(
-        "SELECT comment, 'reinhard05' AS operator FROM reinhard05");
+        "SELECT comment, 'reinhard05' AS operator FROM reinhard05 UNION ");
+    sqlQuery += QLatin1String(
+        "SELECT comment, 'ferwerda' AS operator FROM ferwerda UNION ");
+    sqlQuery += QLatin1String(
+        "SELECT comment, 'kimkautz' AS operator FROM kimkautz");
     m_model->setQuery(sqlQuery, m_db);
 
     m_model->setHeaderData(0, Qt::Horizontal, tr("Comment"));

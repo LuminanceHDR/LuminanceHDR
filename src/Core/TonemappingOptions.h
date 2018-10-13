@@ -49,7 +49,8 @@ enum TMOperator : unsigned short {
     ashikhmin = 8,
     pattanaik = 9,
     mai = 10,
-    ferwerda = 11
+    ferwerda = 11,
+    kimkautz = 12
 };
 
 class TonemappingOptions {
@@ -126,6 +127,10 @@ class TonemappingOptions {
             float multiplier;
             float adaptationluminance;
         } ferwerdaoptions;
+        struct {
+            float c1;
+            float c2;
+        } kimkautzoptions;
     } operator_options;
 
     // Davide Anastasia <davideanastasia@users.sourceforge.net>

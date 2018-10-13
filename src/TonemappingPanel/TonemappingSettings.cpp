@@ -444,6 +444,35 @@ void TonemappingSettings::fillPreviews() {
         addPreview(new PreviewLabel(0, tmoReinhard05, index++),
                    m_modelPreviews->record(selectedRow));
     }
+
+
+    sqlQuery =
+        QStringLiteral("SELECT *, 'kimkautz' AS operator FROM kimkautz");
+    m_modelPreviews->setQuery(sqlQuery, db);
+
+    float kk_c1, kk_c2;
+
+    for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount();
+         selectedRow++) {
+        TonemappingOptions *tmoKimKautz08 = new TonemappingOptions;
+        kk_c1 = m_modelPreviews->record(selectedRow)
+                         .value(QStringLiteral("kk_c1"))
+                         .toFloat();
+        kk_c2 = m_modelPreviews->record(selectedRow)
+                                  .value(QStringLiteral("kk_c2"))
+                                  .toFloat();
+
+        fillCommonValues(tmoKimKautz08, origxsize, PREVIEW_WIDTH, kimkautz,
+                         m_modelPreviews->record(selectedRow));
+
+        tmoKimKautz08->operator_options.kimkautzoptions.c1 =
+            kk_c1;
+        tmoKimKautz08->operator_options.kimkautzoptions.c2 =
+            kk_c2;
+
+        addPreview(new PreviewLabel(0, tmoKimKautz08, index++),
+                   m_modelPreviews->record(selectedRow));
+    }
     m_previewSettings->updatePreviews(m_frame);
 }
 

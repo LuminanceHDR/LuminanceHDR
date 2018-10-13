@@ -292,6 +292,16 @@ PreviewPanel::PreviewPanel(QWidget *parent)
                 &PreviewLabel::clicked),
             this, &PreviewPanel::tonemapPreview);
 
+    PreviewLabel *labelKimKautz = new PreviewLabel(this, kimkautz);
+    labelKimKautz->setText(QStringLiteral("KimKautz"));
+    labelKimKautz->setToolTip(QStringLiteral("KimKautz"));
+    labelKimKautz->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelKimKautz);
+    connect(labelKimKautz,
+            static_cast<void (PreviewLabel::*)(TonemappingOptions *)>(
+                &PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
+
     FlowLayout *flowLayout = new FlowLayout;
 
     flowLayout->addWidget(labelMantiuk06);
@@ -306,6 +316,7 @@ PreviewPanel::PreviewPanel(QWidget *parent)
     flowLayout->addWidget(labelPattanaik);
     flowLayout->addWidget(labelMai);
     flowLayout->addWidget(labelFerwerda);
+    flowLayout->addWidget(labelKimKautz);
 
     setLayout(flowLayout);
 }

@@ -299,6 +299,25 @@ struct TonemapOperatorFerwerda96
         }
     }
 };
+
+struct TonemapOperatorKimKautz08
+    : public TonemapOperatorRegister<kimkautz, TonemapOperatorKimKautz08> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
+        ph.setMaximum(100);
+
+        try {
+            pfstmo_kimkautz08(
+                workingframe,
+                opts->operator_options.kimkautzoptions.c1,
+                opts->operator_options.kimkautzoptions.c2,
+                ph);
+        } catch (...) {
+            throw std::runtime_error("KimKautz: Tonemap Failed");
+        }
+    }
+};
+
 typedef TonemapOperator *(*TonemapOperatorCreator)();
 typedef std::map<TMOperator, TonemapOperatorCreator> TonemapOperatorCreatorMap;
 
@@ -316,7 +335,8 @@ inline const TonemapOperatorCreatorMap &registry() {
         (reinhard05, TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05>::create)
         (ashikhmin,  TonemapOperatorRegister<ashikhmin,  TonemapOperatorAshikhmin02>::create)
         (pattanaik,  TonemapOperatorRegister<pattanaik,  TonemapOperatorPattanaik00>::create)
-        (ferwerda,   TonemapOperatorRegister<ferwerda,   TonemapOperatorFerwerda96>::create);
+        (ferwerda,   TonemapOperatorRegister<ferwerda,   TonemapOperatorFerwerda96>::create)
+        (kimkautz,   TonemapOperatorRegister<kimkautz,   TonemapOperatorKimKautz08>::create);
     return reg;
 }
 

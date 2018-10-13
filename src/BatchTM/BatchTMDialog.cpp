@@ -718,6 +718,30 @@ void BatchTMDialog::from_database() {
                         query.value(2).toFloat();
                     tm_opt->pregamma = query.value(3).toFloat();
                 }
+            } else if (tmOperator == QLatin1String("ferwerda")) {
+                m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+                tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+                tm_opt->tmoperator = ferwerda;
+                tm_opt->tonemapSelection = false;
+                while (query.next()) {
+                    tm_opt->operator_options.ferwerdaoptions.multiplier =
+                        query.value(0).toFloat();
+                    tm_opt->operator_options.ferwerdaoptions.adaptationluminance =
+                        query.value(1).toFloat();
+                    tm_opt->pregamma = query.value(2).toFloat();
+                }
+            } else if (tmOperator == QLatin1String("kimkautz")) {
+                m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+                tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+                tm_opt->tmoperator = kimkautz;
+                tm_opt->tonemapSelection = false;
+                while (query.next()) {
+                    tm_opt->operator_options.kimkautzoptions.c1 =
+                        query.value(0).toFloat();
+                    tm_opt->operator_options.kimkautzoptions.c2 =
+                        query.value(1).toFloat();
+                    tm_opt->pregamma = query.value(2).toFloat();
+                }
             }
             m_tm_options_list.append(tm_opt);
             delete temp_model;

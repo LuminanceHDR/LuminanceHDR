@@ -249,6 +249,20 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
         new Gang(m_Ui->adaptationLuminanceSlider, m_Ui->adaptationLuminanceDsb, NULL,
                  NULL, NULL, NULL, 0.001f, 1.f, FERWERDA96_ADAPTATION_LUMINANCE);
 
+    // kimkautz08
+    kimkautzc1Gang =
+        new Gang(m_Ui->kimkautzC1Slider, m_Ui->kimkautzC1Dsb, NULL,
+                 NULL, NULL, NULL, 0.001f, 10.f, KIMKAUTZ08_C1);
+
+    connect(kimkautzc1Gang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(kimkautzc1Gang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
+
+    kimkautzc2Gang =
+        new Gang(m_Ui->kimkautzC2Slider, m_Ui->kimkautzC2Dsb, NULL,
+                 NULL, NULL, NULL, 0.001f, 5.f, KIMKAUTZ08_C2);
+
     // pregamma
     pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb, NULL, NULL,
                             NULL, NULL, 0, 5.f, true);
@@ -335,6 +349,8 @@ TonemappingPanel::~TonemappingPanel() {
     delete lightGang;
     delete ferwerdamultiplierGang;
     delete adaptationGang;
+    delete kimkautzc1Gang;
+    delete kimkautzc2Gang;
     delete pregammaGang;
     delete postgammaGang;
     delete postsaturationGang;
@@ -477,7 +493,7 @@ void TonemappingPanel::createDatabase() {
     }
     // Ferwerda
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS ferwersa (maxlum real, \
+        " CREATE TABLE IF NOT EXISTS ferwerda (maxlum real, \
         adaptlum real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
 
@@ -488,6 +504,20 @@ void TonemappingPanel::createDatabase() {
                 " ALTER TABLE ferwerda ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
         res = query.exec(QStringLiteral(
                 " ALTER TABLE ferwerda ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
+    // KimKautz
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS kimkautz (\
+        kk_c1 real, kk_c2 real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
+    if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM kimkautz; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE kimkautz ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE kimkautz ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
     }
     // Pattanaik
     res = query.exec(QStringLiteral(
@@ -620,6 +650,10 @@ void TonemappingPanel::on_defaultButton_clicked() {
             ferwerdamultiplierGang->setDefault();
             adaptationGang->setDefault();
             break;
+        case kimkautz:
+            kimkautzc1Gang->setDefault();
+            kimkautzc2Gang->setDefault();
+            break;
     }
 }
 
@@ -666,6 +700,9 @@ void TonemappingPanel::updateUndoState() {
             break;
         case ferwerda:
             ferwerdamultiplierGang->updateUndoState();
+            break;
+        case kimkautz:
+            kimkautzc1Gang->updateUndoState();
             break;
     }
 }
@@ -828,6 +865,13 @@ void TonemappingPanel::fillToneMappingOptions(bool exportMode) {
             toneMappingOptions->operator_options.ferwerdaoptions
                 .adaptationluminance = adaptationGang->v();
             break;
+        case kimkautz:
+            toneMappingOptions->tmoperator = kimkautz;
+            toneMappingOptions->operator_options.kimkautzoptions.c1 =
+                kimkautzc1Gang->v();
+            toneMappingOptions->operator_options.kimkautzoptions.c2 =
+                kimkautzc2Gang->v();
+            break;
     }
 }
 
@@ -893,6 +937,10 @@ void TonemappingPanel::setupUndo() {
         case ferwerda:
             ferwerdamultiplierGang->setupUndo();
             adaptationGang->setupUndo();
+            break;
+        case kimkautz:
+            kimkautzc1Gang->setupUndo();
+            kimkautzc2Gang->setupUndo();
             break;
     }
 }
@@ -965,6 +1013,10 @@ void TonemappingPanel::onUndoRedo(bool undo) {
         case ferwerda:
             (ferwerdamultiplierGang->*redoUndo)();
             (adaptationGang->*redoUndo)();
+            break;
+        case kimkautz:
+            (kimkautzc1Gang->*redoUndo)();
+            (kimkautzc2Gang->*redoUndo)();
             break;
     }
 }
@@ -1080,6 +1132,11 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
             << "Ferwerda96" << endl;
         out << "MAX_LUMINANCE=" << ferwerdamultiplierGang->v() << endl;
         out << "ADAPTATION_LUMINANCE=" << adaptationGang->v() << endl;
+    } else if (current_page == m_Ui->page_kimkautz) {
+        out << "TMO="
+            << "KimKautz08" << endl;
+        out << "KK_C1=" << kimkautzc1Gang->v() << endl;
+        out << "KK_C2=" << kimkautzc2Gang->v() << endl;
     } else if (current_page == m_Ui->page_mai) {
         out << "TMO="
             << "Mai11" << endl;
@@ -1218,6 +1275,10 @@ void TonemappingPanel::fromTxt2Gui() {
                 m_Ui->stackedWidget_operators->setCurrentWidget(
                     m_Ui->page_ferwerda);
                 tmo = QStringLiteral("Ferwerda96");
+            } else if (value == QLatin1String("KimKautz08")) {
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_kimkautz);
+                tmo = QStringLiteral("KimKautz08");
             } else if (value == QLatin1String("Mai11")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mai);
                 tmo = QStringLiteral("Mai11");
@@ -1294,6 +1355,10 @@ void TonemappingPanel::fromTxt2Gui() {
         } else if (field == QLatin1String("ADAPTATION_LUMINANCE")) {
             m_Ui->adaptationLuminanceSlider->setValue(
                 adaptationGang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("KK_C1")) {
+            m_Ui->kimkautzC1Slider->setValue(kimkautzc1Gang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("KK_C2")) {
+            m_Ui->kimkautzC2Slider->setValue(kimkautzc2Gang->v2p(value.toFloat()));
         } else if (field == QLatin1String("MULTIPLIER")) {
             m_Ui->multiplierSlider->setValue(
                 multiplierGang->v2p(value.toFloat()));
@@ -1426,7 +1491,8 @@ void TonemappingPanel::saveParameters() {
         float brightness, chromaticAdaptation, lightAdaptation;
         // Ferwerda 96
         float maxLuminance, adaptationLuminance;
-
+        // KimKrautz 08
+        float kk_c1, kk_c2;
 
         QString comment = dialog.getComment();
 
@@ -1511,6 +1577,11 @@ void TonemappingPanel::saveParameters() {
                 adaptationLuminance = adaptationGang->v();
                 execFerwerdaQuery(maxLuminance, adaptationLuminance, comment);
                 break;
+            case kimkautz:
+                kk_c1 = kimkautzc1Gang->v();
+                kk_c2 = kimkautzc2Gang->v();
+                execKimKautzQuery(kk_c1, kk_c2, comment);
+                break;
         }
     }
 }
@@ -1553,6 +1624,8 @@ void TonemappingPanel::loadParameters() {
         float brightness, chromaticAdaptation, lightAdaptation;
         // Ferwerda 96
         float maxLuminance, adaptationLuminance;
+        // KimKrautz 08
+        float kk_c1, kk_c2;
 
         // Pre-gamma
         float pregamma;
@@ -1830,6 +1903,27 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->postgammaSlider->setValue(postgamma);
                 m_Ui->postgammadsb->setValue(postgamma);
                 break;
+            case kimkautz:
+                m_Ui->stackedWidget_operators->setCurrentIndex(kimkautz);
+                kk_c1 =
+                    tmopts->operator_options.kimkautzoptions.c1;
+                kk_c2 =
+                    tmopts->operator_options.kimkautzoptions.c2;
+
+                pregamma = tmopts->pregamma;
+                postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
+                m_Ui->kimkautzC1Slider->setValue(kk_c1);
+                m_Ui->kimkautzC1Dsb->setValue(kk_c1);
+                m_Ui->kimkautzC2Slider->setValue(kk_c2);
+                m_Ui->kimkautzC2Dsb->setValue(kk_c2);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
+                m_Ui->postsaturationSlider->setValue(postsaturation);
+                m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
+                break;
         }
         if (dialog.wantsTonemap()) {
             TonemappingOptions *t = new TonemappingOptions(*tmopts);
@@ -2025,7 +2119,28 @@ void TonemappingPanel::execFerwerdaQuery(float maxlum, float adaptlum,
         "INSERT INTO ferwerda (maxlum, adaptlum, pregamma, comment, postsaturation, postgamma) \
         VALUES (:maxlum, :adaptlum, :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":maxlum"), maxlum);
-    query.bindValue(QStringLiteral(":inv_alpha"), adaptlum);
+    query.bindValue(QStringLiteral(":adaptlum"), adaptlum);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
+    query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
+    bool res = query.exec();
+    if (res == false) qDebug() << query.lastError();
+}
+
+void TonemappingPanel::execKimKautzQuery(float kk_c1, float kk_c2,
+                                          QString comment) {
+    qDebug() << "TonemappingPanel::execKimKautzQuery";
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
+    QSqlQuery query(db);
+    float pregamma = m_Ui->pregammadsb->value();
+    float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
+    query.prepare(
+        "INSERT INTO kimkautz (kk_c1, kk_c2, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:kk_c1, :kk_c2, :pregamma, :comment, :postsaturation, :postgamma)");
+    query.bindValue(QStringLiteral(":kk_c1"), kk_c1);
+    query.bindValue(QStringLiteral(":kk_c2"), kk_c2);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
@@ -2169,6 +2284,11 @@ void TonemappingPanel::updatePreviews(double v) {
         tmopts->operator_options.ferwerdaoptions.multiplier = v;
     else if (eventSender == m_Ui->adaptationLuminanceDsb)
         tmopts->operator_options.ferwerdaoptions.adaptationluminance = v;
+    // KimKautz
+    else if (eventSender == m_Ui->kimkautzC1Dsb)
+        tmopts->operator_options.kimkautzoptions.c1 = v;
+    else if (eventSender == m_Ui->kimkautzC2Dsb)
+        tmopts->operator_options.kimkautzoptions.c2 = v;
     // Drago
     else if (eventSender == m_Ui->biasdsb)
         tmopts->operator_options.dragooptions.bias = v;
@@ -2354,6 +2474,12 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
         connect(m_Ui->adaptationLuminanceDsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
 
+        // KimKautz
+        connect(m_Ui->kimkautzC1Dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->kimkautzC2Dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
         // Drago
         connect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
@@ -2447,6 +2573,11 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
         disconnect(m_Ui->ferwerdaMultiplierDsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
         disconnect(m_Ui->adaptationLuminanceDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->kimkautzC1Dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->kimkautzC2Dsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
 
         disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,

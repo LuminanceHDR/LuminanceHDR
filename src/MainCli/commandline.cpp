@@ -237,7 +237,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
                                          .constData());
     tmo_desc.add_options()(
         "tmo", po::value<std::string>(),
-        tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|ferwerda|pattanaik|reinhard02|reinhard05|\
+        tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|ferwerda|kimkautz|pattanaik|reinhard02|reinhard05|\
                 mai|mantiuk06|mantiuk08] (Default is mantiuk06)")
             .toUtf8()
             .constData())("tmofile", po::value<std::string>(),
@@ -281,6 +281,18 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         "tmoFerwerdaAdaptLum",
         po::value<float>(&tmopts->operator_options.ferwerdaoptions.adaptationluminance),
         tr("adapt_lum FLOAT").toUtf8().constData());
+    po::options_description tmo_kimkautz(
+        tr(" KimKautz").toUtf8().constData());
+    tmo_kimkautz.add_options()
+        (
+        "tmoKimKautzC1",
+        po::value<float>(&tmopts->operator_options.kimkautzoptions.c1),
+        tr("c1 FLOAT").toUtf8().constData()
+        )
+        (
+        "tmoKimKautzC2",
+        po::value<float>(&tmopts->operator_options.kimkautzoptions.c2),
+        tr("c2 FLOAT").toUtf8().constData());
     po::options_description tmo_mantiuk06(
         tr(" Mantiuk 06").toUtf8().constData());
     tmo_mantiuk06.add_options()(
@@ -403,6 +415,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
     tmo_desc.add(tmo_fattal);
     tmo_desc.add(tmo_ferradans);
     tmo_desc.add(tmo_ferwerda);
+    tmo_desc.add(tmo_kimkautz);
     tmo_desc.add(tmo_mantiuk06);
     tmo_desc.add(tmo_mantiuk08);
     tmo_desc.add(tmo_durand);
@@ -571,6 +584,8 @@ directory must exist.  Useful to avoid clutter in the current directory. \
                 tmopts->tmoperator = ferradans;
             else if (strcmp(value, "ferwerda") == 0)
                 tmopts->tmoperator = ferwerda;
+            else if (strcmp(value, "kimkautz") == 0)
+                tmopts->tmoperator = kimkautz;
             else if (strcmp(value, "mai") == 0)
                 tmopts->tmoperator = mai;
             else if (strcmp(value, "pattanaik") == 0)
