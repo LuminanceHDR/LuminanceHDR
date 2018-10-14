@@ -37,6 +37,7 @@
 #include <iostream>
 #include <vector>
 
+#include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/array2d.h"
 #include "Libpfs/rt_algo.h"
 #include "Libpfs/progress.h"
@@ -99,6 +100,10 @@ R output = r*exp(log(output intensity)), etc.
 void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
                   float sigma_s, float sigma_r, float baseContrast,
                   int downsample, bool color_correction, pfs::Progress &ph) {
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
 
     int w = R.getCols();
     int h = R.getRows();
@@ -290,4 +295,11 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
     if (!ph.canceled()) {
         ph.setValue(100);
     }
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_durand02 = " << stop_watch.get_time() << " msec" << endl;
+#endif
+
 }

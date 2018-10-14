@@ -32,6 +32,7 @@
 
 #include "tmo_reinhard05.h"
 #include "Libpfs/progress.h"
+#include "Libpfs/utils/msec_timer.h"
 #include "TonemappingOperators/pfstmo.h"
 
 #include <assert.h>
@@ -264,6 +265,10 @@ void normalizeChannel(float *samples, size_t width, size_t height, float min, fl
 void tmo_reinhard05(size_t width, size_t height, float *nR, float *nG,
                     float *nB, const float *nY, const Reinhard05Params &params,
                     pfs::Progress &ph) {
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
 
     float Cav[] = {0.0f, 0.0f, 0.0f};
 
@@ -309,4 +314,11 @@ void tmo_reinhard05(size_t width, size_t height, float *nR, float *nG,
 
     // normalize BLUE channel
     normalizeChannel(nB, width, height, min_col, max_col);
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_reinhard05 = " << stop_watch.get_time() << " msec" << endl;
+#endif
+
 }
