@@ -37,57 +37,47 @@
 #include "Libpfs/utils/msec_timer.h"
 #include "tmo_ferwerda96.h"
 
-
 namespace {
-float TpFerwerda(float x)
-{
-    float t = log10(x);
+    float TpFerwerda(float x)
+    {
+        float t = log10(x);
 
-    float y;
+        float y;
 
-    if(t <= -2.6f)
-        y = -0.72f;
-    else
-        if(t >= 1.9f)
-            y = t - 1.255f;
+        if(t <= -2.6f)
+            y = -0.72f;
         else
-            y = powf(2.7f, (0.249f * t + 0.65f)) - 0.72f;
+            if(t >= 1.9f)
+                y = t - 1.255f;
+            else
+                y = powf((0.249f * t + 0.65f), 2.7f) - 0.72f;
 
-return powf(10.f, y);
-}
-
-float TsFerwerda(float x)
-{
-    float t = log10(x);
-
-    float y;
-
-    if(t <= -3.94f)
-        y = -2.86f;
-    else
-        if(t >= -1.44f)
-            y = t - 0.395f;
-        else
-            y = powf(2.18f, (0.405f * t + 1.6f)) - 2.86f;
-
-    return powf(10.f, y);
-}
-
-float WalravenValeton_k(float Lwa, float wv_sigma)
-{
-    float k = (wv_sigma - Lwa / 4.f) / (wv_sigma + Lwa);
-
-    return (k < 0.0f) ? 0.0f : k;
-}
-
-struct Clamp {
-    Clamp() {}
-    float operator()(float in) const {
-        if (in < 0.f) return 0.f;
-        if (in > 1.f) return 1.f;
-        return in;
+        return powf(10.f, y);
     }
-} clampfunc;
+
+    float TsFerwerda(float x)
+    {
+        float t = log10(x);
+
+        float y;
+
+        if(t <= -3.94f)
+            y = -2.86f;
+        else
+            if(t >= -1.44f)
+                y = t - 0.395f;
+            else
+                y = powf(2.18f, (0.405f * t + 1.6f)) - 2.86f;
+
+        return powf(10.f, y);
+    }
+
+    float WalravenValeton_k(float Lwa, float wv_sigma)
+    {
+        float k = (wv_sigma - Lwa / 4.f) / (wv_sigma + Lwa);
+
+        return (k < 0.0f) ? 0.0f : k;
+    }
 }
 
 using namespace pfs;
@@ -105,47 +95,37 @@ int tmo_ferwerda96(Array2Df *X, Array2Df *Y, Array2Df *Z, Array2Df *L,
     assert(Z != NULL);
     assert(L != NULL);
 
-    float Ld_Max = *max_element(L->begin(), L->end());
-    float coeff = 1.f / Ld_Max;
+    float Ld_Max = 100.f * mul1;
+    float L_wa = *max_element(L->begin(), L->end()) * 0.5f * mul1;
 
-    float L_wa = mul1 * Ld_Max * .5f;
-    float L_da = 2.0f * mul2 * Ld_Max * .5f;
-
-    float maxX = *max_element(X->begin(), X->end());
-    float maxY = *max_element(X->begin(), X->end());
-    float maxZ = *max_element(X->begin(), X->end());
-
-    cout << "Ld_Max " << Ld_Max << endl;
-    cout << "L_wa " << L_wa << endl;
-    cout << "L_da " << L_da << endl;
-    cout << "MaxX " << *max_element(X->begin(), X->end()) << endl;
-    cout << "MaxY " << *max_element(Y->begin(), Y->end()) << endl;
-    cout << "MaxZ " << *max_element(Z->begin(), Z->end()) << endl;
-    cout << "MinX " << *min_element(X->begin(), X->end()) << endl;
-    cout << "MinY " << *min_element(Y->begin(), Y->end()) << endl;
-    cout << "MinZ " << *min_element(Z->begin(), Z->end()) << endl;
+    float L_da = mul2 * Ld_Max;
 
     //compute the scaling factors
     float mC = TpFerwerda(L_da) / TpFerwerda(L_wa); //cones
     float mR = TsFerwerda(L_da) / TsFerwerda(L_wa); //rods
     float k = WalravenValeton_k(L_wa, L_da);
 
-    cout << "mC " << mC << endl;
-    cout << "mR " << mR << endl;
-    cout << "k  " << k << endl;
+    ph.setValue(2);
+    if (ph.canceled()) return 0;
 
     float vec[3] = {1.05f, 0.97f, 1.27f};
-    float maxC[3] = {maxX, maxY, maxZ};
+    float maxX = *max_element(X->begin(), X->end());
+    float maxY = *max_element(Y->begin(), Y->end());
+    float maxZ = *max_element(Z->begin(), Z->end());
+    float maxC = max(maxX, max(maxY, maxZ));
+    float scale = 1.0f / maxC;
+
+    ph.setValue(10);
+    if (ph.canceled()) return 0;
 
     const int channels = 3;
     Array2Df *Ch[channels] = {X, Y, Z};
     for (int c = 0; c < channels; c++) {
-            float v = vec[c];
-            float coeff = 1.f / maxC[c];
-            transform(Ch[c]->begin(), Ch[c]->end(), L->begin(), Ch[c]->begin(),
-                      [mC, mR, k, v](float a, float L) { return (mC * a + v * mR * k * L); } );
-            transform(Ch[c]->begin(), Ch[c]->end(), Ch[c]->begin(),
-                      [coeff](float a){ return a*coeff; } );
+        ph.setValue(10+(c+1)*30);
+        if (ph.canceled()) return 0;
+
+        transform(Ch[c]->begin(), Ch[c]->end(), L->begin(), Ch[c]->begin(),
+                  [mC, mR, k, vec, c, scale](float a, float L) { return (mC * a + vec[c] * mR * k * L) * scale; } );
     }
 
 #ifdef TIMER_PROFILING

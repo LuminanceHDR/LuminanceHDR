@@ -50,28 +50,30 @@ void pfstmo_ferwerda96(pfs::Frame &frame, float Ld_Max,
     std::cout << ", adaptation luminance: " << L_da << ")" << std::endl;
 #endif
 
-    pfs::Channel *R, *G, *B;
-    frame.getXYZChannels(R, G, B);
-    assert(R != NULL);
-    assert(G != NULL);
-    assert(B != NULL);
-    if (!R || !G || !B) {
+    pfs::Channel *inX, *inY, *inZ;
+    frame.getXYZChannels(inY, inX, inZ);
+    assert(inX != NULL);
+    assert(inY != NULL);
+    assert(inZ != NULL);
+    if (!inX || !inY || !inZ) {
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 
-
-    int w = R->getCols();
-    int h = R->getRows();
+    int w = inX->getCols();
+    int h = inX->getRows();
 
     pfs::Array2Df L(w, h);
-    pfs::transformRGB2Y(R, G, B, &L);
+    transformRGB2Y(inX, inY, inZ, &L);
+
     try {
-            tmo_ferwerda96(R, G, B, &L,
+            tmo_ferwerda96(inX, inY, inZ, &L,
                            Ld_Max, L_da,
                            ph);
     } catch (...) {
         throw pfs::Exception("Tonemapping Failed!");
     }
+
+    frame.getTags().setTag("LUMINANCE", "DISPLAY");
 
     if (!ph.canceled()) {
         ph.setValue(100);
