@@ -148,7 +148,7 @@ void markesteijn_demosaic (int width, int height, const float * const *rawData, 
 
     // sgrow/sgcol is the offset in the sensor matrix of the solitary
     // green pixels
-    ushort sgrow = 0, sgcol = 0;
+    unsigned short sgrow = 0, sgcol = 0;
 
     librtprocess::xtransborder_demosaic(width, height, 6, rawData, red, green, blue, xtrans);
 
