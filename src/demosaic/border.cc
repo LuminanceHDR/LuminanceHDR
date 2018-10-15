@@ -192,7 +192,7 @@ void bayerborder_demosaic(int winw, int winh, int lborders, const float * const 
 
 #define fcol(row,col) xtrans[(row)%6][(col)%6]
 
-void xtransborder_demosaic(int winw, int winh, int border, const float * const *rawData, float **red, float **green, float **blue, int xtrans[6][6])
+void xtransborder_demosaic(int winw, int winh, int border, const float * const *rawData, float **red, float **green, float **blue, const int xtrans[6][6])
 {
     BENCHFUN
     const int height = winh, width = winw;
