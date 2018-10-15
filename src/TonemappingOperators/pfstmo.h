@@ -76,5 +76,7 @@ void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,
 void pfstmo_reinhard05(pfs::Frame &frame, float brightness,
                        float chromaticadaptation, float lightadaptation,
                        pfs::Progress &ph);
+void pfstmo_vanhateren06(pfs::Frame &frame, float pupil_area,
+                        pfs::Progress &ph);
 
 #endif

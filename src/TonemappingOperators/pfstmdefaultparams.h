@@ -93,4 +93,7 @@
 #define KIMKAUTZ08_C1 3.0f
 #define KIMKAUTZ08_C2 0.5f
 
+// VanHateren 06
+#define VANHATEREN06_PUPIL_AREA 10.0f
+
 #endif  // PFSTMDEFAULTPARAMS_H

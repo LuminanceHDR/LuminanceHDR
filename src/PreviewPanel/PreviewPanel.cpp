@@ -302,6 +302,16 @@ PreviewPanel::PreviewPanel(QWidget *parent)
                 &PreviewLabel::clicked),
             this, &PreviewPanel::tonemapPreview);
 
+    PreviewLabel *labelVanHateren = new PreviewLabel(this, vanhateren);
+    labelVanHateren->setText(QStringLiteral("VanHateren"));
+    labelVanHateren->setToolTip(QStringLiteral("VanHateren"));
+    labelVanHateren->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelVanHateren);
+    connect(labelVanHateren,
+            static_cast<void (PreviewLabel::*)(TonemappingOptions *)>(
+                &PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
+
     FlowLayout *flowLayout = new FlowLayout;
 
     flowLayout->addWidget(labelMantiuk06);
@@ -317,6 +327,7 @@ PreviewPanel::PreviewPanel(QWidget *parent)
     flowLayout->addWidget(labelMai);
     flowLayout->addWidget(labelFerwerda);
     flowLayout->addWidget(labelKimKautz);
+    flowLayout->addWidget(labelVanHateren);
 
     setLayout(flowLayout);
 }
@@ -328,6 +339,7 @@ PreviewPanel::~PreviewPanel() {
 }
 
 void PreviewPanel::updatePreviews(pfs::Frame *frame, int index) {
+    cout << "PreviewPanel::updatePreviews( " << index << " )" << endl;
     if (frame == NULL) return;
 
     m_original_width_frame = frame->getWidth();
@@ -353,6 +365,7 @@ void PreviewPanel::updatePreviews(pfs::Frame *frame, int index) {
             updater(current_label);
         }
     } else {
+        cout << "PreviewLabelUpdater: " << index << endl;
         PreviewLabelUpdater updater(current_frame);
         updater.setAutolevels(m_doAutolevels, m_autolevelThreshold);
         updater(m_ListPreviewLabel.at(index));

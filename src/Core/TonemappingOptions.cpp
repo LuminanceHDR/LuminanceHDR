@@ -111,6 +111,9 @@ void TonemappingOptions::setDefaultTonemapParameters() {
     operator_options.pattanaikoptions.cone = PATTANAIK00_CONE;
     operator_options.pattanaikoptions.rod = PATTANAIK00_ROD;
     operator_options.pattanaikoptions.multiplier = PATTANAIK00_MULTIPLIER;
+
+    // VanHateren
+    operator_options.vanhaterenoptions.pupil_area =  VANHATEREN06_PUPIL_AREA;
 }
 
 void TonemappingOptions::setDefaultParameters() {
@@ -161,6 +164,8 @@ char TonemappingOptions::getRatingForOperator() {
             return 'L';
         case kimkautz:
             return 'M';
+        case vanhateren:
+            return 'N';
     }
     return ' ';
 }
@@ -318,6 +323,11 @@ const QString TonemappingOptions::getPostfix() {
                            .arg(chromaticAdaptation);
             postfix +=
                 QStringLiteral("light_adaptation_%1").arg(lightAdaptation);
+        } break;
+        case vanhateren: {
+            postfix += QLatin1String("vanhateren_");
+            float pupil_area = operator_options.vanhaterenoptions.pupil_area;
+            postfix += QStringLiteral("pupil_area_%1").arg(pupil_area);
         } break;
     }
     postfix += QStringLiteral("_postsaturation_%1").arg(postsaturation);
@@ -506,6 +516,11 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
             caption += QString(QObject::tr("Light Adaptation") + "=%1")
                            .arg(lightAdaptation);
         } break;
+        case vanhateren: {
+            float pupil_area = operator_options.vanhaterenoptions.pupil_area;
+            caption += "VanHateren:" + separator;
+            caption += QString(QObject::tr("Pupil Area") + "=%1").arg(pupil_area) + separator;
+        } break;
     }
     caption += includePregamma
             ? separator + QString(QObject::tr("PostSaturation=%1")).arg(postsaturation) +
@@ -591,6 +606,9 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
             } else if (value == QLatin1String("Mantiuk08")) {
                 toreturn->tmoperator = mantiuk08;
                 tmo = QStringLiteral("Mantiuk08");
+            } else if (value == QLatin1String("VanHateren06")) {
+                toreturn->tmoperator = vanhateren;
+                tmo = QStringLiteral("VanHateren06");
             }
         } else if (field == QLatin1String("CONTRASTFACTOR")) {
             toreturn->operator_options.mantiuk06options.contrastfactor =
@@ -697,6 +715,9 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
                 value.toFloat();
         } else if (field == QLatin1String("LIGHTADAPTATION")) {
             toreturn->operator_options.reinhard05options.lightAdaptation =
+                value.toFloat();
+        } else if (field == QLatin1String("PUPIL_AREA")) {
+            toreturn->operator_options.vanhaterenoptions.pupil_area =
                 value.toFloat();
         } else if (field == QLatin1String("PREGAMMA")) {
             toreturn->pregamma = value.toFloat();
@@ -897,6 +918,12 @@ QString TMOptionsOperations::getExifComment() {
                                 .arg(chromaticAdaptation);
             exif_comment +=
                 QStringLiteral("Light Adaptation: %1\n").arg(lightAdaptation);
+        } break;
+        case vanhateren: {
+            float pupil_area =
+                opts->operator_options.vanhaterenoptions.pupil_area;
+            exif_comment += QLatin1String("VanHateren06\nParameters:\n");
+            exif_comment += QStringLiteral("Pupil Area: %1\n").arg(pupil_area);
         } break;
     }
     exif_comment +=

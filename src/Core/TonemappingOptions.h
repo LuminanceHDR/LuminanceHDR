@@ -50,7 +50,8 @@ enum TMOperator : unsigned short {
     pattanaik = 9,
     mai = 10,
     ferwerda = 11,
-    kimkautz = 12
+    kimkautz = 12,
+    vanhateren = 13
 };
 
 class TonemappingOptions {
@@ -131,6 +132,9 @@ class TonemappingOptions {
             float c1;
             float c2;
         } kimkautzoptions;
+        struct {
+            float pupil_area;
+        } vanhaterenoptions;
     } operator_options;
 
     // Davide Anastasia <davideanastasia@users.sourceforge.net>

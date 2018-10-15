@@ -61,6 +61,6 @@ class PreviewPanel : public QWidget {
     int m_original_width_frame;
     bool m_doAutolevels;
     float m_autolevelThreshold;
-    QList<PreviewLabel *> m_ListPreviewLabel;
+    QVector<PreviewLabel *> m_ListPreviewLabel;
 };
 #endif

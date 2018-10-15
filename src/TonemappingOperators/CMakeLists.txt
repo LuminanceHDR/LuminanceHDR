@@ -15,6 +15,7 @@ ADD_SUBDIRECTORY(mantiuk08)
 ADD_SUBDIRECTORY(pattanaik00)
 ADD_SUBDIRECTORY(reinhard02)
 ADD_SUBDIRECTORY(reinhard05)
+ADD_SUBDIRECTORY(vanhateren06)
 
 # List all .h files in this directory
 FILE(GLOB FILES_H *.h)

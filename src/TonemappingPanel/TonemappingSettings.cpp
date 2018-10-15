@@ -445,6 +445,33 @@ void TonemappingSettings::fillPreviews() {
                    m_modelPreviews->record(selectedRow));
     }
 
+    sqlQuery =
+        QStringLiteral("SELECT *, 'ferwerda' AS operator FROM ferwerda");
+    m_modelPreviews->setQuery(sqlQuery, db);
+
+    float mul, adapt_lum;
+
+    for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount();
+         selectedRow++) {
+        TonemappingOptions *tmoFerwerda96 = new TonemappingOptions;
+        mul = m_modelPreviews->record(selectedRow)
+                         .value(QStringLiteral("maxlum"))
+                         .toFloat();
+        adapt_lum = m_modelPreviews->record(selectedRow)
+                                  .value(QStringLiteral("adaptlum"))
+                                  .toFloat();
+
+        fillCommonValues(tmoFerwerda96, origxsize, PREVIEW_WIDTH, ferwerda,
+                         m_modelPreviews->record(selectedRow));
+
+        tmoFerwerda96->operator_options.ferwerdaoptions.multiplier =
+            mul;
+        tmoFerwerda96->operator_options.ferwerdaoptions.adaptationluminance =
+            adapt_lum;
+
+        addPreview(new PreviewLabel(0, tmoFerwerda96, index++),
+                   m_modelPreviews->record(selectedRow));
+    }
 
     sqlQuery =
         QStringLiteral("SELECT *, 'kimkautz' AS operator FROM kimkautz");
@@ -471,6 +498,28 @@ void TonemappingSettings::fillPreviews() {
             kk_c2;
 
         addPreview(new PreviewLabel(0, tmoKimKautz08, index++),
+                   m_modelPreviews->record(selectedRow));
+    }
+
+    sqlQuery =
+        QStringLiteral("SELECT *, 'vanhateren' AS operator FROM vanhateren");
+    m_modelPreviews->setQuery(sqlQuery, db);
+
+    float pupil_area;
+
+    for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount();
+         selectedRow++) {
+        TonemappingOptions *tmoVanHateren06 = new TonemappingOptions;
+        pupil_area = m_modelPreviews->record(selectedRow)
+                         .value(QStringLiteral("pupil_area"))
+                         .toFloat();
+        fillCommonValues(tmoVanHateren06, origxsize, PREVIEW_WIDTH, vanhateren,
+                         m_modelPreviews->record(selectedRow));
+
+        tmoVanHateren06->operator_options.vanhaterenoptions.pupil_area =
+            pupil_area;
+
+        addPreview(new PreviewLabel(0, tmoVanHateren06, index++),
                    m_modelPreviews->record(selectedRow));
     }
     m_previewSettings->updatePreviews(m_frame);

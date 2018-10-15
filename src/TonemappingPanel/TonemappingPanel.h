@@ -75,6 +75,8 @@ class TonemappingPanel : public QWidget {
         // kimkautz08
         *kimkautzc1Gang,
         *kimkautzc2Gang,
+        // vanhateren06
+        *vanhaterenPupilAreaGang,
         //
         *pregammaGang,
         //
@@ -82,9 +84,9 @@ class TonemappingPanel : public QWidget {
         //
         *postsaturationGang;
 
-    TMOperator currentTmoOperator;
-    TonemappingOptions *toneMappingOptions;
-    QList<TonemappingOptions *> toneMappingOptionsToDelete;
+    TMOperator m_currentTmoOperator;
+    TonemappingOptions *m_toneMappingOptions;
+    QList<TonemappingOptions *> m_toneMappingOptionsToDelete;
     QVector<int> sizes;
     void fillToneMappingOptions(bool exportMode);
     void setupUndo();
@@ -141,9 +143,10 @@ class TonemappingPanel : public QWidget {
     void execPattanaikQuery(bool, bool, float, float, float, QString);
     void execReinhard02Query(bool, float, float, int, int, int, QString);
     void execReinhard05Query(float, float, float, QString);
+    void execVanHaterenQuery(float, QString);
 
     void updatePreviews(double);
-    void updatePreviewsCB(int);
+    void updatePreviewsCB(bool);
     void updatePreviewsRB(bool);
 
     void on_pattalocal_toggled(bool);
