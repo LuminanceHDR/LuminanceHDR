@@ -132,7 +132,7 @@ Luminance HDR can optionally support this file format commonly used by the astro
 The build system will automatically detect the presence of the library in the system enabling proper support
 for astronomical image processing.
 
-3 Platform Notes
+4. Platform Notes
 -------------------------------------------------------------------
 
 Windows:
@@ -208,13 +208,13 @@ $ make
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-4. Enabling Unit Test compilation
+5. Enabling Unit Test compilation
 -------------------------------------------------------------------
 In order to enable the compilation of our testing code pass -DENABLE_UNIT_TEST=ON option to cmake.
 Google's framework 'gtest' must be installed in your system, the resulting test executables
 will be placed under <BUILD_ROOT>/test where <BUILD_ROOT> is your building root directory.
 
-5. Note for Packagers
+6. Note for Packagers
 -------------------------------------------------------------------
 Luminance's default installation prefix is "/usr/local". You can execute:
 
