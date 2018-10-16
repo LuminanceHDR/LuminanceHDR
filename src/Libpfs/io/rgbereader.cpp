@@ -42,7 +42,7 @@ void rgbe2rgb(const Trgbe_pixel &rgbe, float exposure, float &r, float &g,
     if (rgbe.e != 0)  // a non-zero pixel
     {
         int e = rgbe.e - int(128 + 8);
-        double f = ldexp(1.0, e) * WHITE_EFFICACY / exposure;
+        double f = ldexp(1.0, e); // * WHITE_EFFICACY / exposure;
 
         r = (float)(rgbe.r * f);
         g = (float)(rgbe.g * f);
