@@ -95,6 +95,9 @@ int tmo_ferwerda96(Array2Df *X, Array2Df *Y, Array2Df *Z, Array2Df *L,
     assert(Z != NULL);
     assert(L != NULL);
 
+    mul1 *= 100.f;
+    mul2 /= 1000.f;
+
     float Ld_Max = 100.f * mul1;
     float L_wa = *max_element(L->begin(), L->end()) * 0.5f * mul1;
 

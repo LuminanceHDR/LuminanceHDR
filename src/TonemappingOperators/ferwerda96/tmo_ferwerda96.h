@@ -37,16 +37,12 @@ class Frame;
 class Progress;
 }
 
-//! \brief Michael Ashikhmin tone mapping operator
+//! \brief A. Ferwerda tone mapping operator
 //!
-//! \param Y [in] image luminance values
-//! \param L [out] tone mapped values
-//! \param maxLum maximum luminance in the image
-//! \param avLum logarithmic average of luminance in the image
-//! \param simple_flag true: use only tone mapping function (global version of
-//! the operator)
-//! \param lc_value local contrast threshold
-//! \param eq chose equation number from the paper (ie equation 2. or 4. )
+//! \param L [in] image luminance values
+//! \param X, Y, Z [out] tone mapped values
+//! \param Ld_Max: maximum luminance of the display in cd/m^2
+//! \param L_da: adaptation luminance in cd/m^2
 //!
 int tmo_ferwerda96(pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z, pfs::Array2Df *L,
                     float Ld_Max, float L_da,
