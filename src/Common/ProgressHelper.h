@@ -42,7 +42,7 @@ class ProgressHelper : public QObject, public pfs::Progress {
     void setMinimum(int minimum);
 
    public slots:
-    void qtCancel(bool b = true);
+    void qtCancel();
 
    signals:
     void qtSetValue(int value);

@@ -48,4 +48,4 @@ void ProgressHelper::setRange(int minimum, int maximum) {
     emit qtSetRange(minimum, maximum);
 }
 
-void ProgressHelper::qtCancel(bool b) { Progress::cancel(b); }
+void ProgressHelper::qtCancel() { Progress::cancel(true); }
