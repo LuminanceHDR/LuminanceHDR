@@ -33,6 +33,7 @@
 #include <iostream>
 
 #include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/manip/gamma.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 
@@ -40,42 +41,66 @@
 #include "../../sleef.c"
 #include "../../opthelper.h"
 
-void pfstmo_vanhateren06(pfs::Frame &frame, float pupil_area,
-                        pfs::Progress &ph) {
+using namespace pfs;
+
+void pfstmo_vanhateren06(Frame &frame, float pupil_area, Progress &ph) {
 
 #ifndef NDEBUG
     //--- default tone mapping parameters;
     std::cout << "pfstmo_vanhateren06 (";
-    //std::cout << "max luminance: " << Ld_Max;
-    //std::cout << ", adaptation luminance: " << L_da << ")" << std::endl;
+    std::cout << "pupil area: " << pupil_area << ")" << std::endl;
 #endif
 
-    pfs::Channel *inX, *inY, *inZ;
+    applyGamma(&frame, 2.2f);
+
+    Channel *inX, *inY, *inZ;
     frame.getXYZChannels(inY, inX, inZ);
     assert(inX != NULL);
     assert(inY != NULL);
     assert(inZ != NULL);
     if (!inX || !inY || !inZ) {
-        throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
+        throw Exception("Missing X, Y, Z channels in the PFS stream");
     }
 
     int w = inX->getCols();
     int h = inX->getRows();
 
-    pfs::Array2Df L(w, h);
+    Array2Df L(w, h);
+    Array2Df Lold(w, h);
     transformRGB2Y(inX, inY, inZ, &L);
+    copy(L.begin(), L.end(), Lold.begin());
 
     try {
-            tmo_vanhateren06(inX, inY, inZ, &L,
-                           pupil_area,
-                           ph);
+            tmo_vanhateren06(L, pupil_area, ph);
     } catch (...) {
-        throw pfs::Exception("Tonemapping Failed!");
+        throw Exception("Tonemapping Failed!");
+    }
+
+    if (!ph.canceled()) {
+        Array2Df &arrayRed = *inX;
+        Array2Df &arrayGreen = *inY;
+        Array2Df &arrayBlue = *inZ;
+
+        #pragma omp parallel for
+        for (int i = 0; i < h; ++i) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                vfloat scalev = LVFU(L(j, i)) / LVFU(Lold(j, i));
+                STVFU(arrayRed(j, i), LVFU(arrayRed(j, i)) * scalev);
+                STVFU(arrayGreen(j, i), LVFU(arrayGreen(j, i)) * scalev);
+                STVFU(arrayBlue(j, i), LVFU(arrayBlue(j, i)) * scalev);
+            }
+#endif
+            for (; j < w; ++j) {
+                float scale = L(j, i) / Lold(j, i);
+                arrayRed(j, i) = arrayRed(j, i) * scale;
+                arrayGreen(j, i) = arrayGreen(j, i) * scale;
+                arrayBlue(j, i) = arrayBlue(j, i) * scale;
+            }
+        }
     }
 
     frame.getTags().setTag("LUMINANCE", "DISPLAY");
-
-    if (!ph.canceled()) {
-        ph.setValue(100);
-    }
+    ph.setValue(100);
 }

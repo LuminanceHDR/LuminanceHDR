@@ -1,8 +1,8 @@
 /*
  * @brief VanHateren Tone Mapping Operator:
  *    "Encoding of High Dynamic Range Video with a Model of Human Cones"
- * 	  by J. Hans Van Hateren
- *    in ACM Transaction on Graphics 2006
+ *     by J. Hans Van Hateren
+ *     in ACM Transaction on Graphics 2006
  *
  * This file is a part of LuminanceHDR package
  * ----------------------------------------------------------------------
@@ -30,31 +30,100 @@
 #include <assert.h>
 #include <math.h>
 #include <iostream>
+#include <gsl/gsl_poly.h>
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "Libpfs/utils/msec_timer.h"
+#include "Libpfs/utils/clamp.h"
+#include <Libpfs/colorspace/normalizer.h>
 #include "tmo_vanhateren06.h"
 
-namespace {
-}
 
 using namespace pfs;
+using namespace pfs::colorspace;
 using namespace std;
 
-int tmo_vanhateren06(Array2Df *X, Array2Df *Y, Array2Df *Z, Array2Df *L,
-                    float pupil_area,
-                    Progress &ph) {
+int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    assert(X != NULL);
-    assert(Y != NULL);
-    assert(Z != NULL);
-    assert(L != NULL);
 
+    if(pupil_area <= 0.0f)
+        pupil_area = 10.f; //fixed pupil area 10 mm^2
+
+    size_t w = L.getCols();
+    size_t h = L.getRows();
+    size_t size = w*h;
+
+    float k_beta = 1.6e-4; // td/ms
+    float a_C = 9e-2;
+    float C_beta = 2.8e-3; // 1/ms
+
+    //Calculate Ios,max
+    double polIosMax[] = {-1.0/C_beta, 0.0, 0.0, 0.0, 1.0, a_C};
+    gsl_poly_complex_workspace * ws = gsl_poly_complex_workspace_alloc(6);
+    double roots[10];
+    double real_roots[5];
+    gsl_poly_complex_solve (polIosMax, 6, ws, roots);
+    for (int i = 0; i < 10 ; i += 2) {
+        real_roots[i>>1] = roots[i];
+    }
+
+    float maxIos = (float) *max_element(real_roots, real_roots + 5);
+
+    ph.setValue(2);
+    if (ph.canceled()) {
+        gsl_poly_complex_workspace_free (ws);
+        return 0;
+    }
+
+    //conversion from cd/m^2 to trolands (tr)
+    transform(L.begin(), L.end(), L.begin(),
+            [pupil_area](float lori) { return lori * pupil_area; } );
+
+    ph.setValue(4);
+    if (ph.canceled()) {
+        gsl_poly_complex_workspace_free (ws);
+        return 0;
+    }
+
+    //Range reduction
+    Array2Df tmpI(w, h);
+    transform(L.begin(), L.end(), tmpI.begin(),
+            [C_beta, k_beta](float l) { return -1.0f / (C_beta + k_beta * l); } );
+
+    ph.setValue(6);
+    if (ph.canceled()) {
+        gsl_poly_complex_workspace_free (ws);
+        return 0;
+    }
+
+    double base[] = {0.0, 0.0, 0.0, 0.0, 1.0, a_C};
+
+    for (size_t i = 0; i < size; i++) {
+        ph.setValue(6 + i*92/size);
+        if (ph.canceled()) {
+            gsl_poly_complex_workspace_free (ws);
+            return 0;
+        }
+
+        base[0] = tmpI(i);
+        gsl_poly_complex_solve (base, 6, ws, roots);
+        for (int k = 0; k < 10; k += 2)
+            real_roots[k>>1] = roots[k];
+
+        L(i) = (float) *max_element(real_roots, real_roots + 5);
+    }
+
+    gsl_poly_complex_workspace_free (ws);
+
+    transform(L.begin(), L.end(), L.begin(),
+            [maxIos](float i_os) { return (1.0f - i_os/maxIos); } );
+
+    ph.setValue(99);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();

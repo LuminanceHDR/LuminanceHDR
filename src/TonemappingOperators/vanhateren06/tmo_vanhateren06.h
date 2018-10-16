@@ -1,8 +1,8 @@
 /*
  * @brief VanHateren Tone Mapping Operator:
  *    "Encoding of High Dynamic Range Video with a Model of Human Cones"
- * 	  by J. Hans Van Hateren
- *    in ACM Transaction on Graphics 2006
+ *     by J. Hans Van Hateren
+ *     in ACM Transaction on Graphics 2006
  *
  * This file is a part of LuminanceHDR package
  * ----------------------------------------------------------------------
@@ -37,19 +37,11 @@ class Frame;
 class Progress;
 }
 
-//! \brief Michael Ashikhmin tone mapping operator
+//! \brief Van Hateren tone mapping operator
 //!
-//! \param Y [in] image luminance values
-//! \param L [out] tone mapped values
-//! \param maxLum maximum luminance in the image
-//! \param avLum logarithmic average of luminance in the image
-//! \param simple_flag true: use only tone mapping function (global version of
-//! the operator)
-//! \param lc_value local contrast threshold
-//! \param eq chose equation number from the paper (ie equation 2. or 4. )
+//! \param L [in/out] image luminance values
+//! \param pupil area in mm^2
 //!
-int tmo_vanhateren06(pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z, pfs::Array2Df *L,
-                    float pupil_area,
-                    pfs::Progress &ph);
+int tmo_vanhateren06(pfs::Array2Df &L, float pupil_area, pfs::Progress &ph);
 
 #endif  // TMO_VANHATEREN_H
