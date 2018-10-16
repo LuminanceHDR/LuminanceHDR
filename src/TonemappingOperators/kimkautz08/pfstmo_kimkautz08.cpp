@@ -73,9 +73,7 @@ void pfstmo_kimkautz08(Frame &frame, float KK_c1, float KK_c2,
     copy(L.begin(), L.end(), Lold.begin());
 
     try {
-            tmo_kimkautz08(&L,
-                           KK_c1, KK_c2,
-                           ph);
+            tmo_kimkautz08(L, KK_c1, KK_c2, ph);
     } catch (...) {
         throw Exception("Tonemapping Failed!");
     }
@@ -99,8 +97,8 @@ void pfstmo_kimkautz08(Frame &frame, float KK_c1, float KK_c2,
             for (; j < w; ++j) {
                 float scale = L(j, i) / Lold(j, i);
                 arrayRed(j, i) = arrayRed(j, i) * scale;
-                arrayRed(j, i) = arrayGreen(j, i) * scale;
-                arrayRed(j, i) = arrayBlue(j, i) * scale;
+                arrayGreen(j, i) = arrayGreen(j, i) * scale;
+                arrayBlue(j, i) = arrayBlue(j, i) * scale;
             }
         }
 

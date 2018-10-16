@@ -66,20 +66,19 @@ namespace {
     }
 }
 
-int tmo_kimkautz08(Array2Df *L,
+int tmo_kimkautz08(Array2Df &L,
                     float KK_c1, float KK_c2,
                     Progress &ph) {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    assert(L != NULL);
 
-    int w = L->getCols();
-    int h = L->getRows();
+    int w = L.getCols();
+    int h = L.getRows();
 
     Array2Df L_log(w, h);
-    transform(L->begin(), L->end(), L_log.begin(), [](float pix) { return logf(pix + 1e-6); } );
+    transform(L.begin(), L.end(), L_log.begin(), [](float pix) { return logf(pix + 1e-6); } );
 
     ph.setValue(2);
     if (ph.canceled()) return 0;
@@ -131,11 +130,10 @@ int tmo_kimkautz08(Array2Df *L,
     ph.setValue(80);
     if (ph.canceled()) return 0;
 
-    copy(Ld.begin(), Ld.end(), L->begin());
+    copy(Ld.begin(), Ld.end(), L.begin());
 
     ph.setValue(99);
     if (ph.canceled()) return 0;
-
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();

@@ -39,18 +39,19 @@ class Frame;
 class Progress;
 }
 
-//! \brief Michael Ashikhmin tone mapping operator
+//! \brief Min H. Kim, Jan Kautz tone mapping operator
 //!
-//! \param Y [in] image luminance values
-//! \param L [out] tone mapped values
-//! \param maxLum maximum luminance in the image
-//! \param avLum logarithmic average of luminance in the image
-//! \param simple_flag true: use only tone mapping function (global version of
-//! the operator)
-//! \param lc_value local contrast threshold
-//! \param eq chose equation number from the paper (ie equation 2. or 4. )
+//! \param L [in/out] image luminance values
+//!        KK_c1   this parameter adjusts the shape of Gaussian fall-off
+//!                within the width of tis characteristic curve. It influcences
+//!                the resulting brightness and local details of the tone-mapped
+//!                image. A good value is 3.0 (tradeoff between compression and
+//!                lost details)
+//!         KK_c2  the ratio between the dynamic range (in log10) of an
+//!                8-bit imag (2.4) and the dynamic range (in log10) of the
+//!                LDR monitor for visualization
 //!
-int tmo_kimkautz08(pfs::Array2Df *L,
+int tmo_kimkautz08(pfs::Array2Df &L,
                     float KK_c1, float KK_c2,
                     pfs::Progress &ph);
 
