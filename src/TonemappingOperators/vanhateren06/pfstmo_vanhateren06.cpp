@@ -51,7 +51,7 @@ void pfstmo_vanhateren06(Frame &frame, float pupil_area, Progress &ph) {
     std::cout << "pupil area: " << pupil_area << ")" << std::endl;
 #endif
 
-    applyGamma(&frame, 2.2f);
+    applyGamma(&frame, 1.8f);
 
     Channel *inX, *inY, *inZ;
     frame.getXYZChannels(inY, inX, inZ);
