@@ -32,6 +32,7 @@
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
+#include <Libpfs/utils/msec_timer.h>
 #include "Libpfs/progress.h"
 #include "pyramid.h"
 #include "tmo_ashikhmin02.h"
@@ -161,6 +162,11 @@ void Normalize(pfs::Array2Df *lum_map, int nrows, int ncols) {
 int tmo_ashikhmin02(pfs::Array2Df *Y, pfs::Array2Df *L, float maxLum,
                     float minLum, float /*avLum*/, bool simple_flag,
                     float lc_value, int eq, pfs::Progress &ph) {
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+
     assert(Y != NULL);
     assert(L != NULL);
 
@@ -265,6 +271,12 @@ int tmo_ashikhmin02(pfs::Array2Df *Y, pfs::Array2Df *L, float maxLum,
     }
 
     Normalize(L, nrows, ncols);
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_ashikhmin02 = " << stop_watch.get_time() << " msec" << endl;
+#endif
 
     return 0;
 }
