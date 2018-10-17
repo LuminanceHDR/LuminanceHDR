@@ -3573,7 +3573,7 @@ Luminace Level</string>
         <x>0</x>
         <y>0</y>
         <width>511</width>
-        <height>190</height>
+        <height>184</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3615,6 +3615,15 @@ Luminace Level</string>
             </item>
             <item row="1" column="1">
              <widget class="QSlider" name="pregammaSlider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3698,7 +3707,7 @@ Luminace Level</string>
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="maximum">
-               <double>10.000000000000000</double>
+               <double>5.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.100000000000000</double>
@@ -3710,6 +3719,15 @@ Luminace Level</string>
             </item>
             <item row="2" column="1">
              <widget class="QSlider" name="postsaturationSlider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3878,7 +3896,7 @@ Luminace Level</string>
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="maximum">
-               <double>10.000000000000000</double>
+               <double>5.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.100000000000000</double>
@@ -3890,6 +3908,15 @@ Luminace Level</string>
             </item>
             <item row="3" column="1">
              <widget class="QSlider" name="postgammaSlider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3934,7 +3961,7 @@ Luminace Level</string>
         <x>0</x>
         <y>0</y>
         <width>511</width>
-        <height>210</height>
+        <height>213</height>
        </rect>
       </property>
       <attribute name="label">
@@ -4328,12 +4355,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>177</x>
-     <y>208</y>
+     <x>179</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -4344,12 +4371,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>71</x>
-     <y>208</y>
+     <x>73</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -4360,12 +4387,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>177</x>
-     <y>243</y>
+     <x>179</x>
+     <y>252</y>
     </hint>
    </hints>
   </connection>
@@ -4376,12 +4403,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>501</x>
-     <y>208</y>
+     <x>509</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -4392,12 +4419,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>71</x>
-     <y>243</y>
+     <x>73</x>
+     <y>252</y>
     </hint>
    </hints>
   </connection>
@@ -4408,12 +4435,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>501</x>
-     <y>243</y>
+     <x>509</x>
+     <y>252</y>
     </hint>
    </hints>
   </connection>
@@ -4424,12 +4451,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>247</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>105</y>
+     <x>100</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -4440,12 +4467,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>247</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>509</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -4456,12 +4483,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>105</y>
+     <x>247</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>111</x>
-     <y>105</y>
+     <x>247</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -4488,12 +4515,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>255</x>
-     <y>92</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>255</x>
-     <y>181</y>
+     <x>257</x>
+     <y>189</y>
     </hint>
    </hints>
   </connection>
@@ -4504,12 +4531,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>255</x>
-     <y>92</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>92</x>
-     <y>181</y>
+     <x>105</x>
+     <y>189</y>
     </hint>
    </hints>
   </connection>
@@ -4536,12 +4563,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>255</x>
-     <y>92</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>501</x>
-     <y>181</y>
+     <x>509</x>
+     <y>189</y>
     </hint>
    </hints>
   </connection>
@@ -4552,12 +4579,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>139</y>
+     <x>179</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
    </hints>
   </connection>
@@ -4712,12 +4739,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>85</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>179</x>
-     <y>117</y>
+     <x>258</x>
+     <y>125</y>
     </hint>
    </hints>
   </connection>
@@ -4728,12 +4755,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>310</x>
-     <y>86</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>197</x>
-     <y>139</y>
+     <x>258</x>
+     <y>152</y>
     </hint>
    </hints>
   </connection>
@@ -4744,12 +4771,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>91</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>85</x>
-     <y>113</y>
+     <x>97</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>

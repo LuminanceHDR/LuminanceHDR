@@ -47,7 +47,6 @@
 #include <PreviewPanel/PreviewLabel.h>
 #include <TonemappingOperators/pfstmdefaultparams.h>
 #include <TonemappingPanel/SavingParametersDialog.h>
-#include <TonemappingPanel/TMOProgressIndicator.h>
 #include <TonemappingPanel/TonemappingPanel.h>
 #include <TonemappingPanel/TonemappingSettings.h>
 #include <TonemappingPanel/ui_TonemappingPanel.h>
@@ -270,18 +269,18 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
 
     connect(vanhaterenPupilAreaGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
-    
+
     // pregamma
     pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb, NULL, NULL,
-                            NULL, NULL, 0, 5.f, true);
+                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
 
     // postgamma
     postgammaGang = new Gang(m_Ui->postgammaSlider, m_Ui->postgammadsb, NULL, NULL,
-                            NULL, NULL, 0, 5.f, true);
+                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
 
     // postsaturation
     postsaturationGang = new Gang(m_Ui->postsaturationSlider, m_Ui->postsaturationdsb, NULL, NULL,
-                            NULL, NULL, 0, 10.f, true);
+                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
 
     //--
     connect(m_Ui->stackedWidget_operators, &QStackedWidget::currentChanged,
@@ -686,7 +685,6 @@ void TonemappingPanel::on_defaultButton_clicked() {
 // TODO : if you change the position of the operator inside the TMOperator enum
 // you will screw up this function!!!
 void TonemappingPanel::updateCurrentTmoOperator(int idx) {
-    cout << "updateCurrentTmoOperator( " << idx << " )" << endl;
     m_currentTmoOperator = TMOperator(idx);
     updateUndoState();
 }
@@ -1513,131 +1511,123 @@ void TonemappingPanel::updateTonemappingParams(TonemappingOptions *opts) {
 void TonemappingPanel::saveParameters() {
     SavingParameters dialog;
     if (dialog.exec()) {
-        // Ashikhmin
-        float lct;
-        bool simple, eq2;
-        // Drago
-        float bias;
-        // Durand
-        float spatial, range, base;
-        // Fattal
-        float alpha, beta, colorSat, noiseReduction;
-        bool oldFattal;
-        // Ferradans
-        float rho, inv_alpha;
-        // Mantiuk 06
-        float contrastFactor, saturationFactor, detailFactor;
-        bool contrastEqualization;
-        // Mantiuk 08
-        float colorSaturation, contrastEnhancement, luminanceLevel;
-        bool manualLuminanceLevel;
-        // Pattanaik
-        float multiplier, rod, cone;
-        bool autolum, local;
-        // Reinhard 02
-        bool scales;
-        float key, phi;
-        int irange, lower, upper;
-        // Reinhard 05
-        float brightness, chromaticAdaptation, lightAdaptation;
-        // Ferwerda 96
-        float maxLuminance, adaptationLuminance;
-        // KimKrautz 08
-        float kk_c1, kk_c2;
-        // VanHateren 06
-        float pupil_area;
-
         QString comment = dialog.getComment();
 
         switch (m_currentTmoOperator) {
             case ashikhmin:
-                simple = simpleGang->isCheckBox1Checked();
-                eq2 = eq2Gang->isRadioButton1Checked();
-                lct = contrastGang->v();
-                execAshikhminQuery(simple, eq2, lct, comment);
+                {
+                    bool simple = simpleGang->isCheckBox1Checked();
+                    bool eq2 = eq2Gang->isRadioButton1Checked();
+                    float lct = contrastGang->v();
+                    execAshikhminQuery(simple, eq2, lct, comment);
+                }
                 break;
             case drago:
-                bias = biasGang->v();
-                execDragoQuery(bias, comment);
+                {
+                    float bias = biasGang->v();
+                    execDragoQuery(bias, comment);
+                }
                 break;
             case durand:
-                spatial = spatialGang->v();
-                range = rangeGang->v();
-                base = baseGang->v();
-                execDurandQuery(spatial, range, base, comment);
+                {
+                    float spatial = spatialGang->v();
+                    float range = rangeGang->v();
+                    float base = baseGang->v();
+                    execDurandQuery(spatial, range, base, comment);
+                }
                 break;
             case fattal:
-                alpha = alphaGang->v();
-                beta = betaGang->v();
-                colorSat = saturation2Gang->v();
-                noiseReduction = noiseGang->v();
-                oldFattal = !fftSolverGang->isCheckBox1Checked();
-                execFattalQuery(alpha, beta, colorSat, noiseReduction,
-                                oldFattal, comment);
+                {
+                    float alpha = alphaGang->v();
+                    float beta = betaGang->v();
+                    float colorSat = saturation2Gang->v();
+                    bool  noiseReduction = noiseGang->v();
+                    bool  oldFattal = !fftSolverGang->isCheckBox1Checked();
+                    execFattalQuery(alpha, beta, colorSat, noiseReduction,
+                                    oldFattal, comment);
+                }
                 break;
             case ferradans:
-                rho = rhoGang->v();
-                inv_alpha = inv_alphaGang->v();
-                execFerradansQuery(rho, inv_alpha, comment);
+                {
+                    float rho = rhoGang->v();
+                    float inv_alpha = inv_alphaGang->v();
+                    execFerradansQuery(rho, inv_alpha, comment);
+                }
                 break;
             case mai:  // no options
                 break;
             case mantiuk06:
-                contrastFactor = contrastfactorGang->v();
-                saturationFactor = saturationfactorGang->v();
-                detailFactor = detailfactorGang->v();
-                contrastEqualization = contrastfactorGang->isCheckBox1Checked();
-                execMantiuk06Query(contrastEqualization, contrastFactor,
-                                   saturationFactor, detailFactor, comment);
+                {
+                    float contrastFactor = contrastfactorGang->v();
+                    float saturationFactor = saturationfactorGang->v();
+                    float detailFactor = detailfactorGang->v();
+                    bool  contrastEqualization = contrastfactorGang->isCheckBox1Checked();
+                    execMantiuk06Query(contrastEqualization, contrastFactor,
+                                       saturationFactor, detailFactor, comment);
+                }
                 break;
             case mantiuk08:
-                colorSaturation = colorSaturationGang->v();
-                contrastEnhancement = contrastEnhancementGang->v();
-                luminanceLevel = luminanceLevelGang->v();
-                manualLuminanceLevel = luminanceLevelGang->isCheckBox1Checked();
-                execMantiuk08Query(colorSaturation, contrastEnhancement,
-                                   luminanceLevel, manualLuminanceLevel,
-                                   comment);
+                {
+                    float colorSaturation = colorSaturationGang->v();
+                    float contrastEnhancement = contrastEnhancementGang->v();
+                    float luminanceLevel = luminanceLevelGang->v();
+                    bool  manualLuminanceLevel = luminanceLevelGang->isCheckBox1Checked();
+                    execMantiuk08Query(colorSaturation, contrastEnhancement,
+                                       luminanceLevel, manualLuminanceLevel,
+                                       comment);
+                }
                 break;
             case pattanaik:
-                autolum = autoYGang->isCheckBox1Checked();
-                local = pattalocalGang->isCheckBox1Checked();
-                cone = coneGang->v();
-                rod = rodGang->v();
-                multiplier = multiplierGang->v();
-                execPattanaikQuery(autolum, local, cone, rod, multiplier,
-                                   comment);
+                {
+                    bool  autolum = autoYGang->isCheckBox1Checked();
+                    bool  local = pattalocalGang->isCheckBox1Checked();
+                    float cone = coneGang->v();
+                    float rod = rodGang->v();
+                    float multiplier = multiplierGang->v();
+                    execPattanaikQuery(autolum, local, cone, rod, multiplier,
+                                       comment);
+                }
                 break;
             case reinhard02:
-                scales = usescalesGang->isCheckBox1Checked();
-                key = keyGang->v();
-                phi = phiGang->v();
-                irange = (int)range2Gang->v();
-                lower = (int)lowerGang->v();
-                upper = (int)upperGang->v();
-                execReinhard02Query(scales, key, phi, irange, lower, upper,
-                                    comment);
+                {
+                    bool  scales = usescalesGang->isCheckBox1Checked();
+                    float key = keyGang->v();
+                    float phi = phiGang->v();
+                    int   irange = (int)range2Gang->v();
+                    int   lower = (int)lowerGang->v();
+                    int   upper = (int)upperGang->v();
+                    execReinhard02Query(scales, key, phi, irange, lower, upper,
+                                        comment);
+                }
                 break;
             case reinhard05:
-                brightness = brightnessGang->v();
-                chromaticAdaptation = chromaticGang->v();
-                lightAdaptation = lightGang->v();
-                execReinhard05Query(brightness, chromaticAdaptation,
-                                    lightAdaptation, comment);
+                {
+                    float brightness = brightnessGang->v();
+                    float chromaticAdaptation = chromaticGang->v();
+                    float lightAdaptation = lightGang->v();
+                    execReinhard05Query(brightness, chromaticAdaptation,
+                                        lightAdaptation, comment);
+                }
                 break;
             case ferwerda:
-                maxLuminance = ferwerdamultiplierGang->v();
-                adaptationLuminance = adaptationGang->v();
-                execFerwerdaQuery(maxLuminance, adaptationLuminance, comment);
+                {
+                    float maxLuminance = ferwerdamultiplierGang->v();
+                    float adaptationLuminance = adaptationGang->v();
+                    execFerwerdaQuery(maxLuminance, adaptationLuminance, comment);
+                }
                 break;
             case kimkautz:
-                kk_c1 = kimkautzc1Gang->v();
-                kk_c2 = kimkautzc2Gang->v();
-                execKimKautzQuery(kk_c1, kk_c2, comment);
+                {
+                    float kk_c1 = kimkautzc1Gang->v();
+                    float kk_c2 = kimkautzc2Gang->v();
+                    execKimKautzQuery(kk_c1, kk_c2, comment);
+                }
                 break;
             case vanhateren:
-                pupil_area = vanhaterenPupilAreaGang->v();
-                execVanHaterenQuery(pupil_area, comment);
+                {
+                    float pupil_area = vanhaterenPupilAreaGang->v();
+                    execVanHaterenQuery(pupil_area, comment);
+                }
                 break;
         }
     }
@@ -2341,7 +2331,6 @@ float TonemappingPanel::getAutoLevelsThreshold() {
 
 void TonemappingPanel::updatePreviews(double v) {
     int index = m_Ui->stackedWidget_operators->currentIndex();
-    cout << "updatePreviews( " << index << " )" << endl;
     TonemappingOptions *tmopts =
         new TonemappingOptions(*m_toneMappingOptions);  // make a copy
     fillToneMappingOptions(false);
@@ -2466,7 +2455,6 @@ void TonemappingPanel::updatePreviews(double v) {
             }
             updateCurrentTmoOperator(index);
         } else {
-            cout << "UPDATE_PREVIEWS: " << index << endl;
 
             m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
             m_previewPanel->updatePreviews(m_currentFrame, index);
@@ -2477,10 +2465,9 @@ void TonemappingPanel::updatePreviews(double v) {
 
 void TonemappingPanel::updatePreviewsCB(bool state) {
     int index = m_Ui->stackedWidget_operators->currentIndex();
-    cout << "updatePreviewsCB( " << index << " )" << endl;
+    fillToneMappingOptions(false);
     TonemappingOptions *tmopts =
         new TonemappingOptions(*m_toneMappingOptions);  // make a copy
-    fillToneMappingOptions(false);
     QObject *eventSender(sender());
     // Mantiuk06
     if (eventSender == m_Ui->contrastEqualizCheckBox)
@@ -2504,7 +2491,6 @@ void TonemappingPanel::updatePreviewsCB(bool state) {
         tmopts->operator_options.pattanaikoptions.autolum = state;
 
     if (index >= 0) {
-        cout << "index: " << index << endl;
         m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
         m_previewPanel->updatePreviews(m_currentFrame, index);
     }
@@ -2647,116 +2633,121 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
         connect(m_Ui->postsaturationdsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
     } else {
+        // Mantiuk06
         disconnect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)),
-                   this, SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
+        // Mantiuk08
         disconnect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)),
-                   this, SLOT(updatePreviews(double)));
+                this, SLOT(updatePreviews(double)));
         disconnect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
+        // Fattal
         disconnect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
+        // Ferradans
         disconnect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
 
+        // Ferwerda
         disconnect(m_Ui->ferwerdaMultiplierDsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
         disconnect(m_Ui->adaptationLuminanceDsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
 
+        // KimKautz
         disconnect(m_Ui->kimkautzC1Dsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
         disconnect(m_Ui->kimkautzC2Dsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
 
+        // Drago
         disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
 
+        // Durand
         disconnect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
 
+        // Reinhard02
         disconnect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->pupil_areaDsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->postsaturationdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->postgammadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged,
-                   this, &TonemappingPanel::updatePreviewsCB);
-
-        disconnect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
-
-        disconnect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
-
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->usescalescheckbox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
+                &TonemappingPanel::updatePreviewsCB);
 
+        // Reinhard05
+        disconnect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // Ashikhmin
+        disconnect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->simpleCheckBox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
-
-        disconnect(m_Ui->pattalocal, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
-        disconnect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
-
+                &TonemappingPanel::updatePreviewsCB);
         disconnect(m_Ui->eq2RadioButton, &QAbstractButton::toggled, this,
-                   &TonemappingPanel::updatePreviewsRB);
+                &TonemappingPanel::updatePreviewsRB);
+
+        // Pattanaik
+        disconnect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->pattalocal, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
+
+        // VanHateren
+        disconnect(m_Ui->pupil_areaDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // GLOBAL Pregamma
+        disconnect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->postgammadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->postsaturationdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
     }
 }
 
