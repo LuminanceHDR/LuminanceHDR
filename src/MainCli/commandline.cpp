@@ -162,7 +162,8 @@ int CommandLineInterfaceManager::execCommandLineParams() {
             "given threshold. (0.0-1.0)").toUtf8().constData())
         ("autolevels,b", tr("Apply autolevels correction after tonemapping.").toUtf8().constData())
         ("createwebpage,w", tr("Enable generation of a webpage with embedded HDR viewer.").toUtf8().constData())
-        ("proposedldrname,p", po::value<std::string>(&ldrExtension), tr("FILE_EXTENSION   Save LDR file with a name of the form "
+        ("proposedldrname,p", po::value<std::string>(&ldrExtension),
+            tr("FILE_EXTENSION   Save LDR file with a name of the form "
             "first-last_tmparameters.extension.").toUtf8().constData())
         ("proposedhdrname,z", po::value<std::string>(&hdrExtension), tr("FILE_EXTENSION   Save HDR file with a name of the form "
             "first-last_HdrCreationModel.extension.").toUtf8().constData());
@@ -883,13 +884,18 @@ void CommandLineInterfaceManager::saveHDR() {
                     getQString(hdrCreationManager->getFusionOperator()));
 
                 QFileInfo fi1(inputFiles.first());
-                QFileInfo fi2(inputFiles.last());
 
-                saveHdrFilename =
-                    fi1.completeBaseName() + "-" + fi2.completeBaseName();
+                if (inputFiles.first() != inputFiles.last()) {
+                    QFileInfo fi2(inputFiles.last());
+
+                    saveHdrFilename =
+                        fi1.completeBaseName() + "-" + fi2.completeBaseName();
+                }
+                else {
+                    saveHdrFilename = fi1.completeBaseName();
+                }
                 saveHdrFilename.append("_" + caption);
-                saveHdrFilename.append("." +
-                                       QString::fromStdString(hdrExtension));
+                saveHdrFilename.append("." + QString::fromStdString(hdrExtension));
             }
         }
 
