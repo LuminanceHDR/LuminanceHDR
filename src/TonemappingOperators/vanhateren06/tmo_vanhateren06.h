@@ -1,7 +1,12 @@
 /*
- * This file is a part of Luminance HDR package.
+ * @brief VanHateren Tone Mapping Operator:
+ *    "Encoding of High Dynamic Range Video with a Model of Human Cones"
+ *     by J. Hans Van Hateren
+ *     in ACM Transaction on Graphics 2006
+ *
+ * This file is a part of LuminanceHDR package
  * ----------------------------------------------------------------------
- * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2018 Franco Comida
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,35 +22,26 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
+ *
+ * @author Franco Comida, <fcomida@users.sourceforge.net>
+ *
  */
 
-//! \author Franco Comida <fcomida@users.sourceforge.net>
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+#ifndef TMO_VANHATEREN_H
+#define TMO_VANHATEREN_H
 
-#include "ProgressHelper.h"
+#include <Libpfs/array2d_fwd.h>
 
-using namespace pfs;
-
-ProgressHelper::ProgressHelper(QObject *p) : QObject(p), Progress() {}
-
-void ProgressHelper::setValue(int value) {
-    Progress::setValue(value);
-    emit qtSetValue(value);
+namespace pfs {
+class Frame;
+class Progress;
 }
 
-void ProgressHelper::setMaximum(int maximum) {
-    Progress::setMaximum(maximum);
-    emit qtSetMaximum(maximum);
-}
+//! \brief Van Hateren tone mapping operator
+//!
+//! \param L [in/out] image luminance values
+//! \param pupil area in mm^2
+//!
+int tmo_vanhateren06(pfs::Array2Df &L, float pupil_area, pfs::Progress &ph);
 
-void ProgressHelper::setMinimum(int minimum) {
-    Progress::setMinimum(minimum);
-    emit qtSetMinimum(minimum);
-}
-
-void ProgressHelper::setRange(int minimum, int maximum) {
-    Progress::setRange(minimum, maximum);
-    emit qtSetRange(minimum, maximum);
-}
-
-void ProgressHelper::qtCancel() { Progress::cancel(true); }
+#endif  // TMO_VANHATEREN_H

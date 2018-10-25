@@ -283,39 +283,78 @@ struct TonemapOperatorPattanaik00
     }
 };
 
+struct TonemapOperatorFerwerda96
+    : public TonemapOperatorRegister<ferwerda, TonemapOperatorFerwerda96> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
+        ph.setMaximum(100);
+
+        try {
+            pfstmo_ferwerda96(
+                workingframe, opts->operator_options.ferwerdaoptions.multiplier,
+                opts->operator_options.ferwerdaoptions.adaptationluminance,
+                ph);
+        } catch (...) {
+            throw std::runtime_error("Ferwerda: Tonemap Failed");
+        }
+    }
+};
+
+struct TonemapOperatorKimKautz08
+    : public TonemapOperatorRegister<kimkautz, TonemapOperatorKimKautz08> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
+        ph.setMaximum(100);
+
+        try {
+            pfstmo_kimkautz08(
+                workingframe,
+                opts->operator_options.kimkautzoptions.c1,
+                opts->operator_options.kimkautzoptions.c2,
+                ph);
+        } catch (...) {
+            throw std::runtime_error("KimKautz: Tonemap Failed");
+        }
+    }
+};
+
+struct TonemapOperatorVanHateren06
+    : public TonemapOperatorRegister<vanhateren, TonemapOperatorVanHateren06> {
+    void tonemapFrame(pfs::Frame &workingframe, TonemappingOptions *opts,
+                      pfs::Progress &ph) {
+        ph.setMaximum(100);
+
+        try {
+            pfstmo_vanhateren06(
+                workingframe,
+                opts->operator_options.vanhaterenoptions.pupil_area,
+                ph);
+        } catch (...) {
+            throw std::runtime_error("VanHateren: Tonemap Failed");
+        }
+    }
+};
+
 typedef TonemapOperator *(*TonemapOperatorCreator)();
 typedef std::map<TMOperator, TonemapOperatorCreator> TonemapOperatorCreatorMap;
 
 inline const TonemapOperatorCreatorMap &registry() {
     static TonemapOperatorCreatorMap reg = map_list_of
         // XYZ -> *
-        (mantiuk06,
-         TonemapOperatorRegister<mantiuk06, TonemapOperatorMantiuk06>::create)(
-            mantiuk08,
-            TonemapOperatorRegister<mantiuk08,
-                                    TonemapOperatorMantiuk08>::create)(
-            fattal,
-            TonemapOperatorRegister<fattal, TonemapOperatorFattal02>::create)(
-            ferradans,
-            TonemapOperatorRegister<ferradans,
-                                    TonemapOperatorFerradans11>::create)(
-            mai, TonemapOperatorRegister<mai, TonemapOperatorMai11>::create)(
-            drago,
-            TonemapOperatorRegister<drago, TonemapOperatorDrago03>::create)(
-            durand,
-            TonemapOperatorRegister<durand, TonemapOperatorDurand02>::create)(
-            reinhard02,
-            TonemapOperatorRegister<reinhard02,
-                                    TonemapOperatorReinhard02>::create)(
-            reinhard05,
-            TonemapOperatorRegister<reinhard05,
-                                    TonemapOperatorReinhard05>::create)(
-            ashikhmin,
-            TonemapOperatorRegister<ashikhmin,
-                                    TonemapOperatorAshikhmin02>::create)(
-            pattanaik,
-            TonemapOperatorRegister<pattanaik,
-                                    TonemapOperatorPattanaik00>::create);
+        (mantiuk06,  TonemapOperatorRegister<mantiuk06,  TonemapOperatorMantiuk06>::create)
+        (mantiuk08,  TonemapOperatorRegister<mantiuk08,  TonemapOperatorMantiuk08>::create)
+        (fattal,     TonemapOperatorRegister<fattal,     TonemapOperatorFattal02>::create)
+        (ferradans,  TonemapOperatorRegister<ferradans,  TonemapOperatorFerradans11>::create)
+        (mai,        TonemapOperatorRegister<mai,        TonemapOperatorMai11>::create)
+        (drago,      TonemapOperatorRegister<drago,      TonemapOperatorDrago03>::create)
+        (durand,     TonemapOperatorRegister<durand,     TonemapOperatorDurand02>::create)
+        (reinhard02, TonemapOperatorRegister<reinhard02, TonemapOperatorReinhard02>::create)
+        (reinhard05, TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05>::create)
+        (ashikhmin,  TonemapOperatorRegister<ashikhmin,  TonemapOperatorAshikhmin02>::create)
+        (pattanaik,  TonemapOperatorRegister<pattanaik,  TonemapOperatorPattanaik00>::create)
+        (ferwerda,   TonemapOperatorRegister<ferwerda,   TonemapOperatorFerwerda96>::create)
+        (kimkautz,   TonemapOperatorRegister<kimkautz,   TonemapOperatorKimKautz08>::create)
+        (vanhateren, TonemapOperatorRegister<vanhateren, TonemapOperatorVanHateren06>::create);
     return reg;
 }
 

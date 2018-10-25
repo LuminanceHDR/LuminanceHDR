@@ -440,6 +440,10 @@ int tmo_mantiuk06_contmap(Array2Df &R, Array2Df &G, Array2Df &B, Array2Df &Y,
                           const float contrastFactor,
                           const float saturationFactor, float detailfactor,
                           const int itmax, const float tol, Progress &ph) {
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
     assert(R.getCols() == G.getCols());
     assert(G.getCols() == B.getCols());
     assert(B.getCols() == Y.getCols());
@@ -482,6 +486,12 @@ int tmo_mantiuk06_contmap(Array2Df &R, Array2Df &G, Array2Df &B, Array2Df &Y,
     transformToLuminance(pp, Y, itmax, tol, ph);
     denormalizeLuminance(Y);
     denormalizeRGB(R, G, B, Y, saturationFactor);
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_mantiuk06 = " << stop_watch.get_time() << " msec" << endl;
+#endif
 
     return PFSTMO_OK;
 }

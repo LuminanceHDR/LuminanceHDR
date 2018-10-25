@@ -38,6 +38,7 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/pfs.h"
 #include "Libpfs/progress.h"
+#include "Libpfs/utils/msec_timer.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
@@ -238,6 +239,10 @@ float calculateLocalAdaptation(const pfs::Array2Df &Y, int x, int y) {
 void tmo_pattanaik00(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
                      const pfs::Array2Df &Y, VisualAdaptationModel *am,
                      bool local, pfs::Progress &ph) {
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
 
     ///--- initialization of parameters
     /// cones level of adaptation
@@ -392,6 +397,12 @@ void tmo_pattanaik00(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 
     }
     ph.setValue(98);
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_pattanaik00 = " << stop_watch.get_time() << " msec" << endl;
+#endif
+
 }
 
 ///////////////////////////////////////////////////////////

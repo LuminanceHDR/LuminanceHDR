@@ -36,6 +36,7 @@
 
 #include <boost/math/special_functions/fpclassify.hpp>
 
+#include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
@@ -109,6 +110,10 @@ void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
                  float avLum, float bias, pfs::Progress &ph) {
     assert(Y.getRows() == L.getRows());
     assert(Y.getCols() == L.getCols());
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
 
     // normalize maximum luminance by average luminance
     maxLum /= avLum;
@@ -150,4 +155,10 @@ void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
         }
     }
     }
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_drago03 = " << stop_watch.get_time() << " msec" << endl;
+#endif
+
 }

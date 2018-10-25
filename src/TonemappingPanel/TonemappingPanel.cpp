@@ -47,7 +47,6 @@
 #include <PreviewPanel/PreviewLabel.h>
 #include <TonemappingOperators/pfstmdefaultparams.h>
 #include <TonemappingPanel/SavingParametersDialog.h>
-#include <TonemappingPanel/TMOProgressIndicator.h>
 #include <TonemappingPanel/TonemappingPanel.h>
 #include <TonemappingPanel/TonemappingSettings.h>
 #include <TonemappingPanel/ui_TonemappingPanel.h>
@@ -80,7 +79,7 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
     if (!QIcon::hasThemeIcon(QStringLiteral("cloud-upload")))
         m_Ui->loadButton->setIcon(QIcon(":/program-icons/cloud-upload"));
 
-    currentTmoOperator = mantiuk06;  // from Qt Designer
+    m_currentTmoOperator = mantiuk06;  // from Qt Designer
 
     // mantiuk06
     contrastfactorGang =
@@ -235,17 +234,53 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
         new Gang(m_Ui->lightAdaptSlider, m_Ui->lightAdaptdsb, NULL, NULL, NULL,
                  NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
 
+    // ferwerda96
+    ferwerdamultiplierGang =
+        new Gang(m_Ui->ferwerdaMultiplierSlider, m_Ui->ferwerdaMultiplierDsb, NULL, NULL, NULL,
+                 NULL, 0.001f, 2.f, FERWERDA96_MULTIPLIER);
+
+    connect(ferwerdamultiplierGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(ferwerdamultiplierGang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
+
+    adaptationGang =
+        new Gang(m_Ui->adaptationLuminanceSlider, m_Ui->adaptationLuminanceDsb, NULL,
+                 NULL, NULL, NULL, 0.001f, 1.f, FERWERDA96_ADAPTATION_LUMINANCE);
+
+    // kimkautz08
+    kimkautzc1Gang =
+        new Gang(m_Ui->kimkautzC1Slider, m_Ui->kimkautzC1Dsb, NULL,
+                 NULL, NULL, NULL, 0.001f, 10.f, KIMKAUTZ08_C1);
+
+    connect(kimkautzc1Gang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+    connect(kimkautzc1Gang, &Gang::enableRedo, m_Ui->redoButton,
+            &QWidget::setEnabled);
+
+    kimkautzc2Gang =
+        new Gang(m_Ui->kimkautzC2Slider, m_Ui->kimkautzC2Dsb, NULL,
+                 NULL, NULL, NULL, 0.001f, 5.f, KIMKAUTZ08_C2);
+
+    // vanhateren06
+    vanhaterenPupilAreaGang =
+        new Gang(m_Ui->pupil_areaSlider, m_Ui->pupil_areaDsb, NULL,
+                 NULL, NULL, NULL, 0.0f, 100.f, VANHATEREN06_PUPIL_AREA);
+
+    connect(vanhaterenPupilAreaGang, &Gang::enableUndo, m_Ui->undoButton,
+            &QWidget::setEnabled);
+
     // pregamma
     pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb, NULL, NULL,
-                            NULL, NULL, 0, 5.f, true);
+                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
 
     // postgamma
     postgammaGang = new Gang(m_Ui->postgammaSlider, m_Ui->postgammadsb, NULL, NULL,
-                            NULL, NULL, 0, 5.f, true);
+                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
 
     // postsaturation
     postsaturationGang = new Gang(m_Ui->postsaturationSlider, m_Ui->postsaturationdsb, NULL, NULL,
-                            NULL, NULL, 0, 10.f, true);
+                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
 
     //--
     connect(m_Ui->stackedWidget_operators, &QStackedWidget::currentChanged,
@@ -319,12 +354,17 @@ TonemappingPanel::~TonemappingPanel() {
     delete brightnessGang;
     delete chromaticGang;
     delete lightGang;
+    delete ferwerdamultiplierGang;
+    delete adaptationGang;
+    delete kimkautzc1Gang;
+    delete kimkautzc2Gang;
+    delete vanhaterenPupilAreaGang;
     delete pregammaGang;
     delete postgammaGang;
     delete postsaturationGang;
     delete m_spinner;
 
-    qDeleteAll(toneMappingOptionsToDelete);
+    qDeleteAll(m_toneMappingOptionsToDelete);
 
     if (m_mainWinNumber == 0) {
         QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
@@ -445,7 +485,7 @@ void TonemappingPanel::createDatabase() {
         res = query.exec(QStringLiteral(
                 " ALTER TABLE fattal ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
     }
-    // Fattal
+    // Ferradans
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS ferradans (rho real, \
         inv_alpha real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
@@ -458,6 +498,34 @@ void TonemappingPanel::createDatabase() {
                 " ALTER TABLE ferradans ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
         res = query.exec(QStringLiteral(
                 " ALTER TABLE ferradans ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
+    // Ferwerda
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS ferwerda (maxlum real, \
+        adaptlum real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
+    if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM ferwerda; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE ferwerda ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE ferwerda ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
+    // KimKautz
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS kimkautz (\
+        kk_c1 real, kk_c2 real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
+    if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM kimkautz; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE kimkautz ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE kimkautz ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
     }
     // Pattanaik
     res = query.exec(QStringLiteral(
@@ -504,6 +572,20 @@ void TonemappingPanel::createDatabase() {
         res = query.exec(QStringLiteral(
                 " ALTER TABLE reinhard05 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
     }
+    // VanHateren
+    res = query.exec(QStringLiteral(
+        " CREATE TABLE IF NOT EXISTS vanhateren (\
+        pupil_area real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
+    if (res == false) qDebug() << query.lastError();
+
+    res = query.exec(QStringLiteral(
+                " SELECT postsaturation FROM vanhateren; "));
+    if (res == false) {
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE vanhateren ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+        res = query.exec(QStringLiteral(
+                " ALTER TABLE vanhateren ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+    }
     // Hdr creation custom config parameters
     res = query.exec(QStringLiteral(
         "CREATE TABLE IF NOT EXISTS parameters (weight integer, response \
@@ -526,7 +608,7 @@ void TonemappingPanel::setSizes(int width, int height) {
 }
 
 void TonemappingPanel::on_defaultButton_clicked() {
-    switch (currentTmoOperator) {
+    switch (m_currentTmoOperator) {
         case ashikhmin:
             contrastGang->setDefault();
             m_Ui->simpleCheckBox->setChecked(false);
@@ -586,18 +668,29 @@ void TonemappingPanel::on_defaultButton_clicked() {
             chromaticGang->setDefault();
             lightGang->setDefault();
             break;
+        case ferwerda:
+            ferwerdamultiplierGang->setDefault();
+            adaptationGang->setDefault();
+            break;
+        case kimkautz:
+            kimkautzc1Gang->setDefault();
+            kimkautzc2Gang->setDefault();
+            break;
+        case vanhateren:
+            vanhaterenPupilAreaGang->setDefault();
+            break;
     }
 }
 
 // TODO : if you change the position of the operator inside the TMOperator enum
 // you will screw up this function!!!
 void TonemappingPanel::updateCurrentTmoOperator(int idx) {
-    currentTmoOperator = TMOperator(idx);
+    m_currentTmoOperator = TMOperator(idx);
     updateUndoState();
 }
 
 void TonemappingPanel::updateUndoState() {
-    switch (currentTmoOperator) {
+    switch (m_currentTmoOperator) {
         case ashikhmin:
             contrastGang->updateUndoState();
             break;
@@ -630,6 +723,15 @@ void TonemappingPanel::updateUndoState() {
         case reinhard05:
             brightnessGang->updateUndoState();
             break;
+        case ferwerda:
+            ferwerdamultiplierGang->updateUndoState();
+            break;
+        case kimkautz:
+            kimkautzc1Gang->updateUndoState();
+            break;
+        case vanhateren:
+            vanhaterenPupilAreaGang->updateUndoState();
+            break;
     }
 }
 
@@ -649,146 +751,165 @@ void TonemappingPanel::on_applyButton_clicked() {
     fillToneMappingOptions(false);
     setupUndo();
 
-    emit startTonemapping(toneMappingOptions);
+    emit startTonemapping(m_toneMappingOptions);
 }
 
 void TonemappingPanel::on_queueButton_clicked() {
     fillToneMappingOptions(true);
     // setupUndo();
 
-    emit startExport(toneMappingOptions);
+    emit startExport(m_toneMappingOptions);
 }
 
 void TonemappingPanel::fillToneMappingOptions(bool exportMode) {
-    toneMappingOptions = new TonemappingOptions;
+    m_toneMappingOptions = new TonemappingOptions;
     if (!exportMode) {
-        toneMappingOptionsToDelete.push_back(toneMappingOptions);
+        m_toneMappingOptionsToDelete.push_back(m_toneMappingOptions);
     }
     if (!exportMode && sizes.size()) {
-        toneMappingOptions->origxsize = sizes[0];
-        toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
+        m_toneMappingOptions->origxsize = sizes[0];
+        m_toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
     } else {
-        toneMappingOptions->origxsize = 0;
-        toneMappingOptions->xsize = 0;
+        m_toneMappingOptions->origxsize = 0;
+        m_toneMappingOptions->xsize = 0;
     }
-    toneMappingOptions->pregamma = pregammaGang->v();
-    toneMappingOptions->postgamma = postgammaGang->v();
-    toneMappingOptions->postsaturation = postsaturationGang->v();
+    m_toneMappingOptions->pregamma = pregammaGang->v();
+    m_toneMappingOptions->postgamma = postgammaGang->v();
+    m_toneMappingOptions->postsaturation = postsaturationGang->v();
     // toneMappingOptions->tonemapSelection = checkBoxSelection->isChecked();
     // toneMappingOptions->tonemapOriginal = checkBoxOriginal->isChecked();
-    switch (currentTmoOperator) {
+    switch (m_currentTmoOperator) {
         case ashikhmin:
-            toneMappingOptions->tmoperator = ashikhmin;
-            toneMappingOptions->operator_options.ashikhminoptions.simple =
+            m_toneMappingOptions->tmoperator = ashikhmin;
+            m_toneMappingOptions->operator_options.ashikhminoptions.simple =
                 simpleGang->isCheckBox1Checked();
-            toneMappingOptions->operator_options.ashikhminoptions.eq2 =
+            m_toneMappingOptions->operator_options.ashikhminoptions.eq2 =
                 eq2Gang->isRadioButton1Checked();
-            toneMappingOptions->operator_options.ashikhminoptions.lct =
+            m_toneMappingOptions->operator_options.ashikhminoptions.lct =
                 contrastGang->v();
             break;
         case drago:
-            toneMappingOptions->tmoperator = drago;
-            toneMappingOptions->operator_options.dragooptions.bias =
+            m_toneMappingOptions->tmoperator = drago;
+            m_toneMappingOptions->operator_options.dragooptions.bias =
                 biasGang->v();
             break;
         case durand:
-            toneMappingOptions->tmoperator = durand;
-            toneMappingOptions->operator_options.durandoptions.spatial =
+            m_toneMappingOptions->tmoperator = durand;
+            m_toneMappingOptions->operator_options.durandoptions.spatial =
                 spatialGang->v();
-            toneMappingOptions->operator_options.durandoptions.range =
+            m_toneMappingOptions->operator_options.durandoptions.range =
                 rangeGang->v();
-            toneMappingOptions->operator_options.durandoptions.base =
+            m_toneMappingOptions->operator_options.durandoptions.base =
                 baseGang->v();
             break;
         case fattal:
-            toneMappingOptions->tmoperator = fattal;
-            toneMappingOptions->operator_options.fattaloptions.alpha =
+            m_toneMappingOptions->tmoperator = fattal;
+            m_toneMappingOptions->operator_options.fattaloptions.alpha =
                 alphaGang->v();
-            toneMappingOptions->operator_options.fattaloptions.beta =
+            m_toneMappingOptions->operator_options.fattaloptions.beta =
                 betaGang->v();
-            toneMappingOptions->operator_options.fattaloptions.color =
+            m_toneMappingOptions->operator_options.fattaloptions.color =
                 saturation2Gang->v();
-            toneMappingOptions->operator_options.fattaloptions.noiseredux =
+            m_toneMappingOptions->operator_options.fattaloptions.noiseredux =
                 noiseGang->v();
-            //        toneMappingOptions->operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
-            toneMappingOptions->operator_options.fattaloptions.fftsolver =
+            //        m_toneMappingOptions->operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
+            m_toneMappingOptions->operator_options.fattaloptions.fftsolver =
                 fftSolverGang->isCheckBox1Checked();
             break;
         case ferradans:
-            toneMappingOptions->tmoperator = ferradans;
-            toneMappingOptions->operator_options.ferradansoptions.rho =
+            m_toneMappingOptions->tmoperator = ferradans;
+            m_toneMappingOptions->operator_options.ferradansoptions.rho =
                 rhoGang->v();
-            toneMappingOptions->operator_options.ferradansoptions.inv_alpha =
+            m_toneMappingOptions->operator_options.ferradansoptions.inv_alpha =
                 inv_alphaGang->v();
             break;
         case mai:
-            toneMappingOptions->tmoperator = mai;
+            m_toneMappingOptions->tmoperator = mai;
             break;
         case mantiuk06:
-            toneMappingOptions->tmoperator = mantiuk06;
-            toneMappingOptions->operator_options.mantiuk06options
+            m_toneMappingOptions->tmoperator = mantiuk06;
+            m_toneMappingOptions->operator_options.mantiuk06options
                 .contrastfactor = contrastfactorGang->v();
-            toneMappingOptions->operator_options.mantiuk06options
+            m_toneMappingOptions->operator_options.mantiuk06options
                 .saturationfactor = saturationfactorGang->v();
-            toneMappingOptions->operator_options.mantiuk06options.detailfactor =
+            m_toneMappingOptions->operator_options.mantiuk06options.detailfactor =
                 detailfactorGang->v();
-            toneMappingOptions->operator_options.mantiuk06options
+            m_toneMappingOptions->operator_options.mantiuk06options
                 .contrastequalization =
                 contrastfactorGang->isCheckBox1Checked();
             break;
         case mantiuk08:
-            toneMappingOptions->tmoperator = mantiuk08;
-            toneMappingOptions->operator_options.mantiuk08options
+            m_toneMappingOptions->tmoperator = mantiuk08;
+            m_toneMappingOptions->operator_options.mantiuk08options
                 .colorsaturation = colorSaturationGang->v();
-            toneMappingOptions->operator_options.mantiuk08options
+            m_toneMappingOptions->operator_options.mantiuk08options
                 .contrastenhancement = contrastEnhancementGang->v();
-            toneMappingOptions->operator_options.mantiuk08options
+            m_toneMappingOptions->operator_options.mantiuk08options
                 .luminancelevel = luminanceLevelGang->v();
-            toneMappingOptions->operator_options.mantiuk08options.setluminance =
+            m_toneMappingOptions->operator_options.mantiuk08options.setluminance =
                 luminanceLevelGang->isCheckBox1Checked();
             break;
         case pattanaik:
-            toneMappingOptions->tmoperator = pattanaik;
-            toneMappingOptions->operator_options.pattanaikoptions.autolum =
+            m_toneMappingOptions->tmoperator = pattanaik;
+            m_toneMappingOptions->operator_options.pattanaikoptions.autolum =
                 autoYGang->isCheckBox1Checked();
-            toneMappingOptions->operator_options.pattanaikoptions.local =
+            m_toneMappingOptions->operator_options.pattanaikoptions.local =
                 pattalocalGang->isCheckBox1Checked();
-            toneMappingOptions->operator_options.pattanaikoptions.cone =
+            m_toneMappingOptions->operator_options.pattanaikoptions.cone =
                 coneGang->v();
-            toneMappingOptions->operator_options.pattanaikoptions.rod =
+            m_toneMappingOptions->operator_options.pattanaikoptions.rod =
                 rodGang->v();
-            toneMappingOptions->operator_options.pattanaikoptions.multiplier =
+            m_toneMappingOptions->operator_options.pattanaikoptions.multiplier =
                 multiplierGang->v();
             break;
         case reinhard02:
-            toneMappingOptions->tmoperator = reinhard02;
-            toneMappingOptions->operator_options.reinhard02options.scales =
+            m_toneMappingOptions->tmoperator = reinhard02;
+            m_toneMappingOptions->operator_options.reinhard02options.scales =
                 usescalesGang->isCheckBox1Checked();
-            toneMappingOptions->operator_options.reinhard02options.key =
+            m_toneMappingOptions->operator_options.reinhard02options.key =
                 keyGang->v();
-            toneMappingOptions->operator_options.reinhard02options.phi =
+            m_toneMappingOptions->operator_options.reinhard02options.phi =
                 phiGang->v();
-            toneMappingOptions->operator_options.reinhard02options.range =
+            m_toneMappingOptions->operator_options.reinhard02options.range =
                 (int)range2Gang->v();
-            toneMappingOptions->operator_options.reinhard02options.lower =
+            m_toneMappingOptions->operator_options.reinhard02options.lower =
                 (int)lowerGang->v();
-            toneMappingOptions->operator_options.reinhard02options.upper =
+            m_toneMappingOptions->operator_options.reinhard02options.upper =
                 (int)upperGang->v();
             break;
         case reinhard05:
-            toneMappingOptions->tmoperator = reinhard05;
-            toneMappingOptions->operator_options.reinhard05options.brightness =
+            m_toneMappingOptions->tmoperator = reinhard05;
+            m_toneMappingOptions->operator_options.reinhard05options.brightness =
                 brightnessGang->v();
-            toneMappingOptions->operator_options.reinhard05options
+            m_toneMappingOptions->operator_options.reinhard05options
                 .chromaticAdaptation = chromaticGang->v();
-            toneMappingOptions->operator_options.reinhard05options
+            m_toneMappingOptions->operator_options.reinhard05options
                 .lightAdaptation = lightGang->v();
+            break;
+        case ferwerda:
+            m_toneMappingOptions->tmoperator = ferwerda;
+            m_toneMappingOptions->operator_options.ferwerdaoptions.multiplier =
+                ferwerdamultiplierGang->v();
+            m_toneMappingOptions->operator_options.ferwerdaoptions
+                .adaptationluminance = adaptationGang->v();
+            break;
+        case kimkautz:
+            m_toneMappingOptions->tmoperator = kimkautz;
+            m_toneMappingOptions->operator_options.kimkautzoptions.c1 =
+                kimkautzc1Gang->v();
+            m_toneMappingOptions->operator_options.kimkautzoptions.c2 =
+                kimkautzc2Gang->v();
+            break;
+        case vanhateren:
+            m_toneMappingOptions->tmoperator = vanhateren;
+            m_toneMappingOptions->operator_options.vanhaterenoptions.pupil_area =
+                vanhaterenPupilAreaGang->v();
             break;
     }
 }
 
 void TonemappingPanel::setupUndo() {
-    switch (currentTmoOperator) {
+    switch (m_currentTmoOperator) {
         case ashikhmin:
             simpleGang->setupUndo();
             eq2Gang->setupUndo();
@@ -846,6 +967,17 @@ void TonemappingPanel::setupUndo() {
             chromaticGang->setupUndo();
             lightGang->setupUndo();
             break;
+        case ferwerda:
+            ferwerdamultiplierGang->setupUndo();
+            adaptationGang->setupUndo();
+            break;
+        case kimkautz:
+            kimkautzc1Gang->setupUndo();
+            kimkautzc2Gang->setupUndo();
+            break;
+        case vanhateren:
+            vanhaterenPupilAreaGang->setupUndo();
+            break;
     }
 }
 
@@ -856,7 +988,7 @@ void TonemappingPanel::on_redoButton_clicked() { onUndoRedo(false); }
 void TonemappingPanel::onUndoRedo(bool undo) {
     typedef void (Gang::*REDO_UNDO)();
     REDO_UNDO redoUndo = undo ? &Gang::undo : &Gang::redo;
-    switch (currentTmoOperator) {
+    switch (m_currentTmoOperator) {
         case ashikhmin:
             (simpleGang->*redoUndo)();
             (eq2Gang->*redoUndo)();
@@ -913,6 +1045,17 @@ void TonemappingPanel::onUndoRedo(bool undo) {
             (brightnessGang->*redoUndo)();
             (chromaticGang->*redoUndo)();
             (lightGang->*redoUndo)();
+            break;
+        case ferwerda:
+            (ferwerdamultiplierGang->*redoUndo)();
+            (adaptationGang->*redoUndo)();
+            break;
+        case kimkautz:
+            (kimkautzc1Gang->*redoUndo)();
+            (kimkautzc2Gang->*redoUndo)();
+            break;
+        case vanhateren:
+            (vanhaterenPupilAreaGang->*redoUndo)();
             break;
     }
 }
@@ -1023,6 +1166,16 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
             << "Ferradans11" << endl;
         out << "RHO=" << rhoGang->v() << endl;
         out << "INV_ALPHA=" << inv_alphaGang->v() << endl;
+    } else if (current_page == m_Ui->page_ferwerda) {
+        out << "TMO="
+            << "Ferwerda96" << endl;
+        out << "MAX_LUMINANCE=" << ferwerdamultiplierGang->v() << endl;
+        out << "ADAPTATION_LUMINANCE=" << adaptationGang->v() << endl;
+    } else if (current_page == m_Ui->page_kimkautz) {
+        out << "TMO="
+            << "KimKautz08" << endl;
+        out << "KK_C1=" << kimkautzc1Gang->v() << endl;
+        out << "KK_C2=" << kimkautzc2Gang->v() << endl;
     } else if (current_page == m_Ui->page_mai) {
         out << "TMO="
             << "Mai11" << endl;
@@ -1070,6 +1223,10 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
         out << "BRIGHTNESS=" << brightnessGang->v() << endl;
         out << "CHROMATICADAPTATION=" << chromaticGang->v() << endl;
         out << "LIGHTADAPTATION=" << lightGang->v() << endl;
+    } else if (current_page == m_Ui->page_vanhateren) {
+        out << "TMO="
+            << "VanHateren06" << endl;
+        out << "PUPIL_AREA=" << vanhaterenPupilAreaGang->v() << endl;
     }
     out << "PREGAMMA=" << pregammaGang->v() << endl;
     out << "POSTSATURATION=" << postsaturationGang->v() << endl;
@@ -1157,6 +1314,14 @@ void TonemappingPanel::fromTxt2Gui() {
                 m_Ui->stackedWidget_operators->setCurrentWidget(
                     m_Ui->page_ferradans);
                 tmo = QStringLiteral("Ferradans11");
+            } else if (value == QLatin1String("Ferwerda96")) {
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_ferwerda);
+                tmo = QStringLiteral("Ferwerda96");
+            } else if (value == QLatin1String("KimKautz08")) {
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_kimkautz);
+                tmo = QStringLiteral("KimKautz08");
             } else if (value == QLatin1String("Mai11")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mai);
                 tmo = QStringLiteral("Mai11");
@@ -1172,6 +1337,10 @@ void TonemappingPanel::fromTxt2Gui() {
                 m_Ui->stackedWidget_operators->setCurrentWidget(
                     m_Ui->page_reinhard05);
                 tmo = QStringLiteral("Reinhard05");
+            } else if (value == QLatin1String("VanHateren06")) {
+                m_Ui->stackedWidget_operators->setCurrentWidget(
+                    m_Ui->page_vanhateren);
+                tmo = QStringLiteral("VanHateren06");
             }
         } else if (field == QLatin1String("CONTRASTFACTOR")) {
             m_Ui->contrastFactorSlider->setValue(
@@ -1228,6 +1397,15 @@ void TonemappingPanel::fromTxt2Gui() {
         } else if (field == QLatin1String("INV_ALPHA")) {
             m_Ui->inv_alphaSlider->setValue(
                 inv_alphaGang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("MAX_LUMINANCE")) {
+            m_Ui->ferwerdaMultiplierSlider->setValue(ferwerdamultiplierGang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("ADAPTATION_LUMINANCE")) {
+            m_Ui->adaptationLuminanceSlider->setValue(
+                adaptationGang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("KK_C1")) {
+            m_Ui->kimkautzC1Slider->setValue(kimkautzc1Gang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("KK_C2")) {
+            m_Ui->kimkautzC2Slider->setValue(kimkautzc2Gang->v2p(value.toFloat()));
         } else if (field == QLatin1String("MULTIPLIER")) {
             m_Ui->multiplierSlider->setValue(
                 multiplierGang->v2p(value.toFloat()));
@@ -1265,6 +1443,8 @@ void TonemappingPanel::fromTxt2Gui() {
                 chromaticGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("LIGHTADAPTATION")) {
             m_Ui->lightAdaptSlider->setValue(lightGang->v2p(value.toFloat()));
+        } else if (field == QLatin1String("PUPIL_AREA")) {
+            m_Ui->pupil_areaSlider->setValue(vanhaterenPupilAreaGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("PREGAMMA")) {
             m_Ui->pregammaSlider->setValue(pregammaGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("POSTSATURATION")) {
@@ -1323,7 +1503,7 @@ void TonemappingPanel::updatedHDR(pfs::Frame *f) {
 void TonemappingPanel::updateTonemappingParams(TonemappingOptions *opts) {
     qDebug() << "TonemappingPanel::updateTonemappingParams(TonemappingOptions "
                 "*opts)";
-    //    currentTmoOperator = opts->tmoperator;
+    //    m_currentTmoOperator = opts->tmoperator;
     //    updateUndoState();
     m_Ui->cmbOperators->setCurrentIndex(opts->tmoperator);
 }
@@ -1331,111 +1511,123 @@ void TonemappingPanel::updateTonemappingParams(TonemappingOptions *opts) {
 void TonemappingPanel::saveParameters() {
     SavingParameters dialog;
     if (dialog.exec()) {
-        // Ashikhmin
-        float lct;
-        bool simple, eq2;
-        // Drago
-        float bias;
-        // Durand
-        float spatial, range, base;
-        // Fattal
-        float alpha, beta, colorSat, noiseReduction;
-        bool oldFattal;
-        // Ferradans
-        float rho, inv_alpha;
-        // Mantiuk 06
-        float contrastFactor, saturationFactor, detailFactor;
-        bool contrastEqualization;
-        // Mantiuk 08
-        float colorSaturation, contrastEnhancement, luminanceLevel;
-        bool manualLuminanceLevel;
-        // Pattanaik
-        float multiplier, rod, cone;
-        bool autolum, local;
-        // Reinhard 02
-        bool scales;
-        float key, phi;
-        int irange, lower, upper;
-        // Reinhard 05
-        float brightness, chromaticAdaptation, lightAdaptation;
-
         QString comment = dialog.getComment();
 
-        switch (currentTmoOperator) {
+        switch (m_currentTmoOperator) {
             case ashikhmin:
-                simple = simpleGang->isCheckBox1Checked();
-                eq2 = eq2Gang->isRadioButton1Checked();
-                lct = contrastGang->v();
-                execAshikhminQuery(simple, eq2, lct, comment);
+                {
+                    bool simple = simpleGang->isCheckBox1Checked();
+                    bool eq2 = eq2Gang->isRadioButton1Checked();
+                    float lct = contrastGang->v();
+                    execAshikhminQuery(simple, eq2, lct, comment);
+                }
                 break;
             case drago:
-                bias = biasGang->v();
-                execDragoQuery(bias, comment);
+                {
+                    float bias = biasGang->v();
+                    execDragoQuery(bias, comment);
+                }
                 break;
             case durand:
-                spatial = spatialGang->v();
-                range = rangeGang->v();
-                base = baseGang->v();
-                execDurandQuery(spatial, range, base, comment);
+                {
+                    float spatial = spatialGang->v();
+                    float range = rangeGang->v();
+                    float base = baseGang->v();
+                    execDurandQuery(spatial, range, base, comment);
+                }
                 break;
             case fattal:
-                alpha = alphaGang->v();
-                beta = betaGang->v();
-                colorSat = saturation2Gang->v();
-                noiseReduction = noiseGang->v();
-                oldFattal = !fftSolverGang->isCheckBox1Checked();
-                execFattalQuery(alpha, beta, colorSat, noiseReduction,
-                                oldFattal, comment);
+                {
+                    float alpha = alphaGang->v();
+                    float beta = betaGang->v();
+                    float colorSat = saturation2Gang->v();
+                    bool  noiseReduction = noiseGang->v();
+                    bool  oldFattal = !fftSolverGang->isCheckBox1Checked();
+                    execFattalQuery(alpha, beta, colorSat, noiseReduction,
+                                    oldFattal, comment);
+                }
                 break;
             case ferradans:
-                rho = rhoGang->v();
-                inv_alpha = inv_alphaGang->v();
-                execFerradansQuery(rho, inv_alpha, comment);
+                {
+                    float rho = rhoGang->v();
+                    float inv_alpha = inv_alphaGang->v();
+                    execFerradansQuery(rho, inv_alpha, comment);
+                }
                 break;
             case mai:  // no options
                 break;
             case mantiuk06:
-                contrastFactor = contrastfactorGang->v();
-                saturationFactor = saturationfactorGang->v();
-                detailFactor = detailfactorGang->v();
-                contrastEqualization = contrastfactorGang->isCheckBox1Checked();
-                execMantiuk06Query(contrastEqualization, contrastFactor,
-                                   saturationFactor, detailFactor, comment);
+                {
+                    float contrastFactor = contrastfactorGang->v();
+                    float saturationFactor = saturationfactorGang->v();
+                    float detailFactor = detailfactorGang->v();
+                    bool  contrastEqualization = contrastfactorGang->isCheckBox1Checked();
+                    execMantiuk06Query(contrastEqualization, contrastFactor,
+                                       saturationFactor, detailFactor, comment);
+                }
                 break;
             case mantiuk08:
-                colorSaturation = colorSaturationGang->v();
-                contrastEnhancement = contrastEnhancementGang->v();
-                luminanceLevel = luminanceLevelGang->v();
-                manualLuminanceLevel = luminanceLevelGang->isCheckBox1Checked();
-                execMantiuk08Query(colorSaturation, contrastEnhancement,
-                                   luminanceLevel, manualLuminanceLevel,
-                                   comment);
+                {
+                    float colorSaturation = colorSaturationGang->v();
+                    float contrastEnhancement = contrastEnhancementGang->v();
+                    float luminanceLevel = luminanceLevelGang->v();
+                    bool  manualLuminanceLevel = luminanceLevelGang->isCheckBox1Checked();
+                    execMantiuk08Query(colorSaturation, contrastEnhancement,
+                                       luminanceLevel, manualLuminanceLevel,
+                                       comment);
+                }
                 break;
             case pattanaik:
-                autolum = autoYGang->isCheckBox1Checked();
-                local = pattalocalGang->isCheckBox1Checked();
-                cone = coneGang->v();
-                rod = rodGang->v();
-                multiplier = multiplierGang->v();
-                execPattanaikQuery(autolum, local, cone, rod, multiplier,
-                                   comment);
+                {
+                    bool  autolum = autoYGang->isCheckBox1Checked();
+                    bool  local = pattalocalGang->isCheckBox1Checked();
+                    float cone = coneGang->v();
+                    float rod = rodGang->v();
+                    float multiplier = multiplierGang->v();
+                    execPattanaikQuery(autolum, local, cone, rod, multiplier,
+                                       comment);
+                }
                 break;
             case reinhard02:
-                scales = usescalesGang->isCheckBox1Checked();
-                key = keyGang->v();
-                phi = phiGang->v();
-                irange = (int)range2Gang->v();
-                lower = (int)lowerGang->v();
-                upper = (int)upperGang->v();
-                execReinhard02Query(scales, key, phi, irange, lower, upper,
-                                    comment);
+                {
+                    bool  scales = usescalesGang->isCheckBox1Checked();
+                    float key = keyGang->v();
+                    float phi = phiGang->v();
+                    int   irange = (int)range2Gang->v();
+                    int   lower = (int)lowerGang->v();
+                    int   upper = (int)upperGang->v();
+                    execReinhard02Query(scales, key, phi, irange, lower, upper,
+                                        comment);
+                }
                 break;
             case reinhard05:
-                brightness = brightnessGang->v();
-                chromaticAdaptation = chromaticGang->v();
-                lightAdaptation = lightGang->v();
-                execReinhard05Query(brightness, chromaticAdaptation,
-                                    lightAdaptation, comment);
+                {
+                    float brightness = brightnessGang->v();
+                    float chromaticAdaptation = chromaticGang->v();
+                    float lightAdaptation = lightGang->v();
+                    execReinhard05Query(brightness, chromaticAdaptation,
+                                        lightAdaptation, comment);
+                }
+                break;
+            case ferwerda:
+                {
+                    float maxLuminance = ferwerdamultiplierGang->v();
+                    float adaptationLuminance = adaptationGang->v();
+                    execFerwerdaQuery(maxLuminance, adaptationLuminance, comment);
+                }
+                break;
+            case kimkautz:
+                {
+                    float kk_c1 = kimkautzc1Gang->v();
+                    float kk_c2 = kimkautzc2Gang->v();
+                    execKimKautzQuery(kk_c1, kk_c2, comment);
+                }
+                break;
+            case vanhateren:
+                {
+                    float pupil_area = vanhaterenPupilAreaGang->v();
+                    execVanHaterenQuery(pupil_area, comment);
+                }
                 break;
         }
     }
@@ -1477,6 +1669,11 @@ void TonemappingPanel::loadParameters() {
         int irange, lower, upper;
         // Reinhard 05
         float brightness, chromaticAdaptation, lightAdaptation;
+        // Ferwerda 96
+        float maxLuminance, adaptationLuminance;
+        // KimKrautz 08
+        float kk_c1, kk_c2;
+
         // Pre-gamma
         float pregamma;
         // Post-saturation
@@ -1733,10 +1930,68 @@ void TonemappingPanel::loadParameters() {
                 m_Ui->postgammaSlider->setValue(postgamma);
                 m_Ui->postgammadsb->setValue(postgamma);
                 break;
+            case ferwerda:
+                m_Ui->stackedWidget_operators->setCurrentIndex(ferwerda);
+                maxLuminance =
+                    tmopts->operator_options.ferwerdaoptions.multiplier;
+                adaptationLuminance = tmopts->operator_options.ferwerdaoptions
+                                          .adaptationluminance;
+                pregamma = tmopts->pregamma;
+                postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
+                m_Ui->ferwerdaMultiplierSlider->setValue(maxLuminance);
+                m_Ui->ferwerdaMultiplierDsb->setValue(maxLuminance);
+                m_Ui->adaptationLuminanceSlider->setValue(adaptationLuminance);
+                m_Ui->adaptationLuminanceDsb->setValue(adaptationLuminance);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
+                m_Ui->postsaturationSlider->setValue(postsaturation);
+                m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
+                break;
+            case kimkautz:
+                m_Ui->stackedWidget_operators->setCurrentIndex(kimkautz);
+                kk_c1 =
+                    tmopts->operator_options.kimkautzoptions.c1;
+                kk_c2 =
+                    tmopts->operator_options.kimkautzoptions.c2;
+
+                pregamma = tmopts->pregamma;
+                postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
+                m_Ui->kimkautzC1Slider->setValue(kk_c1);
+                m_Ui->kimkautzC1Dsb->setValue(kk_c1);
+                m_Ui->kimkautzC2Slider->setValue(kk_c2);
+                m_Ui->kimkautzC2Dsb->setValue(kk_c2);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
+                m_Ui->postsaturationSlider->setValue(postsaturation);
+                m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
+                break;
+            case vanhateren:
+                m_Ui->stackedWidget_operators->setCurrentIndex(vanhateren);
+                float pupil_area =
+                    tmopts->operator_options.vanhaterenoptions.pupil_area;
+
+                pregamma = tmopts->pregamma;
+                postsaturation = tmopts->postsaturation;
+                postgamma = tmopts->postgamma;
+                m_Ui->pupil_areaSlider->setValue(pupil_area);
+                m_Ui->pupil_areaDsb->setValue(pupil_area);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
+                m_Ui->postsaturationSlider->setValue(postsaturation);
+                m_Ui->postsaturationdsb->setValue(postsaturation);
+                m_Ui->postgammaSlider->setValue(postgamma);
+                m_Ui->postgammadsb->setValue(postgamma);
+                break;
         }
         if (dialog.wantsTonemap()) {
             TonemappingOptions *t = new TonemappingOptions(*tmopts);
-            toneMappingOptionsToDelete.push_back(t);
+            m_toneMappingOptionsToDelete.push_back(t);
             t->origxsize = sizes[0];
             t->xsize = sizes[0];
             emit startTonemapping(t);
@@ -1915,6 +2170,49 @@ void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha,
     bool res = query.exec();
     if (res == false) qDebug() << query.lastError();
 }
+
+void TonemappingPanel::execFerwerdaQuery(float maxlum, float adaptlum,
+                                          QString comment) {
+    qDebug() << "TonemappingPanel::execFerwerdaQuery";
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
+    QSqlQuery query(db);
+    float pregamma = m_Ui->pregammadsb->value();
+    float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
+    query.prepare(
+        "INSERT INTO ferwerda (maxlum, adaptlum, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:maxlum, :adaptlum, :pregamma, :comment, :postsaturation, :postgamma)");
+    query.bindValue(QStringLiteral(":maxlum"), maxlum);
+    query.bindValue(QStringLiteral(":adaptlum"), adaptlum);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
+    query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
+    bool res = query.exec();
+    if (res == false) qDebug() << query.lastError();
+}
+
+void TonemappingPanel::execKimKautzQuery(float kk_c1, float kk_c2,
+                                          QString comment) {
+    qDebug() << "TonemappingPanel::execKimKautzQuery";
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
+    QSqlQuery query(db);
+    float pregamma = m_Ui->pregammadsb->value();
+    float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
+    query.prepare(
+        "INSERT INTO kimkautz (kk_c1, kk_c2, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:kk_c1, :kk_c2, :pregamma, :comment, :postsaturation, :postgamma)");
+    query.bindValue(QStringLiteral(":kk_c1"), kk_c1);
+    query.bindValue(QStringLiteral(":kk_c2"), kk_c2);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
+    query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
+    bool res = query.exec();
+    if (res == false) qDebug() << query.lastError();
+}
+
 void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone,
                                           float rod, float multiplier,
                                           QString comment) {
@@ -1999,6 +2297,26 @@ void TonemappingPanel::execReinhard05Query(float brightness,
     if (res == false) qDebug() << query.lastError();
 }
 
+void TonemappingPanel::execVanHaterenQuery(float pupil_area,
+                                          QString comment) {
+    qDebug() << "TonemappingPanel::execVanHaterenQuery";
+    QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
+    QSqlQuery query(db);
+    float pregamma = m_Ui->pregammadsb->value();
+    float postsaturation = m_Ui->postsaturationdsb->value();
+    float postgamma = m_Ui->postgammadsb->value();
+    query.prepare(
+        "INSERT INTO vanhateren (pupil_area, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:pupil_area, :pregamma, :comment, :postsaturation, :postgamma)");
+    query.bindValue(QStringLiteral(":pupil_area"), pupil_area);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
+    query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
+    query.bindValue(QStringLiteral(":postgamma"), postgamma);
+    bool res = query.exec();
+    if (res == false) qDebug() << query.lastError();
+}
+
 bool TonemappingPanel::replaceLdr() {
     return m_Ui->replaceLdrCheckBox->isChecked();
 }
@@ -2014,7 +2332,7 @@ float TonemappingPanel::getAutoLevelsThreshold() {
 void TonemappingPanel::updatePreviews(double v) {
     int index = m_Ui->stackedWidget_operators->currentIndex();
     TonemappingOptions *tmopts =
-        new TonemappingOptions(*toneMappingOptions);  // make a copy
+        new TonemappingOptions(*m_toneMappingOptions);  // make a copy
     fillToneMappingOptions(false);
     QObject *eventSender(sender());
     // Mantiuk06
@@ -2045,6 +2363,16 @@ void TonemappingPanel::updatePreviews(double v) {
         tmopts->operator_options.ferradansoptions.rho = v;
     else if (eventSender == m_Ui->inv_alphadsb)
         tmopts->operator_options.ferradansoptions.inv_alpha = v;
+    // Ferwerda
+    else if (eventSender == m_Ui->ferwerdaMultiplierDsb)
+        tmopts->operator_options.ferwerdaoptions.multiplier = v;
+    else if (eventSender == m_Ui->adaptationLuminanceDsb)
+        tmopts->operator_options.ferwerdaoptions.adaptationluminance = v;
+    // KimKautz
+    else if (eventSender == m_Ui->kimkautzC1Dsb)
+        tmopts->operator_options.kimkautzoptions.c1 = v;
+    else if (eventSender == m_Ui->kimkautzC2Dsb)
+        tmopts->operator_options.kimkautzoptions.c2 = v;
     // Drago
     else if (eventSender == m_Ui->biasdsb)
         tmopts->operator_options.dragooptions.bias = v;
@@ -2083,6 +2411,9 @@ void TonemappingPanel::updatePreviews(double v) {
         tmopts->operator_options.pattanaikoptions.cone = v;
     else if (eventSender == m_Ui->roddsb)
         tmopts->operator_options.pattanaikoptions.rod = v;
+    // VanHateren
+    else if (eventSender == m_Ui->pupil_areaDsb)
+        tmopts->operator_options.vanhaterenoptions.pupil_area = v;
     // else if(eventSender == m_Ui->pregammadsb)
     //    tmopts->pregamma = v;
 
@@ -2093,7 +2424,7 @@ void TonemappingPanel::updatePreviews(double v) {
                 updateCurrentTmoOperator(i);
                 fillToneMappingOptions(false);
                 TonemappingOptions *tmopts =
-                    new TonemappingOptions(*toneMappingOptions);  // make a copy
+                    new TonemappingOptions(*m_toneMappingOptions);  // make a copy
                 tmopts->pregamma = v;
                 m_previewPanel->getLabel(i)->setTonemappingOptions(tmopts);
                 m_previewPanel->updatePreviews(m_currentFrame, i);
@@ -2105,7 +2436,7 @@ void TonemappingPanel::updatePreviews(double v) {
                 updateCurrentTmoOperator(i);
                 fillToneMappingOptions(false);
                 TonemappingOptions *tmopts =
-                    new TonemappingOptions(*toneMappingOptions);  // make a copy
+                    new TonemappingOptions(*m_toneMappingOptions);  // make a copy
                 tmopts->postgamma = v;
                 m_previewPanel->getLabel(i)->setTonemappingOptions(tmopts);
                 m_previewPanel->updatePreviews(m_currentFrame, i);
@@ -2117,7 +2448,7 @@ void TonemappingPanel::updatePreviews(double v) {
                 updateCurrentTmoOperator(i);
                 fillToneMappingOptions(false);
                 TonemappingOptions *tmopts =
-                    new TonemappingOptions(*toneMappingOptions);  // make a copy
+                    new TonemappingOptions(*m_toneMappingOptions);  // make a copy
                 tmopts->postsaturation = v;
                 m_previewPanel->getLabel(i)->setTonemappingOptions(tmopts);
                 m_previewPanel->updatePreviews(m_currentFrame, i);
@@ -2132,11 +2463,11 @@ void TonemappingPanel::updatePreviews(double v) {
     delete tmopts;
 }
 
-void TonemappingPanel::updatePreviewsCB(int state) {
+void TonemappingPanel::updatePreviewsCB(bool state) {
     int index = m_Ui->stackedWidget_operators->currentIndex();
-    TonemappingOptions *tmopts =
-        new TonemappingOptions(*toneMappingOptions);  // make a copy
     fillToneMappingOptions(false);
+    TonemappingOptions *tmopts =
+        new TonemappingOptions(*m_toneMappingOptions);  // make a copy
     QObject *eventSender(sender());
     // Mantiuk06
     if (eventSender == m_Ui->contrastEqualizCheckBox)
@@ -2169,7 +2500,7 @@ void TonemappingPanel::updatePreviewsCB(int state) {
 void TonemappingPanel::updatePreviewsRB(bool toggled) {
     int index = m_Ui->stackedWidget_operators->currentIndex();
     TonemappingOptions *tmopts =
-        new TonemappingOptions(*toneMappingOptions);  // make a copy
+        new TonemappingOptions(*m_toneMappingOptions);  // make a copy
     fillToneMappingOptions(false);
 
     // Only one sender: Ashikhmin
@@ -2222,6 +2553,18 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
         connect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
         connect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // Ferwerda
+        connect(m_Ui->ferwerdaMultiplierDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->adaptationLuminanceDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // KimKautz
+        connect(m_Ui->kimkautzC1Dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        connect(m_Ui->kimkautzC2Dsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
 
         // Drago
@@ -2278,6 +2621,10 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
         connect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this,
                 &TonemappingPanel::updatePreviewsCB);
 
+        // VanHateren
+        connect(m_Ui->pupil_areaDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
         // GLOBAL Pregamma
         connect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
@@ -2286,103 +2633,121 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
         connect(m_Ui->postsaturationdsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
     } else {
+        // Mantiuk06
         disconnect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)),
-                   this, SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
 
+        // Mantiuk08
         disconnect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)),
-                   this, SLOT(updatePreviews(double)));
+                this, SLOT(updatePreviews(double)));
         disconnect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-        disconnect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->postsaturationdsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->postgammadsb, SIGNAL(valueChanged(double)), this,
-                   SLOT(updatePreviews(double)));
-
-        disconnect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged,
-                   this, &TonemappingPanel::updatePreviewsCB);
-
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
+                &TonemappingPanel::updatePreviewsCB);
 
+        // Fattal
+        disconnect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
+                &TonemappingPanel::updatePreviewsCB);
 
+        // Ferradans
+        disconnect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // Ferwerda
+        disconnect(m_Ui->ferwerdaMultiplierDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->adaptationLuminanceDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // KimKautz
+        disconnect(m_Ui->kimkautzC1Dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->kimkautzC2Dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // Drago
+        disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // Durand
+        disconnect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // Reinhard02
+        disconnect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->usescalescheckbox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
+                &TonemappingPanel::updatePreviewsCB);
 
+        // Reinhard05
+        disconnect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // Ashikhmin
+        disconnect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
         disconnect(m_Ui->simpleCheckBox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
-
-        disconnect(m_Ui->pattalocal, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
-        disconnect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this,
-                   &TonemappingPanel::updatePreviewsCB);
-
+                &TonemappingPanel::updatePreviewsCB);
         disconnect(m_Ui->eq2RadioButton, &QAbstractButton::toggled, this,
-                   &TonemappingPanel::updatePreviewsRB);
+                &TonemappingPanel::updatePreviewsRB);
+
+        // Pattanaik
+        disconnect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->pattalocal, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this,
+                &TonemappingPanel::updatePreviewsCB);
+
+        // VanHateren
+        disconnect(m_Ui->pupil_areaDsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+
+        // GLOBAL Pregamma
+        disconnect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->postgammadsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
+        disconnect(m_Ui->postsaturationdsb, SIGNAL(valueChanged(double)), this,
+                SLOT(updatePreviews(double)));
     }
 }
 

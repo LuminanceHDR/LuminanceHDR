@@ -69,6 +69,14 @@ void TonemappingOptions::setDefaultTonemapParameters() {
     operator_options.ferradansoptions.rho = FERRADANS11_RHO;
     operator_options.ferradansoptions.inv_alpha = FERRADANS11_INV_ALPHA;
 
+    // Ferwerda
+    operator_options.ferwerdaoptions.multiplier = FERWERDA96_MULTIPLIER;
+    operator_options.ferwerdaoptions.adaptationluminance = FERWERDA96_ADAPTATION_LUMINANCE;
+
+    // KimKautz
+    operator_options.kimkautzoptions.c1 = KIMKAUTZ08_C1;
+    operator_options.kimkautzoptions.c2 = KIMKAUTZ08_C2;
+
     // Drago
     operator_options.dragooptions.bias = DRAGO03_BIAS;
 
@@ -103,6 +111,9 @@ void TonemappingOptions::setDefaultTonemapParameters() {
     operator_options.pattanaikoptions.cone = PATTANAIK00_CONE;
     operator_options.pattanaikoptions.rod = PATTANAIK00_ROD;
     operator_options.pattanaikoptions.multiplier = PATTANAIK00_MULTIPLIER;
+
+    // VanHateren
+    operator_options.vanhaterenoptions.pupil_area =  VANHATEREN06_PUPIL_AREA;
 }
 
 void TonemappingOptions::setDefaultParameters() {
@@ -149,6 +160,12 @@ char TonemappingOptions::getRatingForOperator() {
             return 'J';
         case mai:
             return 'K';
+        case ferwerda:
+            return 'L';
+        case kimkautz:
+            return 'M';
+        case vanhateren:
+            return 'N';
     }
     return ' ';
 }
@@ -217,6 +234,20 @@ const QString TonemappingOptions::getPostfix() {
             float inv_alpha = operator_options.ferradansoptions.inv_alpha;
             postfix += QStringLiteral("rho_%1_").arg(rho);
             postfix += QStringLiteral("inv_alpha_%1").arg(inv_alpha);
+        } break;
+        case ferwerda: {
+            postfix += QLatin1String("ferwerda_");
+            float maxlum = operator_options.ferwerdaoptions.multiplier;
+            float adaptlum = operator_options.ferwerdaoptions.adaptationluminance;
+            postfix += QStringLiteral("max_luminance_%1_").arg(maxlum);
+            postfix += QStringLiteral("adaptation_luminance_%1").arg(adaptlum);
+        } break;
+        case kimkautz: {
+            postfix += QLatin1String("kimkautz_");
+            float c1 = operator_options.kimkautzoptions.c1;
+            float c2 = operator_options.kimkautzoptions.c2;
+            postfix += QStringLiteral("c1_%1").arg(c1);
+            postfix += QStringLiteral("c2_%1").arg(c2);
         } break;
         case mai: {
             postfix += QLatin1String("mai_");
@@ -292,6 +323,11 @@ const QString TonemappingOptions::getPostfix() {
                            .arg(chromaticAdaptation);
             postfix +=
                 QStringLiteral("light_adaptation_%1").arg(lightAdaptation);
+        } break;
+        case vanhateren: {
+            postfix += QLatin1String("vanhateren_");
+            float pupil_area = operator_options.vanhaterenoptions.pupil_area;
+            postfix += QStringLiteral("pupil_area_%1").arg(pupil_area);
         } break;
     }
     postfix += QStringLiteral("_postsaturation_%1").arg(postsaturation);
@@ -378,6 +414,20 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
             caption += "Ferrands:" + separator;
             caption += QString(QObject::tr("Rho") + "=%1").arg(rho) + separator;
             caption += QString(QObject::tr("InvAlpha") + "=%1").arg(inv_alpha);
+        } break;
+        case ferwerda: {
+            float maxlum = operator_options.ferwerdaoptions.multiplier;
+            float adaptlum = operator_options.ferwerdaoptions.adaptationluminance;
+            caption += "Ferwerda:" + separator;
+            caption += QString(QObject::tr("MaxLuminance") + "=%1").arg(maxlum) + separator;
+            caption += QString(QObject::tr("AdaptationLuminance") + "=%1").arg(adaptlum);
+        } break;
+        case kimkautz: {
+            float c1 = operator_options.kimkautzoptions.c1;
+            float c2 = operator_options.kimkautzoptions.c2;
+            caption += "KimKautz:" + separator;
+            caption += QString(QObject::tr("C1") + "=%1").arg(c1) + separator;
+            caption += QString(QObject::tr("C2") + "=%1").arg(c2) + separator;
         } break;
         case mai: {
             caption += "Mai:" + separator;
@@ -466,6 +516,11 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
             caption += QString(QObject::tr("Light Adaptation") + "=%1")
                            .arg(lightAdaptation);
         } break;
+        case vanhateren: {
+            float pupil_area = operator_options.vanhaterenoptions.pupil_area;
+            caption += "VanHateren:" + separator;
+            caption += QString(QObject::tr("Pupil Area") + "=%1").arg(pupil_area) + separator;
+        } break;
     }
     caption += includePregamma
             ? separator + QString(QObject::tr("PostSaturation=%1")).arg(postsaturation) +
@@ -527,6 +582,12 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
             } else if (value == QLatin1String("Ferradans11")) {
                 toreturn->tmoperator = ferradans;
                 tmo = QStringLiteral("Ferradans11");
+            } else if (value == QLatin1String("Ferwerda96")) {
+                toreturn->tmoperator = ferwerda;
+                tmo = QStringLiteral("Ferwerda96");
+            } else if (value == QLatin1String("KimKautz08")) {
+                toreturn->tmoperator = kimkautz;
+                tmo = QStringLiteral("KimKautz08");
             } else if (value == QLatin1String("Mai11")) {
                 toreturn->tmoperator = mai;
                 tmo = QStringLiteral("Mai11");
@@ -545,6 +606,9 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
             } else if (value == QLatin1String("Mantiuk08")) {
                 toreturn->tmoperator = mantiuk08;
                 tmo = QStringLiteral("Mantiuk08");
+            } else if (value == QLatin1String("VanHateren06")) {
+                toreturn->tmoperator = vanhateren;
+                tmo = QStringLiteral("VanHateren06");
             }
         } else if (field == QLatin1String("CONTRASTFACTOR")) {
             toreturn->operator_options.mantiuk06options.contrastfactor =
@@ -610,6 +674,15 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
         } else if (field == QLatin1String("INV_ALPHA")) {
             toreturn->operator_options.ferradansoptions.inv_alpha =
                 value.toFloat();
+        } else if (field == QLatin1String("MAX_LUMINANCE")) {
+            toreturn->operator_options.ferwerdaoptions.multiplier = value.toFloat();
+        } else if (field == QLatin1String("ADAPTATION_LUMINANCE")) {
+            toreturn->operator_options.ferwerdaoptions.adaptationluminance =
+                value.toFloat();
+        } else if (field == QLatin1String("KK_C1")) {
+            toreturn->operator_options.kimkautzoptions.c1 = value.toFloat();
+        } else if (field == QLatin1String("KK_C2")) {
+            toreturn->operator_options.kimkautzoptions.c2 = value.toFloat();
         } else if (field == QLatin1String("MULTIPLIER")) {
             toreturn->operator_options.pattanaikoptions.multiplier =
                 value.toFloat();
@@ -642,6 +715,9 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
                 value.toFloat();
         } else if (field == QLatin1String("LIGHTADAPTATION")) {
             toreturn->operator_options.reinhard05options.lightAdaptation =
+                value.toFloat();
+        } else if (field == QLatin1String("PUPIL_AREA")) {
+            toreturn->operator_options.vanhaterenoptions.pupil_area =
                 value.toFloat();
         } else if (field == QLatin1String("PREGAMMA")) {
             toreturn->pregamma = value.toFloat();
@@ -747,6 +823,20 @@ QString TMOptionsOperations::getExifComment() {
             exif_comment += QStringLiteral("Rho: %1\n").arg(rho);
             exif_comment += QStringLiteral("InvAlpha: %1\n").arg(inv_alpha);
         } break;
+        case ferwerda: {
+            float maxlum = opts->operator_options.ferwerdaoptions.multiplier;
+            float adaptlum = opts->operator_options.ferwerdaoptions.adaptationluminance;
+            exif_comment += QLatin1String("Ferwerda\nParameters:\n");
+            exif_comment += QStringLiteral("MaxLuminance: %1\n").arg(maxlum);
+            exif_comment += QStringLiteral("AdaptationLuminance: %1\n").arg(adaptlum);
+        } break;
+        case kimkautz: {
+            float c1 = opts->operator_options.kimkautzoptions.c1;
+            float c2 = opts->operator_options.kimkautzoptions.c2;
+            exif_comment += QLatin1String("KimKautz\nParameters:\n");
+            exif_comment += QStringLiteral("C1: %1\n").arg(c1);
+            exif_comment += QStringLiteral("C2: %1\n").arg(c2);
+        } break;
         case mai: {
             exif_comment += QLatin1String(
                 "Mai\nParameters:\nThis operator has no parameters\n");
@@ -828,6 +918,12 @@ QString TMOptionsOperations::getExifComment() {
                                 .arg(chromaticAdaptation);
             exif_comment +=
                 QStringLiteral("Light Adaptation: %1\n").arg(lightAdaptation);
+        } break;
+        case vanhateren: {
+            float pupil_area =
+                opts->operator_options.vanhaterenoptions.pupil_area;
+            exif_comment += QLatin1String("VanHateren06\nParameters:\n");
+            exif_comment += QStringLiteral("Pupil Area: %1\n").arg(pupil_area);
         } break;
     }
     exif_comment +=

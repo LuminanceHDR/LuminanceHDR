@@ -57,6 +57,10 @@ void pfstmo_fattal02(pfs::Frame &frame, float opt_alpha, float opt_beta,
                      bool fftsolver, int detail_level, pfs::Progress &ph);
 void pfstmo_ferradans11(pfs::Frame &frame, float opt_rho, float opt_inv_alpha,
                         pfs::Progress &ph);
+void pfstmo_ferwerda96(pfs::Frame &frame, float Ld_Max, float L_da,
+                        pfs::Progress &ph);
+void pfstmo_kimkautz08(pfs::Frame &frame, float KK_c1, float KK_c2,
+                        pfs::Progress &ph);
 void pfstmo_mai11(pfs::Frame &frame, pfs::Progress &ph);
 void pfstmo_mantiuk06(pfs::Frame &frame, float scaleFactor,
                       float saturationFactor, float detailFactor, bool cont_eq,
@@ -72,5 +76,7 @@ void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,
 void pfstmo_reinhard05(pfs::Frame &frame, float brightness,
                        float chromaticadaptation, float lightadaptation,
                        pfs::Progress &ph);
+void pfstmo_vanhateren06(pfs::Frame &frame, float pupil_area,
+                        pfs::Progress &ph);
 
 #endif

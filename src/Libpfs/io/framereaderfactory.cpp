@@ -78,31 +78,42 @@ FrameReaderPtr creator(const std::string &filename) {
 FrameReaderFactory::FrameReaderCreatorMap FrameReaderFactory::sm_registry =
     map_list_of
     // LDR formats
-    ("jpeg", creator<JpegReader>)("jpg", creator<JpegReader>)
+    ("jpeg", creator<JpegReader>)
+    ("jpg", creator<JpegReader>)
     // HDR formats
-    ("pfs", creator<PfsReader>)("exr", creator<EXRReader>)("hdr",
-                                                           creator<RGBEReader>)
+    ("pfs", creator<PfsReader>)
+    ("exr", creator<EXRReader>)
+    ("hdr",creator<RGBEReader>)
     // RAW formats
-    (
-        "crw", creator<RAWReader>)("cr2", creator<
-                                              RAWReader>)("nef",
-                                                          creator<
-                                                              RAWReader>)("dng", creator<RAWReader>)("mrw", creator<RAWReader>)("orf", creator<RAWReader>)("kdc", creator<RAWReader>)("dcr", creator<RAWReader>)("arw", creator<RAWReader>)("raf", creator<RAWReader>)("ptx", creator<RAWReader>)("pef", creator<RAWReader>)("x3f", creator<RAWReader>)("raw", creator<RAWReader>)("sr2",
-                                                                                                                                                                                                                                                                                                                                                                                   creator<
-                                                                                                                                                                                                                                                                                                                                                                                       RAWReader>)("3fr",
-                                                                                                                                                                                                                                                                                                                                                                                                   creator<
-                                                                                                                                                                                                                                                                                                                                                                                                       RAWReader>)("rw2",
-                                                                                                                                                                                                                                                                                                                                                                                                                   creator<
-                                                                                                                                                                                                                                                                                                                                                                                                                       RAWReader>)("mef",
-                                                                                                                                                                                                                                                                                                                                                                                                                                   creator<
-                                                                                                                                                                                                                                                                                                                                                                                                                                       RAWReader>)("mos",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                   creator<
-                                                                                                                                                                                                                                                                                                                                                                                                                                                       RAWReader>)("erf", creator<RAWReader>)("nrw", creator<RAWReader>)("srw", creator<RAWReader>)
+    ("crw", creator<RAWReader>)
+    ("cr2", creator<RAWReader>)
+    ("nef", creator<RAWReader>)
+    ("dng", creator<RAWReader>)
+    ("mrw", creator<RAWReader>)
+    ("orf", creator<RAWReader>)
+    ("kdc", creator<RAWReader>)
+    ("dcr", creator<RAWReader>)
+    ("arw", creator<RAWReader>)
+    ("raf", creator<RAWReader>)
+    ("ptx", creator<RAWReader>)
+    ("pef", creator<RAWReader>)
+    ("x3f", creator<RAWReader>)
+    ("raw", creator<RAWReader>)
+    ("sr2", creator<RAWReader>)
+    ("3fr", creator<RAWReader>)
+    ("rw2", creator<RAWReader>)
+    ("mef", creator<RAWReader>)
+    ("mos", creator<RAWReader>)
+    ("erf", creator<RAWReader>)
+    ("nrw", creator<RAWReader>)
+    ("srw", creator<RAWReader>)
     // tiff
-    ("tif", creator<TiffReader>)("tiff", creator<TiffReader>)
+    ("tif", creator<TiffReader>)
+    ("tiff", creator<TiffReader>)
 #ifdef HAVE_CFITSIO
     // fits
-    ("fit", creator<FitsReader>)("fits", creator<FitsReader>)
+    ("fit", creator<FitsReader>)
+    ("fits", creator<FitsReader>)
 #endif
     ;
 

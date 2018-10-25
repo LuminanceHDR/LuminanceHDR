@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>626</height>
+    <width>523</width>
+    <height>633</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -208,6 +208,21 @@
             <string>Mai</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>Ferwerda</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>KimKautz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>VanHateren</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item row="0" column="0">
@@ -300,7 +315,7 @@
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Co&amp;ntrast Factor</string>
+               <string>&amp;Contrast Factor</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2977,6 +2992,464 @@ Luminace Level</string>
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="page_ferwerda">
+         <layout class="QGridLayout" name="gridLayout_31">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_30">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_brightness_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>&amp;Multiplier</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>brightnessSlider</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSlider" name="ferwerdaMultiplierSlider">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>2000</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="pageStep">
+               <number>10</number>
+              </property>
+              <property name="value">
+               <number>1000</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QDoubleSpinBox" name="ferwerdaMultiplierDsb">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>3</number>
+              </property>
+              <property name="minimum">
+               <double>0.001000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>2.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_saturation_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>A&amp;daptation Luminance</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="buddy">
+               <cstring>chromaticAdaptSlider</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSlider" name="adaptationLuminanceSlider">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
+              </property>
+              <property name="value">
+               <number>500</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QDoubleSpinBox" name="adaptationLuminanceDsb">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>3</number>
+              </property>
+              <property name="minimum">
+               <double>0.001000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.500000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <spacer name="verticalSpacer_11">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::MinimumExpanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_kimkautz">
+         <layout class="QGridLayout" name="gridLayout_32">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_saturation_5">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&amp;C1</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="buddy">
+             <cstring>chromaticAdaptSlider</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSlider" name="kimkautzC1Slider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
+            </property>
+            <property name="value">
+             <number>3000</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QDoubleSpinBox" name="kimkautzC1Dsb">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="minimum">
+             <double>0.001000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="value">
+             <double>3.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_saturation_6">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>C&amp;2</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="buddy">
+             <cstring>chromaticAdaptSlider</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSlider" name="kimkautzC2Slider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="maximum">
+             <number>5000</number>
+            </property>
+            <property name="value">
+             <number>500</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QDoubleSpinBox" name="kimkautzC2Dsb">
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="minimum">
+             <double>0.001000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.500000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <spacer name="verticalSpacer_15">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::MinimumExpanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>13</width>
+              <height>39</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_vanhateren">
+         <layout class="QGridLayout" name="gridLayout_34">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_33">
+            <item row="0" column="2">
+             <widget class="QDoubleSpinBox" name="pupil_areaDsb">
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="minimum">
+               <double>0.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
+              </property>
+              <property name="value">
+               <double>10.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="pupil_area_label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Pup&amp;il Area</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>rhoSlider</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSlider" name="pupil_areaSlider">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <spacer name="verticalSpacer_16">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::MinimumExpanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>312</width>
+                <height>13</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item>
@@ -2997,7 +3470,7 @@ Luminace Level</string>
           </property>
           <property name="icon">
            <iconset theme="edit-undo">
-            <normaloff>.</normaloff>.</iconset>
+            <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -3039,7 +3512,7 @@ Luminace Level</string>
           </property>
           <property name="icon">
            <iconset theme="go-previous">
-            <normaloff>.</normaloff>.</iconset>
+            <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -3068,7 +3541,7 @@ Luminace Level</string>
           </property>
           <property name="icon">
            <iconset theme="go-next">
-            <normaloff>.</normaloff>.</iconset>
+            <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -3099,8 +3572,8 @@ Luminace Level</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>503</width>
-        <height>187</height>
+        <width>511</width>
+        <height>184</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3142,6 +3615,15 @@ Luminace Level</string>
             </item>
             <item row="1" column="1">
              <widget class="QSlider" name="pregammaSlider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3203,7 +3685,7 @@ Luminace Level</string>
               </property>
               <property name="icon">
                <iconset theme="edit-undo">
-                <normaloff>.</normaloff>.</iconset>
+                <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3225,7 +3707,7 @@ Luminace Level</string>
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="maximum">
-               <double>10.000000000000000</double>
+               <double>5.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.100000000000000</double>
@@ -3237,6 +3719,15 @@ Luminace Level</string>
             </item>
             <item row="2" column="1">
              <widget class="QSlider" name="postsaturationSlider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3270,7 +3761,7 @@ Luminace Level</string>
               </property>
               <property name="icon">
                <iconset theme="edit-undo">
-                <normaloff>.</normaloff>.</iconset>
+                <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3345,7 +3836,7 @@ Luminace Level</string>
               </property>
               <property name="icon">
                <iconset theme="list-add">
-                <normaloff>.</normaloff>.</iconset>
+                <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3367,7 +3858,7 @@ Luminace Level</string>
                <string>Gamma applied before tonemapping</string>
               </property>
               <property name="text">
-               <string>Pre-ga&amp;mma</string>
+               <string>Pre-&amp;gamma</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3405,7 +3896,7 @@ Luminace Level</string>
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="maximum">
-               <double>10.000000000000000</double>
+               <double>5.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.100000000000000</double>
@@ -3417,6 +3908,15 @@ Luminace Level</string>
             </item>
             <item row="3" column="1">
              <widget class="QSlider" name="postgammaSlider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -3438,7 +3938,7 @@ Luminace Level</string>
               </property>
               <property name="icon">
                <iconset theme="edit-undo">
-                <normaloff>../../../../../</normaloff>../../../../../</iconset>
+                <normaloff>../../../../../../../..</normaloff>../../../../../../../..</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3460,8 +3960,8 @@ Luminace Level</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>503</width>
-        <height>178</height>
+        <width>511</width>
+        <height>213</height>
        </rect>
       </property>
       <attribute name="label">
@@ -3524,7 +4024,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="document-save">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                </widget>
               </item>
@@ -3550,7 +4050,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="document-open">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                </widget>
               </item>
@@ -3592,7 +4092,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="cloud-upload">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                </widget>
               </item>
@@ -3615,7 +4115,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="edit-download">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                </widget>
               </item>
@@ -3689,7 +4189,7 @@ Luminace Level</string>
                 </property>
                 <property name="icon">
                  <iconset theme="folder-pictures">
-                  <normaloff>.</normaloff>.</iconset>
+                  <normaloff>../../../../../.designer/backup</normaloff>../../../../../.designer/backup</iconset>
                 </property>
                 <property name="toolButtonStyle">
                  <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -3855,12 +4355,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>177</x>
-     <y>208</y>
+     <x>179</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -3871,12 +4371,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>71</x>
-     <y>208</y>
+     <x>73</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -3887,12 +4387,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>177</x>
-     <y>243</y>
+     <x>179</x>
+     <y>252</y>
     </hint>
    </hints>
   </connection>
@@ -3903,12 +4403,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>501</x>
-     <y>208</y>
+     <x>509</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -3919,12 +4419,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>71</x>
-     <y>243</y>
+     <x>73</x>
+     <y>252</y>
     </hint>
    </hints>
   </connection>
@@ -3935,12 +4435,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>501</x>
-     <y>243</y>
+     <x>509</x>
+     <y>252</y>
     </hint>
    </hints>
   </connection>
@@ -3951,12 +4451,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>207</y>
+     <x>247</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>87</x>
-     <y>246</y>
+     <x>100</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -3967,12 +4467,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>207</y>
+     <x>247</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>501</x>
-     <y>246</y>
+     <x>509</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -3983,12 +4483,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>207</y>
+     <x>247</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>245</x>
-     <y>246</y>
+     <x>247</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -4015,12 +4515,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>255</x>
-     <y>92</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>255</x>
-     <y>181</y>
+     <x>257</x>
+     <y>189</y>
     </hint>
    </hints>
   </connection>
@@ -4031,12 +4531,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>255</x>
-     <y>92</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>92</x>
-     <y>181</y>
+     <x>105</x>
+     <y>189</y>
     </hint>
    </hints>
   </connection>
@@ -4063,12 +4563,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>255</x>
-     <y>92</y>
+     <x>257</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>501</x>
-     <y>181</y>
+     <x>509</x>
+     <y>189</y>
     </hint>
    </hints>
   </connection>
@@ -4079,12 +4579,12 @@ Luminace Level</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>139</y>
+     <x>179</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
-     <x>177</x>
-     <y>173</y>
+     <x>179</x>
+     <y>179</y>
     </hint>
    </hints>
   </connection>
@@ -4095,12 +4595,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>155</y>
+     <x>63</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>166</x>
-     <y>156</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4111,12 +4611,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>84</x>
-     <y>158</y>
+     <x>96</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>136</x>
-     <y>199</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4127,12 +4627,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>168</y>
+     <x>63</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>126</x>
-     <y>242</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4143,12 +4643,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>64</x>
-     <y>150</y>
+     <x>76</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>299</x>
-     <y>157</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4159,12 +4659,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>91</x>
-     <y>158</y>
+     <x>103</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>262</x>
-     <y>200</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4175,12 +4675,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
-     <y>154</y>
+     <x>69</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>233</x>
-     <y>230</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4191,12 +4691,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>50</x>
-     <y>159</y>
+     <x>62</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>476</x>
-     <y>160</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4207,12 +4707,12 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>50</x>
-     <y>163</y>
+     <x>62</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>459</x>
-     <y>204</y>
+     <x>111</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -4223,12 +4723,60 @@ Luminace Level</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>41</x>
-     <y>160</y>
+     <x>53</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
-     <x>476</x>
-     <y>226</y>
+     <x>111</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simpleCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>eq2RadioButton</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>258</x>
+     <y>125</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simpleCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>eq4RadioButton</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>258</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simpleCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_2</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>97</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>

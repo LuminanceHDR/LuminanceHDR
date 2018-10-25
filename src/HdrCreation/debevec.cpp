@@ -243,13 +243,22 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
         }
     }
 
+    // TODO: Investigate why scaling hdr yields better result
+    for (int c = 0; c < channels; c++) {
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+        for (size_t k = 0; k < size; k++) {
+            (*resultCh[c])(k) *= 0.1f;
+        }
+    }
+
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
     cout << "MergeDebevec = " << f_timer.get_time() << " msec"
               << endl;
 #endif
 }
-
 
 }  // libhdr
 }  // fusion

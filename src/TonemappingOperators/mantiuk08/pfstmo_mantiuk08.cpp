@@ -36,6 +36,7 @@
 #include <iostream>
 #include <memory>
 
+#include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
@@ -46,6 +47,10 @@ using namespace std;
 void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
                       float contrast_enhance_factor, float white_y,
                       bool setluminance, pfs::Progress &ph) {
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
 
     //--- default tone mapping parameters;
     // float contrast_enhance_factor = 1.f;
@@ -173,4 +178,11 @@ void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
 
     delete df;
     delete ds;
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_mantiuk08 = " << stop_watch.get_time() << " msec" << endl;
+#endif
+
 }

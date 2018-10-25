@@ -496,7 +496,11 @@ Reinhard02::~Reinhard02() {
 }
 
 void Reinhard02::tmo_reinhard02() {
-BENCHFUN
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+//BENCHFUN
     m_ph.setValue(0);
 
     // reading image
@@ -520,6 +524,12 @@ BENCHFUN
     tonemap_image();
 
     m_ph.setValue(100);
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_reinhard02 = " << stop_watch.get_time() << " msec" << endl;
+#endif
 
 end:;
 }
