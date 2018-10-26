@@ -339,7 +339,6 @@ PreviewPanel::~PreviewPanel() {
 }
 
 void PreviewPanel::updatePreviews(pfs::Frame *frame, int index) {
-    cout << "PreviewPanel::updatePreviews( " << index << " )" << endl;
     if (frame == NULL) return;
 
     m_original_width_frame = frame->getWidth();
@@ -365,7 +364,6 @@ void PreviewPanel::updatePreviews(pfs::Frame *frame, int index) {
             updater(current_label);
         }
     } else {
-        cout << "PreviewLabelUpdater: " << index << endl;
         PreviewLabelUpdater updater(current_frame);
         updater.setAutolevels(m_doAutolevels, m_autolevelThreshold);
         updater(m_ListPreviewLabel.at(index));
