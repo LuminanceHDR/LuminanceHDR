@@ -102,5 +102,4 @@ void pfstmo_vanhateren06(Frame &frame, float pupil_area, Progress &ph) {
     }
 
     frame.getTags().setTag("LUMINANCE", "DISPLAY");
-    ph.setValue(100);
 }

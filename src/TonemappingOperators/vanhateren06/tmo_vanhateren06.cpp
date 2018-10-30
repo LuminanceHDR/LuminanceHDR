@@ -68,62 +68,54 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
     double roots[10];
     double real_roots[5];
     gsl_poly_complex_solve (polIosMax, 6, ws, roots);
+    gsl_poly_complex_workspace_free (ws);
+
     for (int i = 0; i < 10 ; i += 2) {
         real_roots[i>>1] = roots[i];
     }
 
     float maxIos = (float) *max_element(real_roots, real_roots + 5);
 
-    ph.setValue(2);
-    if (ph.canceled()) {
-        gsl_poly_complex_workspace_free (ws);
-        return 0;
-    }
-
     //conversion from cd/m^2 to trolands (tr)
     transform(L.begin(), L.end(), L.begin(),
             [pupil_area](float lori) { return lori * pupil_area; } );
-
-    ph.setValue(4);
-    if (ph.canceled()) {
-        gsl_poly_complex_workspace_free (ws);
-        return 0;
-    }
 
     //Range reduction
     Array2Df tmpI(w, h);
     transform(L.begin(), L.end(), tmpI.begin(),
             [C_beta, k_beta](float l) { return -1.0f / (C_beta + k_beta * l); } );
 
-    ph.setValue(6);
-    if (ph.canceled()) {
-        gsl_poly_complex_workspace_free (ws);
-        return 0;
-    }
-
     double base[] = {0.0, 0.0, 0.0, 0.0, 1.0, a_C};
 
+    gsl_poly_complex_workspace * wsp;
+#pragma omp parallel for private(base, roots, real_roots, wsp) schedule(static)
     for (size_t i = 0; i < size; i++) {
-        ph.setValue(6 + i*92/size);
-        if (ph.canceled()) {
-            gsl_poly_complex_workspace_free (ws);
-            return 0;
-        }
-
+        base[0] = 0.0;
+        base[1] = 0.0;
+        base[2] = 0.0;
+        base[3] = 0.0;
+        base[4] = 1.0;
+        base[5] = a_C;
+        wsp = gsl_poly_complex_workspace_alloc(6);
         base[0] = tmpI(i);
-        gsl_poly_complex_solve (base, 6, ws, roots);
+        gsl_poly_complex_solve (base, 6, wsp, roots);
+        gsl_poly_complex_workspace_free (wsp);
         for (int k = 0; k < 10; k += 2)
             real_roots[k>>1] = roots[k];
 
         L(i) = (float) *max_element(real_roots, real_roots + 5);
+
+        if (i % w == 0)
+            ph.setValue(i*500/size);
+        if (ph.canceled())
+            i = size;
     }
 
-    gsl_poly_complex_workspace_free (ws);
+    if (ph.canceled())
+        return 0;
 
     transform(L.begin(), L.end(), L.begin(),
             [maxIos](float i_os) { return (1.0f - i_os/maxIos); } );
-
-    ph.setValue(99);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
