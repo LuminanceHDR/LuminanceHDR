@@ -29,9 +29,9 @@ include( CheckCXXSourceCompiles )
 check_cxx_source_compiles( "int main() { int x = 0; if( __builtin_expect((x),0) ) x = 1; return 0; }" HAS_BRANCH_PREDICTION )
 
 if( HAS_BRANCH_PREDICTION )
-  set( BRANCH_PREDICTION 1 )
+    set( BRANCH_PREDICTION 1 )
 else( HAS_BRANCH_PREDICTION )
-  set( BRANCH_PREDICTION 0 )
+    set( BRANCH_PREDICTION 0 )
 endif( HAS_BRANCH_PREDICTION )
 
 # find and setup Qt5 for this project
@@ -68,8 +68,16 @@ IF(WIN32)
 ENDIF(WIN32)
 
 set(LIBS ${LIBS}
-    ${QT_QTCORE_LIBRARIES}     ${QT_QTGUI_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}
-    ${QT_QTWEBENGINE_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
+    ${QT_QTCORE_LIBRARIES}  ${QT_QTGUI_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}
+    ${QT_QTXML_LIBRARIES}   ${QT_QTSQL_LIBRARIES})
+
+if(Qt5WebEngineCore_FOUND)
+    message(STATUS "Building with QtWebEngine")
+    set(LIBS ${LIBS} ${QT_QTWEBENGINE_LIBRARIES})
+else()
+    message(STATUS "Building with QtWebKit")
+    set(LIBS ${LIBS} ${QT_QTWEBKIT_LIBRARIES})
+endif()
 
 FIND_PACKAGE(Git)
 IF(GIT_FOUND)
@@ -135,7 +143,6 @@ ELSE()
     FIND_PACKAGE(lcms2 REQUIRED)
     INCLUDE_DIRECTORIES(${LCMS2_INCLUDE_DIR})
 ENDIF()
-
 
 IF(WIN32)
     SET(Boost_USE_STATIC_LIBS ON)
@@ -283,19 +290,19 @@ IF(APPLE)
     # Link libraries
     TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} ${LUMINANCE_MODULES_GUI} ${LIBS})
     TARGET_LINK_LIBRARIES(luminance-hdr-cli             ${LUMINANCE_MODULES_CLI} ${LIBS})
-    
+
     # Rename generated executable binary to luminance-hdr
     add_custom_command(
     TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
     POST_BUILD
     COMMAND mv ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/${LHDR_OSX_EXECUTABLE_NAME} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr
     )
-    
+
     # Copy align_image_stack into bundle/Contents/MacOS
     FILE(COPY
-    	${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/align_image_stack
-    	DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS
-    	FILE_PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE WORLD_EXECUTE
+        ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/align_image_stack
+        DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS
+        FILE_PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE WORLD_EXECUTE
     )
 
     # Copy help/icons/hdrhtml and qt.conf to bundle resources
