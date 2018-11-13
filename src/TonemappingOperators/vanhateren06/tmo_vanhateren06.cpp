@@ -88,7 +88,8 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
     double base[] = {0.0, 0.0, 0.0, 0.0, 1.0, a_C};
 
     gsl_poly_complex_workspace * wsp;
-#pragma omp parallel for private(base, roots, real_roots, wsp) schedule(static)
+    #pragma omp parallel for private(base, roots, real_roots, wsp) schedule(dynamic,16)
+    //#pragma omp parallel for private(base, roots, real_roots, wsp) schedule(static)
     for (size_t i = 0; i < size; i++) {
         base[0] = 0.0;
         base[1] = 0.0;
@@ -106,7 +107,7 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
         L(i) = (float) *max_element(real_roots, real_roots + 5);
 
         if (i % w == 0)
-            ph.setValue(i*500/size);
+            ph.setValue(i*100/size);
         if (ph.canceled())
             i = size;
     }
@@ -116,6 +117,8 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
 
     transform(L.begin(), L.end(), L.begin(),
             [maxIos](float i_os) { return (1.0f - i_os/maxIos); } );
+
+    ph.setValue(100);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
