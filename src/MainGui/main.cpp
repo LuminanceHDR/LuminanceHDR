@@ -31,6 +31,7 @@
 #include <QSqlError>
 #include <QString>
 #include <QStringList>
+#include <QMessageBox>
 
 #include "BatchHDR/BatchHDRDialog.h"
 #include "BatchTM/BatchTMDialog.h"
@@ -169,6 +170,18 @@ int main(int argc, char **argv) {
     }
 
     if (appname.contains("luminance-hdr") && (!isBatchHDR) && (!isBatchTM)) {
+
+// If extra demosicing packs are not present warn the user and change settings if one of the missing methods is selected.
+#ifndef DEMOSAICING_GPL2
+        if (LuminanceOptions().getRawUserQuality() > 3) {
+            LuminanceOptions().setRawUserQuality( 3 );
+            QMessageBox::warning(NULL, "", QObject::tr("This version of Luminance HDR has been compiled without support for extra "\
+                        "demosaicing algorithms.\nYour preferences were set to use one of the missing algorithms "\
+                        "and are now been changed to use the supported AHD method.\nTo change this "
+                        "go to Tools->Preferences->Raw Conversion->Quality"), QMessageBox::Ok);
+        }
+#endif
+
         DonationDialog::showDonationDialog();
 
         // TODO: create update checker...
