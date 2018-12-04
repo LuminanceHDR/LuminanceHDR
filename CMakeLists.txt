@@ -357,7 +357,7 @@ ELSEIF(UNIX)
     ${CMAKE_SOURCE_DIR}/README.md
     ${CMAKE_SOURCE_DIR}/LICENSE
     ${CMAKE_SOURCE_DIR}/Changelog
-    DESTINATION share/luminance-hdr) #info files
+    DESTINATION share/luminance-hdr/doc) #info files
     INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
     INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml DESTINATION share/luminance-hdr) # hdrhtml directory
 # Microsoft Windows
