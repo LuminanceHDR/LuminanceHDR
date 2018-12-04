@@ -93,7 +93,7 @@ void UMessageBox::about(QWidget *parent) {
     docDir.append("/../Resources");
     QStringList paths =
         QStringList(BASEDIR "/share/doc/luminance-hdr")
-        << BASEDIR "/share/luminance-hdr" << docDir
+        << BASEDIR "/share/luminance-hdr/doc" << docDir
         << QStringLiteral("/Applications/luminance.app/Contents/Resources")
         << QStringLiteral("./") << QCoreApplication::applicationDirPath();
     foreach (const QString &path, paths) {
