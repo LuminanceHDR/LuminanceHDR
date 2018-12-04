@@ -11,9 +11,9 @@ Copyright (C) 2010-2018
 
 Copyright (C) 2006-2010 - Giuseppe Rota <grota@users.sourceforge.net>
 
-- Webpage: http://qtpfsgui.sourceforge.net 
-- Sourceforge: http://sourceforge.net/projects/qtpfsgui 
-- Github: https://github.com/LuminanceHDR/LuminanceHDR 
+- Webpage: http://qtpfsgui.sourceforge.net
+- Sourceforge: http://sourceforge.net/projects/qtpfsgui
+- Github: https://github.com/LuminanceHDR/LuminanceHDR
 
 What it is
 ----------

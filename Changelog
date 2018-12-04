@@ -1,4 +1,8 @@
 Changes 2.5.2
+NEW: New tonemapping operator kimkautz08
+NEW: New tonemapping operator vanhateren06
+NEW: New tonemapping operator ferwerda96
+NEW: Preview of created HDR in HDR Wizard
 NEW: Post processing gamma and saturation
 * great speedup and better memory usage for all tonemapping operators
 * speedup for hdr creation
@@ -38,7 +42,7 @@ NEW: Automatic white-balance for both HDRs and LDRs
 NEW: switch to Transifex translation platform for current and future translations
 NEW: Windows: integration into the operating system (jumplist, progress bar)
 * HDR Creation with small UX improvements
-* changed EXIF detection for the HDR creation 
+* changed EXIF detection for the HDR creation
 * switch to Qt5
 * refactored code base for a future libHDR library
 * improved Debevec radiance map construction
@@ -48,7 +52,7 @@ Changes 2.3.1
 * Update libraries (in particular, LibRAW)
 * Support for TIFF 32 bit floating point (compatible with Adobe Lightroom 4)
 * Improved EXR, TIFF, JPEG and PNG I/O
-* Improved color conversion routines 
+* Improved color conversion routines
 * NEW: Hugin's alignment: Autocrop feature (thanks to David Polák)
 * NEW: Support additional demosaicing algorithms, AMaZE as default
 * NEW: Save HDR creation profiles
@@ -86,14 +90,14 @@ Changes 2.2.1
 * Corrected detection of exif rotation
 * Windows: TIFF support now works correctly (at all)
 * Windows: fixed some align_image_stack and temp dir problems
-* Development: new module system 
-* Development: fixed help install and i18n path under Linux 
+* Development: new module system
+* Development: fixed help install and i18n path under Linux
 
 Changes 2.2.0
 * NEW: BatchHDR tool
 * NEW: LDRs can be saved as 16 bit Tiffs
 * NEW: Samsung(s) RAW file support
-* NEW: Speed improvement due to OpenMP 
+* NEW: Speed improvement due to OpenMP
 * More speed improvements: tone-mapping (Mantiuk 06/08, Fattal, Reinhard)
 * NEW: image viewers with improved crop/selection tool
 * Improvement and optimised level and gamma control (new histogram)
@@ -182,18 +186,18 @@ Changes 1.9.3
   all: Fixes and optimization - see pfstmo ChangeLog for more information
 * Renamed reinhard04 to reinhard05 (src directory and references)
 * Improved linux packaging system: docs and html target directories can be specified
-  separately. 
+  separately.
 
 Changes 1.9.2:
 * Fixed other bugs with non-ascii characters in paths/filenames.
 * Integrated pfstmo 1.2 changes:
-	fixed some serious bugs in the solver and subsampling procedure the artifacts found in
-	some odd-sized images should be gone (this was actually the mantiuk change in qtpfsgui
-	1.9.0, thanks to Rafal).
-	Faster up-/down-sampling functions make the algorithm 25% faster. Thanks to Ed Brambley.
-	Performance improvements from Ed Brambley: lower memory consumption, faster solver,
-	Better convergence, additional scale parameter for the contrast equalization method.
-	(change in mantiuk parameters => new tmo file version + small changes in Fattal by Ed Brambley)
+    fixed some serious bugs in the solver and subsampling procedure the artifacts found in
+    some odd-sized images should be gone (this was actually the mantiuk change in qtpfsgui
+    1.9.0, thanks to Rafal).
+    Faster up-/down-sampling functions make the algorithm 25% faster. Thanks to Ed Brambley.
+    Performance improvements from Ed Brambley: lower memory consumption, faster solver,
+    Better convergence, additional scale parameter for the contrast equalization method.
+    (change in mantiuk parameters => new tmo file version + small changes in Fattal by Ed Brambley)
 * Added support for align_image_stack commandline parameters and user language selection.
 * Global: added 2 new fields in the singleton qtpfsgui class: QStringList for
 align_image_stack options and a 2-chars ISO 639 language code for Qtpfsgui's user
@@ -370,9 +374,9 @@ v1.8.3 Giuseppe Rota <grota@users.sourceforge.net>
 * updated icip06 exponent: 24->12 (it still seems to not work) :(
 
 13-02-2007 Giuseppe Rota <grota@users.sourceforge.net>
-* added initial raw image format input support in "Open Hdr..." 
-	and in the "New Hdr..." wizard.
-	the raw import functionality is obtained via dcraw's code.
+* added initial raw image format input support in "Open Hdr..."
+    and in the "New Hdr..." wizard.
+    the raw import functionality is obtained via dcraw's code.
 * added settings panel.
 * added KDE/GNOME desktop integration
 
@@ -405,9 +409,9 @@ Christmas changes:
 *  fixed save ldr dialog (if no extension specified it uses the one belonging to the current ``filter'')
 *  zoom in/out/original and fit to window enabled
 *  the application now remembers the last used directory for
-	open/save hdr
-	load/save settings
-	load input exposures
+    open/save hdr
+    load/save settings
+    load input exposures
 
 22-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
 v1.4
@@ -419,9 +423,9 @@ v1.4
 *  implemented loadsettings, savesettings, fromGui2Txt, fromTxt2Gui
 
 20-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
-*  Changed behaviour in the TMO dialog: 
-	Combobox moved to the top of the preview image.
-	Clicking save you'll get the full (100%) input hdr tonemapped with current settings.
+*  Changed behaviour in the TMO dialog:
+    Combobox moved to the top of the preview image.
+    Clicking save you'll get the full (100%) input hdr tonemapped with current settings.
 *  Cleared some pfs buffers when the TMO dialog gets closed.
 *  Added a "Done!" label that shows up when the input ldr exposures have finished loading.
 

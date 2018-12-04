@@ -10,7 +10,7 @@ Contents
 1. Introduction
 ---------------------------------------------------------------------
 Translations can be managed either using the classical Qt approach or
-the Transifex (www.transifex.com) online platform. 
+the Transifex (www.transifex.com) online platform.
 
 The Qt approach is implemented using a CMake option (UPDATE_TRANSLATIONS). If this
 is set to true, then the translations in the i18n directory are updated (using Qt's lupdate).
@@ -20,7 +20,7 @@ In the following section the operations using the online platform are described.
 
 2. Operations
 ---------------------------------------------------------------------
-First, download the Transifex Client, available for Windows, Linux, Mac. 
+First, download the Transifex Client, available for Windows, Linux, Mac.
 
 Open a command shell and navigate (CD) into the i18n directory of Luminance HDR.
 
