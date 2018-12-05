@@ -44,7 +44,7 @@ SupportedCamerasDialog::SupportedCamerasDialog(QWidget *parent)
     const char *version = LibRaw::version();
     int count = LibRaw::cameraCount();
     m_Ui->labelLibRawVersion->setText(m_Ui->labelLibRawVersion->text() + " " +
-                                      QString(version));
+                                      QString(version).remove("-Release"));
     m_Ui->labelCount->setText(QStringLiteral("%1").arg(count) + " " +
                               m_Ui->labelCount->text());
 
