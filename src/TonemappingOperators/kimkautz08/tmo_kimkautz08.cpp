@@ -38,6 +38,7 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
+#include "Libpfs/rt_algo.h"
 #include <Libpfs/colorspace/normalizer.h>
 #include "Libpfs/utils/msec_timer.h"
 #include "tmo_kimkautz08.h"
@@ -45,26 +46,6 @@
 using namespace std;
 using namespace pfs;
 using namespace pfs::colorspace;
-
-namespace {
-    float maxQuart(const Array2Df &X, float percentile)
-    {
-        if(percentile > 1.0f)
-            percentile = 1.0f;
-        else if(percentile < 0.0f)
-            percentile = 0.0f;
-
-        int w = X.getCols();
-        int h = X.getRows();
-
-        Array2Df L(w, h);
-        L = X;
-        std::sort(L.begin(), L.end());
-        int index = round(w*h * percentile);
-        index = max(index, 1);
-        return L(index);
-    }
-}
 
 int tmo_kimkautz08(Array2Df &L,
                     float KK_c1, float KK_c2,
@@ -118,8 +99,7 @@ int tmo_kimkautz08(Array2Df &L,
     if (ph.canceled()) return 0;
 
     //Percentile clamping
-    maxLd = maxQuart(Ld, 0.99f);
-    minLd = maxQuart(Ld, 0.01f);
+    lhdrengine::findMinMaxPercentile(Ld.data(), Ld.getCols() * Ld.getRows(), 0.01f, minLd, 0.99f, maxLd, true);
 
     replace_if(Ld.begin(), Ld.end(), [maxLd](float pix) { return pix > maxLd; }, maxLd);
     replace_if(Ld.begin(), Ld.end(), [minLd](float pix) { return pix < minLd; }, minLd);
