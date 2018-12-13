@@ -42,6 +42,8 @@
 #include "tmo_kimkautz08.h"
 #include "../../opthelper.h"
 #include "../../sleef.c"
+#define BENCHMARK
+#include "StopWatch.h"
 
 using namespace pfs;
 
@@ -53,7 +55,7 @@ void pfstmo_kimkautz08(Frame &frame, float KK_c1, float KK_c2,
     std::cout << "pfstmo_kimkautz08 (";
     std::cout << ", KK_c2: " << KK_c2 << ")" << std::endl;
 #endif
-
+BENCHFUN
     Channel *inX, *inY, *inZ;
     frame.getXYZChannels(inX, inY, inZ);
     assert(inX != NULL);

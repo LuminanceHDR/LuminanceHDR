@@ -41,7 +41,7 @@
 #include <Libpfs/colorspace/normalizer.h>
 #include "Libpfs/utils/msec_timer.h"
 #include "tmo_kimkautz08.h"
-
+#include "sleef.c"
 using namespace std;
 using namespace pfs;
 using namespace pfs::colorspace;
@@ -78,7 +78,7 @@ int tmo_kimkautz08(Array2Df &L,
     int h = L.getRows();
 
     Array2Df L_log(w, h);
-    transform(L.begin(), L.end(), L_log.begin(), [](float pix) { return logf(pix + 1e-6); } );
+    transform(L.begin(), L.end(), L_log.begin(), [](float pix) { return xlogf(pix + 1e-6); } );
 
     ph.setValue(2);
     if (ph.canceled()) return 0;
@@ -98,7 +98,7 @@ int tmo_kimkautz08(Array2Df &L,
 
     Array2Df &W = L;
     transform(L_log.begin(), L_log.end(), W.begin(),
-            [mu, sigma_sq_2](float pix) { return expf(-(pix - mu)*(pix - mu) / sigma_sq_2); } );
+            [mu, sigma_sq_2](float pix) { return xexpf(-(pix - mu)*(pix - mu) / sigma_sq_2); } );
 
     ph.setValue(25);
     if (ph.canceled()) return 0;
@@ -112,7 +112,7 @@ int tmo_kimkautz08(Array2Df &L,
 
     Array2Df &Ld = L;
     transform(K2.begin(), K2.end(), L_log.begin(), Ld.begin(),
-            [KK_c2, mu](float pix1, float pix2) { return expf(KK_c2 * pix1 * (pix2 -mu) + mu); } );
+            [KK_c2, mu](float pix1, float pix2) { return xexpf(KK_c2 * pix1 * (pix2 -mu) + mu); } );
 
     ph.setValue(75);
     if (ph.canceled()) return 0;
