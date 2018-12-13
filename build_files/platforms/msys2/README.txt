@@ -14,9 +14,9 @@ cd build
 Currently there is a version conflict in msys2 version of Qt5WebKit.
 To fix (hack) it, open the file msys64\mingw64\lib\cmake\Qt5WebKit\Qt5WebKitConfig.cmake
 Search for 
-find_dependency(Qt5Network 5.10.0 EXACT)
+find_dependency(Qt5Network 5.11.2 EXACT)
 and change to
-find_dependency(Qt5Network 5.10.1 EXACT)
+find_dependency(Qt5Network 5.12.0 EXACT)
 
 run the following commands in msys2 shell
 
