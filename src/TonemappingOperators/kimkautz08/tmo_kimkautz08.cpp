@@ -43,6 +43,7 @@
 #include "Libpfs/utils/msec_timer.h"
 #include "tmo_kimkautz08.h"
 #include "sleef.c"
+#include "opthelper.h"
 using namespace std;
 using namespace pfs;
 using namespace pfs::colorspace;
@@ -60,13 +61,27 @@ int tmo_kimkautz08(Array2Df &L,
 
     Array2Df L_log(w, h);
 #ifdef _OPENMP
-        #pragma omp parallel for
+    #pragma omp parallel
+#endif
+    {
+#ifdef __SSE2__
+        vfloat c1em6v = F2V(1e-6f);
+#endif
+#ifdef _OPENMP
+        #pragma omp for
 #endif
         for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; ++j) {
-                L_log(j, i) = xlogf(L(j, i) + 1e-6);
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                STVFU(L_log(j, i), xlogf(LVFU(L(j, i)) + c1em6v));
+            }
+#endif
+            for (; j < w; ++j) {
+                L_log(j, i) = xlogf(L(j, i) + 1e-6f);
             }
         }
+    }
 
     ph.setValue(2);
     if (ph.canceled()) return 0;
@@ -85,14 +100,29 @@ int tmo_kimkautz08(Array2Df &L,
     float sigma_sq_2 = sigma*sigma * 2;
 
 #ifdef _OPENMP
-    #pragma omp parallel for
+    #pragma omp parallel
 #endif
-    for (int i = 0; i < h; i++) {
-        for (int j = 0; j < w; ++j) {
-            L(j, i) = xexpf(-(L(j, i) - mu)*(L(j, i) - mu) / sigma_sq_2);
+    {
+#ifdef __SSE2__
+        vfloat sigma_sq_2v = F2V(sigma_sq_2);
+        vfloat muv = F2V(mu);
+#endif
+#ifdef _OPENMP
+        #pragma omp for
+#endif
+        for (int i = 0; i < h; i++) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                const vfloat Lv = LVFU(L(j, i));
+                STVFU(L(j, i), xexpf(-(Lv - muv)*(Lv - muv) / sigma_sq_2v));
+            }
+#endif
+            for (; j < w; ++j) {
+                L(j, i) = xexpf(-(L(j, i) - mu)*(L(j, i) - mu) / sigma_sq_2);
+            }
         }
     }
-
     Array2Df &W = L;
 
     ph.setValue(25);
@@ -106,11 +136,24 @@ int tmo_kimkautz08(Array2Df &L,
     if (ph.canceled()) return 0;
 
 #ifdef _OPENMP
-    #pragma omp parallel for
+    #pragma omp parallel
 #endif
-    for (int i = 0; i < h; i++) {
-        for (int j = 0; j < w; ++j) {
-            L(j, i) = xexpf(KK_c2 * K2(j, i) * (L_log(j, i) -mu) + mu);
+    {
+        vfloat KK_c2v = F2V(KK_c2);
+        vfloat muv = F2V(mu);
+#ifdef _OPENMP
+        #pragma omp for
+#endif
+        for (int i = 0; i < h; i++) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                STVFU(L(j, i), xexpf(KK_c2v * LVFU(K2(j, i)) * (LVFU(L_log(j, i)) -muv) + muv));
+            }
+#endif
+            for (; j < w; ++j) {
+                L(j, i) = xexpf(KK_c2 * K2(j, i) * (L_log(j, i) -mu) + mu);
+            }
         }
     }
 
