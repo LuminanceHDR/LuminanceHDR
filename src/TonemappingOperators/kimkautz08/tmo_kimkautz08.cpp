@@ -59,7 +59,14 @@ int tmo_kimkautz08(Array2Df &L,
     int h = L.getRows();
 
     Array2Df L_log(w, h);
-    transform(L.begin(), L.end(), L_log.begin(), [](float pix) { return xlogf(pix + 1e-6); } );
+#ifdef _OPENMP
+        #pragma omp parallel for
+#endif
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; ++j) {
+                L_log(j, i) = xlogf(L(j, i) + 1e-6);
+            }
+        }
 
     ph.setValue(2);
     if (ph.canceled()) return 0;
@@ -77,9 +84,16 @@ int tmo_kimkautz08(Array2Df &L,
     float sigma = d0 / KK_c1;
     float sigma_sq_2 = sigma*sigma * 2;
 
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w; ++j) {
+            L(j, i) = xexpf(-(L(j, i) - mu)*(L(j, i) - mu) / sigma_sq_2);
+        }
+    }
+
     Array2Df &W = L;
-    transform(L_log.begin(), L_log.end(), W.begin(),
-            [mu, sigma_sq_2](float pix) { return xexpf(-(pix - mu)*(pix - mu) / sigma_sq_2); } );
 
     ph.setValue(25);
     if (ph.canceled()) return 0;
@@ -91,9 +105,17 @@ int tmo_kimkautz08(Array2Df &L,
     ph.setValue(50);
     if (ph.canceled()) return 0;
 
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w; ++j) {
+            L(j, i) = xexpf(KK_c2 * K2(j, i) * (L_log(j, i) -mu) + mu);
+        }
+    }
+
     Array2Df &Ld = L;
-    transform(K2.begin(), K2.end(), L_log.begin(), Ld.begin(),
-            [KK_c2, mu](float pix1, float pix2) { return xexpf(KK_c2 * pix1 * (pix2 -mu) + mu); } );
+
 
     ph.setValue(75);
     if (ph.canceled()) return 0;
