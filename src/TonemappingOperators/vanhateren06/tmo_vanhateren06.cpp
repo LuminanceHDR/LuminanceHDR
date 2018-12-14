@@ -38,8 +38,8 @@
 #include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/utils/clamp.h"
 #include <Libpfs/colorspace/normalizer.h>
+#include "rt_math.h"
 #include "tmo_vanhateren06.h"
-
 
 using namespace pfs;
 using namespace pfs::colorspace;
@@ -81,35 +81,42 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
             [pupil_area](float lori) { return lori * pupil_area; } );
 
     //Range reduction
-    Array2Df tmpI(w, h);
-    transform(L.begin(), L.end(), tmpI.begin(),
+    transform(L.begin(), L.end(), L.begin(),
             [C_beta, k_beta](float l) { return -1.0f / (C_beta + k_beta * l); } );
 
-    double base[] = {0.0, 0.0, 0.0, 0.0, 1.0, a_C};
 
-    gsl_poly_complex_workspace * wsp;
-    #pragma omp parallel for private(base, roots, real_roots, wsp) schedule(dynamic,16)
-    //#pragma omp parallel for private(base, roots, real_roots, wsp) schedule(static)
-    for (size_t i = 0; i < size; i++) {
-        base[0] = 0.0;
-        base[1] = 0.0;
-        base[2] = 0.0;
-        base[3] = 0.0;
-        base[4] = 1.0;
-        base[5] = a_C;
-        wsp = gsl_poly_complex_workspace_alloc(6);
-        base[0] = tmpI(i);
-        gsl_poly_complex_solve (base, 6, wsp, roots);
+    float minVal = std::numeric_limits<float>::max();
+    float maxVal = std::numeric_limits<float>::min();
+    for (size_t i = 0; i < size; ++i) {
+        minVal = std::min(minVal, L(i));
+        maxVal = std::max(maxVal, L(i));
+    }
+    const float scale = 65535.f / (maxVal - minVal);
+
+    float lookup[65536];
+
+    const float lutscale = (maxVal - minVal) / 65536.f;
+    #pragma omp parallel
+    {
+        gsl_poly_complex_workspace* wsp = gsl_poly_complex_workspace_alloc(6);
+        double base[] = {0.0, 0.0, 0.0, 0.0, 1.0, a_C};
+        double roots[10];
+        #pragma omp for nowait
+        for (size_t i = 0; i < 65536; ++i) {
+            base[0] = minVal + lutscale * i;
+            gsl_poly_complex_solve (base, 6, wsp, roots);
+            double maxRoot = roots[0];
+            for (int k = 2; k < 10; k += 2) {
+                maxRoot = std::max(maxRoot, roots[k]);
+            }
+            lookup[i] = maxRoot;
+        }
         gsl_poly_complex_workspace_free (wsp);
-        for (int k = 0; k < 10; k += 2)
-            real_roots[k>>1] = roots[k];
+    }
 
-        L(i) = (float) *max_element(real_roots, real_roots + 5);
-
-        if (i % w == 0)
-            ph.setValue(i*100/size);
-        if (ph.canceled())
-            i = size;
+    #pragma omp parallel for schedule(dynamic, w * 16)
+    for (size_t i = 0; i < size; i++) {
+        L(i) = lookup[lhdrengine::LIM(static_cast<int>((L(i) - minVal) * scale), 0, 65535)];
     }
 
     if (ph.canceled())
