@@ -34,6 +34,9 @@
 #include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/utils/msec_timer.h"
+#include "opthelper.h"
+#include "sleef.c"
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
 
 namespace pfs {
 
@@ -57,15 +60,30 @@ void applyGamma(pfs::Array2Df *array, const float exponent,
     f_timer.start();
 #endif
 
-    float *Vin = array->data();
-
-    int V_ELEMS = array->getRows() * array->getCols();
-#pragma omp parallel for
-    for (int idx = 0; idx < V_ELEMS; idx++) {
-        if (Vin[idx] > 0.0f) {
-            Vin[idx] = powf(Vin[idx] * multiplier, exponent);
-        } else {
-            Vin[idx] = 0.0f;
+    const int h = array->getRows();
+    const int w = array->getCols();
+    #pragma omp parallel
+    {
+#ifdef __SSE2__
+        const vfloat multiplierv = F2V(multiplier);
+        const vfloat exponentv = F2V(exponent);
+#endif
+        #pragma omp for
+        for (int i = 0; i < h; ++i) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                const vfloat Vinv = LVFU((*array)(j, i));
+                STVFU((*array)(j, i), vselfzero(vmaskf_gt(Vinv, ZEROV), pow_F(Vinv * multiplierv, exponentv)));
+            }
+#endif
+            for (; j < w; ++j) {
+                if ((*array)(j, i) > 0.0f) {
+                    (*array)(j, i) = pow_F((*array)(j, i) * multiplier, exponent);
+                } else {
+                    (*array)(j, i) = 0.0f;
+                }
+            }
         }
     }
 
