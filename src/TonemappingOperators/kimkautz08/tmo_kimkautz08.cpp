@@ -38,33 +38,16 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
+#include "Libpfs/rt_algo.h"
 #include <Libpfs/colorspace/normalizer.h>
 #include "Libpfs/utils/msec_timer.h"
 #include "tmo_kimkautz08.h"
+#include "sleef.c"
+#include "opthelper.h"
 
 using namespace std;
 using namespace pfs;
 using namespace pfs::colorspace;
-
-namespace {
-    float maxQuart(const Array2Df &X, float percentile)
-    {
-        if(percentile > 1.0f)
-            percentile = 1.0f;
-        else if(percentile < 0.0f)
-            percentile = 0.0f;
-
-        int w = X.getCols();
-        int h = X.getRows();
-
-        Array2Df L(w, h);
-        L = X;
-        std::sort(L.begin(), L.end());
-        int index = round(w*h * percentile);
-        index = max(index, 1);
-        return L(index);
-    }
-}
 
 int tmo_kimkautz08(Array2Df &L,
                     float KK_c1, float KK_c2,
@@ -78,54 +61,159 @@ int tmo_kimkautz08(Array2Df &L,
     int h = L.getRows();
 
     Array2Df L_log(w, h);
-    transform(L.begin(), L.end(), L_log.begin(), [](float pix) { return logf(pix + 1e-6); } );
 
-    ph.setValue(2);
-    if (ph.canceled()) return 0;
-
-    float mu = accumulate(L_log.begin(), L_log.end(), 0.f)/(w*h);
-
-    float maxL = *max_element(L_log.begin(), L_log.end());
-    float minL = *min_element(L_log.begin(), L_log.end());
-
-    float maxLd = logf(300.f);
-    float minLd = logf(0.3f);
-
-    float k1 = (maxLd - minLd) / (maxL - minL);
-    float d0 = maxL - minL;
-    float sigma = d0 / KK_c1;
-    float sigma_sq_2 = sigma*sigma * 2;
-
-    Array2Df &W = L;
-    transform(L_log.begin(), L_log.end(), W.begin(),
-            [mu, sigma_sq_2](float pix) { return expf(-(pix - mu)*(pix - mu) / sigma_sq_2); } );
+    float sum = 0.f;
+    float minVal = std::numeric_limits<float>::max();
+    float maxVal = std::numeric_limits<float>::min();
+#ifdef _OPENMP
+    #pragma omp parallel
+#endif
+    {
+        float sumThr = 0.f;
+        float minValThr = std::numeric_limits<float>::max();
+        float maxValThr = std::numeric_limits<float>::min();
+#ifdef __SSE2__
+        const vfloat c1em6v = F2V(1e-6f);
+        vfloat sumThrv = ZEROV;
+        vfloat minValv = F2V(minValThr);
+        vfloat maxValv = F2V(maxValThr);
+#endif
+#ifdef _OPENMP
+        #pragma omp for schedule(dynamic, 16) nowait
+#endif
+        for (int i = 0; i < h; i++) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                const vfloat valv = xlogf(LVFU(L(j, i)) + c1em6v);
+                sumThrv += valv;
+                minValv = vminf(minValv, valv);
+                maxValv = vmaxf(maxValv, valv);
+                STVFU(L_log(j, i), valv);
+            }
+#endif
+            for (; j < w; ++j) {
+                const float val = xlogf(L(j, i) + 1e-6f);
+                sumThr += val;
+                minValThr = std::min(minValThr, val);
+                maxValThr = std::max(maxValThr, val);
+                L_log(j, i) = val;
+            }
+        }
+#ifdef _OPENMP
+        #pragma omp critical
+#endif
+        {
+            sum += sumThr;
+            minVal = std::min(minVal, minValThr);
+            maxVal = std::max(maxVal, maxValThr);
+#ifdef __SSE2__
+            sum += vhadd(sumThrv);
+            minVal = std::min(minVal, vhmin(minValv));
+            maxVal = std::max(maxVal, vhmax(maxValv));
+#endif
+        }
+    }
 
     ph.setValue(25);
     if (ph.canceled()) return 0;
 
-    Array2Df &K2 = L;
-    transform(W.begin(), W.end(), K2.begin(),
-            [k1](float pix) { return (1 - k1) * pix + k1;} );
+    const float mu = sum / (w * h);
+
+    const float maxLd = logf(300.f);
+    const float minLd = logf(0.3f);
+
+    const float k1 = (maxLd - minLd) / (maxVal - minVal);
+    const float d0 = maxVal - minVal;
+    const float sigma = d0 / KK_c1;
+    const float sigma_sq_2 = sigma*sigma * 2;
+
+#ifdef _OPENMP
+    #pragma omp parallel
+#endif
+    {
+#ifdef __SSE2__
+        const vfloat sigma_sq_2v = F2V(sigma_sq_2);
+        const vfloat muv = F2V(mu);
+        const vfloat k1v = F2V(k1);
+        const vfloat onevmk1v = F2V(1.f - k1);
+
+#endif
+#ifdef _OPENMP
+        #pragma omp for schedule(dynamic, 16)
+#endif
+        for (int i = 0; i < h; i++) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                const vfloat Lv = LVFU(L(j, i));
+                STVFU(L(j, i), onevmk1v * xexpf(-SQRV(Lv - muv) / sigma_sq_2v) + k1v);
+            }
+#endif
+            for (; j < w; ++j) {
+                L(j, i) = (1 - k1) * xexpf(-(L(j, i) - mu)*(L(j, i) - mu) / sigma_sq_2) + k1;
+            }
+        }
+    }
 
     ph.setValue(50);
     if (ph.canceled()) return 0;
 
-    Array2Df &Ld = L;
-    transform(K2.begin(), K2.end(), L_log.begin(), Ld.begin(),
-            [KK_c2, mu](float pix1, float pix2) { return expf(KK_c2 * pix1 * (pix2 -mu) + mu); } );
+#ifdef _OPENMP
+    #pragma omp parallel
+#endif
+    {
+#ifdef __SSE2__
+        const vfloat KK_c2v = F2V(KK_c2);
+        const vfloat muv = F2V(mu);
+#endif
+#ifdef _OPENMP
+        #pragma omp for schedule(dynamic, 16)
+#endif
+        for (int i = 0; i < h; i++) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                STVFU(L(j, i), xexpf(KK_c2v * LVFU(L(j, i)) * (LVFU(L_log(j, i)) - muv) + muv));
+            }
+#endif
+            for (; j < w; ++j) {
+                L(j, i) = xexpf(KK_c2 * L(j, i) * (L_log(j, i) - mu) + mu);
+            }
+        }
+    }
 
     ph.setValue(75);
     if (ph.canceled()) return 0;
 
     //Percentile clamping
-    maxLd = maxQuart(Ld, 0.99f);
-    minLd = maxQuart(Ld, 0.01f);
+    lhdrengine::findMinMaxPercentile(L.data(), L.getCols() * L.getRows(), 0.01f, minVal, 0.99f, maxVal, true);
 
-    replace_if(Ld.begin(), Ld.end(), [maxLd](float pix) { return pix > maxLd; }, maxLd);
-    replace_if(Ld.begin(), Ld.end(), [minLd](float pix) { return pix < minLd; }, minLd);
-
-    transform(Ld.begin(), Ld.end(), Ld.begin(),
-                      Normalizer(minLd, maxLd));
+    const float range = maxVal - minVal;
+#ifdef _OPENMP
+    #pragma omp parallel
+#endif
+    {
+#ifdef __SSE2__
+        const vfloat minValv = F2V(minVal);
+        const vfloat maxValv = F2V(maxVal);
+        const vfloat rangev = F2V(range);
+#endif
+#ifdef _OPENMP
+        #pragma omp for schedule(dynamic, 16)
+#endif
+        for (int i = 0; i < h; i++) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                STVFU(L(j, i), (LIMV(LVFU(L(j, i)), minValv, maxValv) - minValv) / rangev);
+            }
+#endif
+            for (; j < w; ++j) {
+                L(j, i) = (lhdrengine::LIM(L(j, i), minVal, maxVal) - minVal) / range;
+            }
+        }
+    }
 
     ph.setValue(99);
 
