@@ -30,6 +30,7 @@
 #endif
 
 #include "rt_algo.h"
+#include "rt_math.h"
 
 namespace lhdrengine
 {
@@ -148,6 +149,7 @@ void findMinMaxPercentile(const float* data, size_t size, float minPrct, float& 
     // go back to original range
     minOut /= scale;
     minOut += minVal;
+    minOut = lhdrengine::LIM(minOut, minVal, maxVal);
 
     // find (maxPrct*size) smallest value
     const float threshmax = maxPrct * size;
@@ -166,6 +168,7 @@ void findMinMaxPercentile(const float* data, size_t size, float minPrct, float& 
     // go back to original range
     maxOut /= scale;
     maxOut += minVal;
+    maxOut = lhdrengine::LIM(maxOut, minVal, maxVal);
 }
 
 }
