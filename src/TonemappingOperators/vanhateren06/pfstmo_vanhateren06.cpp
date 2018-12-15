@@ -40,8 +40,6 @@
 #include "tmo_vanhateren06.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
-#define BENCHMARK
-#include "StopWatch.h"
 
 using namespace pfs;
 
@@ -52,7 +50,7 @@ void pfstmo_vanhateren06(Frame &frame, float pupil_area, Progress &ph) {
     std::cout << "pfstmo_vanhateren06 (";
     std::cout << "pupil area: " << pupil_area << ")" << std::endl;
 #endif
-BENCHFUN
+
     applyGamma(&frame, 1.8f);
 
     Channel *inX, *inY, *inZ;
