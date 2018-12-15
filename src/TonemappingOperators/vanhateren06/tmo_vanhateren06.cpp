@@ -51,8 +51,7 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
     stop_watch.start();
 #endif
 
-    if(pupil_area <= 0.0f)
-        pupil_area = 10.f; //fixed pupil area 10 mm^2
+    pupil_area = std::max(pupil_area, 0.f);
 
     const size_t w = L.getCols();
     const size_t h = L.getRows();
