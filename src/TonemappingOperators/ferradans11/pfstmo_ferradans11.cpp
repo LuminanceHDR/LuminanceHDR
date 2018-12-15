@@ -33,7 +33,6 @@
 
 #include "Libpfs/exception.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/manip/gamma.h"
 #include "Libpfs/progress.h"
 #include "tmo_ferradans11.h"
 

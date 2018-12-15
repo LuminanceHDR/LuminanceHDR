@@ -41,20 +41,19 @@
 namespace pfs {
 
 void applyGamma(pfs::Frame *frame, float gamma) {
-    float multiplier = 1.0f;
 
     if (gamma == 1.0f) return;
 
     pfs::Channel *X, *Y, *Z;
     frame->getXYZChannels(X, Y, Z);
 
-    applyGamma(X, 1.0f / gamma, multiplier);
-    applyGamma(Y, 1.0f / gamma, multiplier);
-    applyGamma(Z, 1.0f / gamma, multiplier);
+    applyGamma(X, 1.0f / gamma);
+    applyGamma(Y, 1.0f / gamma);
+    applyGamma(Z, 1.0f / gamma);
 }
 
-void applyGamma(pfs::Array2Df *array, const float exponent,
-                const float multiplier) {
+void applyGamma(pfs::Array2Df *array, const float exponent) {
+
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
@@ -65,7 +64,6 @@ void applyGamma(pfs::Array2Df *array, const float exponent,
     #pragma omp parallel
     {
 #ifdef __SSE2__
-        const vfloat multiplierv = F2V(multiplier);
         const vfloat exponentv = F2V(exponent);
 #endif
         #pragma omp for
@@ -74,12 +72,12 @@ void applyGamma(pfs::Array2Df *array, const float exponent,
 #ifdef __SSE2__
             for (; j < w - 3; j += 4) {
                 const vfloat Vinv = LVFU((*array)(j, i));
-                STVFU((*array)(j, i), vselfzero(vmaskf_gt(Vinv, ZEROV), pow_F(Vinv * multiplierv, exponentv)));
+                STVFU((*array)(j, i), vselfzero(vmaskf_gt(Vinv, ZEROV), pow_F(Vinv, exponentv)));
             }
 #endif
             for (; j < w; ++j) {
                 if ((*array)(j, i) > 0.0f) {
-                    (*array)(j, i) = pow_F((*array)(j, i) * multiplier, exponent);
+                    (*array)(j, i) = pow_F((*array)(j, i), exponent);
                 } else {
                     (*array)(j, i) = 0.0f;
                 }

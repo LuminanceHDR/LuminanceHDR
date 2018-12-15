@@ -36,7 +36,7 @@ class Frame;
 void applyGamma(pfs::Frame *frame, float gamma);
 
 //! \brief Apply gamma on the input \c array
-void applyGamma(pfs::Array2Df *array, float exponent, float multiplier = 1.0f);
+void applyGamma(pfs::Array2Df *array, float exponent);
 }
 
 #endif  // PFSGAMMA_H

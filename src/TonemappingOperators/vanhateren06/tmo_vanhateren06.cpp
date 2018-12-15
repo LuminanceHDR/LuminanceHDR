@@ -54,55 +54,58 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
     if(pupil_area <= 0.0f)
         pupil_area = 10.f; //fixed pupil area 10 mm^2
 
-    size_t w = L.getCols();
-    size_t h = L.getRows();
-    size_t size = w*h;
+    const size_t w = L.getCols();
+    const size_t h = L.getRows();
+    const size_t size = w*h;
 
-    float k_beta = 1.6e-4; // td/ms
-    float a_C = 9e-2;
-    float C_beta = 2.8e-3; // 1/ms
+    const float k_beta = 1.6e-4; // td/ms
+    const float a_C = 9e-2;
+    const float C_beta = 2.8e-3; // 1/ms
 
     //Calculate Ios,max
     double polIosMax[] = {-1.0/C_beta, 0.0, 0.0, 0.0, 1.0, a_C};
-    gsl_poly_complex_workspace * ws = gsl_poly_complex_workspace_alloc(6);
+    gsl_poly_complex_workspace* ws = gsl_poly_complex_workspace_alloc(6);
     double roots[10];
-    double real_roots[5];
-    gsl_poly_complex_solve (polIosMax, 6, ws, roots);
-    gsl_poly_complex_workspace_free (ws);
+    gsl_poly_complex_solve(polIosMax, 6, ws, roots);
+    gsl_poly_complex_workspace_free(ws);
 
     for (int i = 0; i < 10 ; i += 2) {
-        real_roots[i>>1] = roots[i];
+        roots[i>>1] = roots[i];
     }
 
-    float maxIos = (float) *max_element(real_roots, real_roots + 5);
-
-    //conversion from cd/m^2 to trolands (tr)
-    transform(L.begin(), L.end(), L.begin(),
-            [pupil_area](float lori) { return lori * pupil_area; } );
-
-    //Range reduction
-    transform(L.begin(), L.end(), L.begin(),
-            [C_beta, k_beta](float l) { return -1.0f / (C_beta + k_beta * l); } );
-
+    const float maxIos = (float) *max_element(roots, roots + 5);
 
     float minVal = std::numeric_limits<float>::max();
     float maxVal = std::numeric_limits<float>::min();
+
+#ifdef _OPENMP
+    #pragma omp parallel for reduction(min:minVal) reduction(max:maxVal)
+#endif
     for (size_t i = 0; i < size; ++i) {
-        minVal = std::min(minVal, L(i));
-        maxVal = std::max(maxVal, L(i));
+        const float val = -1.f / (C_beta + k_beta * L(i) * pupil_area);
+        minVal = std::min(minVal, val);
+        maxVal = std::max(maxVal, val);
+        L(i) = val;
     }
-    const float scale = 65535.f / (maxVal - minVal);
 
-    float lookup[65536];
+    constexpr int lutSize = 65536;
+    const float scale = (lutSize - 1) / (maxVal - minVal);
 
-    const float lutscale = (maxVal - minVal) / 65536.f;
+    float lookup[lutSize];
+
+    const float lutscale = (maxVal - minVal) / (lutSize - 1);
+
+#ifdef _OPENMP
     #pragma omp parallel
+#endif
     {
         gsl_poly_complex_workspace* wsp = gsl_poly_complex_workspace_alloc(6);
         double base[] = {0.0, 0.0, 0.0, 0.0, 1.0, a_C};
         double roots[10];
+#ifdef _OPENMP
         #pragma omp for nowait
-        for (size_t i = 0; i < 65536; ++i) {
+#endif
+        for (size_t i = 0; i < lutSize; ++i) {
             base[0] = minVal + lutscale * i;
             gsl_poly_complex_solve (base, 6, wsp, roots);
             double maxRoot = roots[0];
@@ -114,16 +117,15 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
         gsl_poly_complex_workspace_free (wsp);
     }
 
+#ifdef _OPENMP
     #pragma omp parallel for schedule(dynamic, w * 16)
+#endif
     for (size_t i = 0; i < size; i++) {
-        L(i) = lookup[lhdrengine::LIM(static_cast<int>((L(i) - minVal) * scale), 0, 65535)];
+        const float index = lhdrengine::LIM((L(i) - minVal) * scale, 0.f, static_cast<float>(lutSize - 1));
+        const int lowerIndex = index;
+        const int upperIndex = std::min(lowerIndex + 1, lutSize - 1);
+        L(i) = 1.f - lhdrengine::intp(index - lowerIndex, lookup[upperIndex], lookup[lowerIndex]) / maxIos;
     }
-
-    if (ph.canceled())
-        return 0;
-
-    transform(L.begin(), L.end(), L.begin(),
-            [maxIos](float i_os) { return (1.0f - i_os/maxIos); } );
 
     ph.setValue(100);
 
