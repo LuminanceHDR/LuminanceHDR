@@ -114,10 +114,10 @@ void computeLuminanceProperties(const float *samples, size_t width, size_t heigh
 #endif
         for (; x < width; ++x) {
             float value = samples[y * width + x];
-            min_lum = std::min(min_lum, value);
-            max_lum = std::max(max_lum, value);
-            avg_lum += value;
-            adapted_lum += xlogf(2.3e-5f + value);
+            min_lumthr = std::min(min_lumthr, value);
+            max_lumthr = std::max(max_lumthr, value);
+            avg_lumthr += value;
+            adapted_lumthr += xlogf(2.3e-5f + value);
         }
     }
 #ifdef _OPENMP
