@@ -34,38 +34,54 @@
 #include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/utils/msec_timer.h"
+#include "opthelper.h"
+#include "sleef.c"
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
 
 namespace pfs {
 
 void applyGamma(pfs::Frame *frame, float gamma) {
-    float multiplier = 1.0f;
 
     if (gamma == 1.0f) return;
 
     pfs::Channel *X, *Y, *Z;
     frame->getXYZChannels(X, Y, Z);
 
-    applyGamma(X, 1.0f / gamma, multiplier);
-    applyGamma(Y, 1.0f / gamma, multiplier);
-    applyGamma(Z, 1.0f / gamma, multiplier);
+    applyGamma(X, 1.0f / gamma);
+    applyGamma(Y, 1.0f / gamma);
+    applyGamma(Z, 1.0f / gamma);
 }
 
-void applyGamma(pfs::Array2Df *array, const float exponent,
-                const float multiplier) {
+void applyGamma(pfs::Array2Df *array, const float exponent) {
+
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
 
-    float *Vin = array->data();
-
-    int V_ELEMS = array->getRows() * array->getCols();
-#pragma omp parallel for
-    for (int idx = 0; idx < V_ELEMS; idx++) {
-        if (Vin[idx] > 0.0f) {
-            Vin[idx] = powf(Vin[idx] * multiplier, exponent);
-        } else {
-            Vin[idx] = 0.0f;
+    const int h = array->getRows();
+    const int w = array->getCols();
+    #pragma omp parallel
+    {
+#ifdef __SSE2__
+        const vfloat exponentv = F2V(exponent);
+#endif
+        #pragma omp for
+        for (int i = 0; i < h; ++i) {
+            int j = 0;
+#ifdef __SSE2__
+            for (; j < w - 3; j += 4) {
+                const vfloat Vinv = LVFU((*array)(j, i));
+                STVFU((*array)(j, i), vselfzero(vmaskf_gt(Vinv, ZEROV), pow_F(Vinv, exponentv)));
+            }
+#endif
+            for (; j < w; ++j) {
+                if ((*array)(j, i) > 0.0f) {
+                    (*array)(j, i) = pow_F((*array)(j, i), exponent);
+                } else {
+                    (*array)(j, i) = 0.0f;
+                }
+            }
         }
     }
 
