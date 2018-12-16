@@ -53,6 +53,7 @@
 #include <Common/init_fftw.h>
 #include <Libpfs/array2d.h>
 #include <Libpfs/progress.h>
+#include "Libpfs/rt_algo.h"
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/numeric.h>
 #include <TonemappingOperators/pfstmo.h>
@@ -201,21 +202,18 @@ float quick_select(float arr[], int n) {
 
 #undef ELEM_SWAP
 
-float medval(float a[], int length) {
-    return accumulate(a, a + length, 0.f) / (float)length;
+float medval(const float* a, int length, bool multiThread = true) {
+    return lhdrengine::accumulate(a, length, multiThread) / length;
 }
 
-float MSE(float Im1[], float Im2[], int largo, float escala) {
-    float res = 0.f;
-    float v = 1.f / escala;
-    float v2 = 1.f;
-#pragma omp parallel for reduction(+ : res)
+float MSE(const float Im1[], const float Im2[], int largo) {
+
+    double res = 0.0; // use double precision for summations
+#pragma omp parallel for reduction(+:res)
     for (int i = 0; i < largo; i++) {
-        float tmp = (Im1[i]) * v - (Im2[i]) * v2;
-        tmp = fabs(tmp);
-        res += tmp;
+        res += fabs(Im1[i] - Im2[i]);
     }
-    return (res / largo);
+    return res / largo;
 }
 
 void producto(fftwf_complex *A, const fftwf_complex *B, int fil, int col) {
@@ -410,7 +408,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
 #pragma omp parallel for
     for (int color = 0; color < colors; color++) {
         copy(RGB[color], RGB[color] + length, RGBorig[color]);
-        med[color] = medval(RGB[color], length);
+        med[color] = medval(RGB[color], length, false);
     }
 
     FFTW_MUTEX::fftw_mutex_alloc.lock();
@@ -492,7 +490,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
     fftshift(g, fil, col);
 
     float suma, norm = 1.f / length;
-    suma = accumulate(g, g + length, 0.f);
+    suma = lhdrengine::accumulate(g, length);
 
     float w = (1.0f / suma);
     vsmul(g, w, g, length);
@@ -631,7 +629,7 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
                 RGB[color][i] = max(min(RGB[color][i], 1.f), 0.f);
             }
 
-            float mse = MSE(RGB0, RGB[color], length, 1.f);
+            float mse = MSE(RGB0, RGB[color], length);
             difference += mse;
         }
         delta = fabs(oldDifference - difference);
