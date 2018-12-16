@@ -5,6 +5,17 @@ CMAKE_POLICY(SET CMP0054 NEW)
 CMAKE_POLICY(SET CMP0053 NEW)
 PROJECT("Luminance HDR")
 
+# assume built-in pthreads on MacOS
+IF(APPLE)
+    enable_language(CXX)
+    enable_language(C)
+    set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+    set(CMAKE_HAVE_THREADS_LIBRARY 1)
+    set(CMAKE_USE_WIN32_THREADS_INIT 0)
+    set(CMAKE_USE_PTHREADS_INIT 1)
+    set(THREADS_PREFER_PTHREAD_FLAG ON)
+ENDIF()
+
 # set include path for FindXXX.cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/build_files/Modules")
 
@@ -326,6 +337,38 @@ IF(APPLE)
          ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/Libraries
          DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
     )
+
+    # Install Boost libs
+    file(MAKE_DIRECTORY ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
+    file(COPY
+        ${Boost_SYSTEM_LIBRARY_RELEASE} DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
+    file(COPY
+        ${Boost_THREAD_LIBRARY_RELEASE} DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
+    file(COPY
+        ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
+    file(COPY
+        ${Boost_CHRONO_LIBRARY_RELEASE}  DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
+    file(COPY
+        ${Boost_DATE_TIME_LIBRARY_RELEASE}  DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
+    file(COPY
+        ${Boost_ATOMIC_LIBRARY_RELEASE} DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
+    add_custom_command(
+        TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
+        POST_BUILD
+        COMMAND install_name_tool -change libboost_system.dylib @rpath/libboost_system.dylib *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change libboost_thread.dylib @rpath/libboost_thread.dylib *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change libboost_program_options.dylib @rpath/libboost_program_options.dylib *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change libboost_chrono.dylib @rpath/libboost_chrono.dylib *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change libboost_date_time.dylib @rpath/libboost_date_time.dylib *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change libboost_atomic.dylib @rpath/libboost_atomic.dylib *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change libboost_system.dylib @rpath/libboost_system.dylib *.app/Contents/Frameworks/libboost_chrono.dylib &&
+        install_name_tool -change libboost_system.dylib @rpath/libboost_system.dylib *.app/Contents/Frameworks/libboost_thread.dylib &&
+        install_name_tool -change libboost_system.dylib @rpath/libboost_system.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change libboost_thread.dylib @rpath/libboost_thread.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change libboost_program_options.dylib @rpath/libboost_program_options.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change libboost_chrono.dylib @rpath/libboost_chrono.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change libboost_date_time.dylib @rpath/libboost_date_time.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change libboost_atomic.dylib @rpath/libboost_atomic.dylib *.app/Contents/MacOS/luminance-hdr-cli)
 
 # Unix
 ELSEIF(UNIX)
