@@ -171,4 +171,15 @@ void findMinMaxPercentile(const float* data, size_t size, float minPrct, float& 
     maxOut = lhdrengine::LIM(maxOut, minVal, maxVal);
 }
 
+float accumulate(const float *array, size_t size, bool multithread) {
+    double summation = 0.0;  // use double precision for summations
+#ifdef _OPENMP
+    #pragma omp parallel for reduction(+:summation) if(multithread)
+#endif
+    for (size_t i = 0; i < size; ++i) {
+        summation += array[i];
+    }
+    return summation;
+}
+
 }

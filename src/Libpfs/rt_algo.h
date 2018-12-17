@@ -27,5 +27,6 @@ namespace lhdrengine
 {
 
 void findMinMaxPercentile(const float* data, size_t size, float minPrct, float& minOut, float maxPrct, float& maxOut, bool multiThread = true);
+float accumulate(const float *array, size_t size, bool multithread = true);
 
 }
