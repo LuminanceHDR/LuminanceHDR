@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include <exif.hpp>
 #include <image.hpp>
+#include <exiv2/exiv2.hpp>
 
 #include "Common/config.h"
 #include "Common/global.h"
