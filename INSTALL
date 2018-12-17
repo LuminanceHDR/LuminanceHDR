@@ -19,12 +19,14 @@ Contents
 4. Platform Notes
 5. Enabling Unit Test compilation
 6. Note for Packagers
+7. Pre-built binaries
 
 The build system is based on CMake (http://www.cmake.org/).
 The build description is contained in the CMakeLists.txt file.
 
 1. Basic compilation of the sources
 -------------------------------------------------------------------
+
 To compile from source execute the following command from an EMPTY folder:
 
 > cmake <luminance source code directory>
@@ -53,6 +55,7 @@ the html documentation and the "qm" translation files used for internationalizat
 
 2. Internationalization
 -------------------------------------------------------------------
+
 Luminance HDR source are shipped with updated translation files for internationalization.
 These file are stored inside the folder "i18n". Should you make a change inside the source code
 (in particular on the UI), you need to update them.
@@ -150,13 +153,12 @@ GNU/Linux:
 On GNU/Linux you have to compile the code and you need the aforementioned packages
 (and the *devel* or *dev* ones, depending on the distribution's naming convention).
 CMake will guide you to correctly understand which dependency are missing and which are not.
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-MacOS-X:
-For assistance with the MacOS-X Build, contact robin@clanmills.com
+MacOS:
+For assistance with the MacOS Build, contact robin@clanmills.com
 
-On MacOS-X, all the dependecies can be obtained using MacPorts, except LibRAW that
+On MacOS, all the dependecies can be obtained using MacPorts, except LibRAW that
 must be compiled from source.
 
 Qt5 which must be downloaded from the official website of the Qt project.
@@ -205,17 +207,29 @@ $ cmake .. -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platf
            -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
            -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
 $ make
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+All supported platforms:
+
+General note:
+OpenMP is available when compiling with GCC 4.3 or newer or with Microsoft Visual Studio
+(CMake will correctly find the right option for OpenMP accordingly to your compiler).
+
+Optimisation note:
+default compiler flags include SSE2 and OpenMP.
+SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer).
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 5. Enabling Unit Test compilation
 -------------------------------------------------------------------
+
 In order to enable the compilation of our testing code pass -DENABLE_UNIT_TEST=ON option to cmake.
 Google's framework 'gtest' must be installed in your system, the resulting test executables
 will be placed under <BUILD_ROOT>/test where <BUILD_ROOT> is your building root directory.
 
 6. Note for Packagers
 -------------------------------------------------------------------
+
 Luminance's default installation prefix is "/usr/local". You can execute:
 
 > cmake -DCMAKE_INSTALL_PREFIX=/usr
@@ -237,16 +251,23 @@ suggest to use *RelWithDebInfo*: this option will leave inside the final executa
 the info necessary for a proper debug but at the same time will optimize the code as much
 as possible for good performance.
 
-The Windows EXE is currently build using Microsoft Visual Studio.
-In GNU/Linux you have to compile the code and you need the packages mentioned in Section 3
-(and the *devel* or *dev* ones, depending on the distribution's naming convention).
+7. Pre-built binaries
+-------------------------------------------------------------------
+
+Windows:
+The Windows EXE released on SourceForge.net is built using Microsoft Visual Studio.
 If you want to compile the sources in windows, you need to have a compiled version of all
 the dependencies.
-Building Luminance from sources on Mac OS X can be performed creating a Makefile or an Xcode
-project using CMake. By default, CMake creates a Makefile on Mac OS X.
 
-OpenMP is only available if compiling with GCC 4.3 or newer or with Microsoft Visual Studio
-(CMake will correctly find the right option for OpenMP accordingly to your compiler).
+GNU/Linux:
+Many GNU/Linux distributions provide Luminance HDR pre-packaged in their main repositories
+or in 3rd party ones.
+The program is also available as a flatpak at flathub.org
+In the case you want to compile the code, you will need the packages mentioned in Section 3
+(and the *devel* or *dev* ones, depending on the distribution's naming convention).
 
-Optimisation note: the default compiler flags include SSE2 and [Linux only] OpenMP.
-SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer).
+MacOS:
+Binaries for MacOS are provided at SourceForge.net as Apple Disk Image (dmg) files.
+Building Luminance from sources on MacOS can be performed creating a Makefile or an Xcode
+project using CMake. By default, CMake creates a Makefile on MacOS.
+
