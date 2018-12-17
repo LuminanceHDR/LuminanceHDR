@@ -180,7 +180,7 @@ Copy the boost libraries to /usr/lib
 $ sudo cp /usr/local/*boost*.dylib /usr/lib
 
 Copy Qt frameworks and dynamic libraries into the bundle:
-$ $QT/bin/macdeployqt  Luminance\ HDR\ 2.5.2.app/ -executable=Luminance\ HDR\ 2.5.2.app/Contents/MacOS/luminance-hdr-cli -no-strip -always-overwrite
+$ $QT/bin/macdeployqt  Luminance*.app/ -executable=Luminance*.app/Contents/MacOS/luminance-hdr-cli -no-strip
 
 Caution:  This may produce the following warnings (which you may ignore) such as:
 WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store compliant.
@@ -189,7 +189,7 @@ ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
 ERROR: no file at "/usr/local/lib/libpq.5.dylib"
 
 If you wish to make a DMG (optional)
-$ hdiutil create -ov -srcfolder Luminance\ HDR\ 2.5.2.app Luminance\ HDR\ 2.5.2.dmg
+$ hdiutil create -ov -fs HFS+ -srcfolder Luminance\ HDR\ 2.5.2.app Luminance\ HDR\ 2.5.2.dmg
 
 If you wish to build with an earlier version of the MacOS-X Platform SDK (eg 10.9), use the following:
 
