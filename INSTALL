@@ -1,3 +1,5 @@
+# vim: filetype=markdown
+
 This is the INSTALL file for Luminance HDR
 -------------------------------------------------------------------
 Copyright (C)   2006-2010, Giuseppe Rota <grota@users.sourceforge.net>
@@ -186,7 +188,7 @@ $ cmake -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
 -DOpenMP_libiomp5_LIBRARY="/opt/local/lib/libiomp5.dylib" \
 -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include" \
 -DOpenMP_CXX_LIB_NAMES="libiomp5" \
--DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include" 
+-DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include"
 
 Caution 1:
 If you crash on start up with a message about libz.1.2.8.dylib, modify the executable as follows:
@@ -286,4 +288,3 @@ MacOS:
 Binaries for MacOS are provided at SourceForge.net as Apple Disk Image (dmg) files.
 Building Luminance from sources on MacOS can be performed creating a Makefile or an Xcode
 project using CMake. By default, CMake creates a Makefile on MacOS.
-
