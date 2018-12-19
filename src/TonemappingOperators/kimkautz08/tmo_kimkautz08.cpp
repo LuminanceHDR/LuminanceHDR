@@ -57,6 +57,8 @@ int tmo_kimkautz08(Array2Df &L,
     stop_watch.start();
 #endif
 
+    ph.setValue(5);
+
     int w = L.getCols();
     int h = L.getRows();
 

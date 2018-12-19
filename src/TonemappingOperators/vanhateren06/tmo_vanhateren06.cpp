@@ -51,6 +51,8 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
     stop_watch.start();
 #endif
 
+    ph.setValue(5);
+
     pupil_area = std::max(pupil_area, 0.f);
 
     const size_t w = L.getCols();
@@ -87,6 +89,8 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
         L(i) = val;
     }
 
+    ph.setValue(33);
+
     constexpr int lutSize = 65536;
     const float scale = (lutSize - 1) / (maxVal - minVal);
 
@@ -116,6 +120,8 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
         gsl_poly_complex_workspace_free (wsp);
     }
 
+    ph.setValue(66);
+
 #ifdef _OPENMP
     #pragma omp parallel for schedule(dynamic, w * 16)
 #endif
@@ -126,7 +132,7 @@ int tmo_vanhateren06(Array2Df &L, float pupil_area, Progress &ph) {
         L(i) = 1.f - lhdrengine::intp(index - lowerIndex, lookup[upperIndex], lookup[lowerIndex]) / maxIos;
     }
 
-    ph.setValue(100);
+    ph.setValue(99);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();

@@ -61,6 +61,9 @@ void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,
     std::cout << ", upper scale: " << high;
     std::cout << ", use scales: " << use_scales << ")" << std::endl;
 #endif
+
+    ph.setValue(0);
+
     pfs::Channel *X, *Y, *Z;
     frame.getXYZChannels(X, Y, Z);
     //---

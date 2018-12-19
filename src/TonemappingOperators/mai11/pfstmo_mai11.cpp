@@ -52,6 +52,8 @@ void pfstmo_mai11(pfs::Frame &frame, pfs::Progress &ph) {
 
     //--- default tone mapping parameters;
 
+    ph.setValue(0);
+
     CompressionTMO tmo;
 
     pfs::Channel *inX, *inY, *inZ;

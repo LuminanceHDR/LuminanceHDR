@@ -111,6 +111,8 @@ void pfstmo_ashikhmin02(pfs::Frame &frame, bool simple_flag, float lc_value,
     std::cout << ", eq: " << eq << ")" << std::endl;
 #endif
 
+    ph.setValue(0);
+
     pfs::Channel *Xr, *Yr, *Zr;
     frame.getXYZChannels(Xr, Yr, Zr);
     assert(Xr != NULL);
@@ -148,9 +150,7 @@ void pfstmo_ashikhmin02(pfs::Frame &frame, bool simple_flag, float lc_value,
         }
     }
 
-    if (!ph.canceled()) {
-        ph.setValue(100);
-    }
-
     pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, Yr, Zr);
+
+    ph.setValue(100);
 }

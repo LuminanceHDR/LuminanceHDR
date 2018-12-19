@@ -292,9 +292,7 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
         }
     }
 
-    if (!ph.canceled()) {
-        ph.setValue(100);
-    }
+    ph.setValue(99);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();

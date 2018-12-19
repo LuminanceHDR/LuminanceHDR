@@ -49,6 +49,8 @@ void pfstmo_drago03(pfs::Frame &frame, float opt_biasValue, pfs::Progress &ph) {
     std::cout << ss.str() << std::endl;
 #endif
 
+    ph.setValue(0);
+
     pfs::Channel *X, *Y, *Z;
     frame.getXYZChannels(X, Y, Z);
 
@@ -57,7 +59,6 @@ void pfstmo_drago03(pfs::Frame &frame, float opt_biasValue, pfs::Progress &ph) {
     }
 
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
-    //---
 
     pfs::Array2Df &Xr = *X;
     pfs::Array2Df &Yr = *Y;
@@ -77,32 +78,32 @@ void pfstmo_drago03(pfs::Frame &frame, float opt_biasValue, pfs::Progress &ph) {
         throw pfs::Exception("Tonemapping Failed!");
     }
 
-#pragma omp parallel for
-    for (int y = 0; y < h; y++) {
-        int x = 0;
-#ifdef __SSE2__
-        for (; x < w - 3; x+=4) {
-            vfloat yrv = LVFU(Yr(x, y));
-            vfloat scalev = vselfnotzero(vmaskf_eq(yrv, ZEROV), LVFU(L(x,y)) / yrv);
-
-            STVFU(Yr(x, y), yrv * scalev);
-            STVFU(Xr(x, y), LVFU(Xr(x, y)) * scalev);
-            STVFU(Zr(x, y), LVFU(Zr(x, y)) * scalev);
-        }
-#endif
-        for (; x < w; x++) {
-            float yr = Yr(x, y);
-            float scale = yr != 0.f ? L(x, y) / yr : 0.f;
-
-            assert(!boost::math::isnan(scale));
-
-            Yr(x, y) = Yr(x, y) * scale;
-            Xr(x, y) = Xr(x, y) * scale;
-            Zr(x, y) = Zr(x, y) * scale;
-        }
-    }
-
     if (!ph.canceled()) {
+#pragma omp parallel for
+        for (int y = 0; y < h; y++) {
+            int x = 0;
+#ifdef __SSE2__
+            for (; x < w - 3; x+=4) {
+                vfloat yrv = LVFU(Yr(x, y));
+                vfloat scalev = vselfnotzero(vmaskf_eq(yrv, ZEROV), LVFU(L(x,y)) / yrv);
+
+                STVFU(Yr(x, y), yrv * scalev);
+                STVFU(Xr(x, y), LVFU(Xr(x, y)) * scalev);
+                STVFU(Zr(x, y), LVFU(Zr(x, y)) * scalev);
+            }
+#endif
+            for (; x < w; x++) {
+                float yr = Yr(x, y);
+                float scale = yr != 0.f ? L(x, y) / yr : 0.f;
+
+                assert(!boost::math::isnan(scale));
+
+                Yr(x, y) = Yr(x, y) * scale;
+                Xr(x, y) = Xr(x, y) * scale;
+                Zr(x, y) = Zr(x, y) * scale;
+            }
+        }
+
         ph.setValue(100);
     }
 }

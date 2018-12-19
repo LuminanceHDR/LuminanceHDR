@@ -500,8 +500,8 @@ void Reinhard02::tmo_reinhard02() {
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-//BENCHFUN
-    m_ph.setValue(0);
+
+    m_ph.setValue(2);
 
     // reading image
     #pragma omp parallel for
@@ -523,7 +523,7 @@ void Reinhard02::tmo_reinhard02() {
 
     tonemap_image();
 
-    m_ph.setValue(100);
+    m_ph.setValue(99);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();

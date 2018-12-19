@@ -285,8 +285,6 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
 
     init_fftw();
 
-    ph.setValue(0);
-
     int fil = imR.getRows();
     int col = imR.getCols();
     int length = fil * col;

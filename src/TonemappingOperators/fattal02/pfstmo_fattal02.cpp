@@ -73,6 +73,8 @@ void pfstmo_fattal02(pfs::Frame &frame, float opt_alpha, float opt_beta,
     std::cout << ss.str() << std::endl;
 #endif
 
+    ph.setValue(0);
+
     // Store RGB data temporarily in XYZ channels
     pfs::Channel *R, *G, *B;
     frame.getXYZChannels(R, G, B);

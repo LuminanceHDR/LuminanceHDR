@@ -233,6 +233,8 @@ int tmo_ashikhmin02(pfs::Array2Df *Y, pfs::Array2Df *L, float maxLum,
 
     delete myPyramid;
 
+    ph.setValue(66);
+
     // TM function
     float div = C(maxLum) - C(minLum);
     div = div != 0 ? div : EPSILON;

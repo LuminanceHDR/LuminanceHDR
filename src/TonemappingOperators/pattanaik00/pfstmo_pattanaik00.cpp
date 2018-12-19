@@ -76,6 +76,8 @@ void pfstmo_pattanaik00(pfs::Frame &frame, bool local, float multiplier,
     std::cout << "autolum: " << autolum << ")" << std::endl;
 #endif
 
+    ph.setValue(0);
+
     std::unique_ptr<VisualAdaptationModel> am(new VisualAdaptationModel());
 
     pfs::Channel *X, *Y, *Z;

@@ -50,6 +50,8 @@ void pfstmo_ferwerda96(pfs::Frame &frame, float Ld_Max,
     std::cout << ", adaptation luminance: " << L_da << ")" << std::endl;
 #endif
 
+    ph.setValue(0);
+
     pfs::Channel *inX, *inY, *inZ;
     frame.getXYZChannels(inY, inX, inZ);
     assert(inX != NULL);

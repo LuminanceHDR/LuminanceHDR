@@ -54,6 +54,8 @@ void pfstmo_kimkautz08(Frame &frame, float KK_c1, float KK_c2,
     std::cout << ", KK_c2: " << KK_c2 << ")" << std::endl;
 #endif
 
+    ph.setValue(0);
+
     Channel *inX, *inY, *inZ;
     frame.getXYZChannels(inX, inY, inZ);
     assert(inX != NULL);

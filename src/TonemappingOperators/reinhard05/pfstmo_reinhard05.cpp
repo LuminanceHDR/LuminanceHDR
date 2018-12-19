@@ -62,6 +62,8 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness,
     std::cout << ss.str();
 #endif
 
+    ph.setValue(0);
+
     pfs::Channel *R, *G, *B;
     frame.getXYZChannels(R, G, B);
     //---

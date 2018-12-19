@@ -73,6 +73,8 @@ void pfstmo_durand02(pfs::Frame &frame, float sigma_s, float sigma_r,
     std::cout << ss.str() << std::endl;
 #endif
 
+    ph.setValue(0);
+
     pfs::Channel *X, *Y, *Z;
 
     frame.getXYZChannels(X, Y, Z);

@@ -51,6 +51,8 @@ void pfstmo_vanhateren06(Frame &frame, float pupil_area, Progress &ph) {
     std::cout << "pupil area: " << pupil_area << ")" << std::endl;
 #endif
 
+    ph.setValue(0);
+
     applyGamma(&frame, 1.8f);
 
     Channel *inX, *inY, *inZ;
@@ -102,4 +104,6 @@ void pfstmo_vanhateren06(Frame &frame, float pupil_area, Progress &ph) {
     }
 
     frame.getTags().setTag("LUMINANCE", "DISPLAY");
+
+    ph.setValue(100);
 }

@@ -52,6 +52,8 @@ void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
     stop_watch.start();
 #endif
 
+    ph.setValue(0);
+
     //--- default tone mapping parameters;
     // float contrast_enhance_factor = 1.f;
     // float saturation_factor = 1.f;

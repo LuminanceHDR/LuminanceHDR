@@ -491,11 +491,11 @@ void tmo_fattal02(size_t width, size_t height, const pfs::Array2Df &Y,
         // note, we intentionally do not cut off values > 1.0
     }
 
+    ph.setValue(96);
+
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     cout << endl;
     cout << "tmo_fattal02 = " << stop_watch.get_time() << " msec" << endl;
 #endif
-
-    ph.setValue(96);
 }
