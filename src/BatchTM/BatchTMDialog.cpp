@@ -742,6 +742,28 @@ void BatchTMDialog::from_database() {
                         query.value(1).toFloat();
                     tm_opt->pregamma = query.value(2).toFloat();
                 }
+            } else if (tmOperator == QLatin1String("vanhateren")) {
+                m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+                tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+                tm_opt->tmoperator = vanhateren;
+                tm_opt->tonemapSelection = false;
+                while (query.next()) {
+                    tm_opt->operator_options.vanhaterenoptions.pupil_area =
+                        query.value(0).toFloat();
+                    tm_opt->pregamma = query.value(1).toFloat();
+                }
+            } else if (tmOperator == QLatin1String("lischinski")) {
+                m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+                tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+                tm_opt->tmoperator = lischinski;
+                tm_opt->tonemapSelection = false;
+                while (query.next()) {
+                    tm_opt->operator_options.lischinskioptions.alpha =
+                        query.value(0).toFloat();
+                    tm_opt->operator_options.lischinskioptions.white_point =
+                        query.value(1).toFloat();
+                    tm_opt->pregamma = query.value(2).toFloat();
+                }
             }
             m_tm_options_list.append(tm_opt);
             delete temp_model;

@@ -51,7 +51,8 @@ enum TMOperator : unsigned short {
     mai = 10,
     ferwerda = 11,
     kimkautz = 12,
-    vanhateren = 13
+    vanhateren = 13,
+    lischinski = 14
 };
 
 class TonemappingOptions {
@@ -135,6 +136,10 @@ class TonemappingOptions {
         struct {
             float pupil_area;
         } vanhaterenoptions;
+        struct {
+            float alpha;
+            float white_point;
+        } lischinskioptions;
     } operator_options;
 
     // Davide Anastasia <davideanastasia@users.sourceforge.net>

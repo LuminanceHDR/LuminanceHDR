@@ -513,6 +513,7 @@ void TonemappingSettings::fillPreviews() {
         pupil_area = m_modelPreviews->record(selectedRow)
                          .value(QStringLiteral("pupil_area"))
                          .toFloat();
+
         fillCommonValues(tmoVanHateren06, origxsize, PREVIEW_WIDTH, vanhateren,
                          m_modelPreviews->record(selectedRow));
 
@@ -520,6 +521,35 @@ void TonemappingSettings::fillPreviews() {
             pupil_area;
 
         addPreview(new PreviewLabel(0, tmoVanHateren06, index++),
+                   m_modelPreviews->record(selectedRow));
+    }
+
+    sqlQuery =
+        QStringLiteral("SELECT *, 'lischinski' AS operator FROM lischinski");
+    m_modelPreviews->setQuery(sqlQuery, db);
+
+    float lischinski_alpha;
+    float lischinski_white_point;
+
+    for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount();
+         selectedRow++) {
+        TonemappingOptions *tmoLischinski06 = new TonemappingOptions;
+        lischinski_alpha = m_modelPreviews->record(selectedRow)
+                         .value(QStringLiteral("alpha"))
+                         .toFloat();
+        lischinski_white_point = m_modelPreviews->record(selectedRow)
+                         .value(QStringLiteral("white_point"))
+                         .toFloat();
+
+        fillCommonValues(tmoLischinski06, origxsize, PREVIEW_WIDTH, lischinski,
+                         m_modelPreviews->record(selectedRow));
+
+        tmoLischinski06->operator_options.lischinskioptions.alpha =
+            lischinski_alpha;
+        tmoLischinski06->operator_options.lischinskioptions.white_point =
+            lischinski_white_point;
+
+        addPreview(new PreviewLabel(0, tmoLischinski06, index++),
                    m_modelPreviews->record(selectedRow));
     }
     m_previewSettings->updatePreviews(m_frame);

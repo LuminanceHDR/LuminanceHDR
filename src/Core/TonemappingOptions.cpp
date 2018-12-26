@@ -114,6 +114,10 @@ void TonemappingOptions::setDefaultTonemapParameters() {
 
     // VanHateren
     operator_options.vanhaterenoptions.pupil_area =  VANHATEREN06_PUPIL_AREA;
+
+    // Lischinski
+    operator_options.lischinskioptions.alpha =  LISCHINSKI06_ALPHA;
+    operator_options.lischinskioptions.white_point =  LISCHINSKI06_WHITE_POINT;
 }
 
 void TonemappingOptions::setDefaultParameters() {
@@ -166,6 +170,8 @@ char TonemappingOptions::getRatingForOperator() {
             return 'M';
         case vanhateren:
             return 'N';
+        case lischinski:
+            return 'O';
     }
     return ' ';
 }
@@ -206,11 +212,11 @@ const QString TonemappingOptions::getPostfix() {
                 postfix +=
                     QStringLiteral("luminancelevel_%1_").arg(luminancelevel);
             } else {
-                postfix += QStringLiteral("auto_luminance");
+                postfix += QStringLiteral("auto_luminance_");
             }
             postfix +=
-                QStringLiteral("colorsaturation_%1_").arg(colorsaturation);
-            postfix += QStringLiteral("contrastenhancement_%1")
+                QStringLiteral("color_saturation_%1_").arg(colorsaturation);
+            postfix += QStringLiteral("contrast_enhancement_%1")
                            .arg(contrastenhancement);
         } break;
         case fattal: {
@@ -246,7 +252,7 @@ const QString TonemappingOptions::getPostfix() {
             postfix += QLatin1String("kimkautz_");
             float c1 = operator_options.kimkautzoptions.c1;
             float c2 = operator_options.kimkautzoptions.c2;
-            postfix += QStringLiteral("c1_%1").arg(c1);
+            postfix += QStringLiteral("c1_%1_").arg(c1);
             postfix += QStringLiteral("c2_%1").arg(c2);
         } break;
         case mai: {
@@ -292,7 +298,7 @@ const QString TonemappingOptions::getPostfix() {
                 postfix += QLatin1String("autolum");
             } else {
                 postfix += QStringLiteral("cone_%1_").arg(cone);
-                postfix += QStringLiteral("rod_%1_").arg(rod);
+                postfix += QStringLiteral("rod_%1").arg(rod);
             }
         } break;
         case reinhard02: {
@@ -328,6 +334,13 @@ const QString TonemappingOptions::getPostfix() {
             postfix += QLatin1String("vanhateren_");
             float pupil_area = operator_options.vanhaterenoptions.pupil_area;
             postfix += QStringLiteral("pupil_area_%1").arg(pupil_area);
+        } break;
+        case lischinski: {
+            postfix += QLatin1String("lischinski_");
+            float alpha = operator_options.lischinskioptions.alpha;
+            float white_point = operator_options.lischinskioptions.white_point;
+            postfix += QStringLiteral("alpha_%1_").arg(alpha);
+            postfix += QStringLiteral("white_point_%1").arg(white_point);
         } break;
     }
     postfix += QStringLiteral("_postsaturation_%1").arg(postsaturation);
@@ -427,7 +440,7 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
             float c2 = operator_options.kimkautzoptions.c2;
             caption += "KimKautz:" + separator;
             caption += QString(QObject::tr("C1") + "=%1").arg(c1) + separator;
-            caption += QString(QObject::tr("C2") + "=%1").arg(c2) + separator;
+            caption += QString(QObject::tr("C2") + "=%1").arg(c2);
         } break;
         case mai: {
             caption += "Mai:" + separator;
@@ -519,7 +532,14 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
         case vanhateren: {
             float pupil_area = operator_options.vanhaterenoptions.pupil_area;
             caption += "VanHateren:" + separator;
-            caption += QString(QObject::tr("Pupil Area") + "=%1").arg(pupil_area) + separator;
+            caption += QString(QObject::tr("Pupil Area") + "=%1").arg(pupil_area);
+        } break;
+        case lischinski: {
+            float alpha = operator_options.lischinskioptions.alpha;
+            float white_point = operator_options.lischinskioptions.white_point;
+            caption += "Lischinski:" + separator;
+            caption += QString(QObject::tr("Alpha") + "=%1").arg(alpha) + separator;
+            caption += QString(QObject::tr("White Point") + "=%1").arg(white_point);
         } break;
     }
     caption += includePregamma
@@ -609,6 +629,9 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
             } else if (value == QLatin1String("VanHateren06")) {
                 toreturn->tmoperator = vanhateren;
                 tmo = QStringLiteral("VanHateren06");
+            } else if (value == QLatin1String("Lischinski06")) {
+                toreturn->tmoperator = lischinski;
+                tmo = QStringLiteral("Lischinski06");
             }
         } else if (field == QLatin1String("CONTRASTFACTOR")) {
             toreturn->operator_options.mantiuk06options.contrastfactor =
@@ -718,6 +741,12 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
                 value.toFloat();
         } else if (field == QLatin1String("PUPIL_AREA")) {
             toreturn->operator_options.vanhaterenoptions.pupil_area =
+                value.toFloat();
+        } else if (field == QLatin1String("ALPHA")) {
+            toreturn->operator_options.lischinskioptions.alpha =
+                value.toFloat();
+        } else if (field == QLatin1String("WHITE_POINT")) {
+            toreturn->operator_options.lischinskioptions.white_point =
                 value.toFloat();
         } else if (field == QLatin1String("PREGAMMA")) {
             toreturn->pregamma = value.toFloat();
@@ -924,6 +953,15 @@ QString TMOptionsOperations::getExifComment() {
                 opts->operator_options.vanhaterenoptions.pupil_area;
             exif_comment += QLatin1String("VanHateren06\nParameters:\n");
             exif_comment += QStringLiteral("Pupil Area: %1\n").arg(pupil_area);
+        } break;
+        case lischinski: {
+            float alpha =
+                opts->operator_options.lischinskioptions.alpha;
+            float white_point =
+                opts->operator_options.lischinskioptions.white_point;
+            exif_comment += QLatin1String("Lischinski06\nParameters:\n");
+            exif_comment += QStringLiteral("Alpha: %1\n").arg(alpha);
+            exif_comment += QStringLiteral("White Point: %1\n").arg(white_point);
         } break;
     }
     exif_comment +=

@@ -239,7 +239,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
     tmo_desc.add_options()(
         "tmo", po::value<std::string>(),
         tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|ferwerda|kimkautz|pattanaik|reinhard02|reinhard05|\
-                mai|mantiuk06|mantiuk08|vanhateren06] (Default is mantiuk06)")
+                mai|mantiuk06|mantiuk08|vanhateren|lischinski] (Default is mantiuk06)")
             .toUtf8()
             .constData())("tmofile", po::value<std::string>(),
                           tr("SETTING_FILE Load an existing setting file "
@@ -418,8 +418,18 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         (
         "tmoVanHaterenPupilArea",
         po::value<float>(&tmopts->operator_options.vanhaterenoptions.pupil_area),
-        tr("pupil_area FLOAT").toUtf8().constData()
-        );
+        tr("pupil_area FLOAT").toUtf8().constData());
+    po::options_description tmo_lischinski(
+        tr(" Lischinski").toUtf8().constData());
+    tmo_lischinski.add_options()
+        (
+        "tmoLischinskiAlpha",
+        po::value<float>(&tmopts->operator_options.lischinskioptions.alpha),
+        tr("alpha FLOAT").toUtf8().constData())
+        (
+        "tmoLischinskiWhitePoint",
+        po::value<float>(&tmopts->operator_options.lischinskioptions.white_point),
+        tr("white_point FLOAT").toUtf8().constData());
 
     tmo_desc.add(tmo_fattal);
     tmo_desc.add(tmo_ferradans);
@@ -434,6 +444,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
     tmo_desc.add(tmo_ash);
     tmo_desc.add(tmo_patt);
     tmo_desc.add(tmo_vanhateren);
+    tmo_desc.add(tmo_lischinski);
 
     po::options_description hidden("Hidden options");
     hidden.add_options()("input-file", po::value<vector<string>>(),
@@ -610,6 +621,8 @@ directory must exist.  Useful to avoid clutter in the current directory. \
                 tmopts->tmoperator = mantiuk08;
             else if (strcmp(value, "vanhateren") == 0)
                 tmopts->tmoperator = vanhateren;
+            else if (strcmp(value, "lischinski") == 0)
+                tmopts->tmoperator = lischinski;
             else
                 printErrorAndExit(
                     tr("Error: Unknown tone mapping operator specified."));

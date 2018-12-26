@@ -312,6 +312,16 @@ PreviewPanel::PreviewPanel(QWidget *parent)
                 &PreviewLabel::clicked),
             this, &PreviewPanel::tonemapPreview);
 
+    PreviewLabel *labelLischinski = new PreviewLabel(this, lischinski);
+    labelLischinski->setText(QStringLiteral("Lischinski"));
+    labelLischinski->setToolTip(QStringLiteral("Lischinski"));
+    labelLischinski->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelLischinski);
+    connect(labelLischinski,
+            static_cast<void (PreviewLabel::*)(TonemappingOptions *)>(
+                &PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
+
     FlowLayout *flowLayout = new FlowLayout;
 
     flowLayout->addWidget(labelMantiuk06);
@@ -328,6 +338,7 @@ PreviewPanel::PreviewPanel(QWidget *parent)
     flowLayout->addWidget(labelFerwerda);
     flowLayout->addWidget(labelKimKautz);
     flowLayout->addWidget(labelVanHateren);
+    flowLayout->addWidget(labelLischinski);
 
     setLayout(flowLayout);
 }

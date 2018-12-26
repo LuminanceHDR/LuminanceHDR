@@ -96,4 +96,8 @@
 // VanHateren 06
 #define VANHATEREN06_PUPIL_AREA 10.0f
 
+// Lischinski 06
+#define LISCHINSKI06_ALPHA 1.f
+#define LISCHINSKI06_WHITE_POINT 5.f
+
 #endif  // PFSTMDEFAULTPARAMS_H

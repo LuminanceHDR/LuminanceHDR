@@ -49,7 +49,7 @@ class TonemappingSettings : public QDialog {
     void fillPreviews();
     pfs::Frame *m_frame;
     PreviewSettings *m_previewSettings;
-    QSqlQueryModel *m_modelPreviews;
+    QScopedPointer<QSqlQueryModel> m_modelPreviews;
     int m_currentIndex;
     QList<PreviewLabel *> m_previewLabelList;
     bool m_wantsTonemap;

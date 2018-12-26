@@ -79,4 +79,6 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness,
 void pfstmo_vanhateren06(pfs::Frame &frame, float pupil_area,
                         pfs::Progress &ph);
 
+void pfstmo_lischinski06(pfs::Frame &frame, float alpha, float white_point,
+                        pfs::Progress &ph);
 #endif

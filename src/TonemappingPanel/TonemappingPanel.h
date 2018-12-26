@@ -77,6 +77,9 @@ class TonemappingPanel : public QWidget {
         *kimkautzc2Gang,
         // vanhateren06
         *vanhaterenPupilAreaGang,
+        // lischinski06
+        *lischinskiAlphaGang,
+        *lischinskiWhitePointGang,
         //
         *pregammaGang,
         //
@@ -144,6 +147,7 @@ class TonemappingPanel : public QWidget {
     void execReinhard02Query(bool, float, float, int, int, int, QString);
     void execReinhard05Query(float, float, float, QString);
     void execVanHaterenQuery(float, QString);
+    void execLischinskiQuery(float, float, QString);
 
     void updatePreviews(double);
     void updatePreviewsCB(bool);
