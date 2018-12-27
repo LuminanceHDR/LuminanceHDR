@@ -59,6 +59,8 @@
     #define CLAMP(x, a)         (x >= a ? (a - 1) : (x < 0 ? 0 : x))
 #endif
 
+#define pow_F(a,b) (xexpf(b*xlogf(a)))
+
 using namespace std;
 using namespace pfs;
 using namespace pfs::colorspace;
@@ -68,12 +70,13 @@ float LogMeanVal(const Array2Df &L) {
     const size_t w = L.getCols();
     const size_t size = w*h;
     double ret = 0.0;
+#pragma omp parallel for reduction(+:ret)
     for(size_t j = 0; j < h; j++) {
         for(size_t i = 0; i < w; i++) {
-            ret += log2(L(i, j) + 1e-6);
+            ret += xlogf(L(i, j) + 1e-6);
         }
     }
-    return expf(ret/size);
+    return xexpf(ret/size);
 }
 
 int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
@@ -93,13 +96,14 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     float maxL, minL;
     lhdrengine::findMinMaxPercentile(L.data(), L.getCols() * L.getRows(), 0.01f, minL, 0.99f, maxL, true);
 
+    const float invLOG2 = 1.0f/xlogf(2.0f);
     float Lav = LogMeanVal(L);
-    float maxL_log = log2f(maxL + 1e-6f);
-    float minL_log = log2f(minL + 1e-6f);
+    float maxL_log = xlogf(maxL + 1e-6f) * invLOG2;
+    float minL_log = xlogf(minL + 1e-6f) * invLOG2;
 
-    float log2Average = log2(Lav + 1e-9f);
-    float alpha = 0.18f * powf(4.0f, (2.0f * log2Average - minL_log - maxL_log)/( maxL_log - minL_log));
-    float whitePoint = 1.5f * powf(2.0f, maxL_log - minL_log - 5.0f);
+    float log2Average = xlogf(Lav + 1e-6f) * invLOG2;
+    float alpha = 0.18f * pow_F(4.0f, (2.0f * log2Average - minL_log - maxL_log)/( maxL_log - minL_log));
+    float whitePoint = 1.5f * pow_F(2.0f, maxL_log - minL_log - 5.0f);
 
     alpha *= alpha_mul;
     whitePoint *= whitePoint_mul/100.f;
@@ -135,7 +139,7 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
             float Lum = L(j,i);
-            float Lum_log = log2f(Lum + 1e-6f);
+            float Lum_log = xlogf(Lum + 1e-6f) * invLOG2;
 
             int zone = CLAMP(int(ceilf(Lum_log - minL_log)), Z);
 
@@ -154,7 +158,7 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
                 //photographic operator
                 float Rz2 = Rz[i] * alpha / Lav;
                 float f = (Rz2 * (1 + Rz2 / whitePoint_sq) ) / (1.0f + Rz2);
-                fstop[i] = log2f(f / Rz[i] + 1e-6f);
+                fstop[i] = xlogf(f / Rz[i] + 1e-6f) * invLOG2;
             }
         }
     }
@@ -162,10 +166,11 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     //create the fstop map
     Array2Df L_log(width, height);
     transform(L.begin(), L.end(), L_log.begin(),
-            [](float l) { return log2f(l + 1e-6f); } );
+            [invLOG2](float l) { return xlogf(l + 1e-6f) * invLOG2; } );
 
     Array2Df fstopMap(width, height);
 
+#pragma omp parallel for
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
             float l_log = L_log(j,i);
@@ -180,13 +185,14 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
 
     //Lischinski minimization
     Array2Df tmp(width, height);
-    tmp.fill(0.007f);
+    tmp.fill(0.07f);
     Array2Df fstopMap_min(width, height);
     LischinskiMinimization(L, fstopMap, tmp, fstopMap_min);
 
+#pragma omp parallel for
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
-            float exposure = powf(2.0f, fstopMap_min(j, i));
+            float exposure = pow_F(2.0f, fstopMap_min(j, i));
 
             inX(j, i) *= exposure;
             inY(j, i) *= exposure;

@@ -145,6 +145,7 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
 
     Array2Df F_res(width, height);
 
+#pragma omp parallel for
     for(int i = 0; i < height; i++) {
         int counter = i * width;
 
