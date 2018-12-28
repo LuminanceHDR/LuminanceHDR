@@ -200,7 +200,7 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
         #pragma omp critical
         {
             for (int i = 0; i < Z; ++i) {
-                for (int j = 0; j < zonesThr[i].size(); ++j) {
+                for (int j = 0; j < int(zonesThr[i].size()); ++j) {
                     zones[i].push_back(zonesThr[i][j]);
                 }
             }
