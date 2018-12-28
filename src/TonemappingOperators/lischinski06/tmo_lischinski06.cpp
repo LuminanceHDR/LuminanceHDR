@@ -152,8 +152,9 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     for(int i = 0; i < Z; i++) {
         int n = int(zones[i].size());
         if(n > 0) {
-            std::sort(zones[i].begin(), zones[i].end());
-            Rz[i] = zones[i][n / 2];
+            float maxL, minL;
+            lhdrengine::findMinMaxPercentile(zones[i].data(), n, 0.5f, minL, 0.5f, maxL, true);
+            Rz[i] = minL;
             if(Rz[i] > 0.0f) {
                 //photographic operator
                 float Rz2 = Rz[i] * alpha / Lav;
