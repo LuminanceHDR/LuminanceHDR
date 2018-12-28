@@ -265,10 +265,8 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     ph.setValue(50);
 
     //Lischinski minimization
-    Array2Df tmp(width, height);
-    tmp.fill(0.07f);
     Array2Df fstopMap_min(width, height);
-    LischinskiMinimization(L, fstopMap, tmp, fstopMap_min);
+    LischinskiMinimization(L, fstopMap, fstopMap_min);
 
 #ifdef _OPENMP
     #pragma omp parallel for

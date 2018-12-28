@@ -53,8 +53,8 @@ inline float LischinskiFunction(float Lcur, float Lref, float param[2],
     return -param[1] / (powf(fabsf(Lcur - Lref), param[0]) + LISCHINSKI_EPSILON);
 }
 
-void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_orig, Array2Df &F,
-                            float alpha, float lambda, float LISCHINSKI_EPSILON) {
+void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &F,
+                            float alpha, float lambda, float LISCHINSKI_EPSILON, float omega) {
 
     const int orig_width = L_orig.getCols();
     const int orig_height = L_orig.getRows();
@@ -71,11 +71,9 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
     const int size = height * width;
     Array2Df L(width, height);
     Array2Df g(width, height);
-    Array2Df omega(width, height);
 
     resize(&L_orig, &L, BilinearInterp);
     resize(&g_orig, &g, BilinearInterp);
-    resize(&omega_orig, &omega, BilinearInterp);
 
     // USE FLOATS HERE?
     Eigen::VectorXf b, x;
@@ -98,7 +96,7 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
             int indI = tmpInd + j;
             float Lref = L(indI);
 
-            b[indI] = omega(indI) * g(indI);
+            b[indI] = omega * g(indI);
 
             if((i - 1) >= 0) {
                 indJ = indI - width;
@@ -129,7 +127,7 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
                 sum += tmp;
             }
 
-            tL.push_back(Eigen::Triplet< float >{indI, indI, omega(indI) - sum});
+            tL.push_back(Eigen::Triplet< float >{indI, indI, omega - sum});
         }
     }
 

@@ -44,10 +44,10 @@
 
 void LischinskiMinimization(pfs::Array2Df &L,
                             pfs::Array2Df &g,
-                            pfs::Array2Df &omega,
                             pfs::Array2Df &F,
                             float alpha = 1.0f,
                             float lambda = 0.4f,
-                            float LISCHINSKI_EPSILON = 1e-4f);
+                            float LISCHINSKI_EPSILON = 1e-4f,
+                            float omega = 0.07f);
 
 #endif // LISCHINSKI_MINIMIZATION_H
