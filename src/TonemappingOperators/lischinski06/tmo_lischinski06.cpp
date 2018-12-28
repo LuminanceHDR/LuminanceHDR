@@ -164,14 +164,46 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
         fstop[i] = 0.0f;
     }
 
-    for(int i = 0; i < height; i++) {
-        for(int j = 0; j < width; j++) {
-            float Lum = L(j,i);
-            float Lum_log = xlogf(Lum + 1e-6f) * invLOG2;
+    #pragma omp parallel
+    {
+        std::vector<float> zonesThr[Z];
+#ifdef __SSE2__
+        std::vector<float> logBuffer(width);
+        const vfloat c1em6v = F2V(1e-6f);
+        const vfloat invLOG2v = F2V(invLOG2);
+        const vfloat minL_logv = F2V(minL_log);
+#endif
+        #pragma omp for nowait
+        for(int i = 0; i < height; i++) {
+#ifdef __SSE2__
+            int j = 0;
+            for(; j + 3 < width; j+=4) {
+                STVFU(logBuffer[j], xlogf(LVFU(L(j,i)) + c1em6v) * invLOG2v - minL_logv);
+            }
+            for(; j < width; ++j) {
+                logBuffer[j] = xlogf(L(j,i) + 1e-6f) * invLOG2 - minL_log;
+            }
+#endif
+            for(int j = 0; j < width; j++) {
+#ifdef __SSE2__
+                const float Lum = L(j,i);
+                const float Lum_log = logBuffer[j];
+#else
+                const float Lum = L(j,i);
+                const float Lum_log = xlogf(Lum + 1e-6f) * invLOG2 - minL_log;
+#endif
+                const int zone = CLAMP(int(ceilf(Lum_log)), Z);
 
-            int zone = CLAMP(int(ceilf(Lum_log - minL_log)), Z);
-
-            zones[zone].push_back(Lum);
+                zonesThr[zone].push_back(Lum);
+            }
+        }
+        #pragma omp critical
+        {
+            for (int i = 0; i < Z; ++i) {
+                for (int j = 0; j < zonesThr[i].size(); ++j) {
+                    zones[i].push_back(zonesThr[i][j]);
+                }
+            }
         }
     }
 

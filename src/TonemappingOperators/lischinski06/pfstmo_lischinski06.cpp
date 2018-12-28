@@ -51,7 +51,8 @@
 #include "tmo_lischinski06.h"
 #include "../../opthelper.h"
 #include "../../sleef.c"
-
+#define BENCHMARK
+#include "StopWatch.h"
 using namespace pfs;
 
 void pfstmo_lischinski06(Frame &frame, float alpha, float white_point,
@@ -62,7 +63,7 @@ void pfstmo_lischinski06(Frame &frame, float alpha, float white_point,
     std::cout << "pfstmo_lischinski06 (";
     std::cout << "alpha: " << alpha << ", white_point: " << white_point << ")" << std::endl;
 #endif
-
+BENCHFUN
     ph.setValue(0);
 
     Channel *inX, *inY, *inZ;
