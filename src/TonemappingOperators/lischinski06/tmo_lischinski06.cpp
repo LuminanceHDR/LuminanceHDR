@@ -86,12 +86,12 @@ float LogMeanVal(const Array2Df &L) {
         size_t i = 0;
 #ifdef __SSE2__
         for (; i < width - 3; i += 4) {
-            vfloat value = xlogf(LVFU(L(j,i)) + epsv);
+            vfloat value = xlogf(LVFU(L(i,j)) + epsv);
             avg_loglumv += value;
         }
 #endif
         for (; i < width; ++i) {
-            float value = xlogf(L(j,i) + 1e-6f);
+            float value = xlogf(L(i,j) + 1e-6f);
             avg_loglum += value;
         }
     }
