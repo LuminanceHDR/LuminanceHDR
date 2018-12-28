@@ -42,6 +42,8 @@
 
 #include "Libpfs/manip/resize.h"
 #include "lischinski_minimization.h"
+#include "sleef.c"
+#include "opthelper.h"
 
 using namespace std;
 using namespace pfs;
@@ -75,10 +77,11 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
     resize(&g_orig, &g, BilinearInterp);
     resize(&omega_orig, &omega, BilinearInterp);
 
-    Eigen::VectorXd b, x;
-    b = Eigen::VectorXd::Zero(size);
+    // USE FLOATS HERE?
+    Eigen::VectorXf b, x;
+    b = Eigen::VectorXf::Zero(size);
 
-    std::vector< Eigen::Triplet< double > > tL;
+    std::vector< Eigen::Triplet< float > > tL;
 
     float param[2];
     param[0] = alpha;
@@ -89,8 +92,8 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
 
         for(int j = 0; j < width; j++) {
 
-            double sum = 0.0;
-            double tmp;
+            float sum = 0.0;
+            float tmp;
             int indJ;
             int indI = tmpInd + j;
             float Lref = L(indI);
@@ -100,14 +103,14 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
             if((i - 1) >= 0) {
                 indJ = indI - width;
                 tmp = LischinskiFunction(L(indJ), Lref, param, LISCHINSKI_EPSILON);
-                tL.push_back(Eigen::Triplet< double > (indI, indJ, tmp));
+                tL.push_back(Eigen::Triplet< float > (indI, indJ, tmp));
                 sum += tmp;
             }
 
             if((i + 1) < height) {
                 indJ = indI + width;
                 tmp = LischinskiFunction(L(indJ), Lref, param, LISCHINSKI_EPSILON);
-                tL.push_back(Eigen::Triplet< double > (indI, indJ, tmp));
+                tL.push_back(Eigen::Triplet< float > (indI, indJ, tmp));
 
                 sum += tmp;
             }
@@ -115,25 +118,25 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
             if((j - 1) >= 0) {
                 indJ = indI - 1;
                 tmp = LischinskiFunction(L(indJ), Lref, param, LISCHINSKI_EPSILON);
-                tL.push_back(Eigen::Triplet< double > (indI, indJ, tmp));
+                tL.push_back(Eigen::Triplet< float > (indI, indJ, tmp));
                 sum += tmp;
             }
 
             if((j + 1) < width) {
                 indJ = indI + 1;
                 tmp = LischinskiFunction(L(indJ), Lref, param, LISCHINSKI_EPSILON);
-                tL.push_back(Eigen::Triplet< double > (indI, indJ, tmp));
+                tL.push_back(Eigen::Triplet< float > (indI, indJ, tmp));
                 sum += tmp;
             }
 
-            tL.push_back(Eigen::Triplet< double >{indI, indI, omega(indI) - sum});
+            tL.push_back(Eigen::Triplet< float >{indI, indI, omega(indI) - sum});
         }
     }
 
-    Eigen::SparseMatrix<double> A = Eigen::SparseMatrix<double>(size, size);
+    Eigen::SparseMatrix<float> A = Eigen::SparseMatrix<float>(size, size);
     A.setFromTriplets(tL.begin(), tL.end());
 
-    Eigen::SimplicialCholesky<Eigen::SparseMatrix<double> > solver(A);
+    Eigen::SimplicialCholesky<Eigen::SparseMatrix<float> > solver(A);
     x = solver.solve(b);
 
     if(solver.info() != Eigen::Success) {
@@ -145,13 +148,39 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &omega_
 
     Array2Df F_res(width, height);
 
-#pragma omp parallel for
-    for(int i = 0; i < height; i++) {
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (int i = 0; i < height; ++i) {
+        int j = 0;
         int counter = i * width;
-
-        for(int j = 0; j < width; j++) {
-            F_res(j, i) =  float(x(counter + j));
+#ifdef __SSE2__
+        for (; j < width - 3; j += 4) {
+             STVFU(F_res(j, i), LVFU(x(counter + j)));
+        }
+#endif
+        for (; j < width; ++j) {
+            F_res(j, i) =  x(counter + j);
         }
     }
+
+/* IF USING DOUBLES
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (int i = 0; i < height; ++i) {
+        int j = 0;
+        int counter = i * width;
+#ifdef __SSE2__
+        for (; j < width - 1; j += 2) {
+             STVFU(F_res(j, i),_mm_cvtpd_ps(_mm_load_pd(&x(counter + j))));
+        }
+#endif
+        for (; j < width; ++j) {
+            F_res(j, i) = float(x(counter + j));
+        }
+    }
+*/
+
     resize(&F_res, &F, BilinearInterp);
 }
