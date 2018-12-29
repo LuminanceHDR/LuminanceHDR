@@ -425,11 +425,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         (
         "tmoLischinskiAlpha",
         po::value<float>(&tmopts->operator_options.lischinskioptions.alpha),
-        tr("alpha FLOAT").toUtf8().constData())
-        (
-        "tmoLischinskiWhitePoint",
-        po::value<float>(&tmopts->operator_options.lischinskioptions.white_point),
-        tr("white_point FLOAT").toUtf8().constData());
+        tr("alpha FLOAT").toUtf8().constData());
 
     tmo_desc.add(tmo_fattal);
     tmo_desc.add(tmo_ferradans);

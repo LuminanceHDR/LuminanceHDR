@@ -108,7 +108,7 @@ float LogMeanVal(const Array2Df &L) {
 }
 
 int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
-                     const float alpha_mul, const float whitePoint_mul,
+                     const float alpha_mul,
                      Progress &ph) {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
@@ -134,7 +134,6 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     float whitePoint = 1.5f * pow_F(2.0f, maxL_log - minL_log - 5.0f);
 
     alpha *= alpha_mul;
-    whitePoint *= whitePoint_mul/100.f;
 
     int Z = int(ceilf(maxL_log - minL_log));
 

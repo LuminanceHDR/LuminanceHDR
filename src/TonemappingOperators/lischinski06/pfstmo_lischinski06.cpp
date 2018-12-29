@@ -55,13 +55,13 @@
 #include "StopWatch.h"
 using namespace pfs;
 
-void pfstmo_lischinski06(Frame &frame, float alpha, float white_point,
+void pfstmo_lischinski06(Frame &frame, float alpha_mul,
                          Progress &ph) {
 
 #ifndef NDEBUG
     //--- default tone mapping parameters;
     std::cout << "pfstmo_lischinski06 (";
-    std::cout << "alpha: " << alpha << ", white_point: " << white_point << ")" << std::endl;
+    std::cout << "alpha_mul: " << alpha_mul << ")" << std::endl;
 #endif
 BENCHFUN
     ph.setValue(0);
@@ -83,7 +83,7 @@ BENCHFUN
     transformRGB2Y(inX, inY, inZ, &L);
 
     try {
-            tmo_lischinski06(L, *inX, *inY, *inZ, alpha, white_point, ph);
+            tmo_lischinski06(L, *inX, *inY, *inZ, alpha_mul, ph);
     } catch (...) {
         throw Exception("Tonemapping Failed!");
     }

@@ -529,7 +529,6 @@ void TonemappingSettings::fillPreviews() {
     m_modelPreviews->setQuery(sqlQuery, db);
 
     float lischinski_alpha;
-    float lischinski_white_point;
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount();
          selectedRow++) {
@@ -537,17 +536,12 @@ void TonemappingSettings::fillPreviews() {
         lischinski_alpha = m_modelPreviews->record(selectedRow)
                          .value(QStringLiteral("alpha"))
                          .toFloat();
-        lischinski_white_point = m_modelPreviews->record(selectedRow)
-                         .value(QStringLiteral("white_point"))
-                         .toFloat();
 
         fillCommonValues(tmoLischinski06, origxsize, PREVIEW_WIDTH, lischinski,
                          m_modelPreviews->record(selectedRow));
 
         tmoLischinski06->operator_options.lischinskioptions.alpha =
             lischinski_alpha;
-        tmoLischinski06->operator_options.lischinskioptions.white_point =
-            lischinski_white_point;
 
         addPreview(new PreviewLabel(0, tmoLischinski06, index++),
                    m_modelPreviews->record(selectedRow));

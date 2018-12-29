@@ -117,7 +117,6 @@ void TonemappingOptions::setDefaultTonemapParameters() {
 
     // Lischinski
     operator_options.lischinskioptions.alpha =  LISCHINSKI06_ALPHA;
-    operator_options.lischinskioptions.white_point =  LISCHINSKI06_WHITE_POINT;
 }
 
 void TonemappingOptions::setDefaultParameters() {
@@ -338,9 +337,7 @@ const QString TonemappingOptions::getPostfix() {
         case lischinski: {
             postfix += QLatin1String("lischinski_");
             float alpha = operator_options.lischinskioptions.alpha;
-            float white_point = operator_options.lischinskioptions.white_point;
-            postfix += QStringLiteral("alpha_%1_").arg(alpha);
-            postfix += QStringLiteral("white_point_%1").arg(white_point);
+            postfix += QStringLiteral("alpha_%1").arg(alpha);
         } break;
     }
     postfix += QStringLiteral("_postsaturation_%1").arg(postsaturation);
@@ -536,10 +533,8 @@ const QString TonemappingOptions::getCaption(bool includePregamma,
         } break;
         case lischinski: {
             float alpha = operator_options.lischinskioptions.alpha;
-            float white_point = operator_options.lischinskioptions.white_point;
             caption += "Lischinski:" + separator;
-            caption += QString(QObject::tr("Alpha") + "=%1").arg(alpha) + separator;
-            caption += QString(QObject::tr("White Point") + "=%1").arg(white_point);
+            caption += QString(QObject::tr("Alpha") + "=%1").arg(alpha);
         } break;
     }
     caption += includePregamma
@@ -744,9 +739,6 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
                 value.toFloat();
         } else if (field == QLatin1String("ALPHA")) {
             toreturn->operator_options.lischinskioptions.alpha =
-                value.toFloat();
-        } else if (field == QLatin1String("WHITE_POINT")) {
-            toreturn->operator_options.lischinskioptions.white_point =
                 value.toFloat();
         } else if (field == QLatin1String("PREGAMMA")) {
             toreturn->pregamma = value.toFloat();
@@ -957,11 +949,8 @@ QString TMOptionsOperations::getExifComment() {
         case lischinski: {
             float alpha =
                 opts->operator_options.lischinskioptions.alpha;
-            float white_point =
-                opts->operator_options.lischinskioptions.white_point;
             exif_comment += QLatin1String("Lischinski06\nParameters:\n");
             exif_comment += QStringLiteral("Alpha: %1\n").arg(alpha);
-            exif_comment += QStringLiteral("White Point: %1\n").arg(white_point);
         } break;
     }
     exif_comment +=

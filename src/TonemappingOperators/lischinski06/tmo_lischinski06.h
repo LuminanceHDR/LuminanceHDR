@@ -57,7 +57,7 @@ class Progress;
 //!        white_point   the white point
 //!
 int tmo_lischinski06(pfs::Array2Df &L, pfs::Array2Df &inX, pfs::Array2Df &inY, pfs::Array2Df &inZ,
-                     float alpha, float white_point,
+                     float alpha_mul,
                      pfs::Progress &ph);
 
 #endif  // TMO_LISCHINSKI_H

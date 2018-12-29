@@ -98,6 +98,5 @@
 
 // Lischinski 06
 #define LISCHINSKI06_ALPHA 1.f
-#define LISCHINSKI06_WHITE_POINT 5.f
 
 #endif  // PFSTMDEFAULTPARAMS_H

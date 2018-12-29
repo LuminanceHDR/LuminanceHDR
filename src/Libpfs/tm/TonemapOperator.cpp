@@ -344,7 +344,7 @@ struct TonemapOperatorLischinski06
         try {
             pfstmo_lischinski06(
                 workingframe, opts->operator_options.lischinskioptions.alpha,
-                opts->operator_options.lischinskioptions.white_point, ph);
+                ph);
         } catch (...) {
             throw std::runtime_error("Lischinski: Tonemap Failed");
         }

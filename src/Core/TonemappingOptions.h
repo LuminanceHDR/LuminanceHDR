@@ -138,7 +138,6 @@ class TonemappingOptions {
         } vanhaterenoptions;
         struct {
             float alpha;
-            float white_point;
         } lischinskioptions;
     } operator_options;
 

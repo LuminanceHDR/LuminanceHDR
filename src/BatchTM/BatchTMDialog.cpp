@@ -760,9 +760,7 @@ void BatchTMDialog::from_database() {
                 while (query.next()) {
                     tm_opt->operator_options.lischinskioptions.alpha =
                         query.value(0).toFloat();
-                    tm_opt->operator_options.lischinskioptions.white_point =
-                        query.value(1).toFloat();
-                    tm_opt->pregamma = query.value(2).toFloat();
+                    tm_opt->pregamma = query.value(1).toFloat();
                 }
             }
             m_tm_options_list.append(tm_opt);

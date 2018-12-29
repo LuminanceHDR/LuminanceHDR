@@ -273,15 +273,9 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
     // lischinski06
     lischinskiAlphaGang =
         new Gang(m_Ui->lischinski_alpha_Slider, m_Ui->lischinski_alpha_Dsb, NULL,
-                 NULL, NULL, NULL, 0.001f, 10.1f, LISCHINSKI06_ALPHA);
-
-    lischinskiWhitePointGang =
-        new Gang(m_Ui->lischinski_white_point_Slider, m_Ui->lischinski_white_point_Dsb, NULL,
-                 NULL, NULL, NULL, 0.001f, 10.f, LISCHINSKI06_WHITE_POINT);
+                 NULL, NULL, NULL, 0.01f, 10.0f, LISCHINSKI06_ALPHA, true);
 
     connect(lischinskiAlphaGang, &Gang::enableUndo, m_Ui->undoButton,
-            &QWidget::setEnabled);
-    connect(lischinskiWhitePointGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
 
     // pregamma
@@ -374,7 +368,6 @@ TonemappingPanel::~TonemappingPanel() {
     delete kimkautzc2Gang;
     delete vanhaterenPupilAreaGang;
     delete lischinskiAlphaGang;
-    delete lischinskiWhitePointGang;
     delete pregammaGang;
     delete postgammaGang;
     delete postsaturationGang;
@@ -605,7 +598,7 @@ void TonemappingPanel::createDatabase() {
     // Lischinski
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS lischinski (\
-        alpha real, white_point real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
+        alpha real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
 
     res = query.exec(QStringLiteral(
@@ -711,7 +704,6 @@ void TonemappingPanel::on_defaultButton_clicked() {
             break;
         case lischinski:
             lischinskiAlphaGang->setDefault();
-            lischinskiWhitePointGang->setDefault();
             break;
     }
 }
@@ -768,7 +760,6 @@ void TonemappingPanel::updateUndoState() {
             break;
         case lischinski:
             lischinskiAlphaGang->updateUndoState();
-            lischinskiWhitePointGang->updateUndoState();
             break;
     }
 }
@@ -947,8 +938,6 @@ void TonemappingPanel::fillToneMappingOptions(bool exportMode) {
             m_toneMappingOptions->tmoperator = lischinski;
             m_toneMappingOptions->operator_options.lischinskioptions.alpha =
                 lischinskiAlphaGang->v();
-            m_toneMappingOptions->operator_options.lischinskioptions.white_point =
-                lischinskiWhitePointGang->v();
             break;
     }
 }
@@ -1025,7 +1014,6 @@ void TonemappingPanel::setupUndo() {
             break;
         case lischinski:
             lischinskiAlphaGang->setupUndo();
-            lischinskiWhitePointGang->setupUndo();
             break;
     }
 }
@@ -1108,7 +1096,6 @@ void TonemappingPanel::onUndoRedo(bool undo) {
             break;
         case lischinski:
             (lischinskiAlphaGang->*redoUndo)();
-            (lischinskiWhitePointGang->*redoUndo)();
             break;
     }
 }
@@ -1284,7 +1271,6 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
         out << "TMO="
             << "Lischinski06" << endl;
         out << "ALPHA_L=" << lischinskiAlphaGang->v() << endl;
-        out << "WHITE_POINT=" << lischinskiWhitePointGang->v() << endl;
     }
     out << "PREGAMMA=" << pregammaGang->v() << endl;
     out << "POSTSATURATION=" << postsaturationGang->v() << endl;
@@ -1509,8 +1495,6 @@ void TonemappingPanel::fromTxt2Gui() {
             m_Ui->pupil_areaSlider->setValue(vanhaterenPupilAreaGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("ALPHA_L")) {
             m_Ui->lischinski_alpha_Slider->setValue(lischinskiAlphaGang->v2p(value.toFloat()));
-        } else if (field == QLatin1String("WHITE_POINT")) {
-            m_Ui->lischinski_white_point_Slider->setValue(lischinskiWhitePointGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("PREGAMMA")) {
             m_Ui->pregammaSlider->setValue(pregammaGang->v2p(value.toFloat()));
         } else if (field == QLatin1String("POSTSATURATION")) {
@@ -1698,8 +1682,7 @@ void TonemappingPanel::saveParameters() {
             case lischinski:
                 {
                     float alpha = lischinskiAlphaGang->v();
-                    float white_point = lischinskiWhitePointGang->v();
-                    execLischinskiQuery(alpha, white_point, comment);
+                    execLischinskiQuery(alpha, comment);
                 }
                 break;
         }
@@ -1749,7 +1732,7 @@ void TonemappingPanel::loadParameters() {
         // VanHateren 06
         float pupil_area;
         // Lischinski 06
-        float lischinski_alpha, lischinski_white_point;
+        float lischinski_alpha;
 
         // Pre-gamma
         float pregamma;
@@ -2066,14 +2049,11 @@ void TonemappingPanel::loadParameters() {
             case lischinski:
                 m_Ui->stackedWidget_operators->setCurrentIndex(lischinski);
                 lischinski_alpha = tmopts->operator_options.lischinskioptions.alpha;
-                lischinski_white_point = tmopts->operator_options.lischinskioptions.white_point;
                 pregamma = tmopts->pregamma;
                 postsaturation = tmopts->postsaturation;
                 postgamma = tmopts->postgamma;
                 m_Ui->lischinski_alpha_Slider->setValue(lischinski_alpha);
                 m_Ui->lischinski_alpha_Dsb->setValue(lischinski_alpha);
-                m_Ui->lischinski_white_point_Slider->setValue(lischinski_white_point);
-                m_Ui->lischinski_white_point_Dsb->setValue(lischinski_white_point);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
                 m_Ui->postsaturationSlider->setValue(postsaturation);
@@ -2410,7 +2390,7 @@ void TonemappingPanel::execVanHaterenQuery(float pupil_area,
     if (res == false) qDebug() << query.lastError();
 }
 
-void TonemappingPanel::execLischinskiQuery(float alpha, float white_point,
+void TonemappingPanel::execLischinskiQuery(float alpha,
                                           QString comment) {
     qDebug() << "TonemappingPanel::execLischinskiQuery";
     QSqlDatabase db = QSqlDatabase::database(m_databaseconnection);
@@ -2419,10 +2399,9 @@ void TonemappingPanel::execLischinskiQuery(float alpha, float white_point,
     float postsaturation = m_Ui->postsaturationdsb->value();
     float postgamma = m_Ui->postgammadsb->value();
     query.prepare(
-        "INSERT INTO lischinski (alpha, white_point, pregamma, comment, postsaturation, postgamma) \
-        VALUES (:alpha, :white_point, :pregamma, :comment, :postsaturation, :postgamma)");
+        "INSERT INTO lischinski (alpha, pregamma, comment, postsaturation, postgamma) \
+        VALUES (:alpha, :pregamma, :comment, :postsaturation, :postgamma)");
     query.bindValue(QStringLiteral(":alpha"), alpha);
-    query.bindValue(QStringLiteral(":white_point"), white_point);
     query.bindValue(QStringLiteral(":pregamma"), pregamma);
     query.bindValue(QStringLiteral(":comment"), comment);
     query.bindValue(QStringLiteral(":postsaturation"), postsaturation);
@@ -2531,8 +2510,6 @@ void TonemappingPanel::updatePreviews(double v) {
     // Lischinski
     else if (eventSender == m_Ui->lischinski_alpha_Dsb)
         tmopts->operator_options.lischinskioptions.alpha = v;
-    else if (eventSender == m_Ui->lischinski_white_point_Dsb)
-        tmopts->operator_options.lischinskioptions.white_point = v;
     // else if(eventSender == m_Ui->pregammadsb)
     //    tmopts->pregamma = v;
 
@@ -2747,8 +2724,6 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
         // Lischinski
         connect(m_Ui->lischinski_alpha_Dsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
-        connect(m_Ui->lischinski_white_point_Dsb, SIGNAL(valueChanged(double)), this,
-                SLOT(updatePreviews(double)));
 
         // GLOBAL Pregamma
         connect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this,
@@ -2868,8 +2843,6 @@ void TonemappingPanel::setRealtimePreviews(bool toggled) {
 
         // Lischinski
         disconnect(m_Ui->lischinski_alpha_Dsb, SIGNAL(valueChanged(double)), this,
-                SLOT(updatePreviews(double)));
-        disconnect(m_Ui->lischinski_white_point_Dsb, SIGNAL(valueChanged(double)), this,
                 SLOT(updatePreviews(double)));
 
         // GLOBAL Pregamma
