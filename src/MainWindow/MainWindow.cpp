@@ -140,18 +140,38 @@ QString getHdrFileNameFromSaveDialog(const QString &suggestedFileName,
     qDebug() << "MainWindow::getHdrFileNameFromSaveDialog(" << suggestedFileName
              << ")";
 #endif
-    static const QString filetypes =
-        "OpenEXR (*.exr *.EXR);;"
-        "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;"
-        "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;"
-        "PFS Stream (*.pfs *.PFS)";
+
+    QStringList validHdrExtensions;
+    validHdrExtensions << "exr"
+                       << "hdr"
+                       << "tif"
+                       << "tiff"
+                       << "pfs";
+
+    QString filetypes = QObject::tr("All HDR formats");
+    filetypes += QLatin1String(
+        " (*.exr *.EXR *.tiff *.TIFF *.hdr *.HDR *.pic *.PIC *.pfs *.PFS);;");
+    filetypes += QLatin1String("OpenEXR (*.exr *.EXR);;");
+    filetypes += QLatin1String("HDR TIFF (*.tiff *.tif *.TIFF *.TIT);;");
+    filetypes += QLatin1String("Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;");
+    filetypes += QLatin1String("PFS Stream (*.pfs *.PFS);;");
 
     QFileInfo qfi(suggestedFileName);
+
+    QString suffix = qfi.suffix();
+
+    if (suffix.isEmpty()) {
+            suffix = "exr";
+    }
+
+    if (!validHdrExtensions.contains(suffix, Qt::CaseInsensitive)) {
+        suffix = "exr";
+    }
 
     QString outputFilename = QFileDialog::getSaveFileName(
         parent, QObject::tr("Save the HDR image as..."),
         LuminanceOptions().getDefaultPathLdrIn() + QDir::separator() +
-            qfi.completeBaseName() + "." + qfi.suffix(),
+            qfi.completeBaseName() + "." + suffix,
         filetypes);
 
     if (!outputFilename.isEmpty()) {
@@ -639,8 +659,12 @@ void MainWindow::on_fileSaveAsAction_triggered() {
     GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
     if (g_v->isHDR()) {
         // In this case I'm saving an HDR
+        QString separator = "";
+        if (!m_HdrCaption.isEmpty()) {
+            separator = "-";
+        }
         QString fname = getHdrFileNameFromSaveDialog(
-            g_v->getFileName() + "-" + m_HdrCaption , this);
+            g_v->getFileName() + separator + m_HdrCaption , this);
 
         if (fname.isEmpty()) return;
 
