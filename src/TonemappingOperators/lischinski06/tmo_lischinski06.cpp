@@ -37,17 +37,11 @@
  *
  */
 
-#include <assert.h>
-#include <math.h>
-#include <algorithm>
-#include <numeric>
 #include <iostream>
 
 #include "Libpfs/array2d.h"
-#include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "Libpfs/rt_algo.h"
-#include <Libpfs/colorspace/normalizer.h>
 #include "Libpfs/utils/msec_timer.h"
 #include "tmo_lischinski06.h"
 #include "lischinski_minimization.h"
@@ -63,7 +57,6 @@
 
 using namespace std;
 using namespace pfs;
-using namespace pfs::colorspace;
 
 float LogMeanVal(const Array2Df &L) {
     const size_t height = L.getRows();
@@ -207,6 +200,7 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     }
 
     ph.setValue(25);
+    if (ph.canceled()) return 0;
 
     for(int i = 0; i < Z; i++) {
         int n = int(zones[i].size());
@@ -262,10 +256,14 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     }
 
     ph.setValue(50);
+    if (ph.canceled()) return 0;
 
     //Lischinski minimization
     Array2Df fstopMap_min(width, height);
     LischinskiMinimization(L, fstopMap, fstopMap_min);
+
+    ph.setValue(85);
+    if (ph.canceled()) return 0;
 
 #ifdef _OPENMP
     #pragma omp parallel for

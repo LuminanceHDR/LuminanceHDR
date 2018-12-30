@@ -40,6 +40,7 @@
 #include <Eigen/Sparse>
 #include <Eigen/src/SparseCore/SparseMatrix.h>
 
+#include "Libpfs/exception.h"
 #include "Libpfs/manip/resize.h"
 #include "lischinski_minimization.h"
 #include "sleef.c"
@@ -75,7 +76,6 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &F,
     resize(&L_orig, &L, BilinearInterp);
     resize(&g_orig, &g, BilinearInterp);
 
-    // USE FLOATS HERE?
     Eigen::VectorXf b, x;
     b = Eigen::VectorXf::Zero(size);
 
@@ -141,7 +141,7 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &F,
         #ifndef NDDEBUG
             printf("SOLVER FAILED!\n");
         #endif
-        return;
+        throw pfs::Exception("SOLVER FAILED");
     }
 
     Array2Df F_res(width, height);
@@ -161,24 +161,6 @@ void LischinskiMinimization(Array2Df &L_orig, Array2Df &g_orig, Array2Df &F,
             F_res(j, i) =  x(counter + j);
         }
     }
-
-/* IF USING DOUBLES
-#ifdef _OPENMP
-    #pragma omp parallel for
-#endif
-    for (int i = 0; i < height; ++i) {
-        int j = 0;
-        int counter = i * width;
-#ifdef __SSE2__
-        for (; j < width - 1; j += 2) {
-             STVFU(F_res(j, i),_mm_cvtpd_ps(_mm_load_pd(&x(counter + j))));
-        }
-#endif
-        for (; j < width; ++j) {
-            F_res(j, i) = float(x(counter + j));
-        }
-    }
-*/
 
     resize(&F_res, &F, BilinearInterp);
 }

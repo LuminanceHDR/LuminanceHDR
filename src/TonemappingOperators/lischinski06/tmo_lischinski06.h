@@ -51,10 +51,9 @@ class Progress;
 //!
 //! \param L             [in] image luminance values
 //!        inX           [out] image red channel
-//!        inY           [out] image red channel
-//!        inZ           [out] image red channel
-//!        alpha         value of exposure of the image
-//!        white_point   the white point
+//!        inY           [out] image green channel
+//!        inZ           [out] image blue channel
+//!        alpha_mul     multiplier value of exposure of the image
 //!
 int tmo_lischinski06(pfs::Array2Df &L, pfs::Array2Df &inX, pfs::Array2Df &inY, pfs::Array2Df &inZ,
                      float alpha_mul,

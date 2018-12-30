@@ -44,15 +44,11 @@
 #include <iostream>
 
 #include "Libpfs/colorspace/colorspace.h"
-#include "Libpfs/manip/copy.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 
 #include "tmo_lischinski06.h"
-#include "../../opthelper.h"
-#include "../../sleef.c"
-#define BENCHMARK
-#include "StopWatch.h"
+
 using namespace pfs;
 
 void pfstmo_lischinski06(Frame &frame, float alpha_mul,
@@ -63,7 +59,7 @@ void pfstmo_lischinski06(Frame &frame, float alpha_mul,
     std::cout << "pfstmo_lischinski06 (";
     std::cout << "alpha_mul: " << alpha_mul << ")" << std::endl;
 #endif
-BENCHFUN
+
     ph.setValue(0);
 
     Channel *inX, *inY, *inZ;
