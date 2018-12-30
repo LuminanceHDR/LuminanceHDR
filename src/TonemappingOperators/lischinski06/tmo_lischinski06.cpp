@@ -73,7 +73,7 @@ float LogMeanVal(const Array2Df &L) {
     vfloat epsv = F2V(1e-6f);
 #endif
 #ifdef _OPENMP
-    #pragma omp for nowait
+    #pragma omp for reduction(+:avg_loglum) nowait
 #endif
     for (size_t j = 0; j < height; ++j) {
         size_t i = 0;
