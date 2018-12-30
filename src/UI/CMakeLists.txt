@@ -5,6 +5,7 @@ SET(FILES_UI
     ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/ExportToHtmlDialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/SupportedCamerasDialog.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/SavedParametersDialog.ui
 )
 SET(FILES_H
     ${CMAKE_CURRENT_SOURCE_DIR}/ExtWizardPage.h
@@ -18,6 +19,7 @@ SET(FILES_H
     ${CMAKE_CURRENT_SOURCE_DIR}/FlowLayout.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ExportToHtmlDialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/SupportedCamerasDialog.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SavedParametersDialog.h
 )
 SET(FILES_CPP
     ${CMAKE_CURRENT_SOURCE_DIR}/ExtWizardPage.cpp
@@ -31,6 +33,7 @@ SET(FILES_CPP
     ${CMAKE_CURRENT_SOURCE_DIR}/SimplePreviewLabel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ExportToHtmlDialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SupportedCamerasDialog.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SavedParametersDialog.cpp
 )
 
 IF(CFITSIO_FOUND)
@@ -48,12 +51,12 @@ QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 
 ADD_LIBRARY(ui STATIC ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H})
 IF(MINGW)
-    TARGET_LINK_LIBRARIES(ui Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::WebKitWidgets)
+    TARGET_LINK_LIBRARIES(ui Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::WebKitWidgets Qt5::Sql)
 ELSE()
     IF(Qt5WebEngineCore_FOUND)
-        TARGET_LINK_LIBRARIES(ui Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::WebEngineWidgets)
+        TARGET_LINK_LIBRARIES(ui Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::WebEngineWidgets Qt5::Sql)
     ELSE()
-        TARGET_LINK_LIBRARIES(ui Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::WebKitWidgets)
+        TARGET_LINK_LIBRARIES(ui Qt5::Core Qt5::Concurrent Qt5::Gui Qt5::Widgets Qt5::WebKitWidgets Qt5::Sql)
     ENDIF()
 ENDIF()
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} ${FILES_UI} PARENT_SCOPE)

@@ -30,8 +30,8 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-#include <Common/SavedParametersDialog.h>
-#include <Common/ui_SavedParametersDialog.h>
+#include <UI/SavedParametersDialog.h>
+#include <UI/ui_SavedParametersDialog.h>
 
 SavedParametersDialog::SavedParametersDialog(QSqlDatabase &db, QWidget *parent)
     : QDialog(parent),

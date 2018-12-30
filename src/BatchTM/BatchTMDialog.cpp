@@ -40,7 +40,7 @@
 #include <BatchTM/ui_BatchTMDialog.h>
 
 #include <BatchTM/BatchTMJob.h>
-#include <Common/SavedParametersDialog.h>
+#include <UI/SavedParametersDialog.h>
 #include <Common/config.h>
 #include <Core/TonemappingOptions.h>
 #include <Exif/ExifOperations.h>
