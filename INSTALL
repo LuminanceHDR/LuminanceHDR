@@ -90,7 +90,7 @@ to build correctly the whole source directory.
 3. Dependencies
 -------------------------------------------------------------------
 
-Luminance has 12 dependencies (eleven are mandatory, one is optional):
+Luminance has 13 dependencies (eleven are mandatory, one is optional):
 
 1) Qt5 (http://qt-project.org)
 Qt5 is the heart of the the graphical user interface (GUI).
@@ -130,7 +130,11 @@ Luminance HDR color management engine.
 11) Boost (http://www.boost.org/)
 Boost provides free peer-reviewed portable C++ source libraries used inside Luminance HDR project.
 
-12) cfitsio (Optional) (http://heasarc.gsfc.nasa.gov/fitsio/)
+12) Eigen3 (http://eigen.tuxfamily.org)
+Eigen is a C++ template library for linear algebra: matrices, vectors, numerical solvers, and related algorithms.
+Required by Lischinski tone mapping operator.
+
+13) cfitsio (Optional) (http://heasarc.gsfc.nasa.gov/fitsio/)
 CFITSIO is a library of C and Fortran subroutines for reading and writing data files in FITS
 (Flexible Image Transport System) data format.
 Luminance HDR can optionally support this file format commonly used by the astrophotographers community.
