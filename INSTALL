@@ -90,7 +90,7 @@ to build correctly the whole source directory.
 3. Dependencies
 -------------------------------------------------------------------
 
-Luminance has 13 dependencies (eleven are mandatory, one is optional):
+Luminance has 13 dependencies (twelve are mandatory, one is optional):
 
 1) Qt5 (http://qt-project.org)
 Qt5 is the heart of the the graphical user interface (GUI).
