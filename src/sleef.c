@@ -590,7 +590,7 @@ __inline double2 logk(double d) {
   t = mla(t, x2.x, 0.666666666666666371239645);
 
   return add2_dd(mul_ds(dd(0.693147180559945286226764, 2.319046813846299558417771e-17), e),
-		 add2_dd(scale_d(x, 2), mul_ds(mul_dd(x2, x), t)));
+         add2_dd(scale_d(x, 2), mul_ds(mul_dd(x2, x), t)));
 }
 
 __inline double expk(double2 d) {
@@ -725,7 +725,7 @@ __inline double2 logk2(double2 d) {
   t = mla(t, x2.x, 0.666666666666666371239645);
 
   return add2_dd(mul_ds(dd(0.693147180559945286226764, 2.319046813846299558417771e-17), e),
-		 add2_dd(scale_d(x, 2), mul_ds(mul_dd(x2, x), t)));
+         add2_dd(scale_d(x, 2), mul_ds(mul_dd(x2, x), t)));
 }
 
 __inline double xasinh(double x) {
@@ -1220,31 +1220,31 @@ __inline float xexpf(float d) {
 }
 
 __inline float xmul2f(float d) {
-	return d + d;
+    return d + d;
 }
 
 __inline float xdiv2f(float d) {
-	union {
-		float floatval;
-		int intval;
-	} uflint;
-	uflint.floatval = d;
-	if (uflint.intval & 0x7FFFFFFF) { // if f==0 do nothing
-		uflint.intval -= 1 << 23; // sub 1 from the exponent
-		}
-	return uflint.floatval;
+    union {
+        float floatval;
+        int intval;
+    } uflint;
+    uflint.floatval = d;
+    if (uflint.intval & 0x7FFFFFFF) { // if f==0 do nothing
+        uflint.intval -= 1 << 23; // sub 1 from the exponent
+        }
+    return uflint.floatval;
 }
 
 __inline float xdivf( float d, int n){
-	union {
-		float floatval;
-		int intval;
-	} uflint;
-	uflint.floatval = d;
-	if (uflint.intval & 0x7FFFFFFF) { // if f==0 do nothing
-		uflint.intval -= n << 23; // add n to the exponent
-		}
-	return uflint.floatval;
+    union {
+        float floatval;
+        int intval;
+    } uflint;
+    uflint.floatval = d;
+    if (uflint.intval & 0x7FFFFFFF) { // if f==0 do nothing
+        uflint.intval -= n << 23; // add n to the exponent
+        }
+    return uflint.floatval;
 }
 
 

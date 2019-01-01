@@ -186,7 +186,7 @@ static INLINE vdouble2 div_dd(vdouble2 n, vdouble2 d) {
   q.x = vmul(n.x, t);
 
   vdouble u = vadd5(vsub(vmul(nhh, th), q.x), vmul(nhh, tl), vmul(nhl, th), vmul(nhl, tl),
-		    vmul(q.x, vsub5(vcast_vd_d(1), vmul(dh, th), vmul(dh, tl), vmul(dl, th), vmul(dl, tl))));
+            vmul(q.x, vsub5(vcast_vd_d(1), vmul(dh, th), vmul(dh, tl), vmul(dl, th), vmul(dl, tl))));
 
   q.y = vadd(vmul(t, vsub(n.y, vmul(q.x, d.y))), u);
 
@@ -617,8 +617,8 @@ static INLINE vdouble2 logk(vdouble d) {
   t = vmla(t, x2.x, vcast_vd_d(0.666666666666666371239645));
 
   return add2_dd(mul_ds(dd(vcast_vd_d(0.693147180559945286226764), vcast_vd_d(2.319046813846299558417771e-17)),
-		       vcast_vd_vi(e)),
-		add2_dd(scale_d(x, vcast_vd_d(2)), mul_ds(mul_dd(x2, x), t)));
+               vcast_vd_vi(e)),
+        add2_dd(scale_d(x, vcast_vd_d(2)), mul_ds(mul_dd(x2, x), t)));
 }
 
 static INLINE vdouble expk(vdouble2 d) {
@@ -663,30 +663,30 @@ static INLINE vdouble xpow(vdouble x, vdouble y) {
   //result = vsel(vmask_isnan(result), vcast_vd_d(lhdrengine::RT_INFINITY), result);
 
   result = vmul(result,
-		vsel(vmask_gt(x, vcast_vd_d(0)),
-		     vcast_vd_d(1),
-		     vsel(yisint,
-			  vsel(yisodd,
-			       vcast_vd_d(-1),
-			       vcast_vd_d(1)),
-			  vcast_vd_d(lhdrengine::RT_NAN))));
+        vsel(vmask_gt(x, vcast_vd_d(0)),
+             vcast_vd_d(1),
+             vsel(yisint,
+              vsel(yisodd,
+                   vcast_vd_d(-1),
+                   vcast_vd_d(1)),
+              vcast_vd_d(lhdrengine::RT_NAN))));
 
   vdouble efx = vreinterpret_vd_vm(vxorm(vreinterpret_vm_vd(vsub(vabs(x), vcast_vd_d(1))), vsignbit(y)));
 
   result = vsel(vmask_isinf(y),
-		vsel(vmask_lt(efx, vcast_vd_d(0)),
-		     vcast_vd_d(0),
-		     vsel(vmask_eq(efx, vcast_vd_d(0)),
-			  vcast_vd_d(1.0),
-			  vcast_vd_d(lhdrengine::RT_INFINITY))),
-		result);
+        vsel(vmask_lt(efx, vcast_vd_d(0)),
+             vcast_vd_d(0),
+             vsel(vmask_eq(efx, vcast_vd_d(0)),
+              vcast_vd_d(1.0),
+              vcast_vd_d(lhdrengine::RT_INFINITY))),
+        result);
 
   result = vsel(vorm(vmask_isinf(x), vmask_eq(x, vcast_vd_d(0))),
-		vmul(vsel(yisodd, vsign(x), vcast_vd_d(1)),
-		     vsel(vmask_lt(vsel(vmask_eq(x, vcast_vd_d(0)), vneg(y), y), vcast_vd_d(0)),
-			  vcast_vd_d(0),
-			  vcast_vd_d(lhdrengine::RT_INFINITY))),
-		result);
+        vmul(vsel(yisodd, vsign(x), vcast_vd_d(1)),
+             vsel(vmask_lt(vsel(vmask_eq(x, vcast_vd_d(0)), vneg(y), y), vcast_vd_d(0)),
+              vcast_vd_d(0),
+              vcast_vd_d(lhdrengine::RT_INFINITY))),
+        result);
 
   result = vsel(vorm(vmask_isnan(x), vmask_isnan(y)), vcast_vd_d(lhdrengine::RT_NAN), result);
 
@@ -789,8 +789,8 @@ static INLINE vdouble2 logk2(vdouble2 d) {
   t = vmla(t, x2.x, vcast_vd_d(0.666666666666666371239645));
 
   return add2_dd(mul_ds(dd(vcast_vd_d(0.693147180559945286226764), vcast_vd_d(2.319046813846299558417771e-17)),
-		       vcast_vd_vi(e)),
-		add2_dd(scale_d(x, vcast_vd_d(2)), mul_ds(mul_dd(x2, x), t)));
+               vcast_vd_vi(e)),
+        add2_dd(scale_d(x, vcast_vd_d(2)), mul_ds(mul_dd(x2, x), t)));
 }
 
 static INLINE vdouble xasinh(vdouble x) {
@@ -917,24 +917,24 @@ static INLINE vfloat vabsf(vfloat f) { return (vfloat)vandnotm((vmask)vcast_vf_f
 static INLINE vfloat vnegf(vfloat f) { return (vfloat)vxorm((vmask)f, (vmask)vcast_vf_f(-0.0f)); }
 
 #if defined( __SSE4_1__ ) && defined( __x86_64__ )
-	// only one instruction when using SSE4.1
-	static INLINE vfloat vself(vmask mask, vfloat x, vfloat y) {
-		return _mm_blendv_ps(y,x,(vfloat)mask);
-	}
+    // only one instruction when using SSE4.1
+    static INLINE vfloat vself(vmask mask, vfloat x, vfloat y) {
+        return _mm_blendv_ps(y,x,(vfloat)mask);
+    }
 
-	static INLINE vint vselc(vmask mask, vint x, vint y) {
-		return _mm_blendv_epi8(y,x,mask);
-	}
+    static INLINE vint vselc(vmask mask, vint x, vint y) {
+        return _mm_blendv_epi8(y,x,mask);
+    }
 
 #else
-	// three instructions when using SSE2
-	static INLINE vfloat vself(vmask mask, vfloat x, vfloat y) {
-		return (vfloat)vorm(vandm(mask, (vmask)x), vandnotm(mask, (vmask)y));
-	}
+    // three instructions when using SSE2
+    static INLINE vfloat vself(vmask mask, vfloat x, vfloat y) {
+        return (vfloat)vorm(vandm(mask, (vmask)x), vandnotm(mask, (vmask)y));
+    }
 
-	static INLINE vint vselc(vmask mask, vint x, vint y) {
-	    return vorm(vandm(mask, (vmask)x), vandnotm(mask, (vmask)y));
-	}
+    static INLINE vint vselc(vmask mask, vint x, vint y) {
+        return vorm(vandm(mask, (vmask)x), vandnotm(mask, (vmask)y));
+    }
 #endif
 
 static INLINE vfloat vselfzero(vmask mask, vfloat x) {
@@ -1383,7 +1383,7 @@ return vmaxf( b, vminf(a,c));
 }
 
 static INLINE vfloat SQRV(vfloat a){
-	return a * a;
+    return a * a;
 }
 
 static inline void vswap( vmask condition, vfloat &a, vfloat &b) {
@@ -1414,7 +1414,7 @@ static inline float vhmin( vfloat a ) {
 
 static INLINE vfloat vmul2f(vfloat a){
     // fastest way to multiply by 2
-	return a + a;
+    return a + a;
 }
 
 static INLINE vfloat vintpf(vfloat a, vfloat b, vfloat c) {

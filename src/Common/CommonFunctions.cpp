@@ -146,9 +146,9 @@ static void compute_histogram_minmax(const valarray<float> &hist,
     int counter = 0;
     while (true) {
         if (counter > hist_size) break;
-        
+
         count = hist[slice(xa, xmax - xa, 1)].sum();
-        
+
         if (count >= Threshold_A) break;
         xa--;
 
