@@ -62,42 +62,45 @@ float LogMeanVal(const Array2Df &L) {
     const size_t height = L.getRows();
     const size_t width = L.getCols();
     const size_t size = width*height;
+    constexpr float eps = 1e-6f;
 
     float avg_loglum = 0.f;
+
 #ifdef _OPENMP
-#pragma omp parallel
+    #pragma omp parallel
 #endif
-{
+    {
 #ifdef __SSE2__
-    vfloat avg_loglumv = ZEROV;
-    vfloat epsv = F2V(1e-6f);
+        vfloat avg_loglumv = ZEROV;
+        vfloat epsv = F2V(eps);
 #endif
 #ifdef _OPENMP
-    #pragma omp for reduction(+:avg_loglum) nowait
+        #pragma omp for reduction(+:avg_loglum) nowait
 #endif
-    for (size_t j = 0; j < height; ++j) {
-        size_t i = 0;
+        for (size_t j = 0; j < height; ++j) {
+            size_t i = 0;
 #ifdef __SSE2__
-        for (; i < width - 3; i += 4) {
-            vfloat value = xlogf(LVFU(L(i,j)) + epsv);
-            avg_loglumv += value;
+            for (; i < width - 3; i += 4) {
+                vfloat value = xlogf(LVFU(L(i,j)) + epsv);
+                avg_loglumv += value;
+            }
+#endif
+            for (; i < width; ++i) {
+                float value = xlogf(L(i,j) + eps);
+                avg_loglum += value;
+            }
         }
+
+#ifdef _OPENMP
+        #pragma omp critical
 #endif
-        for (; i < width; ++i) {
-            float value = xlogf(L(i,j) + 1e-6f);
-            avg_loglum += value;
+        {
+#ifdef __SSE2__
+            avg_loglum += vhadd(avg_loglumv);
+#endif
         }
     }
-#ifdef _OPENMP
-#pragma omp critical
-#endif
-{
-#ifdef __SSE2__
-    avg_loglum += vhadd(avg_loglumv);
-#endif
-}
-}
-    return xexpf(avg_loglum/size);
+    return xexpf(avg_loglum / size);
 }
 
 int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
@@ -110,25 +113,24 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
 
     ph.setValue(5);
 
-    int width = L.getCols();
-    int height = L.getRows();
+    const int width = L.getCols();
+    const int height = L.getRows();
+    constexpr float eps = 1e-6f;
 
     //Percentile clamping
     float maxL, minL;
     lhdrengine::findMinMaxPercentile(L.data(), L.getCols() * L.getRows(), 0.01f, minL, 0.99f, maxL, true);
 
     const float invLOG2 = 1.0f/xlogf(2.0f);
-    float Lav = LogMeanVal(L);
-    float maxL_log = xlogf(maxL + 1e-6f) * invLOG2;
-    float minL_log = xlogf(minL + 1e-6f) * invLOG2;
+    const float Lav = LogMeanVal(L);
+    const float maxL_log = xlogf(maxL + eps) * invLOG2;
+    const float minL_log = xlogf(minL + eps) * invLOG2;
 
-    float log2Average = xlogf(Lav + 1e-6f) * invLOG2;
+    const float log2Average = xlogf(Lav + eps) * invLOG2;
     float alpha = 0.18f * pow_F(4.0f, (2.0f * log2Average - minL_log - maxL_log)/( maxL_log - minL_log));
     float whitePoint = 1.5f * pow_F(2.0f, maxL_log - minL_log - 5.0f);
 
     alpha *= alpha_mul;
-
-    int Z = int(ceilf(maxL_log - minL_log));
 
 #ifndef NDEBUG
     cout << "maxL:       " << maxL << endl;
@@ -140,59 +142,59 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     cout << "alpha:      " << alpha << endl;
 #endif
 
-    float whitePoint_sq = whitePoint * whitePoint;
+    const float whitePoint_sq = whitePoint * whitePoint;
 
+    const int Z = int(ceilf(maxL_log - minL_log));
     if(Z <= 0) {
         return 0;
     }
 
-    //Choose the representative Rz for each zone
-    std::vector<float> *zones = new std::vector<float>[Z];
-    float *fstop = new float[Z];
-    float *Rz = new float[Z];
+    std::vector<float> zones[Z];
 
-    for(int i = 0; i < Z; i++) {
-        Rz[i] = 0.0f;
-        fstop[i] = 0.0f;
-    }
+    Array2Df L_log(width, height);
 
+#ifdef _OPENMP
     #pragma omp parallel
+#endif
     {
-        std::vector<float> zonesThr[Z];
 #ifdef __SSE2__
-        std::vector<float> logBuffer(width);
-        const vfloat c1em6v = F2V(1e-6f);
+        const vfloat epsv = F2V(eps);
         const vfloat invLOG2v = F2V(invLOG2);
         const vfloat minL_logv = F2V(minL_log);
 #endif
-        #pragma omp for nowait
-        for(int i = 0; i < height; i++) {
-#ifdef __SSE2__
+#ifdef _OPENMP
+        #pragma omp for
+#endif
+        for (int i = 0; i < height; ++i) {
             int j = 0;
-            for(; j + 3 < width; j+=4) {
-                STVFU(logBuffer[j], xlogf(LVFU(L(j,i)) + c1em6v) * invLOG2v - minL_logv);
-            }
-            for(; j < width; ++j) {
-                logBuffer[j] = xlogf(L(j,i) + 1e-6f) * invLOG2 - minL_log;
-            }
-#endif
-            for(int j = 0; j < width; j++) {
 #ifdef __SSE2__
-                const float Lum = L(j,i);
-                const float Lum_log = logBuffer[j];
-#else
-                const float Lum = L(j,i);
-                const float Lum_log = xlogf(Lum + 1e-6f) * invLOG2 - minL_log;
+            for (; j < width - 3; j += 4) {
+                STVFU(L_log(j, i), vceilf(xlogf(LVFU(L(j, i)) + epsv) * invLOG2v - minL_logv));
+            }
 #endif
-                const int zone = CLAMP(int(ceilf(Lum_log)), Z);
-
-                zonesThr[zone].push_back(Lum);
+            for (; j < width; ++j) {
+                L_log(j, i) = ceilf(xlogf(L(j, i) + eps) * invLOG2 - minL_log);
             }
         }
+
+        std::vector<float> zonesThr[Z];
+
+#ifdef _OPENMP
+        #pragma omp for nowait
+#endif
+        for(int i = 0; i < height; i++) {
+            for(int j = 0; j < width; j++) {
+                const int zone = CLAMP(int(L_log(j, i)), Z);
+                zonesThr[zone].push_back(L(j,i));
+            }
+        }
+
+#ifdef _OPENMP
         #pragma omp critical
+#endif
         {
             for (int i = 0; i < Z; ++i) {
-                for (int j = 0; j < int(zonesThr[i].size()); ++j) {
+                for (size_t j = 0; j < zonesThr[i].size(); ++j) {
                     zones[i].push_back(zonesThr[i][j]);
                 }
             }
@@ -202,6 +204,10 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     ph.setValue(25);
     if (ph.canceled()) return 0;
 
+    //Choose the representative Rz for each zone
+    float fstop[Z] = {};
+    float Rz[Z] = {};
+
     for(int i = 0; i < Z; i++) {
         int n = int(zones[i].size());
         if(n > 0) {
@@ -210,48 +216,22 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
             Rz[i] = minL;
             if(Rz[i] > 0.0f) {
                 //photographic operator
-                float Rz2 = Rz[i] * alpha / Lav;
-                float f = (Rz2 * (1 + Rz2 / whitePoint_sq) ) / (1.0f + Rz2);
-                fstop[i] = xlogf(f / Rz[i] + 1e-6f) * invLOG2;
+                const float Rz2 = Rz[i] * alpha / Lav;
+                const float f = (Rz2 * (1 + Rz2 / whitePoint_sq) ) / (1.0f + Rz2);
+                fstop[i] = xlogf(f / Rz[i] + eps) * invLOG2;
             }
         }
     }
 
     //create the fstop map
-    Array2Df L_log(width, height);
-
-#ifdef __SSE2__
-    const vfloat epsv = F2V(1e-6f);
-    const vfloat invLOG2v = F2V(invLOG2);
-#endif
-#ifdef _OPENMP
-    #pragma omp parallel for
-#endif
-    for (int i = 0; i < height; ++i) {
-        int j = 0;
-#ifdef __SSE2__
-        for (; j < width - 3; j += 4) {
-            vfloat lv = xlogf(LVFU(L(j, i)) + epsv) * invLOG2v;
-            STVFU(L_log(j, i), lv);
-        }
-#endif
-        for (; j < width; ++j) {
-            L_log(j, i) = xlogf(L(j, i) + 1e-6f) * invLOG2;
-        }
-    }
-
-    Array2Df fstopMap(width, height);
+    Array2Df &fstopMap = L_log;
 
 #ifdef _OPENMP
     #pragma omp parallel for
 #endif
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
-            float l_log = L_log(j,i);
-
-            int zone = CLAMP(int(ceilf(l_log - minL_log)), Z);
-
-            fstopMap(j,i) = fstop[zone];
+            fstopMap(j,i) = fstop[CLAMP(int(L_log(j,i)), Z)];
         }
     }
 
@@ -259,8 +239,7 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     if (ph.canceled()) return 0;
 
     //Lischinski minimization
-    Array2Df fstopMap_min(width, height);
-    LischinskiMinimization(L, fstopMap, fstopMap_min);
+    LischinskiMinimization(L, fstopMap, L);
 
     ph.setValue(85);
     if (ph.canceled()) return 0;
@@ -272,23 +251,19 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
         int j = 0;
 #ifdef __SSE2__
         for (; j < width - 3; j += 4) {
-            vfloat exposurev = pow_F(2.0f, LVFU(fstopMap_min(j, i)));
+            const vfloat exposurev = pow_F(2.0f, LVFU(L(j, i)));
             STVFU(inX(j, i), LVFU(inX(j, i)) * exposurev);
             STVFU(inY(j, i), LVFU(inY(j, i)) * exposurev);
             STVFU(inZ(j, i), LVFU(inZ(j, i)) * exposurev);
         }
 #endif
         for (; j < width; ++j) {
-            float exposure = pow_F(2.0f, fstopMap_min(j, i));
+            const float exposure = pow_F(2.0f, L(j, i));
             inX(j, i) *= exposure;
             inY(j, i) *= exposure;
             inZ(j, i) *= exposure;
         }
     }
-
-    delete[] zones;
-    delete[] Rz;
-    delete[] fstop;
 
     ph.setValue(99);
 
