@@ -205,10 +205,11 @@ int tmo_lischinski06(Array2Df &L,Array2Df &inX, Array2Df &inY, Array2Df &inZ,
     if (ph.canceled()) return 0;
 
     //Choose the representative Rz for each zone
-    float fstop[Z] = {};
-    float Rz[Z] = {};
+    float fstop[Z];
+    float Rz[Z];
 
     for(int i = 0; i < Z; i++) {
+        fstop[i] = Rz[i] = 0.f;
         int n = int(zones[i].size());
         if(n > 0) {
             float maxL, minL;
