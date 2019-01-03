@@ -43,7 +43,7 @@ TEST(solve_pde_dct, Test1)
     }
 
     solve_pde_dct(divergence, U);
-    float residual = residual_pde(&U, &divergence);
+    float residual = residual_pde(U, divergence);
 
     ASSERT_LE(residual, 1e-2);
 }

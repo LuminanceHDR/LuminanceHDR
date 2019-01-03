@@ -43,6 +43,26 @@ struct vadds {
     T s_;
 };
 
+//! \brief Extension of std::plus to compute A + s
+template <typename T>
+struct vsadd {
+    vsadd(const T &s) : s_(s) {}
+    T operator()(const T &t1) const { return (t1 + s_ ); }
+
+   private:
+    T s_;
+};
+
+//! \brief Extension of std::multiply to compute A * s
+template <typename T, typename Ts>
+struct vsmul {
+    vsmul(const Ts &s) : s_(s) {}
+    T operator()(const T &t1) const { return (t1 * s_ ); }
+
+   private:
+    Ts s_;
+};
+
 //! \brief Extension of std::minus to compute A - s*B
 template <typename T>
 struct vsubs {
@@ -77,7 +97,7 @@ void vadd(const _Type *A, const _Type *B, _Type *C, size_t size);
 //! \brief sum  element-wise \c s to \c A and stores into \c B
 //! B[i] = A[i] + s
 template <typename _Type>
-void vsadd(const _Type *A, const float s, _Type *B, size_t size);
+void vsadd(const _Type *A, const _Type &s, _Type *B, size_t size);
 
 //! \brief multiplies element-wise \c s and \c B, sum it to \c A and stores into
 //! \c C
@@ -99,17 +119,9 @@ void vsubs(const _Type *A, const _Type &s, const _Type *B, _Type *C,
            size_t size);
 
 //! // O[i] = c * I[i]
-template <typename _Type>
-void vsmul(const _Type *I, const float c, _Type *O, size_t size);
+template <typename _Type, typename _Type_c>
+void vsmul(const _Type *I, const _Type_c &c, _Type *O, size_t size);
 
-template <typename _Type>
-void vsum_scalar(const _Type *I, const float c, _Type *O, size_t size);
-
-template <typename _Type>
-void vmul_scalar(const _Type *I, const float c, _Type *O, size_t size);
-
-template <typename _Type>
-void vdiv_scalar(const _Type *I, float c, _Type *O, size_t size);
 }  // utils
 }  // pfs
 

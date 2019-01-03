@@ -186,13 +186,13 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #ifdef _OPENMP
             #pragma omp critical
 #endif
-            vadd(resultCh[c], &response_img, resultCh[c], size);
+            vadd(resultCh[c]->data(), response_img.data(), resultCh[c]->data(), size);
         }
 
 #ifdef _OPENMP
         #pragma omp critical
 #endif
-        vadd(&weight_sum, &w, &weight_sum, size);
+        vadd(weight_sum.data(), w.data(), weight_sum.data(), size);
     }
 #ifdef _OPENMP
     omp_set_nested(oldNested);

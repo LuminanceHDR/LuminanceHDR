@@ -314,14 +314,14 @@ void tmo_ferradans11(pfs::Array2Df &imR, pfs::Array2Df &imG, pfs::Array2Df &imB,
     RGB[2] = new float[length];
 
     int iteration = 0;
-    float difference = 1000.0;
+    float difference = 1000.0f;
 
     float med[3];
     float *aux = new float[length];
     float median, mu[3];
 
     for (int k = 0; k < 3; k++) {
-        vsadd(RGBorig[k], 1e-6, RGBorig[k], length);
+        vsadd(RGBorig[k], 1e-6f, RGBorig[k], length);
         copy(RGBorig[k], RGBorig[k] + length, aux);
         median = quick_select(aux, length);
         float mdval = medval(aux, length);
