@@ -176,6 +176,8 @@ class GenericViewer : public QWidget {
     virtual void retranslateUi();
     virtual void changeEvent(QEvent *event);
 
+    void closeEvent(QCloseEvent *event);
+
     QToolBar *mToolBar;
     QToolButton *mCornerButton;
     PanIconWidget *mPanIconWidget;
@@ -212,7 +214,7 @@ class GenericViewer : public QWidget {
     void selectionReady(bool isReady);
     void changed(
         GenericViewer *v);  // emitted when zoomed in/out, scrolled ....
-    void reparent(GenericViewer *v);     // emitted when exit fullscreen
+    void reparent(GenericViewer *v, bool close = false);     // emitted when exit fullscreen
     void goNext(GenericViewer *v);       // shows next image in fullscreen
     void goPrevious(GenericViewer *v);   // shows previous image in fullscreen
     void syncViewers(GenericViewer *v);  // toggle viewers syncronization

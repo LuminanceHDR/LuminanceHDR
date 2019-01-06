@@ -184,6 +184,11 @@ bool GenericViewer::isNormalSize() {
 
 GenericViewer::ViewerMode GenericViewer::getViewerMode() { return mViewerMode; }
 
+void GenericViewer::closeEvent(QCloseEvent *event) {
+    emit reparent(this, true); // true means user requested closing full screen viewer
+    event->ignore();
+}
+
 void GenericViewer::setViewerMode(GenericViewer::ViewerMode viewer_mode) {
     switch (viewer_mode) {
         case NORMAL_SIZE:

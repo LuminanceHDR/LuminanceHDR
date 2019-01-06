@@ -2204,10 +2204,13 @@ void MainWindow::on_actionShow_Image_Full_Screen_triggered() {
     g_v->showFullScreen();
 }
 
-void MainWindow::reparentViewer(GenericViewer *g_v) {
+void MainWindow::reparentViewer(GenericViewer *g_v, bool close) {
     m_tabwidget->insertTab(m_viewerIndex, g_v, m_tabText);
     m_tabwidget->setCurrentIndex(m_viewerIndex);
     g_v->showNormal();
+    if (close) {
+        on_actionRemove_Tab_triggered();
+    }
 }
 
 void MainWindow::showNextViewer(GenericViewer *g_v) {

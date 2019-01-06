@@ -221,7 +221,7 @@ class MainWindow : public QMainWindow {
 
     void updatePreviews(bool, float);
 
-    void reparentViewer(GenericViewer *g_v);
+    void reparentViewer(GenericViewer *g_vi, bool);
     void showNextViewer(GenericViewer *g_v);
     void showPreviousViewer(GenericViewer *g_v);
     void setSyncViewers(GenericViewer *);
