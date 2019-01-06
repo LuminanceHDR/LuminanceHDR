@@ -221,7 +221,7 @@ class MainWindow : public QMainWindow {
 
     void updatePreviews(bool, float);
 
-    void reparentViewer(GenericViewer *g_vi, bool);
+    void reparentViewer(GenericViewer *g_vi, bool = false);
     void showNextViewer(GenericViewer *g_v);
     void showPreviousViewer(GenericViewer *g_v);
     void setSyncViewers(GenericViewer *);
@@ -240,8 +240,6 @@ class MainWindow : public QMainWindow {
     QSplitter *m_bottom_splitter;
 
     QTabWidget *m_tabwidget;
-    QString m_tabText;
-    int m_viewerIndex;
 
     QSignalMapper *windowMapper;
     QDialog *splash;
@@ -320,6 +318,11 @@ class MainWindow : public QMainWindow {
    private:
     // UI declaration
     QScopedPointer<Ui::MainWindow> m_Ui;
+
+    // keep track of fullscreen image viewer
+    QString m_tabText;
+    int m_viewerIndex;
+    GenericViewer *m_g_v_fullscreen;
 
     // Tone Mapping Panel
     TonemappingPanel *m_tonemapPanel;

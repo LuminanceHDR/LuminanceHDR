@@ -212,6 +212,7 @@ HelpBrowser *MainWindow::sm_helpBrowser = nullptr;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       m_Ui(new Ui::MainWindow),
+      m_viewerIndex(-1),
       m_exportQueueSize(0),
       m_interpolationMethod(BilinearInterp),
       m_firstWindow(0),
@@ -224,6 +225,7 @@ MainWindow::MainWindow(pfs::Frame *curr_frame, const QString &new_file,
                        QWidget *parent)
     : QMainWindow(parent),
       m_Ui(new Ui::MainWindow),
+      m_viewerIndex(-1),
       m_exportQueueSize(0),
       m_interpolationMethod(BilinearInterp),
       m_firstWindow(0),
@@ -1441,6 +1443,9 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->ignore();
         return;
     }
+    if (m_viewerIndex != -1) {
+        reparentViewer(m_g_v_fullscreen);
+    }
     sm_NumMainWindows--;
     if (sm_NumMainWindows == 0) {
         if (sm_helpBrowser) {
@@ -2197,17 +2202,22 @@ void MainWindow::on_actionShow_Full_Screen_toggled(bool b) {
 }
 
 void MainWindow::on_actionShow_Image_Full_Screen_triggered() {
+    if (m_viewerIndex != -1) {
+        return;
+    }
     m_viewerIndex = m_tabwidget->currentIndex();
     m_tabText = m_tabwidget->tabText(m_viewerIndex);
-    GenericViewer *g_v = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
-    g_v->setParent(0);
-    g_v->showFullScreen();
+    m_g_v_fullscreen = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
+    m_g_v_fullscreen->setParent(0);
+    m_g_v_fullscreen->showFullScreen();
 }
 
 void MainWindow::reparentViewer(GenericViewer *g_v, bool close) {
     m_tabwidget->insertTab(m_viewerIndex, g_v, m_tabText);
     m_tabwidget->setCurrentIndex(m_viewerIndex);
     g_v->showNormal();
+    m_viewerIndex = -1;
+    m_g_v_fullscreen = nullptr;
     if (close) {
         on_actionRemove_Tab_triggered();
     }
