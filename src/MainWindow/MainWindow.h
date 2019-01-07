@@ -321,7 +321,8 @@ class MainWindow : public QMainWindow {
 
     // keep track of fullscreen image viewer
     QString m_tabText;
-    int m_viewerIndex;
+    int m_fullscreenViewerIndex;
+    bool m_isFullscreenViewer;
     GenericViewer *m_g_v_fullscreen;
 
     // Tone Mapping Panel

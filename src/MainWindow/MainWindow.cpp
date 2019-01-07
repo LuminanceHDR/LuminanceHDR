@@ -212,7 +212,7 @@ HelpBrowser *MainWindow::sm_helpBrowser = nullptr;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       m_Ui(new Ui::MainWindow),
-      m_viewerIndex(-1),
+      m_isFullscreenViewer(false),
       m_exportQueueSize(0),
       m_interpolationMethod(BilinearInterp),
       m_firstWindow(0),
@@ -225,7 +225,7 @@ MainWindow::MainWindow(pfs::Frame *curr_frame, const QString &new_file,
                        QWidget *parent)
     : QMainWindow(parent),
       m_Ui(new Ui::MainWindow),
-      m_viewerIndex(-1),
+      m_isFullscreenViewer(false),
       m_exportQueueSize(0),
       m_interpolationMethod(BilinearInterp),
       m_firstWindow(0),
@@ -1443,7 +1443,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->ignore();
         return;
     }
-    if (m_viewerIndex != -1) {
+    if (m_isFullscreenViewer) {
         reparentViewer(m_g_v_fullscreen);
     }
     sm_NumMainWindows--;
@@ -2202,22 +2202,22 @@ void MainWindow::on_actionShow_Full_Screen_toggled(bool b) {
 }
 
 void MainWindow::on_actionShow_Image_Full_Screen_triggered() {
-    if (m_viewerIndex != -1) {
+    if (m_isFullscreenViewer) {
         return;
     }
-    m_viewerIndex = m_tabwidget->currentIndex();
-    m_tabText = m_tabwidget->tabText(m_viewerIndex);
+    m_isFullscreenViewer = true;
+    m_fullscreenViewerIndex = m_tabwidget->currentIndex();
+    m_tabText = m_tabwidget->tabText(m_fullscreenViewerIndex);
     m_g_v_fullscreen = qobject_cast<GenericViewer *>(m_tabwidget->currentWidget());
     m_g_v_fullscreen->setParent(0);
     m_g_v_fullscreen->showFullScreen();
 }
 
 void MainWindow::reparentViewer(GenericViewer *g_v, bool close) {
-    m_tabwidget->insertTab(m_viewerIndex, g_v, m_tabText);
-    m_tabwidget->setCurrentIndex(m_viewerIndex);
+    m_tabwidget->insertTab(m_fullscreenViewerIndex, g_v, m_tabText);
+    m_tabwidget->setCurrentIndex(m_fullscreenViewerIndex);
     g_v->showNormal();
-    m_viewerIndex = -1;
-    m_g_v_fullscreen = nullptr;
+    m_isFullscreenViewer = false;
     if (close) {
         on_actionRemove_Tab_triggered();
     }
@@ -2226,9 +2226,7 @@ void MainWindow::reparentViewer(GenericViewer *g_v, bool close) {
 void MainWindow::showNextViewer(GenericViewer *g_v) {
     int count = m_tabwidget->count();
     if (count >= 1) {
-        m_tabwidget->insertTab(m_viewerIndex, g_v, m_tabText);
-        m_tabwidget->setCurrentIndex(m_viewerIndex);
-        // g_v->showNormal();
+        reparentViewer(g_v);
         int idx = m_tabwidget->currentIndex();
         int next = (idx + 1) % (count + 1);
         m_tabwidget->setCurrentIndex(next);
@@ -2239,9 +2237,7 @@ void MainWindow::showNextViewer(GenericViewer *g_v) {
 void MainWindow::showPreviousViewer(GenericViewer *g_v) {
     int count = m_tabwidget->count();
     if (count >= 1) {
-        m_tabwidget->insertTab(m_viewerIndex, g_v, m_tabText);
-        m_tabwidget->setCurrentIndex(m_viewerIndex);
-        // g_v->showNormal();
+        reparentViewer(g_v);
         int idx = m_tabwidget->currentIndex();
         int previous;
         if (idx == 0) {
