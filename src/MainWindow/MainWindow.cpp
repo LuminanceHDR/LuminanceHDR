@@ -1061,7 +1061,9 @@ void MainWindow::on_documentationAction_triggered() {
     if (sm_helpBrowser == nullptr) {
         sm_helpBrowser =
             new HelpBrowser(0, QStringLiteral("Luminance HDR Help"));
-        // sm_helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
+        sm_helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
+        connect(sm_helpBrowser, &QObject::destroyed, sm_helpBrowser,
+                &QObject::deleteLater);
         connect(sm_helpBrowser, &HelpBrowser::closed, this,
                 &MainWindow::helpBrowserClosed);
         sm_helpBrowser->show();
@@ -1073,7 +1075,6 @@ void MainWindow::on_documentationAction_triggered() {
 }
 
 void MainWindow::helpBrowserClosed() {
-    delete sm_helpBrowser;
     sm_helpBrowser = nullptr;
 }
 

@@ -74,6 +74,7 @@
 #include <QTextEdit>
 #include <QTreeView>
 #include <QXmlDefaultHandler>
+#include <QCloseEvent>
 
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
@@ -218,7 +219,7 @@ HelpBrowser::~HelpBrowser() {
                                 saveGeometry());
 }
 
-void HelpBrowser::closeEvent(QCloseEvent *) {
+void HelpBrowser::closeEvent(QCloseEvent *event) {
     delete menuModel;
 
     // no need to delete child widgets, Qt does it all for us
@@ -267,6 +268,7 @@ void HelpBrowser::closeEvent(QCloseEvent *) {
     //     prefs->set("ysize", height());
 
     emit closed();
+    QMainWindow::closeEvent(event);
 }
 
 void HelpBrowser::setupLocalUI() {
