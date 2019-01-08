@@ -44,9 +44,11 @@
 #include "../../sleef.c"
 
 namespace {
+/*
 inline float biasFunc(float b, float x) {
     return b == 0.f ? xexpf( x * xlogf(b)) : 1.f;
 }
+*/
 
 const float LOG05 = -0.693147f;  // log(0.5)
 }
