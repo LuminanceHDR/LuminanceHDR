@@ -17,10 +17,15 @@ librtprocess currently is maintained by developers of the following projects:
 
 ... the latter is where currently all the code comes from ;-)
 
-This is version 0.4.0, which furnishes the following routines:
+This is version 0.5.0, which furnishes the following routines:
+
 
 * amaze_demosaic
+* dcb_demosaic
+* rcd_demosaic
+* vng4_demosaic
 * markesteijn_demosaic
+* xtransfast_demosaic
 * CA_correct
 * gaussianBlur
 

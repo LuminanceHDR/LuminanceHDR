@@ -31,7 +31,11 @@ namespace librtprocess
     void bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray);
     void xtransborder_demosaic(int winw, int winh, int border, const float * const *rawData, float **red, float **green, float **blue, const int xtrans[6][6]);
     void amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale = 65535.f, float outputScale = 65535.f);
+    void dcb_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, int iterations, bool dcb_enhance);
+    void rcd_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel);
     void markesteijn_demosaic(int width, int height, const float * const *rawdata, float **red, float **green, float **blue, const int xtrans[6][6], const float rgb_cam[3][4], const std::function<bool(double)> &setProgCancel, const int passes, const bool useCieLab);
+    void xtransfast_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const int xtrans[6][6], const std::function<bool(double)> &setProgCancel);
+    void vng4_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel);
     bool CA_correct(int winx, int winy, int winw, int winh, const bool autoCA, size_t autoIterations, const double cared, const double cablue, bool avoidColourshift, const float * const *rawDataIn, float **rawDataOut, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, CaFitParams &fitParams, bool fitParamsIn, float inputScale = 65535.f, float outputScale = 65535.f);
 
     enum eGaussType {GAUSS_STANDARD, GAUSS_MULT, GAUSS_DIV};
