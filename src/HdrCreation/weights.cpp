@@ -35,13 +35,14 @@ WeightFunction::WeightFunction(WeightFunctionType type) : m_type(type) {
 }
 
 namespace {
-static const float s_triangularThreshold = 2.0f / WeightFunction::NUM_BINS;
+static const float s_triangularThreshold_u = 350.f / WeightFunction::NUM_BINS;
+static const float s_triangularThreshold_d = 2.f / WeightFunction::NUM_BINS;
 }
 
 static float getWeightTriangular(float input) {
     // ignore very low weights
-    if (input < s_triangularThreshold ||
-        input > 1.0f - s_triangularThreshold) {
+    if (input < s_triangularThreshold_d ||
+        input > 1.0f - s_triangularThreshold_u) {
         return 0.f;
     }
     float half = 0.5f;
@@ -63,14 +64,15 @@ static float maxTrustedValueTriangular() {
 }
 
 namespace {
-static const float s_gaussianThreshold = 2.0f / WeightFunction::NUM_BINS;
+static const float s_gaussianThreshold_u = 350.0f / WeightFunction::NUM_BINS;
+static const float s_gaussianThreshold_d = 2.0f / WeightFunction::NUM_BINS;
 static const float s_mu = 0.5f;
 }
 
 static float getWeightGaussian(float input) {
     // ignore very low weights
-    if (input < s_gaussianThreshold ||
-        input > 1.0f - s_gaussianThreshold) {
+    if (input < s_gaussianThreshold_d ||
+        input > 1.0f - s_gaussianThreshold_u) {
         return 0.f;
     }
     return exp(-32.0f * (input - s_mu) * (input - s_mu));
@@ -92,11 +94,13 @@ static float maxTrustedValueGaussian() {
 
 namespace {
 static const float s_plateauThreshold = 0.00025f;
+static const float s_plateauThreshold_u = 100.0f / WeightFunction::NUM_BINS;
+static const float s_plateauThreshold_d = 0.0f / WeightFunction::NUM_BINS;
 }
 
 static float getWeightPlateau(float input) {
     if ((input < s_plateauThreshold) ||
-        (input > (1.f - s_plateauThreshold))) {
+        (input > (1.f - s_plateauThreshold_u))) {
         return 0.f;
     }
 
