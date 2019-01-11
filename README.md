@@ -22,6 +22,7 @@ This is version 0.5.0, which furnishes the following routines:
 
 * amaze_demosaic
 * dcb_demosaic
+* igv_demosaic
 * rcd_demosaic
 * vng4_demosaic
 * markesteijn_demosaic
