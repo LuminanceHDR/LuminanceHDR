@@ -1,11 +1,11 @@
 IF(UNIX)
-ADD_DEFINITIONS(-Wall -Wno-unknown-pragmas)
-ADD_DEFINITIONS(-ffast-math)
+    ADD_DEFINITIONS(-Wall -Wno-unknown-pragmas -Wno-deprecated -Wno-deprecated-declarations)
+    ADD_DEFINITIONS(-ffast-math)
 
-IF(APPLE)
-# optimize for 64-bit core 2 architecture on Apple
-ADD_DEFINITIONS(-march=core2)
-ENDIF()
+    IF(APPLE)
+    # optimize for 64-bit core 2 architecture on Apple
+    ADD_DEFINITIONS(-march=core2)
+    ENDIF()
 ENDIF()
 
 #Activate C++11 support, when available
