@@ -20,11 +20,10 @@
 #ifndef _LIBRTPROCESS_
 #define _LIBRTPROCESS_
 
-#include <array>
 #include <functional>
 
-using ColorFilterArray = std::array<std::array<unsigned, 2>, 2>;
-using CaFitParams = std::array<std::array<std::array<double, 16>, 2>, 2>;
+using ColorFilterArray = unsigned[2][2];
+using CaFitParams = double[2][2][16];
 
 namespace librtprocess
 {

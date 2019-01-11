@@ -30,7 +30,7 @@
 
 namespace {
 
-bool LinEqSolve(int nDim, double* pfMatr, double* pfVect, std::array<double, 16> &pfSolution)
+bool LinEqSolve(int nDim, double* pfMatr, double* pfVect, double pfSolution[16])
 {
 //==============================================================================
 // return 1 if system not solving, 0 if system solved
