@@ -623,6 +623,7 @@ BENCHFUN
     }
     free(buffer0);
 }
+    bayerborder_demosaic(width, height, 1, rawData, red, green, blue, cfarray);
 
     setProgCancel(1.0);
 
