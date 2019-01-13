@@ -30,6 +30,7 @@
 #include <array>
 #include <cstring>
 
+#include "bayerhelper.h"
 #include "librtprocess.h"
 #include "rt_math.h"
 #include "sleef.c"
@@ -37,20 +38,14 @@
 #include "median.h"
 #include "StopWatch.h"
 
-namespace
-{
-unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
-{
-    return cfa[row & 1][col & 1];
-}
-}
+using namespace librtprocess;
 
-namespace librtprocess
-{
-
-void amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
+void amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
 {
     BENCHFUN
+    if (!validateBayerCfa(3, cfarray)) {
+        return;
+    }
 
     double progress = 0.0;
     setProgCancel(progress);
@@ -1597,5 +1592,4 @@ void amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int winw,
 
     setProgCancel(1.0);
 
-}
 }

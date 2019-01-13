@@ -22,6 +22,7 @@
 //
 ////////////////////////////////////////////////////////////////
 
+#include "bayerhelper.h"
 #include "librtprocess.h"
 #include "jaggedarray.h"
 #include "rt_math.h"
@@ -105,17 +106,10 @@ bool LinEqSolve(int nDim, double* pfMatr, double* pfVect, double pfSolution[16])
 }
 //end of linear equation solver
 
-unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
-{
-    return cfa[row & 1][col & 1];
-}
-
 }
 
 using namespace std;
-namespace librtprocess
-{
-
+using namespace librtprocess;
 bool CA_correct(
     int winx,
     int winy,
@@ -128,9 +122,9 @@ bool CA_correct(
     bool avoidColourshift,
     const float * const *rawDataIn,
     float **rawDataOut,
-    const ColorFilterArray &cfarray,
+    const unsigned cfarray[2][2],
     const std::function<bool(double)> &setProgCancel,
-    CaFitParams &fitParams,
+    double fitParams[2][2][16],
     bool fitParamsIn,
     float inputScale,
     float outputScale
@@ -144,13 +138,8 @@ bool CA_correct(
     constexpr int v1 = ts, v2 = 2 * ts, v3 = 3 * ts, v4 = 4 * ts; //, p1=-ts+1, p2=-2*ts+2, p3=-3*ts+3, m1=ts+1, m2=2*ts+2, m3=3*ts+3;
 
     // Test for RGB cfa
-    for(int i = 0; i < 2; i++) {
-        for(int j = 0; j < 2; j++) {
-            if(fc(cfarray, i, j) == 3) {
-                std::cout << "CA correction supports only RGB Colour filter arrays" << std::endl;
-                return false;
-            }
-        }
+    if (!validateBayerCfa(3, cfarray)) {
+        return false;
     }
 
     // local variables
@@ -285,8 +274,8 @@ bool CA_correct(
                         memset(bufferThr, 0, buffersize);
                         const int vblock = ((top + border) / (ts - border2)) + 1;
                         const int hblock = ((left + border) / (ts - border2)) + 1;
-                        const int bottom = min(top + ts, height + border);
-                        const int right  = min(left + ts, width - (W & 1) + border);
+                        const int bottom = std::min(top + ts, height + border);
+                        const int right  = std::min(left + ts, width - (W & 1) + border);
                         const int rr1 = bottom - top;
                         const int cc1 = right - left;
                         const int rrmin = top < 0 ? border : 0;
@@ -442,15 +431,15 @@ bool CA_correct(
                             }
 
                             if (row > -1 && row < height) {
-                                int offset = (fc(cfarray, row,max(left + 3, 0)) & 1);
-                                int col = max(left + 3, 0) + offset;
+                                int offset = (fc(cfarray, row,std::max(left + 3, 0)) & 1);
+                                int col = std::max(left + 3, 0) + offset;
                                 int indx = rr * ts + 3 - (left < 0 ? (left+3) : 0) + offset;
 #ifdef __SSE2__
-                                for(; col < min(cc1 + left - 3, width) - 7; col+=8, indx+=8) {
+                                for(; col < std::min(cc1 + left - 3, width) - 7; col+=8, indx+=8) {
                                     STVFU(Gtmp[(row * width + col) >> 1], LC2VFU(rgb[1][indx]));
                                 }
 #endif
-                                for(; col < min(cc1 + left - 3, width); col+=2, indx+=2) {
+                                for(; col < std::min(cc1 + left - 3, width); col+=2, indx+=2) {
                                     Gtmp[(row * width + col) >> 1] = rgb[1][indx];
                                 }
                             }
@@ -773,7 +762,7 @@ bool CA_correct(
                                 }//c
                             }//blocks
 
-                        numblox[1] = min(numblox[0], numblox[1]);
+                        numblox[1] = std::min(numblox[0], numblox[1]);
 
                         //if too few data points, restrict the order of the fit to linear
                         if (numblox[1] < 32) {
@@ -818,8 +807,8 @@ bool CA_correct(
                         float lblockshifts[2][2];
                         const int vblock = ((top + border) / (ts - border2)) + 1;
                         const int hblock = ((left + border) / (ts - border2)) + 1;
-                        const int bottom = min(top + ts, winy + winh + border);
-                        const int right  = min(left + ts, winx + winw - (W & 1) + border);
+                        const int bottom = std::min(top + ts, winy + winh + border);
+                        const int right  = std::min(left + ts, winx + winw - (W & 1) + border);
                         const int rr1 = bottom - top;
                         const int cc1 = right - left;
 
@@ -1319,5 +1308,4 @@ bool CA_correct(
     setProgCancel(1.0);
 
     return processpasstwo;
-}
 }

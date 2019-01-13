@@ -18,23 +18,13 @@
  */
 #include <cmath>
 
+#include "bayerhelper.h"
 #include "librtprocess.h"
 #include "rt_math.h"
 #include "median.h"
 #include "StopWatch.h"
 
-using namespace std;
-
-namespace {
-unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
-{
-    return cfa[row & 1][col & 1];
-}
-}
-
-namespace librtprocess
-{
-
+using namespace librtprocess;
 /***
 *
 *   Bayer CFA Demosaicing using Integrated Gaussian Vector on Color Differences
@@ -53,9 +43,13 @@ namespace librtprocess
 // SSE version by Ingo Weyrich 5/2013
 #ifdef __SSE2__
 #define CLIPV(a) LIMV(a,zerov,c65535v)
-void igv_demosaic(int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel)
+void igv_demosaic(int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
 {
     BENCHFUN
+    if (!validateBayerCfa(3, cfarray)) {
+        return;
+    }
+
     static const float eps = 1e-5f, epssq = 1e-5f; //mod epssq -10f =>-5f Jacques 3/2013 to prevent artifact (divide by zero)
 
     static const int h1 = 1, h2 = 2, h3 = 3, h5 = 5;
@@ -430,9 +424,13 @@ void igv_demosaic(int winw, int winh, const float * const *rawData, float **red,
 }
 #undef CLIPV
 #else
-void igv_demosaic(int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel)
+void igv_demosaic(int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
 {
     BENCHFUN
+    if (!validateBayerCfa(3, cfarray)) {
+        return;
+    }
+
     static const float eps = 1e-5f, epssq = 1e-5f; //mod epssq -10f =>-5f Jacques 3/2013 to prevent artifact (divide by zero)
     static const int h1 = 1, h2 = 2, h3 = 3, h4 = 4, h5 = 5, h6 = 6;
     const int width = winw, height = winh;
@@ -671,4 +669,3 @@ void igv_demosaic(int winw, int winh, const float * const *rawData, float **red,
 }
 #endif
 
-} /* namespace */

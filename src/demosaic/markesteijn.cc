@@ -117,8 +117,6 @@ void cielab (const float (*rgb)[3], float* l, float* a, float *b, const int widt
 }
 }
 
-namespace librtprocess {
-
 
 #define fcol(row,col) xtrans[(row)%6][(col)%6]
 #define isgreen(row,col) (xtrans[(row)%3][(col)%3]&1)
@@ -130,7 +128,7 @@ namespace librtprocess {
 */
 // override CLIP function to test clipped output
 #define CLIP(x) (x)
-
+using namespace librtprocess;
 void markesteijn_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const int xtrans[6][6], const float rgb_cam[3][4], const std::function<bool(double)> &setProgCancel, const int passes, const bool useCieLab)
 {
     BENCHFUN
@@ -150,7 +148,7 @@ void markesteijn_demosaic (int width, int height, const float * const *rawData, 
     // green pixels
     unsigned short sgrow = 0, sgcol = 0;
 
-    librtprocess::xtransborder_demosaic(width, height, 6, rawData, red, green, blue, xtrans);
+    xtransborder_demosaic(width, height, 6, rawData, red, green, blue, xtrans);
 
     float xyz_cam[3][3];
     {
@@ -905,6 +903,4 @@ void markesteijn_demosaic (int width, int height, const float * const *rawData, 
 #undef CLIP
 #undef fcol
 #undef isgreen
-
-}
 

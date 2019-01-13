@@ -17,7 +17,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=unused-label -O3")
 
 option(VERBOSE "Build in verbose mode" OFF)
 if(VERBOSE)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBENCHMARK -DVERBOSE")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVERBOSE")
 endif()
 
 # By default we don't use a specific processor target, so PROC_TARGET_NUMBER is set to 0.

@@ -55,6 +55,7 @@
 #include <cassert>
 #include <cstring>
 
+#include "bayerhelper.h"
 #include "librtprocess.h"
 #include "rt_math.h"
 #include "StopWatch.h"
@@ -72,11 +73,6 @@ using namespace std;
 
 using namespace librtprocess;
 namespace {
-
-unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
-{
-    return cfa[row & 1][col & 1];
-}
 
 inline void dcb_initTileLimits(int W, int H, int &colMin, int &rowMin, int &colMax, int &rowMax, int x0, int y0, int border)
 {
@@ -102,7 +98,7 @@ inline void dcb_initTileLimits(int W, int H, int &colMin, int &rowMin, int &colM
     }
 }
 
-void fill_raw(int W, int H, float (*cache )[3], int x0, int y0, const float * const *rawData, const ColorFilterArray &cfarray)
+void fill_raw(int W, int H, float (*cache )[3], int x0, int y0, const float * const *rawData, const unsigned cfarray[2][2])
 {
     int rowMin, colMin, rowMax, colMax;
     dcb_initTileLimits(W, H, colMin, rowMin, colMax, rowMax, x0, y0, 0);
@@ -141,7 +137,7 @@ void restore_from_buffer(float (*image)[3], float (*buffer)[2])
     }
 }
 
-void fill_border(int W, int H, float (*cache )[3], int border, int x0, int y0, const ColorFilterArray &cfarray)
+void fill_border(int W, int H, float (*cache )[3], int border, int x0, int y0, const unsigned cfarray[2][2])
 {
     unsigned f;
     float sum[8];
@@ -180,7 +176,7 @@ void fill_border(int W, int H, float (*cache )[3], int border, int x0, int y0, c
 // First pass green interpolation
 
 // remove entirely: bufferH and bufferV
-void dcb_hid(int W, int H, float (*image)[3], int x0, int y0, const ColorFilterArray &cfarray)
+void dcb_hid(int W, int H, float (*image)[3], int x0, int y0, const unsigned cfarray[2][2])
 {
     const int u = CACHESIZE;
     int rowMin, colMin, rowMax, colMax;
@@ -196,7 +192,7 @@ void dcb_hid(int W, int H, float (*image)[3], int x0, int y0, const ColorFilterA
 }
 
 // missing colours are interpolated
-void dcb_color(int W, int H, float (*image)[3], int x0, int y0, const ColorFilterArray &cfarray)
+void dcb_color(int W, int H, float (*image)[3], int x0, int y0, const unsigned cfarray[2][2])
 {
     const int u = CACHESIZE;
     int rowMin, colMin, rowMax, colMax;
@@ -238,7 +234,7 @@ void dcb_color(int W, int H, float (*image)[3], int x0, int y0, const ColorFilte
 }
 
 // green correction
-void dcb_hid2(int W, int H, float (*image)[3], int x0, int y0, const ColorFilterArray &cfarray)
+void dcb_hid2(int W, int H, float (*image)[3], int x0, int y0, const unsigned cfarray[2][2])
 {
     const int v = 2 * CACHESIZE;
     int rowMin, colMin, rowMax, colMax;
@@ -293,7 +289,7 @@ void dcb_map(int W, int H, float (*image)[3], uint8_t *map, int x0, int y0)
 // I don't know if *pix is faster than a loop working on image[] directly
 
 // interpolated green pixels are corrected using the map
-void dcb_correction(int W, int H, float (*image)[3], uint8_t *map, int x0, int y0, const ColorFilterArray &cfarray)
+void dcb_correction(int W, int H, float (*image)[3], uint8_t *map, int x0, int y0, const unsigned cfarray[2][2])
 {
     const int u = CACHESIZE, v = 2 * CACHESIZE;
     int rowMin, colMin, rowMax, colMax;
@@ -373,7 +369,7 @@ void dcb_pp(int W, int H, float (*image)[3], int x0, int y0)
 
 // interpolated green pixels are corrected using the map
 // with correction
-void dcb_correction2(int W, int H, float (*image)[3], uint8_t *map, int x0, int y0, const ColorFilterArray &cfarray)
+void dcb_correction2(int W, int H, float (*image)[3], uint8_t *map, int x0, int y0, const unsigned cfarray[2][2])
 {
     const int u = CACHESIZE, v = 2 * CACHESIZE;
     int rowMin, colMin, rowMax, colMax;
@@ -413,7 +409,7 @@ void dcb_correction2(int W, int H, float (*image)[3], uint8_t *map, int x0, int 
 }
 
 // image refinement
-void dcb_refinement(int W, int H, float (*image)[3], uint8_t *map, int x0, int y0, const ColorFilterArray &cfarray)
+void dcb_refinement(int W, int H, float (*image)[3], uint8_t *map, int x0, int y0, const unsigned cfarray[2][2])
 {
     const int u = CACHESIZE, v = 2 * CACHESIZE;
     int rowMin, colMin, rowMax, colMax;
@@ -456,7 +452,7 @@ void dcb_refinement(int W, int H, float (*image)[3], uint8_t *map, int x0, int y
 }
 
 // missing colours are interpolated using high quality algorithm by Luis Sanz Rodriguez
-void dcb_color_full(int W, int H, float (*image)[3], int x0, int y0, float (*chroma)[2], const ColorFilterArray &cfarray)
+void dcb_color_full(int W, int H, float (*image)[3], int x0, int y0, float (*chroma)[2], const unsigned cfarray[2][2])
 {
     const int u = CACHESIZE, w = 3 * CACHESIZE;
     int rowMin, colMin, rowMax, colMax;
@@ -512,15 +508,15 @@ void dcb_color_full(int W, int H, float (*image)[3], int x0, int y0, float (*chr
 }
 
 }
-namespace librtprocess
-{
-
-
 
 // DCB demosaicing main routine
-void dcb_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel, int iterations, bool dcb_enhance)
+void dcb_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, int iterations, bool dcb_enhance)
 {
 BENCHFUN
+    if (!validateBayerCfa(3, cfarray)) {
+        return;
+    }
+
     double currentProgress = 0.0;
     setProgCancel(currentProgress);
 
@@ -634,4 +630,4 @@ BENCHFUN
 #undef TILESIZE
 #undef CACHESIZE
 #undef FORCC
-} /* namespace */
+

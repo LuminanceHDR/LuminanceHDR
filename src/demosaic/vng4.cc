@@ -21,20 +21,17 @@
 ////////////////////////////////////////////////////////////////
 
 #include <cmath>
+#include "bayerhelper.h"
 #include "librtprocess.h"
 #include "opthelper.h"
 #include "rt_math.h"
-//#define BENCHMARK
 #include "StopWatch.h"
 
+using namespace librtprocess;
+
 namespace {
-unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
-{
-    return cfa[row & 1][col & 1];
-}
 
-
-inline void vng4interpolate_row_redblue (const float * const *rawData, const ColorFilterArray &cfarray, float* ar, float* ab, const float * const pg, const float * const cg, const float * const ng, int i, int width)
+inline void vng4interpolate_row_redblue (const float * const *rawData, const unsigned cfarray[2][2], float* ar, float* ab, const float * const pg, const float * const cg, const float * const ng, int i, int width)
 {
     if (fc(cfarray, i, 0) == 2 || fc(cfarray, i, 1) == 2) {
         std::swap(ar, ab);
@@ -59,13 +56,13 @@ inline void vng4interpolate_row_redblue (const float * const *rawData, const Col
 }
 }
 
-namespace librtprocess
 
-{
-
-void vng4_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel)
+void vng4_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
 {
     BENCHFUN
+    if (!validateBayerCfa(4, cfarray)) {
+        return;
+    }
     const signed short int *cp, terms[] = {
         -2, -2, +0, -1, 0, 0x01, -2, -2, +0, +0, 1, 0x01, -2, -1, -1, +0, 0, 0x01,
         -2, -1, +0, -1, 0, 0x02, -2, -1, +0, +0, 0, 0x03, -2, -1, +0, +1, 1, 0x01,
@@ -375,7 +372,14 @@ void vng4_demosaic (int width, int height, const float * const *rawData, float *
 #endif
         {
             // let the first thread, which is out of work, do the border interpolation
-            bayerborder_demosaic(width, height, 3, rawData, red, green, blue, cfarray);
+            // bayerborder_demosaic needs a 3 color cfa.
+            unsigned bordercfa[2][2];
+            for (int i = 0; i < 2; ++i) {
+                for (int j = 0; j < 2; ++j) {
+                    bordercfa[i][j] = (cfarray[i][j] & 1) ? 1 : cfarray[i][j];
+                }
+            }
+            bayerborder_demosaic(width, height, 3, rawData, red, green, blue, bordercfa);
         }
     }
 
@@ -383,5 +387,4 @@ void vng4_demosaic (int width, int height, const float * const *rawData, float *
     free (image);
 
     setProgCancel(1.0);
-}
 }

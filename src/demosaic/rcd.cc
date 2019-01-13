@@ -18,21 +18,12 @@
  */
 #include <cmath>
 
+#include "bayerhelper.h"
 #include "librtprocess.h"
 #include "rt_math.h"
 #include "StopWatch.h"
-using namespace std;
 
-namespace {
-unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
-{
-    return cfa[row & 1][col & 1];
-}
-}
-
-namespace librtprocess
-{
-
+using namespace librtprocess;
 /**
 * RATIO CORRECTED DEMOSAICING
 * Luis Sanz Rodriguez (luis.sanz.rodriguez(at)gmail(dot)com)
@@ -43,9 +34,12 @@ namespace librtprocess
 * Licensed under the GNU GPL version 3
 */
 // Tiled version by Ingo Weyrich (heckflosse67@gmx.de)
-void rcd_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray, const std::function<bool(double)> &setProgCancel)
+void rcd_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
 {
     BENCHFUN
+    if (!validateBayerCfa(3, cfarray)) {
+        return;
+    }
 
     double progress = 0.0;
     setProgCancel(progress);
@@ -113,8 +107,8 @@ void rcd_demosaic(int width, int height, const float * const *rawData, float **r
                 for (int col = 4, indx = row * tileSize + col; col < tilecols - 4; col++, indx++) {
                     const float cfai = cfa[indx];
                     //Calculate h/v local discrimination
-                    float V_Stat = max(epssq, -18.f * cfai * (cfa[indx - w1] + cfa[indx + w1] + 2.f * (cfa[indx - w2] + cfa[indx + w2]) - cfa[indx - w3] - cfa[indx + w3]) - 2.f * cfai * (cfa[indx - w4] + cfa[indx + w4] - 19.f * cfai) - cfa[indx - w1] * (70.f * cfa[indx + w1] + 12.f * cfa[indx - w2] - 24.f * cfa[indx + w2] + 38.f * cfa[indx - w3] - 16.f * cfa[indx + w3] - 12.f * cfa[indx - w4] + 6.f * cfa[indx + w4] - 46.f * cfa[indx - w1]) + cfa[indx + w1] * (24.f * cfa[indx - w2] - 12.f * cfa[indx + w2] + 16.f * cfa[indx - w3] - 38.f * cfa[indx + w3] - 6.f * cfa[indx - w4] + 12.f * cfa[indx + w4] + 46.f * cfa[indx + w1]) + cfa[indx - w2] * (14.f * cfa[indx + w2] - 12.f * cfa[indx + w3] - 2.f * cfa[indx - w4] + 2.f * cfa[indx + w4] + 11.f * cfa[indx - w2]) + cfa[indx + w2] * (-12.f * cfa[indx - w3] + 2.f * (cfa[indx - w4] - cfa[indx + w4]) + 11.f * cfa[indx + w2]) + cfa[indx - w3] * (2.f * cfa[indx + w3] - 6.f * cfa[indx - w4] + 10.f * cfa[indx - w3]) + cfa[indx + w3] * (-6.f * cfa[indx + w4] + 10.f * cfa[indx + w3]) + cfa[indx - w4] * cfa[indx - w4] + cfa[indx + w4] * cfa[indx + w4]);
-                    float H_Stat = max(epssq, -18.f * cfai * (cfa[indx -  1] + cfa[indx +  1] + 2.f * (cfa[indx -  2] + cfa[indx +  2]) - cfa[indx -  3] - cfa[indx +  3]) - 2.f * cfai * (cfa[indx -  4] + cfa[indx +  4] - 19.f * cfai) - cfa[indx -  1] * (70.f * cfa[indx +  1] + 12.f * cfa[indx -  2] - 24.f * cfa[indx +  2] + 38.f * cfa[indx -  3] - 16.f * cfa[indx +  3] - 12.f * cfa[indx -  4] + 6.f * cfa[indx +  4] - 46.f * cfa[indx -  1]) + cfa[indx +  1] * (24.f * cfa[indx -  2] - 12.f * cfa[indx +  2] + 16.f * cfa[indx -  3] - 38.f * cfa[indx +  3] - 6.f * cfa[indx -  4] + 12.f * cfa[indx +  4] + 46.f * cfa[indx +  1]) + cfa[indx -  2] * (14.f * cfa[indx +  2] - 12.f * cfa[indx +  3] - 2.f * cfa[indx -  4] + 2.f * cfa[indx +  4] + 11.f * cfa[indx -  2]) + cfa[indx +  2] * (-12.f * cfa[indx -  3] + 2.f * (cfa[indx -  4] - cfa[indx +  4]) + 11.f * cfa[indx +  2]) + cfa[indx -  3] * (2.f * cfa[indx +  3] - 6.f * cfa[indx -  4] + 10.f * cfa[indx -  3]) + cfa[indx +  3] * (-6.f * cfa[indx +  4] + 10.f * cfa[indx +  3]) + cfa[indx -  4] * cfa[indx -  4] + cfa[indx +  4] * cfa[indx +  4]);
+                    float V_Stat = std::max(epssq, -18.f * cfai * (cfa[indx - w1] + cfa[indx + w1] + 2.f * (cfa[indx - w2] + cfa[indx + w2]) - cfa[indx - w3] - cfa[indx + w3]) - 2.f * cfai * (cfa[indx - w4] + cfa[indx + w4] - 19.f * cfai) - cfa[indx - w1] * (70.f * cfa[indx + w1] + 12.f * cfa[indx - w2] - 24.f * cfa[indx + w2] + 38.f * cfa[indx - w3] - 16.f * cfa[indx + w3] - 12.f * cfa[indx - w4] + 6.f * cfa[indx + w4] - 46.f * cfa[indx - w1]) + cfa[indx + w1] * (24.f * cfa[indx - w2] - 12.f * cfa[indx + w2] + 16.f * cfa[indx - w3] - 38.f * cfa[indx + w3] - 6.f * cfa[indx - w4] + 12.f * cfa[indx + w4] + 46.f * cfa[indx + w1]) + cfa[indx - w2] * (14.f * cfa[indx + w2] - 12.f * cfa[indx + w3] - 2.f * cfa[indx - w4] + 2.f * cfa[indx + w4] + 11.f * cfa[indx - w2]) + cfa[indx + w2] * (-12.f * cfa[indx - w3] + 2.f * (cfa[indx - w4] - cfa[indx + w4]) + 11.f * cfa[indx + w2]) + cfa[indx - w3] * (2.f * cfa[indx + w3] - 6.f * cfa[indx - w4] + 10.f * cfa[indx - w3]) + cfa[indx + w3] * (-6.f * cfa[indx + w4] + 10.f * cfa[indx + w3]) + cfa[indx - w4] * cfa[indx - w4] + cfa[indx + w4] * cfa[indx + w4]);
+                    float H_Stat = std::max(epssq, -18.f * cfai * (cfa[indx -  1] + cfa[indx +  1] + 2.f * (cfa[indx -  2] + cfa[indx +  2]) - cfa[indx -  3] - cfa[indx +  3]) - 2.f * cfai * (cfa[indx -  4] + cfa[indx +  4] - 19.f * cfai) - cfa[indx -  1] * (70.f * cfa[indx +  1] + 12.f * cfa[indx -  2] - 24.f * cfa[indx +  2] + 38.f * cfa[indx -  3] - 16.f * cfa[indx +  3] - 12.f * cfa[indx -  4] + 6.f * cfa[indx +  4] - 46.f * cfa[indx -  1]) + cfa[indx +  1] * (24.f * cfa[indx -  2] - 12.f * cfa[indx +  2] + 16.f * cfa[indx -  3] - 38.f * cfa[indx +  3] - 6.f * cfa[indx -  4] + 12.f * cfa[indx +  4] + 46.f * cfa[indx +  1]) + cfa[indx -  2] * (14.f * cfa[indx +  2] - 12.f * cfa[indx +  3] - 2.f * cfa[indx -  4] + 2.f * cfa[indx +  4] + 11.f * cfa[indx -  2]) + cfa[indx +  2] * (-12.f * cfa[indx -  3] + 2.f * (cfa[indx -  4] - cfa[indx +  4]) + 11.f * cfa[indx +  2]) + cfa[indx -  3] * (2.f * cfa[indx +  3] - 6.f * cfa[indx -  4] + 10.f * cfa[indx -  3]) + cfa[indx +  3] * (-6.f * cfa[indx +  4] + 10.f * cfa[indx +  3]) + cfa[indx -  4] * cfa[indx -  4] + cfa[indx +  4] * cfa[indx +  4]);
 
                     VH_Dir[indx] = V_Stat / (V_Stat + H_Stat);
                 }
@@ -174,8 +168,8 @@ void rcd_demosaic(int width, int height, const float * const *rawData, float **r
                 for (int col = rcdBorder - 4 + (fc(cfarray, row, rcdBorder) & 1), indx = row * tileSize + col; col < tilecols - rcdBorder + 4; col += 2, indx += 2) {
                     const float cfai = cfa[indx];
 
-                    float P_Stat = max(epssq, - 18.f * cfai * (cfa[indx - w1 - 1] + cfa[indx + w1 + 1] + 2.f * (cfa[indx - w2 - 2] + cfa[indx + w2 + 2]) - cfa[indx - w3 - 3] - cfa[indx + w3 + 3]) - 2.f * cfai * (cfa[indx - w4 - 4] + cfa[indx + w4 + 4] - 19.f * cfai) - cfa[indx - w1 - 1] * (70.f * cfa[indx + w1 + 1] - 12.f * cfa[indx - w2 - 2] + 24.f * cfa[indx + w2 + 2] - 38.f * cfa[indx - w3 - 3] + 16.f * cfa[indx + w3 + 3] + 12.f * cfa[indx - w4 - 4] - 6.f * cfa[indx + w4 + 4] + 46.f * cfa[indx - w1 - 1]) + cfa[indx + w1 + 1] * (24.f * cfa[indx - w2 - 2] - 12.f * cfa[indx + w2 + 2] + 16.f * cfa[indx - w3 - 3] - 38.f * cfa[indx + w3 + 3] - 6.f * cfa[indx - w4 - 4] + 12.f * cfa[indx + w4 + 4] + 46.f * cfa[indx + w1 + 1]) + cfa[indx - w2 - 2] * (14.f * cfa[indx + w2 + 2] - 12.f * cfa[indx + w3 + 3] - 2.f * (cfa[indx - w4 - 4] - cfa[indx + w4 + 4]) + 11.f * cfa[indx - w2 - 2]) - cfa[indx + w2 + 2] * (12.f * cfa[indx - w3 - 3] + 2.f * (cfa[indx - w4 - 4] - cfa[indx + w4 + 4]) + 11.f * cfa[indx + w2 + 2]) + cfa[indx - w3 - 3] * (2.f * cfa[indx + w3 + 3] - 6.f * cfa[indx - w4 - 4] + 10.f * cfa[indx - w3 - 3]) - cfa[indx + w3 + 3] * (6.f * cfa[indx + w4 + 4] + 10.f * cfa[indx + w3 + 3]) + cfa[indx - w4 - 4] * cfa[indx - w4 - 4] + cfa[indx + w4 + 4] * cfa[indx + w4 + 4]);
-                    float Q_Stat = max(epssq, - 18.f * cfai * (cfa[indx + w1 - 1] + cfa[indx - w1 + 1] + 2.f * (cfa[indx + w2 - 2] + cfa[indx - w2 + 2]) - cfa[indx + w3 - 3] - cfa[indx - w3 + 3]) - 2.f * cfai * (cfa[indx + w4 - 4] + cfa[indx - w4 + 4] - 19.f * cfai) - cfa[indx + w1 - 1] * (70.f * cfa[indx - w1 + 1] - 12.f * cfa[indx + w2 - 2] + 24.f * cfa[indx - w2 + 2] - 38.f * cfa[indx + w3 - 3] + 16.f * cfa[indx - w3 + 3] + 12.f * cfa[indx + w4 - 4] - 6.f * cfa[indx - w4 + 4] + 46.f * cfa[indx + w1 - 1]) + cfa[indx - w1 + 1] * (24.f * cfa[indx + w2 - 2] - 12.f * cfa[indx - w2 + 2] + 16.f * cfa[indx + w3 - 3] - 38.f * cfa[indx - w3 + 3] - 6.f * cfa[indx + w4 - 4] + 12.f * cfa[indx - w4 + 4] + 46.f * cfa[indx - w1 + 1]) + cfa[indx + w2 - 2] * (14.f * cfa[indx - w2 + 2] - 12.f * cfa[indx - w3 + 3] - 2.f * (cfa[indx + w4 - 4] - cfa[indx - w4 + 4]) + 11.f * cfa[indx + w2 - 2]) - cfa[indx - w2 + 2] * (12.f * cfa[indx + w3 - 3] + 2.f * (cfa[indx + w4 - 4] - cfa[indx - w4 + 4]) + 11.f * cfa[indx - w2 + 2]) + cfa[indx + w3 - 3] * (2.f * cfa[indx - w3 + 3] - 6.f * cfa[indx + w4 - 4] + 10.f * cfa[indx + w3 - 3]) - cfa[indx - w3 + 3] * (6.f * cfa[indx - w4 + 4] + 10.f * cfa[indx - w3 + 3]) + cfa[indx + w4 - 4] * cfa[indx + w4 - 4] + cfa[indx - w4 + 4] * cfa[indx - w4 + 4]);
+                    float P_Stat = std::max(epssq, - 18.f * cfai * (cfa[indx - w1 - 1] + cfa[indx + w1 + 1] + 2.f * (cfa[indx - w2 - 2] + cfa[indx + w2 + 2]) - cfa[indx - w3 - 3] - cfa[indx + w3 + 3]) - 2.f * cfai * (cfa[indx - w4 - 4] + cfa[indx + w4 + 4] - 19.f * cfai) - cfa[indx - w1 - 1] * (70.f * cfa[indx + w1 + 1] - 12.f * cfa[indx - w2 - 2] + 24.f * cfa[indx + w2 + 2] - 38.f * cfa[indx - w3 - 3] + 16.f * cfa[indx + w3 + 3] + 12.f * cfa[indx - w4 - 4] - 6.f * cfa[indx + w4 + 4] + 46.f * cfa[indx - w1 - 1]) + cfa[indx + w1 + 1] * (24.f * cfa[indx - w2 - 2] - 12.f * cfa[indx + w2 + 2] + 16.f * cfa[indx - w3 - 3] - 38.f * cfa[indx + w3 + 3] - 6.f * cfa[indx - w4 - 4] + 12.f * cfa[indx + w4 + 4] + 46.f * cfa[indx + w1 + 1]) + cfa[indx - w2 - 2] * (14.f * cfa[indx + w2 + 2] - 12.f * cfa[indx + w3 + 3] - 2.f * (cfa[indx - w4 - 4] - cfa[indx + w4 + 4]) + 11.f * cfa[indx - w2 - 2]) - cfa[indx + w2 + 2] * (12.f * cfa[indx - w3 - 3] + 2.f * (cfa[indx - w4 - 4] - cfa[indx + w4 + 4]) + 11.f * cfa[indx + w2 + 2]) + cfa[indx - w3 - 3] * (2.f * cfa[indx + w3 + 3] - 6.f * cfa[indx - w4 - 4] + 10.f * cfa[indx - w3 - 3]) - cfa[indx + w3 + 3] * (6.f * cfa[indx + w4 + 4] + 10.f * cfa[indx + w3 + 3]) + cfa[indx - w4 - 4] * cfa[indx - w4 - 4] + cfa[indx + w4 + 4] * cfa[indx + w4 + 4]);
+                    float Q_Stat = std::max(epssq, - 18.f * cfai * (cfa[indx + w1 - 1] + cfa[indx - w1 + 1] + 2.f * (cfa[indx + w2 - 2] + cfa[indx - w2 + 2]) - cfa[indx + w3 - 3] - cfa[indx - w3 + 3]) - 2.f * cfai * (cfa[indx + w4 - 4] + cfa[indx - w4 + 4] - 19.f * cfai) - cfa[indx + w1 - 1] * (70.f * cfa[indx - w1 + 1] - 12.f * cfa[indx + w2 - 2] + 24.f * cfa[indx - w2 + 2] - 38.f * cfa[indx + w3 - 3] + 16.f * cfa[indx - w3 + 3] + 12.f * cfa[indx + w4 - 4] - 6.f * cfa[indx - w4 + 4] + 46.f * cfa[indx + w1 - 1]) + cfa[indx - w1 + 1] * (24.f * cfa[indx + w2 - 2] - 12.f * cfa[indx - w2 + 2] + 16.f * cfa[indx + w3 - 3] - 38.f * cfa[indx - w3 + 3] - 6.f * cfa[indx + w4 - 4] + 12.f * cfa[indx - w4 + 4] + 46.f * cfa[indx - w1 + 1]) + cfa[indx + w2 - 2] * (14.f * cfa[indx - w2 + 2] - 12.f * cfa[indx - w3 + 3] - 2.f * (cfa[indx + w4 - 4] - cfa[indx - w4 + 4]) + 11.f * cfa[indx + w2 - 2]) - cfa[indx - w2 + 2] * (12.f * cfa[indx + w3 - 3] + 2.f * (cfa[indx + w4 - 4] - cfa[indx - w4 + 4]) + 11.f * cfa[indx - w2 + 2]) + cfa[indx + w3 - 3] * (2.f * cfa[indx - w3 + 3] - 6.f * cfa[indx + w4 - 4] + 10.f * cfa[indx + w3 - 3]) - cfa[indx - w3 + 3] * (6.f * cfa[indx - w4 + 4] + 10.f * cfa[indx - w3 + 3]) + cfa[indx + w4 - 4] * cfa[indx + w4 - 4] + cfa[indx - w4 + 4] * cfa[indx - w4 + 4]);
 
                     PQ_Dir[indx] = P_Stat / (P_Stat + Q_Stat);
 
@@ -293,4 +287,3 @@ void rcd_demosaic(int width, int height, const float * const *rawData, float **r
     // -------------------------------------------------------------------------
 }
 
-} /* namespace */

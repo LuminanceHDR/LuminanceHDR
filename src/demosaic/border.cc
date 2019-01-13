@@ -18,25 +18,19 @@
  */
 #include <algorithm>
 
+#include "bayerhelper.h"
 #include "librtprocess.h"
 #include "StopWatch.h"
 
-namespace
-{
-unsigned fc(const ColorFilterArray &cfa, unsigned row, unsigned col)
-{
-    return cfa[row & 1][col & 1];
-}
-}
+using namespace librtprocess;
 
-using namespace std;
-
-namespace librtprocess
-{
-
-void bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const ColorFilterArray &cfarray)
+void bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2])
 {
     BENCHFUN
+    if (!validateBayerCfa(3, cfarray)) {
+        return;
+    }
+
     int bord = lborders;
     int width = winw;
     int height = winh;
@@ -238,4 +232,3 @@ void xtransborder_demosaic(int winw, int winh, int border, const float * const *
         }
 }
 #undef fcol
-} /* namespace */

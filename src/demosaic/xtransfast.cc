@@ -21,8 +21,6 @@
 
 #include "librtprocess.h"
 
-namespace librtprocess
-{
 #define fcol(row,col) xtrans[(row)%6][(col)%6]
 
 void xtransfast_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const int xtrans[6][6], const std::function<bool(double)> &setProgCancel)
@@ -30,7 +28,7 @@ void xtransfast_demosaic (int width, int height, const float * const *rawData, f
 
     setProgCancel(0.0);
 
-    librtprocess::xtransborder_demosaic(width, height, 1, rawData, red, green, blue, xtrans);
+    xtransborder_demosaic(width, height, 1, rawData, red, green, blue, xtrans);
 
     const float weight[3][3] = {
                                 {0.25f, 0.5f, 0.25f},
@@ -83,6 +81,4 @@ void xtransfast_demosaic (int width, int height, const float * const *rawData, f
 #undef CLIP
 #undef fcol
 #undef isgreen
-
-}
 

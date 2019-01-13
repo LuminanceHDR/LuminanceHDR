@@ -24,7 +24,7 @@
 #include <iostream>
 #include "mytime.h"
 
-#ifdef BENCHMARK
+#ifdef VERBOSE
     #define BENCHFUN StopWatch StopFun(__func__);
     #define BENCHFUNMICRO StopWatch StopFun(__func__, true);
 #else
