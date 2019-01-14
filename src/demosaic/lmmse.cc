@@ -44,9 +44,7 @@ namespace {
 void refinement(int width, int height, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, int PassCount)
 {
 
-    int w1 = width;
-    int w2 = 2 * w1;
-
+BENCHFUN
     float **rgb[3];
     rgb[0] = red;
     rgb[1] = green;
@@ -60,7 +58,6 @@ void refinement(int width, int height, float **red, float **green, float **blue,
         #pragma omp parallel
 #endif
         {
-            float *pix[3];
 
             /* Reinforce interpolated green pixels on RED/BLUE pixel locations */
 #ifdef _OPENMP
@@ -71,35 +68,30 @@ void refinement(int width, int height, float **red, float **green, float **blue,
                 int col = 2 + (fc(cfarray, row, 2) & 1);
                 int c = fc(cfarray, row, col);
 #ifdef __SSE2__
-                __m128 dLv, dRv, dUv, dDv, v0v;
-                __m128 onev = _mm_set1_ps(1.f);
-                __m128 zd5v = _mm_set1_ps(0.5f);
-                __m128 c65535v = _mm_set1_ps(65535.f);
+                vfloat dLv, dRv, dUv, dDv, v0v;
+                const vfloat onev = F2V(1.f);
+                const vfloat zd5v = F2V(0.5f);
+                const vfloat c65535v = F2V(65535.f);
 
                 for (; col < width - 8; col += 8) {
-                    int indx = row * width + col;
-                    pix[c] = (float*)(*rgb[c]) + indx;
-                    pix[1] = (float*)(*rgb[1]) + indx;
-                    dLv = onev / (onev + vabsf(LC2VFU(pix[c][ -2]) - LC2VFU(pix[c][0])) + vabsf(LC2VFU(pix[1][ 1]) - LC2VFU(pix[1][ -1])));
-                    dRv = onev / (onev + vabsf(LC2VFU(pix[c][  2]) - LC2VFU(pix[c][0])) + vabsf(LC2VFU(pix[1][ 1]) - LC2VFU(pix[1][ -1])));
-                    dUv = onev / (onev + vabsf(LC2VFU(pix[c][-w2]) - LC2VFU(pix[c][0])) + vabsf(LC2VFU(pix[1][w1]) - LC2VFU(pix[1][-w1])));
-                    dDv = onev / (onev + vabsf(LC2VFU(pix[c][ w2]) - LC2VFU(pix[c][0])) + vabsf(LC2VFU(pix[1][w1]) - LC2VFU(pix[1][-w1])));
-                    v0v = CLIPV(LC2VFU(pix[c][0]) + zd5v + ((LC2VFU(pix[1][-1]) - LC2VFU(pix[c][-1])) * dLv + (LC2VFU(pix[1][1]) - LC2VFU(pix[c][1])) * dRv + (LC2VFU(pix[1][-w1]) - LC2VFU(pix[c][-w1])) * dUv + (LC2VFU(pix[1][w1]) - LC2VFU(pix[c][w1])) * dDv ) / (dLv + dRv + dUv + dDv));
-                    STC2VFU(pix[1][0], v0v);
+                    const vfloat centre = LC2VFU(rgb[c][row][col]);
+                    dLv = onev / (onev + vabsf(LC2VFU(rgb[c][row][col - 2]) - centre) + vabsf(LC2VFU(rgb[1][row][col + 1]) - LC2VFU(rgb[1][row][col - 1])));
+                    dRv = onev / (onev + vabsf(LC2VFU(rgb[c][row][col + 2]) - centre) + vabsf(LC2VFU(rgb[1][row][col + 1]) - LC2VFU(rgb[1][row][col - 1])));
+                    dUv = onev / (onev + vabsf(LC2VFU(rgb[c][row - 2][col]) - centre) + vabsf(LC2VFU(rgb[1][row + 1][col]) - LC2VFU(rgb[1][row - 1][col])));
+                    dDv = onev / (onev + vabsf(LC2VFU(rgb[c][row + 2][col]) - centre) + vabsf(LC2VFU(rgb[1][row + 1][col]) - LC2VFU(rgb[1][row - 1][col])));
+                    v0v = CLIPV(centre + zd5v + ((LC2VFU(rgb[1][row][col - 1]) - LC2VFU(rgb[c][row][col - 1])) * dLv + (LC2VFU(rgb[1][row][col + 1]) - LC2VFU(rgb[c][row][col + 1])) * dRv + (LC2VFU(rgb[1][row - 1][col]) - LC2VFU(rgb[c][row - 1][col])) * dUv + (LC2VFU(rgb[1][row + 1][col]) - LC2VFU(rgb[c][row + 1][col])) * dDv ) / (dLv + dRv + dUv + dDv));
+                    STC2VFU(rgb[1][row][col], v0v);
                 }
 
 #endif
 
                 for (; col < width - 2; col += 2) {
-                    int indx = row * width + col;
-                    pix[c] = (float*)(*rgb[c]) + indx;
-                    pix[1] = (float*)(*rgb[1]) + indx;
-                    float dL = 1.f / (1.f + fabsf(pix[c][ -2] - pix[c][0]) + fabsf(pix[1][ 1] - pix[1][ -1]));
-                    float dR = 1.f / (1.f + fabsf(pix[c][  2] - pix[c][0]) + fabsf(pix[1][ 1] - pix[1][ -1]));
-                    float dU = 1.f / (1.f + fabsf(pix[c][-w2] - pix[c][0]) + fabsf(pix[1][w1] - pix[1][-w1]));
-                    float dD = 1.f / (1.f + fabsf(pix[c][ w2] - pix[c][0]) + fabsf(pix[1][w1] - pix[1][-w1]));
-                    float v0 = (pix[c][0] + 0.5f + ((pix[1][ -1] - pix[c][ -1]) * dL + (pix[1][  1] - pix[c][  1]) * dR + (pix[1][-w1] - pix[c][-w1]) * dU + (pix[1][ w1] - pix[c][ w1]) * dD ) / (dL + dR + dU + dD));
-                    pix[1][0] = CLIP(v0);
+                    float dL = 1.f / (1.f + fabsf(rgb[c][row][col - 2] - rgb[c][row][col]) + fabsf(rgb[1][row][col + 1] - rgb[1][row][col - 1]));
+                    float dR = 1.f / (1.f + fabsf(rgb[c][row][col + 2] - rgb[c][row][col]) + fabsf(rgb[1][row][col + 1] - rgb[1][row][col - 1]));
+                    float dU = 1.f / (1.f + fabsf(rgb[c][row - 2][col] - rgb[c][row][col]) + fabsf(rgb[1][row + 1][col] - rgb[1][row - 1][col]));
+                    float dD = 1.f / (1.f + fabsf(rgb[c][row + 2][col] - rgb[c][row][col]) + fabsf(rgb[1][row + 1][col] - rgb[1][row - 1][col]));
+                    float v0 = (rgb[c][row][col] + 0.5f + ((rgb[1][row][col - 1] - rgb[c][row][col - 1]) * dL + (rgb[1][row][col + 1] - rgb[c][row][col + 1]) * dR + (rgb[1][row - 1][col] - rgb[c][row - 1][col]) * dU + (rgb[1][row + 1][col] - rgb[c][row + 1][col]) * dD ) / (dL + dR + dU + dD));
+                    rgb[1][row][col] = CLIP(v0);
                 }
             }
 
@@ -112,40 +104,32 @@ void refinement(int width, int height, float **red, float **green, float **blue,
                 int col = 2 + (fc(cfarray, row, 3) & 1);
                 int c = fc(cfarray, row, col + 1);
 #ifdef __SSE2__
-                __m128 dLv, dRv, dUv, dDv, v0v;
-                __m128 onev = _mm_set1_ps(1.f);
-                __m128 zd5v = _mm_set1_ps(0.5f);
-                __m128 c65535v = _mm_set1_ps(65535.f);
+                vfloat dLv, dRv, dUv, dDv, v0v;
+                const vfloat onev = F2V(1.f);
+                const vfloat zd5v = F2V(0.5f);
+                const vfloat c65535v = F2V(65535.f);
 
                 for (; col < width - 8; col += 8) {
-                    int indx = row * width + col;
-                    pix[1] = (float*)(*rgb[1]) + indx;
-
                     for (int i = 0; i < 2; c = 2 - c, i++) {
-                        pix[c] = (float*)(*rgb[c]) + indx;
-                        dLv = onev / (onev + vabsf(LC2VFU(pix[1][ -2]) - LC2VFU(pix[1][0])) + vabsf(LC2VFU(pix[c][ 1]) - LC2VFU(pix[c][ -1])));
-                        dRv = onev / (onev + vabsf(LC2VFU(pix[1][  2]) - LC2VFU(pix[1][0])) + vabsf(LC2VFU(pix[c][ 1]) - LC2VFU(pix[c][ -1])));
-                        dUv = onev / (onev + vabsf(LC2VFU(pix[1][-w2]) - LC2VFU(pix[1][0])) + vabsf(LC2VFU(pix[c][w1]) - LC2VFU(pix[c][-w1])));
-                        dDv = onev / (onev + vabsf(LC2VFU(pix[1][ w2]) - LC2VFU(pix[1][0])) + vabsf(LC2VFU(pix[c][w1]) - LC2VFU(pix[c][-w1])));
-                        v0v = CLIPV(LC2VFU(pix[1][0]) + zd5v - ((LC2VFU(pix[1][-1]) - LC2VFU(pix[c][-1])) * dLv + (LC2VFU(pix[1][1]) - LC2VFU(pix[c][1])) * dRv + (LC2VFU(pix[1][-w1]) - LC2VFU(pix[c][-w1])) * dUv + (LC2VFU(pix[1][w1]) - LC2VFU(pix[c][w1])) * dDv ) / (dLv + dRv + dUv + dDv));
-                        STC2VFU(pix[c][0], v0v);
+                        dLv = onev / (onev + vabsf(LC2VFU(rgb[1][row][col - 2]) - LC2VFU(rgb[1][row][col])) + vabsf(LC2VFU(rgb[c][row][col + 1]) - LC2VFU(rgb[c][row][col - 1])));
+                        dRv = onev / (onev + vabsf(LC2VFU(rgb[1][row][col + 2]) - LC2VFU(rgb[1][row][col])) + vabsf(LC2VFU(rgb[c][row][col + 1]) - LC2VFU(rgb[c][row][col - 1])));
+                        dUv = onev / (onev + vabsf(LC2VFU(rgb[1][row - 2][col]) - LC2VFU(rgb[1][row][col])) + vabsf(LC2VFU(rgb[c][row + 1][col]) - LC2VFU(rgb[c][row - 1][col])));
+                        dDv = onev / (onev + vabsf(LC2VFU(rgb[1][row + 2][col]) - LC2VFU(rgb[1][row][col])) + vabsf(LC2VFU(rgb[c][row + 1][col]) - LC2VFU(rgb[c][row - 1][col])));
+                        v0v = CLIPV(LC2VFU(rgb[1][row][col]) + zd5v - ((LC2VFU(rgb[1][row][col - 1]) - LC2VFU(rgb[c][row][col - 1])) * dLv + (LC2VFU(rgb[1][row][col + 1]) - LC2VFU(rgb[c][row][col + 1])) * dRv + (LC2VFU(rgb[1][row -1][col]) - LC2VFU(rgb[c][row -1][col])) * dUv + (LC2VFU(rgb[1][row + 1][col]) - LC2VFU(rgb[c][row + 1][col])) * dDv ) / (dLv + dRv + dUv + dDv));
+                        STC2VFU(rgb[c][row][col], v0v);
                     }
                 }
 
 #endif
 
                 for (; col < width - 2; col += 2) {
-                    int indx = row * width + col;
-                    pix[1] = (float*)(*rgb[1]) + indx;
-
                     for (int i = 0; i < 2; c = 2 - c, i++) {
-                        pix[c] = (float*)(*rgb[c]) + indx;
-                        float dL = 1.f / (1.f + fabsf(pix[1][ -2] - pix[1][0]) + fabsf(pix[c][ 1] - pix[c][ -1]));
-                        float dR = 1.f / (1.f + fabsf(pix[1][  2] - pix[1][0]) + fabsf(pix[c][ 1] - pix[c][ -1]));
-                        float dU = 1.f / (1.f + fabsf(pix[1][-w2] - pix[1][0]) + fabsf(pix[c][w1] - pix[c][-w1]));
-                        float dD = 1.f / (1.f + fabsf(pix[1][ w2] - pix[1][0]) + fabsf(pix[c][w1] - pix[c][-w1]));
-                        float v0 = (pix[1][0] + 0.5f - ((pix[1][ -1] - pix[c][ -1]) * dL + (pix[1][  1] - pix[c][  1]) * dR + (pix[1][-w1] - pix[c][-w1]) * dU + (pix[1][ w1] - pix[c][ w1]) * dD ) / (dL + dR + dU + dD));
-                        pix[c][0] = CLIP(v0);
+                        float dL = 1.f / (1.f + fabsf(rgb[1][row][col - 2] - rgb[1][row][col]) + fabsf(rgb[c][row][col + 1] - rgb[c][row][col - 1]));
+                        float dR = 1.f / (1.f + fabsf(rgb[1][row][col + 2] - rgb[1][row][col]) + fabsf(rgb[c][row][col + 1] - rgb[c][row][col - 1]));
+                        float dU = 1.f / (1.f + fabsf(rgb[1][row - 2][col] - rgb[1][row][col]) + fabsf(rgb[c][row + 1][col] - rgb[c][row - 1][col]));
+                        float dD = 1.f / (1.f + fabsf(rgb[1][row + 2][col] - rgb[1][row][col]) + fabsf(rgb[c][row + 1][col] - rgb[c][row - 1][col]));
+                        float v0 = (rgb[1][row][col] + 0.5f - ((rgb[1][row][col - 1] - rgb[c][row][col - 1]) * dL + (rgb[1][row][col + 1] - rgb[c][row][col + 1]) * dR + (rgb[1][row - 1][col] - rgb[c][row - 1][col]) * dU + (rgb[1][row + 1][col] - rgb[c][row + 1][col]) * dD ) / (dL + dR + dU + dD));
+                        rgb[c][row][col] = CLIP(v0);
                     }
                 }
             }
@@ -159,39 +143,31 @@ void refinement(int width, int height, float **red, float **green, float **blue,
                 int col = 2 + (fc(cfarray, row, 2) & 1);
                 int c = 2 - fc(cfarray, row, col);
 #ifdef __SSE2__
-                __m128 dLv, dRv, dUv, dDv, v0v;
-                __m128 onev = _mm_set1_ps(1.f);
-                __m128 zd5v = _mm_set1_ps(0.5f);
-                __m128 c65535v = _mm_set1_ps(65535.f);
+                vfloat dLv, dRv, dUv, dDv, v0v;
+                const vfloat onev = F2V(1.f);
+                const vfloat zd5v = F2V(0.5f);
+                const vfloat c65535v = F2V(65535.f);
 
                 for (; col < width - 8; col += 8) {
-                    int indx = row * width + col;
-                    pix[0] = (float*)(*rgb[0]) + indx;
-                    pix[1] = (float*)(*rgb[1]) + indx;
-                    pix[2] = (float*)(*rgb[2]) + indx;
                     int d = 2 - c;
-                    dLv = onev / (onev + vabsf(LC2VFU(pix[d][ -2]) - LC2VFU(pix[d][0])) + vabsf(LC2VFU(pix[1][ 1]) - LC2VFU(pix[1][ -1])));
-                    dRv = onev / (onev + vabsf(LC2VFU(pix[d][  2]) - LC2VFU(pix[d][0])) + vabsf(LC2VFU(pix[1][ 1]) - LC2VFU(pix[1][ -1])));
-                    dUv = onev / (onev + vabsf(LC2VFU(pix[d][-w2]) - LC2VFU(pix[d][0])) + vabsf(LC2VFU(pix[1][w1]) - LC2VFU(pix[1][-w1])));
-                    dDv = onev / (onev + vabsf(LC2VFU(pix[d][ w2]) - LC2VFU(pix[d][0])) + vabsf(LC2VFU(pix[1][w1]) - LC2VFU(pix[1][-w1])));
-                    v0v = CLIPV(LC2VFU(pix[1][0]) + zd5v - ((LC2VFU(pix[1][-1]) - LC2VFU(pix[c][-1])) * dLv + (LC2VFU(pix[1][1]) - LC2VFU(pix[c][1])) * dRv + (LC2VFU(pix[1][-w1]) - LC2VFU(pix[c][-w1])) * dUv + (LC2VFU(pix[1][w1]) - LC2VFU(pix[c][w1])) * dDv ) / (dLv + dRv + dUv + dDv));
-                    STC2VFU(pix[c][0], v0v);
+                    dLv = onev / (onev + vabsf(LC2VFU(rgb[d][row][col - 2]) - LC2VFU(rgb[d][row][col])) + vabsf(LC2VFU(rgb[1][row][col + 1]) - LC2VFU(rgb[1][row][col - 1])));
+                    dRv = onev / (onev + vabsf(LC2VFU(rgb[d][row][col + 2]) - LC2VFU(rgb[d][row][col])) + vabsf(LC2VFU(rgb[1][row][col + 1]) - LC2VFU(rgb[1][row][col - 1])));
+                    dUv = onev / (onev + vabsf(LC2VFU(rgb[d][row - 2][col]) - LC2VFU(rgb[d][row][col])) + vabsf(LC2VFU(rgb[1][row + 1][col]) - LC2VFU(rgb[1][row - 1][col])));
+                    dDv = onev / (onev + vabsf(LC2VFU(rgb[d][row + 2][col]) - LC2VFU(rgb[d][row][col])) + vabsf(LC2VFU(rgb[1][row + 1][col]) - LC2VFU(rgb[1][row - 1][col])));
+                    v0v = CLIPV(LC2VFU(rgb[1][row][col]) + zd5v - ((LC2VFU(rgb[1][row][col - 1]) - LC2VFU(rgb[c][row][col - 1])) * dLv + (LC2VFU(rgb[1][row][col + 1]) - LC2VFU(rgb[c][row][col + 1])) * dRv + (LC2VFU(rgb[1][row - 1][col]) - LC2VFU(rgb[c][row - 1][col])) * dUv + (LC2VFU(rgb[1][row + 1][col]) - LC2VFU(rgb[c][row + 1][col])) * dDv ) / (dLv + dRv + dUv + dDv));
+                    STC2VFU(rgb[c][row][col], v0v);
                 }
 
 #endif
 
                 for (; col < width - 2; col += 2) {
-                    int indx = row * width + col;
-                    pix[0] = (float*)(*rgb[0]) + indx;
-                    pix[1] = (float*)(*rgb[1]) + indx;
-                    pix[2] = (float*)(*rgb[2]) + indx;
                     int d = 2 - c;
-                    float dL = 1.f / (1.f + fabsf(pix[d][ -2] - pix[d][0]) + fabsf(pix[1][ 1] - pix[1][ -1]));
-                    float dR = 1.f / (1.f + fabsf(pix[d][  2] - pix[d][0]) + fabsf(pix[1][ 1] - pix[1][ -1]));
-                    float dU = 1.f / (1.f + fabsf(pix[d][-w2] - pix[d][0]) + fabsf(pix[1][w1] - pix[1][-w1]));
-                    float dD = 1.f / (1.f + fabsf(pix[d][ w2] - pix[d][0]) + fabsf(pix[1][w1] - pix[1][-w1]));
-                    float v0 = (pix[1][0] + 0.5f - ((pix[1][ -1] - pix[c][ -1]) * dL + (pix[1][  1] - pix[c][  1]) * dR + (pix[1][-w1] - pix[c][-w1]) * dU + (pix[1][ w1] - pix[c][ w1]) * dD ) / (dL + dR + dU + dD));
-                    pix[c][0] = CLIP(v0);
+                    float dL = 1.f / (1.f + fabsf(rgb[d][row][col - 2] - rgb[d][row][col]) + fabsf(rgb[1][row][col + 1] - rgb[1][row][col - 1]));
+                    float dR = 1.f / (1.f + fabsf(rgb[d][row][col + 2] - rgb[d][row][col]) + fabsf(rgb[1][row][col + 1] - rgb[1][row][col - 1]));
+                    float dU = 1.f / (1.f + fabsf(rgb[d][row - 2][col] - rgb[d][row][col]) + fabsf(rgb[1][row + 1][col] - rgb[1][row - 1][col]));
+                    float dD = 1.f / (1.f + fabsf(rgb[d][row + 2][col] - rgb[d][row][col]) + fabsf(rgb[1][row + 1][col] - rgb[1][row - 1][col]));
+                    float v0 = (rgb[1][row][col] + 0.5f - ((rgb[1][row][col - 1] - rgb[c][row][col - 1]) * dL + (rgb[1][row][col + 1] - rgb[c][row][col + 1]) * dR + (rgb[1][row - 1][col] - rgb[c][row - 1][col]) * dU + (rgb[1][row + 1][col] - rgb[c][row + 1][col]) * dD ) / (dL + dR + dU + dD));
+                    rgb[c][row][col] = CLIP(v0);
                 }
             }
         } // end parallel
@@ -410,9 +386,9 @@ void lmmse_demosaic(int width, int height, const float * const *rawData, float *
         for (int rr = 4; rr < rr1 - 4; rr++) {
             int cc = 4 + (fc(cfarray, rr, 4) & 1);
 #ifdef __SSE2__
-            __m128 p1v, p2v, p3v, p4v, p5v, p6v, p7v, p8v, p9v, muv, vxv, vnv, xhv, vhv, xvv, vvv;
-            __m128 epsv = _mm_set1_ps(1e-7);
-            __m128 ninev = _mm_set1_ps(9.f);
+            vfloat p1v, p2v, p3v, p4v, p5v, p6v, p7v, p8v, p9v, muv, vxv, vnv, xhv, vhv, xvv, vvv;
+            const vfloat epsv = F2V(1e-7f);
+            const vfloat ninev = F2V(9.f);
 
             for (; cc < cc1 - 10; cc += 8) {
                 rix[0] = qix[0] + rr * cc1 + cc;
@@ -650,7 +626,7 @@ void lmmse_demosaic(int width, int height, const float * const *rawData, float *
                         LVFU(rix[c][ w1]) - LVFU(rix[1][ w1]),
                         LVFU(rix[c][ w1 + 1]) - LVFU(rix[1][ w1 + 1])
                     };
-                    _mm_storeu_ps(&rix[d][0], median(p));
+                    STVFU(rix[d][0], median(p));
                 }
 
 #endif
@@ -786,10 +762,11 @@ void lmmse_demosaic(int width, int height, const float * const *rawData, float *
 
     if(buffer) {
         free(buffer);
-    } else
+    } else {
         for(int i = 0; i < 5; i++) {
             free(qix[i]);
         }
+    }
 
     if(iterations > 4) {
         refinement(width, height, red, green, blue, cfarray, setProgCancel, passref);
