@@ -53,9 +53,9 @@ inline bool validateBayerCfa(unsigned colors, const unsigned cfa[2][2]) {
             return true;
         }
     }
-#ifdef VERBOSE
-    std::cout << "librtprocess : Wrong color filter for " << colors << " colors array: " << cfa[0][0] << " " << cfa[0][1] << " " << cfa[1][0] << " " << cfa[1][1] << std::endl;
-#endif
+
+    std::cerr << "librtprocess : Wrong color filter for " << colors << " colors array: " << cfa[0][0] << " " << cfa[0][1] << " " << cfa[1][0] << " " << cfa[1][1] << std::endl;
+
     return false;
 }
 }

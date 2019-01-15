@@ -510,12 +510,14 @@ void dcb_color_full(int W, int H, float (*image)[3], int x0, int y0, float (*chr
 }
 
 // DCB demosaicing main routine
-void dcb_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, int iterations, bool dcb_enhance)
+rpError dcb_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, int iterations, bool dcb_enhance)
 {
 BENCHFUN
     if (!validateBayerCfa(3, cfarray)) {
-        return;
+        return RP_WRONG_CFA;
     }
+
+    rpError rc = RP_NO_ERROR;
 
     double currentProgress = 0.0;
     setProgCancel(currentProgress);
@@ -532,98 +534,115 @@ BENCHFUN
 {
     // assign working space
     char *buffer0 = (char *) malloc(5 * sizeof(float) * CACHESIZE * CACHESIZE + sizeof(uint8_t) * CACHESIZE * CACHESIZE + 3 * cldf * 64 + 63);
-    // aligned to 64 byte boundary
-    char *data = (char*)( ( uintptr_t(buffer0) + uintptr_t(63)) / 64 * 64);
+#ifdef _OPENMP
+    #pragma omp critical
+#endif
+    {
+        if(!buffer0) {
+            rc = RP_MEMORY_ERROR;
+        }
+    }
+#ifdef _OPENMP
+    #pragma omp barrier
+#endif
+    if (!rc) {
+        // aligned to 64 byte boundary
+        char *data = (char*)( ( uintptr_t(buffer0) + uintptr_t(63)) / 64 * 64);
 
-    float (*tile)[3]   = (float(*)[3]) data;
-    float (*buffer)[2] = (float(*)[2]) ((char*)tile + sizeof(float) * CACHESIZE * CACHESIZE * 3 + cldf * 64);
-    float (*chrm)[2]   = (float(*)[2]) (buffer); // No overlap in usage of buffer and chrm means we can reuse buffer
-    uint8_t *map       = (uint8_t*) ((char*)buffer + sizeof(float) * CACHESIZE * CACHESIZE * 2 + cldf * 64);
+        float (*tile)[3]   = (float(*)[3]) data;
+        float (*buffer)[2] = (float(*)[2]) ((char*)tile + sizeof(float) * CACHESIZE * CACHESIZE * 3 + cldf * 64);
+        float (*chrm)[2]   = (float(*)[2]) (buffer); // No overlap in usage of buffer and chrm means we can reuse buffer
+        uint8_t *map       = (uint8_t*) ((char*)buffer + sizeof(float) * CACHESIZE * CACHESIZE * 2 + cldf * 64);
 
 #ifdef _OPENMP
-    #pragma omp for schedule(dynamic) nowait
+        #pragma omp for schedule(dynamic) nowait
 #endif
 
-    for( int iTile = 0; iTile < numTiles; iTile++) {
-        int xTile = iTile % wTiles;
-        int yTile = iTile / wTiles;
-        int x0 = xTile * TILESIZE;
-        int y0 = yTile * TILESIZE;
+        for( int iTile = 0; iTile < numTiles; iTile++) {
+            int xTile = iTile % wTiles;
+            int yTile = iTile / wTiles;
+            int x0 = xTile * TILESIZE;
+            int y0 = yTile * TILESIZE;
 
-        memset(tile, 0, CACHESIZE * CACHESIZE * sizeof * tile);
-        memset(map, 0, CACHESIZE * CACHESIZE * sizeof * map);
+            memset(tile, 0, CACHESIZE * CACHESIZE * sizeof * tile);
+            memset(map, 0, CACHESIZE * CACHESIZE * sizeof * map);
 
-        fill_raw(width, height, tile, x0, y0, rawData, cfarray);
+            fill_raw(width, height, tile, x0, y0, rawData, cfarray);
 
-        if( !xTile || !yTile || xTile == wTiles - 1 || yTile == hTiles - 1) {
-            fill_border(width, height, tile, 6, x0, y0, cfarray);
-        }
+            if( !xTile || !yTile || xTile == wTiles - 1 || yTile == hTiles - 1) {
+                fill_border(width, height, tile, 6, x0, y0, cfarray);
+            }
 
-        copy_to_buffer(buffer, tile);
-        dcb_hid(width, height, tile, x0, y0, cfarray);
+            copy_to_buffer(buffer, tile);
+            dcb_hid(width, height, tile, x0, y0, cfarray);
 
-        for (int i = iterations; i > 0; i--) {
-            dcb_hid2(width, height, tile, x0, y0, cfarray);
-            dcb_hid2(width, height, tile, x0, y0, cfarray);
-            dcb_hid2(width, height, tile, x0, y0, cfarray);
+            for (int i = iterations; i > 0; i--) {
+                dcb_hid2(width, height, tile, x0, y0, cfarray);
+                dcb_hid2(width, height, tile, x0, y0, cfarray);
+                dcb_hid2(width, height, tile, x0, y0, cfarray);
+                dcb_map(width, height, tile, map, x0, y0);
+                dcb_correction(width, height, tile, map, x0, y0, cfarray);
+            }
+
+            dcb_color(width, height, tile, x0, y0, cfarray);
+            dcb_pp(width, height, tile, x0, y0);
+            dcb_map(width, height, tile, map, x0, y0);
+            dcb_correction2(width, height, tile, map, x0, y0, cfarray);
             dcb_map(width, height, tile, map, x0, y0);
             dcb_correction(width, height, tile, map, x0, y0, cfarray);
-        }
-
-        dcb_color(width, height, tile, x0, y0, cfarray);
-        dcb_pp(width, height, tile, x0, y0);
-        dcb_map(width, height, tile, map, x0, y0);
-        dcb_correction2(width, height, tile, map, x0, y0, cfarray);
-        dcb_map(width, height, tile, map, x0, y0);
-        dcb_correction(width, height, tile, map, x0, y0, cfarray);
-        dcb_color(width, height, tile, x0, y0, cfarray);
-        dcb_map(width, height, tile, map, x0, y0);
-        dcb_correction(width, height, tile, map, x0, y0, cfarray);
-        dcb_map(width, height, tile, map, x0, y0);
-        dcb_correction(width, height, tile, map, x0, y0, cfarray);
-        dcb_map(width, height, tile, map, x0, y0);
-        restore_from_buffer(tile, buffer);
-
-        if (!dcb_enhance)
             dcb_color(width, height, tile, x0, y0, cfarray);
-        else
-        {
-            memset(chrm, 0, CACHESIZE * CACHESIZE * sizeof * chrm);
-            dcb_refinement(width, height, tile, map, x0, y0, cfarray);
-            dcb_color_full(width, height, tile, x0, y0, chrm, cfarray);
-        }
+            dcb_map(width, height, tile, map, x0, y0);
+            dcb_correction(width, height, tile, map, x0, y0, cfarray);
+            dcb_map(width, height, tile, map, x0, y0);
+            dcb_correction(width, height, tile, map, x0, y0, cfarray);
+            dcb_map(width, height, tile, map, x0, y0);
+            restore_from_buffer(tile, buffer);
 
-        for(int y = 0; y < TILESIZE && y0 + y < height; y++) {
-            for (int j = 0; j < TILESIZE && x0 + j < width; j++) {
-                red[y0 + y][x0 + j]   = tile[(y + TILEBORDER) * CACHESIZE + TILEBORDER + j][0];
-                green[y0 + y][x0 + j] = tile[(y + TILEBORDER) * CACHESIZE + TILEBORDER + j][1];
-                blue[y0 + y][x0 + j]  = tile[(y + TILEBORDER) * CACHESIZE + TILEBORDER + j][2];
+            if (!dcb_enhance)
+                dcb_color(width, height, tile, x0, y0, cfarray);
+            else
+            {
+                memset(chrm, 0, CACHESIZE * CACHESIZE * sizeof * chrm);
+                dcb_refinement(width, height, tile, map, x0, y0, cfarray);
+                dcb_color_full(width, height, tile, x0, y0, chrm, cfarray);
             }
-        }
+
+            for(int y = 0; y < TILESIZE && y0 + y < height; y++) {
+                for (int j = 0; j < TILESIZE && x0 + j < width; j++) {
+                    red[y0 + y][x0 + j]   = tile[(y + TILEBORDER) * CACHESIZE + TILEBORDER + j][0];
+                    green[y0 + y][x0 + j] = tile[(y + TILEBORDER) * CACHESIZE + TILEBORDER + j][1];
+                    blue[y0 + y][x0 + j]  = tile[(y + TILEBORDER) * CACHESIZE + TILEBORDER + j][2];
+                }
+            }
 
 #ifdef _OPENMP
 
-        if(omp_get_thread_num() == 0)
+            if(omp_get_thread_num() == 0)
 #endif
-        {
-            if(double(tilesDone) / numTiles > currentProgress) {
-                currentProgress += 0.1; // Show progress each 10%
-                setProgCancel(currentProgress);
+            {
+                if(double(tilesDone) / numTiles > currentProgress) {
+                    currentProgress += 0.1; // Show progress each 10%
+                    setProgCancel(currentProgress);
+                }
             }
-        }
 
 #ifdef _OPENMP
-        #pragma omp atomic
+            #pragma omp atomic
 #endif
-        tilesDone++;
+            tilesDone++;
+        }
     }
-    free(buffer0);
+    if (buffer0) {
+        free(buffer0);
+    }
 }
-    bayerborder_demosaic(width, height, 1, rawData, red, green, blue, cfarray);
+    if (!rc) {
+        rc = bayerborder_demosaic(width, height, 1, rawData, red, green, blue, cfarray);
+    }
 
     setProgCancel(1.0);
 
-
+    return rc;
 }
 
 #undef TILEBORDER

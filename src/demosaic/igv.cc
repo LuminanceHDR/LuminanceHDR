@@ -43,29 +43,48 @@ using namespace librtprocess;
 // SSE version by Ingo Weyrich 5/2013
 #ifdef __SSE2__
 #define CLIPV(a) LIMV(a,zerov,c65535v)
-void igv_demosaic(int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
+rpError igv_demosaic(int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
 {
     BENCHFUN
     if (!validateBayerCfa(3, cfarray)) {
-        return;
+        return RP_WRONG_CFA;
     }
 
-    static const float eps = 1e-5f, epssq = 1e-5f; //mod epssq -10f =>-5f Jacques 3/2013 to prevent artifact (divide by zero)
+    rpError rc = RP_NO_ERROR;
 
-    static const int h1 = 1, h2 = 2, h3 = 3, h5 = 5;
+    constexpr float eps = 1e-5f, epssq = 1e-5f; //mod epssq -10f =>-5f Jacques 3/2013 to prevent artifact (divide by zero)
+
+    constexpr int h1 = 1, h2 = 2, h3 = 3, h5 = 5;
     const int width = winw, height = winh;
     const int v1 = 1 * width, v2 = 2 * width, v3 = 3 * width, v5 = 5 * width;
+
+    float *rgbarray = (float (*)) malloc((width * height) * sizeof(float));
+    float *vdif = (float (*)) calloc(width * height / 2, sizeof * vdif);
+    float *hdif = (float (*)) calloc(width * height / 2, sizeof * hdif);
+    float *chrarray = (float (*)) calloc(width * height, sizeof(float));
+
+    if(!rgbarray || !vdif || !hdif || !chrarray) {
+        if (rgbarray) {
+            free(rgbarray);
+        }
+        if (vdif) {
+            free(vdif);
+        }
+        if (hdif) {
+            free(hdif);
+        }
+        if (chrarray) {
+            free(chrarray);
+        }
+        return RP_MEMORY_ERROR;
+    }
+
     float* rgb[2];
-    float* chr[4];
-    float *rgbarray, *vdif, *hdif, *chrarray;
-    rgbarray    = (float (*)) malloc((width * height) * sizeof(float));
     rgb[0] = rgbarray;
     rgb[1] = rgbarray + (width * height) / 2;
 
-    vdif  = (float (*)) calloc(width * height / 2, sizeof * vdif);
-    hdif  = (float (*)) calloc(width * height / 2, sizeof * hdif);
+    float* chr[4];
 
-    chrarray    = (float (*)) calloc(width * height, sizeof(float));
     chr[0] = chrarray;
     chr[1] = chrarray + (width * height) / 2;
 
@@ -409,7 +428,7 @@ void igv_demosaic(int winw, int winh, const float * const *rawData, float **red,
         }
     }// End of parallelization
 
-    bayerborder_demosaic(winw, winh, 8, rawData, red, green, blue, cfarray);
+    rc = bayerborder_demosaic(winw, winh, 8, rawData, red, green, blue, cfarray);
 
     setProgCancel(1.0);
 
@@ -417,35 +436,58 @@ void igv_demosaic(int winw, int winh, const float * const *rawData, float **red,
     free(rgbarray);
     free(vdif);
     free(hdif);
+
+    return rc;
 }
 #undef CLIPV
 #else
-void igv_demosaic(int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
+rpError igv_demosaic(int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
 {
     BENCHFUN
     if (!validateBayerCfa(3, cfarray)) {
-        return;
+        return RP_WRONG_CFA;
     }
 
-    static const float eps = 1e-5f, epssq = 1e-5f; //mod epssq -10f =>-5f Jacques 3/2013 to prevent artifact (divide by zero)
-    static const int h1 = 1, h2 = 2, h3 = 3, h4 = 4, h5 = 5, h6 = 6;
+    rpError rc = RP_NO_ERROR;
+
+    constexpr float eps = 1e-5f, epssq = 1e-5f; //mod epssq -10f =>-5f Jacques 3/2013 to prevent artifact (divide by zero)
+    constexpr int h1 = 1, h2 = 2, h3 = 3, h4 = 4, h5 = 5, h6 = 6;
     const int width = winw, height = winh;
     const int v1 = 1 * width, v2 = 2 * width, v3 = 3 * width, v4 = 4 * width, v5 = 5 * width, v6 = 6 * width;
-    float* rgb[3];
-    float* chr[2];
-    float *rgbarray, *vdif, *hdif, *chrarray;
 
-    rgbarray    = (float (*)) calloc(width * height * 3, sizeof(float));
+    float *rgbarray = (float (*)) malloc((width * height) * sizeof(float));
+    float *vdif = (float (*)) calloc(width * height / 2, sizeof * vdif);
+    float *hdif = (float (*)) calloc(width * height / 2, sizeof * hdif);
+    float *chrarray = (float (*)) calloc(width * height, sizeof(float));
+
+    if(!rgbarray || !vdif || !hfif || !chrarray) {
+        if (rgbarray) {
+            free(rgbarray);
+        }
+        if (vdif) {
+            free(vdif);
+        }
+        if (hdif) {
+            free(hdif);
+        }
+        if (chrarray) {
+            free(chrarray);
+        }
+        return RP_MEMORY_ERROR;
+    }
+
+    float* rgb[2];
     rgb[0] = rgbarray;
-    rgb[1] = rgbarray + (width * height);
-    rgb[2] = rgbarray + 2 * (width * height);
+    rgb[1] = rgbarray + (width * height) / 2;
 
-    chrarray    = (float (*)) calloc(width * height * 2, sizeof(float));
+    float* chr[4];
+
     chr[0] = chrarray;
-    chr[1] = chrarray + (width * height);
+    chr[1] = chrarray + (width * height) / 2;
 
-    vdif  = (float (*))    calloc(width * height / 2, sizeof * vdif);
-    hdif  = (float (*))    calloc(width * height / 2, sizeof * hdif);
+    // mapped chr[2] and chr[3] to hdif and hdif, because these are out of use, when chr[2] and chr[3] are used
+    chr[2] = hdif;
+    chr[3] = vdif;
 
     setProgCancel(0.0);
 
@@ -640,7 +682,7 @@ void igv_demosaic(int winw, int winh, const float * const *rawData, float **red,
             }
     }// End of parallelization
 
-    bayerborder_demosaic(winw, winh, 8, rawData, red, green, blue, cfarray);
+    rc = bayerborder_demosaic(winw, winh, 8, rawData, red, green, blue, cfarray);
 
     setProgCancel(1.0);
 
@@ -648,6 +690,8 @@ void igv_demosaic(int winw, int winh, const float * const *rawData, float **red,
     free(rgbarray);
     free(vdif);
     free(hdif);
+
+    return rc;
 }
 #endif
 

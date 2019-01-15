@@ -57,12 +57,15 @@ inline void vng4interpolate_row_redblue (const float * const *rawData, const uns
 }
 
 
-void vng4_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
+rpError vng4_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
 {
     BENCHFUN
     if (!validateBayerCfa(4, cfarray)) {
-        return;
+        return RP_WRONG_CFA;
     }
+
+    rpError rc = RP_NO_ERROR;
+
     const signed short int *cp, terms[] = {
         -2, -2, +0, -1, 0, 0x01, -2, -2, +0, +0, 1, 0x01, -2, -1, -1, +0, 0, 0x01,
         -2, -1, +0, -1, 0, 0x02, -2, -1, +0, +0, 0, 0x03, -2, -1, +0, +1, 1, 0x01,
@@ -95,6 +98,10 @@ void vng4_demosaic (int width, int height, const float * const *rawData, float *
     constexpr unsigned int colors = 4;
 
     float (*image)[4] = (float (*)[4]) calloc (height * width, sizeof * image);
+
+    if (!image) {
+        return RP_MEMORY_ERROR;
+    }
 
     int lcode[16][16][32];
     float mul[16][16][8];
@@ -210,181 +217,186 @@ void vng4_demosaic (int width, int height, const float * const *rawData, float *
 
     constexpr int prow = 7, pcol = 1;
     int32_t *code[8][2];
-    int32_t * ip = (int32_t *) calloc ((prow + 1) * (pcol + 1), 1280);
+    int32_t *ip = (int32_t *) calloc ((prow + 1) * (pcol + 1), 1280);
+    if(!ip) {
+        rc = RP_MEMORY_ERROR;
+    } else {
 
-    for (int row = 0; row <= prow; row++)   /* Precalculate for VNG */
-        for (int col = 0; col <= pcol; col++) {
-            code[row][col] = ip;
-            cp = terms;
-            for (int t = 0; t < 64; t++) {
-                int y1 = *cp++;
-                int x1 = *cp++;
-                int y2 = *cp++;
-                int x2 = *cp++;
-                int weight = *cp++;
-                int grads = *cp++;
-                unsigned int color = fc(cfarray, row + y1, col + x1);
+        for (int row = 0; row <= prow; row++)   /* Precalculate for VNG */
+            for (int col = 0; col <= pcol; col++) {
+                code[row][col] = ip;
+                cp = terms;
+                for (int t = 0; t < 64; t++) {
+                    int y1 = *cp++;
+                    int x1 = *cp++;
+                    int y2 = *cp++;
+                    int x2 = *cp++;
+                    int weight = *cp++;
+                    int grads = *cp++;
+                    unsigned int color = fc(cfarray, row + y1, col + x1);
 
-                if (fc(cfarray, row + y2, col + x2) != color) {
-                    continue;
-                }
+                    if (fc(cfarray, row + y2, col + x2) != color) {
+                        continue;
+                    }
 
-                int diag = (fc(cfarray, row, col + 1) == color && fc(cfarray, row + 1, col) == color) ? 2 : 1;
+                    int diag = (fc(cfarray, row, col + 1) == color && fc(cfarray, row + 1, col) == color) ? 2 : 1;
 
-                if (abs(y1 - y2) == diag && abs(x1 - x2) == diag) {
-                    continue;
-                }
+                    if (abs(y1 - y2) == diag && abs(x1 - x2) == diag) {
+                        continue;
+                    }
 
-                *ip++ = (y1 * width + x1) * 4 + color;
-                *ip++ = (y2 * width + x2) * 4 + color;
+                    *ip++ = (y1 * width + x1) * 4 + color;
+                    *ip++ = (y2 * width + x2) * 4 + color;
 #ifdef __SSE2__
-                // at least on machines with SSE2 feature this cast is save
-                *reinterpret_cast<float*>(ip++) = 1 << weight;
+                    // at least on machines with SSE2 feature this cast is save
+                    *reinterpret_cast<float*>(ip++) = 1 << weight;
 #else
-                *ip++ = 1 << weight;
+                    *ip++ = 1 << weight;
 #endif
-                for (int g = 0; g < 8; g++)
-                    if (grads & (1 << g)) {
-                        *ip++ = g;
-                    }
-
-                *ip++ = -1;
-            }
-
-            *ip++ = INT_MAX;
-
-            cp = chood;
-            for (int g = 0; g < 8; g++) {
-                int y = *cp++;
-                int x = *cp++;
-                *ip++ = (y * width + x) * 4;
-                unsigned int color = fc(cfarray, row, col);
-
-                if (fc(cfarray, row + y, col + x) != color && fc(cfarray, row + y * 2, col + x * 2) == color) {
-                    *ip++ = (y * width + x) * 8 + color;
-                } else {
-                    *ip++ = 0;
-                }
-            }
-        }
-
-    progress = 0.2;
-    setProgCancel(progress);
-
-#ifdef _OPENMP
-    #pragma omp parallel
-#endif
-    {
-        constexpr int progressStep = 64;
-        const double progressInc = (1.0 - progress) / ((height - 2) / progressStep);
-        int firstRow = -1;
-        int lastRow = -1;
-#ifdef _OPENMP
-        // note, static scheduling is important in this implementation
-        #pragma omp for schedule(static)
-#endif
-
-        for (int row = 2; row < height - 2; row++) {    /* Do VNG interpolation */
-            if (firstRow == -1) {
-                firstRow = row;
-            }
-            lastRow = row;
-            for (int col = 2; col < width - 2; col++) {
-                float * pix = image[row * width + col];
-                int color = fc(cfarray, row, col);
-                int32_t * ip = code[row & prow][col & pcol];
-                float gval[8] = {};
-
-                while (ip[0] != INT_MAX) {        /* Calculate gradients */
-#ifdef __SSE2__
-                    // at least on machines with SSE2 feature this cast is save and saves a lot of int => float conversions
-                    const float diff = std::fabs(pix[ip[0]] - pix[ip[1]]) * reinterpret_cast<float*>(ip)[2];
-#else
-                    const float diff = std::fabs(pix[ip[0]] - pix[ip[1]]) * ip[2];
-#endif
-                    gval[ip[3]] += diff;
-                    ip += 5;
-                    if (UNLIKELY(ip[-1] != -1)) {
-                        gval[ip[-1]] += diff;
-                        ip++;
-                    }
-                }
-                ip++;
-
-                const float thold = librtprocess::min(gval[0], gval[1], gval[2], gval[3], gval[4], gval[5], gval[6], gval[7])
-                                  + librtprocess::max(gval[0], gval[1], gval[2], gval[3], gval[4], gval[5], gval[6], gval[7]) * 0.5f;
-
-                float sum0 = 0.f;
-                float sum1 = 0.f;
-                const float greenval = pix[color];
-                int num = 0;
-
-                if(color & 1) {
-                    color ^= 2;
-                    for (int g = 0; g < 8; g++, ip += 2) {  /* Average the neighbors */
-                        if (gval[g] <= thold) {
-                            if(ip[1]) {
-                                sum0 += greenval + pix[ip[1]];
-                            }
-
-                            sum1 += pix[ip[0] + color];
-                            num++;
+                    for (int g = 0; g < 8; g++)
+                        if (grads & (1 << g)) {
+                            *ip++ = g;
                         }
-                    }
-                    sum0 *= 0.5f;
-                } else {
-                    for (int g = 0; g < 8; g++, ip += 2) {  /* Average the neighbors */
-                        if (gval[g] <= thold) {
-                            if(ip[1]) {
-                                sum0 += greenval + pix[ip[1]];
-                            }
 
-                            sum1 += pix[ip[0] + 1] + pix[ip[0] + 3];
-                            num++;
-                        }
+                    *ip++ = -1;
+                }
+
+                *ip++ = INT_MAX;
+
+                cp = chood;
+                for (int g = 0; g < 8; g++) {
+                    int y = *cp++;
+                    int x = *cp++;
+                    *ip++ = (y * width + x) * 4;
+                    unsigned int color = fc(cfarray, row, col);
+
+                    if (fc(cfarray, row + y, col + x) != color && fc(cfarray, row + y * 2, col + x * 2) == color) {
+                        *ip++ = (y * width + x) * 8 + color;
+                    } else {
+                        *ip++ = 0;
                     }
                 }
-                green[row][col] = greenval + (sum1 - sum0) / (2 * num);
-            }
-            if (row - 1 > firstRow) {
-                vng4interpolate_row_redblue(rawData, cfarray, red[row - 1], blue[row - 1], green[row - 2], green[row - 1], green[row], row - 1, width);
             }
 
-                if((row % progressStep) == 0)
-#ifdef _OPENMP
-                    #pragma omp critical (updateprogress)
-#endif
-                {
-                    progress += progressInc;
-                    setProgCancel(progress);
-                }
-        }
+        progress = 0.2;
+        setProgCancel(progress);
 
-        if (firstRow > 2 && firstRow < height - 3) {
-            vng4interpolate_row_redblue(rawData, cfarray, red[firstRow], blue[firstRow], green[firstRow - 1], green[firstRow], green[firstRow + 1], firstRow, width);
-        }
-
-        if (lastRow > 2 && lastRow < height - 3) {
-            vng4interpolate_row_redblue(rawData, cfarray, red[lastRow], blue[lastRow], green[lastRow - 1], green[lastRow], green[lastRow + 1], lastRow, width);
-        }
 #ifdef _OPENMP
-        #pragma omp single
+        #pragma omp parallel
 #endif
         {
-            // let the first thread, which is out of work, do the border interpolation
-            // bayerborder_demosaic needs a 3 color cfa.
-            unsigned bordercfa[2][2];
-            for (int i = 0; i < 2; ++i) {
-                for (int j = 0; j < 2; ++j) {
-                    bordercfa[i][j] = (cfarray[i][j] & 1) ? 1 : cfarray[i][j];
-                }
-            }
-            bayerborder_demosaic(width, height, 3, rawData, red, green, blue, bordercfa);
-        }
-    }
+            constexpr int progressStep = 64;
+            const double progressInc = (1.0 - progress) / ((height - 2) / progressStep);
+            int firstRow = -1;
+            int lastRow = -1;
+#ifdef _OPENMP
+            // note, static scheduling is important in this implementation
+            #pragma omp for schedule(static)
+#endif
 
-    free (code[0][0]);
-    free (image);
+            for (int row = 2; row < height - 2; row++) {    /* Do VNG interpolation */
+                if (firstRow == -1) {
+                    firstRow = row;
+                }
+                lastRow = row;
+                for (int col = 2; col < width - 2; col++) {
+                    float * pix = image[row * width + col];
+                    int color = fc(cfarray, row, col);
+                    int32_t * ip = code[row & prow][col & pcol];
+                    float gval[8] = {};
+
+                    while (ip[0] != INT_MAX) {        /* Calculate gradients */
+#ifdef __SSE2__
+                        // at least on machines with SSE2 feature this cast is save and saves a lot of int => float conversions
+                        const float diff = std::fabs(pix[ip[0]] - pix[ip[1]]) * reinterpret_cast<float*>(ip)[2];
+#else
+                        const float diff = std::fabs(pix[ip[0]] - pix[ip[1]]) * ip[2];
+#endif
+                        gval[ip[3]] += diff;
+                        ip += 5;
+                        if (UNLIKELY(ip[-1] != -1)) {
+                            gval[ip[-1]] += diff;
+                            ip++;
+                        }
+                    }
+                    ip++;
+
+                    const float thold = librtprocess::min(gval[0], gval[1], gval[2], gval[3], gval[4], gval[5], gval[6], gval[7])
+                                      + librtprocess::max(gval[0], gval[1], gval[2], gval[3], gval[4], gval[5], gval[6], gval[7]) * 0.5f;
+
+                    float sum0 = 0.f;
+                    float sum1 = 0.f;
+                    const float greenval = pix[color];
+                    int num = 0;
+
+                    if(color & 1) {
+                        color ^= 2;
+                        for (int g = 0; g < 8; g++, ip += 2) {  /* Average the neighbors */
+                            if (gval[g] <= thold) {
+                                if(ip[1]) {
+                                    sum0 += greenval + pix[ip[1]];
+                                }
+
+                                sum1 += pix[ip[0] + color];
+                                num++;
+                            }
+                        }
+                        sum0 *= 0.5f;
+                    } else {
+                        for (int g = 0; g < 8; g++, ip += 2) {  /* Average the neighbors */
+                            if (gval[g] <= thold) {
+                                if(ip[1]) {
+                                    sum0 += greenval + pix[ip[1]];
+                                }
+
+                                sum1 += pix[ip[0] + 1] + pix[ip[0] + 3];
+                                num++;
+                            }
+                        }
+                    }
+                    green[row][col] = greenval + (sum1 - sum0) / (2 * num);
+                }
+                if (row - 1 > firstRow) {
+                    vng4interpolate_row_redblue(rawData, cfarray, red[row - 1], blue[row - 1], green[row - 2], green[row - 1], green[row], row - 1, width);
+                }
+
+                    if((row % progressStep) == 0)
+#ifdef _OPENMP
+                        #pragma omp critical (updateprogress)
+#endif
+                    {
+                        progress += progressInc;
+                        setProgCancel(progress);
+                    }
+            }
+
+            if (firstRow > 2 && firstRow < height - 3) {
+                vng4interpolate_row_redblue(rawData, cfarray, red[firstRow], blue[firstRow], green[firstRow - 1], green[firstRow], green[firstRow + 1], firstRow, width);
+            }
+
+            if (lastRow > 2 && lastRow < height - 3) {
+                vng4interpolate_row_redblue(rawData, cfarray, red[lastRow], blue[lastRow], green[lastRow - 1], green[lastRow], green[lastRow + 1], lastRow, width);
+            }
+#ifdef _OPENMP
+            #pragma omp single
+#endif
+            {
+                // let the first thread, which is out of work, do the border interpolation
+                // bayerborder_demosaic needs a 3 color cfa.
+                unsigned bordercfa[2][2];
+                for (int i = 0; i < 2; ++i) {
+                    for (int j = 0; j < 2; ++j) {
+                        bordercfa[i][j] = (cfarray[i][j] & 1) ? 1 : cfarray[i][j];
+                    }
+                }
+                rc = bayerborder_demosaic(width, height, 3, rawData, red, green, blue, bordercfa);
+            }
+        }
+        free(code[0][0]);
+    }
+    free(image);
 
     setProgCancel(1.0);
+
+    return rc;
 }

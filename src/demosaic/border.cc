@@ -21,14 +21,15 @@
 #include "bayerhelper.h"
 #include "librtprocess.h"
 #include "StopWatch.h"
+#include "xtranshelper.h"
 
 using namespace librtprocess;
 
-void bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2])
+rpError bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2])
 {
     BENCHFUN
     if (!validateBayerCfa(3, cfarray)) {
-        return;
+        return RP_WRONG_CFA;
     }
 
     int bord = lborders;
@@ -182,11 +183,10 @@ void bayerborder_demosaic(int winw, int winh, int lborders, const float * const 
         }//j
     }
 
+    return RP_NO_ERROR;
 }
 
-#define fcol(row,col) xtrans[(row)%6][(col)%6]
-
-void xtransborder_demosaic(int winw, int winh, int border, const float * const *rawData, float **red, float **green, float **blue, const int xtrans[6][6])
+void xtransborder_demosaic(int winw, int winh, int border, const float * const *rawData, float **red, float **green, float **blue, const unsigned xtrans[6][6])
 {
     BENCHFUN
     const int height = winh, width = winw;
@@ -201,12 +201,12 @@ void xtransborder_demosaic(int winw, int winh, int border, const float * const *
 
             for (int y = std::max(0, row - 1); y <= std::min(row + 1, height - 1); y++)
                 for (int x = std::max(0, col - 1); x <= std::min(col + 1, width - 1); x++) {
-                    int f = fcol(y, x);
+                    int f = fc(xtrans, y, x);
                     sum[f] += rawData[y][x];
                     sum[f + 3]++;
                 }
 
-            switch(fcol(row, col)) {
+            switch(fc(xtrans, row, col)) {
             case 0:
                 red[row][col] = rawData[row][col];
                 green[row][col] = (sum[1] / sum[4]);
@@ -231,4 +231,3 @@ void xtransborder_demosaic(int winw, int winh, int border, const float * const *
             }
         }
 }
-#undef fcol

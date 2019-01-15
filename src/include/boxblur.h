@@ -22,7 +22,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "jaggedarray.h"
 #include "rt_math.h"
 #include "opthelper.h"
 

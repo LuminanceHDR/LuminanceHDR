@@ -187,11 +187,11 @@ BENCHFUN
 // Adapted to RawTherapee by Jacques Desmis 3/2013
 // Improved speed and reduced memory consumption by Ingo Weyrich 2/2015
 //TODO Tiles to reduce memory consumption
-void lmmse_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, int iterations)
+rpError lmmse_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, int iterations)
 {
     BENCHFUN
     if (!validateBayerCfa(3, cfarray)) {
-        return;
+        return RP_WRONG_CFA;
     }
 
     constexpr int ba = 10;
@@ -231,7 +231,7 @@ void lmmse_demosaic(int width, int height, const float * const *rawData, float *
     float *qix[5];
     float *buffer = (float *)calloc(rr1 * cc1 * 5 * sizeof(float), 1);
 
-    if(buffer == nullptr) { // allocation of big block of memory failed, try to get 5 smaller ones
+    if(!buffer) { // allocation of big block of memory failed, try to get 5 smaller ones
         printf("lmmse_interpolate_omp: allocation of big memory block failed, try to get 5 smaller ones now...\n");
         bool allocationFailed = false;
 
@@ -252,8 +252,7 @@ void lmmse_demosaic(int width, int height, const float * const *rawData, float *
                 }
             }
 
-            igv_demosaic(width, height, rawData, red, green, blue, cfarray, setProgCancel);
-            return;
+            return RP_MEMORY_ERROR;
         }
     } else {
         qix[0] = buffer;
@@ -771,5 +770,7 @@ void lmmse_demosaic(int width, int height, const float * const *rawData, float *
     if(iterations > 4) {
         refinement(width, height, red, green, blue, cfarray, setProgCancel, passref);
     }
+
+    return RP_NO_ERROR;
 }
 

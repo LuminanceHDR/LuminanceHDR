@@ -20,11 +20,18 @@
 ////////////////////////////////////////////////////////////////
 
 #include "librtprocess.h"
+#include "StopWatch.h"
+#include "xtranshelper.h"
 
-#define fcol(row,col) xtrans[(row)%6][(col)%6]
+using namespace librtprocess;
 
-void xtransfast_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const int xtrans[6][6], const std::function<bool(double)> &setProgCancel)
+rpError xtransfast_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned xtrans[6][6], const std::function<bool(double)> &setProgCancel)
 {
+BENCHFUN
+
+    if (!validateXtransCfa(xtrans)) {
+        return RP_WRONG_CFA;
+    }
 
     setProgCancel(0.0);
 
@@ -44,11 +51,11 @@ void xtransfast_demosaic (int width, int height, const float * const *rawData, f
 
             for (int v = -1; v <= 1; v++) {
                 for (int h = -1; h <= 1; h++) {
-                    sum[fcol(row + v, col + h)] += rawData[row + v][(col + h)] * weight[v + 1][h + 1];
+                    sum[fc(xtrans, row + v, col + h)] += rawData[row + v][(col + h)] * weight[v + 1][h + 1];
                 }
             }
 
-            switch(fcol(row, col)) {
+            switch(fc(xtrans, row, col)) {
             case 0: // red pixel
                 red[row][col] = rawData[row][col];
                 green[row][col] = sum[1] * 0.5f;
@@ -57,7 +64,7 @@ void xtransfast_demosaic (int width, int height, const float * const *rawData, f
 
             case 1: // green pixel
                 green[row][col] = rawData[row][col];
-                if (fcol(row, col - 1) == fcol(row, col + 1)) { // Solitary green pixel always has exactly two direct red and blue neighbors in 3x3 grid
+                if (fc(xtrans, row, col - 1) == fc(xtrans, row, col + 1)) { // Solitary green pixel always has exactly two direct red and blue neighbors in 3x3 grid
                     red[row][col] = sum[0];
                     blue[row][col] = sum[2];
                 } else { // Non solitary green pixel always has one direct and one diagonal red and blue neighbor in 3x3 grid
@@ -76,9 +83,6 @@ void xtransfast_demosaic (int width, int height, const float * const *rawData, f
     }
 
     setProgCancel(1.0);
+
+    return RP_NO_ERROR;
 }
-
-#undef CLIP
-#undef fcol
-#undef isgreen
-
