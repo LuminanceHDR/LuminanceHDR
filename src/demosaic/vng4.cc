@@ -21,6 +21,7 @@
 ////////////////////////////////////////////////////////////////
 
 #include <cmath>
+#include <climits>
 #include "bayerhelper.h"
 #include "librtprocess.h"
 #include "opthelper.h"
