@@ -18,6 +18,7 @@
  */
 #include "librtprocess.h"
 #include <cmath>
+#include <cstring>
 #include <cstdlib>
 #include "opthelper.h"
 #include "boxblur.h"
