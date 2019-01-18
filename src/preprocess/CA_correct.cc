@@ -136,6 +136,7 @@ rpError CA_correct(
 // multithreaded and vectorized by Ingo Weyrich
     constexpr int ts = 128;
     constexpr int tsh = ts / 2;
+    constexpr int cb = 2; // 2 pixels border will be excluded from correction
     //shifts to location of vertical and diagonal neighbors
     constexpr int v1 = ts, v2 = 2 * ts, v3 = 3 * ts, v4 = 4 * ts;
 
@@ -152,17 +153,17 @@ rpError CA_correct(
     std::unique_ptr<JaggedArray<float>> blueFactor;
     std::unique_ptr<JaggedArray<float>> oldraw;
     if (avoidColourshift) {
-        redFactor.reset(new JaggedArray<float>((W + 1) / 2, (H + 1) / 2));
-        blueFactor.reset(new JaggedArray<float>((W + 1) / 2, (H + 1) / 2));
-        oldraw.reset(new JaggedArray<float>((W + 1) / 2, H));
+        redFactor.reset(new JaggedArray<float>((W + 1 - 2 * cb) / 2, (H + 1 - 2 * cb) / 2));
+        blueFactor.reset(new JaggedArray<float>((W + 1 - 2 * cb) / 2, (H + 1 - 2 * cb) / 2));
+        oldraw.reset(new JaggedArray<float>((W + 1- 2 * cb) / 2, H- 2 * cb));
         if(!*redFactor.get() || !*blueFactor.get() || !*oldraw.get()) {
             return RP_MEMORY_ERROR;
         }
         // copy raw values before ca correction
         #pragma omp parallel for
-        for (int i = 0; i < H; ++i) {
-            for (int j = fc(cfarray, i, 0) & 1; j < W; j += 2) {
-                (*oldraw)[i][j / 2] = rawDataIn[i + winy][j + winx];
+        for (int i = cb; i < H - cb; ++i) {
+            for (int j = cb + (fc(cfarray, i + winy, winx) & 1); j < W - cb; j += 2) {
+                (*oldraw)[i - cb][(j - cb) / 2] = rawDataIn[i + winy][j + winx];
             }
         }
     }
@@ -197,8 +198,7 @@ rpError CA_correct(
         return RP_MEMORY_ERROR;
     }
 
-    float *RawDataTmp = Gtmp + (height * width) / 2;
-
+    float *RawDataTmp = Gtmp + (winh * (winw + (winw & 1))) / 2;
     //block CA shift values and weight assigned to block
     float *const blockwt = Gtmp + height * width;
     memset(blockwt, 0, vblsz * hblsz * (2 * 2 + 1) * sizeof(float));
@@ -824,7 +824,7 @@ rpError CA_correct(
                             const int vblock = ((top + border) / (ts - border2)) + 1;
                             const int hblock = ((left + border) / (ts - border2)) + 1;
                             const int bottom = std::min(top + ts, winy + winh + border);
-                            const int right  = std::min(left + ts, winx + winw - (W & 1) + border);
+                            const int right  = std::min(left + ts, winx + winw + border);
                             const int rr1 = bottom - top;
                             const int cc1 = right - left;
 
@@ -1190,14 +1190,14 @@ rpError CA_correct(
                                 int c = fc(cfarray, rr + top, left + border + (fc(cfarray, rr + top, 2) & 1));
                                 int row = rr + top;
                                 int cc = border + (fc(cfarray, rr, 2) & 1);
-                                int indx = ((row-winy) * winw + cc + left - winx) >> 1;
+                                int indx = ((row-winy) * (winw + (winw & 1)) + cc + left - winx) >> 1;
                                 int indx1 = (rr * ts + cc) >> 1;
 #ifdef __SSE2__
-                                for (; indx < ((row-winy) * winw + cc1 - border - 7 + left - winx) >> 1; indx+=4, indx1 += 4) {
+                                for (; indx < ((row-winy) * (winw + (winw & 1)) + cc1 - border - 7 + left - winx) >> 1; indx+=4, indx1 += 4) {
                                     STVFU(RawDataTmp[indx], coutScalev * LVFU(rgb[c][indx1]));
                                 }
 #endif
-                                for (; indx < ((row-winy) * winw + cc1 - border + left - winx) >> 1; indx++, indx1++) {
+                                for (; indx < ((row-winy) * (winw + (winw & 1)) + cc1 - border + left - winx) >> 1; indx++, indx1++) {
                                     RawDataTmp[indx] = outputScale * rgb[c][indx1];
                                 }
                             }
@@ -1221,15 +1221,15 @@ rpError CA_correct(
                     // copy temporary image matrix back to image matrix
                     #pragma omp for
 
-                    for(int row = 0; row < winh; row++) {
-                        int col = fc(cfarray, row + winy, winx) & 1;
-                        int indx = (row * winw + col) >> 1;
+                    for(int row = cb; row < winh - cb; row++) {
+                        int col = cb + (fc(cfarray, row + winy, winx) & 1);
+                        int indx = (row * (winw + (winw & 1)) + col) >> 1;
 #ifdef __SSE2__
-                        for (; col < winw - 7 - (3 * (W & 1)); col += 8, indx += 4) {
+                        for (; col < (winw + (winw & 1)) - 7 - cb; col += 8, indx += 4) {
                             STC2VFU(rawDataOut[row + winy][col + winx], LVFU(RawDataTmp[indx]));
                         }
 #endif
-                        for (; col < winw - (3 * (W & 1)); col += 2, indx++) {
+                        for (; col < (winw + (winw & 1)) - cb; col += 2, indx++) {
                             rawDataOut[row + winy][col + winx] = RawDataTmp[indx];
                         }
                     }
@@ -1250,14 +1250,14 @@ rpError CA_correct(
                 const vfloat zd5v = F2V(0.5f);
 #endif
                 #pragma omp for
-                for (int i = winy; i < winh; ++i) {
+                for (int i = winy; i < winh - 2 * cb; ++i) {
                     const int firstCol = winx + (fc(cfarray, i, winx) & 1);
                     const int colour = fc(cfarray, i, firstCol);
                     JaggedArray<float>* nonGreen = colour == 0 ? redFactor.get() : blueFactor.get();
                     int j = firstCol;
 #ifdef __SSE2__
-                    for (; j < winw - 7; j += 8) {
-                        const vfloat newvals = LC2VFU(rawDataOut[i][j]);
+                    for (; j < winw - 7 - 2 * cb; j += 8) {
+                        const vfloat newvals = LC2VFU(rawDataOut[i + cb][j + cb]);
                         const vfloat oldvals = LVFU((*oldraw)[i - winy][(j - winx) / 2]);
                         vfloat factors = oldvals / newvals;
                         factors = vself(vmaskf_le(newvals, onev), onev, factors);
@@ -1265,20 +1265,19 @@ rpError CA_correct(
                         STVFU((*nonGreen)[(i - winy) / 2][(j - winx) / 2], LIMV(factors, zd5v, twov));
                     }
 #endif
-                    for (; j < winw; j += 2) {
-                        (*nonGreen)[(i - winy) / 2][(j - winx) / 2] = (rawDataOut[i][j] <= 1.f || (*oldraw)[i - winy][(j - winx) / 2] <= 1.f) ? 1.f : librtprocess::LIM((*oldraw)[i - winy][(j - winx) / 2] / rawDataOut[i][j], 0.5f, 2.f);
+                    for (; j < winw - 2 * cb; j += 2) {
+                        (*nonGreen)[(i - winy) / 2][(j - winx) / 2] = (rawDataOut[i + cb][j + cb] <= 1.f || (*oldraw)[i - winy][(j - winx) / 2] <= 1.f) ? 1.f : librtprocess::LIM((*oldraw)[i - winy][(j - winx) / 2] / rawDataOut[i + cb][j + cb], 0.5f, 2.f);
                     }
                 }
 
                 #pragma omp single
                 {
                     if (H % 2) {
-                        // odd height => factors for one channel are not set in last row => use values of preceding row
-                        const int firstCol = winx + (fc(cfarray, winy, winx) & 1);
-                        const int colour = fc(cfarray, winy, firstCol);
-                        JaggedArray<float>* nonGreen = colour == 0 ? blueFactor.get() : redFactor.get();
-                        for (int j = winx; j < (winw + 1) / 2; ++j) {
-                            (*nonGreen)[(H + 1) / 2 - 1][j] = (*nonGreen)[(H + 1) / 2 - 2][j];
+                        // odd height => factors are not set in last row => use values of preceding row
+                        // odd height => factors are not set in last row => use values of preceding row
+                        for (int j = 0; j < (W + 1 - 2 * cb) / 2; ++j) {
+                            (*redFactor)[(H - 2 * cb + 1) / 2 - 1][j] = (*redFactor)[(H - 2 * cb + 1) / 2 - 2][j];
+                            (*blueFactor)[(H - 2 * cb + 1) / 2 - 1][j] = (*blueFactor)[(H - 2 * cb + 1) / 2 - 2][j];
                         }
                     }
 
@@ -1288,24 +1287,24 @@ rpError CA_correct(
                         const int ngCol = winx + (fc(cfarray, ngRow, winx) & 1);
                         const int colour = fc(cfarray, ngRow, ngCol);
                         JaggedArray<float>* nonGreen = colour == 0 ? redFactor.get() : blueFactor.get();
-                        for (int i = 0; i < (H + 1) / 2; ++i) {
-                            (*nonGreen)[i][(W + 1) / 2 - 1] = (*nonGreen)[i][(W + 1) / 2 - 2];
+                        for (int i = 0; i < (H + 1 - 2 * cb) / 2; ++i) {
+                            (*nonGreen)[i][(W - 2 * cb + 1) / 2 - 1] = (*nonGreen)[i][(W - 2* cb + 1) / 2 - 2];
                         }
                     }
                 }
 
                 // blur correction factors
-                gaussianBlur(*redFactor, *redFactor, (W+1)/2, (H+1)/2, 30.0);
-                gaussianBlur(*blueFactor, *blueFactor, (W+1)/2, (H+1)/2, 30.0);
+                gaussianBlur(*redFactor, *redFactor, (W + 1 - 2 * cb) / 2, (H + 1 - 2 * cb) / 2, 30.0);
+                gaussianBlur(*blueFactor, *blueFactor, (W + 1 - 2 * cb) / 2, (H + 1 - 2 * cb) / 2, 30.0);
 
                 // apply correction factors to avoid (reduce) colour shift
                 #pragma omp for
-                for (int i = winy; i < winh; ++i) {
+                for (int i = winy; i < winh - 2 * cb; ++i) {
                     const int firstCol = winx + (fc(cfarray, i, winx) & 1);
                     const int colour = fc(cfarray, i, firstCol);
                     JaggedArray<float>* nonGreen = colour == 0 ? redFactor.get() : blueFactor.get();
-                    for (int j = firstCol; j < winw; j += 2) {
-                        rawDataOut[i][j] *= (*nonGreen)[i/2][j/2];
+                    for (int j = firstCol; j < winw - 2 * cb; j += 2) {
+                        rawDataOut[i + cb][j + cb] *= (*nonGreen)[i/2][j/2];
                     }
                 }
             }
