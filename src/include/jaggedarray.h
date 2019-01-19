@@ -37,17 +37,20 @@ public:
         array(
             [width, height, init_zero]() -> T**
             {
-                T** const res = new T*[height];
-                res[0] = new T[height * width];
+                T** const res = new (std::nothrow) T*[height];
+                if (res) {
+                    res[0] = new (std::nothrow)T[height * width];
 
-                for (std::size_t i = 1; i < height; ++i) {
-                    res[i] = res[i - 1] + width;
+                    for (std::size_t i = 1; i < height; ++i) {
+                        res[i] = res[i - 1] + width;
+                    }
+
+                    if (res[0] && init_zero) {
+                        std::memset(res[0], 0, sizeof(T) * width * height);
+                    }
+                } else {
+                    res[0] = nullptr;
                 }
-
-                if (init_zero) {
-                    std::memset(res[0], 0, sizeof(T) * width * height);
-                }
-
                 return res;
             }()
         )
@@ -63,6 +66,11 @@ public:
     operator T** ()
     {
         return array;
+    }
+
+    operator bool()
+    {
+        return array && array[0];
     }
 
 private:
