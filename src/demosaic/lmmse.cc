@@ -264,7 +264,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
 
     setProgCancel(0.0);
 
-    LUTf gamtab(65536, 0);
+    LUTf gamtab(65536, LUT_CLIP_ABOVE | LUT_CLIP_BELOW);
 
     if(applyGamma) {
         for (int i = 0; i < 65536; i++) {
@@ -728,6 +728,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
             float x = i / 65535.f;
             gamtab[i] = 65535.f * (x <= 0.031746f ? x / 17.f : xexpf(xlogf((x + 0.044445f) / 1.044445f) * 2.4f));
         }
+        gamtab.setClip(0);
     } else {
         gamtab.makeIdentity();
     }
