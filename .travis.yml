@@ -12,6 +12,8 @@ before_script:
   - cp -a "$TRAVIS_BUILD_DIR" librtprocess-ci
   - cd librtprocess-ci
   - git fetch --all && git pull --all
+  - git branch
+  - git branch -r
   - git checkout ci
   - cp -a ci-scripts "$TRAVIS_BUILD_DIR"
   #- git clone https://github.com/aferrero2707/librtprocess.git --branch ci --single-branch librtprocess-ci
