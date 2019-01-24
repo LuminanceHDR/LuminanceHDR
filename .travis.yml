@@ -12,7 +12,7 @@ before_script:
   - git clone https://github.com/aferrero2707/librtprocess.git --branch ci --single-branch librtprocess-ci
   - cp -a librtprocess-ci/ci-scripts "$TRAVIS_BUILD_DIR"
   - cd "$TRAVIS_BUILD_DIR"
-  - sudo docker run -it -v $(pwd):/sources -e "LIBRT_BRANCH=$LIBRT_BRANCH" -e "TARGET_PROJECT=$TARGET_PROJECT" centos:7 bash /sources/ci-scripts/build-appimages.sh
+  - sudo docker run -it -v $(pwd):/sources -e "LIBRT_BRANCH=$TRAVIS_BRANCH" -e "TARGET_PROJECT=$TARGET_PROJECT" centos:7 bash /sources/ci-scripts/build-appimages.sh
 after_success:
   - cd $TRAVIS_BUILD_DIR
   - pwd
@@ -20,7 +20,8 @@ after_success:
   - ls -lh out/* # Assuming you have some files in out/ that you would like to upload
   #- wget -c https://github.com/aferrero2707/uploadtool/raw/master/remove.sh
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash ./remove.sh "nightly" "RawTherapee-${RT_BRANCH}-" ".AppImage"
-  #- wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
+  - wget -c https://github.com/aferrero2707/uploadtool/raw/master/upload_rotate.sh
+  - bash  ./upload_rotate.sh "continuous" out/* >& /dev/null
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash  ./upload_rotate.sh "nightly" out/* >& /dev/null
   #- TRAVIS_REPO_SLUG="Beep6581/RawTherapee" bash  ./upload_rotate.sh "nightly" $TRAVIS_BUILD_DIR/RawTherapee/commit-${RT_BRANCH}.hash >& /dev/null
 
