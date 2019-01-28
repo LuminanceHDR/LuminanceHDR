@@ -25,6 +25,7 @@
 #include <memory>
 
 #include "bayerhelper.h"
+#include "gauss.h"
 #include "librtprocess.h"
 #include "jaggedarray.h"
 #include "rt_math.h"

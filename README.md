@@ -19,7 +19,6 @@ librtprocess currently is maintained by developers of the following projects:
 
 This is version 0.7.0, which furnishes the following routines:
 
-
 * ahd_demosaic
 * amaze_demosaic
 * dcb_demosaic
@@ -30,7 +29,6 @@ This is version 0.7.0, which furnishes the following routines:
 * markesteijn_demosaic
 * xtransfast_demosaic
 * CA_correct
-* gaussianBlur
 
 Build instructions:
 
