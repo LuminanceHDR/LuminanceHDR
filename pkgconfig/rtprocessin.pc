@@ -5,6 +5,6 @@ includedir=${prefix}/include
 Name: rtprocess
 Description: A raw preprocessing and demosaic library
 URL: https://github.com/CarVac/librtprocess
-Version: 0.6.0
+Version: 0.7.0
 Libs: -L${libdir} -lrtprocess
 Cflags: -I${includedir}
