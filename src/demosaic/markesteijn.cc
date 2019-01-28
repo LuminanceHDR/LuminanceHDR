@@ -515,7 +515,7 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
                                 }
 
                             int coloffset = (RightShift[row % 3] == 1 ? 3 : 1);
-                            c = (row - sgrow) % 3 ? ts : 1;
+                            c = ((row - sgrow) % 3) ? ts : 1;
                             int h = 3 * (c ^ ts ^ 1);
 
                             if(coloffset == 3) {

@@ -522,8 +522,8 @@ BENCHFUN
     double currentProgress = 0.0;
     setProgCancel(currentProgress);
 
-    int wTiles = width / TILESIZE + (width % TILESIZE ? 1 : 0);
-    int hTiles = height / TILESIZE + (height % TILESIZE ? 1 : 0);
+    int wTiles = width / TILESIZE + ((width % TILESIZE) ? 1 : 0);
+    int hTiles = height / TILESIZE + ((height % TILESIZE) ? 1 : 0);
     int numTiles = wTiles * hTiles;
     int tilesDone = 0;
     constexpr int cldf = 2; // factor to multiply cache line distance. 1 = 64 bytes, 2 = 128 bytes ...
