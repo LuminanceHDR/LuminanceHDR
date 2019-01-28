@@ -227,8 +227,8 @@ rpError ahd_demosaic(int width, int height, const float * const *rawData, float 
 
             }
         }
-        delete [] buffer;
     }
+    delete [] buffer;
 }
 
     setProgCancel(1.0);
