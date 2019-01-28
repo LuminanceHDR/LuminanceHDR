@@ -13,6 +13,8 @@ librtprocess currently is maintained by developers of the following projects:
 
 . PhotoFlow https://github.com/aferrero2707/PhotoFlow
 
+. rawproc https://github.com/butcherg/rawproc
+
 . RawTherapee https://github.com/Beep6581/RawTherapee
 
 ... the latter is where currently all the code comes from ;-)
