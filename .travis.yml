@@ -9,13 +9,8 @@ env:
 
 before_script:
   - cd /tmp
-  - cp -a "$TRAVIS_BUILD_DIR" librtprocess-ci
-  - cd librtprocess-ci
-  - git fetch --all && git pull --all
-  - git checkout ci
-  - cp -a ci-scripts "$TRAVIS_BUILD_DIR"
-  #- git clone https://github.com/aferrero2707/librtprocess.git --branch ci --single-branch librtprocess-ci
-  #- cp -a librtprocess-ci/ci-scripts "$TRAVIS_BUILD_DIR"
+  - git clone https://github.com/${TRAVIS_REPO_SLUG}.git --branch ci --single-branch librtprocess-ci
+  - cp -a librtprocess-ci/ci-scripts "$TRAVIS_BUILD_DIR"
   - cd "$TRAVIS_BUILD_DIR"
   - sudo docker run -it -v $(pwd):/sources -e "LIBRT_BRANCH=$TRAVIS_BRANCH" -e "TARGET_PROJECT=$TARGET_PROJECT" centos:7 bash /sources/ci-scripts/build-appimages.sh
 after_success:
