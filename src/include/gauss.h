@@ -23,6 +23,8 @@
 #include "opthelper.h"
 #include "boxblur.h"
 
+enum eGaussType {GAUSS_STANDARD, GAUSS_MULT, GAUSS_DIV};
+
 using namespace librtprocess;
 
 template<class T> void calculateYvVFactors( const T sigma, T &b1, T &b2, T &b3, T &B, T M[3][3])
@@ -1295,7 +1297,7 @@ template<class T> void gaussianBlurImpl(T** src, T** dst, const int W, const int
     }
 }
 
-void gaussianBlur(float** src, float** dst, const int W, const int H, const double sigma, float *buffer, eGaussType gausstype, float** buffer2)
+static void gaussianBlur(float** src, float** dst, const int W, const int H, const double sigma, float *buffer = nullptr, eGaussType gausstype = GAUSS_STANDARD, float** buffer2 = nullptr)
 {
     gaussianBlurImpl<float>(src, dst, W, H, sigma, buffer, gausstype, buffer2);
 }
