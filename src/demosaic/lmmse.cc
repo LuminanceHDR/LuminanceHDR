@@ -194,7 +194,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
         return RP_WRONG_CFA;
     }
 
-    constexpr int ba = 10;
+    constexpr int ba = 4;
     const int rr1 = height + 2 * ba;
     const int cc1 = width + 2 * ba;
     const int w1 = cc1;
