@@ -206,8 +206,8 @@ rpError amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int wi
                     int cc1 = right - left;
                     // bookkeeping for borders
                     // min and max row/column in the tile
-                    int rrmin = top < winy ? 16 : 0;
-                    int ccmin = left < winx ? 16 : 0;
+                    int rrmin = top < 0 ? 16 : 0;
+                    int ccmin = left < 0 ? 16 : 0;
                     //int rrmax = bottom > (winy + height) ? winy + height - top : rr1;
                     int rrmax = bottom > (raw_height) ? winy + height - top : rr1;
                     //int ccmax = right > (winx + width) ? winx + width - left : cc1;
