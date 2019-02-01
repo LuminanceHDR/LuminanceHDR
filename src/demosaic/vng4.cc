@@ -30,33 +30,6 @@
 
 using namespace librtprocess;
 
-namespace {
-
-inline void vng4interpolate_row_redblue (const float * const *rawData, const unsigned cfarray[2][2], float* ar, float* ab, const float * const pg, const float * const cg, const float * const ng, int i, int width)
-{
-    if (fc(cfarray, i, 0) == 2 || fc(cfarray, i, 1) == 2) {
-        std::swap(ar, ab);
-    }
-
-    // RGRGR or GRGRGR line
-    for (int j = 3; j < width - 3; ++j) {
-        if (!(fc(cfarray, i, j) & 1)) {
-            // keep original value
-            ar[j] = rawData[i][j];
-            // cross interpolation of red/blue
-            float rb = (rawData[i - 1][j - 1] - pg[j - 1] + rawData[i + 1][j - 1] - ng[j - 1]);
-            rb += (rawData[i - 1][j + 1] - pg[j + 1] + rawData[i + 1][j + 1] - ng[j + 1]);
-            ab[j] = cg[j] + rb * 0.25f;
-        } else {
-            // linear R/B-G interpolation horizontally
-            ar[j] = cg[j] + (rawData[i][j - 1] - cg[j - 1] + rawData[i][j + 1] - cg[j + 1]) / 2;
-            // linear B/R-G interpolation vertically
-            ab[j] = cg[j] + (rawData[i - 1][j] - pg[j] + rawData[i + 1][j] - ng[j]) / 2;
-        }
-    }
-}
-}
-
 
 rpError vng4_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
 {
@@ -358,7 +331,7 @@ rpError vng4_demosaic (int width, int height, const float * const *rawData, floa
                     green[row][col] = greenval + (sum1 - sum0) / (2 * num);
                 }
                 if (row - 1 > firstRow) {
-                    vng4interpolate_row_redblue(rawData, cfarray, red[row - 1], blue[row - 1], green[row - 2], green[row - 1], green[row], row - 1, width);
+                    interpolate_row_redblue(rawData, cfarray, red[row - 1], blue[row - 1], green[row - 2], green[row - 1], green[row], row - 1, width);
                 }
 
                     if((row % progressStep) == 0)
@@ -372,11 +345,11 @@ rpError vng4_demosaic (int width, int height, const float * const *rawData, floa
             }
 
             if (firstRow > 2 && firstRow < height - 3) {
-                vng4interpolate_row_redblue(rawData, cfarray, red[firstRow], blue[firstRow], green[firstRow - 1], green[firstRow], green[firstRow + 1], firstRow, width);
+                interpolate_row_redblue(rawData, cfarray, red[firstRow], blue[firstRow], green[firstRow - 1], green[firstRow], green[firstRow + 1], firstRow, width);
             }
 
             if (lastRow > 2 && lastRow < height - 3) {
-                vng4interpolate_row_redblue(rawData, cfarray, red[lastRow], blue[lastRow], green[lastRow - 1], green[lastRow], green[lastRow + 1], lastRow, width);
+                interpolate_row_redblue(rawData, cfarray, red[lastRow], blue[lastRow], green[lastRow - 1], green[lastRow], green[lastRow + 1], lastRow, width);
             }
 #ifdef _OPENMP
             #pragma omp single
