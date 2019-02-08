@@ -217,7 +217,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
     int passref;
     int iter;
 
-    if(iterations <= 4) {
+    if (iterations <= 4) {
         iter = std::max(iterations - 1, 0);
         passref = 0;
     } else {
@@ -228,26 +228,27 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
     const bool applyGamma = iterations > 0;
 
     float *rix[5];
-    float *qix[5];
+    float *qix[5] {nullptr};
     float *buffer = (float *)calloc(rr1 * cc1 * 5 * sizeof(float), 1);
 
-    if(!buffer) { // allocation of big block of memory failed, try to get 5 smaller ones
+    if (!buffer) { // allocation of big block of memory failed, try to get 5 smaller ones
         printf("lmmse_interpolate_omp: allocation of big memory block failed, try to get 5 smaller ones now...\n");
         bool allocationFailed = false;
 
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             qix[i] = (float *)calloc(rr1 * cc1 * sizeof(float), 1);
 
-            if(!qix[i]) { // allocation of at least one small block failed
+            if (!qix[i]) { // allocation of at least one small block failed
                 allocationFailed = true;
+                break;
             }
         }
 
-        if(allocationFailed) { // fall back to igv_interpolate
+        if (allocationFailed) { // fall back to igv_interpolate
             printf("lmmse_interpolate_omp: allocation of 5 small memory blocks failed, falling back to igv_demosaic...\n");
 
-            for(int i = 0; i < 5; i++) { // free the already allocated buffers
-                if(qix[i]) {
+            for (int i = 0; i < 5; i++) { // free the already allocated buffers
+                if (qix[i]) {
                     free(qix[i]);
                 }
             }
@@ -257,7 +258,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
     } else {
         qix[0] = buffer;
 
-        for(int i = 1; i < 5; i++) {
+        for (int i = 1; i < 5; i++) {
             qix[i] = qix[i - 1] + rr1 * cc1;
         }
     }
@@ -266,7 +267,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
 
     LUTf gamtab(65536, LUT_CLIP_ABOVE | LUT_CLIP_BELOW);
 
-    if(applyGamma) {
+    if (applyGamma) {
         for (int i = 0; i < 65536; i++) {
             float x = i / 65535.f;
             gamtab[i] = x <= 0.001867f ? x * 17.f : 1.044445f * xexpf(xlogf(x) / 2.4f) - 0.044445f;
@@ -360,7 +361,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
         #pragma omp for
 #endif
 
-        for (int rr = 4; rr < rr1 - 4; rr++)
+        for (int rr = 4; rr < rr1 - 4; rr++) {
             for (int cc = 4; cc < cc1 - 4; cc++) {
                 rix[0] = qix[0] + rr * cc1 + cc;
                 rix[2] = qix[2] + rr * cc1 + cc;
@@ -369,6 +370,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                 rix[3] = qix[3] + rr * cc1 + cc;
                 rix[3][0] = h0 * rix[1][0] + h1 * (rix[1][-w1] + rix[1][w1]) + h2 * (rix[1][-w2] + rix[1][w2]) + h3 * (rix[1][-w3] + rix[1][w3]) + h4 * (rix[1][-w4] + rix[1][w4]);
             }
+        }
 
 #ifdef _OPENMP
         #pragma omp single
@@ -468,7 +470,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                 float p8 = rix[2][ 3];
                 float p9 = rix[2][ 4];
                 float mu = (p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9) / 9.f;
-                float vx = 1e-7 + SQR(p1 - mu) + SQR(p2 - mu) + SQR(p3 - mu) + SQR(p4 - mu) + SQR(p5 - mu) + SQR(p6 - mu) + SQR(p7 - mu) + SQR(p8 - mu) + SQR(p9 - mu);
+                float vx = 1e-7f + SQR(p1 - mu) + SQR(p2 - mu) + SQR(p3 - mu) + SQR(p4 - mu) + SQR(p5 - mu) + SQR(p6 - mu) + SQR(p7 - mu) + SQR(p8 - mu) + SQR(p9 - mu);
                 p1 -= rix[0][-4];
                 p2 -= rix[0][-3];
                 p3 -= rix[0][-2];
@@ -478,7 +480,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                 p7 -= rix[0][ 2];
                 p8 -= rix[0][ 3];
                 p9 -= rix[0][ 4];
-                float vn = 1e-7 + SQR(p1) + SQR(p2) + SQR(p3) + SQR(p4) + SQR(p5) + SQR(p6) + SQR(p7) + SQR(p8) + SQR(p9);
+                float vn = 1e-7f + SQR(p1) + SQR(p2) + SQR(p3) + SQR(p4) + SQR(p5) + SQR(p6) + SQR(p7) + SQR(p8) + SQR(p9);
                 float xh = (rix[0][0] * vx + rix[2][0] * vn) / (vx + vn);
                 float vh = vx * vn / (vx + vn);
 
@@ -493,7 +495,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                 p8 = rix[3][ w3];
                 p9 = rix[3][ w4];
                 mu = (p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9) / 9.f;
-                vx = 1e-7 + SQR(p1 - mu) + SQR(p2 - mu) + SQR(p3 - mu) + SQR(p4 - mu) + SQR(p5 - mu) + SQR(p6 - mu) + SQR(p7 - mu) + SQR(p8 - mu) + SQR(p9 - mu);
+                vx = 1e-7f + SQR(p1 - mu) + SQR(p2 - mu) + SQR(p3 - mu) + SQR(p4 - mu) + SQR(p5 - mu) + SQR(p6 - mu) + SQR(p7 - mu) + SQR(p8 - mu) + SQR(p9 - mu);
                 p1 -= rix[1][-w4];
                 p2 -= rix[1][-w3];
                 p3 -= rix[1][-w2];
@@ -503,7 +505,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                 p7 -= rix[1][ w2];
                 p8 -= rix[1][ w3];
                 p9 -= rix[1][ w4];
-                vn = 1e-7 + SQR(p1) + SQR(p2) + SQR(p3) + SQR(p4) + SQR(p5) + SQR(p6) + SQR(p7) + SQR(p8) + SQR(p9);
+                vn = 1e-7f + SQR(p1) + SQR(p2) + SQR(p3) + SQR(p4) + SQR(p5) + SQR(p6) + SQR(p7) + SQR(p8) + SQR(p9);
                 float xv = (rix[1][0] * vx + rix[3][0] * vn) / (vx + vn);
                 float vv = vx * vn / (vx + vn);
                 // interpolated G-R(B)
@@ -523,7 +525,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
         #pragma omp for
 #endif
 
-        for (int rr = 0; rr < rr1; rr++)
+        for (int rr = 0; rr < rr1; rr++) {
             for (int cc = 0, row = rr - ba; cc < cc1; cc++) {
                 int col = cc - ba;
                 int c = fc(cfarray, rr, cc);
@@ -541,6 +543,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                     rix[1][0] = rix[c][0] + rix[4][0];
                 }
             }
+        }
 
 #ifdef _OPENMP
         #pragma omp single
@@ -555,7 +558,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
         #pragma omp for
 #endif
 
-        for (int rr = 1; rr < rr1 - 1; rr++)
+        for (int rr = 1; rr < rr1 - 1; rr++) {
             for (int cc = 1 + (fc(cfarray, rr, 2) & 1), c = fc(cfarray, rr, cc + 1); cc < cc1 - 1; cc += 2) {
                 rix[c] = qix[c] + rr * cc1 + cc;
                 rix[1] = qix[1] + rr * cc1 + cc;
@@ -565,6 +568,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                 rix[c][0] = rix[1][0] + 0.5f * (rix[c][-w1] - rix[1][-w1] + rix[c][w1] - rix[1][w1]);
                 c = 2 - c;
             }
+        }
 
 #ifdef _OPENMP
         #pragma omp single
@@ -578,12 +582,13 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
         #pragma omp for
 #endif
 
-        for (int rr = 1; rr < rr1 - 1; rr++)
+        for (int rr = 1; rr < rr1 - 1; rr++) {
             for (int cc = 1 + (fc(cfarray, rr, 1) & 1), c = 2 - fc(cfarray, rr, cc); cc < cc1 - 1; cc += 2) {
                 rix[c] = qix[c] + rr * cc1 + cc;
                 rix[1] = qix[1] + rr * cc1 + cc;
                 rix[c][0] = rix[1][0] + 0.25f * (rix[c][-w1] - rix[1][-w1] + rix[c][ -1] - rix[1][ -1] + rix[c][  1] - rix[1][  1] + rix[c][ w1] - rix[1][ w1]);
             }
+        }
 
 #ifdef _OPENMP
         #pragma omp single
@@ -665,7 +670,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
             int c0 = fc(cfarray, rr, 0);
             int c1 = fc(cfarray, rr, 1);
 
-            if(c0 == 1) {
+            if (c0 == 1) {
                 c1 = 2 - c1;
                 int d = c1 + 3 - (c1 == 0 ? 0 : 1);
                 int cc;
@@ -687,7 +692,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                     rix[4]++;
                 }
 
-                if(cc < cc1) { // remaining pixel, only if width is odd
+                if (cc < cc1) { // remaining pixel, only if width is odd
                     rix[0][0] = rix[1][0] + rix[3][0];
                     rix[2][0] = rix[1][0] + rix[4][0];
                 }
@@ -713,7 +718,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
                     rix[4]++;
                 }
 
-                if(cc < cc1) { // remaining pixel, only if width is odd
+                if (cc < cc1) { // remaining pixel, only if width is odd
                     rix[c0][0] = rix[1][0] + rix[d][0];
                     rix[1][0] = 0.5f * (rix[0][0] - rix[3][0] + rix[2][0] - rix[4][0]);
                 }
@@ -723,7 +728,7 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
 
     setProgCancel(0.8);
 
-    if(applyGamma) {
+    if (applyGamma) {
         for (int i = 0; i < 65536; i++) {
             float x = i / 65535.f;
             gamtab[i] = 65535.f * (x <= 0.031746f ? x / 17.f : xexpf(xlogf((x + 0.044445f) / 1.044445f) * 2.4f));
@@ -760,15 +765,15 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
 
     setProgCancel(1.0);
 
-    if(buffer) {
+    if (buffer) {
         free(buffer);
     } else {
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             free(qix[i]);
         }
     }
 
-    if(iterations > 4) {
+    if (iterations > 4) {
         refinement(width, height, red, green, blue, cfarray, setProgCancel, passref);
     }
 
