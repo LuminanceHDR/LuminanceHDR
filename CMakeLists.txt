@@ -2,6 +2,14 @@
 cmake_minimum_required(VERSION 3.5.0)
 cmake_policy(SET CMP0048 NEW)
 
+# Specify search path for CMake modules to be loaded by include()
+# and find_package()
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
+
+### Add defaults for cmake
+# These defaults need to be included before the project() call.
+include(DefineCMakeDefaults)
+
 project(rtprocess VERSION 0.9.0 LANGUAGES CXX)
 
 option(OPTION_OMP "Build with OpenMP support" ON)
