@@ -4,8 +4,6 @@ cmake_policy(SET CMP0048 NEW)
 
 project(rtprocess VERSION 0.9.0 LANGUAGES CXX)
 
-set(CMAKE_BUILD_TYPE Release)
-
 option(OPTION_OMP "Build with OpenMP support" ON)
 
 if(OPTION_OMP)
