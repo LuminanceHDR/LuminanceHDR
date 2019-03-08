@@ -10,6 +10,10 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 # These defaults need to be included before the project() call.
 include(DefineCMakeDefaults)
 
+# This will provide -DCMAKE_BUILD_TYPE=Profiling
+# and -DCMAKE_BUILD_TYPE=AddressSanitizer
+include(DefineCompilerFlags)
+
 project(rtprocess VERSION 0.9.0 LANGUAGES CXX)
 
 option(OPTION_OMP "Build with OpenMP support" ON)
