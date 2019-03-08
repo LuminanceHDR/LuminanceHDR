@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 2.8.9)
-project(rtprocess)
+# Required cmake version
+cmake_minimum_required(VERSION 3.5.0)
+cmake_policy(SET CMP0048 NEW)
+
+project(rtprocess VERSION 0.9.0 LANGUAGES CXX)
+
 set(CMAKE_BUILD_TYPE Release)
 
 option(OPTION_OMP "Build with OpenMP support" ON)
