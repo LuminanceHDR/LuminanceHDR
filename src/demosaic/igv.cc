@@ -460,7 +460,7 @@ rpError igv_demosaic(int winw, int winh, const float * const *rawData, float **r
     float *hdif = (float (*)) calloc(width * height / 2, sizeof * hdif);
     float *chrarray = (float (*)) calloc(width * height, sizeof(float));
 
-    if(!rgbarray || !vdif || !hfif || !chrarray) {
+    if(!rgbarray || !vdif || !hdif || !chrarray) {
         if (rgbarray) {
             free(rgbarray);
         }
