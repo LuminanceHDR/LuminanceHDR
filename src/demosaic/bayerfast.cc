@@ -26,6 +26,7 @@
 #include "bayerhelper.h"
 #include "librtprocess.h"
 #include "opthelper.h"
+#include "rt_math.h"
 #include "StopWatch.h"
 
 using namespace librtprocess;
