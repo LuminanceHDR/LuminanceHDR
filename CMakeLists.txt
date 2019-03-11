@@ -55,9 +55,9 @@ else()
 endif()
 
 #create rtprocess.pc
-file(READ pkgconfig/rtprocessin.pc RTPROCESSIN)
-file(WRITE pkgconfig/rtprocess.pc "prefix=/${PC_PREFIX}")
-file(APPEND pkgconfig/rtprocess.pc ${RTPROCESSIN})
+#file(READ pkgconfig/rtprocessin.pc RTPROCESSIN)
+#file(WRITE pkgconfig/rtprocess.pc "prefix=/${PC_PREFIX}")
+#file(APPEND pkgconfig/rtprocess.pc ${RTPROCESSIN})
 
 
 
