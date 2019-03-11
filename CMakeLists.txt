@@ -20,6 +20,7 @@ project(rtprocess VERSION 0.9.0 LANGUAGES CXX)
 include(DefineOptions.cmake)
 include(CompilerChecks.cmake)
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 # By default we don't use a specific processor target, so PROC_TARGET_NUMBER is set to 0.
 # Specify other values to optimize for specific processor architecture as listed in ProcessorTargets.cmake:
@@ -33,3 +34,27 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(pkgconfig)
+
+# cmake config files
+set(RTPROCESS_LIBRARY_NAME ${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
+
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE INTERNAL "")
+set(LIB_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR} CACHE INTERNAL "")
+configure_package_config_file(${PROJECT_NAME}-config.cmake.in
+                              ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+                              PATH_VARS
+                                  INCLUDE_INSTALL_DIR LIB_INSTALL_DIR
+                              INSTALL_DESTINATION
+                                  ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
+
+write_basic_package_version_file(${PROJECT_NAME}-config-version.cmake
+                                 COMPATIBILITY
+                                     AnyNewerVersion)
+
+install(FILES
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+        DESTINATION
+            ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+        COMPONENT
+            devel)
