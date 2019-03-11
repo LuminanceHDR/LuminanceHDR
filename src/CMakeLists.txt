@@ -28,9 +28,14 @@ target_include_directories(rtprocess
                                ${GLIBMM_INCLUDE_DIRS})
 target_compile_options(rtprocess
                        PRIVATE
-                           ${OpenMP_CXX_FLAGS})
+                           ${OpenMP_CXX_FLAGS}
+                           ${DEFAULT_CXX_COMPILE_FLAGS}
+                           ${OpenMP_CXX_FLAGS}
+                           ${PROC_FLAGS})
 set_property(TARGET
                  rtprocess
+             PROPERTY
+                 LINKER_FLAGS "${DEFAULT_LINK_FLAGS}"
              PROPERTY
                  PUBLIC_HEADER "include/librtprocess.h")
 

@@ -1,10 +1,6 @@
-
-libdir=${prefix}/lib
-includedir=${prefix}/include
-
 Name: rtprocess
 Description: A raw preprocessing and demosaic library
 URL: https://github.com/CarVac/librtprocess
 Version: 0.9.0
-Libs: -L${libdir} -lrtprocess
-Cflags: -I${includedir}
+Libs: -L${CMAKE_INSTALL_FULL_LIBDIR} -lrtprocess
+Cflags: -I${CMAKE_INSTALL_FULL_INCLUDEDIR}
