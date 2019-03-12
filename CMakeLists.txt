@@ -21,6 +21,7 @@ include(DefineOptions.cmake)
 include(CompilerChecks.cmake)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+include(CPackConfig.cmake)
 
 # By default we don't use a specific processor target, so PROC_TARGET_NUMBER is set to 0.
 # Specify other values to optimize for specific processor architecture as listed in ProcessorTargets.cmake:
@@ -58,3 +59,7 @@ install(FILES
             ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         COMPONENT
             devel)
+
+# Add 'make dist' target which makes sure to invoke cmake before
+add_custom_target(dist
+                  COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
