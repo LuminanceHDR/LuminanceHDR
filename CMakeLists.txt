@@ -1,24 +1,27 @@
-cmake_minimum_required(VERSION 2.8.9)
-project(rtprocess)
-set(CMAKE_BUILD_TYPE Release)
+# Required cmake version
+cmake_minimum_required(VERSION 3.5.0)
+cmake_policy(SET CMP0048 NEW)
 
-option(OPTION_OMP "Build with OpenMP support" ON)
+# Specify search path for CMake modules to be loaded by include()
+# and find_package()
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 
-if(OPTION_OMP)
-    find_package(OpenMP)
-    if(OPENMP_FOUND)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -Werror=unknown-pragmas")
-    endif()
-endif()
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -std=c++11")
+### Add defaults for cmake
+# These defaults need to be included before the project() call.
+include(DefineCMakeDefaults)
 
-# Stop compilation on typos such as std:swap (missing colon will be detected as unused label):
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=unused-label -O3")
+# This will provide -DCMAKE_BUILD_TYPE=Profiling
+# and -DCMAKE_BUILD_TYPE=AddressSanitizer
+include(DefineCompilerFlags)
 
-option(VERBOSE "Build in verbose mode" OFF)
-if(VERBOSE)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVERBOSE")
-endif()
+project(rtprocess VERSION 0.9.0 LANGUAGES CXX)
+
+# include cmake files
+include(DefineOptions.cmake)
+include(CompilerChecks.cmake)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+include(CPackConfig.cmake)
 
 # By default we don't use a specific processor target, so PROC_TARGET_NUMBER is set to 0.
 # Specify other values to optimize for specific processor architecture as listed in ProcessorTargets.cmake:
@@ -30,37 +33,37 @@ if(NOT(PROC_TARGET_NUMBER EQUAL 0))
     set(PROC_FLAGS ${PROC_TARGET_${PROC_TARGET_NUMBER}_FLAGS})
 endif()
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PROC_FLAGS}")
+add_subdirectory(src)
+add_subdirectory(pkgconfig)
 
-#bring headers into the project
-include_directories(src/include)
-
-#get source files
-file(GLOB_RECURSE SOURCES "src/*.cc")
-
-if(WIN32)
-    set(INSTALL_PREFIX "")
-    set(PC_PREFIX "mingw64")
-    set(LIBRARY_TYPE "STATIC")
-elseif(APPLE)
-    set(INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/)
-    set(PC_PREFIX ${CMAKE_INSTALL_PREFIX}/)
-    set(LIBRARY_TYPE "SHARED")
+# cmake config files
+if (WIN32)
+    set(RTPROCESS_LIBRARY_NAME ${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_IMPORT_LIBRARY_SUFFIX})
 else()
-    set(INSTALL_PREFIX "/usr/")
-    set(PC_PREFIX "usr")
-    set(LIBRARY_TYPE "SHARED")
+    set(RTPROCESS_LIBRARY_NAME ${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
 endif()
 
-#create rtprocess.pc
-file(READ pkgconfig/rtprocessin.pc RTPROCESSIN)
-file(WRITE pkgconfig/rtprocess.pc "prefix=/${PC_PREFIX}")
-file(APPEND pkgconfig/rtprocess.pc ${RTPROCESSIN})
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE INTERNAL "")
+set(LIB_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR} CACHE INTERNAL "")
+configure_package_config_file(${PROJECT_NAME}-config.cmake.in
+                              ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+                              PATH_VARS
+                                  INCLUDE_INSTALL_DIR LIB_INSTALL_DIR
+                              INSTALL_DESTINATION
+                                  ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
 
+write_basic_package_version_file(${PROJECT_NAME}-config-version.cmake
+                                 COMPATIBILITY
+                                     AnyNewerVersion)
 
+install(FILES
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+        DESTINATION
+            ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+        COMPONENT
+            devel)
 
-#set location for library installation
-add_library(rtprocess ${LIBRARY_TYPE} ${SOURCES})
-install(TARGETS rtprocess DESTINATION ${INSTALL_PREFIX}lib)
-install(FILES "pkgconfig/rtprocess.pc" DESTINATION ${INSTALL_PREFIX}lib/pkgconfig)
-install(FILES "src/include/librtprocess.h" DESTINATION ${INSTALL_PREFIX}include/rtprocess)
+# Add 'make dist' target which makes sure to invoke cmake before
+add_custom_target(dist
+                  COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
