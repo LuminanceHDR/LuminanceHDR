@@ -411,7 +411,17 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
         for(int c = 0; c < 3; c++) {
             printf("chmax[%d] : %f\tclmax[%d] : %f\tratio[%d] : %f\n", c, chmax[c], c, clmax[c], c, chmax[c] / clmax[c]);
         }
-    //What are chmax and clmax?
+    /*What are chmax and clmax?
+    clmax is the raw clip level.
+    In RawTherapee it's calculated as
+    clmax[i] * (c_white[i] - cblacksom[i]) * scale_mul[i]
+    cblacksom = max(c_black[i] + black_lev[i], 0.0f)
+    c_white is the white level
+    scale_mul is the white balance multipliers that scale so that the image ends up 0-65535?
+    For monochrome it's just 65535/(c_white-c_black)
+    For color, it's scale_mul[c] = (pre_mul[c]/maxpremul)*65535/(c_white-c_black)
+    */
+
 
     float factor[3];
 
