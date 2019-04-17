@@ -51,7 +51,7 @@ public:
     void start()
     {
         startTime.set();
-    };
+    }
     void stop()
     {
         stopTime.set();
@@ -68,7 +68,7 @@ public:
     {
         message = msg;
         stop();
-    };
+    }
 private:
     bool microseconds;
     MyTime startTime;

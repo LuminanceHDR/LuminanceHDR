@@ -31,6 +31,10 @@
 
 #define VERBOSE true
 
+using librtprocess::SQR;
+using librtprocess::max;
+using librtprocess::min;
+
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 void boxblur2(float** src, float** dst, float** temp, int H, int W, int box )
@@ -384,7 +388,7 @@ void boxblur_resamp(float **src, float **dst, float ** temp, int H, int W, int b
 
 }
 
-rpError HLRecovery_inpaint (const int width, const int height, float** red, float** green, float** blue, const std::function<bool(double)> &setProgCancel)
+rpError HLRecovery_inpaint (const int width, const int height, float** red, float** green, float** blue, float chmax[4], float clmax[4], const std::function<bool(double)> &setProgCancel)
 {
     double progress = 0.0;
 
@@ -417,9 +421,11 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
     clmax[i] * (c_white[i] - cblacksom[i]) * scale_mul[i]
     cblacksom = max(c_black[i] + black_lev[i], 0.0f)
     c_white is the white level
-    scale_mul is the white balance multipliers that scale so that the image ends up 0-65535?
+    scale_mul is the white balance multipliers that scale so that the image ends up 0-65535
     For monochrome it's just 65535/(c_white-c_black)
     For color, it's scale_mul[c] = (pre_mul[c]/maxpremul)*65535/(c_white-c_black)
+
+    chmax is the actual highest value in the channel for the image after multiplying by scale_mul
     */
 
 
@@ -1119,5 +1125,7 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
     }
 
     setProgCancel(1.00);
+
+    return RP_NO_ERROR;
 
 }// end of HLReconstruction
