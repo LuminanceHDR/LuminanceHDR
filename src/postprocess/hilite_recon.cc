@@ -388,7 +388,7 @@ void boxblur_resamp(float **src, float **dst, float ** temp, int H, int W, int b
 
 }
 
-rpError HLRecovery_inpaint (const int width, const int height, float** red, float** green, float** blue, const float chmax[4], const float clmax[4], const std::function<bool(double)> &setProgCancel)
+rpError HLRecovery_inpaint (const int width, const int height, float** red, float** green, float** blue, const float chmax[3], const float clmax[3], const std::function<bool(double)> &setProgCancel)
 {
     double progress = 0.0;
 
