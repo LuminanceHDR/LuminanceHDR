@@ -19,7 +19,8 @@ set(rtprocess_SRCS
     demosaic/rcd.cc
     demosaic/vng4.cc
     demosaic/xtransfast.cc
-    preprocess/CA_correct.cc)
+    preprocess/CA_correct.cc
+    postprocess/hilite_recon.cc)
 
 add_library(rtprocess SHARED ${rtprocess_SRCS})
 target_include_directories(rtprocess
