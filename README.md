@@ -68,6 +68,8 @@ Optional switches to be included in the `cmake` command:
 
 Include `-lrtprocess`, and `#include <rtprocess/librtprocess.h>` to use this library.
 
+### Demosaic
+
 The demosaic routines expect raw data in the form 1) single-channel, 2) float, 3) range 0.0 - 65535.0.  This roughly
 corresponds to what the raw libraries deliver, e.g. Libraw's mosaic is single-channel unsigned short 0-65535, except 
 for the float number format, so at least a unsigned short -> float cast is probably required.  
@@ -140,3 +142,8 @@ the logic to convert from/to this structure.
 		free( rawdata );
 ```
 
+The Bayer demosaic routines also take in a `cfarray` parameter that is a 2x2 array corresponding to the indexing of the color filters corresponding to the top left corner of the raw image plane. The `xtrans` parameter for the X-Trans routines is similar but has dimensions of 6 by 6. For these, `0` corresponds to red, `1` corresponds to green channel one, `2` corresponds to blue, and `3` corresponds to green channel two. Some algorithms require both greens, others only one.
+
+### Highlight Recovery
+
+The highlight recovery algorithm uses inpainting to reconstruct clipped highlights when not all channels are clipped. The input data should be full RGB for each pixel, in the raw color space, with the white balance multipliers already applied to it. `chmax` is simply the maximum pixel value in each of the three color channels. `clmax` is the raw clip point for each channel; that is, the whitepoint minus the blackpoint for each channel, multiplied by the white balance multipliers.
