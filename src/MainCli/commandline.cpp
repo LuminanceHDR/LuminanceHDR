@@ -761,7 +761,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
             printIfVerbose(QObject::tr("Temporary directory: %1")
                                .arg(luminance_options.getTempDir()),
                            verbose);
-            printIfVerbose(QObject::tr("Using %n threads.", "",
+            printIfVerbose(QObject::tr("Using %n thread(s).", "",
                                        luminance_options.getNumThreads()),
                            verbose);
         }
