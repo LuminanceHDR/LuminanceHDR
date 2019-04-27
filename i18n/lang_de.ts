@@ -23,128 +23,131 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="116"/>
-        <source>A&amp;uthors</source>
-        <translation>&amp;Autoren</translation>
-    </message>
-    <message>
         <location filename="../src/UI/about.ui" line="92"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:11pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:24pt; color:#55aaff;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Create and tone-map HDR images.&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;(c) 2006-2009 Giuseppe Rota&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;(c) 2010-2018 Franco Comida, Davide Anastasia&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/LuminanceHDR/LuminanceHDR&quot;&gt;&lt;span style=&quot; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;https://github.com/LuminanceHDR/LuminanceHDR&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:24pt; font-weight:600; color:#55aaff;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Create and tone-map HDR images.&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2006-2009 Giuseppe Rota&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2018 Franco Comida, Davide Anastasia&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2019 Franco Comida&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/LuminanceHDR/LuminanceHDR&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#32a4e6;&quot;&gt;https://github.com/LuminanceHDR/LuminanceHDR&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="125"/>
+        <location filename="../src/UI/about.ui" line="118"/>
+        <source>A&amp;uthors</source>
+        <translation>&amp;Autoren</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/about.ui" line="127"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:8pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;DEVELOPERS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Main developer of QtPfsGui&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Giuseppe Rota, &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Main Developers of Luminance HDR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Franco Comida, &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Davide Anastasia, &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Daniel Kaneider, &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Ingo Weyrich, &lt;/span&gt;&lt;a href=&quot;mailto:heckflosse67@gmx.de&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;heckflosse67@gmx.de&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Grzegorz Krawczyk, &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Rafal Mantiuk, &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Nicholas Phillips, &lt;/span&gt;&lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;CONTRIBUTORS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Arne Hagenah&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Ignacy Gawedzki&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Jean-Christophe Frisch, &lt;/span&gt;&lt;a href=&quot;mailto:natureh.510@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;natureh.510@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Maciej Dworak, &lt;/span&gt;&lt;a href=&quot;https://github.com/Beep6581&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;https://github.com/Beep6581&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;PACKAGE MAINTAINERS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Linux:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Fedora&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Franco Comida&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    FreeBSD: &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Gentoo&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Rene Zbinden&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    OpenSUSE&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Peter Linnell, Rauch Christian&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;macOS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Robin Mills, &lt;/span&gt;&lt;a href=&quot;mailto:robin@clanmills.com&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;robin@clanmills.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Richard Barber, &lt;/span&gt;&lt;a href=&quot;https://github.com/Benitoite&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;https://github.com/Benitoite&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Windows&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;TRANSLATORS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;https://www.transifex.com/luminance-hdr/teams/&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;Luminance HDR translation team&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt; at Transifex&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Chinese&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Lei Zhao&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Czech&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Jan Gemela&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;French&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Cyril Lavier&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;German&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Christian Raue&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Norwegian&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Åsmund Ødegård, &lt;/span&gt;&lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Polish&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Maciej Dziardziel&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Romanian&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Andrei Răcăşan&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Russian&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Alexandre Prokoudine, &lt;/span&gt;&lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Spanish&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Alberto Garcia&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Turkish&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;: Mustafa Günay&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;DEVELOPERS&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Main developer of QtPfsGui&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Giuseppe Rota, &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Main Developers of Luminance HDR&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Franco Comida, &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Davide Anastasia, &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Daniel Kaneider, &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Ingo Weyrich, &lt;/span&gt;&lt;a href=&quot;mailto:heckflosse67@gmx.de&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;heckflosse67@gmx.de&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Grzegorz Krawczyk, &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Rafal Mantiuk, &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Nicholas Phillips, &lt;/span&gt;&lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;CONTRIBUTORS&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Arne Hagenah&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Ignacy Gawedzki&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Jean-Christophe Frisch, &lt;/span&gt;&lt;a href=&quot;mailto:natureh.510@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;natureh.510@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Maciej Dworak, &lt;/span&gt;&lt;a href=&quot;https://github.com/Beep6581&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;https://github.com/Beep6581&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;PACKAGE MAINTAINERS&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Linux:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;    Fedora&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Franco Comida&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;    FreeBSD: &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;     &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Gentoo&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Rene Zbinden&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;    OpenSUSE&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Peter Linnell, Rauch Christian&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;macOS&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Robin Mills, &lt;/span&gt;&lt;a href=&quot;mailto:robin@clanmills.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;robin@clanmills.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Richard Barber, &lt;/span&gt;&lt;a href=&quot;https://github.com/Benitoite&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;https://github.com/Benitoite&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Windows&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Daniel Kaneider, &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;TRANSLATORS&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;https://www.transifex.com/luminance-hdr/teams/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;Luminance HDR translation team&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; at Transifex&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Chinese&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Lei Zhao&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Czech&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Jan Gemela&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;French&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Cyril Lavier&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;German&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Christian Raue&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Norwegian&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Åsmund Ødegård, &lt;/span&gt;&lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Polish&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Maciej Dziardziel&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Romanian&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Andrei Răcăşan&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Russian&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Alexandre Prokoudine, &lt;/span&gt;&lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Spanish&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Alberto Garcia&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Turkish&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Mustafa Günay&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="193"/>
+        <location filename="../src/UI/about.ui" line="205"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;The community on &lt;/span&gt;&lt;a href=&quot;https://discuss.pixls.us/c/software/luminancehdr&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;Pixls.us&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;The community on &lt;/span&gt;&lt;a href=&quot;https://www.flickr.com/groups/qtpfsgui/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Hugin&apos;s align_image_stack and more&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Pablo D&apos;Angelo&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Dave Coffin&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Erik Ouchterlony&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Antoine Latter&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Frank Boehme&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Sloan Poe&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Elizabeth Oldham&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/about.ui" line="196"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;Dank an</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="202"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:8pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The community on &lt;/span&gt;&lt;a href=&quot;https://discuss.pixls.us/c/software/luminancehdr&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;Pixls.us&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The community on &lt;/span&gt;&lt;a href=&quot;https://www.flickr.com/groups/qtpfsgui/&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#32a4e6;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Hugin&apos;s align_image_stack and more&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Pablo D&apos;Angelo&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;DCRaw&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Dave Coffin&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;And also&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Erik Ouchterlony&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Antoine Latter&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Frank Boehme&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Sloan Poe&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;    Elizabeth Oldham&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/about.ui" line="229"/>
+        <location filename="../src/UI/about.ui" line="232"/>
         <source>Changelog</source>
         <translation>Änderungshistorie</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="239"/>
+        <location filename="../src/UI/about.ui" line="242"/>
         <source>&amp;License Agreement</source>
         <translation>&amp;Lizenzvereinbarung</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="292"/>
+        <location filename="../src/UI/about.ui" line="295"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
@@ -923,446 +926,492 @@ Fortfahren?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="165"/>
+        <location filename="../src/MainCli/commandline.cpp" line="166"/>
         <source>FILE_EXTENSION   Save LDR file with a name of the form first-last_tmparameters.extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="167"/>
+        <location filename="../src/MainCli/commandline.cpp" line="168"/>
         <source>FILE_EXTENSION   Save HDR file with a name of the form first-last_HdrCreationModel.extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="171"/>
+        <location filename="../src/MainCli/commandline.cpp" line="172"/>
         <source>HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR</source>
         <translation>HDR-Erzeugungs-Parameter - Es muss entweder eine existierende HDR-Datei geladen (mittels Option -l) oder QUELLDATEIEN angegeben werden, um ein neues HDR-Bild zu erzeugen.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="179"/>
+        <location filename="../src/MainCli/commandline.cpp" line="180"/>
         <source>weight = triangular|gaussian|plateau|flat (Default is triangular)</source>
         <translation>Gewichtung = dreieckig|Gauss|Plataeu|flach (Standard ist dreieckig)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="182"/>
+        <location filename="../src/MainCli/commandline.cpp" line="183"/>
         <source>response curve = from_file|linear|gamma|log|srgb (Default is linear)</source>
         <translation>Verstärkerkennlinie = aus Datei|linear|Gamma|Log|sRGB (Standard ist linear)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="187"/>
+        <location filename="../src/MainCli/commandline.cpp" line="188"/>
         <source>model: robertson|robertsonauto|debevec (Default is debevec)</source>
         <translation>Model: robertson|robertsonauto|debevec (Voreinstellung ist debevec)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="191"/>
+        <location filename="../src/MainCli/commandline.cpp" line="192"/>
         <source>curve filename = your_file_here.m</source>
         <translation>curve filename = deine_datei.m</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="194"/>
+        <location filename="../src/MainCli/commandline.cpp" line="195"/>
         <source>LDR output parameters</source>
         <translation>LDR Ausgabeparameter</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="197"/>
+        <location filename="../src/MainCli/commandline.cpp" line="198"/>
         <source>VALUE      Quality of the saved tone mapped file (1-100).</source>
         <translation>VALUE      Qualität der gespeicherten dynamikkomprimierten Datei (0-100).</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="201"/>
+        <location filename="../src/MainCli/commandline.cpp" line="202"/>
         <source>Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)</source>
         <translation>Tiff-Format. Erlaubte Werte sind [8b|16b|32b|log|uv] (Voreinstellung ist 8b)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="205"/>
+        <location filename="../src/MainCli/commandline.cpp" line="206"/>
         <source>Tiff deflate compression. true|false (Default is true)</source>
         <translation>Tiff-Komprimierung. true|false (Voreinstellung ist true)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="210"/>
+        <location filename="../src/MainCli/commandline.cpp" line="211"/>
         <source>HTML output parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="213"/>
+        <location filename="../src/MainCli/commandline.cpp" line="214"/>
         <source>VALUE      Quality of the interpolated exposures, from the worst (1) to the best(4). Higher quality will introduce less distortions in the brightest and the darkest tones, but will also generate more images. More images means that there is more data that needs to be transferred to the web-browser, making HDR viewer less responsive. (Default is 2, which is sufficient for most applications)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="221"/>
+        <location filename="../src/MainCli/commandline.cpp" line="222"/>
         <source>Specifies the file name, of the web page to be generated. If &lt;page_name&gt; is missing, the file name of the first image with .html extension will be used. (Default is first image name)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="226"/>
+        <location filename="../src/MainCli/commandline.cpp" line="227"/>
         <source>Specify where to store the resulting image files. Links to images in HTML will be updated accordingly. This must be a relative path and the directory must exist.  Useful to avoid clutter in the current directory. (Default is current working directory)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="233"/>
+        <location filename="../src/MainCli/commandline.cpp" line="234"/>
         <source>Tone mapping parameters  - no tonemapping is performed unless -o is specified</source>
         <translation>Tone Mapping Parameter  - Es wird kein Tone Mapping angewandt wenn -o nicht angegeben wird</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="240"/>
-        <source>Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|                mai|mantiuk06|mantiuk08] (Default is mantiuk06)</source>
+        <location filename="../src/MainCli/commandline.cpp" line="241"/>
+        <source>Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|ferwerda|kimkautz|pattanaik|reinhard02|reinhard05|                mai|mantiuk06|mantiuk08|vanhateren|lischinski] (Default is mantiuk06)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="244"/>
+        <location filename="../src/MainCli/commandline.cpp" line="245"/>
         <source>SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings</source>
         <translation>SETTING_FILE Lade eine existierende Einstellungsdatei mit Pre-Gamma- und allen TMO-Einstellungen</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="249"/>
+        <location filename="../src/MainCli/commandline.cpp" line="250"/>
         <source> Fattal</source>
         <translation> Fattal</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="253"/>
+        <location filename="../src/MainCli/commandline.cpp" line="254"/>
+        <location filename="../src/MainCli/commandline.cpp" line="428"/>
         <source>alpha FLOAT</source>
         <translation>Alpha-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="256"/>
+        <location filename="../src/MainCli/commandline.cpp" line="257"/>
         <source>beta FLOAT</source>
         <translation>Beta-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="259"/>
+        <location filename="../src/MainCli/commandline.cpp" line="260"/>
         <source>color FLOAT</source>
         <translation>Farbverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="262"/>
+        <location filename="../src/MainCli/commandline.cpp" line="263"/>
         <source>noise FLOAT</source>
         <translation>Rauschverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="265"/>
+        <location filename="../src/MainCli/commandline.cpp" line="266"/>
         <source>new true|false</source>
         <translation>Neu ja|nein</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="267"/>
+        <location filename="../src/MainCli/commandline.cpp" line="268"/>
         <source> Ferradans</source>
         <translation> Ferradans</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="271"/>
+        <location filename="../src/MainCli/commandline.cpp" line="272"/>
         <source>rho FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="274"/>
+        <location filename="../src/MainCli/commandline.cpp" line="275"/>
         <source>inv_alpha FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="276"/>
+        <location filename="../src/MainCli/commandline.cpp" line="277"/>
+        <source> Ferwerda</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="281"/>
+        <source>mul FLOAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="284"/>
+        <source>adapt_lum FLOAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="286"/>
+        <source> KimKautz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="291"/>
+        <source>c1 FLOAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="296"/>
+        <source>c2 FLOAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="298"/>
         <source> Mantiuk 06</source>
         <translation>Mantiuk 06</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="281"/>
+        <location filename="../src/MainCli/commandline.cpp" line="303"/>
         <source>contrast FLOAT</source>
         <translation>Kontrastverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="285"/>
+        <location filename="../src/MainCli/commandline.cpp" line="307"/>
         <source>saturation FLOAT</source>
         <translation>Sättigungsverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="289"/>
+        <location filename="../src/MainCli/commandline.cpp" line="311"/>
         <source>detail FLOAT</source>
         <translation>Detailverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="293"/>
+        <location filename="../src/MainCli/commandline.cpp" line="315"/>
         <source>equalization true|false</source>
         <translation>Äqualisation ja|nein</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="295"/>
+        <location filename="../src/MainCli/commandline.cpp" line="317"/>
         <source> Mantiuk 08</source>
         <translation>Mantiuk 08</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="300"/>
+        <location filename="../src/MainCli/commandline.cpp" line="322"/>
         <source>color saturation FLOAT</source>
         <translation>Farbsättigungsverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="304"/>
+        <location filename="../src/MainCli/commandline.cpp" line="326"/>
         <source>contrast enhancement FLOAT</source>
         <translation>Kontrasterhöhungsverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="308"/>
+        <location filename="../src/MainCli/commandline.cpp" line="330"/>
         <source>luminance level FLOAT</source>
         <translation>Helligkeitsverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="312"/>
+        <location filename="../src/MainCli/commandline.cpp" line="334"/>
         <source>enable luminance level true|false</source>
         <translation>Helligkeit manuell festlegen ja|nein</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="313"/>
+        <location filename="../src/MainCli/commandline.cpp" line="335"/>
         <source> Durand</source>
         <translation>Durand</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="317"/>
+        <location filename="../src/MainCli/commandline.cpp" line="339"/>
         <source>spatial kernel sigma FLOAT</source>
         <translation>Spatial-Kernel-Sigma-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="320"/>
+        <location filename="../src/MainCli/commandline.cpp" line="342"/>
         <source>range kernel sigma FLOAT</source>
         <translation>Range-Kernel-Sigma-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="323"/>
+        <location filename="../src/MainCli/commandline.cpp" line="345"/>
         <source>base contrast FLOAT</source>
         <translation>Basiskontrastverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="324"/>
+        <location filename="../src/MainCli/commandline.cpp" line="346"/>
         <source> Drago</source>
         <translation>Drago</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="328"/>
+        <location filename="../src/MainCli/commandline.cpp" line="350"/>
         <source>bias FLOAT</source>
         <translation>Bias-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="330"/>
+        <location filename="../src/MainCli/commandline.cpp" line="352"/>
         <source> Reinhard 02</source>
         <translation>Reinhard 02</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="334"/>
+        <location filename="../src/MainCli/commandline.cpp" line="356"/>
         <source>key value FLOAT</source>
         <translation>Schlüsselwert-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="337"/>
+        <location filename="../src/MainCli/commandline.cpp" line="359"/>
         <source>phi FLOAT</source>
         <translation>Phi-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="340"/>
+        <location filename="../src/MainCli/commandline.cpp" line="362"/>
         <source>use scales true|false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="343"/>
+        <location filename="../src/MainCli/commandline.cpp" line="365"/>
         <source>range FLOAT</source>
         <translation>Bereichsverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="346"/>
+        <location filename="../src/MainCli/commandline.cpp" line="368"/>
         <source>lower scale FLOAT</source>
         <translation>Verlauf der unteren Skala</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="349"/>
+        <location filename="../src/MainCli/commandline.cpp" line="371"/>
         <source>upper scale FLOAT</source>
         <translation>Verlauf der oberen Skala</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="351"/>
+        <location filename="../src/MainCli/commandline.cpp" line="373"/>
         <source> Reinhard 05</source>
         <translation>Reinhard 05</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="356"/>
+        <location filename="../src/MainCli/commandline.cpp" line="378"/>
         <source>Brightness FLOAT</source>
         <translation>Helligkeitsverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="360"/>
+        <location filename="../src/MainCli/commandline.cpp" line="382"/>
         <source>Chroma adaption FLOAT</source>
         <translation>Chromatischer Anpassungsverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="364"/>
+        <location filename="../src/MainCli/commandline.cpp" line="386"/>
         <source>Light adaption FLOAT</source>
         <translation>Lichtanpassungsverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="365"/>
+        <location filename="../src/MainCli/commandline.cpp" line="387"/>
         <source> Ashikmin</source>
         <translation> Ashikmin</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="369"/>
+        <location filename="../src/MainCli/commandline.cpp" line="391"/>
         <source>Equation number 2 true|false</source>
         <translation>Ausgleichszahl 2 ja|nein</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="372"/>
+        <location filename="../src/MainCli/commandline.cpp" line="394"/>
         <source>Simple true|false</source>
         <translation>Einfach ja|nein</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="375"/>
+        <location filename="../src/MainCli/commandline.cpp" line="397"/>
         <source>Local threshold FLOAT</source>
         <translation>Lokaler Schwellenwertverlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="376"/>
+        <location filename="../src/MainCli/commandline.cpp" line="398"/>
         <source> Pattanaik</source>
         <translation>Pattanaik</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="380"/>
+        <location filename="../src/MainCli/commandline.cpp" line="402"/>
         <source>multiplier FLOAT</source>
         <translation>Multiplikator-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="383"/>
+        <location filename="../src/MainCli/commandline.cpp" line="405"/>
         <source>Local tone mapping true|false</source>
         <translation>Lokale Dynamikkompression ja|nein</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="386"/>
+        <location filename="../src/MainCli/commandline.cpp" line="408"/>
         <source>Auto luminance true|false</source>
         <translation>Automatische Helligkeit ja|nein</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="389"/>
+        <location filename="../src/MainCli/commandline.cpp" line="411"/>
         <source>cone level FLOAT</source>
         <translation>Zapfen-Level-Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="392"/>
+        <location filename="../src/MainCli/commandline.cpp" line="414"/>
         <source>rod level FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="437"/>
+        <location filename="../src/MainCli/commandline.cpp" line="416"/>
+        <source> VanHateren</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="421"/>
+        <source>pupil_area FLOAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="423"/>
+        <source> Lischinski</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="477"/>
         <source>Luminance HDR version </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="447"/>
+        <location filename="../src/MainCli/commandline.cpp" line="487"/>
         <source>With LibRaw version </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="449"/>
+        <location filename="../src/MainCli/commandline.cpp" line="489"/>
         <source> models listed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="466"/>
-        <location filename="../src/MainCli/commandline.cpp" line="652"/>
+        <location filename="../src/MainCli/commandline.cpp" line="506"/>
+        <location filename="../src/MainCli/commandline.cpp" line="700"/>
         <source>Error: Unsupported LDR file type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="472"/>
-        <location filename="../src/MainCli/commandline.cpp" line="642"/>
+        <location filename="../src/MainCli/commandline.cpp" line="512"/>
+        <location filename="../src/MainCli/commandline.cpp" line="690"/>
         <source>Error: Unsupported HDR file type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="478"/>
+        <location filename="../src/MainCli/commandline.cpp" line="518"/>
         <source>Error: htmlQuality must be in the range [1..4].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="494"/>
+        <location filename="../src/MainCli/commandline.cpp" line="534"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>Fehler: Ausrichtungsmethode wurde nicht erkannt.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="515"/>
+        <location filename="../src/MainCli/commandline.cpp" line="555"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Fehler: Unbekannte Gewichtung angegeben.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="532"/>
+        <location filename="../src/MainCli/commandline.cpp" line="572"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>Fehler: Unbekannte Verlaufskurve angegeben.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="544"/>
+        <location filename="../src/MainCli/commandline.cpp" line="584"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>Fehler: Unbekanntes Modell zur HDR-Erzeugung angegeben.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="576"/>
+        <location filename="../src/MainCli/commandline.cpp" line="624"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>Fehler: Unbekannter Dynamikkompressionsoperator angegeben.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="591"/>
-        <location filename="../src/MainCli/commandline.cpp" line="600"/>
+        <location filename="../src/MainCli/commandline.cpp" line="639"/>
+        <location filename="../src/MainCli/commandline.cpp" line="648"/>
         <source>Error: The specified file with TMO settings could not be parsed!</source>
         <translation>Fehler: Die angegebene Datei mit TMO-Einstellungen konnte nicht analysiert werden!</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="596"/>
+        <location filename="../src/MainCli/commandline.cpp" line="644"/>
         <source>Error: The specified file with TMO settings could not be parsed!: %1</source>
         <translation>Fehler: Die angegebene Datei mit TMO-Einstellungen konnte nicht analysiert werden!: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="610"/>
+        <location filename="../src/MainCli/commandline.cpp" line="658"/>
         <source>Error: Quality must be in the range [1..100].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="625"/>
+        <location filename="../src/MainCli/commandline.cpp" line="673"/>
         <source>Error: Unknown tiff format.</source>
         <translation>Fehler: Unbekanntes tiff-Format.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="659"/>
+        <location filename="../src/MainCli/commandline.cpp" line="707"/>
         <source>Error: Threshold must be in the range [0..1].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="693"/>
+        <location filename="../src/MainCli/commandline.cpp" line="741"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>Fehler: Die Anzahl der angegebenen EV-Werte unterscheidet sich von der Anzahl der Quelldateien.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="759"/>
+        <location filename="../src/MainCli/commandline.cpp" line="807"/>
         <source>Load file %1 failed</source>
         <translation>Laden der Datei %1 fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="767"/>
+        <location filename="../src/MainCli/commandline.cpp" line="815"/>
         <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation>Fehler: In den Bildern sind keine EXIF-Daten vorhanden und in der Kommandozeile wurden keine EV-Werte angegeben. Breche ab.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="775"/>
+        <location filename="../src/MainCli/commandline.cpp" line="823"/>
         <source>EV values have been assigned.</source>
         <translation>EV-Werte wurden zugewiesen.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="779"/>
-        <location filename="../src/MainCli/commandline.cpp" line="782"/>
+        <location filename="../src/MainCli/commandline.cpp" line="827"/>
+        <location filename="../src/MainCli/commandline.cpp" line="830"/>
         <source>Starting aligning...</source>
         <translation>Richte aus ...</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="790"/>
+        <location filename="../src/MainCli/commandline.cpp" line="838"/>
         <source>Failed executing align_image_stack</source>
         <translation>Ausführung von align_image_stack fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="794"/>
+        <location filename="../src/MainCli/commandline.cpp" line="842"/>
         <source>Failed aligning images.</source>
         <translation>Bilder konnten nicht ausgerichtet werden.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="796"/>
+        <location filename="../src/MainCli/commandline.cpp" line="844"/>
         <source>Creating (in memory) the HDR.</source>
         <translation>Erzeuge HDR (im Speicher).</translation>
     </message>
@@ -1379,81 +1428,81 @@ Fortfahren?</translation>
         <translation type="obsolete"> - Modell: </translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="858"/>
+        <location filename="../src/MainCli/commandline.cpp" line="911"/>
         <source>Saving to file %1.</source>
         <translation>Speichere in Datei %1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="865"/>
+        <location filename="../src/MainCli/commandline.cpp" line="918"/>
         <source>Image %1 saved successfully</source>
         <translation>Bild %1 erfolgreich gespeichert</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="868"/>
+        <location filename="../src/MainCli/commandline.cpp" line="921"/>
         <source>Could not save %1</source>
         <translation>Konnte %1 nicht speichern</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="873"/>
+        <location filename="../src/MainCli/commandline.cpp" line="926"/>
         <source>NOT Saving HDR image to file. %1</source>
         <translation>Speichere HDR-Bild NICHT in Datei. %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="878"/>
+        <location filename="../src/MainCli/commandline.cpp" line="931"/>
         <source>Exporting to HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="894"/>
+        <location filename="../src/MainCli/commandline.cpp" line="947"/>
         <source>ERROR: directory %1 must exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="929"/>
+        <location filename="../src/MainCli/commandline.cpp" line="982"/>
         <source>Tonemapping requested, saving to file %1.</source>
         <translation>Dynamikkompression angefordert, speichere in Datei %1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="945"/>
+        <location filename="../src/MainCli/commandline.cpp" line="998"/>
         <source>Resizing to width %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="949"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1002"/>
         <source>Applying gamma %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="975"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1028"/>
         <source>
 Applying saturation enhancement %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="978"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1031"/>
         <source>
 Applying post-gamma %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="989"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1042"/>
         <source>
 Image %1 successfully saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="994"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1047"/>
         <source>
 ERROR: Cannot save to file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1001"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1054"/>
         <source>Tonemapping NOT requested.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1011"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1064"/>
         <source>Failed loading images: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2904,7 +2953,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="38"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="364"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="366"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
@@ -2930,7 +2979,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="101"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="369"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="371"/>
         <source>&amp;Print...</source>
         <translation>Dr&amp;ucken ...</translation>
     </message>
@@ -2946,7 +2995,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="122"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="371"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="373"/>
         <source>&amp;Find...</source>
         <translation>&amp;Suchen ...</translation>
     </message>
@@ -2977,7 +3026,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="150"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="377"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="379"/>
         <source>&amp;Add Bookmark</source>
         <translation>Lesezeichen hinzuf&amp;ügen</translation>
     </message>
@@ -2993,7 +3042,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="167"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="379"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="381"/>
         <source>D&amp;elete All</source>
         <translation>Alle l&amp;öschen</translation>
     </message>
@@ -3063,94 +3112,94 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="273"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="275"/>
         <source>Help SideBar</source>
         <translation>Hilfe-Seitenleiste</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="362"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="364"/>
         <source>LuminanceHDR Online Help</source>
         <translation>Online-Hilfe zu Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="365"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="367"/>
         <source>&amp;Edit</source>
         <translation>Bearbei&amp;ten</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="366"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="368"/>
         <source>&amp;View</source>
         <translation>&amp;Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="367"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="376"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="369"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="378"/>
         <source>&amp;Bookmarks</source>
         <translation>&amp;Lesezeichen</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="370"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="372"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="372"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="374"/>
         <source>Find &amp;Next</source>
         <translation>&amp;Weitersuchen</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="373"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="375"/>
         <source>Find &amp;Previous</source>
         <translation>&amp;Rückwärts suchen</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="374"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="376"/>
         <source>&amp;Contents</source>
         <translation>&amp;Inhalt</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="375"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="377"/>
         <source>&amp;Search</source>
         <translation>&amp;Suchen</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="378"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="380"/>
         <source>&amp;Delete</source>
         <translation>Lösche&amp;n</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="487"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="489"/>
         <source>Find</source>
         <translation>Suchen</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="487"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="489"/>
         <source>Search Term:</source>
         <translation>Suchbegriff:</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="514"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="516"/>
         <source>New Bookmark</source>
         <translation>Neues Lesezeichen</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="515"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="517"/>
         <source>New Bookmark&apos;s Title:</source>
         <translation>Titel des neuen Lesezeichens:</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="712"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="714"/>
         <source>&lt;h2&gt;&lt;p&gt;Sorry, no manual is installed!&lt;/p&gt;&lt;p&gt;Please contact your package provider or LuminanceHDR team if you built the application yourself&lt;/p&gt;&lt;/h2&gt;</source>
         <comment>HTML message for no documentation available to show</comment>
         <translation>&lt;h2&gt;&lt;p&gt;Entschuldige, es ist kein Handbuch installiert!&lt;/p&gt;&lt;p&gt;Bitte kontaktier deinen Paket-Anbieter oder, falls du die Anwendung selbst kompiliert hast, das Luminance-HDR-Team.&lt;/p&gt;&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="780"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="782"/>
         <source>LuminanceHDR - Help Browser</source>
         <translation>Luminance HDR - Hilfe-Browser</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="781"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="783"/>
         <source>This protocol is not handled by the help browser.
 Do you want to open the link with the default application 
 associated with the protocol?</source>
@@ -3373,7 +3422,7 @@ p, li { white-space: pre-wrap; }
     <name>MainWindow</name>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1785"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1814"/>
         <source>Luminance HDR</source>
         <translation>Luminance HDR</translation>
     </message>
@@ -4253,73 +4302,73 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="505"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation>Fertig. Öffne jetzt ein bestehendes HDR-Bild oder erstell ein neues!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="599"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="571"/>
         <source>All HDR formats </source>
         <translation>Alle HDR-Formate</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="626"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="598"/>
         <source>Load one or more HDR images...</source>
         <translation>Ein oder mehrere HDR-Bilder laden ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="650"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="622"/>
         <source>Save files in</source>
         <translation>Dateien speichern in</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="792"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="809"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="768"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="785"/>
         <source>Failed to save %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1180"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1157"/>
         <source>Done!</source>
         <translation>Fertig!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1190"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1167"/>
         <source>Aborting...</source>
         <translation>Abbrechen ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1764"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1793"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1429"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1410"/>
         <source>Cropped Image</source>
         <translation>Zugeschnittenes Bild</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1482"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1511"/>
         <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
         <translation>Anscheinend verwendest du die 32-Bit-Version von &lt;strong&gt;Luminance HDR&lt;/strong&gt; auf einem 64-Bit-System. &lt;br&gt;Für das beste Luminance-HDR-Erlebnis lad bitte die&lt;strong&gt;64-Bit&lt;/strong&gt;-Version von &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; herunter!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1501"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1530"/>
         <source>Unsaved changes...</source>
         <translation>Nicht gespeicherte Änderungen ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1501"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1530"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation>Für dieses Bild gibt es nicht gespeicherte Änderungen.&lt;br&gt;Sollen sie gespeichert werden?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1659"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1688"/>
         <source>Fattal Warning</source>
         <translation>Fattal-Warnung</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1661"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1690"/>
         <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
 
 Do you want to continue?</source>
@@ -4328,22 +4377,22 @@ Do you want to continue?</source>
 Möchten Sie ihn dennoch anwenden?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1766"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1795"/>
         <source>Untitled %1</source>
         <translation>Unbenannt %1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1786"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1815"/>
         <source>Error: %1</source>
         <translation>Fehler: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1950"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1979"/>
         <source>Untitled HDR</source>
         <translation>Unbenanntes HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="2167"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="2196"/>
         <source>FITS Image</source>
         <translation>FITS-Bild</translation>
     </message>
@@ -5124,17 +5173,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="481"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="551"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation>FEHLER: Datei mit Dynamikkompressionsvorgaben kann nicht geladen werden: </translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="504"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="574"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation>FEHLER: Datei mit Dynamikkompressionsvorgaben ist zu alt und kann nicht verarbeitet werden: </translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="654"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="751"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>FEHLER: Datei mit Dynamikkompressionsvorgaben kann nicht verarbeitet werden: </translation>
     </message>
@@ -5257,200 +5306,226 @@ p, li { white-space: pre-wrap; }
         <translation>Robertson Response Berechnung</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="306"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="352"/>
         <source>PreGamma=%1</source>
         <translation>Pre-Gamma=%1</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="320"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="366"/>
         <source>Contrast Equalization</source>
         <translation>Kontrastausgleich</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="323"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="369"/>
         <source>Contrast</source>
         <translation>Kontrast</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="327"/>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="368"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="373"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="414"/>
         <source>Saturation</source>
         <translation>Sättigung</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="330"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="376"/>
         <source>Detail</source>
         <translation>Detail</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="342"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="388"/>
         <source>Luminance Level</source>
         <translation>Helligkeit</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="345"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="391"/>
         <source>Luminance Level=Auto</source>
         <translation>Helligkeit=Auto</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="348"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="394"/>
         <source>Color Saturation</source>
         <translation>Farbsättigung</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="351"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="397"/>
         <source>Contrast Enhancement</source>
         <translation>Kontrasterhöhung</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="364"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="410"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="537"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="366"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="412"/>
         <source>Beta</source>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="371"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="417"/>
         <source>NoiseRedux</source>
         <translation>Rauschunterdrückung</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="373"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="419"/>
         <source>FFTSolver</source>
         <translation>FFT-Funktion</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="379"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="425"/>
         <source>Rho</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="380"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="426"/>
         <source>InvAlpha</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="388"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="432"/>
+        <source>MaxLuminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="433"/>
+        <source>AdaptationLuminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="439"/>
+        <source>C1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="440"/>
+        <source>C2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="448"/>
         <source>simple</source>
         <translation>einfach</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="391"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="451"/>
         <source>Equation 2</source>
         <translation>Eqn 2</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="393"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="453"/>
         <source>Equation 4</source>
         <translation>Eqn 4</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="396"/>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="425"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="456"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="485"/>
         <source>Local</source>
         <translation>Schwellenwert</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="402"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="462"/>
         <source>Bias</source>
         <translation>Bias</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="410"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="470"/>
         <source>Spatial</source>
         <translation>Spatial</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="413"/>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="446"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="473"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="506"/>
         <source>Range</source>
         <translation>Bereich</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="414"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="474"/>
         <source>Base</source>
         <translation>Basis</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="422"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="482"/>
         <source>Multiplier</source>
         <translation>Multiplikator</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="427"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="487"/>
         <source>AutoLuminance</source>
         <translation>Auto-Helligkeit</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="430"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="490"/>
         <source>Cone</source>
         <translation>Zapfen</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="431"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="491"/>
         <source>Rod</source>
         <translation>Stäbchen</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="441"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="501"/>
         <source>Key</source>
         <translation>Hauptwert</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="442"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="502"/>
         <source>Phi</source>
         <translation>Phi</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="445"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="505"/>
         <source>Scales:</source>
         <translation>Skalen:</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="448"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="508"/>
         <source>Lower</source>
         <translation>Untere</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="450"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="510"/>
         <source>Upper</source>
         <translation>Obere</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="461"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="521"/>
         <source>Brightness</source>
         <translation>Helligkeit</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="463"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="523"/>
         <source>Chromatic Adaptation</source>
         <translation>Chromatische Anpassung</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="466"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="526"/>
         <source>Light Adaptation</source>
         <translation>Lichtanpassung</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="471"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="532"/>
+        <source>Pupil Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="541"/>
         <source>PostSaturation=%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="472"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="542"/>
         <source>PostGamma=%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Common/LuminanceOptions.cpp" line="778"/>
+        <location filename="../src/Common/LuminanceOptions.cpp" line="777"/>
         <source>Option -v -a...</source>
         <translation>Option -v -a ...</translation>
     </message>
     <message>
-        <location filename="../src/Common/LuminanceOptions.cpp" line="779"/>
+        <location filename="../src/Common/LuminanceOptions.cpp" line="778"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v&quot; and without the &quot;-a&quot; options. Command line options have been corrected.</source>
         <translation>Luminance HDR erfordert, dass align_image_stack mit der Option &quot;-v&quot; und ohne  &quot;-a&quot; ausgeführt wird. Die Kommandozeilenoptionen wurden angepasst.</translation>
     </message>
@@ -5460,32 +5535,32 @@ p, li { white-space: pre-wrap; }
         <translation>Kann %1 nicht in eine Gleitkommazahl konvertieren</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="581"/>
+        <location filename="../src/MainCli/commandline.cpp" line="629"/>
         <source>Loading TMO settings from file: %1</source>
         <translation>TMO-Einstellungen werden aus Datei geladen: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="673"/>
+        <location filename="../src/MainCli/commandline.cpp" line="721"/>
         <source>Input file %1</source>
         <translation>Quelldatei %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="700"/>
+        <location filename="../src/MainCli/commandline.cpp" line="748"/>
         <source>Running in HDR-creation mode.</source>
         <translation>Läuft im HDR-erzeugen-Modus.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="704"/>
+        <location filename="../src/MainCli/commandline.cpp" line="752"/>
         <source>Running in Load-HDR mode.</source>
         <translation>Läuft im HDR-laden-Modus.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="713"/>
+        <location filename="../src/MainCli/commandline.cpp" line="761"/>
         <source>Temporary directory: %1</source>
         <translation>Temporäres Verzeichnis: %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/MainCli/commandline.cpp" line="716"/>
+        <location filename="../src/MainCli/commandline.cpp" line="764"/>
         <source>Using %n threads.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -5493,12 +5568,12 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="744"/>
+        <location filename="../src/MainCli/commandline.cpp" line="792"/>
         <source>Loading file %1</source>
         <translation>Lade Datei %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="754"/>
+        <location filename="../src/MainCli/commandline.cpp" line="802"/>
         <source>Successfully loaded file %1.</source>
         <translation>Datei %1 erfolgreich geladen.</translation>
     </message>
@@ -5513,12 +5588,17 @@ p, li { white-space: pre-wrap; }
         <translation>LDR-Bild speichern als ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="152"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="151"/>
+        <source>All HDR formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="172"/>
         <source>Save the HDR image as...</source>
         <translation>HDR-Bild speichern als ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="745"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="721"/>
         <source>Save as...</source>
         <translation>Speichern als ...</translation>
     </message>
@@ -5529,29 +5609,36 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainGui/main.cpp" line="71"/>
+        <location filename="../src/MainGui/main.cpp" line="72"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation type="unfinished">Die Datenbank zum Speichern von Dynamikkompressionsparametern konnte nicht geöffnet werden. Fehler: %1</translation>
     </message>
     <message>
+        <location filename="../src/MainGui/main.cpp" line="178"/>
+        <source>This version of Luminance HDR has been compiled without support for extra demosaicing algorithms.
+Your preferences were set to use one of the missing algorithms and are now been changed to use the supported AHD method.
+To change this go to Tools-&gt;Preferences-&gt;Raw Conversion-&gt;Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="1014"/>
         <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="461"/>
-        <location filename="../src/MainCli/commandline.cpp" line="838"/>
+        <location filename="../src/MainCli/commandline.cpp" line="886"/>
         <source>Weights= </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="1016"/>
         <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="463"/>
-        <location filename="../src/MainCli/commandline.cpp" line="841"/>
+        <location filename="../src/MainCli/commandline.cpp" line="889"/>
         <source> - Response curve= </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="1018"/>
         <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="465"/>
-        <location filename="../src/MainCli/commandline.cpp" line="844"/>
+        <location filename="../src/MainCli/commandline.cpp" line="892"/>
         <source> - Model= </source>
         <translation type="unfinished"></translation>
     </message>
@@ -5622,17 +5709,17 @@ Error: %1</source>
 <context>
     <name>SavedParametersDialog</name>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.ui" line="17"/>
+        <location filename="../src/UI/SavedParametersDialog.ui" line="17"/>
         <source>Saved Parameters</source>
         <translation>Gespeicherte Parameter</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="66"/>
+        <location filename="../src/UI/SavedParametersDialog.cpp" line="74"/>
         <source>Comment</source>
         <translation>Kommentar</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="67"/>
+        <location filename="../src/UI/SavedParametersDialog.cpp" line="75"/>
         <source>TM Operator</source>
         <translation>Dynamikkompressionsoperator</translation>
     </message>
@@ -5856,107 +5943,132 @@ Error: %1</source>
 <context>
     <name>TonemappingPanel</name>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3485"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3987"/>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
         <translation>Hier kann eine Datei mit Dynamikkompressionsvorgaben geladen bzw. gespeichert werden.&lt;br&gt;Es kann auch der Inhalt der derzeit geladenen Vorgabendatei angewendet werden.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3488"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3990"/>
         <source>Tone Mapping Settings</source>
         <translation>Dynamikkompressionsvorgaben</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3520"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4022"/>
         <source>Save current parameters to a text file</source>
         <translation>Speichert die derzeitigen Parameter in eine Textdatei</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3523"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4025"/>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
         <translation>Speichert die derzeitigen Parameter (zu Pre-Gamma und Dynamikkompression) in eine Textdatei.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3546"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4048"/>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation>Eine vorhandene Textdatei mit Vorgaben zu Pre-Gamma und Dynamikkompression laden</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3549"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4051"/>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation>Eine vorhandene Textdatei mit Vorgaben zu Pre-Gamma und Dynamikkompression laden.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3614"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4116"/>
         <source>Save current parameters</source>
         <translation>Derzeitige Parameter speichern</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3591"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4093"/>
         <source>Load saved parameters</source>
         <translation>Gespeicherte Parameter laden</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1965"/>
-        <source>Upper Sca&amp;le</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2036"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1890"/>
         <source>           Ra&amp;nge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2377"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2217"/>
         <source>Local Contrast Threshol&amp;d</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3107"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2899"/>
+        <source>&amp;Multiplier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2930"/>
+        <source>A&amp;daptation Luminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3032"/>
+        <source>&amp;C1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3113"/>
+        <source>C&amp;2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3244"/>
+        <source>Pup&amp;il Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3296"/>
+        <source>a&amp;lpha mul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3586"/>
         <source>Processing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3392"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3887"/>
         <source>Post-gamma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3434"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3919"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore postgamma&apos;s default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3437"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3922"/>
         <source>...</source>
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3468"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3970"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3665"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4170"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3688"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4193"/>
         <source>Fast export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3708"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4213"/>
         <source>Opens the current export direcotory. This can be changed in the preferences!</source>
         <translation>Öffnet das aktuelle Exportverzeichnis. Dies kann in den Einstellungen geändert werden!</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3711"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4216"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Öffnen&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3122"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3601"/>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation>Hier kann eine Gammakorrektur auf das HDR-Bild angewendet werden.&lt;br&gt;Die Gammakorrektur wird vor der Dynamikkompression durchgeführt.</translation>
     </message>
@@ -5969,14 +6081,15 @@ Error: %1</source>
         <translation type="vanished">Ausgabeg&amp;röße</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3153"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3367"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3694"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3770"/>
         <source>Gamma applied before tonemapping</source>
         <translation>Vor Dynamikkompression angewandte Gammakorrektur</translation>
     </message>
     <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3697"/>
         <source>Pre-&amp;gamma</source>
-        <translation type="vanished">Pre-&amp;Gamma</translation>
+        <translation>Pre-&amp;Gamma</translation>
     </message>
     <message>
         <source>Restore pregamma&apos;s default value (1)</source>
@@ -5991,262 +6104,287 @@ Error: %1</source>
         <translation type="vanished">Hier kann die Größe des resultierenden LDR-Bildes ausgewählt werden.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3292"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3616"/>
         <source>Res&amp;ult Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3338"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3665"/>
         <source>Set Custom Output Size</source>
         <translation>Benutzerdefinierte Ausgabegröße festlegen</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3341"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3668"/>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation>Durch Klick kann die &lt;i&gt;Breite&lt;/i&gt; des resultierenden LDR-Bildes manuell festgelegt werden.&lt;br&gt;Nach Bestätigung durch Enter (oder Return) wird die Höhe automatisch berechnet und die neue Größe der Liste hinzugefügt.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3370"/>
-        <source>Pre-ga&amp;mma</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3199"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3750"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore pregamma&apos;s default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3133"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3798"/>
         <source>Pos&amp;t-saturation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3266"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3845"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore post-saturation&apos;s default value (1)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="38"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3487"/>
         <source>Start tonemapping (CTRL+T)</source>
         <translation>Dynamikkompression starten (Strg+T)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="41"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1819"/>
+        <source>Upper S&amp;cale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3490"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
         <translation>LDR-Bild mithilfe der festgelegten Parameter (Pre-Gamma und Operator) berechnen</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="44"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3493"/>
         <source>&amp;Update preview</source>
         <translation>Vorschau akt&amp;ualisieren</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="47"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3496"/>
         <source>Ctrl+T</source>
         <translation>Strg+T</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="63"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3512"/>
         <source>Update current LDR</source>
         <translation>Aktuelles LDR-Bild aktualisieren</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="85"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3534"/>
         <source>Auto Levels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="98"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3547"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;set auto levels threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="125"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="46"/>
         <source>Tonemap</source>
         <translation>Dynamikkompression</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="158"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="79"/>
         <source>Mantiuk &apos;06</source>
         <translation>Mantiuk &apos;06</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="163"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="84"/>
         <source>Mantiuk &apos;08</source>
         <translation>Mantiuk &apos;08</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="168"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="89"/>
         <source>Fattal</source>
         <translation>Fattal</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="173"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="94"/>
         <source>Ferradans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="178"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="99"/>
         <source>Drago</source>
         <translation>Drago</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="183"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="104"/>
         <source>Durand</source>
         <translation>Durand</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="188"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="109"/>
         <source>Reinhard &apos;02</source>
         <translation>Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="193"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="114"/>
         <source>Reinhard &apos;05</source>
         <translation>Reinhard &apos;05</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="198"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="119"/>
         <source>Ashikhmin</source>
         <translation>Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="203"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="124"/>
         <source>Pattanaik</source>
         <translation>Pattanaik</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="208"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="129"/>
         <source>Mai</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="234"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="134"/>
+        <source>Ferwerda</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="139"/>
+        <source>KimKautz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="144"/>
+        <source>VanHateren</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="149"/>
+        <source>Lischinski</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="175"/>
         <source>Operator</source>
         <translation>Operator</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="303"/>
-        <source>Co&amp;ntrast Factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="328"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="342"/>
         <source>Saturat&amp;ion Factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="459"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="317"/>
         <source>&amp;Detail Factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="592"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="739"/>
         <source>Predefined &amp;Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="644"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="539"/>
         <source>Co&amp;lor Saturation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="666"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="232"/>
+        <source>&amp;Contrast Factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="561"/>
         <source>Co&amp;ntrast Enhancement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="717"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="612"/>
         <source>Lum&amp;inance Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="886"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="788"/>
         <source>A&amp;lpha</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1024"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="860"/>
+        <source>Bet&amp;a</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="967"/>
         <source>Color Saturat&amp;ion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1087"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="989"/>
         <source>&amp;Noise Reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1212"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1111"/>
         <source>&amp;Inverse Alpha</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1337"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1221"/>
         <source>B&amp;ias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1442"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1311"/>
         <source>Spatial &amp;Kernel Sigma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1505"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1431"/>
         <source>Range Kerne&amp;l Sigma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1584"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1333"/>
         <source>Base Co&amp;ntrast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1874"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1728"/>
         <source>&amp;Key Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1852"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1706"/>
         <source>Ph&amp;i</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1899"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1753"/>
         <source>&amp;Lower Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2098"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2090"/>
         <source>Br&amp;ightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2179"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2056"/>
         <source>Chromatic A&amp;daptation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2257"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2003"/>
         <source>&amp;Light Adaptation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2483"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2323"/>
         <source>Equation &amp;Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2592"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2480"/>
         <source>Mu&amp;ltiplier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2751"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2592"/>
         <source>Co&amp;ne Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2813"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2654"/>
         <source>Ro&amp;d Level</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6263,7 +6401,7 @@ Error: %1</source>
         <translation type="vanished">Detailfaktor</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="537"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="254"/>
         <source>Contrast Equalization</source>
         <translation>Kontrastausgleich</translation>
     </message>
@@ -6272,22 +6410,22 @@ Error: %1</source>
         <translation type="vanished">Vordefinierte Anzeige</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="615"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="510"/>
         <source>Lcd Office</source>
         <translation>LCD Büro</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="620"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="515"/>
         <source>Lcd</source>
         <translation>LCD</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="625"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="520"/>
         <source>Lcd Bright</source>
         <translation>LCD hell</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="630"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="525"/>
         <source>CRT</source>
         <translation>CRT</translation>
     </message>
@@ -6300,7 +6438,7 @@ Error: %1</source>
         <translation type="vanished">Kontrasterhöhung</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="688"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="583"/>
         <source>Enable
 Luminace Level</source>
         <translation>Helligkeit manuell festlegen</translation>
@@ -6314,21 +6452,20 @@ Luminace Level</source>
         <translation type="vanished">Alpha</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="958"/>
         <source>Beta</source>
-        <translation>Beta</translation>
+        <translation type="vanished">Beta</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
         <translation type="vanished">Rauschunterdrückung</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1166"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1030"/>
         <source>Version 2.3.0</source>
         <translation>Version 2.3.0</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1231"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1143"/>
         <source>Rho</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6357,7 +6494,7 @@ Luminace Level</source>
         <translation type="vanished">Phi</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2020"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1874"/>
         <source>Use Scales</source>
         <translation>Skalen verwenden</translation>
     </message>
@@ -6390,7 +6527,7 @@ Luminace Level</source>
         <translation type="vanished">Schwellenwert für lokalen Kontrast</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2458"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2298"/>
         <source>Simple</source>
         <translation>Einfach</translation>
     </message>
@@ -6399,12 +6536,12 @@ Luminace Level</source>
         <translation type="vanished">Ausgleichszahl</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2507"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2347"/>
         <source>Eqn &amp;2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2523"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2363"/>
         <source>Eqn &amp;4</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6413,12 +6550,12 @@ Luminace Level</source>
         <translation type="vanished">Multiplikator</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2667"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2433"/>
         <source>Local Tone Mapping</source>
         <translation>Lokale Dynamikkompression</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2692"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2533"/>
         <source>Auto Cone/Rod</source>
         <translation>Zapfen/Stäbchen-Automatik</translation>
     </message>
@@ -6431,107 +6568,107 @@ Luminace Level</source>
         <translation type="vanished">Stäbchen-Level</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2942"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2780"/>
         <source>This operator has no options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2993"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3386"/>
         <source>Restore operator&apos;s default values</source>
         <translation>Setzt die Parameter des Operators auf Standardwerte zurück</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2996"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3389"/>
         <source>Restore</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3035"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3428"/>
         <source>Previous applied settings</source>
         <translation>Zuvor angewandte Werte</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3038"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3431"/>
         <source>Previous</source>
         <translation>Vorherige</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3061"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3454"/>
         <source>Next applied settings</source>
         <translation>Nächste angewandte Werte</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3067"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3460"/>
         <source>Next</source>
         <translation>Nächste</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="283"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="326"/>
         <source>Queue size: %1</source>
         <translation>Warteschlangengröße: %1</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="350"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="399"/>
         <source>TM Database Problem</source>
         <translation>Datenbank-Problem</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="351"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="400"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation>Die Datenbank zum Speichern von Dynamikkompressionsparametern konnte nicht geöffnet werden. Fehler: %1</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="929"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1112"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Lade Datei mit Dynamikkompressionsvorgaben ...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="931"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="957"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1114"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1140"/>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
         <translation>Datei mit Dynamikkompressionsvorgaben für Luminance HDR (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="936"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="975"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1084"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1103"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1119"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1158"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1285"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1304"/>
         <source>Aborting...</source>
         <translation>Abbrechen ...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="937"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1120"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>Datei ist nicht lesbar (prüf deren Existenz, Zugriffsrechte, ...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="955"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1138"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Datei mit Dynamikkompressionsvorgaben speichern als ...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="976"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1159"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Datei ist nicht beschreibbar (prüf deren Zugriffsrechte, Pfad, ...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1085"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1286"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Datei ist nicht lesbar (prüf deren Zugriffsrechte, Pfad, ...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1104"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1305"/>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation>Fehler: Das Dateiformat für Dynamikkompressionsvorgaben hat sich geändert. Diese (alte) Datei kann mit dieser Version von Luminance HDR nicht verwendet werden. Erstell eine neue.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1280"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1510"/>
         <source>Custom LDR size</source>
         <translation>Benutzerdefinierte LDR-Größe</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1281"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1511"/>
         <source>Enter the width of the new size:</source>
         <translation>Die Breite der neuen Größe eingeben:</translation>
     </message>
@@ -6681,19 +6818,19 @@ Error: %1</source>
         <translation>&amp;Starten</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="245"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="279"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="246"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="280"/>
         <source>All Supported formats</source>
         <translation>Alle unterstützten Formate</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="252"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="288"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="253"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="289"/>
         <source>Select the input images</source>
         <translation>Eingabebilder auswählen</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="350"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="351"/>
         <source>&amp;Done</source>
         <translation>&amp;Fertig</translation>
     </message>
