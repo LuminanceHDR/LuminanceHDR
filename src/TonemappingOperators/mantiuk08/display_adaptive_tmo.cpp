@@ -297,7 +297,7 @@ static void compute_gaussian_level(const int width, const int height,
     float *out_raw = out.data();
 
 // Filter rows
-#pragma omp parallel for default(none) shared(in_raw, temp_raw, kernel)
+#pragma omp parallel for shared(in_raw, temp_raw, kernel)
     for (int r = 0; r < height; r++) {
         for (int c = 0; c < width; c++) {
             float sum = 0;
@@ -311,7 +311,7 @@ static void compute_gaussian_level(const int width, const int height,
         }
     }
 // Filter columns
-#pragma omp parallel for default(none) shared(temp_raw, out_raw, kernel)
+#pragma omp parallel for shared(temp_raw, out_raw, kernel)
     // process 8 columns per iteration for better usage of cpu cache
     for (int c = 0; c < width - 7; c+=8) {
         for (int r = 0; r < height; r++) {
@@ -438,7 +438,7 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
     const float min_val = std::max(min_positive(L, pix_count), MIN_PHVAL);
 
 // Compute log10 of an image
-#pragma omp parallel for default(none) shared(LP_high_raw, L)
+#pragma omp parallel for shared(LP_high_raw, L)
 #ifndef __SSE2__
     for (int i = 0; i < pix_count; i++)
         LP_high_raw[i] = safe_log10(L[i], min_val);
@@ -1107,7 +1107,7 @@ int datmo_apply_tone_curve_cc(float *R_out, float *G_out, float *B_out,
     cc_lut.y_i[tc->size - 1] = 1;
 
     const long pix_count = width * height;
-#pragma omp parallel for default(none) \
+#pragma omp parallel for \
     shared(R_in, G_in, B_in, L_in, R_out, G_out, B_out, tc_lut, cc_lut, df)
     for (long i = 0; i < pix_count; i++) {
         float L_fix = clamp_channel(L_in[i]);
