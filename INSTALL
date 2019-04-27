@@ -223,10 +223,13 @@ If you wish to make a DMG (optional)
 
 If you wish to build with an earlier version of the MacOS-X Platform SDK (eg 10.9), use the following:
 
-+----------------------------------------------------+
-| You can obtain legacy SDKs here:                   |
-|   https://github.com/phracker/MacOSX-SDKs/releases |
-+----------------------------------------------------+
+---
+**You can obtain legacy SDKs here: **
+
+https://github.com/phracker/MacOSX-SDKs/releases
+
+---
+
 ```
 $ export QT=~/Qt/5.11.0/clang_64
 $ export MACOSX_DEPLOYMENT_TARGET="10.9"
