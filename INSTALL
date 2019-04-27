@@ -169,17 +169,20 @@ must be compiled from source.
 
 Qt5 which must be downloaded from the official website of the Qt project.
 
-If you install Qt/5.11.0 into ~/Qt/5.11.0, generate the project with:
+If you install Qt/5.11.0 into `~/Qt/5.11.0`, generate the project with:
 
+```
 $ export QT=~/Qt/5.11.0/clang_64
 $ cd LuminanceHDR
 $ mkdir build
 $ cd build
 $ cmake .. -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
 $ make
+```
 
 Enabling OpenMP on macOS:
 As AppleClang requires preprocessing to detect OpenMP, the cmake command to enable AppleClang 10+ to use the libiomp5 implementation would be:
+```
 $ cmake -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
 -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g') -G "Unix Makefiles" \
 -DCMAKE_C_COMPILER="clang" \
@@ -193,27 +196,30 @@ $ cmake -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
 -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include" \
 -DOpenMP_CXX_LIB_NAMES="libiomp5" \
 -DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include"
+```
 
 Caution 1:
 If you crash on start up with a message about libz.1.2.8.dylib, modify the executable as follows:
-$ install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib Luminance\ HDR\ 2.5.2.app/Contents/MacOS/Luminance\ HDR\ 2.5.2
+`$ install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib Luminance\ HDR\ 2.5.2.app/Contents/MacOS/Luminance\ HDR\ 2.5.2`
 
 Caution 2:
 If you built libboost from source, you may encounter errors from macdeployqt about missing libraries.
 Copy the boost libraries to /usr/lib
-$ sudo cp /usr/local/*boost*.dylib /usr/lib
+`$ sudo cp /usr/local/*boost*.dylib /usr/lib`
 
 Copy Qt frameworks and dynamic libraries into the bundle:
-$ $QT/bin/macdeployqt  Luminance*.app/ -executable=Luminance*.app/Contents/MacOS/luminance-hdr-cli -no-strip
+`$ $QT/bin/macdeployqt  Luminance*.app/ -executable=Luminance*.app/Contents/MacOS/luminance-hdr-cli -no-strip`
 
 Caution:  This may produce the following warnings (which you may ignore) such as:
+```
 WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store compliant.
 WARNING: Plugin "libqsqlpsql.dylib" uses private API and is not Mac App store compliant.
 ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
 ERROR: no file at "/usr/local/lib/libpq.5.dylib"
+```
 
 If you wish to make a DMG (optional)
-$ hdiutil create -ov -fs HFS+ -srcfolder Luminance\ HDR\ 2.5.2.app Luminance\ HDR\ 2.5.2.dmg
+`$ hdiutil create -ov -fs HFS+ -srcfolder Luminance\ HDR\ 2.5.2.app Luminance\ HDR\ 2.5.2.dmg`
 
 If you wish to build with an earlier version of the MacOS-X Platform SDK (eg 10.9), use the following:
 
@@ -221,7 +227,7 @@ If you wish to build with an earlier version of the MacOS-X Platform SDK (eg 10.
 | You can obtain legacy SDKs here:                   |
 |   https://github.com/phracker/MacOSX-SDKs/releases |
 +----------------------------------------------------+
-
+```
 $ export QT=~/Qt/5.11.0/clang_64
 $ export MACOSX_DEPLOYMENT_TARGET="10.9"
 $ export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"
@@ -229,6 +235,7 @@ $ cmake .. -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platf
            -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
            -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
 $ make
+```
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 All supported platforms:
