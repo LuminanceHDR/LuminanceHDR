@@ -5684,7 +5684,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message numerus="yes">
         <location filename="../src/MainCli/commandline.cpp" line="764"/>
-        <source>Using %n threads.</source>
+        <source>Using %n thread(s).</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>

@@ -5541,8 +5541,16 @@ p, li { white-space: pre-wrap; }
     </message>
     <message numerus="yes">
         <location filename="../src/MainCli/commandline.cpp" line="764"/>
+        <source>Using %n thread(s).</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
         <source>Using %n threads.</source>
-        <translation>
+        <translation type="vanished">
             <numerusform>Используется %n поток.</numerusform>
             <numerusform>Используется %n потока.</numerusform>
             <numerusform>Используется %n потоков.</numerusform>
