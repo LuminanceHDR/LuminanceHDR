@@ -171,7 +171,7 @@ Qt5 which must be downloaded from the official website of the Qt project.
 
 If you install Qt/5.11.0 into `~/Qt/5.11.0`, generate the project with:
 
-```
+```bash
 $ export QT=~/Qt/5.11.0/clang_64
 $ cd LuminanceHDR
 $ mkdir build
