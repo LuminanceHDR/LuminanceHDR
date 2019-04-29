@@ -238,8 +238,8 @@ directory must exist.  Useful to avoid clutter in the current directory. \
                                          .constData());
     tmo_desc.add_options()(
         "tmo", po::value<std::string>(),
-        tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|ferwerda|kimkautz|pattanaik|reinhard02|reinhard05|\
-                mai|mantiuk06|mantiuk08|vanhateren|lischinski] (Default is mantiuk06)")
+        tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|\nferwerda|kimkautz|pattanaik|\
+reinhard02|\nreinhard05|mai|mantiuk06|mantiuk08|\nvanhateren|lischinski] (Default is mantiuk06)")
             .toUtf8()
             .constData())("tmofile", po::value<std::string>(),
                           tr("SETTING_FILE Load an existing setting file "
