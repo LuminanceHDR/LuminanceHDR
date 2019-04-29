@@ -4210,7 +4210,7 @@ Luminace Level</string>
                  </sizepolicy>
                 </property>
                 <property name="toolTip">
-                 <string>Opens the current export direcotory. This can be changed in the preferences!</string>
+                 <string>Opens the current export directory. This can be changed in the preferences!</string>
                 </property>
                 <property name="text">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
