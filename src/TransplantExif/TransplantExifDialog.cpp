@@ -27,6 +27,15 @@
 #include <exif.hpp>
 #include <image.hpp>
 #include <exiv2/exiv2.hpp>
+// Make sure an EXIV2_TEST_VERSION macro exists:
+#ifdef EXIV2_VERSION
+# ifndef EXIV2_TEST_VERSION
+# define EXIV2_TEST_VERSION(major,minor,patch) \
+    ( EXIV2_VERSION >= EXIV2_MAKE_VERSION(major,minor,patch) )
+# endif
+#else
+# define EXIV2_TEST_VERSION(major,minor,patch) (false)
+#endif
 
 #include "Common/config.h"
 #include "Common/global.h"
