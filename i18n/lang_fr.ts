@@ -991,7 +991,10 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="241"/>
-        <source>Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|ferwerda|kimkautz|pattanaik|reinhard02|reinhard05|                mai|mantiuk06|mantiuk08|vanhateren|lischinski] (Default is mantiuk06)</source>
+        <source>Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|
+ferwerda|kimkautz|pattanaik|reinhard02|
+reinhard05|mai|mantiuk06|mantiuk08|
+vanhateren|lischinski] (Default is mantiuk06)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6298,8 +6301,8 @@ Niveau de luminance</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4213"/>
-        <source>Opens the current export direcotory. This can be changed in the preferences!</source>
-        <translation>Ouvre le répertoire courant. Peut être personnalisé dans les préférences !</translation>
+        <source>Opens the current export directory. This can be changed in the preferences!</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="4216"/>
