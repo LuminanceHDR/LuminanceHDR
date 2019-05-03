@@ -1,6 +1,8 @@
 IF(UNIX)
 ADD_DEFINITIONS(-Wall -Wno-unknown-pragmas)
 ADD_DEFINITIONS(-ffast-math)
+ADD_DEFINITIONS(-Wno-deprecated)
+ADD_DEFINITIONS(-Wno-deprecated-declarations)
 
 IF(APPLE)
 # optimize for 64-bit core 2 architecture on Apple
