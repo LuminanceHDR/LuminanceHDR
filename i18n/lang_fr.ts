@@ -801,7 +801,7 @@ Continuer ?</translation>
     <message numerus="yes">
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="109"/>
         <source>Using %n thread(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Utilise %n tâche(s).</numerusform><numerusform>Utilise %n tâche(s).</numerusform></translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="127"/>
@@ -2872,7 +2872,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="500"/>
         <source>&lt;/ul&gt;&lt;hr&gt;Luminance HDR has inserted those values for you, two stops apart.&lt;br&gt; If the guess is correct you can proceed creating the HDR, otherwise you have to &lt;b&gt;manually&lt;/b&gt; correct the EVs (exposure values) or stop difference values. &lt;hr&gt;To avoid this warning in the future you must load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Aperture (F-Number)&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;/ul&gt;&lt;hr&gt;Luminance HDR a placé ces valeurs pour vous, deux stops d&apos;écart.&lt;br&gt; Si la supposition est correcte, vous pouvez créer le HDR, autrement vous devez &lt;b&gt;corriger&lt;/b&gt; manuellement les valeurs différentielles d&apos;exposition (stops). &lt;hr&gt;Pour ne plus avoir ce message, vous devez charger des images ayant au moins les données exif suivantes: &lt;ul&gt;&lt;li&gt;Vitesse (en secondes)&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Ouverturere (Nombre F)&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Exposition Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;NOTE:&lt;/b&gt; La perte des EXIF survient souvent lors du pré-traitement des images.&lt;br&gt;Vous pouvez recopier les valeurs exif &lt;b&gt;d&apos;une image vers l&apos;autre&lt;/b&gt; via le menu &lt;b&gt;Outils-&gt;Copie des données Exif...&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="521"/>
@@ -3882,12 +3882,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="617"/>
         <source>Copy &amp;Exif Data...</source>
-        <translation>Copier données &amp;Exif...</translation>
+        <translation>Copie des données &amp;Exif...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="620"/>
         <source>Copy Exif Data</source>
-        <translation>Copier données Exif</translation>
+        <translation>Copi des données Exif</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="623"/>
@@ -5663,7 +5663,7 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/MainCli/commandline.cpp" line="764"/>
         <source>Using %n thread(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Utilise %n tâche(s).</numerusform><numerusform>Utilise %n tâche(s).</numerusform></translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="792"/>
@@ -6095,7 +6095,7 @@ Niveau de luminance</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1728"/>
         <source>&amp;Key Value</source>
-        <translation type="unfinished"/>
+        <translation>Valeur &amp;Clé</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1753"/>
@@ -6115,7 +6115,7 @@ Niveau de luminance</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1890"/>
         <source>           Ra&amp;nge</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Plage</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2003"/>
