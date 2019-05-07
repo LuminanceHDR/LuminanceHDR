@@ -484,11 +484,13 @@ Reinhard02::~Reinhard02() {
         for (int scale = 0; scale < m_range; scale++) {
             fftwf_free(m_filter_fft[scale]);
         }
+        fftwf_free(m_filter_fft);
         fftwf_free(m_convolution_fft);
         fftwf_free(m_image_fft);
         FFTW_MUTEX::fftw_mutex_free.unlock();
         for (int scale = 0; scale < m_range; scale++) {
             free(m_convolved_image[scale][0]);
+            free(m_convolved_image[scale]);
         }
         free(m_convolved_image);
     }
