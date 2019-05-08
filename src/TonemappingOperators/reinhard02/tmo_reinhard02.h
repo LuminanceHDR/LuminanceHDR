@@ -73,6 +73,7 @@ class Reinhard02 {
     void tmo_reinhard02();
 
    private:
+    fftwf_plan m_p;
     CVTS m_cvts;
     float **m_image;
     float m_sigma_0, m_sigma_1;
