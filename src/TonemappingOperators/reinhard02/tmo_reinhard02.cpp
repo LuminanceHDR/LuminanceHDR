@@ -220,9 +220,12 @@ void Reinhard02::build_image_fft() {
     FFTW_MUTEX::fftw_mutex_plan.unlock();
 
     #pragma omp parallel for
-    for (int y = 0; y < m_cvts.ymax; y++)
-        for (int x = 0; x < m_cvts.xmax; x++)
+    for (int y = 0; y < m_cvts.ymax; y++) {
+        for (int x = 0; x < m_cvts.xmax; x++) {
             m_image_fft[y * m_cvts.xmax + x][0] = m_image[y][x];
+            m_image_fft[y * m_cvts.xmax + x][1] = 0;
+        }
+    }
 
     fftwf_execute(p);
 
