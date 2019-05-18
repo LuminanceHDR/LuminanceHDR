@@ -137,7 +137,7 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="whatsThis">
                   <string>The image currently selected in this list can be translated up,down,left and right using the controls below.
-This image's histogram is diplayed in the widget above.</string>
+This image's histogram is displayed in the widget above.</string>
                  </property>
                 </widget>
                </item>
