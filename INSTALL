@@ -1,312 +1,244 @@
-# Installing Luminance HDR
--------------------------------------------------------------------
-Copyright (C)   2006-2010, Giuseppe Rota <grota@users.sourceforge.net>
-                2010-2017, Davide Anastasia <davideanastasia@users.sourceforge.net>
-                           Franco Comida <fcomida@users.sourceforge.net>
-                           Daniel Kaneider <danielkaneider@users.sourceforge.net>
-Copyright (C)   2018-2019, Franco Comida <fcomida@users.sourceforge.net>
+# INSTALLATION
 
-Version:       2019-05-05
+## Table of Contents
 
-Webpage:       http://qtpfsgui.sourceforge.net
-GitHub:        http://github.com/LuminanceHDR/LuminanceHDR
-Sourceforge:   http://sourceforge.net/projects/qtpfsgui
+1. [Introduction](#intro)
+2. [Install Prebuilt Binaries](#bin)
+3. [Dependencies](#dep)
+4. [Compilation](#compilation)
+    1. [Obtain the Source Code](#clone)
+    2. [Configure CMake](#cmake)
+    3. [Compile](#compile)
+    4. [Update](#update)
+5. [Platform Notes](#pnotes)
+    1. [Windows](#pnote_win)
+    2. [macOS](#pnote_macos)
 
-Contents
----------
-1. Basic compilation of the sources
-2. Internationalization
-3. Dependencies
-4. Platform Notes
-5. Enabling Unit Test compilation
-6. Note for Packagers
-7. Pre-built binaries
+## Introduction <a name="intro"></a>
 
-The build system is based on CMake (http://www.cmake.org/).
-The build description is contained in the CMakeLists.txt file.
+This document covers the compilation and installation of Luminance HDR.
 
-## 1. Basic compilation of the sources
--------------------------------------------------------------------
+- Copyrights
+    - (C) 2006-2010 Giuseppe Rota
+    <grota@users.sourceforge.net>
+    - (C) 2010-2017 Davide Anastasia
+    <davideanastasia@users.sourceforge.net>
+    - (C) Franco Comida
+    <fcomida@users.sourceforge.net>
+    - (C) Daniel Kaneider
+    <danielkaneider@users.sourceforge.net>
+    - (C) 2019 Maciej Dworak
+    <https://github.com/Beep6581>
+- Project homepage:
+    http://qtpfsgui.sourceforge.net/
+- Source code and issue tracker:
+    https://github.com/LuminanceHDR/LuminanceHDR
+- Forum:
+    https://discuss.pixls.us/c/software/luminancehdr
 
-To compile from source execute the following command from an EMPTY folder:
+## Install Prebuilt Binaries <a name="bin"></a>
 
-> cmake <luminance source code directory>
+Luminance HDR is readily available on all major platforms.
 
-to generate the Makefile. We strongly suggest to use an EMPTY folder OUTSIDE the source
-directory.
+- Get a [Windows installer](https://sourceforge.net/projects/qtpfsgui/files/luminance/)
+- Linux
+    - Check your package manager.
+    - Get an [AppImage](https://github.com/aferrero2707/lhdr-appimage/releases)
+    - Get a [FlatPak](https://flathub.org/apps/details/net.sourceforge.qtpfsgui.LuminanceHDR)
+- Get a [macOS DMG](https://sourceforge.net/projects/qtpfsgui/files/luminance/)
 
-It is also possible to generate specific project files for well known IDEs (Visual Studio,
-Xcode and so on). Please, refer to CMake's manual for all the available options.
-CMake will also check whether all the dependecies are available or not and it will show
-a message accordingly.
+The rest of this document concerns compiling Luminance HDR yourself.
 
-Then execute the command:
+## Dependencies <a name="dep"></a>
 
-> make
+To compile Luminance HDR your system will need a set of tools and code libraries called "dependencies". The following is a list of dependencies needed to compile the latest version of Luminance HDR:
 
-to compile the source code.
+- [Qt5](https://www.qt.io/), the widget toolkit used by the graphical user interface (GUI).
+- [Exiv2](https://www.exiv2.org/), used to read and write image metadata (Exif, IPTC, XMP).
+- [Little CMS](http://www.littlecms.com/), LCMS2 is used for color management.
+- [libjpeg-turbo](https://libjpeg-turbo.org/) (or libjpeg), used to read and write JPEG files.
+- [LibTIFF](http://www.libtiff.org/), used to read and write TIFF files.
+- [libpng](http://www.libpng.org/pub/png/libpng.html), used to read and write PNG files.
+- [LibRaw](https://www.libraw.org/), used to read raw files.
+- [OpenEXR](http://www.openexr.com/), used to read and write high dynamic range EXR files. Some distributions refer to the package as `ilmbase`.
+- [CFITSIO](https://heasarc.gsfc.nasa.gov/fitsio/), an optional library for reading and writing FITS files, commonly used by the astrophotographer community.
+- [FFTW](www.fftw.org), used for computing discrete Fourier transforms. Luminance HDR requires the single-precision "float" version of FFTW3, usually called `fftw3f` or `fftw-3-single` on MacPorts.
+- [Boost](https://www.boost.org/), a set of C++ support libraries.
+- [GNU Scientific Library](https://www.gnu.org/software/gsl/), GSL is used by the Mantiuk08 tone mapping operator.
+- [Eigen3](http://eigen.tuxfamily.org/), a C++ template library required by by the Lischinski tone mapping operator.
 
-Finally execute (as root) the command:
+## Compilation <a name="compilation"></a>
 
-> make install
+Compilation involves obtaining the source code, configuring the build process using CMake, and finally performing the actual compilation.
 
-to install the luminance executable in /usr/local/bin (if not differently specified during
-the configuration command). This last step will also install the icon, the desktop file,
-the html documentation and the "qm" translation files used for internationalization.
+In order to keep your file system clean and to isolate self-compiled programs from those installed using your system's package manager, we will be cloning the source code into `~/programs/code-lhdr`, performing an out-of-source build in `~/programs/code-lhdr/build` and installing the compiled program into `~/programs/lhdr`. To this end:
 
-## 2. Internationalization
--------------------------------------------------------------------
-
-Luminance HDR source are shipped with updated translation files for internationalization.
-These file are stored inside the folder "i18n". Should you make a change inside the source code
-(in particular on the UI), you need to update them.
-Enabling updating of translations is performed issuing the following command:
-
-> cmake -DUPDATE_TRANSLATIONS=ON .
-
-if the current working directory (please, refer to 1. of this file) has already been
-built, otherwise:
-
-> cmake -DUPDATE_TRANSLATIONS=ON <luminance source code directory>
-
-This command will regenerate the Makefile for translation update. Then:
-
-> make
-
-will update every .ts file.
-
-To bring back the working folder to the original "building mode", you must use this command:
-
-> cmake -DUPDATE_TRANSLATIONS=OFF .
-
-and then
-
-> make
-
-to build correctly the whole source directory.
+```bash
+mkdir ~/programs
+cd ~/programs
+```
 
 
-## 3. Dependencies
--------------------------------------------------------------------
+### 1. Obtain the Source Code <a name="clone"></a>
 
-Luminance has 13 dependencies (twelve are mandatory, one is optional):
+First, you need to clone Luminance HDR's source code repository. Bring up your console and run this:
 
-1) Qt5 (http://qt-project.org)
-Qt5 is the heart of the the graphical user interface (GUI).
+```bash
+git clone https://github.com/LuminanceHDR/LuminanceHDR.git code-lhdr
+cd code-lhdr
+```
 
-2) exiv2 (www.exiv2.org)
-libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and it is
-required in order to extract the aperture, exposure-time and ISO tags from the input
-images (and for other EXIF-related functionalities).
+### 2. Configure CMake <a name="cmake"></a>
 
-3) fftw3 (www.fftw.org)
-FFTW is required by the fast implementation of various tonemapping algorithm and anti-ghosting feature.
-Luminance HDR requires the "float" version of fftw3 (usually called fftw3f or fftw3-single on MacPorts).
+In order to keep your source code folder clean, the build will be created in a folder called `build`. If you just cloned the source code, you will need to create this folder:
 
-4) libtiff (http://www.remotesensing.org/libtiff)
-libtiff is required because of the tiff load/save feature.
+```bash
+mkdir build
+cd build
+```
 
-5) libjpeg (http://libjpeg.sourceforge.net/)
-libjpeg is required because of the jpeg load/save feature.
+CMake allows you to configure the build process. The `-D` option allows you to customize settings for the project. Multiple settings can be specified - each must be prefixed with `-D`. Multiple options must be separated by whitespace. Setting values must be enclosed in parentheses. The last argument must point to the source code (as you are in the `build` sub-folder, you can point to the source code using double dots `..`). Refer to the example at the end of this section.
 
-6) libpng (http://libpng.org/)
-libpng is required because of the png save feature.
+The most significant options follow:
+- `CMAKE_BUILD_TYPE`
+    Values:`Debug`, `Release`, `RelWithDebInfo` and `MinSizeRel`.
+    This controls whether the build will favor faster execution times, more verbose debugging output, or a smaller executable. The `Debug` and `RelWithDebInfo` builds will let you get a useful stack-backtrace if Luminance HDR crashes while running through GDB - you can then submit the backtrace to us so that we can find the problem and fix it. The `Debug` build is the slowest but generates the most detailed information. The `RelWithDebInfo` build is as fast as a `Release` build and generates often sufficient information, though not as detailed as a `Debug` build. The `Release` build provides very little useful information when it crashes, but does contain many speed optimizations resulting in a program that works several times faster than the `Debug` build would.
+    For normal use, make a `Release` build. If you find a reproducible bug, then make a `Debug` build and send us a stack-backtrace (or fix it yourself and send us the patch).
+- `CMAKE_INSTALL_PREFIX`
+    Points to a folder into which the compiled program will be installed. Defaults to `/usr/local` in Linux/macOS and `c:/Program Files/Luminance HDR` in Windows.
+- `UPDATE_TRANSLATIONS`
+    Values:`OFF` (default), `ON`.
+    Luminance HDR ships with translations files for localization. These are stored inside the `i18n` folder. Should you wish to update the translation `.ts` files then set this option to `ON`, compile, then set it back to `OFF`.
+- `ENABLE_UNIT_TEST`
+    Values:`OFF` (default), `ON`.
+    Enables unit testing. Requires Google's gtest framework. The resulting test executables are placed in the `test` sub-folder.
 
-7) OpenEXR (www.openexr.com)
-OpenEXR is a high dynamic-range (HDR) image file format developed by Industrial Light &
-Magic for use in computer imaging applications. The package is also known as *ilmbase*
-in some GNU/Linux distributions.
+Your final CMake command (split into multiple lines for readability) should look something like this:
 
-8) Gnu Gsl (http://www.gnu.org/software/gsl/)
-Gnu GSL is required because Mantiuk08 TMO uses this library.
+```bash
+cmake \
+    -DCMAKE_BUILD_TYPE="Release"  \
+    -DCMAKE_INSTALL_PREFIX="$HOME/programs/lhdr" \
+    ..
+```
 
-9) LibRAW (http://www.libraw.org/)
-Used to read the vast majority of RAW file on the market.
+### 3. Compile <a name="compile"></a>
 
-10) LCMS2 (http://www.littlecms.com/)
-Luminance HDR color management engine.
+Find out how many processing units are available:
 
-11) Boost (http://www.boost.org/)
-Boost provides free peer-reviewed portable C++ source libraries used inside Luminance HDR project.
+```bash
+nproc
+```
 
-12) Eigen3 (http://eigen.tuxfamily.org)
-Eigen is a C++ template library for linear algebra: matrices, vectors, numerical solvers, and related algorithms.
-Required by Lischinski tone mapping operator.
+On a typical modern machine with simultaneous multithreading, the number of processing units would be twice the number of actual physical cores. Pass this number as the value for the `--jobs` parameter below. This influences only the compilation speed, it has no influence over how fast the compiled build runs. As an example, a typical dual-core CPU would return "4" processing units.
 
-13) cfitsio (Optional) (http://heasarc.gsfc.nasa.gov/fitsio/)
-CFITSIO is a library of C and Fortran subroutines for reading and writing data files in FITS
-(Flexible Image Transport System) data format.
-Luminance HDR can optionally support this file format commonly used by the astrophotographers community.
-The build system will automatically detect the presence of the library in the system enabling proper support
-for astronomical image processing.
+To start compiling, run:
 
-## 4. Platform Notes
--------------------------------------------------------------------
+```bash
+make install --jobs 4
+```
 
-### Windows:
-Currently, Luminance HDR can be compiled using Microsoft Visual Studio. It either works
-using precompiled libraries (supplied at http://sourceforge.net/projects/qtpfsgui/files/DEPs/
-for different versions of Visual Studio) or building every dependency and Luminance itself using a script file
-(build_files/platforms/msvc/getDependencies.cmd.
-More information can be found inside build_files/platforms/msvc/README.txt).
+Compilation will take a few minutes. When completed successfully, you will see that it had installed the built files.
 
-It is also possible to build Luminance HDR using msys2/mingw.
-See build_files\platforms\msys2\README.txt for build instructions.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+To run your self-compiled build of Luminance HDR, assuming you used the settings as laid out in this document, type:
 
-### GNU/Linux:
-On GNU/Linux you have to compile the code and you need the aforementioned packages
-(and the *devel* or *dev* ones, depending on the distribution's naming convention).
-CMake will guide you to correctly understand which dependency are missing and which are not.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```bash
+~/programs/lhdr/bin/luminance-hdr
+```
 
-### MacOS:
-For assistance with the MacOS Build, contact robin@clanmills.com
+### 4. Update <a name="update"></a>
 
-On MacOS, all the dependecies can be obtained using MacPorts, except LibRAW that
-must be compiled from source.
+Every time you want to update Luminance HDR to the latest code available, just run the following:
 
-Qt5 which must be downloaded from the official website of the Qt project.
+```bash
+cd ~/programs/code-lhdr
+git pull
+cd build
+```
+
+Then repeat the compilation step above.
+
+You can safely delete the source code folder `~/programs/code-lhdr` if you so wish. The compiled program in `~/programs/lhdr` will still work, but then you will have to redo all the steps if you want to update. Rather, leave the repository intact so that you can just update in a week or a month's time without redoing all the steps.
+
+## Platform Notes <a name="pnotes"></a>
+
+### Windows <a name="pnote_win"></a>
+
+Currently, Luminance HDR can be compiled using Microsoft Visual Studio. Either use the precompiled libraries available at https://sourceforge.net/projects/qtpfsgui/files/DEPs/ , or self-compile the dependencies using the provided script, as described in `/build_files/platforms/msvc/README.txt`
+
+It is also possible to build Luminance HDR using MSYS2/MinGW, see `build_files/platforms/msys2/README.txt`
+
+### macOS <a name="pnote_macos"></a>
+
+On macOS, all the dependencies can be obtained using MacPorts, except for LibRaw which must be compiled from source, and Qt5 which must be downloaded from the official Qt5 website.
 
 If you install Qt/5.11.0 into `~/Qt/5.11.0`, generate the project with:
 
 ```bash
-$ export QT=~/Qt/5.11.0/clang_64
-$ cd LuminanceHDR
-$ mkdir build
-$ cd build
-$ cmake .. -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
-$ make
+export QT=~/Qt/5.11.0/clang_64
+cd ~/programs/code-lhdr
+mkdir build
+cd build
+cmake -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g') ..
+make
 ```
 
-Enabling OpenMP on macOS:
-As AppleClang requires preprocessing to detect OpenMP, the cmake command to enable AppleClang 10+ to use the libiomp5 implementation would be:
-```bash
-$ cmake -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
--DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g') -G "Unix Makefiles" \
--DCMAKE_C_COMPILER="clang" \
--DCMAKE_CXX_COMPILER="clang++" \
--DCMAKE_BUILD_TYPE=Release \
--DOpenMP_C_FLAGS=-fopenmp=lomp \
--DOpenMP_CXX_FLAGS=-fopenmp=lomp \
--DOpenMP_C_LIB_NAMES="libiomp5" \
--DOpenMP_CXX_LIB_NAMES="libiomp5" \
--DOpenMP_libiomp5_LIBRARY="/opt/local/lib/libiomp5.dylib" \
--DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include" \
--DOpenMP_CXX_LIB_NAMES="libiomp5" \
--DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include"
-```
-
-Caution 1:
-If you crash on start up with a message about libz.1.2.8.dylib, modify the executable as follows:
-```bash
-$ install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib Luminance\ HDR\ 2.5.2.app/Contents/MacOS/Luminance\ HDR\ 2.5.2`
-```
-Caution 2:
-If you built libboost from source, you may encounter errors from macdeployqt about missing libraries.
-Copy the boost libraries to /usr/lib
-```bash
-$ sudo cp /usr/local/*boost*.dylib /usr/lib`
-```
-
-Copy Qt frameworks and dynamic libraries into the bundle:
-```bash
-$ $QT/bin/macdeployqt  Luminance*.app/ -executable=Luminance*.app/Contents/MacOS/luminance-hdr-cli -no-strip`
-```
-
-Caution:  This may produce the following warnings (which you may ignore) such as:
-```bash
-WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store compliant.
-WARNING: Plugin "libqsqlpsql.dylib" uses private API and is not Mac App store compliant.
-ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
-ERROR: no file at "/usr/local/lib/libpq.5.dylib"
-```
-
-If you wish to make a DMG (optional)
-```bash
-$ hdiutil create -ov -fs HFS+ -srcfolder Luminance\ HDR\ 2.5.2.app Luminance\ HDR\ 2.5.2.dmg`
-```
-
-If you wish to build with an earlier version of the MacOS-X Platform SDK (eg 10.9), use the following:
-
----
-
-> **_You can obtain legacy SDKs here:_**  https://github.com/phracker/MacOSX-SDKs/releases
-
-
----
+As AppleClang requires preprocessing to detect OpenMP, the CMake command to enable AppleClang 10+ to use the libiomp5 implementation would be:
 
 ```bash
-$ export QT=~/Qt/5.11.0/clang_64
-$ export MACOSX_DEPLOYMENT_TARGET="10.9"
-$ export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"
-$ cmake .. -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk" \
-           -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
-           -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
-$ make
+cmake \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
+    -DCMAKE_PREFIX_PATH="$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')" -G "Unix Makefiles" \
+    -DCMAKE_C_COMPILER="clang" \
+    -DCMAKE_CXX_COMPILER="clang++" \
+    -DCMAKE_BUILD_TYPE="Release" \
+    -DOpenMP_C_FLAGS=-fopenmp="lomp" \
+    -DOpenMP_CXX_FLAGS=-fopenmp="lomp" \
+    -DOpenMP_C_LIB_NAMES="libiomp5" \
+    -DOpenMP_CXX_LIB_NAMES="libiomp5" \
+    -DOpenMP_libiomp5_LIBRARY="/opt/local/lib/libiomp5.dylib" \
+    -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include" \
+    -DOpenMP_CXX_LIB_NAMES="libiomp5" \
+    -DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include"
 ```
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-## All supported platforms:
+Troubleshooting:
+- If you crash on start up with a message about `libz.1.2.8.dylib`, modify the executable as follows:
+    ```bash
+    install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib "Luminance HDR 2.5.2.app/Contents/MacOS/Luminance HDR 2.5.2"
+    ```
+- If you built libboost from source, you may encounter errors from macdeployqt about missing libraries. Copy the boost libraries to `/usr/lib`:
+    ```bash
+    sudo cp /usr/local/*boost*.dylib /usr/lib
+    ```
+- Copy Qt frameworks and dynamic libraries into the bundle:
+    ```bash
+    $QT/bin/macdeployqt Luminance*.app/ -executable=Luminance*.app/Contents/MacOS/luminance-hdr-cli -no-strip
+    ```
+  This may produce warnings (which you can ignore) such as:
+    ```
+    WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store compliant.
+    WARNING: Plugin "libqsqlpsql.dylib" uses private API and is not Mac App store compliant.
+    ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
+    ERROR: no file at "/usr/local/lib/libpq.5.dylib"
+    ```
 
-General note:
-OpenMP is available when compiling with GCC 4.3 or newer or with Microsoft Visual Studio
-(CMake will correctly find the right option for OpenMP accordingly to your compiler).
+If you wish to make a DMG:
 
-Optimisation note:
-default compiler flags include SSE2 and OpenMP.
-SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer).
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```bash
+hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 2.5.2.app" "Luminance HDR 2.5.2.dmg"
+```
 
-## 5. Enabling Unit Test compilation
--------------------------------------------------------------------
+If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10.9), you can obtain legacy SDKs from https://github.com/phracker/MacOSX-SDKs/releases
+Then use the following:
 
-In order to enable the compilation of our testing code pass -DENABLE_UNIT_TEST=ON option to cmake.
-Google's framework 'gtest' must be installed in your system, the resulting test executables
-will be placed under <BUILD_ROOT>/test where <BUILD_ROOT> is your building root directory.
-
-## 6. Note for Packagers
--------------------------------------------------------------------
-
-Luminance's default installation prefix is "/usr/local". You can execute:
-
-> cmake -DCMAKE_INSTALL_PREFIX=/usr
-
-before running make in order to modify the default CMAKE_INSTALL_PREFIX.
-
-Icon luminance-hdr.png will be installed in ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps.
-You may need to run update-desktop-database in case Luminance's entry doesn't show up
-in the graphical menus.
-Translation files will be installed inside ${CMAKE_INSTALL_PREFIX}/share/luminance-hdr/i18n
-Help files will be installed inside ${CMAKE_INSTALL_PREFIX}/share/luminance-hdr/help
-
-Running:
-
-> cmake -DCMAKE_BUILD_TYPE={Debug,Release,RelWithDebInfo}
-
-creates a Makefile that builds Luminance with different debug levels. It is strongly
-suggest to use *RelWithDebInfo*: this option will leave inside the final executable all
-the info necessary for a proper debug but at the same time will optimize the code as much
-as possible for good performance.
-
-## 7. Pre-built binaries
--------------------------------------------------------------------
-
-### Windows:
-The Windows EXE released on SourceForge.net is built using Microsoft Visual Studio.
-If you want to compile the sources in windows, you need to have a compiled version of all
-the dependencies.
-
-### GNU/Linux:
-Many GNU/Linux distributions provide Luminance HDR pre-packaged in their main repositories
-or in 3rd party ones.
-The program is also available as a flatpak at flathub.org
-In the case you want to compile the code, you will need the packages mentioned in Section 3
-(and the *devel* or *dev* ones, depending on the distribution's naming convention).
-
-### MacOS:
-Binaries for MacOS are provided at SourceForge.net as Apple Disk Image (dmg) files.
-Building Luminance from sources on MacOS can be performed creating a Makefile or an Xcode
-project using CMake. By default, CMake creates a Makefile on MacOS.
-
-# vim: filetype=markdown
+```bash
+export QT=~/Qt/5.11.0/clang_64
+export MACOSX_DEPLOYMENT_TARGET="10.9"
+export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"
+cmake \
+    -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk" \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
+    -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
+make
+```
