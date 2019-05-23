@@ -560,7 +560,8 @@ void MainWindow::on_fileNewAction_triggered() {
 
 void MainWindow::createNewHdr(const QStringList &files) {
     QScopedPointer<HdrWizard> wizard(
-        new HdrWizard(this, files, m_inputFilesName, m_inputExpoTimes));
+        new HdrWizard(this, files, m_inputFilesName, m_inputExpoTimes,
+                      QSqlDatabase::database(m_tonemapPanel->getDatabaseConnection())));
     if (wizard->exec() == QDialog::Accepted) {
         emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(),
                           wizard->getInputFilesNames(), true);
@@ -1181,7 +1182,6 @@ void MainWindow::load_success(pfs::Frame *new_hdr_frame,
 #ifdef QT_DEBUG
         qDebug() << "Filename: " << new_fname;
 #endif
-
         HdrViewer *newhdr = new HdrViewer(new_hdr_frame, this, needSaving);
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
@@ -1380,7 +1380,7 @@ void MainWindow::on_actionBring_All_to_Front_triggered() {
 }
 
 void MainWindow::on_actionBatch_HDR_triggered() {
-    BatchHDRDialog *batch_hdr_dialog = new BatchHDRDialog(this);
+    BatchHDRDialog *batch_hdr_dialog = new BatchHDRDialog(this, QSqlDatabase::database(m_tonemapPanel->getDatabaseConnection()));
     batch_hdr_dialog->exec();
     delete batch_hdr_dialog;
 }

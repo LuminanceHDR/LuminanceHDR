@@ -134,6 +134,10 @@ void fillResponseSRGB(ResponseCurve::ResponseContainer &response) {
 }
 
 void ResponseCurve::setType(ResponseCurveType type) {
+    if (type == RESPONSE_CUSTOM) {
+        m_type = type;
+        return;
+    }
     typedef void (*ResponseCurveCalculator)(ResponseContainer &);
     typedef map<ResponseCurveType, ResponseCurveCalculator> ResponseCurveFunc;
     static ResponseCurveFunc funcs = map_list_of(

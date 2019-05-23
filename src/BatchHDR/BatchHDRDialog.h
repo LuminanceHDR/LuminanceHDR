@@ -29,6 +29,7 @@
 #include <QDialog>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QtSql/QSqlDatabase>
 
 #include "Common/LuminanceOptions.h"
 #include "Common/ProgressHelper.h"
@@ -49,7 +50,7 @@ class BatchHDRDialog : public QDialog {
     QScopedPointer<Ui::BatchHDRDialog> m_Ui;
 
    public:
-    BatchHDRDialog(QWidget *parent = 0);
+    BatchHDRDialog(QWidget *parent = 0, QSqlDatabase db = QSqlDatabase::database());
     ~BatchHDRDialog();
 
    signals:
@@ -76,6 +77,7 @@ class BatchHDRDialog : public QDialog {
     void ais_failed(QProcess::ProcessError);
     void createHdrFinished();
     void loadFilesAborted();
+    void on_profileComboBox_activated(int);
 
    protected:
     // Application-wide settings, loaded via QSettings
@@ -94,6 +96,7 @@ class BatchHDRDialog : public QDialog {
     bool m_loading_error;
     bool m_abort;
     bool m_processing;
+    QSqlDatabase m_db;
     QVector<FusionOperatorConfig> m_customConfig;
     QFutureWatcher<void> m_futureWatcher;
     QFuture<pfs::Frame *> m_future;

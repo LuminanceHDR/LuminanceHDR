@@ -729,6 +729,16 @@ void LuminanceOptions::setDefaultPathTmoSettings(const QString &path) {
     m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, path);
 }
 
+QString LuminanceOptions::getDefaultResponseCurveFilename() {
+    return m_settingHolder
+        ->value(KEY_RECENT_RESPONSE_CURVE_FILENAME, "")
+        .toString();
+}
+
+void LuminanceOptions::setDefaultResponseCurveFilename(const QString &filename) {
+    m_settingHolder->setValue(KEY_RECENT_RESPONSE_CURVE_FILENAME, filename);
+}
+
 /*
 settings->beginGroup(GROUP_EXTERNALTOOLS);
 //bug 2001032, remove spurious default QString "-a aligned_" value set by ver

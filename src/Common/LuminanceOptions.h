@@ -192,6 +192,7 @@ class LuminanceOptions : public QObject {
     QString getDefaultPathLdrIn();   // HdrWizard
     QString getDefaultPathLdrOut();  // MainWindow
     QString getDefaultPathTmoSettings();
+    QString getDefaultResponseCurveFilename();
 
     void setTempDir(const QString &);
     void setDefaultPathHdrIn(const QString &);
@@ -199,6 +200,7 @@ class LuminanceOptions : public QObject {
     void setDefaultPathLdrIn(const QString &);  // HdrWizard
     void setDefaultPathLdrOut(const QString &);
     void setDefaultPathTmoSettings(const QString &);
+    void setDefaultResponseCurveFilename(const QString &);
 
     // HdrWizard
     // commandline options for align_image_stack

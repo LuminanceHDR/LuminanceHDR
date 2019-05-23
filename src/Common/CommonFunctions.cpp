@@ -477,10 +477,7 @@ QString getQString(libhdr::fusion::ResponseCurveType rf) {
         case RESPONSE_SRGB:
             return QObject::tr("sRGB");
         case RESPONSE_CUSTOM:
-            return QObject::tr("From Calibration/Input File");
-            // case FROM_FILE:
-            //    return tr("From File: ") +
-            //    m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename;
+            return QObject::tr("From Calibration or Input File");
     }
 
     return QString();

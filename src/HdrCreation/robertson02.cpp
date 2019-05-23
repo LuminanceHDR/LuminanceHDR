@@ -350,8 +350,10 @@ void RobertsonOperatorAuto::computeResponse(
                          << " (coverage: " << 100 * hits / I.size() << "%)");
 #endif
         if (delta < MAX_DELTA) {
+#ifndef NDEBUG
             std::cerr << " #" << cur_it << " delta=" << pdelta
                       << " <- converged\n";
+#endif
             break;
         } else if (boost::math::isnan(delta) ||
                    (cur_it > MAXIT && pdelta < delta)) {

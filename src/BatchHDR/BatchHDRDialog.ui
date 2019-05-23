@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
-    <height>712</height>
+    <width>622</width>
+    <height>729</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -118,57 +118,13 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="label_4">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="text">
              <string>Filename prefix:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Predefined profile:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="2">
-           <widget class="QToolButton" name="formatSettingsButton">
-            <property name="text">
-             <string notr="true">...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Output format:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="prefixLineEdit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>hdr_</string>
             </property>
            </widget>
           </item>
@@ -213,7 +169,24 @@ See documentation for more information.</string>
             </item>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Output format:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="prefixLineEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>hdr_</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
            <widget class="QCheckBox" name="proposedFilenameCheckBox">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With leaving this checked, filenames for created HDRs will be of the form &lt;span style=&quot; font-style:italic;&quot;&gt;first-last_HdrCreationModel.ext &lt;/span&gt;where first is the file name of 1st braketed image in the set, last is the file name of the last bracketed image in the set and extension is the selected HDR file format extension.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -223,6 +196,71 @@ See documentation for more information.</string>
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Response:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Weights:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Predefined profile:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QToolButton" name="formatSettingsButton">
+            <property name="text">
+             <string notr="true">...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Model:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="labelModel">
+            <property name="text">
+             <string>Debevec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="labelWeights">
+            <property name="text">
+             <string>Triangular</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="labelResponse">
+            <property name="text">
+             <string>Linear</string>
             </property>
            </widget>
           </item>
@@ -241,32 +279,6 @@ See documentation for more information.</string>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_6">
-            <item row="0" column="0">
-             <widget class="QCheckBox" name="autoAlignCheckBox">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="toolTip">
-               <string>Auto align the bracketed pictures</string>
-              </property>
-              <property name="text">
-               <string>Auto-align images</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0" colspan="2">
-             <widget class="QRadioButton" name="MTBRadioButton">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="toolTip">
-               <string>Use MTB (Median Threshold Bitmap) engine</string>
-              </property>
-              <property name="text">
-               <string>&amp;MTB</string>
-              </property>
-             </widget>
-            </item>
             <item row="2" column="0" colspan="2">
              <widget class="QRadioButton" name="aisRadioButton">
               <property name="enabled">
@@ -283,17 +295,43 @@ See documentation for more information.</string>
               </property>
              </widget>
             </item>
+            <item row="3" column="0" colspan="2">
+             <widget class="QRadioButton" name="MTBRadioButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Use MTB (Median Threshold Bitmap) engine</string>
+              </property>
+              <property name="text">
+               <string>&amp;MTB</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="autoAlignCheckBox">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="toolTip">
+               <string>Auto align the bracketed pictures</string>
+              </property>
+              <property name="text">
+               <string>Auto-align images</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QCheckBox" name="autoCropCheckBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Auto-crop</string>
+              </property>
+             </widget>
+            </item>
            </layout>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="autoCropCheckBox">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Auto-crop</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
@@ -580,7 +618,6 @@ See documentation for more information.</string>
   <tabstop>autoAlignCheckBox</tabstop>
   <tabstop>aisRadioButton</tabstop>
   <tabstop>MTBRadioButton</tabstop>
-  <tabstop>autoCropCheckBox</tabstop>
   <tabstop>autoAG_checkBox</tabstop>
   <tabstop>threshold_horizontalSlider</tabstop>
   <tabstop>threshold_doubleSpinBox</tabstop>
@@ -604,8 +641,8 @@ See documentation for more information.</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>560</x>
-     <y>32</y>
+     <x>614</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel">
      <x>508</x>
@@ -624,8 +661,8 @@ See documentation for more information.</string>
      <y>32</y>
     </hint>
     <hint type="destinationlabel">
-     <x>560</x>
-     <y>32</y>
+     <x>614</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -636,8 +673,8 @@ See documentation for more information.</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>563</x>
-     <y>689</y>
+     <x>614</x>
+     <y>721</y>
     </hint>
     <hint type="destinationlabel">
      <x>285</x>
@@ -652,12 +689,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>555</x>
-     <y>309</y>
+     <x>606</x>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
-     <x>477</x>
-     <y>363</y>
+     <x>519</x>
+     <y>395</y>
     </hint>
    </hints>
   </connection>
@@ -668,12 +705,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>555</x>
-     <y>309</y>
+     <x>606</x>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
-     <x>556</x>
-     <y>368</y>
+     <x>607</x>
+     <y>400</y>
     </hint>
    </hints>
   </connection>
@@ -684,12 +721,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>555</x>
-     <y>309</y>
+     <x>606</x>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
-     <x>68</x>
-     <y>368</y>
+     <x>72</x>
+     <y>400</y>
     </hint>
    </hints>
   </connection>
@@ -736,8 +773,8 @@ See documentation for more information.</string>
      <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>554</x>
-     <y>241</y>
+     <x>553</x>
+     <y>254</y>
     </hint>
    </hints>
   </connection>
@@ -748,12 +785,12 @@ See documentation for more information.</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>156</x>
-     <y>162</y>
+     <x>287</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
-     <x>66</x>
-     <y>195</y>
+     <x>82</x>
+     <y>273</y>
     </hint>
    </hints>
   </connection>
@@ -764,12 +801,12 @@ See documentation for more information.</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>247</x>
-     <y>171</y>
+     <x>350</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
-     <x>244</x>
-     <y>188</y>
+     <x>350</x>
+     <y>273</y>
     </hint>
    </hints>
   </connection>

@@ -51,7 +51,7 @@
 
 using namespace libhdr::fusion;
 
-BatchHDRDialog::BatchHDRDialog(QWidget *p)
+BatchHDRDialog::BatchHDRDialog(QWidget *p, QSqlDatabase db)
     : QDialog(p),
       m_Ui(new Ui::BatchHDRDialog),
       m_numProcessed(0),
@@ -60,7 +60,8 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p)
       m_errors(false),
       m_loading_error(false),
       m_abort(false),
-      m_processing(false) {
+      m_processing(false),
+      m_db(db) {
     m_Ui->setupUi(this);
 
     m_Ui->closeButton->hide();
@@ -83,17 +84,12 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p)
     connect(m_Ui->threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this,
             SLOT(updateThresholdSpinBox(double)));
 
-    // connect(m_hdrCreationManager,
-    // SIGNAL(finishedLoadingInputFiles(QStringList)), this,
-    // SLOT(align(QStringList)));
     connect(m_hdrCreationManager, &HdrCreationManager::finishedLoadingFiles,
             this, &BatchHDRDialog::align);
     connect(m_hdrCreationManager, &HdrCreationManager::finishedAligning, this,
             &BatchHDRDialog::create_hdr);
     connect(m_hdrCreationManager, &HdrCreationManager::errorWhileLoading, this,
             &BatchHDRDialog::error_while_loading);
-    // connect(m_hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this,
-    // SLOT(writeAisData(QByteArray)));
     connect(m_hdrCreationManager, &HdrCreationManager::aisDataReady, this,
             &BatchHDRDialog::writeAisData);
     connect(m_hdrCreationManager, &HdrCreationManager::ais_failed, this,
@@ -132,15 +128,13 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p)
     m_Ui->outputLineEdit->setText(m_batchHdrOutputDir);
 
     QSqlQueryModel model;
-    model.setQuery(QStringLiteral("SELECT * FROM parameters"));
+    model.setQuery(QStringLiteral("SELECT * FROM parameters"), m_db);
     for (int i = 0; i < model.rowCount(); i++) {
         m_Ui->profileComboBox->addItem(tr("Custom config %1").arg(i + 1));
         int weight_ = model.record(i).value(QStringLiteral("weight")).toInt();
-        int response_ =
-            model.record(i).value(QStringLiteral("response")).toInt();
+        int response_ = model.record(i).value(QStringLiteral("response")).toInt();
         int model_ = model.record(i).value(QStringLiteral("model")).toInt();
-        QString filename_ =
-            model.record(i).value(QStringLiteral("filename")).toString();
+        QString filename_ = model.record(i).value(QStringLiteral("filename")).toString();
         FusionOperatorConfig ct;
 
         ct.weightFunction = static_cast<WeightFunctionType>(weight_);
@@ -148,22 +142,28 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p)
 
         switch (response_) {
             case 0:
-                ct.responseCurve = RESPONSE_CUSTOM;
-                ct.inputResponseCurveFilename =
-                    QFile::encodeName(filename_).constData();
-                ct.outputResponseCurveFilename.clear();
-                break;
-            case 2:
-                ct.responseCurve = RESPONSE_GAMMA;
-                break;
-            case 3:
-                ct.responseCurve = RESPONSE_LOG10;
-                break;
-            case 4:
-                ct.responseCurve = RESPONSE_CUSTOM;
-                ct.fusionOperator = ROBERTSON_AUTO;
+                ct.responseCurve = RESPONSE_LINEAR;
                 break;
             case 1:
+                ct.responseCurve = RESPONSE_GAMMA;
+                break;
+            case 2:
+                ct.responseCurve = RESPONSE_LOG10;
+                break;
+            case 3:
+                ct.responseCurve = RESPONSE_SRGB;
+                break;
+            case -1:
+                ct.responseCurve = RESPONSE_CUSTOM;
+                if (model_ == 2) {
+                    ct.inputResponseCurveFilename.clear();
+                    ct.outputResponseCurveFilename.clear();
+                }
+                else {
+                    ct.inputResponseCurveFilename = QFile::encodeName(filename_).constData();
+                    ct.outputResponseCurveFilename.clear();
+                }
+                break;
             default:
                 ct.responseCurve = RESPONSE_LINEAR;
                 break;
@@ -171,6 +171,44 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p)
 
         m_customConfig.push_back(ct);
     }
+    // process input images
+    QStringList filters;
+    filters << QStringLiteral("*.jpg") << QStringLiteral("*.jpeg")
+            << QStringLiteral("*.tiff") << QStringLiteral("*.tif")
+            << QStringLiteral("*.crw") << QStringLiteral("*.cr2")
+            << QStringLiteral("*.nef") << QStringLiteral("*.dng")
+            << QStringLiteral("*.mrw") << QStringLiteral("*.orf")
+            << QStringLiteral("*.kdc") << QStringLiteral("*.dcr")
+            << QStringLiteral("*.arw") << QStringLiteral("*.raf")
+            << QStringLiteral("*.ptx") << QStringLiteral("*.pef")
+            << QStringLiteral("*.x3f") << QStringLiteral("*.raw")
+            << QStringLiteral("*.rw2") << QStringLiteral("*.sr2")
+            << QStringLiteral("*.3fr") << QStringLiteral("*.mef")
+            << QStringLiteral("*.mos") << QStringLiteral("*.erf")
+            << QStringLiteral("*.nrw") << QStringLiteral("*.srw");
+    filters << QStringLiteral("*.JPG") << QStringLiteral("*.JPEG")
+            << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF")
+            << QStringLiteral("*.CRW") << QStringLiteral("*.CR2")
+            << QStringLiteral("*.NEF") << QStringLiteral("*.DNG")
+            << QStringLiteral("*.MRW") << QStringLiteral("*.ORF")
+            << QStringLiteral("*.KDC") << QStringLiteral("*.DCR")
+            << QStringLiteral("*.ARW") << QStringLiteral("*.RAF")
+            << QStringLiteral("*.PTX") << QStringLiteral("*.PEF")
+            << QStringLiteral("*.X3F") << QStringLiteral("*.RAW")
+            << QStringLiteral("*.RW2") << QStringLiteral("*.SR2")
+            << QStringLiteral("*.3FR") << QStringLiteral("*.MEF")
+            << QStringLiteral("*.MOS") << QStringLiteral("*.ERF")
+            << QStringLiteral("*.NRW") << QStringLiteral("*.SRW");
+
+    QDir chosenInputDir(m_batchHdrInputDir);
+    chosenInputDir.setFilter(QDir::Files);
+    chosenInputDir.setSorting(QDir::Name);
+    chosenInputDir.setNameFilters(filters);
+    m_bracketed = chosenInputDir.entryList();
+    // hack to prepend to this list the path as prefix.
+    m_bracketed.replaceInStrings(QRegExp("(.+)"),
+                                 chosenInputDir.path() + "/\\1");
+
     check_start_button();
 }
 
@@ -185,9 +223,11 @@ BatchHDRDialog::~BatchHDRDialog() {
 void BatchHDRDialog::num_bracketed_changed(int value) {
     qDebug() << "BatchHDRDialog::num_bracketed_changed " << value;
     m_Ui->autoAlignCheckBox->setEnabled(value > 1);
-    m_Ui->autoCropCheckBox->setEnabled(value > 1);
-    m_Ui->aisRadioButton->setEnabled(value > 1);
-    m_Ui->MTBRadioButton->setEnabled(value > 1);
+    if (m_Ui->autoAlignCheckBox->isChecked() ) {
+        m_Ui->autoCropCheckBox->setEnabled(value > 1);
+        m_Ui->aisRadioButton->setEnabled(value > 1);
+        m_Ui->MTBRadioButton->setEnabled(value > 1);
+    }
 }
 
 void BatchHDRDialog::on_selectInputFolder_clicked() {
@@ -260,45 +300,6 @@ void BatchHDRDialog::on_startButton_clicked() {
                        "files might be overwritten. \n\nContinue?"),
                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     }
-
-    // process input images
-    QStringList filters;
-    filters << QStringLiteral("*.jpg") << QStringLiteral("*.jpeg")
-            << QStringLiteral("*.tiff") << QStringLiteral("*.tif")
-            << QStringLiteral("*.crw") << QStringLiteral("*.cr2")
-            << QStringLiteral("*.nef") << QStringLiteral("*.dng")
-            << QStringLiteral("*.mrw") << QStringLiteral("*.orf")
-            << QStringLiteral("*.kdc") << QStringLiteral("*.dcr")
-            << QStringLiteral("*.arw") << QStringLiteral("*.raf")
-            << QStringLiteral("*.ptx") << QStringLiteral("*.pef")
-            << QStringLiteral("*.x3f") << QStringLiteral("*.raw")
-            << QStringLiteral("*.rw2") << QStringLiteral("*.sr2")
-            << QStringLiteral("*.3fr") << QStringLiteral("*.mef")
-            << QStringLiteral("*.mos") << QStringLiteral("*.erf")
-            << QStringLiteral("*.nrw") << QStringLiteral("*.srw");
-    filters << QStringLiteral("*.JPG") << QStringLiteral("*.JPEG")
-            << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF")
-            << QStringLiteral("*.CRW") << QStringLiteral("*.CR2")
-            << QStringLiteral("*.NEF") << QStringLiteral("*.DNG")
-            << QStringLiteral("*.MRW") << QStringLiteral("*.ORF")
-            << QStringLiteral("*.KDC") << QStringLiteral("*.DCR")
-            << QStringLiteral("*.ARW") << QStringLiteral("*.RAF")
-            << QStringLiteral("*.PTX") << QStringLiteral("*.PEF")
-            << QStringLiteral("*.X3F") << QStringLiteral("*.RAW")
-            << QStringLiteral("*.RW2") << QStringLiteral("*.SR2")
-            << QStringLiteral("*.3FR") << QStringLiteral("*.MEF")
-            << QStringLiteral("*.MOS") << QStringLiteral("*.ERF")
-            << QStringLiteral("*.NRW") << QStringLiteral("*.SRW");
-
-    QDir chosenInputDir(m_batchHdrInputDir);
-    chosenInputDir.setFilter(QDir::Files);
-    chosenInputDir.setSorting(QDir::Name);
-    chosenInputDir.setNameFilters(filters);
-    m_bracketed = chosenInputDir.entryList();
-    // hack to prepend to this list the path as prefix.
-    m_bracketed.replaceInStrings(QRegExp("(.+)"),
-                                 chosenInputDir.path() + "/\\1");
-    qDebug() << m_bracketed;
 
     if (m_bracketed.count() < m_Ui->spinBox->value()) {
         qDebug() << "Total number of pictures must be a multiple of number of "
@@ -410,18 +411,7 @@ void BatchHDRDialog::create_hdr(int) {
 
     m_Ui->progressBar->hide();
     m_Ui->textEdit->append(tr("Creating HDR..."));
-    int idx = m_Ui->profileComboBox->currentIndex();
-
-    const FusionOperatorConfig *cfg = NULL;
-    if (idx <= 5) {
-        cfg = &predef_confs[idx];
-    } else {
-        cfg = &m_customConfig[idx - 6];
-    }
-
-    m_hdrCreationManager->setFusionOperator(cfg->fusionOperator);
-    m_hdrCreationManager->getWeightFunction().setType(cfg->weightFunction);
-    m_hdrCreationManager->getResponseCurve().setType(cfg->responseCurve);
+    //int idx = m_Ui->profileComboBox->currentIndex();
 
     if (m_Ui->autoAG_checkBox->isChecked()) {
         m_Ui->textEdit->append(tr("Doing auto anti-ghosting..."));
@@ -449,7 +439,7 @@ void BatchHDRDialog::create_hdr(int) {
 
 void BatchHDRDialog::createHdrFinished() {
     std::unique_ptr<pfs::Frame> resultHDR(m_future.result());
-    if (resultHDR.get() == NULL) {
+    if (resultHDR.get() == nullptr) {
         qDebug() << "Aborted";
         QApplication::restoreOverrideCursor();
         this->reject();
@@ -476,8 +466,16 @@ void BatchHDRDialog::createHdrFinished() {
                                            QChar('0')) +
                   "." + suffix;
     }
-    m_IO_Worker->write_hdr_frame(resultHDR.get(), outName,
-                                 m_formatHelper.getParams());
+    try {
+        m_IO_Worker->write_hdr_frame(resultHDR.get(), outName,
+                                     m_formatHelper.getParams());
+    }
+    catch (...) {
+        QApplication::restoreOverrideCursor();
+        this->reject();
+        return;
+    }
+
     resultHDR.reset();
 
     // DAVIDE _ HDR WIZARD
@@ -575,4 +573,25 @@ void BatchHDRDialog::updateThresholdSpinBox(double newThreshold) {
     bool oldState = m_Ui->threshold_horizontalSlider->blockSignals(true);
     m_Ui->threshold_horizontalSlider->setValue((int)(newThreshold * 10000));
     m_Ui->threshold_horizontalSlider->blockSignals(oldState);
+}
+
+void BatchHDRDialog::on_profileComboBox_activated(int idx) {
+    const FusionOperatorConfig *cfg = nullptr;
+    if (idx <= 5) {
+        cfg = &predef_confs[idx];
+    } else {
+        cfg = &m_customConfig[idx - 6];
+    }
+
+    QString labelModel    = getQString(cfg->fusionOperator);
+    QString labelWeights  = getQString(cfg->weightFunction);
+    QString labelResponse = getQString(cfg->responseCurve);
+
+    m_Ui->labelModel->setText(labelModel);
+    m_Ui->labelWeights->setText(labelWeights);
+    m_Ui->labelResponse->setText(labelResponse);
+
+    m_hdrCreationManager->setFusionOperator(cfg->fusionOperator);
+    m_hdrCreationManager->getWeightFunction().setType(cfg->weightFunction);
+    m_hdrCreationManager->getResponseCurve().setType(cfg->responseCurve);
 }

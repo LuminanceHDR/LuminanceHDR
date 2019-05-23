@@ -30,6 +30,7 @@
 #include <QFutureWatcher>
 #include <QString>
 #include <QVector>
+#include <QtSql/QSqlDatabase>
 
 #include "HdrPreview.h"
 #include "Libpfs/manip/copy.h"
@@ -65,13 +66,15 @@ class HdrWizard : public QDialog {
     int m_agGoodImageIndex;
     bool m_processing;
     bool m_isConfigChanged;
+    QSqlDatabase m_db;
     QScopedPointer<HdrPreview> m_hdrPreview;
     ProgressHelper m_ph;
 
    public:
     HdrWizard(QWidget *parent, const QStringList &files,
               const QStringList &inputFilesName,
-              const QVector<float> &inputExpoTimes);
+              const QVector<float> &inputExpoTimes,
+              QSqlDatabase db = QSqlDatabase::database() );
     ~HdrWizard();
 
     //! \brief get the current PFS Frame
@@ -128,8 +131,9 @@ class HdrWizard : public QDialog {
     void responseCurveComboBoxActivated(int);
     void modelComboBoxActivated(int);
 
-    bool loadRespCurve();
+    bool loadRespCurve(bool);
     void saveRespCurveFileButtonClicked();
+    void on_loadRespCurveFileButton_clicked();
     // ...end!
 
     void NextFinishButtonClicked();
@@ -147,7 +151,6 @@ class HdrWizard : public QDialog {
     void startComputation();
     void createHdr();
     void createHdrFinished();
-    void autoAntighostingFinished();
     void updateHideLogButtonText(bool);
     void showHDR();
 
