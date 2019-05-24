@@ -344,6 +344,7 @@ TonemappingPanel::~TonemappingPanel() {
     delete baseGang;
     delete alphaGang;
     delete betaGang;
+    delete fftSolverGang;
     delete rhoGang;
     delete inv_alphaGang;
     delete saturation2Gang;
