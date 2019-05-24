@@ -53,7 +53,7 @@ template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
 void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
                InputIterator in3, OutputIterator out1, OutputIterator out2,
-               OutputIterator out3, ConversionOperator convOp,
+               OutputIterator out3, ConversionOperator &convOp,
                std::random_access_iterator_tag,
                std::random_access_iterator_tag) {
     typename std::iterator_traits<InputIterator>::difference_type numElem =
@@ -132,7 +132,7 @@ template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator, typename InputIteratorTag,
           typename OutputIteratorTag>
 void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
-               InputIterator in3, OutputIterator out, ConversionOperator convOp,
+               InputIterator in3, OutputIterator out, ConversionOperator &convOp,
                InputIteratorTag, OutputIteratorTag) {
     while (in1 != in1End) {
         convOp(*in1++, *in2++, *in3++, *out++);
@@ -143,7 +143,7 @@ void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
 void transform(InputIterator in1, InputIterator in1End, InputIterator in2,
-               InputIterator in3, OutputIterator out, ConversionOperator convOp,
+               InputIterator in3, OutputIterator out, ConversionOperator &convOp,
                std::random_access_iterator_tag,
                std::random_access_iterator_tag) {
     typename std::iterator_traits<InputIterator>::difference_type numElem =
