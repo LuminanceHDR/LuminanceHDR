@@ -42,15 +42,17 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "../../sleef.c"
 #include "../../opthelper.h"
+
 #define pow_F(a,b) (xexpf(b*xlogf(a)))
-/// sensitivity of human visual system
-float n = 0.73f;
 
 float sigma_response_rod(float I);
 float sigma_response_cone(float I);
 float model_response(float I, float sigma);
 
 namespace {
+/// sensitivity of human visual system
+float n = 0.73f;
+
 const float LOG5 = std::log(5.f);
 
 /**
