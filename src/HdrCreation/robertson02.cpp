@@ -338,7 +338,7 @@ void RobertsonOperatorAuto::computeResponse(
         for (size_t m = 0; m < I.size(); ++m) {
             if (I[m] != 0.0f) {
                 float diff = I[m] - Ip[m];
-                delta += diff * diff;
+                delta += (double) diff * diff;
                 Ip[m] = I[m];
                 hits++;
             }

@@ -299,7 +299,7 @@ struct TiffReaderData {
         pfs::Channel *Zc;
         tempFrame.createXYZChannels(Xc, Yc, Zc);
 
-        std::vector<InputDataType> tempBuffer(width_ * samplesPerPixel_);
+        std::vector<InputDataType> tempBuffer((size_t) width_ * samplesPerPixel_);
         for (uint32 row = 0; row < height_; row++) {
             TIFFReadScanline(handle(), tempBuffer.data(), row);
 
@@ -330,7 +330,7 @@ struct TiffReaderData {
         pfs::Channel *Zc;
         tempFrame.createXYZChannels(Xc, Yc, Zc);
 
-        std::vector<InputDataType> tempBuffer(width_ * samplesPerPixel_);
+        std::vector<InputDataType> tempBuffer((size_t) width_ * samplesPerPixel_);
         for (uint32 row = 0; row < height_; row++) {
             TIFFReadScanline(handle(), tempBuffer.data(), row);
 

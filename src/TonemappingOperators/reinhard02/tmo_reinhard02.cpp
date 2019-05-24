@@ -143,10 +143,10 @@ void Reinhard02::gaussian_filter(fftwf_complex *filter, float scale, float k) {
     constexpr float c = 1.f / 4.f;
 
 #pragma omp parallel for
-    for (int y = 0; y < m_cvts.ymax; y++) {
+    for (size_t y = 0; y < m_cvts.ymax; y++) {
         float y1 = (y >= m_cvts.ymax / 2) ? y - m_cvts.ymax : y;
         float s = erf(a * (y1 - .5f)) - erf(a * (y1 + .5f));
-        for (int x = 0; x < m_cvts.xmax; x++) {
+        for (size_t x = 0; x < m_cvts.xmax; x++) {
             float x1 = (x >= m_cvts.xmax / 2) ? x - m_cvts.xmax : x;
             filter[y * m_cvts.xmax + x][0] =
                 s * (erf(a * (x1 - .5f)) - erf(a * (x1 + .5f))) * c;
@@ -220,8 +220,8 @@ void Reinhard02::build_image_fft() {
     FFTW_MUTEX::fftw_mutex_plan.unlock();
 
     #pragma omp parallel for
-    for (int y = 0; y < m_cvts.ymax; y++) {
-        for (int x = 0; x < m_cvts.xmax; x++) {
+    for (size_t y = 0; y < m_cvts.ymax; y++) {
+        for (size_t x = 0; x < m_cvts.xmax; x++) {
             m_image_fft[y * m_cvts.xmax + x][0] = m_image[y][x];
             m_image_fft[y * m_cvts.xmax + x][1] = 0;
         }
@@ -257,7 +257,7 @@ void Reinhard02::convolve_filter(int scale, fftwf_complex *convolution_fft) {
     float fft_scale = 1.f / (float)length;
 
     #pragma omp parallel for
-    for (int i = 0; i < m_cvts.xmax * m_cvts.ymax; i++) {
+    for (size_t i = 0; i < m_cvts.xmax * m_cvts.ymax; i++) {
         convolution_fft[i][0] = fft_scale * (m_image_fft[i][0] * m_filter_fft[scale][i][0] +
                                              m_image_fft[i][1] * m_filter_fft[scale][i][1]);
         convolution_fft[i][1] = fft_scale * (m_image_fft[i][0] * m_filter_fft[scale][i][1] +
@@ -271,8 +271,8 @@ void Reinhard02::convolve_filter(int scale, fftwf_complex *convolution_fft) {
     FFTW_MUTEX::fftw_mutex_destroy_plan.unlock();
 
 #pragma omp parallel for
-    for (int y = 0; y < m_cvts.ymax; y++)
-        for (int x = 0, i = y * m_cvts.xmax; x < m_cvts.xmax; x++, i++)
+    for (size_t y = 0; y < m_cvts.ymax; y++)
+        for (size_t x = 0, i = y * m_cvts.xmax; x < m_cvts.xmax; x++, i++)
             m_convolved_image[scale][y][x] = m_convolution_fft[i][0];
 }
 
@@ -307,8 +307,8 @@ float Reinhard02::get_maxvalue() {
     float max = 0.;
 
     #pragma omp parallel for reduction(max:max)
-    for (int y = 0; y < m_cvts.ymax; y++) {
-        for (int x = 0; x < m_cvts.xmax; x++) {
+    for (size_t y = 0; y < m_cvts.ymax; y++) {
+        for (size_t x = 0; x < m_cvts.xmax; x++) {
             max = (max < m_image[y][x]) ? m_image[y][x] : max;
         }
     }
@@ -327,8 +327,8 @@ void Reinhard02::tonemap_image() {
     }
 
 #pragma omp parallel for
-    for (int y = 0; y < m_cvts.ymax; y++)
-        for (int x = 0; x < m_cvts.xmax; x++) {
+    for (size_t y = 0; y < m_cvts.ymax; y++)
+        for (size_t x = 0; x < m_cvts.xmax; x++) {
             if (m_use_scales) {
                 int prefscale = m_range - 1;
                 for (int scale = 0; scale < m_range - 1; scale++)
@@ -360,8 +360,8 @@ float Reinhard02::log_average() {
     vfloat c1v = F2V(0.00001f);
 #endif
 #pragma omp for
-    for (int y = 0; y < m_cvts.ymax; y++) {
-        int x = 0;
+    for (size_t y = 0; y < m_cvts.ymax; y++) {
+        size_t x = 0;
 #ifdef __SSE2__
         for (; x < m_cvts.xmax - 3; x+=4) {
             sumthrv += xlogf(c1v + LVFU(m_image[y][x]));
@@ -386,20 +386,20 @@ void Reinhard02::scale_to_midtone() {
 
 
     float low_tone = m_key / 3.f;
-    int border_size = (m_cvts.xmax < m_cvts.ymax) ? int(m_cvts.xmax / 5.f)
+    size_t border_size = (m_cvts.xmax < m_cvts.ymax) ? int(m_cvts.xmax / 5.f)
                                                   : int(m_cvts.ymax / 5.f);
-    int hw = m_cvts.xmax >> 1;
-    int hh = m_cvts.ymax >> 1;
+    size_t hw = m_cvts.xmax >> 1;
+    size_t hh = m_cvts.ymax >> 1;
 
     float scale_factor = 1.0f / log_average();
     #pragma omp parallel for
-    for (int y = 0; y < m_cvts.ymax; y++) {
-        for (int x = 0; x < m_cvts.xmax; x++) {
+    for (size_t y = 0; y < m_cvts.ymax; y++) {
+        for (size_t x = 0; x < m_cvts.xmax; x++) {
             float factor;
             if (m_use_border) {
-                int u = (x > hw) ? m_cvts.xmax - x : x;
-                int v = (y > hh) ? m_cvts.ymax - y : y;
-                int d = (u < v) ? u : v;
+                size_t u = (x > hw) ? m_cvts.xmax - x : x;
+                size_t v = (y > hh) ? m_cvts.ymax - y : y;
+                size_t d = (u < v) ? u : v;
                 factor =
                     (d < border_size)
                         ? (m_key - low_tone) * kaiserbessel(border_size - d, 0, border_size) + low_tone
@@ -460,7 +460,7 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
     m_bbeta = bessel(boost::math::float_constants::pi * m_alpha);
 
     m_image = (float **)malloc(m_cvts.ymax * sizeof(float *));
-    for (int y = 0; y < m_cvts.ymax; y++) {
+    for (size_t y = 0; y < m_cvts.ymax; y++) {
         m_image[y] = &(*m_L)(0,y);
     }
     if (use_scales) {
@@ -472,7 +472,7 @@ Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
             m_filter_fft[scale] = (fftwf_complex *)fftwf_alloc_complex(length);
             m_convolved_image[scale] = (float **)malloc(m_cvts.ymax * sizeof(float *));
             m_convolved_image[scale][0] = (float *)malloc(length * sizeof(float));
-            for (int y = 1; y < m_cvts.ymax; y++)
+            for (size_t y = 1; y < m_cvts.ymax; y++)
                 m_convolved_image[scale][y] = m_convolved_image[scale][0] + y * m_cvts.xmax;
         }
         m_convolution_fft = (fftwf_complex *)fftwf_alloc_complex(m_cvts.xmax * m_cvts.ymax);
@@ -509,8 +509,8 @@ void Reinhard02::tmo_reinhard02() {
 
     // reading image
     #pragma omp parallel for
-    for (int y = 0; y < m_cvts.ymax; y++)
-        for (int x = 0; x < m_cvts.xmax; x++)
+    for (size_t y = 0; y < m_cvts.ymax; y++)
+        for (size_t x = 0; x < m_cvts.xmax; x++)
             m_image[y][x] = (*m_Y)(x, y);
 
     m_ph.setValue(10);

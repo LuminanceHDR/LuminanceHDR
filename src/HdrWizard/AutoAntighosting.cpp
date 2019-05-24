@@ -192,8 +192,8 @@ void sdv(const HdrCreationItem &item1, const HdrCreationItem &item2,
     Array2Df &G2 = *Y2;
     Array2Df &B2 = *Z2;
 
-    const int W = item1.frame()->getWidth();
-    const int H = item1.frame()->getHeight();
+    const size_t W = item1.frame()->getWidth();
+    const size_t H = item1.frame()->getHeight();
 
     vector<float> logRed(W * H);
     vector<float> logGreen(W * H);
@@ -205,9 +205,9 @@ void sdv(const HdrCreationItem &item1, const HdrCreationItem &item2,
     float mR = 0.0f;
     float mG = 0.0f;
     float mB = 0.0f;
-    for (int y = 0; y < H; y++) {
+    for (size_t y = 0; y < H; y++) {
         if (y + dy < 0 || y + dy > H - 1) continue;
-        for (int x = 0; x < W; x++) {
+        for (size_t x = 0; x < W; x++) {
             if (x + dx < 0 || x + dx > W - 1) continue;
             if (R1(x, y) >= 1.0f || R2(x + dx, y + dy) >= 1.0f) {
                 logRed[count] = 0.0f;

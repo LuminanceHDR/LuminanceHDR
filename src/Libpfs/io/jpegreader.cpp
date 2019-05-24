@@ -326,7 +326,7 @@ static void read3Components(j_decompress_ptr cinfo, Frame &frame,
 
     frame.createXYZChannels(red, green, blue);
 
-    std::vector<JSAMPLE> scanLineBuffer(cinfo->image_width *
+    std::vector<JSAMPLE> scanLineBuffer((size_t) cinfo->image_width *
                                         cinfo->num_components);
     JSAMPROW scanLineBufferArray[1] = {scanLineBuffer.data()};
 
@@ -353,7 +353,7 @@ static void read4Components(j_decompress_ptr cinfo, Frame &frame,
 
     frame.createXYZChannels(red, green, blue);
 
-    std::vector<JSAMPLE> scanLineBuffer(cinfo->image_width *
+    std::vector<JSAMPLE> scanLineBuffer((size_t) cinfo->image_width *
                                         cinfo->num_components);
     JSAMPROW scanLineBufferArray[1] = {scanLineBuffer.data()};
 

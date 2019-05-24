@@ -265,7 +265,7 @@ class JpegWriterImpl {
 
             // If an exception is raised, this buffer gets automatically
             // destructed!
-            std::vector<JSAMPLE> scanLineOut(cinfo.image_width *
+            std::vector<JSAMPLE> scanLineOut((size_t) cinfo.image_width *
                                              cinfo.num_components);
             JSAMPROW scanLineOutArray[1] = {scanLineOut.data()};
 

@@ -105,9 +105,9 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
     stop_watch.start();
 #endif
 
-    int w = R.getCols();
-    int h = R.getRows();
-    int size = w * h;
+    size_t w = R.getCols();
+    size_t h = R.getRows();
+    size_t size = w * h;
 
     pfs::Array2Df I(w, h);       // intensities
     pfs::Array2Df BASE(w, h);    // base layer
@@ -134,8 +134,8 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 #ifdef _OPENMP
     #pragma omp for nowait
 #endif
-    for (int i = 0; i < h; i++) {
-        int j = 0;
+    for (size_t i = 0; i < h; i++) {
+        size_t j = 0;
 #ifdef __SSE2__
         for (; j < w - 3; j+=4) {
             vfloat Iv = onev / c61v * (c20v * LVFU(R(j, i)) + c40v * LVFU(G(j, i)) + LVFU(B(j,i)));
@@ -175,8 +175,8 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 #ifdef _OPENMP
     #pragma omp for
 #endif
-    for (int i = 0; i < h; i++) {
-        int j = 0;
+    for (size_t i = 0; i < h; i++) {
+        size_t j = 0;
 #ifdef __SSE2__
         for (; j < w-3; j+=4) {
             vfloat Lv = LVFU(I(j, i));
@@ -237,8 +237,8 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 #ifdef _OPENMP
         #pragma omp for
 #endif
-        for (int i = 0; i < h; i++) {
-            int j = 0;
+        for (size_t i = 0; i < h; i++) {
+            size_t j = 0;
 #ifdef __SSE2__
             for (; j < w - 3; j+=4) {
                 vfloat Iiv = LVFU(BASE(j, i)) * compressionfactorm1v + LVFU(I(j, i)) - offsetv;
@@ -275,7 +275,7 @@ void tmo_durand02(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 #ifdef _OPENMP
         #pragma omp parallel for
 #endif
-        for (int i = 0; i < size; i++) {
+        for (size_t i = 0; i < size; i++) {
             float Ii = BASE(i) * compressionfactorm1 + I(i);
 
             //!! FIX: this to keep the output in normalized range 0.01 - 1.0

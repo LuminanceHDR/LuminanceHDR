@@ -190,7 +190,7 @@ inline vfloat safelog10f(vfloat xv, vfloat log10v, vfloat minv) {
 #endif
 
 void CompressionTMO::tonemap(const float *R_in, const float *G_in, float *B_in,
-                             int width, int height, float *R_out, float *G_out,
+                             size_t width, size_t height, float *R_out, float *G_out,
                              float *B_out, const float *L_in,
                              pfs::Progress &ph) {
 #ifdef TIMER_PROFILING

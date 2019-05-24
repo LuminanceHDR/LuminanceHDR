@@ -464,7 +464,7 @@ void solve_pde_multigrid(pfs::Array2Df *F, pfs::Array2Df *U,
         // DEBUG_STR << "FMG: cg post improving ..., maxiter=" <<
         // BCG_POST_STEPS;
         // DEBUG_STR << ", tol=" << BCG_POST_TOL << std::endl;
-        linbcg(xmax * ymax, F->data(), U->data(), BCG_POST_TOL, BCG_POST_STEPS,
+        linbcg((unsigned long) xmax * ymax, F->data(), U->data(), BCG_POST_TOL, BCG_POST_STEPS,
                &iter, &err, ymax, xmax);
         // DEBUG_STR << "FMG: cg post improvement: iter=" << iter << ", err=" <<
         // err;

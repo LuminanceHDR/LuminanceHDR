@@ -62,8 +62,8 @@ void pfstmo_mai11(pfs::Frame &frame, pfs::Progress &ph) {
     if (inX == NULL || inY == NULL || inZ == NULL) {
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
-    int cols = frame.getWidth();
-    int rows = frame.getHeight();
+    size_t cols = frame.getWidth();
+    size_t rows = frame.getHeight();
 
     try {
         tmo.tonemap(inX->data(), inY->data(), inZ->data(), cols, rows,

@@ -42,7 +42,7 @@ class Progress;
 }
 
 //--- from defines.h
-typedef struct { int xmax, ymax; /* image dimensions */ } CVTS;
+typedef struct { size_t xmax, ymax; /* image dimensions */ } CVTS;
 
 typedef float COLOR[3]; /* red, green, blue (or X,Y,Z) */
 

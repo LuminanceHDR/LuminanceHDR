@@ -76,8 +76,8 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 
     vector<float> times;
 
-    const int W = images[0].frame()->getWidth();
-    const int H = images[0].frame()->getHeight();
+    const size_t W = images[0].frame()->getWidth();
+    const size_t H = images[0].frame()->getHeight();
 
     for (size_t idx = 0; idx < images.size(); ++idx) {
         times.push_back(images[idx].averageLuminance());
@@ -202,8 +202,8 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #ifdef _OPENMP
         #pragma omp parallel for
 #endif
-        for(int y = 0; y < H; ++y) {
-            int x = 0;
+        for(size_t y = 0; y < H; ++y) {
+            size_t x = 0;
 #ifdef __SSE2__
             for(; x < W - 3; x += 4) {
                 STVFU((*resultCh[c])(x, y), xexpf(LVFU((*resultCh[c])(x,y)) / LVFU(weight_sum(x,y))));

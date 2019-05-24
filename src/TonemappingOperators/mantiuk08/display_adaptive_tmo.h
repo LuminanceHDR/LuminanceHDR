@@ -29,6 +29,9 @@
  * $Id: display_adaptive_tmo.h,v 1.12 2009/02/23 18:46:36 rafm Exp $
  */
 
+#ifndef MANTIUK08_DISPLAY_ADAPTIVE_H
+#define MANTIUK08_DISPLAY_ADAPTIVE_H
+
 #include <memory>
 
 #include <TonemappingOperators/mantiuk08/display_function.h>
@@ -266,7 +269,7 @@ int datmo_apply_tone_curve(float *R_out, float *G_out, float *B_out, int width,
  * error was encountered.
  */
 int datmo_apply_tone_curve_cc(float *R_out, float *G_out, float *B_out,
-                              int width, int height, const float *R_in,
+                              size_t width, size_t height, const float *R_in,
                               const float *G_in, const float *B_in,
                               const float *L_in, datmoToneCurve *tc,
                               DisplayFunction *df,
@@ -282,3 +285,5 @@ int datmo_apply_tone_curve_cc(float *R_out, float *G_out, float *B_out,
  */
 void datmo_filter_tone_curves(datmoToneCurve **in_tc, size_t count_in_tc,
                               datmoToneCurve *out_tc);
+
+#endif

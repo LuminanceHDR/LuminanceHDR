@@ -383,7 +383,7 @@ class conditional_density : public datmoConditionalDensity {
         f_scale = new double[f_count];
 
         C = new double[x_count * g_count * f_count];
-        memset(C, 0, x_count * g_count * f_count * sizeof(double));
+        memset(C, 0, (unsigned long) x_count * g_count * f_count * sizeof(double));
 
         if (x_scale[0] == 0) {
             for (int i = 0; i < x_count; i++) x_scale[i] = l_min + delta * i;
@@ -1075,7 +1075,7 @@ int datmo_compute_tone_curve(datmoToneCurve *tc,
  * (http://zgk.wi.ps.pl/color_correction/)
  */
 int datmo_apply_tone_curve_cc(float *R_out, float *G_out, float *B_out,
-                              int width, int height, const float *R_in,
+                              size_t width, size_t height, const float *R_in,
                               const float *G_in, const float *B_in,
                               const float *L_in, datmoToneCurve *tc,
                               DisplayFunction *df,
@@ -1101,15 +1101,15 @@ int datmo_apply_tone_curve_cc(float *R_out, float *G_out, float *B_out,
                      0.0f);  // In pfstmo 2.0.5
         const float k1 = 1.48f;
         const float k2 = 0.82f;
-        cc_lut.y_i[i] = ((1 + k1) * pow(contrast, k2)) /
-                        (1 + k1 * pow(contrast, k2)) * saturation_factor;
+        cc_lut.y_i[i] = ((1 + k1) * powf(contrast, k2)) /
+                        (1 + k1 * powf(contrast, k2)) * saturation_factor;
     }
     cc_lut.y_i[tc->size - 1] = 1;
 
-    const long pix_count = width * height;
+    const size_t pix_count = width * height;
 #pragma omp parallel for \
     shared(R_in, G_in, B_in, L_in, R_out, G_out, B_out, tc_lut, cc_lut, df)
-    for (long i = 0; i < pix_count; i++) {
+    for (size_t i = 0; i < pix_count; i++) {
         float L_fix = clamp_channel(L_in[i]);
         const float l10 = log10(L_fix);
         const float L_out = tc_lut.interp(l10);

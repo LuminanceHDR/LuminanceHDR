@@ -105,8 +105,8 @@ void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 
-    const int cols = frame.getWidth();
-    const int rows = frame.getHeight();
+    const size_t cols = frame.getWidth();
+    const size_t rows = frame.getHeight();
 
     pfs::Array2Df R(cols, rows);
     pfs::transformColorSpace(pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R,
