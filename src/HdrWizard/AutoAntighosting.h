@@ -23,6 +23,9 @@
  *
  */
 
+#ifndef AUTO_ANTIGHOSTING_H
+#define AUTO_ANTIGHOSTING_H
+
 #include "HdrCreationItem.h"
 
 #define agGridSize 40
@@ -75,3 +78,5 @@ void blend(pfs::Array2Df &R1, pfs::Array2Df &G1, pfs::Array2Df &B1,
            const pfs::Array2Df &R2, const pfs::Array2Df &G2,
            const pfs::Array2Df &B2, const QImage &mask,
            const QImage &maskGoodImage);
+
+#endif

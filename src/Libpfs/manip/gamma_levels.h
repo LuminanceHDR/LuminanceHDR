@@ -22,9 +22,14 @@
 //! \brief apply gamma and black/white point to the input frame
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
+#ifndef LIBPFS_GAMMA_LEVELS_H
+#define LIBPFS_GAMMA_LEVELS_H
+
 namespace pfs {
 class Frame;
 
 void gammaAndLevels(pfs::Frame *in, float black_in, float white_in,
                     float black_out, float white_out, float gamma = 1.0f);
 }
+
+#endif

@@ -25,9 +25,13 @@
  * $$
  */
 
+#ifndef MANTIUK08_CQP_H
+#define MANTIUK08_CQP_H
+
 #ifdef __cplusplus
 #define __BEGIN_DECLS extern "C" {
 #define __END_DECLS }
+#include <gsl/gsl_matrix.h>
 #else
 #define __BEGIN_DECLS /* empty */
 #define __END_DECLS   /* empty */
@@ -50,3 +54,5 @@ int pdip_initial_point_z(gsl_vector *z);
 int pdip_initial_point_strict_feasible(gsl_vector *x, gsl_vector *s);
 
 __END_DECLS
+
+#endif

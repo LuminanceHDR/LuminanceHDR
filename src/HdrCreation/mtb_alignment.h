@@ -27,6 +27,9 @@
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! Remove dependency from Qt and refactoring for new libhdr library
 
+#ifndef LIBHDR_MTB_ALIGNMENT_H
+#define LIBHDR_MTB_ALIGNMENT_H
+
 #include <vector>
 
 #include <Libpfs/array2d_fwd.h>
@@ -37,3 +40,5 @@ namespace libhdr {
 void mtb_alignment(std::vector<pfs::FramePtr> &framePtrList);
 
 }  // libhdr
+
+#endif
