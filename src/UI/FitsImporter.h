@@ -48,6 +48,7 @@ class FitsImporter : public QWizard {
     ~FitsImporter();
 
     pfs::Frame *getFrame();
+    QStringList &getFilenames() { return m_filenames; }
 
    protected slots:
     void on_pushButtonLuminosity_clicked();
@@ -111,6 +112,7 @@ class FitsImporter : public QWizard {
     std::vector<std::vector<float>> m_contents;
     std::vector<QImage> m_qimages;
 
+    QStringList m_filenames;
     // QFutureWatcher<void> m_futureWatcher;
 
     // alignment

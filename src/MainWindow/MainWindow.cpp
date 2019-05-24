@@ -2192,8 +2192,7 @@ void MainWindow::on_actionFits_Importer_triggered() {
     FitsImporter importer;
 
     if (importer.exec() == QDialog::Accepted) {
-        pfs::Frame *frame = importer.getFrame();
-        emit load_success(frame, tr("FITS Image"), QStringList(), true);
+        emit load_success(importer.getFrame(), tr("FITS Image"), importer.getFilenames(), true);
     }
 #endif
 }

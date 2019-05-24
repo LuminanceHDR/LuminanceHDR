@@ -208,6 +208,9 @@ void FitsImporter::on_pushButtonLoad_clicked() {
         QApplication::restoreOverrideCursor();
         error_string = QString(err.what());
         qDebug() << err.what();
+    } catch (...) {
+        QApplication::restoreOverrideCursor();
+        error_string = QStringLiteral("unknown error");
     }
 
     loadFilesDone(error_string);
@@ -226,6 +229,7 @@ void FitsImporter::loadFilesDone(QString error_string) {
          i != m_tmpdata.end(); ++i) {
         if (i->isValid()) {
             qDebug() << QStringLiteral("Insert data for %1").arg(i->filename());
+            m_filenames << i->filename();
             m_data.push_back(*i);
             m_previewFrame->getLabel(idx)->setPixmap(
                 QPixmap::fromImage(i->qimage()));
