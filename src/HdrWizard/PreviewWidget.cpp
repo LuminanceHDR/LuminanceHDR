@@ -46,11 +46,11 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p)
     : QWidget(parent),
       m_movableImage(m),
       m_pivotImage(p),
-      m_agMask(NULL),
-      m_originalAgMask(NULL),
-      m_patchesMask(NULL),
-      m_agMaskPixmap(NULL),
-      m_savedMask(NULL),
+      m_agMask(nullptr),
+      m_originalAgMask(nullptr),
+      m_patchesMask(nullptr),
+      m_agMaskPixmap(nullptr),
+      m_savedMask(nullptr),
       m_prevComputed(),
       m_mx(0),
       m_my(0),
@@ -58,7 +58,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p)
       m_py(0),
       m_old_mx(0),
       m_old_my(0),
-      m_agcursorPixmap(NULL),
+      m_agcursorPixmap(nullptr),
       m_drawingMode(BRUSH) {
     setFocusPolicy(Qt::StrongFocus);
     // setMouseTracking(true);
@@ -136,6 +136,9 @@ PreviewWidget::~PreviewWidget() {
         delete m_originalAgMask;
         delete m_agMask;
     }
+    if (m_patchesMask) {
+        delete m_patchesMask;
+    }
 }
 
 QRgb outofbounds = qRgba(0, 0, 0, 255);
@@ -171,11 +174,11 @@ void PreviewWidget::renderPreviewImage(
     if ((originx + W - 1) >= m_movableImage->width())
         W = m_movableImage->width() - originx;
 
-    const QRgb *movVal = NULL;
-    const QRgb *pivVal = NULL;
-    QRgb *movLine = NULL;
-    QRgb *pivLine = NULL;
-    QRgb *out = NULL;
+    const QRgb *movVal = nullptr;
+    const QRgb *pivVal = nullptr;
+    QRgb *movLine = nullptr;
+    QRgb *pivLine = nullptr;
+    QRgb *out = nullptr;
 
 // for all the rows that we have to paint
 #pragma omp parallel for private(out, movVal, pivVal, movLine, pivLine)
@@ -186,23 +189,23 @@ void PreviewWidget::renderPreviewImage(
         if (!((i - m_my) < 0 || (i - m_my) >= m_movableImage->height()))
             movLine = (QRgb *)(m_movableImage->scanLine(i - m_my));
         else
-            movLine = NULL;
+            movLine = nullptr;
 
         if (!((i - m_py) < 0 || (i - m_py) >= m_pivotImage->height()))
             pivLine = (QRgb *)(m_pivotImage->scanLine(i - m_py));
         else
-            pivLine = NULL;
+            pivLine = nullptr;
 
         // for all the columns that we have to paint
         for (int j = originx; j < originx + W; j++) {
             // if within bounds considering horizontal offset
-            if (movLine == NULL || (j - m_mx) < 0 ||
+            if (movLine == nullptr || (j - m_mx) < 0 ||
                 (j - m_mx) >= m_movableImage->width())
                 movVal = &outofbounds;
             else
                 movVal = &movLine[j - m_mx];
 
-            if (pivLine == NULL || (j - m_px) < 0 ||
+            if (pivLine == nullptr || (j - m_px) < 0 ||
                 (j - m_px) >= m_pivotImage->width())
                 pivVal = &outofbounds;
             else
@@ -233,9 +236,9 @@ void paste(QImage *mask, QImage pixmap, const int mx, const int my) {
 
 void PreviewWidget::renderAgMask() {
     int W = 0, H = 0;
-    const QRgb *maskVal = NULL;
-    const QRgb *maskLine = NULL;
-    QRgb *outMask = NULL;
+    const QRgb *maskVal = nullptr;
+    const QRgb *maskLine = nullptr;
+    QRgb *outMask = nullptr;
 
     if (m_agMaskPixmap) {
         W = m_originalAgMask->width();
@@ -249,12 +252,12 @@ void PreviewWidget::renderAgMask() {
             if (!((i - m_my) < 0 || (i - m_my) >= H))
                 maskLine = (QRgb *)m_originalAgMask->scanLine(i - m_my);
             else
-                maskLine = NULL;
+                maskLine = nullptr;
 
             // for all the columns that we have to paint
             for (int j = 0; j < W; j++) {
                 // if within bounds considering horizontal offset
-                if (maskLine == NULL || (j - m_mx) < 0 || (j - m_mx) >= W)
+                if (maskLine == nullptr || (j - m_mx) < 0 || (j - m_mx) >= W)
                     maskVal = &outofbounds;
                 else
                     maskVal = &maskLine[j - m_mx];
@@ -435,7 +438,7 @@ QImage *PreviewWidget::getMask() {
     if (m_agMaskPixmap) {
         return new QImage(*m_originalAgMask);
     }
-    return NULL;
+    return nullptr;
 }
 
 void PreviewWidget::updateVertShiftMovable(int v) {
