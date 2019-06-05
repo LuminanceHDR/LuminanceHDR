@@ -349,7 +349,7 @@ rpError hphd_demosaic(int width, int height, const float * const *rawData, float
         }
     }
 #else
-    rc = hphd_vertical(hpmap, 0, W, H);
+    rc = hphd_vertical(rawData, hpmap, 0, W, H);
 #endif
 
     if (!rc) {
@@ -376,7 +376,7 @@ rpError hphd_demosaic(int width, int height, const float * const *rawData, float
             }
         }
 #else
-        rc = hphd_horizontal(hpmap, 0, H);
+        rc = hphd_horizontal(rawData, hpmap, 0, H, W);
 #endif
         if (!rc) {
             setProgCancel(0.43);
