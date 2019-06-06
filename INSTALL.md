@@ -183,7 +183,7 @@ cmake -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g') ..
 make
 ```
 
-As AppleClang requires preprocessing to detect OpenMP, the CMake command to enable AppleClang 10+ to use the libiomp5 implementation would be:
+As AppleClang requires preprocessing to detect OpenMP, the CMake command to enable AppleClang to use the libomp implementation would be:
 
 ```bash
 cmake ..\
@@ -205,7 +205,7 @@ cmake ..\
 Troubleshooting:
 - If you crash on start up with a message about `libz.1.2.8.dylib`, modify the executable as follows:
     ```bash
-    install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib "Luminance HDR 2.6.app/Contents/MacOS/Luminance HDR 2.6"
+    install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib "Luminance HDR 2.6.0.app/Contents/MacOS/Luminance HDR 2.6.0"
     ```
 - If you built libboost from source, you may encounter errors from macdeployqt about missing libraries. Copy the boost libraries to `/usr/lib`:
     ```bash
@@ -226,7 +226,7 @@ Troubleshooting:
 If you wish to make a DMG:
 
 ```bash
-hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 2.6.app" "Luminance HDR 2.6.dmg"
+hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 2.6.0.app" "Luminance HDR 2.6.0.dmg"
 ```
 
 If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10.10), you can obtain legacy SDKs from https://github.com/phracker/MacOSX-SDKs/releases
