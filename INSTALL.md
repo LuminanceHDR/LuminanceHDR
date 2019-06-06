@@ -187,7 +187,7 @@ As AppleClang requires preprocessing to detect OpenMP, the CMake command to enab
 
 ```bash
 cmake ..\
-    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.12" \
     -DCMAKE_PREFIX_PATH="$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')" -G "Unix Makefiles" \
     -DCMAKE_C_COMPILER="clang" \
     -DCMAKE_CXX_COMPILER="clang++" \
@@ -229,16 +229,16 @@ If you wish to make a DMG:
 hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 2.6.app" "Luminance HDR 2.6.dmg"
 ```
 
-If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10.9), you can obtain legacy SDKs from https://github.com/phracker/MacOSX-SDKs/releases
+If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10.10), you can obtain legacy SDKs from https://github.com/phracker/MacOSX-SDKs/releases
 Then use the following:
 
 ```bash
-export QT=~/Qt/5.13.0/clang_64
-export MACOSX_DEPLOYMENT_TARGET="10.9"
-export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"
-cmake \
-    -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk" \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
+export QT=~/Qt/5.9.8/clang_64
+export MACOSX_DEPLOYMENT_TARGET="10.10"
+export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk"
+cmake ..\
+    -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk" \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.10" \
     -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
 make
 ```
