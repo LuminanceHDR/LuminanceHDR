@@ -172,10 +172,10 @@ It is also possible to build Luminance HDR using MSYS2/MinGW, see `build_files/p
 
 On macOS, all the dependencies can be obtained using MacPorts, except for LibRaw which must be compiled from source, and Qt5 which must be downloaded from the official Qt5 website.
 
-If you install Qt/5.11.0 into `~/Qt/5.11.0`, generate the project with:
+If you install Qt/5.13.0 into `~/Qt/5.13.0`, generate the project with:
 
 ```bash
-export QT=~/Qt/5.11.0/clang_64
+export QT=~/Qt/5.13.0/clang_64
 cd ~/programs/code-lhdr
 mkdir build
 cd build
@@ -186,26 +186,26 @@ make
 As AppleClang requires preprocessing to detect OpenMP, the CMake command to enable AppleClang 10+ to use the libiomp5 implementation would be:
 
 ```bash
-cmake \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
+cmake ..\
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.12" \
     -DCMAKE_PREFIX_PATH="$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')" -G "Unix Makefiles" \
     -DCMAKE_C_COMPILER="clang" \
     -DCMAKE_CXX_COMPILER="clang++" \
     -DCMAKE_BUILD_TYPE="Release" \
     -DOpenMP_C_FLAGS=-fopenmp="lomp" \
     -DOpenMP_CXX_FLAGS=-fopenmp="lomp" \
-    -DOpenMP_C_LIB_NAMES="libiomp5" \
+    -DOpenMP_C_LIB_NAMES="libomp" \
+    -DOpenMP_CXX_LIB_NAMES="libomp" \
+    -DOpenMP_libomp_LIBRARY="/opt/local/lib/libomp.dylib" \
+    -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libomp.dylib -I/opt/local/include" \
     -DOpenMP_CXX_LIB_NAMES="libiomp5" \
-    -DOpenMP_libiomp5_LIBRARY="/opt/local/lib/libiomp5.dylib" \
-    -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include" \
-    -DOpenMP_CXX_LIB_NAMES="libiomp5" \
-    -DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libiomp5.dylib -I/opt/local/include"
+    -DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libomp.dylib -I/opt/local/include"
 ```
 
 Troubleshooting:
 - If you crash on start up with a message about `libz.1.2.8.dylib`, modify the executable as follows:
     ```bash
-    install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib "Luminance HDR 2.5.2.app/Contents/MacOS/Luminance HDR 2.5.2"
+    install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib "Luminance HDR 2.6.app/Contents/MacOS/Luminance HDR 2.6"
     ```
 - If you built libboost from source, you may encounter errors from macdeployqt about missing libraries. Copy the boost libraries to `/usr/lib`:
     ```bash
@@ -226,19 +226,19 @@ Troubleshooting:
 If you wish to make a DMG:
 
 ```bash
-hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 2.5.2.app" "Luminance HDR 2.5.2.dmg"
+hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 2.6.app" "Luminance HDR 2.6.dmg"
 ```
 
-If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10.9), you can obtain legacy SDKs from https://github.com/phracker/MacOSX-SDKs/releases
+If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10.10), you can obtain legacy SDKs from https://github.com/phracker/MacOSX-SDKs/releases
 Then use the following:
 
 ```bash
-export QT=~/Qt/5.11.0/clang_64
-export MACOSX_DEPLOYMENT_TARGET="10.9"
-export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"
-cmake \
-    -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk" \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9" \
+export QT=~/Qt/5.9.8/clang_64
+export MACOSX_DEPLOYMENT_TARGET="10.10"
+export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk"
+cmake ..\
+    -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk" \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.10" \
     -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
 make
 ```
