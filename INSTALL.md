@@ -186,7 +186,7 @@ make
 As AppleClang requires preprocessing to detect OpenMP, the CMake command to enable AppleClang to use the libomp implementation would be:
 
 ```bash
-cmake ..\
+cmake .. \
     -DCMAKE_OSX_DEPLOYMENT_TARGET="10.12" \
     -DCMAKE_PREFIX_PATH="$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')" -G "Unix Makefiles" \
     -DCMAKE_C_COMPILER="clang" \
@@ -236,7 +236,7 @@ Then use the following:
 export QT=~/Qt/5.9.8/clang_64
 export MACOSX_DEPLOYMENT_TARGET="10.10"
 export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk"
-cmake ..\
+cmake .. \
     -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk" \
     -DCMAKE_OSX_DEPLOYMENT_TARGET="10.10" \
     -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
