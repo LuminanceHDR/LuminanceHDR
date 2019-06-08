@@ -931,7 +931,7 @@ void print_image_htmlcode(ostream &out, void *user_data,
         }
         if (it == hdrhtml_set->image_list.end()) {
             cerr << "Warning: image '" << parameter << "' not found\n";
-            throw;
+            throw pfs::Exception("HdrHML: image parameter not found");
         }
         try {
             print_image_htmlcode(out, hdrhtml_set, *it);
