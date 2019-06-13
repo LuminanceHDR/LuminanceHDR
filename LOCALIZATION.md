@@ -3,26 +3,31 @@
 
 # Table of Contents
 ---------
-1. [Introduction](#intro)
-2. [Operations](#operations)
+1. [Contributing Translations](#contrib)
+2. [Managing Translations](#manage)
 
 
-# Introduction <a name="intro"></a>
+# Contributing Translations <a name="contrib"></a>
 ---------------------------------------------------------------------
-Translations can be managed either using the classical Qt approach or
-the [Transifex](https://www.transifex.com/luminance-hdr/) online platform.
+Contributing translations and, doing so, helping improving Luminance HDR is very easy.
 
-The Qt approach is implemented using a CMake option (UPDATE_TRANSLATIONS). If this
-is set to true, then the translations in the i18n directory are updated (using Qt's lupdate).
+The translation process is managed through the web-based [Transifex](https://www.transifex.com/luminance-hdr/) platform.
 
-In the following section the operations using the online platform are described.
+You can spend few minutes of your time, whenever you want, just translating few strings of the UI in your native language or helping reviewing the work of other translators.
+If you are not a developer and still willing to help, please read the guide [Getting Started as a Translator|Transifex Documentation](https://docs.transifex.com/getting-started-1/translators)
+
+If instead you are a developer contributing code to the Luminance HDR project, you might be interested in the information given below.
 
 
-# Operations <a name="operations"></a>
+# Managing Translations <a name="manage"></a>
 ---------------------------------------------------------------------
-First, download the Transifex Client, available for Windows, Linux, Mac.
+Managing the translations is implemented using a CMake option (UPDATE_TRANSLATIONS).
+When changes are made to the UI, setting this option to TRUE will force *make* to update the files containing the translations in the *i18n* directory (Qt's *lupdate* will be called).
+You can then rerun CMAKE with the option set to OFF.
 
-Open a command shell and navigate (CD) into the i18n directory of Luminance HDR.
+To syncronize the local content with the Transifex online platform, you first install the Transifex Client, available for Windows, Linux, Mac.
+
+Open a command shell and navigate (CD) into the i18n directory of Luminance HDR source tree.
 
 The first time you use the client you need to initialize it with your credentials.
 Therefore type:
