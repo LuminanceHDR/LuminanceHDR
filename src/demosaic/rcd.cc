@@ -17,6 +17,7 @@
  *  along with RawTherapee.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <cmath>
+#include <memory>
 
 #include "bayerhelper.h"
 #include "librtprocess.h"
@@ -34,9 +35,16 @@ using namespace librtprocess;
 * Licensed under the GNU GPL version 3
 */
 // Tiled version by Ingo Weyrich (heckflosse67@gmx.de)
-rpError rcd_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel)
+rpError rcd_demosaic(int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, size_t chunkSize, bool measure)
 {
     BENCHFUN
+
+    std::unique_ptr<StopWatch> stop;
+
+    if (measure) {
+        std::cout << "Demosaicing " << width << "x" << height << " image using rcd with " << chunkSize << " tiles per thread" << std::endl;
+        stop.reset(new StopWatch("rcd demosaic"));
+    }
     if (!validateBayerCfa(3, cfarray)) {
         return RP_WRONG_CFA;
     }
@@ -80,7 +88,7 @@ rpError rcd_demosaic(int width, int height, const float * const *rawData, float 
 #endif
     if (!rc) {
 #ifdef _OPENMP
-        #pragma omp for schedule(dynamic) collapse(2) nowait
+        #pragma omp for schedule(dynamic, chunkSize) collapse(2) nowait
 #endif
         for(int tr = 0; tr < numTh; ++tr) {
             for(int tc = 0; tc < numTw; ++tc) {
