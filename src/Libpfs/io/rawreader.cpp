@@ -27,6 +27,8 @@
 #include <sstream>
 #include <vector>
 
+#include <rtprocess/librtprocess.h>
+
 #include <Libpfs/colorspace/copy.h>
 #include <Libpfs/colorspace/gamma.h>
 #include <Libpfs/fixedstrideiterator.h>
