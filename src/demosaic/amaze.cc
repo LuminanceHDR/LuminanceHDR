@@ -29,6 +29,7 @@
 #include <algorithm>
 #include <array>
 #include <cstring>
+#include <memory>
 
 #include "bayerhelper.h"
 #include "librtprocess.h"
@@ -40,9 +41,16 @@
 
 using namespace librtprocess;
 
-rpError amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale)
+rpError amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int winw, int winh, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2], const std::function<bool(double)> &setProgCancel, double initGain, int border, float inputScale, float outputScale, size_t chunkSize, bool measure)
 {
     BENCHFUN
+    std::unique_ptr<StopWatch> stop;
+
+    if (measure) {
+        std::cout << "Demosaicing " << winw << "x" << winh << " image using AMaZE with " << chunkSize << " Tiles per Thread" << std::endl;
+        stop.reset(new StopWatch("amaze demosaic"));
+    }
+
     if (!validateBayerCfa(3, cfarray)) {
         return RP_WRONG_CFA;
     }
@@ -190,7 +198,7 @@ rpError amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int wi
             // Main algorithm: Tile loop
             // use collapse(2) to collapse the 2 loops to one large loop, so there is better scaling
 #ifdef _OPENMP
-            #pragma omp for schedule(dynamic) collapse(2) nowait
+            #pragma omp for schedule(dynamic, chunkSize) collapse(2) nowait
 #endif
 
             for (int top = winy - 16; top < winy + height; top += ts - 32) {
