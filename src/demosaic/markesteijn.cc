@@ -20,6 +20,7 @@
 ////////////////////////////////////////////////////////////////
 
 #include <float.h>
+#include <memory>
 
 #include "librtprocess.h"
 #include "LUT.h"
@@ -125,9 +126,15 @@ void cielab (const float (*rgb)[3], float* l, float* a, float *b, const int widt
 */
 
 using namespace librtprocess;
-rpError markesteijn_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned xtrans[6][6], const float rgb_cam[3][4], const std::function<bool(double)> &setProgCancel, const int passes, const bool useCieLab)
+rpError markesteijn_demosaic (int width, int height, const float * const *rawData, float **red, float **green, float **blue, const unsigned xtrans[6][6], const float rgb_cam[3][4], const std::function<bool(double)> &setProgCancel, const int passes, const bool useCieLab, size_t chunkSize, bool measure)
 {
     BENCHFUN
+    std::unique_ptr<StopWatch> stop;
+
+    if (measure) {
+        std::cout << passes << "-pass Markesteijn Demosaicing " << width << "x" << height << " image with " << chunkSize << " tiles per thread" << std::endl;
+        stop.reset(new StopWatch("xtrans demosaic"));
+    }
     if (!validateXtransCfa(xtrans)) {
         return RP_WRONG_CFA;
     }
@@ -149,8 +156,6 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
     // sgrow/sgcol is the offset in the sensor matrix of the solitary
     // green pixels
     unsigned short sgrow = 0, sgcol = 0;
-
-    xtransborder_demosaic(width, height, 6, rawData, red, green, blue, xtrans);
 
     float xyz_cam[3][3];
     {
@@ -255,7 +260,7 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
             uint8_t (*homosummax)[ts] = (uint8_t (*)[ts]) homo[ndir - 1]; // we can reuse the homo-buffer because they are not used together
 
 #ifdef _OPENMP
-            #pragma omp for collapse(2) schedule(dynamic) nowait
+            #pragma omp for collapse(2) schedule(dynamic, chunkSize) nowait
 #endif
 
             for (int top = 3; top < height - 19; top += ts - 16)
@@ -913,6 +918,6 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
         }
         free(buffer);
     }
-
+    xtransborder_demosaic(width, height, 8, rawData, red, green, blue, xtrans);
     return rc;
 }
