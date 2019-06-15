@@ -36,6 +36,9 @@
 #include <Libpfs/io/rawreader.h>
 #include <Libpfs/utils/transform.h>
 
+
+bool callback(double a) { return false; }
+
 using namespace pfs;
 
 #ifndef NDEBUG
@@ -389,6 +392,8 @@ static void setParams(LibRaw &processor, const RAWReaderParams &params) {
         // outParams.aber[3] = params.chroma3_;
     }
 
+    outParams.no_interpolation = 0;
+
     // camera profile
     if (params.cameraProfile_.empty()) {
         outParams.camera_profile = (char *)embbededProfile;
@@ -456,13 +461,12 @@ void RAWReader::read(Frame &frame, const Params &params) {
 
     if (!image)  // ret != LIBRAW_SUCCESS ||
     {
-        PRINT_DEBUG("Memory Error in processing RAW File");
         m_processor.recycle();
         throw pfs::io::ReadException("Memory Error in processing RAW File");
     }
 
-    int W = image->width;
-    int H = image->height;
+    unsigned W = image->width;
+    unsigned H = image->height;
 
     assert(image->data_size == W * H * 3 * sizeof(uint16_t));
 
@@ -472,20 +476,103 @@ void RAWReader::read(Frame &frame, const Params &params) {
     tempFrame.createXYZChannels(Xc, Yc, Zc);
 
     const uint16_t *raw_data = reinterpret_cast<const uint16_t *>(image->data);
-    utils::transform(
-        FixedStrideIterator<const uint16_t *, 3>(raw_data),
-        FixedStrideIterator<const uint16_t *, 3>(raw_data + H * W * 3),
-        FixedStrideIterator<const uint16_t *, 3>(raw_data + 1),
-        FixedStrideIterator<const uint16_t *, 3>(raw_data + 2), Xc->begin(),
-        Yc->begin(), Zc->begin(),
-        colorspace::Gamma<pfs::colorspace::Gamma1_8>());
+
+    /* utils::transform( */
+    /*     FixedStrideIterator<const uint16_t *, 3>(raw_data), */
+    /*     FixedStrideIterator<const uint16_t *, 3>(raw_data + H * W * 3), */
+    /*     FixedStrideIterator<const uint16_t *, 3>(raw_data + 1), */
+    /*     FixedStrideIterator<const uint16_t *, 3>(raw_data + 2), Xc->begin(), */
+    /*     Yc->begin(), Zc->begin(), */
+    /*     colorspace::Gamma<pfs::colorspace::Gamma1_8>()); */
 
     PRINT_DEBUG("Data size: " << image->data_size << " "
                               << W * H * 3 * sizeof(uint16_t));
     PRINT_DEBUG("W: " << W << " H: " << H);
 
+    unsigned cf_array[2][2];
+    cf_array[0][0] = 2;
+    cf_array[0][1] = 1;
+    cf_array[1][0] = 1;
+    cf_array[1][1] = 0;
+
+    float **rawdata;
+    rawdata = (float **) malloc(H * sizeof(float *));
+    rawdata[0] = (float *) malloc(W*H * sizeof(float));
+    for(unsigned i = 1; i < H; i++) {
+        rawdata[i] = rawdata[i-1] + W;
+    }
+
+    for(unsigned i = 0; i < H; i++) {
+        unsigned k = 0;
+        for(unsigned j = 0; j < W; j++) {
+            unsigned c = cf_array[i%2][j%2];
+            unsigned pos = k + i*W*3;
+            rawdata[i][j] = raw_data[pos + c];
+            k += 3;
+        }
+    }
+
     LibRaw::dcraw_clear_mem(image);
     m_processor.recycle();
+
+    float **r;
+    float **g;
+    float **b;
+
+    r = (float **) malloc(sizeof(float *) * H);
+    r[0] = (float *)malloc(W*H * sizeof(float));
+    for(unsigned i = 1; i < H; i++) {
+        r[i] = r[i-1] + W;
+    }
+
+    g = (float **) malloc(sizeof(float *) * H);
+    g[0] = (float *)malloc(W*H * sizeof(float));
+    for(unsigned i = 1; i < H; i++) {
+        g[i] = g[i-1] + W;
+    }
+
+    b = (float **) malloc(sizeof(float *) * H);
+    b[0] = (float *)malloc(W*H * sizeof(float));
+    for(unsigned i = 1; i < H; i++) {
+        b[i] = b[i-1] + W;
+    }
+
+    try {
+        igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+    }
+    catch(...) {
+        cout << "DEMOSAICING FAILED" << endl;
+    }
+
+    for(unsigned i = 0; i < H; i++) {
+        for(unsigned j = 0; j < W; j++) {
+            unsigned pos = j + i*W;
+            (*Xc)(pos) = r[i][j];
+        }
+    }
+
+    for(unsigned i = 0; i < H; i++) {
+        for(unsigned j = 0; j < W; j++) {
+            unsigned pos = j + i*W;
+            (*Yc)(pos) = g[i][j];
+        }
+    }
+
+    for(unsigned i = 0; i < H; i++) {
+        for(unsigned j = 0; j < W; j++) {
+            unsigned pos = j + i*W;
+            (*Zc)(pos) = b[i][j];
+        }
+    }
+
+    free ( b[0] );
+    free ( b );
+    free ( g[0] );
+    free ( g );
+    free ( r[0] );
+    free ( r );
+    free ( rawdata[0] );
+    free ( rawdata );
 
     FrameReader::read(tempFrame, params);
     frame.swap(tempFrame);
