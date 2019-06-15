@@ -191,7 +191,13 @@ void xtransborder_demosaic(int winw, int winh, int border, const float * const *
     BENCHFUN
     const int height = winh, width = winw;
 
-    for (int row = 0; row < height; row++)
+    const float weight[3][3] = {
+                                {0.25f, 0.5f, 0.25f},
+                                {0.5f,  0.f,  0.5f},
+                                {0.25f, 0.5f, 0.25f}
+                               };
+
+    for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
             if (col == border && row >= border && row < height - border) {
                 col = width - border;
@@ -199,35 +205,36 @@ void xtransborder_demosaic(int winw, int winh, int border, const float * const *
 
             float sum[6] = {0.f};
 
-            for (int y = std::max(0, row - 1); y <= std::min(row + 1, height - 1); y++)
-                for (int x = std::max(0, col - 1); x <= std::min(col + 1, width - 1); x++) {
+            for (int y = std::max(0, row - 1), v = row == 0 ? 0 : -1; y <= std::min(row + 1, height - 1); y++, v++)
+                for (int x = std::max(0, col - 1), h = col == 0 ? 0 : -1; x <= std::min(col + 1, width - 1); x++, h++) {
                     int f = fc(xtrans, y, x);
-                    sum[f] += rawData[y][x];
-                    sum[f + 3]++;
+                    sum[f] += rawData[y][x] * weight[v + 1][h + 1];
+                    sum[f + 3] += weight[v + 1][h + 1];
                 }
 
             switch(fc(xtrans, row, col)) {
-            case 0:
-                red[row][col] = rawData[row][col];
-                green[row][col] = (sum[1] / sum[4]);
-                blue[row][col] = (sum[2] / sum[5]);
-                break;
-
-            case 1:
-                if(sum[3] == 0.f) { // at the 4 corner pixels it can happen, that we have only green pixels in 2x2 area
-                    red[row][col] = green[row][col] = blue[row][col] = rawData[row][col];
-                } else {
-                    red[row][col] = (sum[0] / sum[3]);
-                    green[row][col] = rawData[row][col];
+                case 0:
+                    red[row][col] = rawData[row][col];
+                    green[row][col] = (sum[1] / sum[4]);
                     blue[row][col] = (sum[2] / sum[5]);
-                }
+                    break;
 
-                break;
+                case 1:
+                    if(sum[3] == 0.f) { // at the 4 corner pixels it can happen, that we have only green pixels in 2x2 area
+                        red[row][col] = green[row][col] = blue[row][col] = rawData[row][col];
+                    } else {
+                        red[row][col] = (sum[0] / sum[3]);
+                        green[row][col] = rawData[row][col];
+                        blue[row][col] = (sum[2] / sum[5]);
+                    }
 
-            case 2:
-                red[row][col] = (sum[0] / sum[3]);
-                green[row][col] = (sum[1] / sum[4]);
-                blue[row][col] = rawData[row][col];
+                    break;
+
+                case 2:
+                    red[row][col] = (sum[0] / sum[3]);
+                    green[row][col] = (sum[1] / sum[4]);
+                    blue[row][col] = rawData[row][col];
             }
         }
+    }
 }
