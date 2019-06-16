@@ -341,8 +341,8 @@ rpError CA_correct(
 #endif
                                 for (; cc < ccmax; cc++, col++) {
                                     int c = fc(cfarray, rr, cc);
-                                    int indx1 = rr * ts + cc;
-                                    rgb[c][indx1 >> ((c & 1) ^ 1)] = rawDataOut[row][col] / inputScale;
+                                    int indx = rr * ts + cc;
+                                    rgb[c][indx >> ((c & 1) ^ 1)] = rawDataOut[row][col] / inputScale;
                                 }
                             }
 
@@ -460,14 +460,14 @@ rpError CA_correct(
                                 if (row > -1 && row < height) {
                                     int offset = (fc(cfarray, row,std::max(left + 3, 0)) & 1);
                                     int col = std::max(left + 3, 0) + offset;
-                                    int indx = rr * ts + 3 - (left < 0 ? (left+3) : 0) + offset;
+                                    int indx1 = rr * ts + 3 - (left < 0 ? (left+3) : 0) + offset;
 #ifdef __SSE2__
-                                    for(; col < std::min(cc1 + left - 3, width) - 7; col+=8, indx+=8) {
-                                        STVFU(Gtmp[(row * width + col) >> 1], LC2VFU(rgb[1][indx]));
+                                    for(; col < std::min(cc1 + left - 3, width) - 7; col+=8, indx1+=8) {
+                                        STVFU(Gtmp[(row * width + col) >> 1], LC2VFU(rgb[1][indx1]));
                                     }
 #endif
-                                    for(; col < std::min(cc1 + left - 3, width); col+=2, indx+=2) {
-                                        Gtmp[(row * width + col) >> 1] = rgb[1][indx];
+                                    for(; col < std::min(cc1 + left - 3, width); col+=2, indx1+=2) {
+                                        Gtmp[(row * width + col) >> 1] = rgb[1][indx1];
                                     }
                                 }
 
@@ -878,10 +878,10 @@ rpError CA_correct(
                                 }
 #endif
                                 for (; cc < ccmax; cc++, col++, indx++, indx1++) {
-                                    int c = fc(cfarray, rr, cc);
-                                    rgb[c][indx1 >> ((c & 1) ^ 1)] = rawDataOut[row][col] / inputScale;
+                                    int cl = fc(cfarray, rr, cc);
+                                    rgb[cl][indx1 >> ((cl & 1) ^ 1)] = rawDataOut[row][col] / inputScale;
 
-                                    if ((c & 1) == 0) {
+                                    if ((cl & 1) == 0) {
                                         rgb[1][indx1] = Gtmp[indx >> 1];
                                     }
                                 }
@@ -1154,21 +1154,21 @@ rpError CA_correct(
                                     STVFU(rgb[c][indx >> 1], RBint);
                                 }
 #endif
-                                for (int c = fc(cfarray, rr, cc), indx = rr * ts + cc; cc < cc1 - 8; cc += 2, indx += 2) {
-                                    float grbdiffold = rgb[1][indx] - rgb[c][indx >> 1];
+                                for (int c1 = fc(cfarray, rr, cc), indx = rr * ts + cc; cc < cc1 - 8; cc += 2, indx += 2) {
+                                    float grbdiffold = rgb[1][indx] - rgb[c1][indx >> 1];
 
                                     //interpolate colour difference from optical R/B locations to grid locations
-                                    float grbdiffinthfloor = intp(shifthfrac[c], grbdiff[(indx - GRBdir1) >> 1], grbdiff[indx >> 1]);
-                                    float grbdiffinthceil = intp(shifthfrac[c], grbdiff[((rr - GRBdir0) * ts + cc - GRBdir1) >> 1], grbdiff[((rr - GRBdir0) * ts + cc) >> 1]);
+                                    float grbdiffinthfloor = intp(shifthfrac[c1], grbdiff[(indx - GRBdir1) >> 1], grbdiff[indx >> 1]);
+                                    float grbdiffinthceil = intp(shifthfrac[c1], grbdiff[((rr - GRBdir0) * ts + cc - GRBdir1) >> 1], grbdiff[((rr - GRBdir0) * ts + cc) >> 1]);
                                     //grbdiffint is bilinear interpolation of G-R/G-B at grid point
-                                    float grbdiffint = intp(shiftvfrac[c], grbdiffinthceil, grbdiffinthfloor);
+                                    float grbdiffint = intp(shiftvfrac[c1], grbdiffinthceil, grbdiffinthfloor);
 
                                     //now determine R/B at grid points using interpolated colour differences and interpolated G value at grid point
                                     float RBint = rgb[1][indx] - grbdiffint;
 
-                                    if (fabsf(RBint - rgb[c][indx >> 1]) < 0.25f * (RBint + rgb[c][indx >> 1])) {
+                                    if (fabsf(RBint - rgb[c1][indx >> 1]) < 0.25f * (RBint + rgb[c1][indx >> 1])) {
                                         if (fabsf(grbdiffold) > fabsf(grbdiffint) ) {
-                                            rgb[c][indx >> 1] = RBint;
+                                            rgb[c1][indx >> 1] = RBint;
                                         }
                                     } else {
 
@@ -1183,13 +1183,13 @@ rpError CA_correct(
 
                                         //now determine R/B at grid points using interpolated colour differences and interpolated G value at grid point
                                         if (fabsf(grbdiffold) > fabsf(grbdiffint) ) {
-                                            rgb[c][indx >> 1] = rgb[1][indx] - grbdiffint;
+                                            rgb[c1][indx >> 1] = rgb[1][indx] - grbdiffint;
                                         }
                                     }
 
                                     //if colour difference interpolation overshot the correction, just desaturate
                                     if (grbdiffold * grbdiffint < 0) {
-                                        rgb[c][indx >> 1] = rgb[1][indx] - 0.5f * (grbdiffold + grbdiffint);
+                                        rgb[c1][indx >> 1] = rgb[1][indx] - 0.5f * (grbdiffold + grbdiffint);
                                     }
                                 }
                             }

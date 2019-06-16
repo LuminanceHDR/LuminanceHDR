@@ -191,14 +191,14 @@ rpError vng4_demosaic (int width, int height, const float * const *rawData, floa
 
     constexpr int prow = 7, pcol = 1;
     int32_t *code[8][2];
-    int32_t *ip = (int32_t *) calloc ((prow + 1) * (pcol + 1), 1280);
-    if(!ip) {
+    int32_t *ipp = (int32_t *) calloc ((prow + 1) * (pcol + 1), 1280);
+    if(!ipp) {
         rc = RP_MEMORY_ERROR;
     } else {
 
         for (int row = 0; row <= prow; row++)   /* Precalculate for VNG */
             for (int col = 0; col <= pcol; col++) {
-                code[row][col] = ip;
+                code[row][col] = ipp;
                 cp = terms;
                 for (int t = 0; t < 64; t++) {
                     int y1 = *cp++;
@@ -219,35 +219,35 @@ rpError vng4_demosaic (int width, int height, const float * const *rawData, floa
                         continue;
                     }
 
-                    *ip++ = (y1 * width + x1) * 4 + color;
-                    *ip++ = (y2 * width + x2) * 4 + color;
+                    *ipp++ = (y1 * width + x1) * 4 + color;
+                    *ipp++ = (y2 * width + x2) * 4 + color;
 #ifdef __SSE2__
                     // at least on machines with SSE2 feature this cast is save
-                    *reinterpret_cast<float*>(ip++) = 1 << weight;
+                    *reinterpret_cast<float*>(ipp++) = 1 << weight;
 #else
-                    *ip++ = 1 << weight;
+                    *ipp++ = 1 << weight;
 #endif
                     for (int g = 0; g < 8; g++)
                         if (grads & (1 << g)) {
-                            *ip++ = g;
+                            *ipp++ = g;
                         }
 
-                    *ip++ = -1;
+                    *ipp++ = -1;
                 }
 
-                *ip++ = INT_MAX;
+                *ipp++ = INT_MAX;
 
                 cp = chood;
                 for (int g = 0; g < 8; g++) {
                     int y = *cp++;
                     int x = *cp++;
-                    *ip++ = (y * width + x) * 4;
+                    *ipp++ = (y * width + x) * 4;
                     unsigned int color = fc(cfarray, row, col);
 
                     if (fc(cfarray, row + y, col + x) != color && fc(cfarray, row + y * 2, col + x * 2) == color) {
-                        *ip++ = (y * width + x) * 8 + color;
+                        *ipp++ = (y * width + x) * 8 + color;
                     } else {
-                        *ip++ = 0;
+                        *ipp++ = 0;
                     }
                 }
             }

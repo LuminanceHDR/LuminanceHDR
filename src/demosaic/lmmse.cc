@@ -288,8 +288,8 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
         for (int rrr = ba; rrr < rr1 - ba; rrr++) {
             for (int ccc = ba, row = rrr - ba; ccc < cc1 - ba; ccc++) {
                 int col = ccc - ba;
-                float *rix = qix[4] + rrr * cc1 + ccc;
-                rix[0] = gamtab[rawData[row][col]];
+                float *rix0 = qix[4] + rrr * cc1 + ccc;
+                rix0[0] = gamtab[rawData[row][col]];
             }
         }
 
@@ -755,8 +755,8 @@ rpError lmmse_demosaic(int width, int height, const float * const *rawData, floa
 
             for (int ii = 0; ii < 3; ii++)
                 if (ii != c) {
-                    float *rix = qix[ii] + rr * cc1 + cc;
-                    ((rgb[ii]))[row][col] = gamtab[65535.f * rix[0]];
+                    float *rix0 = qix[ii] + rr * cc1 + cc;
+                    ((rgb[ii]))[row][col] = gamtab[65535.f * rix0[0]];
                 } else {
                     ((rgb[ii]))[row][col] = CLIP(rawData[row][col]);
                 }

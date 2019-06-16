@@ -200,10 +200,10 @@ rpError ahd_demosaic(int width, int height, const float * const *rawData, float 
                             }
 
                         if (hm0 != hm1) {
-                            int dir = hm1 > hm0;
-                            red[row][col] = rgb[dir][tr][tc][0];
-                            green[row][col] = rgb[dir][tr][tc][1];
-                            blue[row][col] = rgb[dir][tr][tc][2];
+                            int ldir = hm1 > hm0;
+                            red[row][col] = rgb[ldir][tr][tc][0];
+                            green[row][col] = rgb[ldir][tr][tc][1];
+                            blue[row][col] = rgb[ldir][tr][tc][2];
                         } else {
                             red[row][col] = 0.5f * (rgb[0][tr][tc][0] + rgb[1][tr][tc][0]);
                             green[row][col] = 0.5f * (rgb[0][tr][tc][1] + rgb[1][tr][tc][1]);

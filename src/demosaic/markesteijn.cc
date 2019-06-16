@@ -234,8 +234,7 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
 #endif
     {
         int progressCounter = 0;
-        int c;
-        float color[3][6];
+        float dcolor[3][6];
 
         float *buffer = (float *) malloc ((ts * ts * (ndir * 4 + 3) + 128) * sizeof(float));
 
@@ -486,7 +485,7 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
                                 for (int i = 1, d = 0; d < 6; d++, i ^= ts ^ 1, h ^= 2) {
                                     for (int c = 0; c < 2; c++, h ^= 2) {
                                         float g = rix[0][1] + rix[0][1] - rix[i << c][1] - rix[-i << c][1];
-                                        color[h][d] = g + rix[i << c][h] + rix[-i << c][h];
+                                        dcolor[h][d] = g + rix[i << c][h] + rix[-i << c][h];
 
                                         if (d > 1)
                                             diff[d] += SQR (rix[i << c][1] - rix[-i << c][1]
@@ -496,12 +495,12 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
                                     if (d > 2 && (d & 1))    // 3, 5
                                         if (diff[d - 1] < diff[d])
                                             for(int c = 0; c < 2; c++) {
-                                                color[c * 2][d] = color[c * 2][d - 1];
+                                                dcolor[c * 2][d] = dcolor[c * 2][d - 1];
                                             }
 
                                     if ((d & 1) || d < 2) { // d: 0, 1, 3, 5
                                         for(int c = 0; c < 2; c++) {
-                                            rix[0][c * 2] = 0.5f * color[c * 2][d];
+                                            rix[0][c * 2] = 0.5f * dcolor[c * 2][d];
                                         }
 
                                         rix += ts * ts;
@@ -520,7 +519,7 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
                                 }
 
                             int coloffset = (RightShift[row % 3] == 1 ? 3 : 1);
-                            c = ((row - sgrow) % 3) ? ts : 1;
+                            int c = ((row - sgrow) % 3) ? ts : 1;
                             int h = 3 * (c ^ ts ^ 1);
 
                             if(coloffset == 3) {
@@ -585,13 +584,13 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
                                         if (hex[d] + hex[d + 1]) {
                                             float g = 3 * rix[0][1] - 2 * rix[hex[d]][1] - rix[hex[d + 1]][1];
 
-                                            for (c = 0; c < 4; c += 2) {
+                                            for (int c = 0; c < 4; c += 2) {
                                                 rix[0][c] = (g + 2 * rix[hex[d]][c] + rix[hex[d + 1]][c]) * 0.33333333f;
                                             }
                                         } else {
                                             float g = 2 * rix[0][1] - rix[hex[d]][1] - rix[hex[d + 1]][1];
 
-                                            for (c = 0; c < 4; c += 2) {
+                                            for (int c = 0; c < 4; c += 2) {
                                                 rix[0][c] = (g + rix[hex[d]][c] + rix[hex[d + 1]][c]) * 0.5f;
                                             }
                                         }
@@ -624,14 +623,14 @@ rpError markesteijn_demosaic (int width, int height, const float * const *rawDat
                                 #pragma omp simd
 #endif
                                 for (int col = 5; col < mcol - 5; col++) {
-                                    float *l = &lab[0][row - 4][col - 4];
-                                    float *a = &lab[1][row - 4][col - 4];
-                                    float *b = &lab[2][row - 4][col - 4];
+                                    float *ll = &lab[0][row - 4][col - 4];
+                                    float *la = &lab[1][row - 4][col - 4];
+                                    float *lb = &lab[2][row - 4][col - 4];
 
-                                    float g = 2 * l[0] - l[f] - l[-f];
+                                    float g = 2 * ll[0] - ll[f] - ll[-f];
                                     drv[d][row - 5][col - 5] =  SQR(g)
-                                                                + SQR((2 * a[0] - a[f] - a[-f] + g * 2.1551724f))
-                                                                + SQR((2 * b[0] - b[f] - b[-f] - g * 0.86206896f));
+                                                                + SQR((2 * la[0] - la[f] - la[-f] + g * 2.1551724f))
+                                                                + SQR((2 * lb[0] - lb[f] - lb[-f] - g * 0.86206896f));
                                 }
 
                         }

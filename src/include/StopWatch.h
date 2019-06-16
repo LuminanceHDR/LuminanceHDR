@@ -36,7 +36,7 @@ class StopWatch
 {
 public:
 
-    explicit StopWatch( const char* msg, bool microseconds = false ) : microseconds(microseconds)
+    explicit StopWatch( const char* msg, bool microSeconds = false ) : microseconds(microSeconds)
     {
         message = msg;
         start();

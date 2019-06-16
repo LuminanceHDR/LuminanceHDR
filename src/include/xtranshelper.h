@@ -79,12 +79,12 @@ inline bool validateXtransCfa(const  unsigned cfa[6][6]) {
                             // 1) number of reds == number blues
                             // 2) number of reds is either one or two
                             // 3) if number of reds is two, then right and left pixel of cross must have same color
-                            int count[3] = {};
-                            count[cfa[i - 1][j]]++;
-                            count[cfa[i + 1][j]]++;
-                            count[cfa[i][j - 1]]++;
-                            count[cfa[i][j + 1]]++;
-                            if (count[0] != count[2] || (count[0] != 1 && count[0] != 2) || (count[0] == 2 && cfa[i][j - 1] != cfa[i][j + 1])) {
+                            int lcount[3] = {};
+                            lcount[cfa[i - 1][j]]++;
+                            lcount[cfa[i + 1][j]]++;
+                            lcount[cfa[i][j - 1]]++;
+                            lcount[cfa[i][j + 1]]++;
+                            if (lcount[0] != lcount[2] || (lcount[0] != 1 && lcount[0] != 2) || (lcount[0] == 2 && cfa[i][j - 1] != cfa[i][j + 1])) {
                                 checkGreens = false;
                                 break;
                             }

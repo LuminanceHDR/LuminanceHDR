@@ -29,7 +29,7 @@
 #include "rt_math.h"
 #include "opthelper.h"
 
-#define VERBOSE true
+//#define VERBOSE
 
 using librtprocess::SQR;
 using librtprocess::max;
@@ -155,25 +155,25 @@ void boxblur2(float** src, float** dst, float** temp, int H, int W, int box )
             }
 
             for (int col = W - (W % 4); col < W; col++) {
-                int len = box + 1;
-                dst[0][col] = temp[0][col] / len;
+                int llen = box + 1;
+                dst[0][col] = temp[0][col] / llen;
 
                 for (int i = 1; i <= box; i++) {
-                    dst[0][col] += temp[i][col] / len;
+                    dst[0][col] += temp[i][col] / llen;
                 }
 
                 for (int row = 1; row <= box; row++) {
-                    dst[row][col] = (dst[(row - 1)][col] * len + temp[(row + box)][col]) / (len + 1);
-                    len ++;
+                    dst[row][col] = (dst[(row - 1)][col] * llen + temp[(row + box)][col]) / (llen + 1);
+                    llen ++;
                 }
 
                 for (int row = box + 1; row < H - box; row++) {
-                    dst[row][col] = dst[(row - 1)][col] + (temp[(row + box)][col] - temp[(row - box - 1)][col]) / len;
+                    dst[row][col] = dst[(row - 1)][col] + (temp[(row + box)][col] - temp[(row - box - 1)][col]) / llen;
                 }
 
                 for (int row = H - box; row < H; row++) {
-                    dst[row][col] = (dst[(row - 1)][col] * len - temp[(row - box - 1)][col]) / (len - 1);
-                    len --;
+                    dst[row][col] = (dst[(row - 1)][col] * llen - temp[(row - box - 1)][col]) / (llen - 1);
+                    llen --;
                 }
             }
         }
@@ -411,10 +411,11 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
     constexpr float itrans[ColorCount][ColorCount] =
     { { 1.f, 0.8660254f, -0.5f }, { 1.f, -0.8660254f, -0.5f }, { 1.f, 0.f, 1.f } };
 
-    if(VERBOSE)
+#ifdef VERBOSE
         for(int c = 0; c < 3; c++) {
             printf("chmax[%d] : %f\tclmax[%d] : %f\tratio[%d] : %f\n", c, chmax[c], c, clmax[c], c, chmax[c] / clmax[c]);
         }
+#endif
     /*What are chmax and clmax?
     clmax is the raw clip level.
     In RawTherapee it's calculated as
@@ -466,11 +467,11 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
         factor[0] = factor[1] = factor[2] = 1.f;
     }
 
-    if(VERBOSE)
+#ifdef VERBOSE
         for (int c = 0; c < ColorCount; c++) {
             printf("correction factor[%d] : %f\n", c, factor[c]);
         }
-
+#endif
     float max_f[3], thresh[3];
 
     for (int c = 0; c < ColorCount; c++) {
@@ -966,8 +967,8 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
                 for (int c = 0; c < ColorCount; c++) {
                     lab[i2][c] = 0;
 
-                    for (int j = 0; j < ColorCount; j++) {
-                        lab[i2][c] += trans[c][j] * cam[i2][j];
+                    for (int c1 = 0; c1 < ColorCount; c1++) {
+                        lab[i2][c] += trans[c][c1] * cam[i2][c1];
                     }
                 }
 
@@ -994,8 +995,8 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
             for (int c = 0; c < ColorCount; c++) {
                 cam[0][c] = 0;
 
-                for (int j = 0; j < ColorCount; j++) {
-                    cam[0][c] += itrans[c][j] * lab[0][j];
+                for (int c1 = 0; c1 < ColorCount; c1++) {
+                    cam[0][c] += itrans[c][c1] * lab[0][c1];
                 }
             }
 
@@ -1048,12 +1049,12 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
             }
 
             for (int dir = 0; dir < 2; dir++) {
-                float Yhi = 1.f / ( hilite_dir[dir * 4 + 0][i1][j1] + hilite_dir[dir * 4 + 1][i1][j1] + hilite_dir[dir * 4 + 2][i1][j1]);
+                float Yhil = 1.f / ( hilite_dir[dir * 4 + 0][i1][j1] + hilite_dir[dir * 4 + 1][i1][j1] + hilite_dir[dir * 4 + 2][i1][j1]);
 
-                if (Yhi < 2.f) {
-                    float dirwt = 1.f / (1.f + 65535.f * (SQR(rgb_blend[0] - hilite_dir[dir * 4 + 0][i1][j1] * Yhi) +
-                                                          SQR(rgb_blend[1] - hilite_dir[dir * 4 + 1][i1][j1] * Yhi) +
-                                                          SQR(rgb_blend[2] - hilite_dir[dir * 4 + 2][i1][j1] * Yhi)));
+                if (Yhil < 2.f) {
+                    float dirwt = 1.f / (1.f + 65535.f * (SQR(rgb_blend[0] - hilite_dir[dir * 4 + 0][i1][j1] * Yhil) +
+                                                          SQR(rgb_blend[1] - hilite_dir[dir * 4 + 1][i1][j1] * Yhil) +
+                                                          SQR(rgb_blend[2] - hilite_dir[dir * 4 + 2][i1][j1] * Yhil)));
                     totwt += dirwt;
                     dirwt /= (hilite_dir[dir * 4 + 3][i1][j1] + epsilon);
                     clipfix[0] += dirwt * hilite_dir[dir * 4 + 0][i1][j1];
@@ -1087,12 +1088,12 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
             //now correct clipped channels
             if (pixel[0] > max_f[0] && pixel[1] > max_f[1] && pixel[2] > max_f[2]) {
                 //all channels clipped
-                float Y = (0.299 * clipfix[0] + 0.587 * clipfix[1] + 0.114 * clipfix[2]);
+                float Yl = (0.299 * clipfix[0] + 0.587 * clipfix[1] + 0.114 * clipfix[2]);
 
-                float factor = whitept / Y;
-                red[i][j]   = clipfix[0] * factor;
-                green[i][j] = clipfix[1] * factor;
-                blue[i][j]  = clipfix[2] * factor;
+                float mult = whitept / Yl;
+                red[i][j]   = clipfix[0] * mult;
+                green[i][j] = clipfix[1] * mult;
+                blue[i][j]  = clipfix[2] * mult;
             } else {//some channels clipped
                 float notclipped[3] = {pixel[0] <= max_f[0] ? 1.f : 0.f, pixel[1] <= max_f[1] ? 1.f : 0.f, pixel[2] <= max_f[2] ? 1.f : 0.f};
 
@@ -1115,11 +1116,11 @@ rpError HLRecovery_inpaint (const int width, const int height, float** red, floa
             Y = (0.299 * red[i][j] + 0.587 * green[i][j] + 0.114 * blue[i][j]);
 
             if (Y > whitept) {
-                float factor = whitept / Y;
+                float mult = whitept / Y;
 
-                red[i][j]   *= factor;
-                green[i][j] *= factor;
-                blue[i][j]  *= factor;
+                red[i][j]   *= mult;
+                green[i][j] *= mult;
+                blue[i][j]  *= mult;
             }
         }
     }
