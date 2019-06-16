@@ -170,7 +170,9 @@ rpError CA_correct(
             return RP_MEMORY_ERROR;
         }
         // copy raw values before ca correction
+#ifdef _OPENMP
         #pragma omp parallel for
+#endif
         for (int i = cb; i < H - cb; ++i) {
             for (int j = cb + (fc(cfarray, i + winy, winx) & 1); j < W - cb; j += 2) {
                 (*oldraw)[i - cb][(j - cb) / 2] = rawDataIn[i + winy][j + winx];
@@ -180,7 +182,9 @@ rpError CA_correct(
 
     if (rawDataOut && rawDataOut != rawDataIn) {
         // copy raw values before ca correction
+#ifdef _OPENMP
         #pragma omp parallel for
+#endif
         for (int i = 0; i < H; ++i) {
             for (int j = 0; j < W; ++j) {
                 rawDataOut[i + winy][j + winx] = rawDataIn[i + winy][j + winx];
@@ -237,7 +241,9 @@ rpError CA_correct(
         constexpr float eps = 1e-5f, eps2 = 1e-10f; //tolerance to avoid dividing by zero
 
 
+#ifdef _OPENMP
         #pragma omp parallel
+#endif
         {
             int progresscounter = 0;
 
@@ -255,13 +261,17 @@ rpError CA_correct(
             constexpr int buffersizePassTwo = ts * ts + 4 * ts * tsh + 4 * 16;
             std::unique_ptr<float> bufferThr(new (std::nothrow) float[(autoCA && !fitParamsSet) ? buffersize : buffersizePassTwo]);
             float *data = bufferThr.get();
+#ifdef _OPENMP
             #pragma omp critical
+#endif
             {
                 if (!data) {
                     rc = RP_MEMORY_ERROR;
                 }
             }
+#ifdef _OPENMP
             #pragma omp barrier
+#endif
             if (!rc) {
                 // shift the beginning of all arrays but the first by 64 bytes to avoid cache miss conflicts on CPUs which have <= 4-way associative L1-Cache
 
@@ -294,7 +304,9 @@ rpError CA_correct(
                     //per thread data for evaluation of block CA shift variance
                     float   blockavethr[2][2] = {{0, 0}, {0, 0}}, blocksqavethr[2][2] = {{0, 0}, {0, 0}}, blockdenomthr[2][2] = {{0, 0}, {0, 0}};
 
+#ifdef _OPENMP
                     #pragma omp for collapse(2) schedule(dynamic, chunkSize) nowait
+#endif
                     for (int top = -border ; top < height; top += ts - border2)
                         for (int left = -border; left < width - (W & 1); left += ts - border2) {
                             memset(data, 0, buffersize * sizeof(float));
@@ -665,7 +677,9 @@ rpError CA_correct(
                             progresscounter++;
 
                             if(progresscounter % 8 == 0)
+#ifdef _OPENMP
                                 #pragma omp critical (cadetectpass1)
+#endif
                             {
                                 progress += (double)(8.0 * (ts - border2) * (ts - border2)) / (2 * height * width);
 
@@ -678,7 +692,9 @@ rpError CA_correct(
                         }
 
                     //end of diagnostic pass
+#ifdef _OPENMP
                     #pragma omp critical (cadetectpass2)
+#endif
                     {
                         for (int dir = 0; dir < 2; dir++)
                             for (int c = 0; c < 2; c++) {
@@ -687,9 +703,11 @@ rpError CA_correct(
                                 blockave[dir][c]   += blockavethr[dir][c];
                             }
                     }
+#ifdef _OPENMP
                     #pragma omp barrier
 
                     #pragma omp single
+#endif
                     {
                         for (int dir = 0; dir < 2; dir++)
                             for (int c = 0; c < 2; c++) {
@@ -826,8 +844,9 @@ rpError CA_correct(
                     float *grbdiff = data + 2 * ts * ts + 48; // there is no overlap in buffer usage => share
                     //green interpolated to optical sample points for R/B
                     float *gshift  = data + 2 * ts * ts + ts * tsh + 64; // there is no overlap in buffer usage => share
+#ifdef _OPENMP
                     #pragma omp for schedule(dynamic, chunkSize) collapse(2) nowait
-
+#endif
                     for (int top = winy-border; top < winy+winh; top += ts - border2)
                       for (int left = winx-border; left < winx+winw; left += ts - border2) {
                             memset(data, 0, buffersizePassTwo * sizeof(float));
@@ -1217,7 +1236,9 @@ rpError CA_correct(
                             progresscounter++;
 
                             if(progresscounter % 8 == 0)
+#ifdef _OPENMP
                                 #pragma omp critical (cacorrect)
+#endif
                             {
                                 progress += (double)(8.0 * (ts - border2) * (ts - border2)) / (2 * height * width);
 
@@ -1229,9 +1250,11 @@ rpError CA_correct(
                             }
                         }
 
+#ifdef _OPENMP
                     #pragma omp barrier
                     // copy temporary image matrix back to image matrix
                     #pragma omp for
+#endif
 
                     for(int row = cb; row < winh - cb; row++) {
                         int col = cb + (fc(cfarray, row + winy, winx) & 1);
@@ -1255,14 +1278,18 @@ rpError CA_correct(
             // of red and blue channel and apply a gaussian blur to them.
             // Then we apply the resulting factors per pixel on the result of raw ca correction
 
+#ifdef _OPENMP
             #pragma omp parallel
+#endif
             {
 #ifdef __SSE2__
                 const vfloat onev = F2V(1.f);
                 const vfloat twov = F2V(2.f);
                 const vfloat zd5v = F2V(0.5f);
 #endif
+#ifdef _OPENMP
                 #pragma omp for
+#endif
                 for (int i = winy; i < winh - 2 * cb; ++i) {
                     const int firstCol = winx + (fc(cfarray, i, winx) & 1);
                     const int colour = fc(cfarray, i, firstCol);
@@ -1283,7 +1310,9 @@ rpError CA_correct(
                     }
                 }
 
+#ifdef _OPENMP
                 #pragma omp single
+#endif
                 {
                     if (H % 2) {
                         // odd height => factors are not set in last row => use values of preceding row
@@ -1311,7 +1340,9 @@ rpError CA_correct(
                 gaussianBlur(*blueFactor, *blueFactor, (W + 1 - 2 * cb) / 2, (H + 1 - 2 * cb) / 2, 30.0);
 
                 // apply correction factors to avoid (reduce) colour shift
+#ifdef _OPENMP
                 #pragma omp for
+#endif
                 for (int i = winy; i < winh - 2 * cb; ++i) {
                     const int firstCol = winx + (fc(cfarray, i, winx) & 1);
                     const int colour = fc(cfarray, i, firstCol);
