@@ -35,17 +35,19 @@
 #include <Libpfs/frame.h>
 #include <Libpfs/io/rawreader.h>
 #include <Libpfs/utils/transform.h>
+#include "sleef.c"
+#include "opthelper.h"
 
 
 bool callback(double a) { return false; }
 
 using namespace pfs;
 
-#ifndef NDEBUG
+//#ifndef NDEBUG
 #define PRINT_DEBUG(str) std::cerr << "RAWReader: " << str << std::endl
-#else
-#define PRINT_DEBUG(str)
-#endif
+//#else
+//#define PRINT_DEBUG(str)
+//#endif
 
 namespace pfs {
 namespace io {
@@ -392,7 +394,7 @@ static void setParams(LibRaw &processor, const RAWReaderParams &params) {
         // outParams.aber[3] = params.chroma3_;
     }
 
-    outParams.no_interpolation = 0;
+    outParams.no_interpolation = 1;
 
     // camera profile
     if (params.cameraProfile_.empty()) {
@@ -441,21 +443,36 @@ void RAWReader::read(Frame &frame, const Params &params) {
         throw pfs::io::ReadException("Error Unpacking RAW File");
     }
 
-#ifndef NDEBUG
     PRINT_DEBUG("Width: " << S.width << " Height: " << S.height);
     PRINT_DEBUG("iWidth: " << S.iwidth << " iHeight: " << S.iheight);
     PRINT_DEBUG("Make: " << P1.make);
     PRINT_DEBUG("Model: " << P1.model);
+    PRINT_DEBUG("Software: " << P1.software);
+    PRINT_DEBUG("Raw Count: " << P1.raw_count);
+    PRINT_DEBUG("Is Foveon: " << P1.is_foveon);
+    PRINT_DEBUG("DNG Version: " << P1.dng_version);
+    PRINT_DEBUG("Colors: " << P1.colors);
+    PRINT_DEBUG("Filters: " << P1.filters);
+    PRINT_DEBUG("Color Desc: " << P1.cdesc);
+    PRINT_DEBUG("Xtrans: " << P1.xtrans);
+    PRINT_DEBUG("Xtrans_abs: " << P1.xtrans_abs);
     PRINT_DEBUG("ISO: " << P2.iso_speed);
     PRINT_DEBUG("Shutter: " << P2.shutter);
     PRINT_DEBUG("Aperture: " << P2.aperture);
     PRINT_DEBUG("Focal Length: " << P2.focal_len);
-#endif
+
+    libraw_decoder_info_t *dec_info = (libraw_decoder_info_t *) malloc(sizeof(libraw_decoder_info_t *));
+    m_processor.get_decoder_info(dec_info);
+    cout << "Decoder name: " << dec_info->decoder_name << endl;
+    free (dec_info);
 
     if (m_processor.dcraw_process() != LIBRAW_SUCCESS) {
         m_processor.recycle();
         throw pfs::io::ReadException("Error Processing RAW File");
     }
+
+    bool isFoveon = P1.is_foveon;
+    unsigned filters = P1.filters;
 
     libraw_processed_image_t *image = m_processor.dcraw_make_mem_image();
 
@@ -490,10 +507,28 @@ void RAWReader::read(Frame &frame, const Params &params) {
     PRINT_DEBUG("W: " << W << " H: " << H);
 
     unsigned cf_array[2][2];
-    cf_array[0][0] = 2;
-    cf_array[0][1] = 1;
-    cf_array[1][0] = 1;
-    cf_array[1][1] = 0;
+    for(unsigned i = 0; i < 2; i++) {
+        for(unsigned j = 0; j < 2; j++) {
+            cf_array[i][j] = m_processor.COLOR(i, j);
+        }
+    }
+
+    //unsigned x_trans[6][6];
+    /*
+    for (int i = 0; i < 6; ++i) {
+        for (int j = 0; j < 6; ++j) {
+            x_trans[i][j] = m_processor.COLOR(i, j);
+        }
+    }
+    */
+    unsigned x_trans[6][6] = {
+                { 1, 2, 1, 1, 0, 1},
+                { 0, 1, 0, 2, 1, 2},
+                { 1, 2, 1, 1, 0, 1},
+                { 1, 0, 1, 1, 2, 1},
+                { 2, 1, 2, 0, 1, 0},
+                { 1, 0, 1, 1, 2, 1}
+            };
 
     float **rawdata;
     rawdata = (float **) malloc(H * sizeof(float *));
@@ -502,13 +537,35 @@ void RAWReader::read(Frame &frame, const Params &params) {
         rawdata[i] = rawdata[i-1] + W;
     }
 
-    for(unsigned i = 0; i < H; i++) {
-        unsigned k = 0;
-        for(unsigned j = 0; j < W; j++) {
-            unsigned c = cf_array[i%2][j%2];
-            unsigned pos = k + i*W*3;
-            rawdata[i][j] = raw_data[pos + c];
-            k += 3;
+    if ((!isFoveon) && (filters != 9)) {
+    #ifdef _OPENMP
+        #pragma omp parallel for
+    #endif
+        for(unsigned i = 0; i < H; i++) {
+            unsigned k = 0;
+            for(unsigned j = 0; j < W; j++) {
+                unsigned c = cf_array[i%2][j%2];
+                unsigned pos = k + i*W*3;
+                rawdata[i][j] = raw_data[pos + c] / 65535.f;
+                k += 3;
+            }
+        }
+    }
+    else {
+        unsigned p = 0;
+        unsigned q = 0;
+        for(unsigned i = 0; i < H; i++) {
+            unsigned k = 0;
+            if (q == 6) q = 0;
+            for(unsigned j = 0; j < W; j++) {
+                if (p == 6) p = 0;
+                unsigned c = x_trans[p][q];
+                unsigned pos = k + i*W*3;
+                rawdata[i][j] = raw_data[pos + c] / 65535.f;
+                k += 3;
+                p++;
+            }
+            q++;
         }
     }
 
@@ -538,30 +595,37 @@ void RAWReader::read(Frame &frame, const Params &params) {
     }
 
     try {
-        igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+        //igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+        //hphd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+        //dcb_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 3, true);
+        if ( (!isFoveon) && (filters != 9) ) {
+            amaze_demosaic(W, H, 0, 0, W, H, rawdata, r, g, b, cf_array, callback, 1.0, 0, 1.0, 1.0, 4);
+        }
+        else {
+            //xtransfast_demosaic(W, H, rawdata, r, g, b, x_trans, callback);
+            markesteijn_demosaic(W, H, rawdata, r, g, b,x_trans, C.rgb_cam, callback, 1, false);
+        }
     }
     catch(...) {
         cout << "DEMOSAICING FAILED" << endl;
     }
 
-    for(unsigned i = 0; i < H; i++) {
-        for(unsigned j = 0; j < W; j++) {
-            unsigned pos = j + i*W;
-            (*Xc)(pos) = r[i][j];
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (unsigned i = 0; i < H; ++i) {
+        unsigned j = 0;
+#ifdef __SSE2__
+        for (; j < W - 3; j += 4) {
+            STVFU((*Xc)(j, i), LVFU(r[i][j]));
+            STVFU((*Yc)(j, i), LVFU(g[i][j]));
+            STVFU((*Zc)(j, i), LVFU(b[i][j]));
         }
-    }
-
-    for(unsigned i = 0; i < H; i++) {
-        for(unsigned j = 0; j < W; j++) {
-            unsigned pos = j + i*W;
-            (*Yc)(pos) = g[i][j];
-        }
-    }
-
-    for(unsigned i = 0; i < H; i++) {
-        for(unsigned j = 0; j < W; j++) {
-            unsigned pos = j + i*W;
-            (*Zc)(pos) = b[i][j];
+#endif
+        for (; j < W; ++j) {
+            (*Xc)(j, i) = r[i][j];
+            (*Yc)(j, i) = g[i][j];
+            (*Zc)(j, i) = b[i][j];
         }
     }
 
