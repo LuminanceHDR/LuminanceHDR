@@ -40,7 +40,7 @@ rpError vng4_demosaic (int width, int height, const float * const *rawData, floa
 
     rpError rc = RP_NO_ERROR;
 
-    const signed short int *cp, terms[] = {
+    const signed short int terms[] = {
         -2, -2, +0, -1, 0, 0x01, -2, -2, +0, +0, 1, 0x01, -2, -1, -1, +0, 0, 0x01,
         -2, -1, +0, -1, 0, 0x02, -2, -1, +0, +0, 0, 0x03, -2, -1, +0, +1, 1, 0x01,
         -2, +0, +0, -1, 0, 0x06, -2, +0, +0, +0, 1, 0x02, -2, +0, +0, +1, 0, 0x03,
@@ -199,7 +199,7 @@ rpError vng4_demosaic (int width, int height, const float * const *rawData, floa
         for (int row = 0; row <= prow; row++)   /* Precalculate for VNG */
             for (int col = 0; col <= pcol; col++) {
                 code[row][col] = ipp;
-                cp = terms;
+                const signed short int* cp = terms;
                 for (int t = 0; t < 64; t++) {
                     int y1 = *cp++;
                     int x1 = *cp++;

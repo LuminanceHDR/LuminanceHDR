@@ -119,15 +119,14 @@ rpError igv_demosaic(int winw, int winh, const float * const *rawData, float **r
         const vfloat d725v = F2V(0.725f);
         const vfloat d1375v = F2V(0.1375f);
 
-        float *dest1, *dest2;
         float ng, eg, wg, sg, nv, ev, wv, sv, nwg, neg, swg, seg, nwv, nev, swv, sev;
 #ifdef _OPENMP
         #pragma omp for
 #endif
 
         for (int row = 0; row < height - 0; row++) {
-            dest1 = rgb[fc(cfarray, row, 0) & 1];
-            dest2 = rgb[fc(cfarray, row, 1) & 1];
+            float* dest1 = rgb[fc(cfarray, row, 0) & 1];
+            float* dest2 = rgb[fc(cfarray, row, 1) & 1];
             int col, indx;
 
             for (col = 0, indx = row * width + col; col < width - 7; col += 8, indx += 8) {
@@ -368,7 +367,6 @@ rpError igv_demosaic(int winw, int winh, const float * const *rawData, float **r
         {
             setProgCancel(0.91);
         }
-        float *src1, *src2, *redsrc0, *redsrc1, *bluesrc0, *bluesrc1;
 #ifdef _OPENMP
         #pragma omp for
 #endif
@@ -376,12 +374,12 @@ rpError igv_demosaic(int winw, int winh, const float * const *rawData, float **r
         for(int row = 7; row < height - 7; row++) {
             int col, indx, fc0;
             fc0 = fc(cfarray, row, 7) & 1;
-            src1 = rgb[fc0];
-            src2 = rgb[fc0 ^ 1];
-            redsrc0 = chr[fc0 << 1];
-            redsrc1 = chr[(fc0 ^ 1) << 1];
-            bluesrc0 = chr[(fc0 << 1) + 1];
-            bluesrc1 = chr[((fc0 ^ 1) << 1) + 1];
+            float* src1 = rgb[fc0];
+            float* src2 = rgb[fc0 ^ 1];
+            float* redsrc0 = chr[fc0 << 1];
+            float* redsrc1 = chr[(fc0 ^ 1) << 1];
+            float* bluesrc0 = chr[(fc0 << 1) + 1];
+            float* bluesrc1 = chr[((fc0 ^ 1) << 1) + 1];
 
             for(col = 7, indx = row * width + col; col < width - 14; col += 8, indx += 8) {
                 temp1v = LVFU(src1[indx >> 1]);

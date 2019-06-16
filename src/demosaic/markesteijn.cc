@@ -47,9 +47,9 @@ void cielab (const float (*rgb)[3], float* l, float* a, float *b, const int widt
     constexpr float eps = 216.0 / 24389.0;
     constexpr float kappa = 24389.0 / 27.0;
     static LUTf cbrt(0x14000);
-    static bool cbrtinit = false;
 
     if (!rgb) {
+        static bool cbrtinit = false;
         if(!cbrtinit) {
             for (int i = 0; i < 0x14000; i++) {
                 double r = i / 65535.0;
