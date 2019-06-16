@@ -145,55 +145,55 @@ rpError amaze_demosaic(int raw_width, int raw_height, int winx, int winy, int wi
 #endif
         if (!rc) {
             // aligned to 64 byte boundary
-            char *data = (char*)( ( uintptr_t(buffer) + uintptr_t(63)) / 64 * 64);
+            float *data = (float*)((uintptr_t(buffer) + uintptr_t(63)) / 64 * 64);
 
             // green values
-            float *rgbgreen         = (float (*))         data;
+            float *rgbgreen         = data;
             // sum of square of horizontal gradient and square of vertical gradient
-            float *delhvsqsum       = (float (*))         ((char*)rgbgreen + sizeof(float) * ts * ts + cldf * 64);       // 1
+            float *delhvsqsum       = rgbgreen + ts * ts + cldf * 16;
             // gradient based directional weights for interpolation
-            float *dirwts0          = (float (*))         ((char*)delhvsqsum + sizeof(float) * ts * ts + cldf * 64);     // 1
-            float *dirwts1          = (float (*))         ((char*)dirwts0 + sizeof(float) * ts * ts + cldf * 64);        // 1
+            float *dirwts0          = delhvsqsum + ts * ts + cldf * 16;
+            float *dirwts1          = dirwts0 + ts * ts + cldf * 16;
             // vertically interpolated colour differences G-R, G-B
-            float *vcd              = (float (*))         ((char*)dirwts1 + sizeof(float) * ts * ts + cldf * 64);        // 1
+            float *vcd              = dirwts1 + ts * ts + cldf * 16;
             // horizontally interpolated colour differences
-            float *hcd              = (float (*))         ((char*)vcd + sizeof(float) * ts * ts + cldf * 64);            // 1
+            float *hcd              = vcd + ts * ts + cldf * 16;
             // alternative vertical interpolation
-            float *vcdalt           = (float (*))         ((char*)hcd + sizeof(float) * ts * ts + cldf * 64);            // 1
+            float *vcdalt           = hcd + ts * ts + cldf * 16;
             // alternative horizontal interpolation
-            float *hcdalt           = (float (*))         ((char*)vcdalt + sizeof(float) * ts * ts + cldf * 64);         // 1
+            float *hcdalt           = vcdalt + ts * ts + cldf * 16;
             // square of average colour difference
-            float *cddiffsq         = (float (*))         ((char*)hcdalt + sizeof(float) * ts * ts + cldf * 64);         // 1
+            float *cddiffsq         = hcdalt + ts * ts + cldf * 16;
             // weight to give horizontal vs vertical interpolation
-            float *hvwt             = (float (*))         ((char*)cddiffsq + sizeof(float) * ts * ts + 2 * cldf * 64);   // 1
+            float *hvwt             = cddiffsq + ts * ts + 2 * cldf * 16;
             // final interpolated colour difference
-            float (*Dgrb)[ts * tsh] = (float (*)[ts * tsh])vcdalt; // there is no overlap in buffer usage => share
+            float (*Dgrb)[ts * tsh] = (float (*)[ts * tsh]) vcdalt; // there is no overlap in buffer usage => share
             // gradient in plus (NE/SW) direction
-            float *delp             = (float (*))cddiffsq; // there is no overlap in buffer usage => share
+            float *delp             = cddiffsq; // there is no overlap in buffer usage => share
             // gradient in minus (NW/SE) direction
-            float *delm             = (float (*))         ((char*)delp + sizeof(float) * ts * tsh + cldf * 64);
+            float *delm             = delp + ts * tsh + cldf * 16;
             // diagonal interpolation of R+B
-            float *rbint            = (float (*))delm; // there is no overlap in buffer usage => share
-            // horizontal and vertical curvature of interpolated G (used to refine interpolation in Nyquist texture regions)
-            s_hv  *Dgrb2            = (s_hv  (*))         ((char*)hvwt + sizeof(float) * ts * tsh + cldf * 64);          // 1
+            float *rbint            = delm; // there is no overlap in buffer usage => share
             // difference between up/down interpolations of G
-            float *dgintv           = (float (*))Dgrb2;   // there is no overlap in buffer usage => share
+            float *dgintv           = hvwt + ts * tsh + cldf * 16;
             // difference between left/right interpolations of G
-            float *dginth           = (float (*))         ((char*)dgintv + sizeof(float) * ts * ts + cldf * 64);         // 1
+            float *dginth           = dgintv + ts * ts + cldf * 16;
+            // horizontal and vertical curvature of interpolated G (used to refine interpolation in Nyquist texture regions)
+            s_hv  *Dgrb2            = (s_hv  (*)) dgintv; // there is no overlap in buffer usage => share
             // square of diagonal colour differences
-            float *Dgrbsq1m         = (float (*))         ((char*)dginth + sizeof(float) * ts * ts + cldf * 64);         // 1
-            float *Dgrbsq1p         = (float (*))         ((char*)Dgrbsq1m + sizeof(float) * ts * tsh + cldf * 64);      // 1
+            float *Dgrbsq1m         = dginth + ts * ts + cldf * 16;
+            float *Dgrbsq1p         = Dgrbsq1m + ts * tsh + cldf * 16;
             // tile raw data
-            float *cfa              = (float (*))         ((char*)Dgrbsq1p + sizeof(float) * ts * tsh + cldf * 64);      // 1
+            float *cfa              = Dgrbsq1p + ts * tsh + cldf * 16;
             // relative weight for combining plus and minus diagonal interpolations
-            float *pmwt             = (float (*))delhvsqsum;  // there is no overlap in buffer usage => share
+            float *pmwt             = delhvsqsum;  // there is no overlap in buffer usage => share
             // interpolated colour difference R-B in minus and plus direction
-            float *rbm              = (float (*))vcd;  // there is no overlap in buffer usage => share
-            float *rbp              = (float (*))         ((char*)rbm + sizeof(float) * ts * tsh + cldf * 64);
+            float *rbm              = vcd;  // there is no overlap in buffer usage => share
+            float *rbp              = rbm + ts * tsh + cldf * 16;
             // nyquist texture flags 1=nyquist, 0=not nyquist
-            unsigned char *nyquist  = (unsigned char (*)) ((char*)cfa + sizeof(float) * ts * ts + cldf * 64);            // 1
-            unsigned char *nyquist2 = (unsigned char (*))cddiffsq;
-            float *nyqutest = (float(*)) ((char*)nyquist + sizeof(unsigned char) * ts * tsh + cldf * 64);                // 1
+            unsigned char *nyquist  = (unsigned char (*)) (cfa + ts * ts + cldf * 16);            // 1
+            unsigned char *nyquist2 = (unsigned char (*)) cddiffsq;
+            float *nyqutest = (float(*)) (nyquist + sizeof(unsigned char) * ts * tsh + cldf * 64);                // 1
 
             // Main algorithm: Tile loop
             // use collapse(2) to collapse the 2 loops to one large loop, so there is better scaling
