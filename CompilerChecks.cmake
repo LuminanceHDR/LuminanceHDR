@@ -1,28 +1,13 @@
 include(AddCXXCompilerFlag)
 include(CheckCXXCompilerFlagSSP)
 
-if (UNIX)
-    ##################### CXX ########################
-
+if (UNIX OR WIN32)
     set(CMAKE_CXX_STANDARD 11)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS OFF)
 
-    #
-    # Check for -Werror turned on if possible
-    #
-    # This will prevent that compiler flags are detected incorrectly.
-    #
-    check_cxx_compiler_flag("-Werror" REQUIRED_FLAGS_WERROR)
-    if (REQUIRED_FLAGS_WERROR)
-        set(CMAKE_REQUIRED_FLAGS "-Werror")
-
-        if (PICKY_DEVELOPER)
-            list(APPEND SUPPORTED_CXX_COMPILER_FLAGS "-Werror")
-        endif()
-    endif()
-
     add_cxx_compiler_flag("-Wall" SUPPORTED_CXX_COMPILER_FLAGS)
+    add_cxx_compiler_flag("-Wextra" SUPPORTED_CXX_COMPILER_FLAGS)
     add_cxx_compiler_flag("-Wshadow" SUPPORTED_CXX_COMPILER_FLAGS)
     add_cxx_compiler_flag("-Wwrite-strings" SUPPORTED_CXX_COMPILER_FLAGS)
     add_cxx_compiler_flag("-Werror=write-strings" SUPPORTED_CXX_COMPILER_FLAGS)
@@ -39,6 +24,30 @@ if (UNIX)
     add_cxx_compiler_flag("-Wmissing-field-initializers" SUPPORTED_CXX_COMPILER_FLAGS)
     add_cxx_compiler_flag("-Wunused-label" SUPPORTED_CXX_COMPILER_FLAGS)
     add_cxx_compiler_flag("-Werror=unused-label" SUPPORTED_CXX_COMPILER_FLAGS)
+    if(OPTION_OMP)
+        add_cxx_compiler_flag("-Werror=unknown-pragmas" SUPPORTED_CXX_COMPILER_FLAGS)
+    endif()
+
+endif()
+
+if (UNIX)
+    ##################### CXX ########################
+
+
+    #
+    # Check for -Werror turned on if possible
+    #
+    # This will prevent that compiler flags are detected incorrectly.
+    #
+    check_cxx_compiler_flag("-Werror" REQUIRED_FLAGS_WERROR)
+    if (REQUIRED_FLAGS_WERROR)
+        set(CMAKE_REQUIRED_FLAGS "-Werror")
+
+        if (PICKY_DEVELOPER)
+            list(APPEND SUPPORTED_CXX_COMPILER_FLAGS "-Werror")
+        endif()
+    endif()
+
 
     check_cxx_compiler_flag("-Wformat" REQUIRED_FLAGS_WFORMAT)
     if (REQUIRED_FLAGS_WFORMAT)
