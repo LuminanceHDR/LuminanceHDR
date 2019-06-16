@@ -21,7 +21,7 @@ librtprocess currently is maintained by developers of the following projects:
 
 ... the latter is where currently all the code comes from ;-)
 
-This is version 0.10.0, which furnishes the following routines:
+This is version 0.11.0, which furnishes the following routines:
 
 * ahd_demosaic
 * amaze_demosaic
