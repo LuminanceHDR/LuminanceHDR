@@ -466,13 +466,13 @@ void RAWReader::read(Frame &frame, const Params &params) {
     cout << "Decoder name: " << dec_info->decoder_name << endl;
     free (dec_info);
 
+    bool isFoveon = P1.is_foveon;
+    unsigned filters = P1.filters;
+
     if (m_processor.dcraw_process() != LIBRAW_SUCCESS) {
         m_processor.recycle();
         throw pfs::io::ReadException("Error Processing RAW File");
     }
-
-    bool isFoveon = P1.is_foveon;
-    unsigned filters = P1.filters;
 
     libraw_processed_image_t *image = m_processor.dcraw_make_mem_image();
 
@@ -494,7 +494,25 @@ void RAWReader::read(Frame &frame, const Params &params) {
 
     const uint16_t *raw_data = reinterpret_cast<const uint16_t *>(image->data);
 
-    /* utils::transform( */
+    if (isFoveon) {
+
+        utils::transform(
+            FixedStrideIterator<const uint16_t *, 3>(raw_data),
+            FixedStrideIterator<const uint16_t *, 3>(raw_data + H * W * 3),
+            FixedStrideIterator<const uint16_t *, 3>(raw_data + 1),
+            FixedStrideIterator<const uint16_t *, 3>(raw_data + 2), Xc->begin(),
+            Yc->begin(), Zc->begin(),
+            colorspace::Gamma<pfs::colorspace::Gamma1_0>());
+
+        LibRaw::dcraw_clear_mem(image);
+        m_processor.recycle();
+
+        FrameReader::read(tempFrame, params);
+        frame.swap(tempFrame);
+        return;
+    }
+
+/* utils::transform( */
     /*     FixedStrideIterator<const uint16_t *, 3>(raw_data), */
     /*     FixedStrideIterator<const uint16_t *, 3>(raw_data + H * W * 3), */
     /*     FixedStrideIterator<const uint16_t *, 3>(raw_data + 1), */
@@ -537,7 +555,7 @@ void RAWReader::read(Frame &frame, const Params &params) {
         rawdata[i] = rawdata[i-1] + W;
     }
 
-    if ((!isFoveon) && (filters != 9)) {
+    if (filters != 9) {
     #ifdef _OPENMP
         #pragma omp parallel for
     #endif
@@ -598,12 +616,12 @@ void RAWReader::read(Frame &frame, const Params &params) {
         //igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
         //hphd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
         //dcb_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 3, true);
-        if ( (!isFoveon) && (filters != 9) ) {
+        if ( filters != 9 ) {
             amaze_demosaic(W, H, 0, 0, W, H, rawdata, r, g, b, cf_array, callback, 1.0, 0, 1.0, 1.0, 4);
         }
         else {
-            //xtransfast_demosaic(W, H, rawdata, r, g, b, x_trans, callback);
-            markesteijn_demosaic(W, H, rawdata, r, g, b,x_trans, C.rgb_cam, callback, 1, false);
+            xtransfast_demosaic(W, H, rawdata, r, g, b, x_trans, callback);
+            //markesteijn_demosaic(W, H, rawdata, r, g, b, x_trans, C.rgb_cam, callback, 1, false);
         }
     }
     catch(...) {

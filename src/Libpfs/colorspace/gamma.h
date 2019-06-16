@@ -30,11 +30,15 @@ namespace pfs {
 namespace colorspace {
 
 struct Gamma2_2 {
-    static float gamma() { return 1 / 2.2f; }
+    static float gamma() { return 1.f / 2.2f; }
 };
 
 struct Gamma1_8 {
-    static float gamma() { return 1 / 1.8f; }
+    static float gamma() { return 1.f / 1.8f; }
+};
+
+struct Gamma1_0 {
+    static float gamma() { return 1.f; }
 };
 
 template <typename GammaFactor>
