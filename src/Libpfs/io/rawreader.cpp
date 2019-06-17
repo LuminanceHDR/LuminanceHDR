@@ -538,7 +538,7 @@ void RAWReader::read(Frame &frame, const Params &params) {
         cout << "xtrans: ";
         for (int j=0; j<6; j++)
         {
-            xtrans[i][j] = uint(m_processor.imgdata.idata.xtrans[i][j]);
+            xtrans[i][j] = unsigned(m_processor.imgdata.idata.xtrans[i][j]);
             maxXtrans = max(maxXtrans,int(m_processor.imgdata.idata.xtrans[i][j]));
             cout << xtrans[i][j];
         }
