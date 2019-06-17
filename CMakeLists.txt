@@ -14,7 +14,7 @@ include(DefineCMakeDefaults)
 # and -DCMAKE_BUILD_TYPE=AddressSanitizer
 include(DefineCompilerFlags)
 
-project(rtprocess VERSION 0.9.0 LANGUAGES CXX)
+project(rtprocess VERSION 0.11.0 LANGUAGES CXX)
 
 # include cmake files
 include(DefineOptions.cmake)
