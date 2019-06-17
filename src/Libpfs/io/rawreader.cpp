@@ -467,7 +467,6 @@ void RAWReader::read(Frame &frame, const Params &params) {
     free (dec_info);
 
     bool isFoveon = P1.is_foveon;
-    unsigned filters = P1.filters;
 
     if (m_processor.dcraw_process() != LIBRAW_SUCCESS) {
         m_processor.recycle();
@@ -531,22 +530,20 @@ void RAWReader::read(Frame &frame, const Params &params) {
         }
     }
 
-    //unsigned x_trans[6][6];
-    /*
-    for (int i = 0; i < 6; ++i) {
-        for (int j = 0; j < 6; ++j) {
-            x_trans[i][j] = m_processor.COLOR(i, j);
+    unsigned xtrans[6][6];
+    //get xtrans color filter array
+    int maxXtrans = 0;
+    for (int i=0; i<6; i++)
+    {
+        cout << "xtrans: ";
+        for (int j=0; j<6; j++)
+        {
+            xtrans[i][j] = uint(m_processor.imgdata.idata.xtrans[i][j]);
+            maxXtrans = max(maxXtrans,int(m_processor.imgdata.idata.xtrans[i][j]));
+            cout << xtrans[i][j];
         }
+        cout << endl;
     }
-    */
-    unsigned x_trans[6][6] = {
-                { 1, 2, 1, 1, 0, 1},
-                { 0, 1, 0, 2, 1, 2},
-                { 1, 2, 1, 1, 0, 1},
-                { 1, 0, 1, 1, 2, 1},
-                { 2, 1, 2, 0, 1, 0},
-                { 1, 0, 1, 1, 2, 1}
-            };
 
     float **rawdata;
     rawdata = (float **) malloc(H * sizeof(float *));
@@ -555,7 +552,8 @@ void RAWReader::read(Frame &frame, const Params &params) {
         rawdata[i] = rawdata[i-1] + W;
     }
 
-    if (filters != 9) {
+
+    if (maxXtrans == 0) {
     #ifdef _OPENMP
         #pragma omp parallel for
     #endif
@@ -570,20 +568,17 @@ void RAWReader::read(Frame &frame, const Params &params) {
         }
     }
     else {
-        unsigned p = 0;
-        unsigned q = 0;
+    #ifdef _OPENMP
+        #pragma omp parallel for
+    #endif
         for(unsigned i = 0; i < H; i++) {
             unsigned k = 0;
-            if (q == 6) q = 0;
             for(unsigned j = 0; j < W; j++) {
-                if (p == 6) p = 0;
-                unsigned c = x_trans[p][q];
+                unsigned c = xtrans[(i + 6) % 6][(j + 6) % 6];
                 unsigned pos = k + i*W*3;
                 rawdata[i][j] = raw_data[pos + c] / 65535.f;
                 k += 3;
-                p++;
             }
-            q++;
         }
     }
 
@@ -594,21 +589,15 @@ void RAWReader::read(Frame &frame, const Params &params) {
     float **g;
     float **b;
 
-    r = (float **) malloc(sizeof(float *) * H);
+    r = (float **) malloc(H * sizeof(float *));
+    g = (float **) malloc(H * sizeof(float *));
+    b = (float **) malloc(H * sizeof(float *));
     r[0] = (float *)malloc(W*H * sizeof(float));
-    for(unsigned i = 1; i < H; i++) {
-        r[i] = r[i-1] + W;
-    }
-
-    g = (float **) malloc(sizeof(float *) * H);
     g[0] = (float *)malloc(W*H * sizeof(float));
-    for(unsigned i = 1; i < H; i++) {
-        g[i] = g[i-1] + W;
-    }
-
-    b = (float **) malloc(sizeof(float *) * H);
     b[0] = (float *)malloc(W*H * sizeof(float));
     for(unsigned i = 1; i < H; i++) {
+        r[i] = r[i-1] + W;
+        g[i] = g[i-1] + W;
         b[i] = b[i-1] + W;
     }
 
@@ -616,12 +605,13 @@ void RAWReader::read(Frame &frame, const Params &params) {
         //igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
         //hphd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
         //dcb_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 3, true);
-        if ( filters != 9 ) {
+        if ( maxXtrans == 0 ) {
+            cout << "AMAZE DEMOSAICING" << endl;
             amaze_demosaic(W, H, 0, 0, W, H, rawdata, r, g, b, cf_array, callback, 1.0, 0, 1.0, 1.0, 4);
         }
         else {
-            xtransfast_demosaic(W, H, rawdata, r, g, b, x_trans, callback);
-            //markesteijn_demosaic(W, H, rawdata, r, g, b, x_trans, C.rgb_cam, callback, 1, false);
+            cout << "MARKESTEIJN DEMOSAICING" << endl;
+            markesteijn_demosaic(W, H, rawdata, r, g, b, xtrans, C.rgb_cam, callback, 3, true);
         }
     }
     catch(...) {
