@@ -40,7 +40,7 @@ This is version 0.11.0, which furnishes the following routines:
 ## Build instructions:
 
 1. Make a subdirectory named `build`, and `cd` to that directory.
-2. Run `cmake ..`
+2. Run `cmake -DCMAKE_BUILD_TYPE="Release" ..`
 3. Run `make`
 4. Run `make install` as root.
 
