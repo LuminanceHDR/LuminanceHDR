@@ -53,6 +53,22 @@ class RAWReader : public FrameReader {
 
     void read(Frame &frame, const Params &params);
 
+   protected:
+    bool isBayer() const
+    {
+        return (m_filters != 0 && m_filters != 1 && m_filters != 9);
+    }
+
+    bool isXtrans() const
+    {
+        return m_filters == 9;
+    }
+    unsigned FC (unsigned row, unsigned col) const
+    {
+        return (m_filters >> ((((row) << 1 & 14) + ((col) & 1)) << 1) & 3);
+    }
+
+    unsigned m_filters;
    private:
     LibRaw m_processor;
 };
