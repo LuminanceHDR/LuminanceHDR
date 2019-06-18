@@ -461,7 +461,7 @@ void RAWReader::read(Frame &frame, const Params &params) {
     PRINT_DEBUG("Aperture: " << P2.aperture);
     PRINT_DEBUG("Focal Length: " << P2.focal_len);
 
-    libraw_decoder_info_t *dec_info = (libraw_decoder_info_t *) malloc(sizeof(libraw_decoder_info_t *));
+    libraw_decoder_info_t *dec_info = (libraw_decoder_info_t *) malloc(sizeof(libraw_decoder_info_t));
     m_processor.get_decoder_info(dec_info);
     cout << "Decoder name: " << dec_info->decoder_name << endl;
     free (dec_info);
