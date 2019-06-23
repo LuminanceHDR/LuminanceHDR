@@ -1,7 +1,5 @@
 find_package(PkgConfig)
 
-pkg_check_modules(GLIBMM glibmm-2.4)
-
 if (OPTION_OMP)
     find_package(OpenMP REQUIRED COMPONENTS CXX)
 endif()
@@ -26,7 +24,7 @@ add_library(rtprocess SHARED ${rtprocess_SRCS})
 target_include_directories(rtprocess
                            PRIVATE
                                ${CMAKE_CURRENT_SOURCE_DIR}/include
-                               ${GLIBMM_INCLUDE_DIRS})
+                          )
 target_compile_options(rtprocess
                        PRIVATE
                            ${OpenMP_CXX_FLAGS}
@@ -39,8 +37,6 @@ set_property(TARGET
                  LINKER_FLAGS "${DEFAULT_LINK_FLAGS}"
              PROPERTY
                  PUBLIC_HEADER "include/librtprocess.h")
-
-target_link_libraries(rtprocess PRIVATE ${GLIBMM_LIBRARIES})
 
 if (OpenMP_FOUND)
     target_link_libraries(rtprocess PRIVATE ${OpenMP_CXX_LIBRARIES})
@@ -68,7 +64,7 @@ if (WITH_STATIC_LIB)
     target_include_directories(rtprocess_static
                                PRIVATE
                                    ${CMAKE_CURRENT_SOURCE_DIR}/include
-                                   ${GLIBMM_INCLUDE_DIRS})
+                                   )
     target_compile_options(rtprocess_static
                            PRIVATE
                                ${OpenMP_CXX_FLAGS}
@@ -81,8 +77,6 @@ if (WITH_STATIC_LIB)
                      LINKER_FLAGS "${DEFAULT_LINK_FLAGS}"
                  PROPERTY
                      PUBLIC_HEADER "include/librtprocess.h")
-
-    target_link_libraries(rtprocess_static PRIVATE ${GLIBMM_LIBRARIES})
 
     if (OpenMP_FOUND)
         target_link_libraries(rtprocess_static
