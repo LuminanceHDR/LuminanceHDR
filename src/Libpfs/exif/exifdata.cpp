@@ -61,11 +61,10 @@ void ExifData::fromFile(const std::string &filename) {
 
         // Exiv2 iterator in read-only
         ::Exiv2::ExifData::const_iterator it = exifData.end();
-        if ((it = exifData.findKey(Exiv2::ExifKey(
-                 "Exif.Photo.ExposureTime"))) != exifData.end()) {
+        if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureTime"))) != exifData.end()) {
             m_exposureTime = it->toFloat();
-        } else if ((it = exifData.findKey(Exiv2::ExifKey(
-                        "Exif.Photo.ShutterSpeedValue"))) != exifData.end()) {
+        }
+        else if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue"))) != exifData.end()) {
             long num = 1;
             long div = 1;
             float tmp = std::exp(std::log(2.0f) * it->toFloat());
@@ -77,14 +76,20 @@ void ExifData::fromFile(const std::string &filename) {
             m_exposureTime = static_cast<float>(num) / div;
         }
 
-        if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"))) !=
-            exifData.end()) {
+        if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"))) != exifData.end()) {
             m_FNumber = it->toFloat();
-        } else if ((it = exifData.findKey(Exiv2::ExifKey(
-                        "Exif.Photo.ApertureValue"))) != exifData.end()) {
-            m_FNumber =
-                static_cast<float>(expf(logf(2.0f) * it->toFloat() / 2.f));
+            if (m_FNumber == 0) goto MissingFNumber;
         }
+        else {
+MissingFNumber:
+            if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"))) != exifData.end()) {
+                m_FNumber = static_cast<float>(expf(logf(2.0f) * it->toFloat() / 2.f));
+            }
+            else { // no ApertureValue, no FNumber or FNumber == 0, default to 1
+                m_FNumber = static_cast<float>(expf(logf(2.0f) * 0.5f));
+            }
+        }
+
         // some cameras/lens DO print the fnum but with value 0, and this is not
         // allowed for ev computation purposes.
         if (m_FNumber == 0.0f) {
@@ -93,13 +98,11 @@ void ExifData::fromFile(const std::string &filename) {
 
         // if iso is found use that value, otherwise assume a value of iso=100.
         // (again, some cameras do not print iso in exif).
-        if ((it = exifData.findKey(Exiv2::ExifKey(
-                 "Exif.Photo.ISOSpeedRatings"))) != exifData.end()) {
+        if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"))) != exifData.end()) {
             m_isoSpeed = it->toFloat();
         }
 
-        if ((it = exifData.findKey(Exiv2::ExifKey(
-                 "Exif.Photo.ExposureBiasValue"))) != exifData.end()) {
+        if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureBiasValue"))) != exifData.end()) {
             m_EVCompensation = it->toFloat();
         }
 
