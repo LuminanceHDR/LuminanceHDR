@@ -28,8 +28,9 @@
 #define MyBitDepth "${BUILD_BIT_DEPTH}"
 #define MyTargetArchitecture "${ARCHITECTURE_ALLOWED}"
 #define MyInstallMode "${INSTALL_MODE}"
-#define MySystemName "${SYSTEM_NAME}"
+#define MySystemName "Windows"
 #define MySourceLibsDir "${LIBSSRCDIR}"
+#define MyQtTrans "${QTTRANS}"
 #define MyBranch "${GIT_BRANCH}"
 #define MyHuginBinPath "${HUGIN_BIN_DIR}"
 
@@ -71,17 +72,17 @@ Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
 Name: "finnish"; MessagesFile: "compiler:Languages\Finnish.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
-Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
+;Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "hebrew"; MessagesFile: "compiler:Languages\Hebrew.isl"
-Name: "hungarian"; MessagesFile: "compiler:Languages\Hungarian.isl"
+;Name: "hungarian"; MessagesFile: "compiler:Languages\Hungarian.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"
 Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
-Name: "serbiancyrillic"; MessagesFile: "compiler:Languages\SerbianCyrillic.isl"
-Name: "serbianlatin"; MessagesFile: "compiler:Languages\SerbianLatin.isl"
+;Name: "serbiancyrillic"; MessagesFile: "compiler:Languages\SerbianCyrillic.isl"
+;Name: "serbianlatin"; MessagesFile: "compiler:Languages\SerbianLatin.isl"
 Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
@@ -158,9 +159,11 @@ Source: "{#MySourceLibsDir}\libicuuc*.dll"; Excludes: "libicuucd*.dll"; DestDir:
 Source: "{#MySourceLibsDir}\libpcre2-16-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libharfbuzz-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libicudt*.dll"; Excludes: "libicudtd*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\libdouble-conversion.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libfreetype-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libglib-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libgraphite2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\librtprocess.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libsqlite3-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libwebp-7.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libxml2-2.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -170,6 +173,7 @@ Source: "{#MySourceLibsDir}\libbz2-1.dll"; DestDir: "{app}"; Flags: ignoreversio
 Source: "{#MySourceLibsDir}\libintl-8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libpcre-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libcfitsio-3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyQtTrans}\qt_*.qm"; Excludes: "qt_help_*.qm"; DestDir: "{app}\i18n"; Flags: ignoreversion
 
 ;Source: "gdb.exe"; DestDir: "{app}"; Flags: skipifsourcedoesntexist ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
