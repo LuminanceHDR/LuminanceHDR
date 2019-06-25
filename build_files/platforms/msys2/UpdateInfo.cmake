@@ -81,6 +81,7 @@ elseif (BIT_DEPTH EQUAL 8)
     set(INSTALL_MODE "x64 ia64")
 endif (BIT_DEPTH EQUAL 4)
 # set part of the output archive name
-set(SYSTEM_NAME "WinVista")
+set(SYSTEM_NAME "Windows")
+set ( QTTRANS "$ENV{MSYSTEM_PREFIX}/share/qt5/translations")
 
 configure_file ("${PROJECT_SOURCE_DIR}/build_files/platforms/msys2/WindowsInnoSetup.iss.in" "${CMAKE_INSTALL_PREFIX}/WindowsInnoSetup.iss")
