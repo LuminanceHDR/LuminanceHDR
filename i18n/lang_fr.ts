@@ -167,7 +167,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;TRADUCTEURS&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;https://www.transifex.com/luminance-hdr/teams/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;Eéquip de traduction de Luminance HDR&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; sur Transifex&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;https://www.transifex.com/luminance-hdr/teams/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;ÉquipE de traduction de Luminance HDR&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; sur Transifex&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Chinois&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Lei Zhao&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Tchèque&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Jan Gemela&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Français&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: François Edelin&lt;/span&gt;&lt;/p&gt;
@@ -214,7 +214,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Communauté sur &lt;/span&gt;&lt;a href=&quot;https://www.flickr.com/groups/qtpfsgui/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#32a4e6;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;align_image_stack d&apos;Ungin et plus&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;align_image_stack d&apos;Hugin et plus&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;    Pablo D&apos;Angelo&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;/p&gt;
@@ -336,7 +336,7 @@ Lire la documentation pour plus d&apos;informations.</translation>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="205"/>
         <source>Response:</source>
-        <translation type="unfinished"/>
+        <translation>Réponse:</translation>
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="215"/>
@@ -351,7 +351,7 @@ Lire la documentation pour plus d&apos;informations.</translation>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="239"/>
         <source>Model:</source>
-        <translation type="unfinished"/>
+        <translation>Modèle:</translation>
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="249"/>
@@ -478,7 +478,7 @@ Lire la documentation pour plus d&apos;informations.</translation>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="527"/>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="555"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recompute&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recalcul&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="576"/>
@@ -1739,7 +1739,7 @@ ERROR: Ne peut sauver sur fichier %1</translation>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="67"/>
         <source>Images List</source>
-        <translation>Liste d&apos;images</translation>
+        <translation>Liste des images</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="108"/>
@@ -1858,7 +1858,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="510"/>
         <source>Fill the window</source>
-        <translation>Pleine fenêtre</translation>
+        <translation>Pleine largeur</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="513"/>
@@ -1958,12 +1958,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="858"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme anti-fantôme auto. Un seuil bas signifie un traitement plus aggressif mais peut diminuer la plage dynamique finale. Presser le bouton &amp;quot;Recompute&amp;quot; pour voir la couverture actuelle des rustines et ajuster le seuil en conséquence.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme anti-fantôme auto. Un seuil bas signifie un traitement plus aggressif mais peut diminuer la plage dynamique finale. Presser le bouton &amp;quot;Recalcul&amp;quot; pour voir la couverture actuelle des rustines et ajuster le seuil en conséquence.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="886"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recompute&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recalcul&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="908"/>
@@ -2174,7 +2174,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1707"/>
         <source>&amp;What&apos;s this?</source>
-        <translation>&amp;Qu&apos;est-ce ?</translation>
+        <translation>&amp;Qu&apos;est-ce donc ?</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1720"/>
@@ -2545,7 +2545,7 @@ ERREUR: %2</translation>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="80"/>
         <source>Currently &amp;Loaded Files</source>
-        <translation>Fichiers Actue&amp;llement chargés</translation>
+        <translation>Fichiers actue&amp;llement chargés</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="167"/>
@@ -2570,7 +2570,7 @@ ERREUR: %2</translation>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="294"/>
         <source>Selected Image &amp;Exposure</source>
-        <translation>Sélectionner l&apos;&amp;Exposition de l&apos;Image</translation>
+        <translation>Valeur d&apos;&amp;Exposition de l&apos;Image</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="306"/>
@@ -2620,7 +2620,7 @@ ERREUR: %2</translation>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recompute&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recalcul&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="545"/>
@@ -2681,32 +2681,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="680"/>
         <source>Profile 1 - Debevec, Triangular, Linear</source>
-        <translation type="unfinished"/>
+        <translation>Profil 1 - Debevec, Triangulaire, Linéaire</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="685"/>
         <source>Profile 2 - Debevec, Triangular, Gamma</source>
-        <translation type="unfinished"/>
+        <translation>Profil 2 - Debevec, Triangulaire, Gamma</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="690"/>
         <source>Profile 3 - Debevec, Plateau, Linear</source>
-        <translation type="unfinished"/>
+        <translation>Profil 3 - Debevec, Plateau, Linéaire</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="695"/>
         <source>Profile 4 - Debevec, Plateau, Gamma</source>
-        <translation type="unfinished"/>
+        <translation>Profil 4 - Debevec, Plateau, Gamma</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="700"/>
         <source>Profile 5 - Debevec, Gaussian, Linear</source>
-        <translation type="unfinished"/>
+        <translation>Profil 5 - Debevec, Gaussien, Linéaire</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="705"/>
         <source>Profile 6 - Debevec, Gaussian, Gamma</source>
-        <translation type="unfinished"/>
+        <translation>Profil 6 - Debevec, Gaussien, Gamma</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="713"/>
@@ -2791,7 +2791,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="862"/>
         <source>Custom (From File)</source>
-        <translation type="unfinished"/>
+        <translation>Personnalisé (à partir d&apos;un fichier)</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="873"/>
@@ -2801,7 +2801,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="904"/>
         <source>Load Response</source>
-        <translation type="unfinished"/>
+        <translation>Réponse de charge</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="916"/>
@@ -2826,7 +2826,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="982"/>
         <source>Show HDR Preview</source>
-        <translation type="unfinished"/>
+        <translation>Afficher l&apos;aperçu HDR</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1043"/>
@@ -2969,7 +2969,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="640"/>
         <source>Compute</source>
-        <translation>Calcul</translation>
+        <translation>Calculer</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="643"/>
@@ -2984,7 +2984,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="788"/>
         <source>&amp;Compute</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Calculer</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="820"/>
@@ -3462,12 +3462,12 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Niveaux d&apos;entrée&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Niveau d&apos;entrée&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/UI/GammaAndLevels.ui" line="192"/>
         <source>Clip black</source>
-        <translation>Clip Black</translation>
+        <translation>Min. Noir</translation>
     </message>
     <message>
         <location filename="../src/UI/GammaAndLevels.ui" line="219"/>
@@ -3477,7 +3477,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/UI/GammaAndLevels.ui" line="255"/>
         <source>Clip White</source>
-        <translation>Clip White</translation>
+        <translation>Max Blanc</translation>
     </message>
     <message>
         <location filename="../src/UI/GammaAndLevels.ui" line="293"/>
@@ -3488,7 +3488,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Niveaux de sortie&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Niveau de sortie&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/UI/GammaAndLevels.ui" line="420"/>
@@ -3916,12 +3916,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="617"/>
         <source>Copy &amp;Exif Data...</source>
-        <translation>Copie des données &amp;Exif...</translation>
+        <translation>Recopie des données &amp;Exif...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="620"/>
         <source>Copy Exif Data</source>
-        <translation>Copie des données Exif</translation>
+        <translation>Recopie des données Exif</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="623"/>
@@ -3995,7 +3995,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="708"/>
         <source>&amp;What&apos;s This?</source>
-        <translation>&amp;Qu&apos;est-ce ?</translation>
+        <translation>&amp;Qu&apos;est-ce donc ?</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="711"/>
@@ -4168,7 +4168,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="931"/>
         <source>Adjust &amp;Levels</source>
-        <translation>Ajustement &amp;Niveaux</translation>
+        <translation>Ajustement des &amp;Niveaux</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="934"/>
@@ -4302,7 +4302,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1140"/>
         <source>&amp;Show Full Screen</source>
-        <translation>&amp;Voir en plein écran</translation>
+        <translation>&amp;Application en plein écran</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1143"/>
@@ -4312,7 +4312,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1154"/>
         <source>Show &amp;Image Full Screen</source>
-        <translation>Affiche l&apos;&amp;Image en plein écran</translation>
+        <translation>Bascule l&apos;&amp;Image en plein écran</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1157"/>
@@ -5652,7 +5652,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/CommonFunctions.cpp" line="480"/>
         <source>From Calibration or Input File</source>
-        <translation type="unfinished"/>
+        <translation>À partir d&apos;un fichier d&apos;étalonnage ou d&apos;entrée</translation>
     </message>
     <message>
         <location filename="../src/Common/LuminanceOptions.cpp" line="787"/>
@@ -6154,7 +6154,7 @@ Niveau de luminance</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2003"/>
         <source>&amp;Light Adaptation</source>
-        <translation>Adapter la &amp;Lumière</translation>
+        <translation>Adaptation &amp;Lumière</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2056"/>
@@ -6651,7 +6651,7 @@ Erreur: %1</translation>
     <message>
         <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="470"/>
         <source>Keep existing Exif tags in destination file</source>
-        <translation>Converser les champs Exif de la destination</translation>
+        <translation>Conserver les champs Exif de la destination</translation>
     </message>
     <message>
         <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="523"/>

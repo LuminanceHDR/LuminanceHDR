@@ -259,7 +259,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="49"/>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="74"/>
         <source>Select the number of bracketed pictures used to create the HDRs</source>
-        <translation>Выберите число изображений в вилке для создания HDR&apos;ов</translation>
+        <translation>Выберите число изображений в вилке для создания HDR</translation>
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="100"/>
