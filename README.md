@@ -1,5 +1,11 @@
+![Logo](images/luminance.svg)
 # Luminance HDR
-===============
+---------------
+
+[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/LuminanceHDR/LuminanceHDR.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LuminanceHDR/LuminanceHDR/context:cpp)
+[![License](https://img.shields.io/github/license/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/blob/master/LICENSE)
+[![Issue Stats](https://img.shields.io/github/issues/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/issues)
+[![Pull Request Stats](https://img.shields.io/github/issues-pr/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/pulls)
 
 Copyright (C) 2010-2019
 
@@ -41,7 +47,7 @@ of the same scene taken at different exposure setting
 
 Raw image formats are supported - and treated as HDR - thanks to [LibRAW](http://www.libraw.org/).
 
-Make sure you read the "Dependencies" Section in the INSTALL file. If you intend to make a package for a GNU/Linux distribution, please refer to the same file for more information.
+Make sure you read the "Dependencies" Section in the [INSTALL.md](.github/INSTALL.md) file. If you intend to make a package for a GNU/Linux distribution, please refer to the same file for more information.
 
 The code is in part based on the existing open source packages:
 - "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -51,17 +57,17 @@ Without their contribution all of this would have not been possible.
 
 Dependencies
 ------------
-Please, refer to the INSTALL file
+Please, refer to the [INSTALL.md](.github/INSTALL.md) file
 
 Compiling the sources
 ---------------------
-Please, refer to the INSTALL file
+Please, refer to the [INSTALL.md](.github/INSTALL.md) file
 
 Contact and Links
 -----------------
-All comments and suggestions concerning this package or implementation of particular algorithm are welcome.
+All comments and suggestions concerning this package or the implementation of particular algorithms are welcome.
 
-For bugs, or feature request, please refer to the BUGS file
+For bugs, issues or feature requests, please refer to the [BUGS](.github/BUGS) file
 
 See also:
 * [PFStools](http://www.mpii.mpg.de/resources/pfstools/)
