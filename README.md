@@ -47,7 +47,7 @@ of the same scene taken at different exposure setting
 
 Raw image formats are supported - and treated as HDR - thanks to [LibRAW](http://www.libraw.org/).
 
-Make sure you read the "Dependencies" Section in the [INSTALL.md](.github/INSTALL.md) file. If you intend to make a package for a GNU/Linux distribution, please refer to the same file for more information.
+Make sure you read the "Dependencies" Section in the [INSTALL.md](INSTALL.md) file. If you intend to make a package for a GNU/Linux distribution, please refer to the same file for more information.
 
 The code is in part based on the existing open source packages:
 - "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -57,17 +57,17 @@ Without their contribution all of this would have not been possible.
 
 Dependencies
 ------------
-Please, refer to the [INSTALL.md](.github/INSTALL.md) file
+Please, refer to the [INSTALL.md](INSTALL.md) file
 
 Compiling the sources
 ---------------------
-Please, refer to the [INSTALL.md](.github/INSTALL.md) file
+Please, refer to the [INSTALL.md](INSTALL.md) file
 
 Contact and Links
 -----------------
 All comments and suggestions concerning this package or the implementation of particular algorithms are welcome.
 
-For bugs, issues or feature requests, please refer to the [BUGS](.github/BUGS) file
+For bugs, issues or feature requests, please refer to the [BUGS](BUGS) file
 
 See also:
 * [PFStools](http://www.mpii.mpg.de/resources/pfstools/)
