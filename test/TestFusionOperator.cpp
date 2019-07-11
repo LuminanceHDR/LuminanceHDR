@@ -139,7 +139,7 @@ int main(int argc, char** argv)
     }
 
 #else
-    cout << "This code doens't work without a C++11 compiler! \n";
+    cout << "This code doesn't work without a C++11 compiler! \n";
     return -1;
 #endif
 }

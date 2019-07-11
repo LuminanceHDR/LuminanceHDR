@@ -53,7 +53,7 @@ class TiffWriter : public FrameWriter {
     //!   logluv
     //!   min_luminance (float): minimum luminance to consider trusthworthy
     //!   max_luminance (float): maximum luminance to consider trusthworthy
-    //!   mapping_method (int): RGB mapping methodo choosen between
+    //!   mapping_method (int): RGB mapping method chosen between
     //!   RGBMappingType in rgbremapper.h
     bool write(const pfs::Frame &frame, const pfs::Params &params);
 };

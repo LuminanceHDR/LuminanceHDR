@@ -161,7 +161,7 @@ Requires: mootools javascript library from www.mootools.net or linked in from go
                                  "<ul><li>Change exposure by sliding the dynamic range window left and right. Or just use the scroll wheel.</li>" +
                                  "<li>Press \"-\" and \"=\" keys to change exposure by 1 f-stop.</li>" +
                                  "<li>The green plot represents the HDR histogram. EV value is given in f-stops (log<sub>2</sub> units) " +
-                                 "relative to the inital exposure.</li>" +
+                                 "relative to the initial exposure.</li>" +
                                  "<li>The exposure window / slider encompasses 8 f-stops.</li>" +
                                  "</ul></div></div>";	
 

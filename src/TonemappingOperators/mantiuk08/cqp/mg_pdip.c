@@ -75,8 +75,8 @@ typedef struct {
     /* gondzio's parameters */
     size_t k_max; /*maximal number of corrections */
     double beta_min,
-        beta_max; /* relatibe threhold values for outlier compl. products */
-    double delta_alpha; /* the required increas of stepsize */
+        beta_max; /* relative threshold values for outlier compl. products */
+    double delta_alpha; /* the required increase of stepsize */
     double gamma;       /* the minimum acceptable increase of stepsize */
 
     double data_norm; /* norm of the problem data */
@@ -359,7 +359,7 @@ static int mg_pdip_iterate(void *vstate, const gsl_cqp_data *cqp, gsl_vector *x,
 
     /************  Corrector Step ******************/
 
-    /* modify the right-hand side of the kkt-system in oder to find the
+    /* modify the right-hand side of the kkt-system in order to find the
      * Mehrotra's corrector step */
 
     r_block = gsl_vector_subvector(state->r, cqp->Q->size1 + cqp->A->size1,

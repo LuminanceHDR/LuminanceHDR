@@ -42,7 +42,7 @@
 #include "Common/LuminanceOptions.h"
 #include "UI/FlowLayout.h"
 
-namespace  // anoymous namespace
+namespace  // anonymous namespace
 {
 const int PREVIEW_WIDTH = 120;
 const int PREVIEW_HEIGHT = 100;

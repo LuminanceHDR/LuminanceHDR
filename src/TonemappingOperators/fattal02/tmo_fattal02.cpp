@@ -63,7 +63,7 @@ void downSample(const pfs::Array2Df &A, pfs::Array2Df &B) {
     const int height = B.getRows();
 
     // Note, I've uncommented all omp directives. They are all ok but are
-    // applied to too small problems and in total don't lead to noticable
+    // applied to too small problems and in total don't lead to noticeable
     // speed improvements. The main issue is the pde solver and in case of the
     // fft solver uses optimised threaded fftw routines.
     // Note from Ingo Weyrich. The above statement is wrong. There are some very expensive loops (exp, log, pow) which got a really good speedup by parallelized and vectorized code.

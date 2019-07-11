@@ -238,7 +238,7 @@ void copyExifData(const std::string &from, const std::string &to,
  * [4] http://doug.kerr.home.att.net/pumpkin/#APEX
  *
  * This function tries first to obtain the shutter speed from either of
- * two exif tags (there is no standard between camera manifacturers):
+ * two exif tags (there is no standard between camera manufacturers):
  * ExposureTime or ShutterSpeedValue.
  * Same thing for f-number: it can be found in FNumber or in ApertureValue.
  *

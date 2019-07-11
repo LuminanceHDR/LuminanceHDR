@@ -74,7 +74,7 @@ class BatchTMDialog : public QDialog {
     void filterComboBoxActivated(int);
     void abort();
 
-    // fuction that adds a log message to the model
+    // function that adds a log message to the model
     void add_log_message(const QString &);
 
     void batch_core();

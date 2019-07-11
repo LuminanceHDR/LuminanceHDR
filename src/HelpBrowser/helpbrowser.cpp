@@ -85,7 +85,7 @@
 #include "HelpBrowser/LuminancePaths.h"
 #include "HelpBrowser/schelptreemodel.h"
 
-/*! \brief XML parsef for documantation history.
+/*! \brief XML parsef for documentation history.
 This is small helper class which reads saved bookmarks configuration
 from ~/.scribus/doc/history.xml file.
 The reference to historyBrowser is a reference to the dialog.
@@ -114,7 +114,7 @@ class HistoryParser2 : public QXmlDefaultHandler {
     }
 };
 
-/*! \brief XML parsef for documantation bookmarks.
+/*! \brief XML parsef for documentation bookmarks.
 This is small helper class which reads saved bookmarks configuration
 from ~/.scribus/doc/bookmarks.xml file.
 The reference to QListView *view is a reference to the list view with bookmarks

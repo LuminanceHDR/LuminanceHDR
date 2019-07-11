@@ -47,7 +47,7 @@ class TransplantExifDialog : public QDialog {
     void updateinterval(bool);
     QString RecentDirEXIFfrom;
     QString RecentDirEXIFto;
-    // fuction that adds a log message to the model
+    // function that adds a log message to the model
     void add_log_message(const QString &);
     // the class that performs regexp filtering
     QSortFilterProxyModel *log_filter;

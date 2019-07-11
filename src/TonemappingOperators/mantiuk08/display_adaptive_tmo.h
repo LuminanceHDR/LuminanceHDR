@@ -77,7 +77,7 @@ class datmoTCFilter {
 
    public:
     /**
-     * Create a temporal filter for tone-curves. This shoudl be used to
+     * Create a temporal filter for tone-curves. This should be used to
      * tonemap video sequences.
      *
      * @param fps - frames per second. Only certain values are allowed
@@ -116,7 +116,7 @@ typedef int datmoVisualModel;
 
 /**
  * Tone-map RGB radiance map using the display adaptive tone
- * mapping. This is a convienience function that calls three stages of
+ * mapping. This is a convenience function that calls three stages of
  * this tone-mapping algorithm: datmo_compute_conditional_density(),
  * datmo_compute_conditional_density(), and
  * datmo_apply_tone_curve(). If you need a finer control over the
@@ -148,7 +148,7 @@ typedef int datmoVisualModel;
  * images).
  * @param progress_cb callback function for reporting progress or stopping
  * computations.
- * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
+ * @return PFSTMO_OK if tone-mapping was successful, PFSTMO_ABORTED if
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */
@@ -199,7 +199,7 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
  * images).
  * @param progress_cb callback function for reporting progress or stopping
  * computations.
- * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
+ * @return PFSTMO_OK if tone-mapping was successful, PFSTMO_ABORTED if
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */
@@ -230,7 +230,7 @@ int datmo_compute_tone_curve(datmoToneCurve *tc,
  * @param tc tone-curve computed with datmo_compute_tone_curve()
  * @param saturation_factor color saturation factor. See man
  * pfstmo_mantiuk08 page for details
- * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
+ * @return PFSTMO_OK if tone-mapping was successful, PFSTMO_ABORTED if
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */
@@ -264,7 +264,7 @@ int datmo_apply_tone_curve(float *R_out, float *G_out, float *B_out, int width,
  * @param tc tone-curve computed with datmo_compute_tone_curve()
  * @param saturation_factor color saturation factor. Set to 1 to preserve
  * colors, >1 to increase color saturation, <1 to reduce color saturation.
- * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
+ * @return PFSTMO_OK if tone-mapping was successful, PFSTMO_ABORTED if
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */

@@ -358,7 +358,7 @@ class MainWindow : public QMainWindow {
     static int sm_counter;         // Always increases
     static QScopedPointer<UpdateChecker> sm_updateChecker;
     static QMap<int, MainWindow *>
-        sm_mainWindowMap;  // maps m_winId with MainWindow "this" ponter
+        sm_mainWindowMap;  // maps m_winId with MainWindow "this" pointer
     static HelpBrowser *sm_helpBrowser;
 };
 

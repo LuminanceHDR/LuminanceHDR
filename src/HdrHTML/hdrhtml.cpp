@@ -304,8 +304,8 @@ class ArrayLUT {
 // ================================================
 
 /**
- * Compute prctiles using image cummulative histogram, which is less
- * accurate method but much faster than sorting.
+ * Compute percentiles using image cumulative histogram, which is a
+ * less accurate method but much faster than sorting.
  */
 template <class T>
 class Percentiles {
@@ -323,7 +323,7 @@ class Percentiles {
           d_size(d_size)  // Accuracy 0.1 prctile
     {
         hist.compute(data, d_size, bin_n, 1, -1, false);
-        // Compute cummulative histogram
+        // Compute cumulative histogram
         for (size_t k = 1; k < bin_n; k++) hist.n[k] += hist.n[k - 1];
 
         //    cerr << "d_size: " << d_size << "  hist.n: " << hist.n[bin_n-1] <<
@@ -801,7 +801,7 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
     else
         out_file_name << page_name;
 
-    // Load the table of the opacity coeffcients
+    // Load the table of the opacity coefficients
     ostringstream lut_filename;
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     QString h_c_b = HDRHTMLDIR;

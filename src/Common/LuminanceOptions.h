@@ -69,7 +69,7 @@ class LuminanceOptions : public QObject {
     bool isRawDoNotUseFujiRotate() const;
     void setRawDoNotUseFujiRotate(bool);
 
-    // Chromatic Aberation
+    // Chromatic Aberration
     bool isRawUseChromaAber() const;
     void setRawUseChromaAber(bool);
     double getRawAber0() const;

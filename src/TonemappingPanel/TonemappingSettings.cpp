@@ -32,7 +32,7 @@
 #include <TonemappingPanel/TonemappingSettings.h>
 #include <TonemappingPanel/ui_TonemappingSettings.h>
 
-namespace  // anoymous namespace
+namespace  // anonymous namespace
 {
 const int PREVIEW_WIDTH = PREVIEW_WIDTH;
 

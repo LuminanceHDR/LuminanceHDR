@@ -94,9 +94,9 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
  * @param contrastFactor contrast scaling factor (in 0-1 range)
  * @param saturationFactor color desaturation (in 0-1 range)
  * @param itmax maximum number of iterations for convergence (typically 50)
- * @param tol tolerence to get within for convergence (typically 1e-3)
+ * @param tol tolerance to get within for convergence (typically 1e-3)
  * @param progress_cb callback function that reports progress
- * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
+ * @return PFSTMO_OK if tone-mapping was successful, PFSTMO_ABORTED if
  * it was stopped from a callback function and PFSTMO_ERROR if an
  * error was encountered.
  */

@@ -240,7 +240,7 @@ void JpegReader::open() {
     setup_read_icc_profile(m_data->cinfo());
     jpeg_read_header(m_data->cinfo(), true);
 
-    PRINT_DEBUG("Readed JPEG headers");
+    PRINT_DEBUG("Read JPEG headers");
     PRINT_DEBUG(
         "cinfo.jpeg_color_space: " << m_data->cinfo()->jpeg_color_space);
 

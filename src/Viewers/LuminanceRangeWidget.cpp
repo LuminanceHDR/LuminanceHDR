@@ -47,7 +47,7 @@ static const float shrinkStep = 0.1f;
 static const float minWindowSize = 0.1f;
 
 static const int dragZoneMargin = 5;  // How many pizels from the range window
-                                      // border should draging be activated
+                                      // border should dragging be activated
 
 #define min(x, y) ((x) < (y) ? (x) : (y))
 #define max(x, y) ((x) > (y) ? (x) : (y))
