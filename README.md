@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/github/license/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/blob/master/LICENSE)
 [![Issue Stats](https://img.shields.io/github/issues/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/issues)
 [![Pull Request Stats](https://img.shields.io/github/issues-pr/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/pulls)
+[![Packaging status](https://repology.org/badge/tiny-repos/luminance-hdr.svg)](https://repology.org/project/luminance-hdr/badges)
 
 Copyright (C) 2010-2019
 
