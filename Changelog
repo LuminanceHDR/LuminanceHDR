@@ -83,7 +83,7 @@ JPEG or PNG.
 * Improved JPG, PNG and TIFF reader and writer
 
 Changes 2.2.1
-* NEW: splitted executable luminance-hdr-cli for commandline mode
+* NEW: split executable luminance-hdr-cli for commandline mode
 * NEW: Windows Installer optionally registers file associations
 * Aborting Batch HDR creation and batch tonemapping is now possible
 * Speed improvements in Reinhard05
@@ -289,7 +289,7 @@ Changes 1.9.0:
 * Restructured source tree
 * Added run-time check for correct dll placement.
 * Included pfstools patch for XYZ<->sRGB color space transformation
-* Using Qt4 endiannes detection
+* Using Qt4 endianness detection
 
 09-06-2007 v1.8.9
 * fixed serious bug related to the creation of an hdr image.

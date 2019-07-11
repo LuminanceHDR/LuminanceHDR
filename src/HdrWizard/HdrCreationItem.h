@@ -32,7 +32,7 @@
 #include <cmath>
 #include "arch/math.h"
 
-// defines an element that contains all the informations for this particular
+// defines an element that contains all the information for this particular
 // image to be used inside the HdrWizard
 class HdrCreationItem {
    public:

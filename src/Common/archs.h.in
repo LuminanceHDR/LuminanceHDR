@@ -21,7 +21,7 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  * This file contains path necessary to let Luminance work correctly in FreeBSD
  * Other architecture specific definition can be stored in this file afterwords.
- * From a suggestion of Joao Rocha Braga Filho <goffredo@gmail.com>, mantainer of
+ * From a suggestion of Joao Rocha Braga Filho <goffredo@gmail.com>, maintainer of
  * Luminance HDR for FreeBSD
  */
 

@@ -295,7 +295,7 @@ void transformColorSpace(ColorSpace inCS, const Array2Df *inC1,
         s_csTransformMap.find(CSTransformProfile(inCS, outCS));
 
     if (itTransform == s_csTransformMap.end()) {
-        throw Exception("Unsupported color tranform");
+        throw Exception("Unsupported color transform");
     }
 #ifndef NDEBUG
     std::cerr << __FUNCTION__

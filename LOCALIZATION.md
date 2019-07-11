@@ -25,7 +25,7 @@ Managing the translations is implemented using a CMake option (UPDATE_TRANSLATIO
 When changes are made to the UI, setting this option to TRUE will force *make* to update the files containing the translations in the *i18n* directory (Qt's *lupdate* will be called).
 You can then rerun CMAKE with the option set to OFF.
 
-To syncronize the local content with the Transifex online platform, you first install the Transifex Client, available for Windows, Linux, Mac.
+To synchronize the local content with the Transifex online platform, you first install the Transifex Client, available for Windows, Linux, Mac.
 
 Open a command shell and navigate (CD) into the i18n directory of Luminance HDR source tree.
 

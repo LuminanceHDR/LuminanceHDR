@@ -581,7 +581,7 @@ REM )
 REM 
 REM IF NOT EXIST tbb40_20120613oss (
 REM 	cmake -E tar %TEMP_DIR%/tbb40_20120613oss_win.zip
-REM 	REM Everthing is already compiled, nothing to do!
+REM 	REM Everything is already compiled, nothing to do!
 REM )
 
 REM IF NOT EXIST %TEMP_DIR%\gtest-1.6.0.zip (

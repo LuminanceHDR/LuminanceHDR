@@ -40,7 +40,7 @@
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"
 
-namespace  // anoymous namespace
+namespace  // anonymous namespace
 {
 const int PREVIEW_WIDTH = 120;
 const int PREVIEW_HEIGHT = 100;

@@ -562,7 +562,7 @@ static int solve(gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d,
 
     // Do not use any equality constraints (Ax=b)
 
-    // Unfortunatelly GSL does not allow for 0-size vectors and matrices
+    // Unfortunately GSL does not allow for 0-size vectors and matrices
     // As a work-around we create a phony gsl_matrix that has 0-size.
     // This matrix must not be passed to any gsl function!
 

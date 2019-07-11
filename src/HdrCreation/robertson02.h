@@ -1,7 +1,7 @@
 /*
  * This file is a part of Luminance HDR package
  * ----------------------------------------------------------------------
- * Copytight (C) 2013-2014 Davide Anastasia
+ * Copyright (C) 2013-2014 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

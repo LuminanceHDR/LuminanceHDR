@@ -155,7 +155,7 @@ LdrViewer::LdrViewer(pfs::Frame *frame, TonemappingOptions *opts,
     mPixmap->disableSelectionTool();  // disable by default crop functionalities
 
     // I shouldn't call a virtual function straight from the constructor,
-    // but specifing correctly which version of this virtual function I want to
+    // but specifying correctly which version of this virtual function I want to
     // call,
     // I am safe
     LdrViewer::setTonemappingOptions(opts);

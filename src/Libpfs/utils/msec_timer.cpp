@@ -25,7 +25,7 @@
 
 #include "msec_timer.h"
 
-// costructor
+// constructor
 msec_timer::msec_timer()
     :
 #ifdef WIN_TIMER

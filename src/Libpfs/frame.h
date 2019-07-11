@@ -43,7 +43,7 @@ typedef std::vector<Channel *> ChannelContainer;
 
 //! Interface representing a single PFS frame. Frame may contain 0
 //! or more channels (e.g. color XYZ, depth channel, alpha
-//! channnel). All the channels are of the same size. Frame can
+//! channel). All the channels are of the same size. Frame can
 //! also contain additional information in tags (see getTags).
 class Frame {
    public:

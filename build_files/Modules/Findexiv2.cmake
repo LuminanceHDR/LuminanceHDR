@@ -13,8 +13,8 @@
 # The minimum required version of Exiv2 can be specified using the
 # standard syntax, e.g. find_package(Exiv2 0.17)
 #
-# For compatiblity, also the variable EXIV2_MIN_VERSION can be set to the minimum version
-# you need before doing FIND_PACKAGE(Exiv2). The default is 0.12.
+# For compatibility, the variable EXIV2_MIN_VERSION can also be set to the minimum
+# version you need before doing FIND_PACKAGE(Exiv2). The default is 0.12.
 
 # Copyright (c) 2010, Alexander Neundorf, <neundorf@kde.org>
 # Copyright (c) 2008, Gilles Caulier, <caulier.gilles@gmail.com>

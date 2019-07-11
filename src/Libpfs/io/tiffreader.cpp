@@ -60,7 +60,7 @@ using namespace boost::assign;
 #endif
 
 //! \brief This code is taken from tificc.c from libcms distribution and
-//! sligthly modified
+//! slightly modified
 //! \ref
 //! http://svn.ghostscript.com/ghostscript/trunk/gs/lcms2/utils/tificc/tificc.c
 static cmsHPROFILE GetTIFFProfile(TIFF *in, uint16 bps) {

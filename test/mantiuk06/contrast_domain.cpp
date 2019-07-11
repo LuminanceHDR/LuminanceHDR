@@ -198,7 +198,7 @@ void matrix_downsample_full(const int inCols, const int inRows, const float* con
 	      if (i == iy1)
                   factory = fy1;  // We're just getting the bottom edge of this pixel
 	      else if (i == iy2)
-                  factory = fy2;  // We're just gettting the top edge of this pixel
+                  factory = fy2;  // We're just getting the top edge of this pixel
 	      else
                   factory = 1.0f; // We've got the full height of this pixel
 	      for (int j = ix1; j <= ix2 && j < inCols; j++)
@@ -263,7 +263,7 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
     pfs::utils::vsub(a, b, b, n);
 }
 
-// copy matix a to b, return = a 
+// copy matrix a to b, return = a 
  void matrix_copy(const int n, const float* const a, float* const b)
 {
      std::copy(a, a + n, b);

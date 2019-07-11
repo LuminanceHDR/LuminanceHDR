@@ -294,7 +294,7 @@ ostream &operator<<(ostream &out, const RAWReaderParams &p) {
         ss << ", Noise Reduction: OFF";
     }
 
-    ss << ", Chromatic Aberation: " << p.chromaAberation_;
+    ss << ", Chromatic Aberration: " << p.chromaAberation_;
     if (p.chromaAberation_) {
         ss << ", Chroma {" << p.chroma0_ << ", " << p.chroma1_;
         ss << ", " << p.chroma2_ << ", " << p.chroma3_ << "}";
@@ -315,7 +315,7 @@ static void setParams(LibRaw &processor, const RAWReaderParams &params) {
     outParams.gamm[1] = params.gamma1_;  // outParams.gamm[1] = 12.92;   //sRGB
     // use 4-color demosaicing algorithm
     outParams.four_color_rgb = params.fourColorRGB_;
-    // do not rotate or strech pixels on fuji cameras - default = 1 (rotate)
+    // do not rotate or stretch pixels on fuji cameras - default = 1 (rotate)
     outParams.use_fuji_rotate = params.useFujiRotate_;
     // demosaicing parameters
     outParams.user_qual = params.userQuality_;
@@ -379,7 +379,7 @@ static void setParams(LibRaw &processor, const RAWReaderParams &params) {
         outParams.threshold = params.noiseReductionThreshold_;
     }
 
-    // chromatic aberation
+    // chromatic aberration
     if (params.chromaAberation_) {
         outParams.aber[0] = params.chroma0_;
         // outParams.aber[1] = params.chroma1_;

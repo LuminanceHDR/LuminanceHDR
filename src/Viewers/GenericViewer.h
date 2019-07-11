@@ -121,8 +121,8 @@ class GenericViewer : public QWidget {
     //! \brief set filename (overwrite previous status)
     void setFileName(const QString &);
 
-    //! \brief This function syncronizes scrollbars position and zoom mode
-    //! \param[src] GenericViewer to syncronize with
+    //! \brief This function synchronizes scrollbars position and zoom mode
+    //! \param[src] GenericViewer to synchronize with
     void syncViewer(GenericViewer *src);
 
     //! \brief tells is the viewer holds an LDR or an HDR frame
@@ -217,7 +217,7 @@ class GenericViewer : public QWidget {
     void reparent(GenericViewer *v, bool close = false);     // emitted when exit fullscreen
     void goNext(GenericViewer *v);       // shows next image in fullscreen
     void goPrevious(GenericViewer *v);   // shows previous image in fullscreen
-    void syncViewers(GenericViewer *v);  // toggle viewers syncronization
+    void syncViewers(GenericViewer *v);  // toggle viewers synchronization
 };
 
 inline bool GenericViewer::needsSaving(void) { return mNeedsSaving; }

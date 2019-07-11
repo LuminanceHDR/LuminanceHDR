@@ -786,7 +786,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
         } catch (std::runtime_error &e) {
             printErrorAndExit(e.what());
         } catch (...) {
-            printErrorAndExit(QStringLiteral("Catched unhandled exception"));
+            printErrorAndExit(QStringLiteral("Caught unhandled exception"));
         }
     } else {
         printIfVerbose(QObject::tr("Loading file %1").arg(loadHdrFilename),
@@ -795,7 +795,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
         try {
             HDR.reset(IOWorker().read_hdr_frame(loadHdrFilename));
         } catch (...) {
-            printErrorAndExit(QStringLiteral("Catched unhandled exception"));
+            printErrorAndExit(QStringLiteral("Caught unhandled exception"));
         }
 
         if (HDR != NULL) {

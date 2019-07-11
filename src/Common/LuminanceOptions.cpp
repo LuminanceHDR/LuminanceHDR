@@ -2,7 +2,7 @@
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * Copytight (C) 2011 Davide Anastasia
+ * Copyright (C) 2011 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

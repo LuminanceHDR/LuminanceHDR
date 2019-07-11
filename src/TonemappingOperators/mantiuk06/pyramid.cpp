@@ -365,7 +365,7 @@ void matrixDownsampleFull(size_t inCols, size_t inRows, const float *inputData,
                                     // this pixel
                 else if (i == iy2)
                     factory =
-                        fy2;  // We're just gettting the top edge of this pixel
+                        fy2;  // We're just getting the top edge of this pixel
                 else
                     factory = 1.0f;  // We've got the full height of this pixel
                 for (size_t j = ix1; j <= ix2 && j < inCols; j++) {

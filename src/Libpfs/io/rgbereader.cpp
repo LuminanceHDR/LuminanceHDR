@@ -99,7 +99,7 @@ void readRadianceHeader(FILE *file, int &width, int &height, float &exposure,
         }
     }
 
-    // ignore wierd exposure adjustments
+    // ignore weird exposure adjustments
     if (exposure > 1e12 || exposure < 1e-12) {
         exposure = 1.0f;
     }
