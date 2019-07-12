@@ -42,8 +42,6 @@
 
 namespace  // anonymous namespace
 {
-const int PREVIEW_WIDTH = 120;
-const int PREVIEW_HEIGHT = 100;
 
 //! \note It is not the most efficient way to do this thing, but I will fix it
 //! later

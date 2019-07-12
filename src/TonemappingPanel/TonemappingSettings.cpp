@@ -34,7 +34,6 @@
 
 namespace  // anonymous namespace
 {
-const int PREVIEW_WIDTH = PREVIEW_WIDTH;
 
 bool compareByComment(PreviewLabel *l1, PreviewLabel *l2) {
     QString s1 = l1->getComment(), s2 = l2->getComment();

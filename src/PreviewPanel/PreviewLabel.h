@@ -30,6 +30,9 @@
 
 #include "Core/TonemappingOptions.h"
 
+const int PREVIEW_WIDTH = 120;
+const int PREVIEW_HEIGHT = 100;
+
 class PreviewLabel : public QLabel {
     Q_OBJECT
 
