@@ -20,11 +20,11 @@
  *
  */
 
-//#ifndef GITSHA1_H
-//#define GITSHA1_H
+#ifndef GITSHA1_H
+#define GITSHA1_H
 
 // extern "C"
 //{
 extern char g_GIT_SHA1[];
 //}
-//#endif // GITSHA1_H
+#endif // GITSHA1_H
