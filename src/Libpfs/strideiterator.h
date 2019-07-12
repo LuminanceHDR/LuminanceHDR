@@ -54,6 +54,9 @@ class StrideIterator
         : m_data(x), m_step(step) {}
 
     // operators
+    //! \brief Copy constructor
+    self &operator=(const self &rhs) { m_data(rhs.m_data); m_step(rhs.m_step); }
+
     //! \brief Prefix increment
     self &operator++() {
         m_data += m_step;

@@ -53,6 +53,9 @@ class FixedStrideIterator
     FixedStrideIterator(IterType x) : m_data(x) {}
 
     // operators
+    //! \brief Copy constructor
+    self &operator=(const self &rhs) { m_data(rhs.m_data); }
+
     //! \brief Prefix increment
     self &operator++() {
         m_data += StepSize;
