@@ -45,6 +45,7 @@
 #include <Libpfs/colorspace/convert.h>
 #include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/manip/rotate.h>
+#include <Libpfs/manip/copy.h>
 #include <Libpfs/utils/transform.h>
 #include <UI/UMessageBox.h>
 
@@ -54,7 +55,7 @@ using namespace pfs::colorspace;
 static const int previewWidth = 300;
 static const int previewHeight = 200;
 
-FitsImporter::~FitsImporter() {}
+FitsImporter::~FitsImporter() { delete m_frame; }
 
 FitsImporter::FitsImporter(QWidget *parent)
     : QWizard(parent),
@@ -128,7 +129,7 @@ FitsImporter::FitsImporter(QWidget *parent)
 
 pfs::Frame *FitsImporter::getFrame() {
     buildFrame();
-    return m_frame;
+    return pfs::copy(m_frame);
 }
 
 void FitsImporter::selectInputFile(QLineEdit *textField, QString *channel) {
