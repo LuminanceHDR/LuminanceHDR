@@ -1,7 +1,7 @@
 ![Logo](images/luminance.svg)
 # Luminance HDR
 ---------------
-
+[![Release](https://img.shields.io/github/release/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/releases/tag/v.2.6.0)
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/LuminanceHDR/LuminanceHDR.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LuminanceHDR/LuminanceHDR/context:cpp)
 [![License](https://img.shields.io/github/license/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/blob/master/LICENSE)
 [![Issue Stats](https://img.shields.io/github/issues/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/issues)
