@@ -134,15 +134,19 @@ inline float TM(float lum_val, float minLum, float div) {
 ////////////////////////////////////////////////////////
 
 void getMaxMin(pfs::Array2Df *lum_map, float &maxLum, float &minLum) {
-    maxLum = minLum = 0.0;
+    // older gcc versions do not support reference parameters in reduction clause
+    float lmaxLum = 0.f;
+    float lminLum = 0.f;
 
 #ifdef _OPENMP
-    #pragma omp parallel for reduction(min:minLum) reduction(max:maxLum)
+    #pragma omp parallel for reduction(min:lminLum) reduction(max:lmaxLum)
 #endif
-    for (unsigned int i = 0; i < lum_map->getCols() * lum_map->getRows(); i++) {
-        maxLum = ((*lum_map)(i) > maxLum) ? (*lum_map)(i) : maxLum;
-        minLum = ((*lum_map)(i) < minLum) ? (*lum_map)(i) : minLum;
+    for (size_t i = 0; i < lum_map->getCols() * lum_map->getRows(); ++i) {
+        lmaxLum = std::max(lmaxLum, (*lum_map)(i));
+        lminLum = std::min(lminLum, (*lum_map)(i));
     }
+    maxLum = lmaxLum;
+    minLum = lminLum;
 }
 
 void Normalize(pfs::Array2Df *lum_map, int nrows, int ncols) {
