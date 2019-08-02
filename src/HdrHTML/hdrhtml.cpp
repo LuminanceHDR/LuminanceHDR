@@ -192,7 +192,7 @@ class UniformArrayLUT {
         if (own_y_i) delete[] y_i;
     }
 
-    float interp(float x) {
+    float interp(float x) const {
         const float ind_f = (x - x_i[0]) / delta;
         const size_t ind_low = (size_t)(ind_f);
         const size_t ind_hi = (size_t)ceil(ind_f);
@@ -253,7 +253,7 @@ class ArrayLUT {
         }
     }
 
-    ArrayLUT() : x_i(0), y_i(0), lut_size(0), own_y_i(false) {}
+    ArrayLUT() : x_i(0), lut_size(0), own_y_i(false), y_i(0)  {}
 
     ArrayLUT(const ArrayLUT &other) : x_i(other.x_i), lut_size(other.lut_size) {
         this->y_i = new Ty[lut_size];
@@ -277,7 +277,7 @@ class ArrayLUT {
         //  delete []y_i;
     }
 
-    Ty interp(Tx x) {
+    Ty interp(Tx x) const {
         if ((x <= x_i[0]))  // Out of range checks
             return y_i[0];
         if ((x >= x_i[lut_size - 1])) return y_i[lut_size - 1];
@@ -768,7 +768,6 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
 
     HDRHTMLImage new_image(base_name, width, height);
 
-    new_image.hist_width = hist_width;
     new_image.f8_stops = f8_stops;
     new_image.f_step_res = f_step_res;
     new_image.basis = basis_no;
@@ -819,8 +818,7 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
         ReplacePattern("cf_array_def", print_cf_table, &coeff_table),
         ReplacePattern("hdr_img_def", print_image_objects, this),
         ReplacePattern("image_htmlcode", print_image_htmlcode, this),
-        ReplacePattern("title",
-                       page_name == NULL ? "HDRHTML viewer" : page_name),
+        ReplacePattern("title", page_name == NULL ? "HDRHTML viewer" : page_name),
         ReplacePattern("version", hdrhtml_version),
         ReplacePattern()};
 
