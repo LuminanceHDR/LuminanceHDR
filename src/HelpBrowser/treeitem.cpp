@@ -36,9 +36,7 @@
 
 #include "treeitem.h"
 
-TreeItem::TreeItem(const QList<QVariant> &data, TreeItem *parent) {
-    parentItem = parent;
-    itemData = data;
+TreeItem::TreeItem(const QList<QVariant> &data, TreeItem *parent) : itemData(data), parentItem(parent) {
 }
 
 TreeItem::~TreeItem() { qDeleteAll(childItems); }

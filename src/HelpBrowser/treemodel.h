@@ -39,7 +39,7 @@ class TreeModel : public QAbstractItemModel {
     // Q_OBJECT
 
    public:
-    TreeModel(const QString &data, QObject *parent = 0);
+    explicit TreeModel(const QString &data, QObject *parent = 0);
     explicit TreeModel(QObject * /*parent = 0*/)
         : rootItem(NULL){};  // CB Added for ScHelpTreeModel
     ~TreeModel();
