@@ -45,23 +45,23 @@
 //-------------------------------------------
 
 float calc_LAL_interpolated(GaussianPyramid *myPyramid, size_t x, size_t y, int s) {
-    float ratio = myPyramid->p[s - 1].lambda;
+    double ratio = myPyramid->p[s - 1].lambda;
 
-    float newX = (float)x * ratio;
-    float newY = (float)y * ratio;
+    double newX = (double)x * ratio;
+    double newY = (double)y * ratio;
     size_t X_int = (size_t)newX;
     size_t Y_int = (size_t)newY;
 
-    float dx, dy, omdx, omdy;
-    dx = newX - (float)X_int;
-    omdx = 1.f - dx;
-    dy = newY - (float)Y_int;
-    omdy = 1.f - dy;
+    double dx, dy, omdx, omdy;
+    dx = newX - (double)X_int;
+    omdx = 1. - dx;
+    dy = newY - (double)Y_int;
+    omdy = 1. - dy;
 
     size_t w = myPyramid->p[s - 1].GP->getCols();
     size_t h = myPyramid->p[s - 1].GP->getRows();
 
-    float g;
+    double g;
     if (X_int < w - 1 && Y_int < h - 1) {
         g = omdx * omdy * myPyramid->p[s - 1].getPixel(X_int, Y_int) +
             dx * omdy * myPyramid->p[s - 1].getPixel(X_int + 1, Y_int) +
@@ -134,14 +134,23 @@ inline float TM(float lum_val, float minLum, float div) {
 ////////////////////////////////////////////////////////
 
 void getMaxMin(pfs::Array2Df *lum_map, float &maxLum, float &minLum) {
-    maxLum = minLum = 0.0;
-
+    const size_t n = lum_map->getCols() * lum_map->getRows();
+    if (n > 0) {
+        // older gcc versions do not support reference parameters in reduction clause
+        float lmaxLum = (*lum_map)(0);
+        float lminLum = (*lum_map)(0);
 #ifdef _OPENMP
-    #pragma omp parallel for reduction(min:minLum) reduction(max:maxLum)
+        #pragma omp parallel for reduction(min:lminLum) reduction(max:lmaxLum)
 #endif
-    for (unsigned int i = 0; i < lum_map->getCols() * lum_map->getRows(); i++) {
-        maxLum = ((*lum_map)(i) > maxLum) ? (*lum_map)(i) : maxLum;
-        minLum = ((*lum_map)(i) < minLum) ? (*lum_map)(i) : minLum;
+        for (size_t i = 0; i < n; ++i) {
+            lmaxLum = std::max(lmaxLum, (*lum_map)(i));
+            lminLum = std::min(lminLum, (*lum_map)(i));
+        }
+        maxLum = lmaxLum;
+        minLum = lminLum;
+    } else {
+        maxLum = 0.f;
+        minLum = 0.f;
     }
 }
 
