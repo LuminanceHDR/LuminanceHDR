@@ -352,7 +352,7 @@ void normalizeLuminanceAndRGB(Array2Df &R, Array2Df &G, Array2Df &B,
 // std::cout << "clip_min = " << clip_min << std::endl;
 // std::cout << "Ymax = " << Ymax << std::endl;
 #pragma omp parallel for
-    for (int idx = 0; idx < static_cast<int>(Y.size()); idx++) {
+    for (size_t idx = 0; idx < Y.size(); idx++) {
         if (R(idx) < clip_min) R(idx) = clip_min;
         if (G(idx) < clip_min) G(idx) = clip_min;
         if (B(idx) < clip_min) B(idx) = clip_min;
@@ -377,7 +377,7 @@ void denormalizeLuminance(Array2Df &Y) {
     const float lumRange = 1.f / (lumMax - lumMin) * DISP_DYN_RANGE;
 
 #pragma omp parallel for  // shared(lumRange, lumMin)
-    for (int j = 0; j < static_cast<int>(size); j++) {
+    for (size_t j = 0; j < size; j++) {
         Y(j) = (Y(j) - lumMin) * lumRange - DISP_DYN_RANGE;  // x scaled
     }
 }
