@@ -214,7 +214,7 @@ void HdrCreationManager::refreshEVOffset() {
     }
 
     // no image has EV
-    if (evs.size() <= 0) {
+    if (evs.size() == 0) {
         m_evOffset = 0.f;
         return;
     }
@@ -296,15 +296,15 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
             &HdrCreationManager::progressValueChanged, Qt::DirectConnection);
 }
 
-void HdrCreationManager::setConfig(const FusionOperatorConfig &c) {
-    if (!c.inputResponseCurveFilename.isEmpty()) {
+void HdrCreationManager::setConfig(const FusionOperatorConfig &cfg) {
+    if (!cfg.inputResponseCurveFilename.isEmpty()) {
         setLoadResponseCurve(true);
-        setResponseCurveInputFilename(c.inputResponseCurveFilename);
+        setResponseCurveInputFilename(cfg.inputResponseCurveFilename);
     } else {
-        m_response->setType(c.responseCurve);
+        m_response->setType(cfg.responseCurve);
     }
-    getWeightFunction().setType(c.weightFunction);
-    setFusionOperator(c.fusionOperator);
+    getWeightFunction().setType(cfg.weightFunction);
+    setFusionOperator(cfg.fusionOperator);
 }
 
 QVector<float> HdrCreationManager::getExpotimes() const {
