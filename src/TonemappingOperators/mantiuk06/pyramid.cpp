@@ -312,8 +312,8 @@ void PyramidT::multiply(const PyramidT &other) {
         while (innerIt != innerItEnd) {
             *innerIt *= *innerItOther;
 
-            innerIt++;
-            innerItOther++;
+            ++innerIt;
+            ++innerItOther;
         }
     }
 }
