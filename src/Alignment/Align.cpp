@@ -33,10 +33,10 @@
 #include "Common/CommonFunctions.h"
 #include "Exif/ExifOperations.h"
 
-Align::Align(HdrCreationItemContainer &data, bool fromCommadLine,
+Align::Align(HdrCreationItemContainer &data, bool fromCommandLine,
              int savingMode, float minLum, float maxLum)
     : m_data(data),
-      m_fromCommandLine(fromCommadLine),
+      m_fromCommandLine(fromCommandLine),
       m_savingMode(savingMode),
       m_minLum(minLum),
       m_maxLum(maxLum),
