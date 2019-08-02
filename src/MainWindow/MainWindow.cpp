@@ -1452,9 +1452,6 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         if (sm_helpBrowser) {
             sm_helpBrowser->close();
         }
-    }
-
-    if (sm_NumMainWindows == 0) {
         // Last MainWindow is dead...
         LuminanceOptions().setValue(QStringLiteral("MainWindowState"),
                                     saveState());
