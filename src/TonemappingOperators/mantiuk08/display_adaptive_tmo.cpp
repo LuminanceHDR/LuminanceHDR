@@ -287,17 +287,8 @@ static void compute_gaussian_level(const int width, const int height,
 
     const int step = 1 << level;
 
-    // FIXME: without the following (with using operator () ) there
-    // seems to be a performance drop - need to investigate if gcc can
-    // be made to optimize this better.  If this can't be made faster
-    // with using the overloaded operator then this optimization should
-    // be applied to the other TMOs as well.
-    const float *in_raw = in.data();
-    float *temp_raw = temp.data();
-    float *out_raw = out.data();
-
 // Filter rows
-#pragma omp parallel for shared(in_raw, temp_raw, kernel)
+#pragma omp parallel for shared(in, temp, kernel)
     for (int r = 0; r < height; r++) {
         for (int c = 0; c < width; c++) {
             float sum = 0;
@@ -305,13 +296,13 @@ static void compute_gaussian_level(const int width, const int height,
                 int l = (j - kernel_len_2) * step + c;
                 if (unlikely(l < 0)) l = -l;
                 if (unlikely(l >= width)) l = 2 * width - 2 - l;
-                sum += in_raw[r * width + l] * kernel[j];
+                sum += in(l, r) * kernel[j];
             }
-            temp_raw[r * width + c] = sum;
+            temp(c, r) = sum;
         }
     }
 // Filter columns
-#pragma omp parallel for shared(temp_raw, out_raw, kernel)
+#pragma omp parallel for shared(temp, out, kernel)
     // process 8 columns per iteration for better usage of cpu cache
     for (int c = 0; c < width - 7; c+=8) {
         for (int r = 0; r < height; r++) {
@@ -321,9 +312,9 @@ static void compute_gaussian_level(const int width, const int height,
                     int l = (j - kernel_len_2) * step + r;
                     if (unlikely(l < 0)) l = -l;
                     if (unlikely(l >= height)) l = 2 * height - 2 - l;
-                    sum[cc] += temp_raw[l * width + c + cc] * kernel[j];
+                    sum[cc] += temp(c + cc, l) * kernel[j];
                 }
-                out_raw[r * width + c + cc] = sum[cc];
+                out(c + cc, r) = sum[cc];
             }
         }
     }
@@ -335,9 +326,9 @@ static void compute_gaussian_level(const int width, const int height,
                 int l = (j - kernel_len_2) * step + r;
                 if (unlikely(l < 0)) l = -l;
                 if (unlikely(l >= height)) l = 2 * height - 2 - l;
-                sum += temp_raw[l * width + c] * kernel[j];
+                sum += temp(c, l) * kernel[j];
             }
-            out_raw[r * width + c] = sum;
+            out(c, r) = sum;
         }
     }
 }
@@ -1095,14 +1086,14 @@ int datmo_apply_tone_curve_cc(float *R_out, float *G_out, float *B_out,
         // (tc->y_i[i+1]-tc->y_i[i])/(tc->x_i[i+1]-tc->x_i[i]), 0.d ); // In
         // pfstmo
         // 2.0.5
-        const float contrast =
-            std::max((float)(tc->y_i[i + 1] - tc->y_i[i]) /
-                         (float)(tc->x_i[i + 1] - tc->x_i[i]),
-                     0.0f);  // In pfstmo 2.0.5
-        const float k1 = 1.48f;
-        const float k2 = 0.82f;
-        cc_lut.y_i[i] = ((1 + k1) * powf(contrast, k2)) /
-                        (1 + k1 * powf(contrast, k2)) * saturation_factor;
+        const double contrast =
+            std::max((tc->y_i[i + 1] - tc->y_i[i]) /
+                     (tc->x_i[i + 1] - tc->x_i[i]),
+                      0.0);  // In pfstmo 2.0.5
+        const double k1 = 1.48;
+        const double k2 = 0.82;
+        cc_lut.y_i[i] = ((1 + k1) * pow(contrast, k2)) /
+                        (1 + k1 * pow(contrast, k2)) * (double)saturation_factor;
     }
     cc_lut.y_i[tc->size - 1] = 1;
 
