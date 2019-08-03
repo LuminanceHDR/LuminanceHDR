@@ -367,7 +367,7 @@ void RobertsonOperatorAuto::computeResponse(
 
 void RobertsonOperatorAuto::computeFusion(
     ResponseCurve &response, WeightFunction &weight,
-    const vector<FrameEnhanced> &frames, pfs::Frame &frame) {
+    const vector<FrameEnhanced> &frames, pfs::Frame &outFrame) {
     assert(frames.size());
 
     size_t numExposures = frames.size();
