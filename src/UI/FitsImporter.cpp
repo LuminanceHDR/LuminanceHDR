@@ -34,8 +34,6 @@
 #include <QtConcurrentFilter>
 #include <QtConcurrentMap>
 
-#include <boost/bind.hpp>
-
 #include "UI/FitsImporter.h"
 #include "UI/ui_FitsImporter.h"
 
@@ -225,7 +223,6 @@ void FitsImporter::loadFilesDone(QString error_string) {
     m_data.clear();
 
     int idx = 0;
-    // BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata)
     for (HdrCreationItemContainer::iterator i = m_tmpdata.begin();
          i != m_tmpdata.end(); ++i) {
         if (i->isValid()) {

@@ -44,11 +44,11 @@
 #include <vector>
 
 #include <boost/assign.hpp>
-#include <boost/bind.hpp>
-#include <boost/current_function.hpp>
-#include <boost/function.hpp>
+#include <functional>
 #include <boost/lexical_cast.hpp>
 
+using namespace std;
+using namespace std::placeholders;
 using namespace pfs;
 using namespace pfs::utils;
 using namespace boost::assign;
@@ -151,14 +151,14 @@ struct TiffReaderParams {};
 
 struct TiffReaderData {
     // < photometric type, bits per sample >
-    typedef boost::function<void(TiffReaderData *, Frame &,
+    typedef function<void(TiffReaderData *, Frame &,
                                  const TiffReaderParams &)>
         Callback;
 
     TiffReaderData()
         : hasAlpha_(false),
           stonits_(1.0),
-          currentCallback_(boost::bind(&TiffReaderData::doNothing, _1, _2, _3)),
+          currentCallback_(bind(&TiffReaderData::doNothing, _1, _2, _3)),
           hsRGB_(cmsCreate_sRGBProfile()) {}
 
     // public members...
@@ -197,19 +197,19 @@ struct TiffReaderData {
             // (RegistryKey(PHOTOMETRIC_LOGLUV, 32),
             // boost::bind(&TiffReaderData::readLogLuv, _1, _2, _3)) // <
             (RegistryKey(PHOTOMETRIC_LOGLUV, 16),
-             boost::bind(&TiffReaderData::readLogLuv, _1, _2, _3))(
+             bind(&TiffReaderData::readLogLuv, _1, _2, _3))(
                 RegistryKey(PHOTOMETRIC_SEPARATED, 8),
-                boost::bind(&TiffReaderData::readCMYK<uint8_t>, _1, _2, _3))(
+                bind(&TiffReaderData::readCMYK<uint8_t>, _1, _2, _3))(
                 RegistryKey(PHOTOMETRIC_SEPARATED, 16),
-                boost::bind(&TiffReaderData::readCMYK<uint16_t>, _1, _2, _3))
+                bind(&TiffReaderData::readCMYK<uint16_t>, _1, _2, _3))
             // (RegistryKey(PHOTOMETRIC_SEPARATED, 32),
-            // boost::bind(&TiffReaderData::readCMYK<float>, _1, _2, _3))
+            // bind(&TiffReaderData::readCMYK<float>, _1, _2, _3))
             (RegistryKey(PHOTOMETRIC_RGB, 8),
-             boost::bind(&TiffReaderData::readRGB<uint8_t>, _1, _2, _3))(
+             bind(&TiffReaderData::readRGB<uint8_t>, _1, _2, _3))(
                 RegistryKey(PHOTOMETRIC_RGB, 16),
-                boost::bind(&TiffReaderData::readRGB<uint16_t>, _1, _2, _3))(
+                bind(&TiffReaderData::readRGB<uint16_t>, _1, _2, _3))(
                 RegistryKey(PHOTOMETRIC_RGB, 32),
-                boost::bind(&TiffReaderData::readRGB<float>, _1, _2, _3));
+                bind(&TiffReaderData::readRGB<float>, _1, _2, _3));
 
         Registry::iterator it =
             sm_registry.find(RegistryKey(photometricType_, bitsPerSample_));

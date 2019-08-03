@@ -39,7 +39,6 @@
 #include <QSqlRecord>
 #include <QtConcurrentRun>
 
-#include <boost/bind.hpp>
 #include <memory>
 
 #include <Libpfs/frame.h>
@@ -364,7 +363,7 @@ void BatchHDRDialog::batch_hdr() {
         qDebug() << "BatchHDRDialog::batch_hdr() Files to process: "
                  << toProcess;
         // DAVIDE _ HDR CREATION
-        QtConcurrent::run(boost::bind(&HdrCreationManager::loadFiles,
+        QtConcurrent::run(std::bind(&HdrCreationManager::loadFiles,
                                       m_hdrCreationManager, toProcess));
     } else {
         m_Ui->closeButton->show();
@@ -423,7 +422,7 @@ void BatchHDRDialog::create_hdr(int) {
         int h0 = m_hdrCreationManager->computePatches(
             m_Ui->threshold_doubleSpinBox->value(), m_patches, patchesPercent,
             HV_offsets);
-        m_future = QtConcurrent::run(boost::bind(
+        m_future = QtConcurrent::run(std::bind(
             &HdrCreationManager::doAntiGhosting, m_hdrCreationManager,
             m_patches, h0, false, &m_ph));  // false means auto anti-ghosting
 
@@ -431,7 +430,7 @@ void BatchHDRDialog::create_hdr(int) {
 
     } else {
         m_future = QtConcurrent::run(
-            boost::bind(&HdrCreationManager::createHdr, m_hdrCreationManager));
+            std::bind(&HdrCreationManager::createHdr, m_hdrCreationManager));
 
         m_futureWatcher.setFuture(m_future);
     }

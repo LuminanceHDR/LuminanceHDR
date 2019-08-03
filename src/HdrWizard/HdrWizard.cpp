@@ -24,8 +24,6 @@
 #include "HdrWizard/HdrWizard.h"
 #include "HdrWizard/ui_HdrWizard.h"
 
-#include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 #include <cmath>
 
 #include <QDebug>
@@ -248,7 +246,7 @@ void HdrWizard::updateTableGrid() {
     // insert the row at the bottom of the table widget
     int counter = 0;
     QStringList filesWithoutExif;
-    BOOST_FOREACH (const HdrCreationItem &item, *m_hdrCreationManager) {
+    for (const auto &item: *m_hdrCreationManager) {
         float normalizedEV = item.getEV() - m_hdrCreationManager->getEVOffset();
 
         qDebug() << QStringLiteral(
@@ -452,7 +450,7 @@ void HdrWizard::loadInputFiles(const QStringList &files) {
         m_inputFilesName = files;
 
         m_futureWatcher.setFuture(
-            QtConcurrent::run(boost::bind(&HdrCreationManager::loadFiles,
+            QtConcurrent::run(std::bind(&HdrCreationManager::loadFiles,
                                           m_hdrCreationManager.data(), files)));
     }
 }
@@ -720,7 +718,7 @@ void HdrWizard::startComputation() {
     if (m_doAutoAntighosting) {
         int h0;
         m_hdrCreationManager->getAgData(m_patches, h0);
-        m_future = QtConcurrent::run(boost::bind(
+        m_future = QtConcurrent::run(std::bind(
             &HdrCreationManager::doAntiGhosting,
             m_hdrCreationManager.data(), m_patches, h0, false,
             &m_ph));  // false means auto anti-ghosting
@@ -733,7 +731,7 @@ void HdrWizard::startComputation() {
         m_futureWatcher.setFuture(m_future);
     } else if (m_doManualAntighosting) {
         m_future = QtConcurrent::run(
-            boost::bind(&HdrCreationManager::doAntiGhosting,
+            std::bind(&HdrCreationManager::doAntiGhosting,
                         m_hdrCreationManager.data(), m_patches,
                         m_agGoodImageIndex, true,
                         &m_ph));  // true means manual anti-ghosting
@@ -753,7 +751,7 @@ void HdrWizard::createHdr() {
     m_Ui->NextFinishButton->setEnabled(false);
     m_Ui->cancelButton->setEnabled(false);
 
-    m_future = QtConcurrent::run(boost::bind(&HdrCreationManager::createHdr,
+    m_future = QtConcurrent::run(std::bind(&HdrCreationManager::createHdr,
                                              m_hdrCreationManager.data()));
 
     if (m_pfsFrameHDR == nullptr) {

@@ -6,8 +6,6 @@
 #include <iomanip>
 #include <numeric>
 
-#include <boost/algorithm/minmax_element.hpp>
-
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/manip/copy.h>
@@ -77,7 +75,7 @@ std::pair<float, float> quantiles(const pfs::Array2Df &data, float nb_min,
 
 std::pair<float, float> getMinMax(const pfs::Array2Df &data) {
     std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator>
-        minmax = boost::minmax_element(data.begin(), data.end());
+        minmax = minmax_element(data.begin(), data.end());
 
     return std::pair<float, float>(*minmax.first, *minmax.second);
 }

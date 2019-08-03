@@ -28,11 +28,11 @@
 
 using namespace std;
 
-boost::mutex FFTW_MUTEX::fftw_mutex_global;
-boost::mutex FFTW_MUTEX::fftw_mutex_plan;
-boost::mutex FFTW_MUTEX::fftw_mutex_destroy_plan;
-boost::mutex FFTW_MUTEX::fftw_mutex_alloc;
-boost::mutex FFTW_MUTEX::fftw_mutex_free;
+std::mutex FFTW_MUTEX::fftw_mutex_global;
+std::mutex FFTW_MUTEX::fftw_mutex_plan;
+std::mutex FFTW_MUTEX::fftw_mutex_destroy_plan;
+std::mutex FFTW_MUTEX::fftw_mutex_alloc;
+std::mutex FFTW_MUTEX::fftw_mutex_free;
 
 void init_fftw() {
     FFTW_MUTEX::fftw_mutex_global.lock();

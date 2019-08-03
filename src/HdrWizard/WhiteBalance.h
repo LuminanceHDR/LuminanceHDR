@@ -16,7 +16,7 @@ void colorBalanceRGB(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B,
 void robustAWB(pfs::Array2Df *R, pfs::Array2Df *G, pfs::Array2Df *B);
 void shadesOfGrayAWB(pfs::Array2Df &R, pfs::Array2Df &G, pfs::Array2Df &B);
 
-enum WhiteBalanceType {
+enum WhiteBalanceType : short {
     WB_COLORBALANCE = 0,
     WB_ROBUST = 1,
     WB_SHADESOFGRAY = 2

@@ -22,7 +22,6 @@
  *
  */
 
-#include <boost/math/special_functions/round.hpp>
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -68,18 +67,18 @@ void PanIconWidget::setImage(const QImage *fullsize) {
 }
 
 void PanIconWidget::regionSelectionMoved() {
-    int x = (int)boost::math::round(
+    int x = (int)round(
         ((float)m_localRegionSelection.x() /*- (float)m_rect.x()*/) *
         ((float)m_orgWidth / (float)m_width));
 
-    int y = (int)boost::math::round(
+    int y = (int)round(
         ((float)m_localRegionSelection.y() /*- (float)m_rect.y()*/) *
         ((float)m_orgHeight / (float)m_height));
 
-    int w = (int)boost::math::round((float)m_localRegionSelection.width() *
+    int w = (int)round((float)m_localRegionSelection.width() *
                                     ((float)m_orgWidth / (float)m_width));
 
-    int h = (int)boost::math::round((float)m_localRegionSelection.height() *
+    int h = (int)round((float)m_localRegionSelection.height() *
                                     ((float)m_orgHeight / (float)m_height));
 
     regionSelection.setX(x);

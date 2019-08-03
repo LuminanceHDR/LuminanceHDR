@@ -22,9 +22,8 @@
 #ifndef PFS_COLORSPACE_NORMALIZER_H
 #define PFS_COLORSPACE_NORMALIZER_H
 
+#include <cmath>
 #include <cassert>
-
-#include <boost/math/special_functions/fpclassify.hpp>
 
 namespace pfs {
 namespace colorspace {
@@ -35,7 +34,7 @@ struct Normalizer {
     }
 
     float operator()(float sample) const {
-        //assert(!boost::math::isnan(sample));
+        //assert(!std::isnan(sample));
 
         return (sample - m_min) / m_range;
     }

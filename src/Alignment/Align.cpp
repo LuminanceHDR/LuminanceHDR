@@ -27,8 +27,6 @@
 #include <QtConcurrentFilter>
 #include <QtConcurrentMap>
 
-#include <boost/bind.hpp>
-
 #include "Align.h"
 #include "Common/CommonFunctions.h"
 #include "Exif/ExifOperations.h"

@@ -22,7 +22,6 @@
  */
 
 #include <QtGlobal>
-#include <boost/foreach.hpp>
 #include "UI/SupportedCamerasDialog.h"
 #include "UI/ui_SupportedCamerasDialog.h"
 #include "Common/GitSHA1.h"
@@ -67,22 +66,16 @@ SupportedCamerasDialog::~SupportedCamerasDialog() {
 void SupportedCamerasDialog::search(const QString &text) {
     m_Ui->listWidget->clear();
 
-    // for (auto i : m_items)
-    BOOST_FOREACH (QListWidgetItem *i, m_items) {
-        m_Ui->listWidget->addItem(new QListWidgetItem(
-            *i));  // listWidget takes ownership of its items
+    for (auto i : m_items) {
+        m_Ui->listWidget->addItem(new QListWidgetItem( *i ));  // listWidget takes ownership of its items
     }
-    QList<QListWidgetItem *> tmp_found = m_Ui->listWidget->findItems(
-        text, Qt::MatchContains);  // still owned by listWidget
+    QList<QListWidgetItem *> tmp_found = m_Ui->listWidget->findItems(text, Qt::MatchContains);  // still owned by listWidget
     QList<QListWidgetItem *> found;
-    // for (auto i : tmp_found)
-    BOOST_FOREACH (QListWidgetItem *i, tmp_found) {
+    for (auto i : tmp_found) {
         found.append(new QListWidgetItem(*i));  // new copy owned by found QList
     }
     m_Ui->listWidget->clear();
-    // for (auto i : found)
-    BOOST_FOREACH (QListWidgetItem *i, found) {
-        m_Ui->listWidget->addItem(
-            i);  // ownership transferred by found to listWidget
+    for (auto i : found) {
+        m_Ui->listWidget->addItem( i );  // ownership transferred by found to listWidget
     }
 }
