@@ -33,7 +33,6 @@
 #define TMO_REINHARD02_H
 
 #include <fftw3.h>
-#include <boost/thread/mutex.hpp>
 
 #include <Libpfs/array2d_fwd.h>
 

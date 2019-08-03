@@ -48,7 +48,6 @@
 #endif
 
 #include <boost/math/constants/constants.hpp>
-#include <boost/thread/mutex.hpp>
 
 #include <Common/init_fftw.h>
 #include <Libpfs/array2d.h>

@@ -33,11 +33,7 @@
 #include <iostream>
 #include <iterator>
 #include <vector>
-
-#include <boost/bind.hpp>
-#include <boost/limits.hpp>
-#include <boost/math/special_functions/fpclassify.hpp>
-#include <boost/numeric/conversion/bounds.hpp>
+#include <functional>
 
 #include <Libpfs/array2d.h>
 
@@ -49,6 +45,7 @@
 
 using namespace pfs;
 using namespace std;
+using namespace std::placeholders;
 
 namespace libhdr {
 namespace fusion {
@@ -80,10 +77,10 @@ void RobertsonOperator::applyResponse(
             // saturated value is present, and maximum exp time at which
             // black value is present
             if (m > maxAllowedValue) {
-                minti = std::min(minti, ti);
+                minti = min(minti, ti);
             }
             if (m < minAllowedValue) {
-                maxti = std::max(maxti, ti);
+                maxti = max(maxti, ti);
             }
 
             // --- anti-ghosting: monotonous increase in time should result
@@ -128,7 +125,7 @@ void RobertsonOperator::applyResponse(
 
 void RobertsonOperator::computeFusion(ResponseCurve &response,
                                       WeightFunction &weight,
-                                      const std::vector<FrameEnhanced> &frames,
+                                      const vector<FrameEnhanced> &frames,
                                       pfs::Frame &frame) {
     assert(frames.size());
 
@@ -150,10 +147,10 @@ void RobertsonOperator::computeFusion(ResponseCurve &response,
     float maxAllowedValue = weight.maxTrustedValue();
     float minAllowedValue = weight.minTrustedValue();
 
-    std::vector<float> averageLuminances;
-    std::transform(frames.begin(), frames.end(),
-                   std::back_inserter(averageLuminances),
-                   boost::bind(&FrameEnhanced::averageLuminance, _1));
+    vector<float> averageLuminances;
+    transform(frames.begin(), frames.end(),
+                   back_inserter(averageLuminances),
+                   bind(&FrameEnhanced::averageLuminance, _1));
 
     applyResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels,
                   outputRed->data(), tempFrame.getWidth(),
@@ -172,7 +169,7 @@ void RobertsonOperator::computeFusion(ResponseCurve &response,
     cmax[0] = *max_element(outputRed->begin(), outputRed->end());
     cmax[1] = *max_element(outputGreen->begin(), outputGreen->end());
     cmax[2] = *max_element(outputBlue->begin(), outputBlue->end());
-    float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
+    float Max = max(cmax[0], max(cmax[1], cmax[2]));
 
     replace_if(outputRed->begin(), outputRed->end(),
                [](float f) { return !isnormal(f); }, Max);
@@ -283,7 +280,7 @@ void RobertsonOperatorAuto::computeResponse(
     applyResponse(response, weight, channel, inputData, outputData, width,
                   height, minAllowedValue, maxAllowedValue, arrayofexptime);
 
-    std::vector<long> cardEm(ResponseCurve::NUM_BINS);
+    vector<long> cardEm(ResponseCurve::NUM_BINS);
     ResponseContainer sum;
 
     assert(sum.size() == cardEm.size());
@@ -351,14 +348,14 @@ void RobertsonOperatorAuto::computeResponse(
 #endif
         if (delta < MAX_DELTA) {
 #ifndef NDEBUG
-            std::cerr << " #" << cur_it << " delta=" << pdelta
+            cerr << " #" << cur_it << " delta=" << pdelta
                       << " <- converged\n";
 #endif
             break;
-        } else if (boost::math::isnan(delta) ||
+        } else if (isnan(delta) ||
                    (cur_it > MAXIT && pdelta < delta)) {
 #ifndef NDEBUG
-            std::cerr
+            cerr
                 << "algorithm failed to converge, too noisy data in range\n";
 #endif
             break;
@@ -370,7 +367,7 @@ void RobertsonOperatorAuto::computeResponse(
 
 void RobertsonOperatorAuto::computeFusion(
     ResponseCurve &response, WeightFunction &weight,
-    const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) {
+    const vector<FrameEnhanced> &frames, pfs::Frame &frame) {
     assert(frames.size());
 
     size_t numExposures = frames.size();
@@ -391,10 +388,10 @@ void RobertsonOperatorAuto::computeFusion(
     float maxAllowedValue = weight.maxTrustedValue();
     float minAllowedValue = weight.minTrustedValue();
 
-    std::vector<float> averageLuminances;
-    std::transform(frames.begin(), frames.end(),
-                   std::back_inserter(averageLuminances),
-                   boost::bind(&FrameEnhanced::averageLuminance, _1));
+    vector<float> averageLuminances;
+    transform(frames.begin(), frames.end(),
+                   back_inserter(averageLuminances),
+                   bind(&FrameEnhanced::averageLuminance, _1));
 
     // red
     computeResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels,
@@ -416,7 +413,7 @@ void RobertsonOperatorAuto::computeFusion(
     cmax[0] = *max_element(outputRed->begin(), outputRed->end());
     cmax[1] = *max_element(outputGreen->begin(), outputGreen->end());
     cmax[2] = *max_element(outputBlue->begin(), outputBlue->end());
-    float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
+    float Max = max(cmax[0], max(cmax[1], cmax[2]));
 
     replace_if(outputRed->begin(), outputRed->end(),
                [](float f) { return !isnormal(f); }, Max);

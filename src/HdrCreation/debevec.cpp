@@ -33,7 +33,6 @@
 
 #include <QtGlobal>
 #include <limits>
-#include <boost/numeric/conversion/bounds.hpp>
 #include <cassert>
 #include <cfloat>
 #include <cmath>
@@ -58,7 +57,6 @@ using namespace pfs;
 using namespace std;
 using namespace utils;
 using namespace colorspace;
-using namespace boost::math;
 
 namespace libhdr {
 namespace fusion {

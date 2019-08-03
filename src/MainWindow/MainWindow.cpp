@@ -49,6 +49,7 @@
 #include <QWhatsThis>
 #include <QtConcurrentRun>
 
+//#include <functional>
 #include <boost/bind.hpp>
 
 #include "MainWindow/ui_MainWindow.h"

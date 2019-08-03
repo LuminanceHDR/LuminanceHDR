@@ -27,13 +27,13 @@
  */
 
 #include <algorithm>
-#include <boost/bind.hpp>
 #include <iostream>
 
 #include "channel.h"
 #include "frame.h"
 
 using namespace std;
+using namespace std::placeholders;
 
 namespace pfs {
 Frame::Frame(size_t width, size_t height)
@@ -55,7 +55,7 @@ Frame::~Frame() {
 //! \brief Changes the size of the frame
 void Frame::resize(size_t width, size_t height) {
     for_each(m_channels.begin(), m_channels.end(),
-             boost::bind(&Channel::ChannelData::resize, _1, width, height));
+             bind(&Channel::ChannelData::resize, _1, width, height));
 
     m_width = width;
     m_height = height;

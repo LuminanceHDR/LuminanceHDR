@@ -22,7 +22,6 @@
  */
 
 #include <QtConcurrentRun>
-#include <boost/bind.hpp>
 
 #include "Projection/ProjectionsDialog.h"
 #include "Projection/ui_ProjectionsDialog.h"
@@ -132,7 +131,7 @@ void ProjectionsDialog::okClicked() {
         static_cast<int>(xSize / transforminfo->dstProjection->getSizeRatio());
     transformed = new pfs::Frame(xSize, ySize);
 
-    m_future = QtConcurrent::run(boost::bind(&worker, original, transformed,
+    m_future = QtConcurrent::run(bind(&worker, original, transformed,
                                              xSize, ySize, transforminfo));
 
     m_futureWatcher.setFuture(m_future);

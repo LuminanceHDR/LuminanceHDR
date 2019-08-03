@@ -31,7 +31,6 @@
  */
 
 #include <boost/assign.hpp>
-#include <boost/thread/mutex.hpp>
 #include <map>
 
 #include "TonemappingOperators/pfstmo.h"
