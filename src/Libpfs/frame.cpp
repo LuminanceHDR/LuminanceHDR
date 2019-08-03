@@ -37,7 +37,7 @@ using namespace std;
 
 namespace pfs {
 Frame::Frame(size_t width, size_t height)
-    : m_width(width), m_height(height), m_X(NULL), m_Y(NULL), m_Z(NULL) {}
+    : m_width(width), m_height(height), m_X(nullptr), m_Y(nullptr), m_Z(nullptr) {}
 
 namespace {
 struct ChannelDeleter {
@@ -78,10 +78,10 @@ struct FindChannel {
 void Frame::getXYZChannels(const Channel *&X, const Channel *&Y,
                            const Channel *&Z) const {
     // find X
-    if (m_X == NULL || m_Y == NULL || m_Z == NULL) {
-        X = NULL;
-        Y = NULL;
-        Z = NULL;
+    if (m_X == nullptr || m_Y == nullptr || m_Z == nullptr) {
+        X = nullptr;
+        Y = nullptr;
+        Z = nullptr;
         return;
     }
 
@@ -96,7 +96,7 @@ void Frame::getXYZChannels(const Channel *&X, const Channel *&Y,
     //                );
     //    if ( it == m_channels.end() )
     //    {
-    //        X = Y = Z = NULL;
+    //        X = Y = Z = nullptr;
     //        return;
     //    }
     //    X = *it;
@@ -107,7 +107,7 @@ void Frame::getXYZChannels(const Channel *&X, const Channel *&Y,
     //                      FindChannel("Y"));
     //    if ( it == m_channels.end() )
     //    {
-    //        X = Y = Z = NULL;
+    //        X = Y = Z = nullptr;
     //        return;
     //    }
     //    Y = *it;
@@ -118,7 +118,7 @@ void Frame::getXYZChannels(const Channel *&X, const Channel *&Y,
     //                      FindChannel("Z"));
     //    if ( it == m_channels.end() )
     //    {
-    //        X = Y = Z = NULL;
+    //        X = Y = Z = nullptr;
     //        return;
     //    }
     //    Z = *it;
@@ -146,7 +146,7 @@ const Channel *Frame::getChannel(const string &name) const {
     ChannelContainer::const_iterator it =
         find_if(m_channels.begin(), m_channels.end(), FindChannel(name));
     if (it == m_channels.end())
-        return NULL;
+        return nullptr;
     else
         return *it;
 }
@@ -157,7 +157,7 @@ Channel *Frame::getChannel(const string &name) {
 }
 
 Channel *Frame::createChannel(const string &name) {
-    Channel *ch = NULL;
+    Channel *ch = nullptr;
     ChannelContainer::iterator it =
         find_if(m_channels.begin(), m_channels.end(), FindChannel(name));
     if (it != m_channels.end()) {
@@ -188,11 +188,11 @@ void Frame::removeChannel(const string &channel) {
         delete ch;
 
         if (channel == "X") {
-            m_X = NULL;
+            m_X = nullptr;
         } else if (channel == "Y") {
-            m_Y = NULL;
+            m_Y = nullptr;
         } else if (channel == "Z") {
-            m_Z = NULL;
+            m_Z = nullptr;
         }
     }
 }

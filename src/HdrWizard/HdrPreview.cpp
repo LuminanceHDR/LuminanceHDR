@@ -28,7 +28,7 @@
 HdrPreview::HdrPreview(QDialog *parent)
     : QDialog(parent),
       m_Ui(new Ui::HdrPreview),
-      m_viewer(new HdrViewer(NULL)) {
+      m_viewer(new HdrViewer(nullptr)) {
 
     m_Ui->setupUi(this);
     m_Ui->hdrPreviewFrame->layout()->addWidget(m_viewer.data());

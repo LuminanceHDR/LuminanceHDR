@@ -74,20 +74,20 @@ pfs::Frame *TMWorker::computeTonemap(/* const */ pfs::Frame *in_frame,
 #endif
 
     pfs::Frame *working_frame = preprocessFrame(in_frame, tm_options, m);
-    if (working_frame == NULL) return NULL;
+    if (working_frame == nullptr) return nullptr;
     try {
         tonemapFrame(working_frame, tm_options);
     } catch (...) {
         emit tonemapFailed(QStringLiteral("Tonemap failed!"));
         delete working_frame;
-        return NULL;
+        return nullptr;
     }
 
     if (m_Callback->canceled()) {
         emit tonemapFailed(QStringLiteral("Canceled"));
         m_Callback->cancel(false);  // double check this
         delete working_frame;
-        return NULL;
+        return nullptr;
     }
 
     postprocessFrame(working_frame, tm_options);
@@ -103,7 +103,7 @@ void TMWorker::computeTonemapAndExport(/* const */ pfs::Frame *in_frame,
                                        QVector<float> inputExpoTimes,
                                        InterpolationMethod m) {
     pfs::Frame *working_frame = preprocessFrame(in_frame, tm_options, m);
-    if (working_frame == NULL) return;
+    if (working_frame == nullptr) return;
     try {
         tonemapFrame(working_frame, tm_options);
     } catch (...) {
@@ -177,7 +177,7 @@ void TMWorker::tonemapFrame(pfs::Frame *working_frame,
 pfs::Frame *TMWorker::preprocessFrame(pfs::Frame *input_frame,
                                       TonemappingOptions *tm_options,
                                       InterpolationMethod m) {
-    pfs::Frame *working_frame = NULL;
+    pfs::Frame *working_frame = nullptr;
 
     if (tm_options->tonemapSelection) {
         // workingframe = "crop"

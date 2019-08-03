@@ -550,7 +550,7 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
         throw(
             QApplication::tr("ERROR: cannot load Tone Mapping Setting file: ") +
             fname);
-        // return NULL;
+        // return nullptr;
     }
 
     TonemappingOptions *toreturn = new TonemappingOptions;
@@ -575,7 +575,7 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
                           "ERROR: File too old, cannot parse Tone Mapping "
                           "Setting file: ") +
                       fname);
-                //                 return NULL;
+                //                 return nullptr;
             }
         } else if (field == QLatin1String("XSIZE")) {
             toreturn->xsize = value.toInt();
@@ -751,7 +751,7 @@ TonemappingOptions *TMOptionsOperations::parseFile(const QString &fname) {
             throw(QApplication::tr(
                       "ERROR: cannot parse Tone Mapping Setting file: ") +
                   fname);
-            //             return NULL;
+            //             return nullptr;
         }
     }
     return toreturn;

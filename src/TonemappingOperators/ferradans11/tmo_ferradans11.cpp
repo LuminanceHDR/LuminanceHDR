@@ -72,7 +72,7 @@ using namespace utils;
 static void dumpPFS( const char *fileName, const pfstmo::Array2D *data, const char *channelName )
 {
    FILE *fh = fopen( fileName, "wb" );
-   assert( fh != NULL );
+   assert( fh != nullptr );
 
    int width = data->getCols();
    int height = data->getRows();

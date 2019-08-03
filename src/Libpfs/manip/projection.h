@@ -140,7 +140,7 @@ class TransformInfo {
         xRotate = yRotate = zRotate = 0;
         oversampleFactor = 1;
         interpolate = true;
-        srcProjection = dstProjection = NULL;
+        srcProjection = dstProjection = nullptr;
     }
 };
 

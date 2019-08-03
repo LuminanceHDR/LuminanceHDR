@@ -83,13 +83,13 @@ void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
     std::cout << ", setluminance: " << setluminance << ")" << std::endl;
 #endif
 
-    DisplayFunction *df = NULL;
-    DisplaySize *ds = NULL;
+    DisplayFunction *df = nullptr;
+    DisplaySize *ds = nullptr;
 
-    if (df == NULL)  // As of now df is not selected by users but hardcoded here
+    if (df == nullptr)  // As of now df is not selected by users but hardcoded here
         df = new DisplayFunctionGGBA("lcd");
 
-    if (ds == NULL)  // As of now ds is not selected by users but hardcoded here
+    if (ds == nullptr)  // As of now ds is not selected by users but hardcoded here
         ds = new DisplaySize(30.f, 0.5f);
 
 #ifndef NDEBUG
@@ -101,7 +101,7 @@ void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
     frame.getXYZChannels(inX, inY, inZ);
 
     if (!inX || !inY || !inZ) {
-        if (df != NULL) delete df;
+        if (df != nullptr) delete df;
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 
@@ -116,7 +116,7 @@ void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
         std::string white_y_str = frame.getTags().getTag("WHITE_Y");
         if (!white_y_str.empty())  // TODO check this
         {
-            white_y = strtod(white_y_str.c_str(), NULL);
+            white_y = strtod(white_y_str.c_str(), nullptr);
             if (white_y == 0) {
                 white_y = -1;
                 fprintf(stderr, "warning - wrong WHITE_Y in the input image");
@@ -141,7 +141,7 @@ void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
 
     std::unique_ptr<datmoConditionalDensity> C =
         datmo_compute_conditional_density(cols, rows, inY->data(), ph);
-    if (C.get() == NULL) {
+    if (C.get() == nullptr) {
         delete df;
         delete ds;
         throw pfs::Exception("failed to analyse the image");

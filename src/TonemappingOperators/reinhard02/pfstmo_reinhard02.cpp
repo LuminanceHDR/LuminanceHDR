@@ -68,7 +68,7 @@ void pfstmo_reinhard02(pfs::Frame &frame, float key, float phi, int num,
     frame.getXYZChannels(X, Y, Z);
     //---
 
-    if (Y == NULL || X == NULL || Z == NULL) {
+    if (Y == nullptr || X == nullptr || Z == nullptr) {
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 

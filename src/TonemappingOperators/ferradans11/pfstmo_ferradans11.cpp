@@ -55,7 +55,7 @@ void pfstmo_ferradans11(pfs::Frame &frame, float opt_rho, float opt_inv_alpha,
     pfs::Channel *inR, *inG, *inB;
     frame.getXYZChannels(inR, inG, inB);
 
-    if (inR == NULL || inG == NULL || inB == NULL)
+    if (inR == nullptr || inG == nullptr || inB == nullptr)
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
 
     frame.getTags().setTag("LUMINANCE", "RELATIVE");

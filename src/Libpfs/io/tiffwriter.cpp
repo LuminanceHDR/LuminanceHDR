@@ -145,7 +145,7 @@ void writeCommonHeader(TIFF *tif, uint32_t width, uint32_t height) {
 void writeSRGBProfile(TIFF *tif) {
     utils::ScopedCmsProfile hsRGB(cmsCreate_sRGBProfile());
     cmsUInt32Number profileSize = 0;
-    cmsSaveProfileToMem(hsRGB.data(), NULL, &profileSize);  // get the size
+    cmsSaveProfileToMem(hsRGB.data(), nullptr, &profileSize);  // get the size
 
     std::vector<char> embedBuffer(profileSize);
 
@@ -167,7 +167,7 @@ bool writeUint8(TIFF *tif, const Frame &frame, const TiffWriterParams &params) {
     cout << BOOST_CURRENT_FUNCTION << endl;
 #endif
 
-    assert(tif != NULL);
+    assert(tif != nullptr);
 
     uint32_t width = frame.getWidth();
     uint32_t height = frame.getHeight();
@@ -220,7 +220,7 @@ bool writeUint16(TIFF *tif, const Frame &frame,
 #ifndef NDEBUG
     cout << BOOST_CURRENT_FUNCTION << endl;
 #endif
-    assert(tif != NULL);
+    assert(tif != nullptr);
 
     uint32_t width = frame.getWidth();
     uint32_t height = frame.getHeight();
@@ -282,7 +282,7 @@ bool writeFloat32(TIFF *tif, const Frame &frame,
 #ifndef NDEBUG
     cout << BOOST_CURRENT_FUNCTION << endl;
 #endif
-    assert(tif != NULL);
+    assert(tif != nullptr);
 
     uint32_t width = frame.getWidth();
     uint32_t height = frame.getHeight();
@@ -342,7 +342,7 @@ bool writeLogLuv(TIFF *tif, const Frame &frame,
 #ifndef NDEBUG
     cout << BOOST_CURRENT_FUNCTION << endl;
 #endif
-    assert(tif != NULL);
+    assert(tif != nullptr);
 
     uint32_t width = frame.getWidth();
     uint32_t height = frame.getHeight();

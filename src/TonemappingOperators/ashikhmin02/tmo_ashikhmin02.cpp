@@ -176,8 +176,8 @@ int tmo_ashikhmin02(pfs::Array2Df *Y, pfs::Array2Df *L, float maxLum,
     stop_watch.start();
 #endif
 
-    assert(Y != NULL);
-    assert(L != NULL);
+    assert(Y != nullptr);
+    assert(L != nullptr);
 
     unsigned int nrows = Y->getRows();  // image size
     unsigned int ncols = Y->getCols();

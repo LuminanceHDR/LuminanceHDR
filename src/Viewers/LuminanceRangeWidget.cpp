@@ -57,8 +57,8 @@ LuminanceRangeWidget::LuminanceRangeWidget(QWidget *parent)
       dragMode(DRAG_NO),
       showVP(false),
       valuePointer(0.f),
-      histogram(NULL),
-      histogramImage(NULL)
+      histogram(nullptr),
+      histogramImage(nullptr)
 
 {
     setFrameStyle(QFrame::Panel | QFrame::Sunken);
@@ -102,8 +102,8 @@ void LuminanceRangeWidget::paintEvent(QPaintEvent * /*pe */) {
     }
 
     // Paint histogram
-    if (histogramImage != NULL) {
-        if (histogram == NULL || histogram->getBins() != fRect.width()) {
+    if (histogramImage != nullptr) {
+        if (histogram == nullptr || histogram->getBins() != fRect.width()) {
             delete histogram;
             // Build histogram from at least 5000 pixels
             int accuracy =
@@ -257,12 +257,12 @@ void LuminanceRangeWidget::shrinkRange() {
 void LuminanceRangeWidget::setHistogramImage(const pfs::Array2Df *image) {
     histogramImage = image;
     delete histogram;
-    histogram = NULL;
+    histogram = nullptr;
     update();
 }
 
 void LuminanceRangeWidget::fitToDynamicRange() {
-    if (histogramImage != NULL) {
+    if (histogramImage != nullptr) {
         float min = 99999999.0f;
         float max = -99999999.0f;
 

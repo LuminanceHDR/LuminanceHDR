@@ -74,19 +74,19 @@ DisplaySize *createDisplaySizeFromArgs(int &argc, char *argv[]) {
             float vres = 1024, vd = 2, d = 0.5, ppd = -1;
             char *token;
             token = strtok(argv[i + 1], ":");
-            while (token != NULL) {
+            while (token != nullptr) {
                 if (!strncmp(token, "vres=", 5)) {
-                    vres = strtod(token + 5, NULL);
+                    vres = strtod(token + 5, nullptr);
                 } else if (!strncmp(token, "vd=", 3)) {
-                    vd = strtod(token + 3, NULL);
+                    vd = strtod(token + 3, nullptr);
                 } else if (!strncmp(token, "d=", 2)) {
-                    d = strtod(token + 2, NULL);
+                    d = strtod(token + 2, nullptr);
                 } else if (!strncmp(token, "ppd=", 4)) {
-                    ppd = strtod(token + 4, NULL);
+                    ppd = strtod(token + 4, nullptr);
                 } else {
                     throw pfs::Exception("Bad display size specification");
                 }
-                token = strtok(NULL, ":");
+                token = strtok(nullptr, ":");
             }
             if (ppd != -1)
                 ds = new DisplaySize(ppd, d);

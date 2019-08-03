@@ -119,7 +119,7 @@ bool OsIntegration::isRunningOnSameCpuPlatform() {
 
     fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(
         GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
-    if (NULL != fnIsWow64Process) {
+    if (nullptr != fnIsWow64Process) {
         return !(fnIsWow64Process(GetCurrentProcess(), &f64) && f64);
     }
     return true;

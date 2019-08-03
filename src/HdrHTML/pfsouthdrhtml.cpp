@@ -76,8 +76,8 @@ void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
             QObject::tr("The quality must be between 1 (worst) and 5 (best).")
                 .toStdString());
 
-    if (frame == NULL) {
-        throw pfs::Exception(QObject::tr("NULL frame passed.").toStdString());
+    if (frame == nullptr) {
+        throw pfs::Exception(QObject::tr("nullptr frame passed.").toStdString());
     }
 
     pfs::Channel *R, *G, *B;
@@ -118,7 +118,7 @@ void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
 
     base_name = tmp_str;
 
-    HDRHTMLSet image_set(NULL, image_dir.empty() ? NULL : image_dir.c_str());
+    HDRHTMLSet image_set(nullptr, image_dir.empty() ? nullptr : image_dir.c_str());
     if (verbose)
         cout << QObject::tr("Adding image ").toStdString() << base_name
              << QObject::tr(" to the web page").toStdString() << endl;
@@ -126,7 +126,7 @@ void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
     try {
         image_set.add_image(frame->getWidth(), frame->getHeight(), R1, G1, B1,
                             Y1, base_name.c_str(),
-                            out_dir.empty() ? NULL : out_dir.c_str(), quality,
+                            out_dir.empty() ? nullptr : out_dir.c_str(), quality,
                             verbose);
     } catch (pfs::Exception &e) {
         throw;
@@ -135,9 +135,9 @@ void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
     try {
         image_set.generate_webpage(
             page_template, image_template,
-            out_dir.empty() ? NULL : out_dir.c_str(),
-            object_output.empty() ? NULL : object_output.c_str(),
-            html_output.empty() ? NULL : html_output.c_str(), verbose);
+            out_dir.empty() ? nullptr : out_dir.c_str(),
+            object_output.empty() ? nullptr : object_output.c_str(),
+            html_output.empty() ? nullptr : html_output.c_str(), verbose);
     } catch (pfs::Exception &e) {
         throw;
     }

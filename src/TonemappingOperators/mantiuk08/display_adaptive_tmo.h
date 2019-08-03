@@ -58,7 +58,7 @@ class datmoToneCurve {
     datmoToneCurve();
     ~datmoToneCurve();
 
-    void init(size_t n_size, const double *n_x_i, double *n_y_i = NULL);
+    void init(size_t n_size, const double *n_x_i, double *n_y_i = nullptr);
     void free();
 };
 
@@ -171,7 +171,7 @@ int datmo_tonemap(float *R_out, float *G_out, float *B_out, int width,
  * @param L input luminance map (L=0.212656*R + 0.715158*G + 0.072186*B)
  * @param progress_cb callback function for reporting progress or stopping
  * computations.
- * @return pointer to conditional_density or NULL if computation was
+ * @return pointer to conditional_density or nullptr if computation was
  * aborted or an error was encountered. The conditional_density object
  * must be freed by the calling application using the 'delete'
  * statement.

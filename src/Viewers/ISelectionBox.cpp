@@ -188,12 +188,12 @@ QPointF ISelectionBox::checkBorders(QPointF in, QGraphicsItem *area) {
 
 bool ISelectionBox::sceneEventFilter(QGraphicsItem *watched, QEvent *event) {
     ISelectionAnchor *anchor = dynamic_cast<ISelectionAnchor *>(watched);
-    if (anchor == NULL) return false;  // not expected to get here
+    if (anchor == nullptr) return false;  // not expected to get here
 
     QGraphicsSceneMouseEvent *mouse_event =
         dynamic_cast<QGraphicsSceneMouseEvent *>(event);
     // this is not one of the mouse events we are interested in
-    if (mouse_event == NULL) return false;
+    if (mouse_event == nullptr) return false;
     // if (mouse_event->button() != Qt::LeftButton) return true;
 
     switch (mouse_event->type()) {

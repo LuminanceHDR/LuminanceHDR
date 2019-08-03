@@ -218,7 +218,7 @@ TonemappingOptions *BatchTMDialog::parse_tm_opt_file(const QString &fname) {
         return TMOptionsOperations::parseFile(fname);
     } catch (QString &e) {
         add_log_message(e);
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -268,7 +268,7 @@ void BatchTMDialog::add_view_model_TM_OPTs(const QStringList &list) {
         TonemappingOptions *i_th_tm_opt =
             parse_tm_opt_file(curr_tmo_options_file);
 
-        if (i_th_tm_opt != NULL) {
+        if (i_th_tm_opt != nullptr) {
             i_th_tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 
             // add to data structure

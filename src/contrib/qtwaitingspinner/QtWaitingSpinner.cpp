@@ -56,7 +56,7 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent)
       m_innerRadius(c_innerRadius),
 
       // Other
-      m_timer(NULL),
+      m_timer(nullptr),
       m_parent(parent),
       m_centreOnParent(false),
       m_currentCounter(0),
@@ -82,7 +82,7 @@ QtWaitingSpinner::QtWaitingSpinner(Qt::WindowModality modality, QWidget *parent,
       m_innerRadius(c_innerRadius),
 
       // Other
-      m_timer(NULL),
+      m_timer(nullptr),
       m_parent(parent),
       m_centreOnParent(centreOnParent),
       m_currentCounter(0) {

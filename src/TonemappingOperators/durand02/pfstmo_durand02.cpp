@@ -81,7 +81,7 @@ void pfstmo_durand02(pfs::Frame &frame, float sigma_s, float sigma_r,
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
     //---
 
-    if (Y == NULL || X == NULL || Z == NULL) {
+    if (Y == nullptr || X == nullptr || Z == nullptr) {
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 

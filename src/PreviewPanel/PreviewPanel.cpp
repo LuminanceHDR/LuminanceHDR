@@ -82,7 +82,7 @@ class PreviewLabelUpdater {
 #ifdef QT_DEBUG
             qDebug() << "operator()() for TM"
                      << static_cast<int>(tm_options->tmoperator)
-                     << " received a NULL pointer";
+                     << " received a nullptr pointer";
             return;
 #endif
         }
@@ -99,7 +99,7 @@ class PreviewLabelUpdater {
 
         // try { //Since nothing here actually throws this isn't useful, i need
         // to
-        // check if returned frame != NULL
+        // check if returned frame != nullptr
         QScopedPointer<TMWorker> tmWorker(new TMWorker);
         QSharedPointer<pfs::Frame> frame(tmWorker->computeTonemap(
             temp_frame.data(), tm_options, BilinearInterp));
@@ -347,7 +347,7 @@ PreviewPanel::~PreviewPanel() {
 }
 
 void PreviewPanel::updatePreviews(pfs::Frame *frame, int index) {
-    if (frame == NULL) return;
+    if (frame == nullptr) return;
 
     m_original_width_frame = frame->getWidth();
 

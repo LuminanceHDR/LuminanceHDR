@@ -152,7 +152,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame *ldr_input, const QString &filename,
     emit IO_init();
 
     QScopedPointer<TMOptionsOperations> operations;
-    if (tmopts != NULL) {
+    if (tmopts != nullptr) {
         operations.reset(new TMOptionsOperations(tmopts));
     }
 
@@ -183,7 +183,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame *ldr_input, const QString &filename,
         if (inputFileName == "FromHdrFile") {
             QString comment;
 
-            if (operations != NULL) {
+            if (operations != nullptr) {
                 comment = operations->getExifComment();
             } else {
                 comment = QObject::tr("HDR Preview");
@@ -200,7 +200,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame *ldr_input, const QString &filename,
                 QFile::encodeName(absoluteInputFileName);
             QString comment;
 
-            if (operations != NULL) {
+            if (operations != nullptr) {
                 comment = operations->getExifComment();
             } else {
                 comment = QObject::tr("HDR Preview");
@@ -232,7 +232,7 @@ pfs::Frame *IOWorker::read_hdr_frame(const QString &filename) {
     emit IO_init();
 
     if (filename.isEmpty()) {
-        return NULL;
+        return nullptr;
     }
 
     QFileInfo qfi(filename);
@@ -240,7 +240,7 @@ pfs::Frame *IOWorker::read_hdr_frame(const QString &filename) {
         emit read_hdr_failed(
             tr("IOWorker: The following file is not readable: %1")
                 .arg(filename));
-        return NULL;
+        return nullptr;
     }
 
     QScopedPointer<pfs::Frame> hdrpfsframe(new pfs::Frame());
@@ -283,7 +283,7 @@ pfs::Frame *IOWorker::read_hdr_frame(const QString &filename) {
         emit read_hdr_success(frame, filename);
         return frame;
     } else {
-        return NULL;
+        return nullptr;
     }
 }
 

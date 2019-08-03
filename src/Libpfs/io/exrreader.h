@@ -32,7 +32,7 @@ class EXRReader : public FrameReader {
     EXRReader(const std::string &filename);
     ~EXRReader();
 
-    bool isOpen() const { return (m_data.get() != NULL); }
+    bool isOpen() const { return (m_data.get() != nullptr); }
 
     void close();
     void open();

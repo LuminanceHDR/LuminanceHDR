@@ -82,13 +82,13 @@ class IOWorker : public QObject {
     bool write_ldr_frame(pfs::Frame *frame, const QString &filename,
                          const QString &inputFileName,
                          const QVector<float> &expoTimes,
-                         TonemappingOptions *tmopts = NULL,
+                         TonemappingOptions *tmopts = nullptr,
                          const pfs::Params &params = pfs::Params());
 
     bool write_ldr_frame(GenericViewer *frame, const QString &filename,
                          const QString &inputFileName,
                          const QVector<float> &expoTimes,
-                         TonemappingOptions *tmopts = NULL,
+                         TonemappingOptions *tmopts = nullptr,
                          const pfs::Params &params = pfs::Params());
 
    signals:

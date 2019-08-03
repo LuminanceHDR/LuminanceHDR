@@ -40,7 +40,7 @@ class TonemappingSettings : public QDialog {
     Q_OBJECT
 
    public:
-    TonemappingSettings(QWidget *parent = 0, pfs::Frame *frame = NULL, QString databaseconnection = "");
+    TonemappingSettings(QWidget *parent = 0, pfs::Frame *frame = nullptr, QString databaseconnection = "");
     ~TonemappingSettings();
     TonemappingOptions *getTonemappingOptions();
     bool wantsTonemap() { return m_wantsTonemap; }

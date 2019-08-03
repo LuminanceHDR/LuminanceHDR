@@ -127,12 +127,12 @@ static cmsHPROFILE GetTIFFProfile(TIFF *in, uint16 bps) {
     TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION, gmr.data(), gmg.data(),
                           gmb.data());
 
-    // curve[0] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmr);
-    // curve[1] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmg);
-    // curve[2] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmb);
-    curve[0] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmr.data());
-    curve[1] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmg.data());
-    curve[2] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmb.data());
+    // curve[0] = cmsBuildTabulatedToneCurve16(nullptr, 1 << bps, gmr);
+    // curve[1] = cmsBuildTabulatedToneCurve16(nullptr, 1 << bps, gmg);
+    // curve[2] = cmsBuildTabulatedToneCurve16(nullptr, 1 << bps, gmb);
+    curve[0] = cmsBuildTabulatedToneCurve16(nullptr, 1 << bps, gmr.data());
+    curve[1] = cmsBuildTabulatedToneCurve16(nullptr, 1 << bps, gmg.data());
+    curve[2] = cmsBuildTabulatedToneCurve16(nullptr, 1 << bps, gmb.data());
 
     hProfile = cmsCreateRGBProfile(&whitePoint, &primaries, curve);
 
@@ -230,7 +230,7 @@ struct TiffReaderData {
     cmsHTRANSFORM getColorSpaceTransform() {
         if (!hIn_) {
             PRINT_DEBUG("No available input profile");
-            return NULL;
+            return nullptr;
         }
 
         PRINT_DEBUG("Available ICC Profile, building LCMS Transform");

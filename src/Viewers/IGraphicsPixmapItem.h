@@ -69,7 +69,7 @@ class IGraphicsPixmapItem : public QObject, public virtual QGraphicsPixmapItem {
 };
 
 inline bool IGraphicsPixmapItem::hasSelection() {
-    return (mSelectionBox != NULL);
+    return (mSelectionBox != nullptr);
 }
 
 inline void IGraphicsPixmapItem::enableSelectionTool() {

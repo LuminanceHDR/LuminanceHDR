@@ -47,7 +47,7 @@ static void worker(pfs::Frame *original, pfs::Frame *transformed, int xSize,
 ProjectionsDialog::ProjectionsDialog(QWidget *parent, pfs::Frame *orig)
     : QDialog(parent),
       original(orig),
-      transformed(NULL),
+      transformed(nullptr),
       m_Ui(new Ui::ProjectionsDialog) {
     m_Ui->setupUi(this);
 

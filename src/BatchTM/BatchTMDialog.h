@@ -91,7 +91,7 @@ class BatchTMDialog : public QDialog {
     void closeEvent(QCloseEvent *);
 
    private:
-    // Parses a TM_opts file (return NULL on error)
+    // Parses a TM_opts file (return nullptr on error)
     TonemappingOptions *parse_tm_opt_file(const QString &filename);
 
     // data structure (model) for left-side list: HDRs

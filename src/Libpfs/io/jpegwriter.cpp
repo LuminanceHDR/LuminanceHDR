@@ -212,7 +212,7 @@ class JpegWriterImpl {
         cmsUInt32Number cmsProfileSize = 0;
         utils::ScopedCmsProfile hsRGB(cmsCreate_sRGBProfile());
 
-        cmsSaveProfileToMem(hsRGB.data(), NULL,
+        cmsSaveProfileToMem(hsRGB.data(), nullptr,
                             &cmsProfileSize);  // get the size
 
         std::vector<JOCTET> cmsOutputProfile(cmsProfileSize);
@@ -309,18 +309,18 @@ typedef std::vector<JOCTET> JpegBuffer;
 struct JpegWriterImplMemory : public JpegWriterImpl {
     typedef std::map<j_compress_ptr, JpegBuffer *> JpegRegistry;
 
-    JpegWriterImplMemory() : JpegWriterImpl(), m_cinfo(NULL), m_buffer(0) {}
+    JpegWriterImplMemory() : JpegWriterImpl(), m_cinfo(nullptr), m_buffer(0) {}
 
     ~JpegWriterImplMemory() { close(); }
 
     // implementation below!
-    void setupJpegDest(j_compress_ptr cinfo, const std::string &filename);
+    void setupJpegDest(j_compress_ptr cinfo, const std::string &filename) override;
 
-    void close() {
+    void close() override {
         sm_registry.erase(m_cinfo);
-        m_cinfo->dest = NULL;
+        m_cinfo->dest = nullptr;
     }
-    size_t getFileSize() const { return (m_buffer.size() * sizeof(JOCTET)); }
+    size_t getFileSize() const override { return (m_buffer.size() * sizeof(JOCTET)); }
 
     static JpegBuffer &getBuffer(j_compress_ptr cinfo) {
         JpegRegistry::iterator it = sm_registry.find(cinfo);
@@ -387,13 +387,13 @@ void JpegWriterImplMemory::setupJpegDest(j_compress_ptr cinfo,
 struct JpegWriterImplFile : public JpegWriterImpl {
     JpegWriterImplFile() : JpegWriterImpl(), m_handle() {}
 
-    void setupJpegDest(j_compress_ptr cinfo, const std::string &filename) {
+    void setupJpegDest(j_compress_ptr cinfo, const std::string &filename) override {
         open(filename);
         jpeg_stdio_dest(cinfo, handle());
     }
 
-    void close() { m_handle.reset(); }
-    size_t getFileSize() const { return 0; }
+    void close() override { m_handle.reset(); }
+    size_t getFileSize() const override { return 0; }
 
    private:
     void open(const std::string &filename) {

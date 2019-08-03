@@ -41,7 +41,7 @@ class TreeModel : public QAbstractItemModel {
    public:
     explicit TreeModel(const QString &data, QObject *parent = 0);
     explicit TreeModel(QObject * /*parent = 0*/)
-        : rootItem(NULL){};  // CB Added for ScHelpTreeModel
+        : rootItem(nullptr){};  // CB Added for ScHelpTreeModel
     ~TreeModel();
 
     QVariant data(const QModelIndex &index, int role) const;

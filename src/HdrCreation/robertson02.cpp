@@ -198,8 +198,8 @@ const float MAX_DELTA = 1e-3f;  // 1e-5f;
 
 float normalizeI(ResponseCurve::ResponseContainer &I) {
     size_t M = I.size();
-    size_t Mmin = 0;
-    size_t Mmax = M - 1;
+    size_t Mmin;
+    size_t Mmax;
     // find min max
     for (Mmin = 0; Mmin < M && I[Mmin] == 0; ++Mmin)
         ;
@@ -370,7 +370,7 @@ void RobertsonOperatorAuto::computeResponse(
 
 void RobertsonOperatorAuto::computeFusion(
     ResponseCurve &response, WeightFunction &weight,
-    const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) {
+    const std::vector<FrameEnhanced> &frames, pfs::Frame &outFrame) {
     assert(frames.size());
 
     size_t numExposures = frames.size();
@@ -425,7 +425,7 @@ void RobertsonOperatorAuto::computeFusion(
     replace_if(outputBlue->begin(), outputBlue->end(),
                [](float f) { return !isnormal(f); }, Max);
 
-    frame.swap(tempFrame);
+    outFrame.swap(tempFrame);
 }
 
 }  // namespace fusion

@@ -92,7 +92,7 @@ static boolean read_icc_profile(j_decompress_ptr cinfo, JOCTET **icc_data_ptr,
         data_length[MAX_SEQ_NO + 1]; /* size of profile data in marker */
     unsigned int data_offset[MAX_SEQ_NO + 1]; /* offset for data in marker */
 
-    *icc_data_ptr = NULL; /* avoid confusion if false return */
+    *icc_data_ptr = nullptr; /* avoid confusion if false return */
     *icc_data_len = 0;
 
     /* This first pass over the saved markers discovers whether there are
@@ -101,7 +101,7 @@ static boolean read_icc_profile(j_decompress_ptr cinfo, JOCTET **icc_data_ptr,
 
     for (seq_no = 1; seq_no <= MAX_SEQ_NO; seq_no++) marker_present[seq_no] = 0;
 
-    for (marker = cinfo->marker_list; marker != NULL; marker = marker->next) {
+    for (marker = cinfo->marker_list; marker != nullptr; marker = marker->next) {
         if (marker_is_icc(marker)) {
             if (num_markers == 0)
                 num_markers = GETJOCTET(marker->data[13]);
@@ -150,10 +150,10 @@ static boolean read_icc_profile(j_decompress_ptr cinfo, JOCTET **icc_data_ptr,
 
     /* Allocate space for assembled data */
     icc_data = (JOCTET *)malloc(total_length * sizeof(JOCTET));
-    if (icc_data == NULL) return false; /* oops, out of memory */
+    if (icc_data == nullptr) return false; /* oops, out of memory */
 
     /* and fill it in */
-    for (marker = cinfo->marker_list; marker != NULL; marker = marker->next) {
+    for (marker = cinfo->marker_list; marker != nullptr; marker = marker->next) {
         if (marker_is_icc(marker)) {
             JOCTET FAR *src_ptr;
             JOCTET *dst_ptr;
@@ -266,7 +266,7 @@ static cmsHTRANSFORM getColorSpaceTransform(j_decompress_ptr cinfo) {
     unsigned int cmsProfileLength;
     JOCTET *cmsProfileBuffer;
     if (!read_icc_profile(cinfo, &cmsProfileBuffer, &cmsProfileLength)) {
-        return NULL;
+        return nullptr;
     }
     PRINT_DEBUG("Found embedded profile");
 
@@ -276,7 +276,7 @@ static cmsHTRANSFORM getColorSpaceTransform(j_decompress_ptr cinfo) {
     free(cmsProfileBuffer);
 
     if ((!hIn) || (!hsRGB)) {  // one of the two profile is not valid
-        return NULL;
+        return nullptr;
     }
 
 #ifndef NDEBUG
@@ -309,11 +309,11 @@ static cmsHTRANSFORM getColorSpaceTransform(j_decompress_ptr cinfo) {
         default:
             // This case should never happen, but at least the compiler
             // stops complaining!
-            return NULL;
+            return nullptr;
             break;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 //! \brief read from a 3 components (RGB) input JPEG file

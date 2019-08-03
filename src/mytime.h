@@ -57,7 +57,7 @@ public:
         t = ulf.QuadPart;
 #elif defined __APPLE__
         struct timeval tv;
-        gettimeofday(&tv, NULL);
+        gettimeofday(&tv, nullptr);
         t.tv_sec = tv.tv_sec;
         t.tv_nsec = tv.tv_usec * 1000;
 #else

@@ -83,7 +83,7 @@ void copyTags(const Frame *from, Frame *to) {
         pfs::Channel *toCh = to->getChannel(fromCh->getName());
 
         // Skip if there is no corresponding channel
-        if (toCh != NULL) {
+        if (toCh != nullptr) {
             copyTags(fromCh->getTags(), toCh->getTags());
         }
     }

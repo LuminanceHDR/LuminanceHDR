@@ -57,9 +57,9 @@ void pfstmo_vanhateren06(Frame &frame, float pupil_area, Progress &ph) {
 
     Channel *inX, *inY, *inZ;
     frame.getXYZChannels(inY, inX, inZ);
-    assert(inX != NULL);
-    assert(inY != NULL);
-    assert(inZ != NULL);
+    assert(inX != nullptr);
+    assert(inY != nullptr);
+    assert(inZ != nullptr);
     if (!inX || !inY || !inZ) {
         throw Exception("Missing X, Y, Z channels in the PFS stream");
     }

@@ -201,15 +201,15 @@ HelpBrowser::HelpBrowser(QWidget *parent, const QString & /*caption*/,
     qDebug() << finalBaseDir;
 
     m_Ui->htmlPage->setHome(QUrl::fromLocalFile(finalBaseDir + "index.html"));
-    menuModel = NULL;
+    menuModel = nullptr;
     loadMenu();
 
-    if (menuModel != NULL) {
+    if (menuModel != nullptr) {
         readBookmarks();
         jumpToHelpSection(jumpToSection, jumpToFile);
         languageChange();
     } else {
-        qDebug("menuModel == NULL");
+        qDebug("menuModel == nullptr");
         displayNoHelp();
     }
 }
@@ -536,7 +536,7 @@ void HelpBrowser::bookmarkButton_clicked() {
 
 void HelpBrowser::deleteBookmarkButton_clicked() {
     QTreeWidgetItem *twi = helpSideBar->m_Ui->bookmarksView->currentItem();
-    if (twi != NULL) {
+    if (twi != nullptr) {
         if (bookmarkIndex.contains(twi->text(0)))
             bookmarkIndex.remove(twi->text(0));
         delete twi;
@@ -629,7 +629,7 @@ void HelpBrowser::loadMenu() {
     QString toLoad = baseHelpMenuFile;
     finalBaseDir = baseFi.path();
     if (baseFi.exists()) {
-        if (menuModel != NULL) delete menuModel;
+        if (menuModel != nullptr) delete menuModel;
         menuModel =
             new ScHelpTreeModel(toLoad, QStringLiteral("Topic"),
                                 QStringLiteral("Location"), &quickHelpIndex);
@@ -647,7 +647,7 @@ void HelpBrowser::loadMenu() {
         helpSideBar->m_Ui->listView->setColumnHidden(1, true);
     } else {
         // qDebug("Help menu does not exist: %c", baseHelpMenuFile);
-        menuModel = NULL;
+        menuModel = nullptr;
     }
 }
 

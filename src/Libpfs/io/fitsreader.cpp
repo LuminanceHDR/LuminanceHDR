@@ -48,10 +48,10 @@ namespace io {
 class FitsReaderData {
    public:
     FitsReaderData()
-        : m_format(0), m_status(0), m_bscale(1.f), m_bzero(0.f), m_ptr(NULL) {}
+        : m_format(0), m_status(0), m_bscale(1.f), m_bzero(0.f), m_ptr(nullptr) {}
 
     ~FitsReaderData() {
-        if (m_ptr != NULL) {
+        if (m_ptr != nullptr) {
             fits_close_file(m_ptr, &m_status);
         }
     }
@@ -103,7 +103,7 @@ void FitsReader::open() {
     int status = 0;
     char error_string[FLEN_ERRMSG];
 
-    fits_read_key_flt(m_data->m_ptr, "BSCALE", &bscale, NULL, &status);
+    fits_read_key_flt(m_data->m_ptr, "BSCALE", &bscale, nullptr, &status);
     if (status) {
         fits_get_errstatus(status, error_string);
 #ifndef NDEBUG
@@ -113,7 +113,7 @@ void FitsReader::open() {
         status = 0;
     }
 
-    fits_read_key_flt(m_data->m_ptr, "BZERO", &bzero, NULL, &status);
+    fits_read_key_flt(m_data->m_ptr, "BZERO", &bzero, nullptr, &status);
     if (status) {
         fits_get_errstatus(status, error_string);
 #ifndef NDEBUG
@@ -123,7 +123,7 @@ void FitsReader::open() {
         status = 0;
     }
 
-    fits_read_key_lng(m_data->m_ptr, "BITPIX", &bitpix, NULL, &status);
+    fits_read_key_lng(m_data->m_ptr, "BITPIX", &bitpix, nullptr, &status);
     if (status) {
         fits_get_errstatus(status, error_string);
 #ifndef NDEBUG

@@ -62,9 +62,9 @@ class Frame {
     //! \brief Changes the size of the frame
     void resize(size_t width, size_t height);
 
-    //! Gets color channels in XYZ color space. May return NULLs
+    //! Gets color channels in XYZ color space. May return nullptrs
     //! if such channels do not exist. Values assigned to
-    //! X, Y, Z are always either all NULLs or valid pointers to
+    //! X, Y, Z are always either all nullptrs or valid pointers to
     //! channels.
     //!
     //! \param X [out] a pointer to store X channel in
@@ -89,7 +89,7 @@ class Frame {
     //!
     //! \param name [in] name of the channel. Name must be 8 or less
     //! character long.
-    //! \return channel or NULL if the channel does not exist
+    //! \return channel or nullptr if the channel does not exist
     Channel *getChannel(const std::string &name);
     const Channel *getChannel(const std::string &name) const;
 

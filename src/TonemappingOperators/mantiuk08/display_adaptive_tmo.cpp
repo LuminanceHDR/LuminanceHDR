@@ -116,7 +116,7 @@ class auto_cqpminimizer {
 
 // =============== Tone-curve filtering ==============
 
-datmoToneCurve::datmoToneCurve() : own_y_i(false), size(0), x_i(NULL), y_i(NULL) {}
+datmoToneCurve::datmoToneCurve() : own_y_i(false), size(0), x_i(nullptr), y_i(nullptr) {}
 
 datmoToneCurve::~datmoToneCurve() { free(); }
 
@@ -125,7 +125,7 @@ void datmoToneCurve::init(size_t n_size, const double *n_x_i, double *n_y_i) {
 
     size = n_size;
     x_i = n_x_i;
-    if (n_y_i == NULL) {
+    if (n_y_i == nullptr) {
         y_i = new double[size];
         own_y_i = true;
     } else {
@@ -135,7 +135,7 @@ void datmoToneCurve::init(size_t n_size, const double *n_x_i, double *n_y_i) {
 }
 
 void datmoToneCurve::free() {
-    if (y_i != NULL && own_y_i) delete[] y_i;
+    if (y_i != nullptr && own_y_i) delete[] y_i;
 }
 
 // =============== Utils ==============
@@ -200,9 +200,9 @@ class UniformArrayLUT {
    public:
     double *y_i;
 
-    UniformArrayLUT(size_t lut_size, const double *x_i, double *y_i = NULL)
+    UniformArrayLUT(size_t lut_size, const double *x_i, double *y_i = nullptr)
         : x_i(x_i), lut_size(lut_size), delta(x_i[1] - x_i[0]) {
-        if (y_i == NULL) {
+        if (y_i == nullptr) {
             this->y_i = new double[lut_size];
             own_y_i = true;
         } else {
@@ -260,7 +260,7 @@ class UniformArrayLUT {
 static void dumpPFS(const char *fileName, const int width, const int height,
                     float *data, const char *channelName) {
     FILE *fh = fopen(fileName, "wb");
-    assert(fh != NULL);
+    assert(fh != nullptr);
 
     fprintf(fh, "PFS1" PFSEOL "%d %d" PFSEOL "1" PFSEOL "0" PFSEOL "%s" PFSEOL
                 "0" PFSEOL "ENDH",
@@ -1178,7 +1178,7 @@ datmoToneCurve *datmoTCFilter::filterToneCurve() {
     datmoToneCurve *tc_f = ring_buffer_filt + pos;
 
     tc_f->init(tc_o->size, tc_o->x_i);
-    if (tc_filt_clamp.x_i == NULL) tc_filt_clamp.init(tc_o->size, tc_o->x_i);
+    if (tc_filt_clamp.x_i == nullptr) tc_filt_clamp.init(tc_o->size, tc_o->x_i);
     for (size_t j = 0; j < tc_f->size; j++) tc_f->y_i[j] = 0;
 
     for (int tt = 0; tt < DATMO_TF_TAPSIZE; tt++) {

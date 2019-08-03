@@ -123,9 +123,9 @@ vfloat DisplayFunctionGGBA::display(vfloat pix) {
 static const int max_lut_size = 4096;
 
 DisplayFunctionLUT::DisplayFunctionLUT(const char *file_name)
-    : pix_lut(NULL), L_lut(NULL) {
+    : pix_lut(nullptr), L_lut(nullptr) {
     FILE *fh = fopen(file_name, "r");
-    if (fh == NULL) throw pfs::Exception("Cannot open lookup-table file");
+    if (fh == nullptr) throw pfs::Exception("Cannot open lookup-table file");
 
     L_lut = new float[max_lut_size];
     pix_lut = new float[max_lut_size];
@@ -134,7 +134,7 @@ DisplayFunctionLUT::DisplayFunctionLUT(const char *file_name)
     char buf[max_line];
 
     int i = 0;
-    while (fgets(buf, max_line, fh) != NULL) {
+    while (fgets(buf, max_line, fh) != nullptr) {
         float p_buf, L_buf;
         if (sscanf(buf, "%f%*[ ,;]%f\n", &p_buf, &L_buf) != 2) continue;
         if (p_buf < 0 || p_buf > 1) {
@@ -218,7 +218,7 @@ DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] )
         bool GGBA_model = true;
         char *token;
         token = strtok( argv[i+1], ":" );
-        while( token != NULL ) {
+        while( token != nullptr ) {
           if( !strncmp( token, "pd=", 3 )  ) {
               df = new DisplayFunctionGGBA( token+3 );
               GGBA_model = false;
@@ -228,19 +228,19 @@ DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] )
               GGBA_model = false;
               break;
           } else if( !strncmp( token, "g=", 2 ) ) {
-            gamma = strtod( token+2, NULL );
+            gamma = strtod( token+2, nullptr );
           } else if( !strncmp( token, "l=", 2 ) ) {
-            L_max = strtod( token+2, NULL );
+            L_max = strtod( token+2, nullptr );
           } else if( !strncmp( token, "b=", 2 ) ) {
-            L_black = strtod( token+2, NULL );
+            L_black = strtod( token+2, nullptr );
           } else if( !strncmp( token, "k=", 2 ) ) {
-            k = strtod( token+2, NULL );
+            k = strtod( token+2, nullptr );
           } else if( !strncmp( token, "a=", 2 ) ) {
-            E_amb = strtod( token+2, NULL );
+            E_amb = strtod( token+2, nullptr );
           } else {
             throw pfs::Exception( "Bad display type specification" );
           }
-          token = strtok( NULL, ":" );
+          token = strtok( nullptr, ":" );
         }
         if( GGBA_model )
           df = new DisplayFunctionGGBA( gamma, L_max, L_black, E_amb, k );

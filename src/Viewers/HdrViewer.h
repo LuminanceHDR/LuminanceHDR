@@ -56,20 +56,20 @@ class HdrViewer : public GenericViewer {
 
     LuminanceRangeWidget *lumRange();
 
-    QString getFileNamePostFix();
-    QString getExifComment();
+    QString getFileNamePostFix() override;
+    QString getExifComment() override;
 
     //! \brief virtual function
     //! \return always return TRUE
-    bool isHDR();
+    bool isHDR() override;
 
     //! \brief returns max value of the handled frame
-    float getMaxLuminanceValue();
+    float getMaxLuminanceValue() override;
 
     //! \brief returns min value of the handled frame
-    float getMinLuminanceValue();
+    float getMinLuminanceValue() override;
 
-    RGBMappingType getLuminanceMappingMethod();
+    RGBMappingType getLuminanceMappingMethod() override;
 
    public Q_SLOTS:
     void updateRangeWindow();
@@ -77,11 +77,11 @@ class HdrViewer : public GenericViewer {
     void setLumMappingMethod(int method);
 
    protected Q_SLOTS:
-    virtual void updatePixmap();
+    virtual void updatePixmap() override;
 
    protected:
     // Methods
-    virtual void retranslateUi();
+    virtual void retranslateUi() override;
     void setRangeWindow(float min, float max);
     void keyPressEvent(QKeyEvent *event);
 

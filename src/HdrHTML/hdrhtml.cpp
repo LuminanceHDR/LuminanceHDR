@@ -153,9 +153,9 @@ class UniformArrayLUT {
    public:
     float *y_i;
 
-    UniformArrayLUT(size_t lut_size, const float *x_i, float *y_i = NULL)
-        : y_i(NULL), x_i(x_i), lut_size(lut_size), delta(x_i[1] - x_i[0]) {
-        if (y_i == NULL) {
+    UniformArrayLUT(size_t lut_size, const float *x_i, float *y_i = nullptr)
+        : y_i(nullptr), x_i(x_i), lut_size(lut_size), delta(x_i[1] - x_i[0]) {
+        if (y_i == nullptr) {
             this->y_i = new float[lut_size];
             own_y_i = true;
         } else {
@@ -164,10 +164,10 @@ class UniformArrayLUT {
         }
     }
 
-    UniformArrayLUT() : y_i(NULL), x_i(0), lut_size(0), delta(0.), own_y_i(false) {}
+    UniformArrayLUT() : y_i(nullptr), x_i(0), lut_size(0), delta(0.), own_y_i(false) {}
 
     UniformArrayLUT(const UniformArrayLUT &other)
-        : y_i(NULL),
+        : y_i(nullptr),
           x_i(other.x_i),
           lut_size(other.lut_size),
           delta(other.delta) {
@@ -355,31 +355,31 @@ class ReplacePattern {
     ReplacePattern(const char *pattern, string replace_with)
         : pattern(pattern),
           replace_with(replace_with),
-          callback(NULL),
-          user_data(NULL) {}
+          callback(nullptr),
+          user_data(nullptr) {}
 
     ReplacePattern(const char *pattern, float replace_with_num)
-        : pattern(pattern), callback(NULL), user_data(NULL) {
+        : pattern(pattern), callback(nullptr), user_data(nullptr) {
         ostringstream num_str;
         num_str << replace_with_num;
         replace_with = num_str.str();
     }
 
     ReplacePattern(const char *pattern, int replace_with_num)
-        : pattern(pattern), callback(NULL), user_data(NULL) {
+        : pattern(pattern), callback(nullptr), user_data(nullptr) {
         ostringstream num_str;
         num_str << replace_with_num;
         replace_with = num_str.str();
     }
 
     ReplacePattern(const char *pattern, replace_callback callback,
-                   void *user_data = NULL)
+                   void *user_data = nullptr)
         : pattern(pattern), callback(callback), user_data(user_data) {}
 
-    ReplacePattern() : pattern(NULL), callback(NULL), user_data(NULL) {}
+    ReplacePattern() : pattern(nullptr), callback(nullptr), user_data(nullptr) {}
 
-    virtual void write_replacement(ostream &out, const char *parameter = NULL) {
-        if (callback != NULL)
+    virtual void write_replacement(ostream &out, const char *parameter = nullptr) {
+        if (callback != nullptr)
             callback(out, user_data, parameter);
         else
             out << replace_with;
@@ -417,7 +417,7 @@ void create_from_template(ostream &outfs, const char *template_file_name,
             bool replaced = false;
             size_t end_marker = line_str.find_first_of("@[", find_pos + 1);
             if (end_marker != string::npos) {
-                for (int k = 0; pattern_list[k].pattern != NULL; k++) {
+                for (int k = 0; pattern_list[k].pattern != nullptr; k++) {
                     if (line_str.compare(find_pos + 1,
                                          end_marker - find_pos - 1,
                                          pattern_list[k].pattern) == 0) {
@@ -439,7 +439,7 @@ void create_from_template(ostream &outfs, const char *template_file_name,
 
                         pattern_list[k].write_replacement(
                             outfs,
-                            parameter.empty() ? NULL : parameter.c_str());
+                            parameter.empty() ? nullptr : parameter.c_str());
                         pos = end_marker + 1;
                         replaced = true;
                         break;
@@ -481,18 +481,18 @@ class CSVTable {
     float **data;
     int columns, rows;
 
-    CSVTable() : data(NULL), columns(0), rows(0) {}
+    CSVTable() : data(nullptr), columns(0), rows(0) {}
 
     ~CSVTable() { free(); }
 
     void free() {
-        if (data == NULL) return;
+        if (data == nullptr) return;
 
         for (int k = 0; k < columns; k++) delete[] data[k];
 
         delete[] data;
 
-        data = NULL;
+        data = nullptr;
     }
 
     void read(const char *file_name, int columns) {
@@ -702,8 +702,8 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
         QImage hist_image(hist_buffer_c, hist_width, hist_height,
                           QImage::Format_RGB888);
         ostringstream img_filename;
-        if (out_dir != NULL) img_filename << out_dir << "/";
-        if (image_dir != NULL) img_filename << image_dir << "/";
+        if (out_dir != nullptr) img_filename << out_dir << "/";
+        if (image_dir != nullptr) img_filename << image_dir << "/";
         img_filename << base_name << "_hist.png";
         if (verbose)
             cout << QObject::tr("Writing: ").toStdString() << img_filename.str()
@@ -756,8 +756,8 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
                            QImage::Format_RGB888);
 
             ostringstream img_filename;
-            if (out_dir != NULL) img_filename << out_dir << "/";
-            if (image_dir != NULL) img_filename << image_dir << "/";
+            if (out_dir != nullptr) img_filename << out_dir << "/";
+            if (image_dir != nullptr) img_filename << image_dir << "/";
             img_filename << base_name << '_' << k - 1 << '_' << b + 1 << ".jpg";
             if (verbose)
                 cout << QObject::tr("Writing: ").toStdString()
@@ -794,8 +794,8 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
     if (image_list.empty()) return;
 
     ostringstream out_file_name;
-    if (out_dir != NULL) out_file_name << out_dir << "/";
-    if (page_name == NULL)
+    if (out_dir != nullptr) out_file_name << out_dir << "/";
+    if (page_name == nullptr)
         out_file_name << image_list.front().base_name << ".html";
     else
         out_file_name << page_name;
@@ -818,7 +818,7 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
         ReplacePattern("cf_array_def", print_cf_table, &coeff_table),
         ReplacePattern("hdr_img_def", print_image_objects, this),
         ReplacePattern("image_htmlcode", print_image_htmlcode, this),
-        ReplacePattern("title", page_name == NULL ? "HDRHTML viewer" : page_name),
+        ReplacePattern("title", page_name == nullptr ? "HDRHTML viewer" : page_name),
         ReplacePattern("version", hdrhtml_version),
         ReplacePattern()};
 
@@ -830,7 +830,7 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
         throw;
     }
 
-    if (object_output != NULL) {
+    if (object_output != nullptr) {
         ofstream oofs(object_output);
         if (!oofs.good()) {
             ostringstream error_message;
@@ -838,14 +838,14 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
                           << "' for writing";
             throw pfs::Exception(error_message.str().c_str());
         }
-        print_image_objects(oofs, this, NULL);
+        print_image_objects(oofs, this, nullptr);
     }
 
     if (verbose)
         cout << QObject::tr("Writing: ").toStdString()
              << out_file_name.str().c_str() << endl;
 
-    if (html_output != NULL) {
+    if (html_output != nullptr) {
         ofstream hofs(html_output);
         if (!hofs.good()) {
             ostringstream error_message;
@@ -853,7 +853,7 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
             throw pfs::Exception(error_message.str().c_str());
         }
         try {
-            print_image_htmlcode(hofs, this, NULL);
+            print_image_htmlcode(hofs, this, nullptr);
         } catch (pfs::Exception &e) {
             throw;
         }
@@ -875,7 +875,7 @@ void print_image_objects(ostream &out, void *user_data, const char *parameter) {
         out << obj_name << ".f8_stops = " << it->f8_stops << ";\n";
         out << obj_name << ".f_step_res = " << it->f_step_res << ";\n";
         out << obj_name << ".base_name = \"" << it->base_name << "\";\n";
-        if (hdrhtml_set->image_dir == NULL)
+        if (hdrhtml_set->image_dir == nullptr)
             out << obj_name << ".image_dir = \"\";\n";
         else
             out << obj_name << ".image_dir = \"" << hdrhtml_set->image_dir
@@ -896,7 +896,7 @@ void print_image_htmlcode(ostream &out, HDRHTMLSet *hdrhtml_set,
     obj_name.append(it.base_name);
 
     ostringstream img_dir;
-    if (hdrhtml_set->image_dir != NULL)
+    if (hdrhtml_set->image_dir != nullptr)
         img_dir << hdrhtml_set->image_dir << "/";
 
     ReplacePattern replace_list[] = {
@@ -921,7 +921,7 @@ void print_image_htmlcode(ostream &out, void *user_data,
                           const char *parameter) {
     HDRHTMLSet *hdrhtml_set = static_cast<HDRHTMLSet *>(user_data);
 
-    if (parameter != NULL) {
+    if (parameter != nullptr) {
         list<HDRHTMLImage>::iterator it;
         for (it = hdrhtml_set->image_list.begin();
              it != hdrhtml_set->image_list.end(); ++it) {

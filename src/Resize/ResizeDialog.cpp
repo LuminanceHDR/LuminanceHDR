@@ -30,7 +30,7 @@
 ResizeDialog::ResizeDialog(QWidget *parent, pfs::Frame *orig)
     : QDialog(parent),
       m_original(orig),
-      m_resized(NULL),
+      m_resized(nullptr),
       m_Ui(new Ui::ResizeDialog) {
     m_Ui->setupUi(this);
 

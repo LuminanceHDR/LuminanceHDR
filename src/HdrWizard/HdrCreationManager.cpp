@@ -89,7 +89,7 @@ namespace {
 
 QImage *shiftQImage(const QImage *in, int dx, int dy) {
     QImage *out = new QImage(in->size(), QImage::Format_ARGB32);
-    assert(out != NULL);
+    assert(out != nullptr);
     out->fill(qRgba(0, 0, 0, 0));  // transparent black
     for (int i = 0; i < in->height(); i++) {
         if ((i + dy) < 0) continue;
@@ -270,7 +270,7 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
       m_response(new ResponseCurve(predef_confs[0].responseCurve)),
       m_weight(new WeightFunction(predef_confs[0].weightFunction)),
       m_responseCurveInputFilename(),
-      m_agMask(NULL),
+      m_agMask(nullptr),
       m_align(),
       m_ais_crop_flag(false),
       fromCommandLine(fromCommandLine),
@@ -414,7 +414,7 @@ void HdrCreationManager::cropItems(const QRect &ca) {
     for (int idx = 0; idx < size; idx++) {
         std::unique_ptr<QImage> newimage(
             new QImage(m_data[idx].qimage().copy(ca)));
-        if (newimage == NULL) {
+        if (newimage == nullptr) {
             exit(1);  // TODO: exit gracefully
         }
         m_data[idx].qimage().swap(*newimage);
@@ -584,20 +584,20 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
     Bc = Ch[2];
 
     ph->setValue(5);
-    if (ph->canceled()) return NULL;
+    if (ph->canceled()) return nullptr;
 
     //Red channel
     std::unique_ptr<Array2Df> logIrradianceGood_R(new Array2Df(width, height));
     computeLogIrradiance(*logIrradianceGood_R, *Good_Rc);
     ph->setValue(10);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     std::unique_ptr<Array2Df> logIrradiance_R(new Array2Df(width, height));
     computeLogIrradiance(*logIrradiance_R, *Rc);
     ph->setValue(13);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     std::unique_ptr<Array2Df> gradientXGood_R(new Array2Df(width, height));
     std::unique_ptr<Array2Df> gradientYGood_R(new Array2Df(width, height));
@@ -609,12 +609,12 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
     computeGradient(*gradientXGood_R, *gradientYGood_R, *logIrradianceGood_R);
     ph->setValue(15);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     computeGradient(*gradientX_R, *gradientY_R, *logIrradiance_R);
     ph->setValue(20);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     if (manualAg)
         blendGradients(*gradientXBlended_R, *gradientYBlended_R, *gradientX_R,
@@ -627,21 +627,21 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
 
     ph->setValue(25);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     std::unique_ptr<Array2Df> divergence_R(new Array2Df(width, height));
     computeDivergence(*divergence_R, *gradientXBlended_R, *gradientYBlended_R);
     ph->setValue(28);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     qDebug() << "solve_pde";
     solve_pde_dct(*divergence_R, *logIrradiance_R);
     ph->setValue(33);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     //Green channel
@@ -649,13 +649,13 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
     computeLogIrradiance(*logIrradianceGood_G, *Good_Gc);
     ph->setValue(36);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     std::unique_ptr<Array2Df> logIrradiance_G(new Array2Df(width, height));
     computeLogIrradiance(*logIrradiance_G, *Gc);
     ph->setValue(38);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     std::unique_ptr<Array2Df> gradientXGood_G = std::move(gradientXGood_R);
     std::unique_ptr<Array2Df> gradientYGood_G = std::move(gradientYGood_R);
@@ -667,12 +667,12 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
     computeGradient(*gradientXGood_G, *gradientYGood_G, *logIrradianceGood_G);
     ph->setValue(43);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     computeGradient(*gradientX_G, *gradientY_G, *logIrradiance_G);
     ph->setValue(48);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     if (manualAg)
         blendGradients(*gradientXBlended_G, *gradientYBlended_G, *gradientX_G,
@@ -685,21 +685,21 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
 
     ph->setValue(53);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     std::unique_ptr<Array2Df> divergence_G(new Array2Df(width, height));
     computeDivergence(*divergence_G, *gradientXBlended_G, *gradientYBlended_G);
     ph->setValue(60);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     qDebug() << "solve_pde";
     solve_pde_dct(*divergence_G, *logIrradiance_G);
     ph->setValue(66);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     //Blue channel
@@ -707,13 +707,13 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
     computeLogIrradiance(*logIrradianceGood_B, *Good_Bc);
     ph->setValue(71);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     std::unique_ptr<Array2Df> logIrradiance_B(new Array2Df(width, height));
     computeLogIrradiance(*logIrradiance_B, *Bc);
     ph->setValue(76);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     std::unique_ptr<Array2Df> gradientXGood_B = std::move(gradientXGood_G);
     std::unique_ptr<Array2Df> gradientYGood_B = std::move(gradientYGood_G);
@@ -725,12 +725,12 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
     computeGradient(*gradientXGood_B, *gradientYGood_B, *logIrradianceGood_B);
     ph->setValue(81);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     computeGradient(*gradientX_B, *gradientY_B, *logIrradiance_B);
     ph->setValue(86);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
     if (manualAg)
         blendGradients(*gradientXBlended_B, *gradientYBlended_B, *gradientX_B,
@@ -743,21 +743,21 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
 
     ph->setValue(90);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     std::unique_ptr<Array2Df> divergence_B(new Array2Df(width, height));
     computeDivergence(*divergence_B, *gradientXBlended_B, *gradientYBlended_B);
     ph->setValue(93);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     qDebug() << "solve_pde";
     solve_pde_dct(*divergence_B, *logIrradiance_B);
     ph->setValue(94);
     if (ph->canceled()) {
-        return NULL;
+        return nullptr;
     }
 
     //Blend
@@ -770,19 +770,19 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
     ph->setValue(95);
     if (ph->canceled()) {
         delete deghosted;
-        return NULL;
+        return nullptr;
     }
     computeIrradiance(*Uc[1], *logIrradiance_G);
     ph->setValue(97);
     if (ph->canceled()) {
         delete deghosted;
-        return NULL;
+        return nullptr;
     }
     computeIrradiance(*Uc[2], *logIrradiance_B);
     ph->setValue(99);
     if (ph->canceled()) {
         delete deghosted;
-        return NULL;
+        return nullptr;
     }
     // shadesOfGrayAWB(*Uc[0], *Uc[1], *Uc[2]);
 
@@ -825,7 +825,7 @@ void HdrCreationManager::setPatches(bool patches[][agGridSize]) {
 }
 
 void HdrCreationManager::reset() {
-    if (m_align != NULL) {
+    if (m_align != nullptr) {
         m_align->reset();
     }
 

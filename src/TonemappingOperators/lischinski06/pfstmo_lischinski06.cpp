@@ -64,9 +64,9 @@ void pfstmo_lischinski06(Frame &frame, float alpha_mul,
 
     Channel *inX, *inY, *inZ;
     frame.getXYZChannels(inX, inY, inZ);
-    assert(inX != NULL);
-    assert(inY != NULL);
-    assert(inZ != NULL);
+    assert(inX != nullptr);
+    assert(inY != nullptr);
+    assert(inZ != nullptr);
     if (!inX || !inY || !inZ) {
         throw Exception("Missing X, Y, Z channels in the PFS stream");
     }

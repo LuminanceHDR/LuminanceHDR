@@ -82,7 +82,7 @@ class GenericViewer : public QWidget {
     //! \note GenericViewer holds only an empty implementation of this function.
     //! It is
     //! up to the derived class to override this behaviour
-    virtual TonemappingOptions *getTonemappingOptions() { return NULL; }
+    virtual TonemappingOptions *getTonemappingOptions() { return nullptr; }
 
    public Q_SLOTS:
     //! \brief Update viewer's pixmap when a new frame is set by setFrame() or
@@ -161,7 +161,7 @@ class GenericViewer : public QWidget {
 
     //! set a new reference frame to be shown in the viewport
     //! previous frame gets DELETED!
-    void setFrame(pfs::Frame *new_frame, TonemappingOptions *tmopts = NULL);
+    void setFrame(pfs::Frame *new_frame, TonemappingOptions *tmopts = nullptr);
     void setFrameShared(std::shared_ptr<pfs::Frame> new_frame);
 
    protected Q_SLOTS:

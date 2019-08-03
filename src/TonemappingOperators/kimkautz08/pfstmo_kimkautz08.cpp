@@ -58,9 +58,9 @@ void pfstmo_kimkautz08(Frame &frame, float KK_c1, float KK_c2,
 
     Channel *inX, *inY, *inZ;
     frame.getXYZChannels(inX, inY, inZ);
-    assert(inX != NULL);
-    assert(inY != NULL);
-    assert(inZ != NULL);
+    assert(inX != nullptr);
+    assert(inY != nullptr);
+    assert(inZ != nullptr);
     if (!inX || !inY || !inZ) {
         throw Exception("Missing X, Y, Z channels in the PFS stream");
     }

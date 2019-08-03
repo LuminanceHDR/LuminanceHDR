@@ -90,10 +90,10 @@ int tmo_ferwerda96(Array2Df *X, Array2Df *Y, Array2Df *Z, Array2Df *L,
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    assert(X != NULL);
-    assert(Y != NULL);
-    assert(Z != NULL);
-    assert(L != NULL);
+    assert(X != nullptr);
+    assert(Y != nullptr);
+    assert(Z != nullptr);
+    assert(L != nullptr);
 
     mul1 *= 100.f;
     mul2 /= 1000.f;

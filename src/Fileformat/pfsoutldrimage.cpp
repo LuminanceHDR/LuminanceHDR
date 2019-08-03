@@ -74,11 +74,11 @@ QImage *fromLDRPFStoQImage(pfs::Frame *in_frame, float min_luminance,
     qDebug() << "Max Luminance: " << max_luminance;
     qDebug() << "Mapping method: " << mapping_method;
 
-    assert(in_frame != NULL);
+    assert(in_frame != nullptr);
 
     pfs::Channel *Xc, *Yc, *Zc;
     in_frame->getXYZChannels(Xc, Yc, Zc);
-    assert(Xc != NULL && Yc != NULL && Zc != NULL);
+    assert(Xc != nullptr && Yc != nullptr && Zc != nullptr);
 
     QImage *temp_qimage = new QImage(
         in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);

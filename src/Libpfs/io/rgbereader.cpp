@@ -63,7 +63,7 @@ void readRadianceHeader(FILE *file, int &width, int &height, float &exposure,
     exposure = 1.0f;
 
     while (!feof(file)) {
-        if (fgets(head, 200, file) == NULL) {
+        if (fgets(head, 200, file) == nullptr) {
             throw pfs::io::InvalidHeader("RGBE: invalid header");
         }
         if (strcmp(head, "\n") == 0) break;
@@ -110,7 +110,7 @@ void readRadianceHeader(FILE *file, int &width, int &height, float &exposure,
 
     // image size
     char xbuf[4], ybuf[4];
-    if (fgets(head, sizeof(head) / sizeof(head[0]), file) == NULL ||
+    if (fgets(head, sizeof(head) / sizeof(head[0]), file) == nullptr ||
         sscanf(head, "%3s %d %3s %d", ybuf, &height, xbuf, &width) != 4) {
         throw pfs::Exception("RGBE: unknown image size");
     }

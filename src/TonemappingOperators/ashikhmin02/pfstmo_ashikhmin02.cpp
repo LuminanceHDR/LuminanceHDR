@@ -115,9 +115,9 @@ void pfstmo_ashikhmin02(pfs::Frame &frame, bool simple_flag, float lc_value,
 
     pfs::Channel *Xr, *Yr, *Zr;
     frame.getXYZChannels(Xr, Yr, Zr);
-    assert(Xr != NULL);
-    assert(Yr != NULL);
-    assert(Zr != NULL);
+    assert(Xr != nullptr);
+    assert(Yr != nullptr);
+    assert(Zr != nullptr);
     if (!Xr || !Yr || !Zr) {
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }

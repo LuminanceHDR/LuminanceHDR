@@ -37,7 +37,7 @@ using namespace pfs;
 
 class Pyramid {  // each level of a Gaussian pyramid
    public:
-    Pyramid() : width(0), height(0), size(0), kernel_size(0), lambda(0.), GP(NULL), flag(0) {
+    Pyramid() : width(0), height(0), size(0), kernel_size(0), lambda(0.), GP(nullptr), flag(0) {
     };
 
     ~Pyramid(){

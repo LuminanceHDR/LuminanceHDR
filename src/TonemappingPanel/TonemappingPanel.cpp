@@ -84,7 +84,7 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
     // mantiuk06
     contrastfactorGang =
         new Gang(m_Ui->contrastFactorSlider, m_Ui->contrastFactordsb,
-                 m_Ui->contrastEqualizCheckBox, NULL, NULL, NULL,
+                 m_Ui->contrastEqualizCheckBox, nullptr, nullptr, nullptr,
                  0.01f /*0.001f*/, 1.0f, MANTIUK06_CONTRAST_FACTOR);
 
     connect(contrastfactorGang, &Gang::enableUndo, m_Ui->undoButton,
@@ -93,16 +93,16 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
             &QWidget::setEnabled);
 
     saturationfactorGang =
-        new Gang(m_Ui->saturationFactorSlider, m_Ui->saturationFactordsb, NULL,
-                 NULL, NULL, NULL, 0.0f, 2.0f, MANTIUK06_SATURATION_FACTOR);
+        new Gang(m_Ui->saturationFactorSlider, m_Ui->saturationFactordsb, nullptr,
+                 nullptr, nullptr, nullptr, 0.0f, 2.0f, MANTIUK06_SATURATION_FACTOR);
     detailfactorGang =
-        new Gang(m_Ui->detailFactorSlider, m_Ui->detailFactordsb, NULL, NULL,
-                 NULL, NULL, 1.0f, 99.0f, MANTIUK06_DETAIL_FACTOR);
+        new Gang(m_Ui->detailFactorSlider, m_Ui->detailFactordsb, nullptr, nullptr,
+                 nullptr, nullptr, 1.0f, 99.0f, MANTIUK06_DETAIL_FACTOR);
 
     // mantiuk08
     colorSaturationGang =
-        new Gang(m_Ui->colorSaturationSlider, m_Ui->colorSaturationDSB, NULL,
-                 NULL, NULL, NULL, 0.f, 2.f, MANTIUK08_COLOR_SATURATION);
+        new Gang(m_Ui->colorSaturationSlider, m_Ui->colorSaturationDSB, nullptr,
+                 nullptr, nullptr, nullptr, 0.f, 2.f, MANTIUK08_COLOR_SATURATION);
 
     connect(colorSaturationGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
@@ -110,58 +110,58 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
             &QWidget::setEnabled);
 
     contrastEnhancementGang = new Gang(
-        m_Ui->contrastEnhancementSlider, m_Ui->contrastEnhancementDSB, NULL,
-        NULL, NULL, NULL, .01f, 10.f, MANTIUK08_CONTRAST_ENHANCEMENT);
+        m_Ui->contrastEnhancementSlider, m_Ui->contrastEnhancementDSB, nullptr,
+        nullptr, nullptr, nullptr, .01f, 10.f, MANTIUK08_CONTRAST_ENHANCEMENT);
     luminanceLevelGang =
         new Gang(m_Ui->luminanceLevelSlider, m_Ui->luminanceLevelDSB,
-                 m_Ui->luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f,
+                 m_Ui->luminanceLevelCheckBox, nullptr, nullptr, nullptr, 1.f, 100.0f,
                  MANTIUK08_LUMINANCE_LEVEL);
 
     // fattal02
-    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL, NULL, NULL,
-                         NULL, 0.05, 2.f, FATTAL02_ALPHA, true);
+    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, nullptr, nullptr, nullptr,
+                         nullptr, 0.05, 2.f, FATTAL02_ALPHA, true);
 
     connect(alphaGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
     connect(alphaGang, &Gang::enableRedo, m_Ui->redoButton,
             &QWidget::setEnabled);
 
-    betaGang = new Gang(m_Ui->betaSlider, m_Ui->betadsb, NULL, NULL, NULL, NULL,
+    betaGang = new Gang(m_Ui->betaSlider, m_Ui->betadsb, nullptr, nullptr, nullptr, nullptr,
                         0.1f, 2.f, FATTAL02_BETA);
     saturation2Gang =
-        new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL, NULL,
-                 NULL, NULL, 0.f, 1.5f, FATTAL02_COLOR);
-    noiseGang = new Gang(m_Ui->noiseSlider, m_Ui->noisedsb, NULL, NULL, NULL,
-                         NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
-    // oldFattalGang = new Gang(NULL,NULL, m_Ui->oldFattalCheckBox);
-    fftSolverGang = new Gang(NULL, NULL, m_Ui->fftVersionCheckBox);
+        new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, nullptr, nullptr,
+                 nullptr, nullptr, 0.f, 1.5f, FATTAL02_COLOR);
+    noiseGang = new Gang(m_Ui->noiseSlider, m_Ui->noisedsb, nullptr, nullptr, nullptr,
+                         nullptr, 0, 1.f, FATTAL02_NOISE_REDUX);
+    // oldFattalGang = new Gang(nullptr,nullptr, m_Ui->oldFattalCheckBox);
+    fftSolverGang = new Gang(nullptr, nullptr, m_Ui->fftVersionCheckBox);
 
     // ferradans11
-    rhoGang = new Gang(m_Ui->rhoSlider, m_Ui->rhodsb, NULL, NULL, NULL, NULL,
+    rhoGang = new Gang(m_Ui->rhoSlider, m_Ui->rhodsb, nullptr, nullptr, nullptr, nullptr,
                        -10.f, 10.f, FERRADANS11_RHO);
 
     connect(rhoGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
     connect(rhoGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     inv_alphaGang =
-        new Gang(m_Ui->inv_alphaSlider, m_Ui->inv_alphadsb, NULL, NULL, NULL,
-                 NULL, 0.1f, 10.f, FERRADANS11_INV_ALPHA);
+        new Gang(m_Ui->inv_alphaSlider, m_Ui->inv_alphadsb, nullptr, nullptr, nullptr,
+                 nullptr, 0.1f, 10.f, FERRADANS11_INV_ALPHA);
 
     // ashikhmin02
-    contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb, NULL, NULL,
-                            NULL, NULL, 0.f, 1.f, 0.5f);
+    contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb, nullptr, nullptr,
+                            nullptr, nullptr, 0.f, 1.f, 0.5f);
 
     connect(contrastGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
     connect(contrastGang, &Gang::enableRedo, m_Ui->redoButton,
             &QWidget::setEnabled);
 
-    simpleGang = new Gang(NULL, NULL, m_Ui->simpleCheckBox);
-    eq2Gang = new Gang(NULL, NULL, NULL, NULL, m_Ui->eq2RadioButton,
+    simpleGang = new Gang(nullptr, nullptr, m_Ui->simpleCheckBox);
+    eq2Gang = new Gang(nullptr, nullptr, nullptr, nullptr, m_Ui->eq2RadioButton,
                        m_Ui->eq4RadioButton);
 
     // drago03
-    biasGang = new Gang(m_Ui->biasSlider, m_Ui->biasdsb, NULL, NULL, NULL, NULL,
+    biasGang = new Gang(m_Ui->biasSlider, m_Ui->biasdsb, nullptr, nullptr, nullptr, nullptr,
                         0.f, 1.f, DRAGO03_BIAS);
 
     connect(biasGang, &Gang::enableUndo, m_Ui->undoButton,
@@ -170,57 +170,57 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
             &QWidget::setEnabled);
 
     // durand02
-    spatialGang = new Gang(m_Ui->spatialSlider, m_Ui->spatialdsb, NULL, NULL,
-                           NULL, NULL, 0.f, 100.f, DURAND02_SPATIAL);
+    spatialGang = new Gang(m_Ui->spatialSlider, m_Ui->spatialdsb, nullptr, nullptr,
+                           nullptr, nullptr, 0.f, 100.f, DURAND02_SPATIAL);
 
     connect(spatialGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
     connect(spatialGang, &Gang::enableRedo, m_Ui->redoButton,
             &QWidget::setEnabled);
 
-    rangeGang = new Gang(m_Ui->rangeSlider, m_Ui->rangedsb, NULL, NULL, NULL,
-                         NULL, 0.01f, 10.f, DURAND02_RANGE);
-    baseGang = new Gang(m_Ui->baseSlider, m_Ui->basedsb, NULL, NULL, NULL, NULL,
+    rangeGang = new Gang(m_Ui->rangeSlider, m_Ui->rangedsb, nullptr, nullptr, nullptr,
+                         nullptr, 0.01f, 10.f, DURAND02_RANGE);
+    baseGang = new Gang(m_Ui->baseSlider, m_Ui->basedsb, nullptr, nullptr, nullptr, nullptr,
                         0.f, 10.f, DURAND02_BASE);
 
     // pattanaik00
     multiplierGang =
-        new Gang(m_Ui->multiplierSlider, m_Ui->multiplierdsb, NULL, NULL, NULL,
-                 NULL, 1e-3, 1000.f, PATTANAIK00_MULTIPLIER, true);
+        new Gang(m_Ui->multiplierSlider, m_Ui->multiplierdsb, nullptr, nullptr, nullptr,
+                 nullptr, 1e-3, 1000.f, PATTANAIK00_MULTIPLIER, true);
 
     connect(multiplierGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
     connect(multiplierGang, &Gang::enableRedo, m_Ui->redoButton,
             &QWidget::setEnabled);
 
-    coneGang = new Gang(m_Ui->coneSlider, m_Ui->conedsb, NULL, NULL, NULL, NULL,
+    coneGang = new Gang(m_Ui->coneSlider, m_Ui->conedsb, nullptr, nullptr, nullptr, nullptr,
                         1e-3, 1.f, PATTANAIK00_CONE, true);
-    rodGang = new Gang(m_Ui->rodSlider, m_Ui->roddsb, NULL, NULL, NULL, NULL,
+    rodGang = new Gang(m_Ui->rodSlider, m_Ui->roddsb, nullptr, nullptr, nullptr, nullptr,
                        1e-3, 1.f, PATTANAIK00_ROD, true);
-    autoYGang = new Gang(NULL, NULL, m_Ui->autoYcheckbox);
-    pattalocalGang = new Gang(NULL, NULL, m_Ui->pattalocal);
+    autoYGang = new Gang(nullptr, nullptr, m_Ui->autoYcheckbox);
+    pattalocalGang = new Gang(nullptr, nullptr, m_Ui->pattalocal);
 
     // reinhard02
-    keyGang = new Gang(m_Ui->keySlider, m_Ui->keydsb, NULL, NULL, NULL, NULL,
+    keyGang = new Gang(m_Ui->keySlider, m_Ui->keydsb, nullptr, nullptr, nullptr, nullptr,
                        0.f, 1.f, 0.18f);
 
     connect(keyGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
     connect(keyGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
-    phiGang = new Gang(m_Ui->phiSlider, m_Ui->phidsb, NULL, NULL, NULL, NULL,
+    phiGang = new Gang(m_Ui->phiSlider, m_Ui->phidsb, nullptr, nullptr, nullptr, nullptr,
                        0.f, 100.f, REINHARD02_PHI);
-    range2Gang = new Gang(m_Ui->range2Slider, m_Ui->range2dsb, NULL, NULL, NULL,
-                          NULL, 1.f, 32.f, REINHARD02_RANGE);
-    lowerGang = new Gang(m_Ui->lowerSlider, m_Ui->lowerdsb, NULL, NULL, NULL,
-                         NULL, 1.f, 100.f, REINHARD02_LOWER);
-    upperGang = new Gang(m_Ui->upperSlider, m_Ui->upperdsb, NULL, NULL, NULL,
-                         NULL, 1.f, 100.f, REINHARD02_UPPER);
-    usescalesGang = new Gang(NULL, NULL, m_Ui->usescalescheckbox);
+    range2Gang = new Gang(m_Ui->range2Slider, m_Ui->range2dsb, nullptr, nullptr, nullptr,
+                          nullptr, 1.f, 32.f, REINHARD02_RANGE);
+    lowerGang = new Gang(m_Ui->lowerSlider, m_Ui->lowerdsb, nullptr, nullptr, nullptr,
+                         nullptr, 1.f, 100.f, REINHARD02_LOWER);
+    upperGang = new Gang(m_Ui->upperSlider, m_Ui->upperdsb, nullptr, nullptr, nullptr,
+                         nullptr, 1.f, 100.f, REINHARD02_UPPER);
+    usescalesGang = new Gang(nullptr, nullptr, m_Ui->usescalescheckbox);
 
     // reinhard05
     brightnessGang =
-        new Gang(m_Ui->brightnessSlider, m_Ui->brightnessdsb, NULL, NULL, NULL,
-                 NULL, -20.f, 20.f, REINHARD05_BRIGHTNESS);
+        new Gang(m_Ui->brightnessSlider, m_Ui->brightnessdsb, nullptr, nullptr, nullptr,
+                 nullptr, -20.f, 20.f, REINHARD05_BRIGHTNESS);
 
     connect(brightnessGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
@@ -228,16 +228,16 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
             &QWidget::setEnabled);
 
     chromaticGang =
-        new Gang(m_Ui->chromaticAdaptSlider, m_Ui->chromaticAdaptdsb, NULL,
-                 NULL, NULL, NULL, 0.f, 1.f, REINHARD05_CHROMATIC_ADAPTATION);
+        new Gang(m_Ui->chromaticAdaptSlider, m_Ui->chromaticAdaptdsb, nullptr,
+                 nullptr, nullptr, nullptr, 0.f, 1.f, REINHARD05_CHROMATIC_ADAPTATION);
     lightGang =
-        new Gang(m_Ui->lightAdaptSlider, m_Ui->lightAdaptdsb, NULL, NULL, NULL,
-                 NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
+        new Gang(m_Ui->lightAdaptSlider, m_Ui->lightAdaptdsb, nullptr, nullptr, nullptr,
+                 nullptr, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
 
     // ferwerda96
     ferwerdamultiplierGang =
-        new Gang(m_Ui->ferwerdaMultiplierSlider, m_Ui->ferwerdaMultiplierDsb, NULL, NULL, NULL,
-                 NULL, 0.001f, 2.f, FERWERDA96_MULTIPLIER);
+        new Gang(m_Ui->ferwerdaMultiplierSlider, m_Ui->ferwerdaMultiplierDsb, nullptr, nullptr, nullptr,
+                 nullptr, 0.001f, 2.f, FERWERDA96_MULTIPLIER);
 
     connect(ferwerdamultiplierGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
@@ -245,13 +245,13 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
             &QWidget::setEnabled);
 
     adaptationGang =
-        new Gang(m_Ui->adaptationLuminanceSlider, m_Ui->adaptationLuminanceDsb, NULL,
-                 NULL, NULL, NULL, 0.001f, 1.f, FERWERDA96_ADAPTATION_LUMINANCE);
+        new Gang(m_Ui->adaptationLuminanceSlider, m_Ui->adaptationLuminanceDsb, nullptr,
+                 nullptr, nullptr, nullptr, 0.001f, 1.f, FERWERDA96_ADAPTATION_LUMINANCE);
 
     // kimkautz08
     kimkautzc1Gang =
-        new Gang(m_Ui->kimkautzC1Slider, m_Ui->kimkautzC1Dsb, NULL,
-                 NULL, NULL, NULL, 0.001f, 10.f, KIMKAUTZ08_C1);
+        new Gang(m_Ui->kimkautzC1Slider, m_Ui->kimkautzC1Dsb, nullptr,
+                 nullptr, nullptr, nullptr, 0.001f, 10.f, KIMKAUTZ08_C1);
 
     connect(kimkautzc1Gang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
@@ -259,36 +259,36 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel,
             &QWidget::setEnabled);
 
     kimkautzc2Gang =
-        new Gang(m_Ui->kimkautzC2Slider, m_Ui->kimkautzC2Dsb, NULL,
-                 NULL, NULL, NULL, 0.001f, 5.f, KIMKAUTZ08_C2);
+        new Gang(m_Ui->kimkautzC2Slider, m_Ui->kimkautzC2Dsb, nullptr,
+                 nullptr, nullptr, nullptr, 0.001f, 5.f, KIMKAUTZ08_C2);
 
     // vanhateren06
     vanhaterenPupilAreaGang =
-        new Gang(m_Ui->pupil_areaSlider, m_Ui->pupil_areaDsb, NULL,
-                 NULL, NULL, NULL, 0.0f, 100.f, VANHATEREN06_PUPIL_AREA);
+        new Gang(m_Ui->pupil_areaSlider, m_Ui->pupil_areaDsb, nullptr,
+                 nullptr, nullptr, nullptr, 0.0f, 100.f, VANHATEREN06_PUPIL_AREA);
 
     connect(vanhaterenPupilAreaGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
 
     // lischinski06
     lischinskiAlphaGang =
-        new Gang(m_Ui->lischinski_alpha_Slider, m_Ui->lischinski_alpha_Dsb, NULL,
-                 NULL, NULL, NULL, 0.01f, 10.0f, LISCHINSKI06_ALPHA, true);
+        new Gang(m_Ui->lischinski_alpha_Slider, m_Ui->lischinski_alpha_Dsb, nullptr,
+                 nullptr, nullptr, nullptr, 0.01f, 10.0f, LISCHINSKI06_ALPHA, true);
 
     connect(lischinskiAlphaGang, &Gang::enableUndo, m_Ui->undoButton,
             &QWidget::setEnabled);
 
     // pregamma
-    pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb, NULL, NULL,
-                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
+    pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb, nullptr, nullptr,
+                            nullptr, nullptr, 0.1f, 5.f, 1.0f, true);
 
     // postgamma
-    postgammaGang = new Gang(m_Ui->postgammaSlider, m_Ui->postgammadsb, NULL, NULL,
-                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
+    postgammaGang = new Gang(m_Ui->postgammaSlider, m_Ui->postgammadsb, nullptr, nullptr,
+                            nullptr, nullptr, 0.1f, 5.f, 1.0f, true);
 
     // postsaturation
-    postsaturationGang = new Gang(m_Ui->postsaturationSlider, m_Ui->postsaturationdsb, NULL, NULL,
-                            NULL, NULL, 0.1f, 5.f, 1.0f, true);
+    postsaturationGang = new Gang(m_Ui->postsaturationSlider, m_Ui->postsaturationdsb, nullptr, nullptr,
+                            nullptr, nullptr, 0.1f, 5.f, 1.0f, true);
 
     //--
     connect(m_Ui->stackedWidget_operators, &QStackedWidget::currentChanged,
@@ -409,7 +409,7 @@ void TonemappingPanel::createDatabase() {
     bool res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean \
         NOT \
-        NULL, contrastFactor real, saturationFactor real, detailFactor real, \
+        nullptr, contrastFactor real, saturationFactor real, detailFactor real, \
         pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
 
@@ -417,15 +417,15 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM mantiuk06; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE mantiuk06 ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE mantiuk06 ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE mantiuk06 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE mantiuk06 ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Mantiuk 08
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, \
         contrastEnhancement real, luminanceLevel real, manualLuminanceLevel \
-        boolean NOT NULL, pregamma real, comment varchar(150), \
+        boolean NOT nullptr, pregamma real, comment varchar(150), \
         postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
 
@@ -433,23 +433,23 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM mantiuk08; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE mantiuk08 ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE mantiuk08 ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE mantiuk08 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE mantiuk08 ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Ashikhmin
     res = query.exec(QStringLiteral(
-        " CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 \
-        boolean NOT NULL, lct real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
+        " CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT nullptr, eq2 \
+        boolean NOT nullptr, lct real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
 
     res = query.exec(QStringLiteral(
                 " SELECT postsaturation FROM ashikhmin; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE ashikhmin ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE ashikhmin ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE ashikhmin ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE ashikhmin ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Drago
     res = query.exec(
@@ -461,9 +461,9 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM drago; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE drago ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE drago ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE drago ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE drago ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Durand
     res = query.exec(QStringLiteral(
@@ -475,15 +475,15 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM durand; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE durand ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE durand ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE durand ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE durand ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Fattal
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, \
         colorSaturation real, noiseReduction real, oldFattal boolean NOT \
-        NULL, \
+        nullptr, \
         pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
 
@@ -491,9 +491,9 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM fattal; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE fattal ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE fattal ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE fattal ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE fattal ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Ferradans
     res = query.exec(QStringLiteral(
@@ -505,9 +505,9 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM ferradans; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE ferradans ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE ferradans ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE ferradans ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE ferradans ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Ferwerda
     res = query.exec(QStringLiteral(
@@ -519,9 +519,9 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM ferwerda; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE ferwerda ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE ferwerda ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE ferwerda ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE ferwerda ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // KimKautz
     res = query.exec(QStringLiteral(
@@ -533,14 +533,14 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM kimkautz; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE kimkautz ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE kimkautz ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE kimkautz ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE kimkautz ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Pattanaik
     res = query.exec(QStringLiteral(
         " CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean \
-        NOT NULL, local boolean NOT NULL, cone real, rod real, \
+        NOT nullptr, local boolean NOT nullptr, cone real, rod real, \
         multiplier real, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
 
@@ -548,14 +548,14 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM pattanaik; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE pattanaik ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE pattanaik ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE pattanaik ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE pattanaik ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Reinhard02
     res = query.exec(
         QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean \
-                       NOT NULL, key real, phi real, range int, lower int, \
+                       NOT nullptr, key real, phi real, range int, lower int, \
                        upper int, pregamma real, comment varchar(150), postsaturation real, postgamma real);"));
     if (res == false) qDebug() << query.lastError();
 
@@ -563,9 +563,9 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM reinhard02; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE reinhard02 ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE reinhard02 ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE reinhard02 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE reinhard02 ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Reinhard05
     res = query.exec(QStringLiteral(
@@ -578,9 +578,9 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM reinhard05; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE reinhard05 ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE reinhard05 ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE reinhard05 ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE reinhard05 ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // VanHateren
     res = query.exec(QStringLiteral(
@@ -592,9 +592,9 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM vanhateren; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE vanhateren ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE vanhateren ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE vanhateren ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE vanhateren ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Lischinski
     res = query.exec(QStringLiteral(
@@ -606,9 +606,9 @@ void TonemappingPanel::createDatabase() {
                 " SELECT postsaturation FROM lischinski; "));
     if (res == false) {
         res = query.exec(QStringLiteral(
-                " ALTER TABLE lischinski ADD COLUMN postsaturation real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE lischinski ADD COLUMN postsaturation real NOT nullptr DEFAULT 1;"));
         res = query.exec(QStringLiteral(
-                " ALTER TABLE lischinski ADD COLUMN postgamma real NOT NULL DEFAULT 1;"));
+                " ALTER TABLE lischinski ADD COLUMN postgamma real NOT nullptr DEFAULT 1;"));
     }
     // Hdr creation custom config parameters
     res = query.exec(QStringLiteral(

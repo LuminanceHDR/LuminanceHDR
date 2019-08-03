@@ -31,7 +31,7 @@
 namespace pfsadditions {
 
 FormatHelper::FormatHelper()
-    : QObject(), m_comboBox(NULL), m_settingsButton(NULL), m_hdr(false) {}
+    : QObject(), m_comboBox(nullptr), m_settingsButton(nullptr), m_hdr(false) {}
 
 void FormatHelper::initConnection(QComboBox *comboBox,
                                   QAbstractButton *settingsButton, bool hdr) {
@@ -163,7 +163,7 @@ void FormatHelper::buttonPressed() {
             int qual = -1;
             if (m_params.get("quality", quality)) qual = quality;
 
-            ImageQualityDialog d(NULL, format == 21 ? "png" : "jpg", qual,
+            ImageQualityDialog d(nullptr, format == 21 ? "png" : "jpg", qual,
                                  m_settingsButton);
             if (d.exec() == QDialog::Accepted) {
                 size_t quality = d.getQuality();

@@ -45,7 +45,7 @@ using namespace pfs;
 
 namespace {
 void parseOptions(TonemappingOptions *opts, QString &caption) {
-    if (opts == NULL) {
+    if (opts == nullptr) {
         caption.clear();
     } else {
         TMOptionsOperations tmopts(opts);

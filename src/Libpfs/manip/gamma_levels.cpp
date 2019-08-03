@@ -102,7 +102,7 @@ void gammaAndLevels(pfs::Frame *inFrame, float black_in, float white_in,
 
     pfs::Channel *Xc, *Yc, *Zc;
     inFrame->getXYZChannels(Xc, Yc, Zc);
-    assert(Xc != NULL && Yc != NULL && Zc != NULL);
+    assert(Xc != nullptr && Yc != nullptr && Zc != nullptr);
 
     const float *R_i = Xc->data();
     const float *G_i = Yc->data();

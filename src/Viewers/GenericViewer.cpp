@@ -323,7 +323,7 @@ void GenericViewer::slotPanIconHidden() {
 void GenericViewer::scrollBarChanged(int /*value*/) { emit changed(this); }
 
 void GenericViewer::syncViewer(GenericViewer *src) {
-    if (src == NULL) return;
+    if (src == nullptr) return;
     if (src == this) return;
 
     setViewerMode(src->getViewerMode());
@@ -377,7 +377,7 @@ void GenericViewer::setFrame(pfs::Frame *new_frame,
 
     // update tonemappingoptions (if available)
     // in the current implementation, only LdrViewer redefines this function
-    if (tmopts != NULL) setTonemappingOptions(tmopts);
+    if (tmopts != nullptr) setTonemappingOptions(tmopts);
 
     // reset boundaries
     updateView();

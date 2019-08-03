@@ -75,7 +75,7 @@ class PreviewLabelUpdater {
 #ifdef QT_DEBUG
             qDebug() << "operator()() for TM"
                      << static_cast<int>(tm_options->tmoperator)
-                     << " received a NULL pointer";
+                     << " received a nullptr pointer";
             return;
 #endif
         }
@@ -143,7 +143,7 @@ void PreviewSettings::changeEvent(QEvent *event) {
 }
 
 void PreviewSettings::updatePreviews(pfs::Frame *frame) {
-    if (frame == NULL) return;
+    if (frame == nullptr) return;
 
     m_original_width_frame = frame->getWidth();
 

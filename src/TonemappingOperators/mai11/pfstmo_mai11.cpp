@@ -59,7 +59,7 @@ void pfstmo_mai11(pfs::Frame &frame, pfs::Progress &ph) {
     pfs::Channel *inX, *inY, *inZ;
 
     frame.getXYZChannels(inX, inY, inZ);
-    if (inX == NULL || inY == NULL || inZ == NULL) {
+    if (inX == nullptr || inY == nullptr || inZ == nullptr) {
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
     size_t cols = frame.getWidth();

@@ -137,7 +137,7 @@ void ProjectionFactory::registerProjection(const char *name,
 // TODO: check this function
 Projection *ProjectionFactory::getProjection(char *name) {
     char *opts;
-    Projection *projection = NULL;
+    Projection *projection = nullptr;
 
     if ((opts = strchr(name, '/'))) {
         *opts++ = '\0';
@@ -146,10 +146,10 @@ Projection *ProjectionFactory::getProjection(char *name) {
     ProjectionCreator projectionCreator =
         singleton.projections.find(string(name))->second;
 
-    if (projectionCreator != NULL) {
+    if (projectionCreator != nullptr) {
         projection = projectionCreator();
 
-        if (opts != NULL) projection->setOptions(opts);
+        if (opts != nullptr) projection->setOptions(opts);
     }
 
     return projection;
@@ -504,7 +504,7 @@ void transformArray(const pfs::Array2Df *in, pfs::Array2Df *out,
                                 (x + offset + sx) / outCols,
                                 (y + offset + sy) / outRows);
 
-                        if (direction == NULL) continue;
+                        if (direction == nullptr) continue;
 
                         // angles below are negated, because we want to rotate
                         // the environment around us, not us within the

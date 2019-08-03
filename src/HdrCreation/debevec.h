@@ -41,12 +41,12 @@ class DebevecOperator : public IFusionOperator {
    public:
     DebevecOperator() : IFusionOperator() {}
 
-    FusionOperator getType() const { return DEBEVEC; }
+    FusionOperator getType() const override { return DEBEVEC; }
 
    private:
     void computeFusion(ResponseCurve &response, WeightFunction &weight,
                        const std::vector<FrameEnhanced> &frames,
-                       pfs::Frame &frame);
+                       pfs::Frame &frame) override;
 };
 
 }  // fusion

@@ -210,13 +210,13 @@ void EXRReader::read(Frame &frame, const Params & /*params*/) {
         const StringAttribute *attrib =
             file.header().findTypedAttribute<StringAttribute>(attribName);
 
-        if (attrib == NULL) continue;  // Skip if type is not String
+        if (attrib == nullptr) continue;  // Skip if type is not String
 
         // fprintf( stderr, "Tag: %s = %s\n", attribName,
         // attrib->value().c_str() );
 
         const char *colon = strstr(attribName, ":");
-        if (colon == NULL)  // frame tag
+        if (colon == nullptr)  // frame tag
         {
             tempFrame.getTags().setTag(attribName,
                                        escapeString(attrib->value()));
@@ -224,7 +224,7 @@ void EXRReader::read(Frame &frame, const Params & /*params*/) {
         {
             std::string channelName = string(attribName, colon - attribName);
             pfs::Channel *ch = tempFrame.getChannel(channelName);
-            if (ch == NULL) {
+            if (ch == nullptr) {
                 std::cerr << " Warning! Can not set tag for " << channelName
                           << " channel because it does not exist\n";
             } else {

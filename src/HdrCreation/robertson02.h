@@ -37,12 +37,12 @@ class RobertsonOperator : public IFusionOperator {
    public:
     RobertsonOperator() : IFusionOperator() {}
 
-    FusionOperator getType() const { return ROBERTSON; }
+    FusionOperator getType() const override { return ROBERTSON; }
 
    private:
     void computeFusion(ResponseCurve &response, WeightFunction &weight,
                        const std::vector<FrameEnhanced> &frames,
-                       pfs::Frame &frame);
+                       pfs::Frame &frame) override;
 
    protected:
     void applyResponse(ResponseCurve &response, WeightFunction &weight,
@@ -56,12 +56,12 @@ class RobertsonOperatorAuto : public RobertsonOperator {
    public:
     RobertsonOperatorAuto() : RobertsonOperator() {}
 
-    FusionOperator getType() const { return ROBERTSON_AUTO; }
+    FusionOperator getType() const override { return ROBERTSON_AUTO; }
 
    private:
     void computeFusion(ResponseCurve &response, WeightFunction &weight,
                        const std::vector<FrameEnhanced> &frames,
-                       pfs::Frame &outFrame);
+                       pfs::Frame &outFrame) override;
 
     void computeResponse(ResponseCurve &response, WeightFunction &weight,
                          ResponseChannel channel, const DataList &inputData,

@@ -107,6 +107,7 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context,
 #endif
 
 int main(int argc, char **argv) {
+    QGuiApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
@@ -175,7 +176,7 @@ int main(int argc, char **argv) {
 #ifndef DEMOSAICING_GPL2
         if (LuminanceOptions().getRawUserQuality() > 3) {
             LuminanceOptions().setRawUserQuality( 3 );
-            QMessageBox::warning(NULL, "", QObject::tr("This version of Luminance HDR has been compiled without support for extra "\
+            QMessageBox::warning(nullptr, "", QObject::tr("This version of Luminance HDR has been compiled without support for extra "\
                         "demosaicing algorithms.\nYour preferences were set to use one of the missing algorithms "\
                         "and are now been changed to use the supported AHD method.\nTo change this "
                         "go to Tools->Preferences->Raw Conversion->Quality"), QMessageBox::Ok);

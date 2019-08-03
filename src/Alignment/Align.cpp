@@ -46,7 +46,7 @@ Align::~Align() {}
 
 void Align::align_with_ais(bool ais_crop_flag) {
     m_ais.reset(new QProcess(this));
-    if (m_ais == NULL) exit(1);  // TODO: exit gracefully
+    if (m_ais == nullptr) exit(1);  // TODO: exit gracefully
     if (!m_fromCommandLine) {
         m_ais->setWorkingDirectory(m_luminance_options.getTempDir());
     }
@@ -194,7 +194,7 @@ void Align::readData() {
 }
 
 void Align::reset() {
-    if (m_ais != NULL && m_ais->state() != QProcess::NotRunning) {
+    if (m_ais != nullptr && m_ais->state() != QProcess::NotRunning) {
         m_ais->kill();
     }
 }

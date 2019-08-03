@@ -632,7 +632,7 @@ reinhard02|\nreinhard05|mai|mantiuk06|mantiuk08|\nvanhateren|lischinski] (Defaul
             try {
                 TonemappingOptions *options =
                     TMOptionsOperations::parseFile(settingFile);
-                if (options != NULL)
+                if (options != nullptr)
                     tmopts.reset(options);
                 else
                     printErrorAndExit(
@@ -798,7 +798,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
             printErrorAndExit(QStringLiteral("Caught unhandled exception"));
         }
 
-        if (HDR != NULL) {
+        if (HDR != nullptr) {
             printIfVerbose(QObject::tr("Successfully loaded file %1.")
                                .arg(loadHdrFilename),
                            verbose);

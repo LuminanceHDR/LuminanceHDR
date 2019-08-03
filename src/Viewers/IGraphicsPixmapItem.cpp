@@ -32,7 +32,7 @@
 IGraphicsPixmapItem::IGraphicsPixmapItem(QGraphicsItem *parent)
     : QGraphicsPixmapItem(parent),
       mDropShadow(new QGraphicsDropShadowEffect()),
-      mSelectionBox(NULL),
+      mSelectionBox(nullptr),
       mIsSelectionEnabled(true) {
     mDropShadow->setBlurRadius(10);
     mDropShadow->setOffset(0, 0);
@@ -57,7 +57,7 @@ QRect IGraphicsPixmapItem::getSelectionRect() {
 void IGraphicsPixmapItem::removeSelection() {
     if (mSelectionBox) {
         delete mSelectionBox;
-        mSelectionBox = NULL;
+        mSelectionBox = nullptr;
         // scene()->update();
 
         emit selectionReady(false);

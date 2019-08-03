@@ -63,7 +63,7 @@ void msec_timer::start() {
 #elif __APPLE__
     start_t = mach_absolute_time();
 #else
-    gettimeofday(&start_t, NULL);
+    gettimeofday(&start_t, nullptr);
 #endif
 }
 
@@ -73,7 +73,7 @@ void msec_timer::stop() {
 #elif __APPLE__
     stop_t = mach_absolute_time();
 #else
-    gettimeofday(&stop_t, NULL);
+    gettimeofday(&stop_t, nullptr);
 #endif
 }
 

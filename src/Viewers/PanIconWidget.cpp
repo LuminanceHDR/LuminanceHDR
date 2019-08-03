@@ -47,7 +47,7 @@ PanIconWidget::PanIconWidget(QWidget *parent, Qt::WindowFlags flags)
     //     setLineWidth(1);
     //     setMidLineWidth(2);
     //     setContentsMargins(2,2,2,2);
-    m_image = NULL;
+    m_image = nullptr;
     moveSelection = false;
     setMouseTracking(true);  // necessary?
 }
@@ -182,7 +182,7 @@ PanIconWidget::~PanIconWidget() {
 }
 
 void PanIconWidget::paintEvent(QPaintEvent *e) {
-    if (m_image == NULL) return;
+    if (m_image == nullptr) return;
     QPainter p(this);
     p.drawImage(e->rect(), *m_image);
 

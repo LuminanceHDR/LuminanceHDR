@@ -83,7 +83,7 @@ inline float min(float a, float b) { return a < b ? a : b; }
 // char *channelName )
 // {
 //   FILE *fh = fopen( fileName, "wb" );
-//   assert( fh != NULL );
+//   assert( fh != nullptr );
 
 //   int width = data->getCols();
 //   int height = data->getRows();

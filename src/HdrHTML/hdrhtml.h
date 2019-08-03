@@ -70,16 +70,16 @@ class HDRHTMLSet {
     const char *image_template;
     std::list<HDRHTMLImage> image_list;
 
-    HDRHTMLSet(const char *page_name, const char *image_dir = NULL)
-        : page_name(page_name), image_dir(image_dir), image_template(NULL) {}
+    HDRHTMLSet(const char *page_name, const char *image_dir = nullptr)
+        : page_name(page_name), image_dir(image_dir), image_template(nullptr) {}
 
     void add_image(int width, int height, float *R, float *G, float *B,
                    float *Y, const char *base_name, const char *out_dir,
                    int quality, bool verbose);
 
     void generate_webpage(const char *page_template, const char *image_template,
-                          const char *out_dir, const char *object_output = NULL,
-                          const char *html_output = NULL, bool verbose = false);
+                          const char *out_dir, const char *object_output = nullptr,
+                          const char *html_output = nullptr, bool verbose = false);
 };
 }
 #endif

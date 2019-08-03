@@ -106,7 +106,7 @@ ostream &operator<<(ostream &out, const PngWriterParams &params) {
 static void png_write_icc_profile(png_structp png_ptr, png_infop info_ptr) {
     cmsUInt32Number profileSize = 0;
     cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-    cmsSaveProfileToMem(hsRGB, NULL, &profileSize);  // get the size
+    cmsSaveProfileToMem(hsRGB, nullptr, &profileSize);  // get the size
 
 #if PNG_LIBPNG_VER_MINOR < 5
     std::vector<char> profileBuffer(profileSize);
@@ -144,7 +144,7 @@ class PngWriterImpl {
         png_uint_32 height = frame.getHeight();
 
         png_structp png_ptr =
-            png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+            png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
         if (!png_ptr) {
             close();
 
@@ -154,7 +154,7 @@ class PngWriterImpl {
 
         png_infop info_ptr = png_create_info_struct(png_ptr);
         if (!info_ptr) {
-            png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
+            png_destroy_write_struct(&png_ptr, (png_infopp)nullptr);
             close();
 
             throw io::WriteException("PNG: Failed to create info struct");
@@ -218,13 +218,13 @@ class PngWriterImpl {
 struct PngWriterImplFile : public PngWriterImpl {
     PngWriterImplFile() : PngWriterImpl(), m_handle() {}
 
-    void setupPngDest(png_structp png_ptr, const std::string &filename) {
+    void setupPngDest(png_structp png_ptr, const std::string &filename) override {
         open(filename);
         png_init_io(png_ptr, handle());
     }
 
-    void close() { m_handle.reset(); }
-    void computeSize() { m_filesize = 0; }
+    void close() override { m_handle.reset(); }
+    void computeSize() override { m_filesize = 0; }
 
    private:
     FILE *handle() { return m_handle.data(); }
@@ -254,12 +254,12 @@ static void my_png_write_data(png_structp png_ptr, png_bytep data,
 struct PngWriterImplMemory : public PngWriterImpl {
     PngWriterImplMemory() : PngWriterImpl(), m_buffer() {}
 
-    void setupPngDest(png_structp png_ptr, const std::string &) {
-        png_set_write_fn(png_ptr, &m_buffer, my_png_write_data, NULL);
+    void setupPngDest(png_structp png_ptr, const std::string &) override {
+        png_set_write_fn(png_ptr, &m_buffer, my_png_write_data, nullptr);
     }
 
-    void close() { m_buffer.clear(); }
-    void computeSize() { setFileSize(m_buffer.size()); }
+    void close() override { m_buffer.clear(); }
+    void computeSize() override { setFileSize(m_buffer.size()); }
 
    private:
     PngBuffer m_buffer;

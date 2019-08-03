@@ -353,7 +353,7 @@ void EditingTools::cropAgMasks(const QRect &ca) {
     int origlistsize = m_antiGhostingMasksList.size();
     for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
         QImage *newimage = new QImage(m_antiGhostingMasksList.at(0)->copy(ca));
-        if (newimage == NULL) exit(1);  // TODO: exit gracefully
+        if (newimage == nullptr) exit(1);  // TODO: exit gracefully
         m_antiGhostingMasksList.append(newimage);
         delete m_antiGhostingMasksList.takeAt(0);
     }

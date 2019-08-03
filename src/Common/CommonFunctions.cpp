@@ -305,7 +305,7 @@ void LoadFile::operator()(HdrCreationItem &currentItem) {
         Channel *blue;
         currentItem.frame()->getXYZChannels(red, green, blue);
 
-        if (red == NULL || green == NULL || blue == NULL) {
+        if (red == nullptr || green == nullptr || blue == nullptr) {
             throw std::runtime_error("Null frame");
         }
 

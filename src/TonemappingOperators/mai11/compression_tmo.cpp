@@ -70,11 +70,11 @@ class UniformArrayLUT {
    public:
     double *y_i;
 
-    UniformArrayLUT(double from, double to, int lut_size, double *y_i = NULL)
+    UniformArrayLUT(double from, double to, int lut_size, double *y_i = nullptr)
         : start_v(from),
           lut_size(lut_size),
           delta((to - from) / (double)lut_size) {
-        if (y_i == NULL) {
+        if (y_i == nullptr) {
             this->y_i = new double[lut_size];
             own_y_i = true;
         } else {
@@ -83,7 +83,7 @@ class UniformArrayLUT {
         }
     }
 
-    UniformArrayLUT() : start_v(0.), lut_size(0), delta(0.), own_y_i(false), y_i(NULL) {}
+    UniformArrayLUT() : start_v(0.), lut_size(0), delta(0.), own_y_i(false), y_i(nullptr) {}
 
     UniformArrayLUT(const UniformArrayLUT &other)
         : start_v(other.start_v), lut_size(other.lut_size), delta(other.delta) {
@@ -134,7 +134,7 @@ class ImgHistogram {
     double *p;
     int bin_count;
 
-    ImgHistogram() : L_min(-6.f), L_max(9.f), delta(0.1), bins(NULL), p(NULL) {
+    ImgHistogram() : L_min(-6.f), L_max(9.f), delta(0.1), bins(nullptr), p(nullptr) {
         bin_count = (int)ceil((L_max - L_min) / delta);
         bins = new int[bin_count];
         p = new double[bin_count];
