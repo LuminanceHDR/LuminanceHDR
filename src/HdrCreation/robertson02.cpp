@@ -352,7 +352,7 @@ void RobertsonOperatorAuto::computeResponse(
                       << " <- converged\n";
 #endif
             break;
-        } else if (isnan(delta) ||
+        } else if (std::isnan(delta) ||
                    (cur_it > MAXIT && pdelta < delta)) {
 #ifndef NDEBUG
             cerr
