@@ -42,7 +42,7 @@ class XYGradient {
 
     XYGradient(float gx, float gy) : m_Gx(gx), m_Gy(gy) {}
 
-    XYGradient(float grad) : m_Gx(grad), m_Gy(grad) {}
+    explicit XYGradient(float grad) : m_Gx(grad), m_Gy(grad) {}
 
     const float &gX() const { return m_Gx; }
     float &gX() { return m_Gx; }
@@ -73,6 +73,10 @@ inline XYGradient operator*(const XYGradient &x, const XYGradient &y) {
     return XYGradient(x.gX() * y.gX(), x.gY() * y.gY());
 }
 
+inline XYGradient operator*(const XYGradient &x, const float multiplier) {
+    return XYGradient(x.gX() * multiplier, x.gY() * multiplier);
+}
+
 typedef ::pfs::Array2D<XYGradient> PyramidS;
 
 class PyramidT {
@@ -101,7 +105,7 @@ class PyramidT {
     //! \brief fill all the levels of the pyramid based on the data inside
     //! the supplied vector (same size of the first level of the \c PyramidT)
     //! \param[in] data input vector of data
-    void computeGradients(const pfs::Array2Df &inputData);
+    void computeGradients(const pfs::Array2Df &Y);
 
     //! \param[out] data input vector of data
     void computeSumOfDivergence(pfs::Array2Df &sumOfDivG);

@@ -71,6 +71,8 @@ class TagContainer {
     const_iterator begin() const { return m_tags.begin(); }
     const_iterator end() const { return m_tags.end(); }
 
+    bool isEmpty() const { return m_tags.empty(); }
+
    private:
     TagList m_tags;
 };

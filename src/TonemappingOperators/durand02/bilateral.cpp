@@ -33,6 +33,7 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
+#include "noncopyable.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x) __builtin_expect((x), 1)
@@ -62,7 +63,7 @@ void gaussianKernel(pfs::Array2Df *kern, float sigma) {
     }
 }
 
-class GaussLookup {
+class GaussLookup : public lhdrengine::NonCopyable {
     float *gauss;
     float maxVal;
     float scaleFactor;
@@ -81,7 +82,7 @@ class GaussLookup {
 
     ~GaussLookup() { delete[] gauss; }
 
-    float getValue(float x) {
+    float getValue(float x) const {
         x = fabs(x);
         if (unlikely(x > maxVal)) return 0;
         return gauss[(int)(x * scaleFactor)];

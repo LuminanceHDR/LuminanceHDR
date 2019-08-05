@@ -57,7 +57,7 @@ class GenericViewer : public QWidget {
     //! \brief GenericViewer constructor
     //! \param[in] frame reference frame
     //! \param[in] ns need saving
-    GenericViewer(pfs::Frame *frame, QWidget *parent = 0, bool ns = false);
+    explicit GenericViewer(pfs::Frame *frame, QWidget *parent = 0, bool ns = false);
 
     //! \brief GenericViewer virtual destructor
     virtual ~GenericViewer();

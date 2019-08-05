@@ -230,9 +230,9 @@ double gsl_cqpminimizer_residuals_norm(gsl_cqpminimizer *minimizer) {
 }
 
 int gsl_cqpminimizer_test_convergence(gsl_cqpminimizer *minimizer,
-                                      double eps_gap, double eps_residuals) {
+                                      double eps_gap, double eps_residual) {
     if (minimizer->gap <= eps_gap &&
-        minimizer->residuals_norm <= eps_residuals * minimizer->data_norm)
+        minimizer->residuals_norm <= eps_residual * minimizer->data_norm)
         return GSL_SUCCESS;
     else
         return GSL_CONTINUE;

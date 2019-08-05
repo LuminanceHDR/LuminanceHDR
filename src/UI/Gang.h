@@ -42,9 +42,9 @@ class Gang : public QObject {
    public:
     friend class TmoSettings;
 
-    Gang(QSlider *s = 0, QDoubleSpinBox *dsb = 0, QCheckBox *cbx1 = 0,
-         QCheckBox *cbx2 = 0, QRadioButton *rb1 = 0, QRadioButton *rb2 = 0,
-         const float minv = 0.0, const float maxv = 0.0, const float vv = 0.0,
+    Gang(QSlider *slider = 0, QDoubleSpinBox *doublespinbox = 0, QCheckBox *checkbox1 = 0,
+         QCheckBox *checkbox2 = 0, QRadioButton *radiobutton1 = 0, QRadioButton *radiobutton2 = 0,
+         const float minvalue = 0.0, const float maxvalue = 0.0, const float defaultvalue = 0.0,
          const bool logs = false);
     ~Gang();
 
@@ -79,12 +79,12 @@ class Gang : public QObject {
     void enableRedo(bool);
 
    private:
-    QSlider *s;
-    QDoubleSpinBox *dsb;
-    QCheckBox *cbx1;
-    QCheckBox *cbx2;
-    QRadioButton *rb1;
-    QRadioButton *rb2;
+    QSlider *slider;
+    QDoubleSpinBox *doublespinbox;
+    QCheckBox *checkbox1;
+    QCheckBox *checkbox2;
+    QRadioButton *radiobutton1;
+    QRadioButton *radiobutton2;
     bool isCbx1Checked;
     bool isCbx2Checked;
     bool isRb1Checked;
@@ -93,9 +93,9 @@ class Gang : public QObject {
     bool isCbx2Checked_default;
     bool isRb1Checked_default;
     bool isRb2Checked_default;
-    float minv;
-    float maxv;
-    float defaultv;
+    float minvalue;
+    float maxvalue;
+    float defaultvalue;
     bool logscaling;
     float value;
     bool value_from_text;

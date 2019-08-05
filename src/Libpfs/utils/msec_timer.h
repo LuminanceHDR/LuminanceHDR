@@ -79,9 +79,9 @@ class msec_timer {
     void update();
     void stop_and_update();
     void reset();
-    double get_time();
+    double get_time() const;
 
-    void get_timer_type();
+    static void get_timer_type();
 };
 
 double convert_to_gigaflops(double, double);

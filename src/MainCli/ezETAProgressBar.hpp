@@ -70,7 +70,7 @@ class ezETAProgressBar {
     };
 
     // http://stackoverflow.com/questions/3283804/c-get-milliseconds-since-some-date
-    long long osQueryPerfomance() {
+    long long osQueryPerfomance() const {
 #ifdef WIN32
         LARGE_INTEGER llPerf = {0};
         QueryPerformanceCounter(&llPerf);
@@ -82,7 +82,7 @@ class ezETAProgressBar {
 #endif
     }
 
-    std::string secondsToString(long long t) {
+    std::string secondsToString(long long t) const {
         int days = t / 86400;
         long long sec = t - days * 86400;
         int hours = sec / 3600;

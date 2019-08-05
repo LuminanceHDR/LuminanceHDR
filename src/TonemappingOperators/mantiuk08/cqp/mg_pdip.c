@@ -137,6 +137,9 @@ static int mg_pdip_set(void *vstate, const gsl_cqp_data *cqp, gsl_vector *x,
 
     if (cqp->A->size1 != 0) {
         status = pdip_initial_point_y(cqp->Q, cqp->q, cqp->A, x, y);
+        if (status != GSL_SUCCESS) {
+            return status;
+        }
     }
 
     status = pdip_initial_point_z(z);

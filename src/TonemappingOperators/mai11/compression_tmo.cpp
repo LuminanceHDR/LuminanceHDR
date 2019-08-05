@@ -44,6 +44,7 @@
 
 #include "Libpfs/utils/msec_timer.h"
 #include "compression_tmo.h"
+#include "noncopyable.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x) __builtin_expect((x), 1)
@@ -108,7 +109,7 @@ class UniformArrayLUT {
         if (own_y_i) delete[] y_i;
     }
 
-    double interp(double x) {
+    double interp(double x) const {
         const double ind_f = (x - start_v) / delta;
         const size_t ind_low = (size_t)(ind_f);
         const size_t ind_hi = (size_t)ceil(ind_f);
@@ -126,7 +127,7 @@ class UniformArrayLUT {
     }
 };
 
-class ImgHistogram {
+class ImgHistogram : public lhdrengine::NonCopyable {
    public:
     const float L_min, L_max;
     const float delta;

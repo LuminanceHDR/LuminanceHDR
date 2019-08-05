@@ -42,7 +42,7 @@ Frame::Frame(size_t width, size_t height)
 namespace {
 struct ChannelDeleter {
     template <typename T>
-    inline void operator()(T *p) {
+    inline void operator()(T *p) const{
         delete p;
     }
 };

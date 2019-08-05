@@ -38,7 +38,7 @@ class QtWaitingSpinner : public QWidget {
      * parent widget is provided, "centreOnParent" will ensure that
      * QtWaitingSpinner automatically centres itself on it, if not,
      * "centreOnParent" is ignored. */
-    QtWaitingSpinner(Qt::WindowModality modality, QWidget *parent = 0,
+    explicit QtWaitingSpinner(Qt::WindowModality modality, QWidget *parent = 0,
                      bool centreOnParent = true);
 
    public Q_SLOTS:
@@ -68,7 +68,7 @@ class QtWaitingSpinner : public QWidget {
     static int calculateTimerInterval(int lines, int speed);
     static int lineCountDistanceFromPrimary(int current, int primary,
                                             int totalNrOfLines);
-    static QColor currentLineColor(int distance, int totalNrOfLines,
+    static QColor currentLineColor(int countDistance, int totalNrOfLines,
                                    qreal trailFadePerc, qreal minOpacity,
                                    QColor color);
 

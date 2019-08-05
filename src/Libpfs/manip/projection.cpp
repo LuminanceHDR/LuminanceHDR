@@ -73,7 +73,7 @@ class Vector3D {
         z = z / len;
     }
 
-    double dot(Vector3D *v) { return x * v->x + y * v->y + z * v->z; }
+    double dot(Vector3D *v) const { return x * v->x + y * v->y + z * v->z; }
 
     // TODO: optimize rotations by precomputing sines and cosines
     void rotateX(double angle) {

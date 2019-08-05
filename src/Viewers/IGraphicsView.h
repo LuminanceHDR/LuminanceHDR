@@ -38,7 +38,7 @@ class IGraphicsView : public QGraphicsView {
 
    public:
     explicit IGraphicsView(QWidget *parent = 0);
-    IGraphicsView(QGraphicsScene *scene, QWidget *parent = 0);
+    explicit IGraphicsView(QGraphicsScene *scene, QWidget *parent = 0);
     ~IGraphicsView();
 
    protected:

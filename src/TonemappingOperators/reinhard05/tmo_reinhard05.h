@@ -65,8 +65,8 @@ struct Reinhard05Params {
 //! \param br brightness level -8:8 (def 0)
 //! \param ca amount of chromatic adaptation 0:1 (saturation, def 0)
 //! \param la amount of light adaptation 0:1 (local/global, def 1)
-void tmo_reinhard05(size_t width, size_t height, float *R, float *G, float *B,
-                    const float *Y, const Reinhard05Params &params,
+void tmo_reinhard05(size_t width, size_t height, float *nR, float *nG, float *nB,
+                    const float *nY, const Reinhard05Params &params,
                     pfs::Progress &ph);
 
 #endif  // TMO_REINHARD05_H

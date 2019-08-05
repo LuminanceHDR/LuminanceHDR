@@ -70,7 +70,7 @@ class HDRHTMLSet {
     const char *image_template;
     std::list<HDRHTMLImage> image_list;
 
-    HDRHTMLSet(const char *page_name, const char *image_dir = nullptr)
+    explicit HDRHTMLSet(const char *page_name, const char *image_dir = nullptr)
         : page_name(page_name), image_dir(image_dir), image_template(nullptr) {}
 
     void add_image(int width, int height, float *R, float *G, float *B,

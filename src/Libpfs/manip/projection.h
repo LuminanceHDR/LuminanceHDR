@@ -33,11 +33,12 @@
 #include <string>
 
 #include "Libpfs/array2d_fwd.h"
+#include "noncopyable.h"
 
 class Vector3D;
 class Point2D;
 
-class Projection {
+class Projection : public lhdrengine::NonCopyable {
    protected:
     const char *name;
 
@@ -71,11 +72,11 @@ class MirrorBallProjection : public Projection {
    public:
     static MirrorBallProjection singleton;
     static Projection *create();
-    const char *getName(void);
-    double getSizeRatio(void);
-    bool isValidPixel(double u, double v);
-    Vector3D *uvToDirection(double u, double v);
-    Point2D *directionToUV(Vector3D *direction);
+    const char *getName(void) override;
+    double getSizeRatio(void) override;
+    bool isValidPixel(double u, double v) override;
+    Vector3D *uvToDirection(double u, double v) override;
+    Point2D *directionToUV(Vector3D *direction) override;
 };
 
 class AngularProjection : public Projection {
@@ -85,12 +86,12 @@ class AngularProjection : public Projection {
    public:
     static AngularProjection singleton;
     static Projection *create();
-    void setOptions(char *opts);
-    const char *getName(void);
-    double getSizeRatio(void);
-    bool isValidPixel(double u, double v);
-    Vector3D *uvToDirection(double u, double v);
-    Point2D *directionToUV(Vector3D *direction);
+    void setOptions(char *opts) override;
+    const char *getName(void) override;
+    double getSizeRatio(void) override;
+    bool isValidPixel(double u, double v) override;
+    Vector3D *uvToDirection(double u, double v) override;
+    Point2D *directionToUV(Vector3D *direction) override;
     void setAngle(double v) { totalAngle = v; }
 };
 
@@ -104,10 +105,10 @@ class CylindricalProjection : public Projection {
     static CylindricalProjection singleton;
     static Projection *create();
     ~CylindricalProjection();
-    double getSizeRatio(void);
-    bool isValidPixel(double /*u*/, double /*v*/);
-    Vector3D *uvToDirection(double u, double v);
-    Point2D *directionToUV(Vector3D *direction);
+    double getSizeRatio(void) override;
+    bool isValidPixel(double /*u*/, double /*v*/) override;
+    Vector3D *uvToDirection(double u, double v) override;
+    Point2D *directionToUV(Vector3D *direction) override;
 };
 
 class PolarProjection : public Projection {
@@ -120,10 +121,10 @@ class PolarProjection : public Projection {
     static PolarProjection singleton;
     static Projection *create();
     ~PolarProjection();
-    double getSizeRatio(void);
-    bool isValidPixel(double /*u*/, double /*v*/);
-    Vector3D *uvToDirection(double u, double v);
-    Point2D *directionToUV(Vector3D *direction);
+    double getSizeRatio(void) override;
+    bool isValidPixel(double /*u*/, double /*v*/) override;
+    Vector3D *uvToDirection(double u, double v) override;
+    Point2D *directionToUV(Vector3D *direction) override;
 };
 
 class TransformInfo {

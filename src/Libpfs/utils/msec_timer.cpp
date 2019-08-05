@@ -95,7 +95,7 @@ void msec_timer::stop_and_update() {
 
 void msec_timer::reset() { wrk_time = 0.0; }
 
-double msec_timer::get_time() {
+double msec_timer::get_time() const {
 #ifdef WIN_TIMER
     return (wrk_time * 1000.0 / freq.QuadPart);
 #elif __APPLE__

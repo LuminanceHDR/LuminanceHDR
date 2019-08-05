@@ -56,6 +56,7 @@
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/progress.h"
+#include "noncopyable.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x) __builtin_expect((x), 1)
@@ -85,7 +86,7 @@ class auto_matrix {
     gsl_matrix *m;
 
    public:
-    auto_matrix(gsl_matrix *m) : m(m) {}
+    explicit auto_matrix(gsl_matrix *m) : m(m) {}
     ~auto_matrix() { gsl_matrix_free(m); }
     operator gsl_matrix *() { return m; }
 };
@@ -97,7 +98,7 @@ class auto_vector {
     gsl_vector *v;
 
    public:
-    auto_vector(gsl_vector *v) : v(v) {}
+    explicit auto_vector(gsl_vector *v) : v(v) {}
     ~auto_vector() { gsl_vector_free(v); }
     operator gsl_vector *() { return v; }
 };
@@ -109,7 +110,7 @@ class auto_cqpminimizer {
     gsl_cqpminimizer *v;
 
    public:
-    auto_cqpminimizer(gsl_cqpminimizer *v) : v(v) {}
+    explicit auto_cqpminimizer(gsl_cqpminimizer *v) : v(v) {}
     ~auto_cqpminimizer() { gsl_cqpminimizer_free(v); }
     operator gsl_cqpminimizer *() { return v; }
 };
@@ -134,7 +135,7 @@ void datmoToneCurve::init(size_t n_size, const double *n_x_i, double *n_y_i) {
     }
 }
 
-void datmoToneCurve::free() {
+void datmoToneCurve::free() const {
     if (y_i != nullptr && own_y_i) delete[] y_i;
 }
 
@@ -237,7 +238,7 @@ class UniformArrayLUT {
         if (own_y_i) delete[] y_i;
     }
 
-    double interp(double x) {
+    double interp(double x) const {
         const double ind_f = (x - x_i[0]) / delta;
         const size_t ind_low = (size_t)(ind_f);
         const size_t ind_hi = (size_t)ceil(ind_f);
@@ -343,7 +344,7 @@ static inline float clamp_channel(const float v) {
 // round_int( (l_max-l_min)/delta ) + 1;
 #define X_COUNT (round_int((8.f + 8.f) / 0.1) + 1)
 
-class conditional_density : public datmoConditionalDensity {
+class conditional_density : public datmoConditionalDensity, public lhdrengine::NonCopyable {
    public:
     static const double l_min, l_max, delta;
     static double x_scale[X_COUNT];  // input log luminance scale
@@ -580,6 +581,10 @@ static int solve(gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d,
 
     status = gsl_cqpminimizer_set(s, &cqpd);
 
+    if (status != GSL_SUCCESS) {
+        return GSL_FAILURE;
+    }
+
     const bool verbose = false;
 
     if (verbose)
@@ -588,10 +593,14 @@ static int solve(gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d,
 
     do {
         status = gsl_cqpminimizer_iterate(s);
+        if (status != GSL_SUCCESS) {
+            break;
+        }
+
         status = gsl_cqpminimizer_test_convergence(s, 1e-10, 1e-10);
 
         if (verbose)
-            fprintf(stderr, "%4lu   %14.8f  %13.6e  %13.6e\n", iter,
+            fprintf(stderr, "%4zu   %14.8f  %13.6e  %13.6e\n", iter,
                     gsl_cqpminimizer_f(s), gsl_cqpminimizer_gap(s),
                     gsl_cqpminimizer_residuals_norm(s));
 
@@ -631,9 +640,11 @@ static int solve(gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d,
             valid_solution = false;
     }
 
-    if (valid_solution) gsl_vector_memcpy(x, gsl_cqpminimizer_x(s));
-
-    return GSL_SUCCESS;
+    if (valid_solution) {
+        gsl_vector_memcpy(x, gsl_cqpminimizer_x(s));
+        return GSL_SUCCESS;
+    }
+    return GSL_FAILURE;
 }
 
 // =============== HVS functions ==============
@@ -752,7 +763,7 @@ static int optimize_tonecurve(datmoConditionalDensity *C_pub,
                               float enh_factor, double *y, const float white_y,
                               datmoVisualModel visual_model,
                               double scene_l_adapt, pfs::Progress &ph) {
-    conditional_density *C = (conditional_density *)C_pub;
+    conditional_density *C = static_cast<conditional_density *>(C_pub);
 
     double d_dr =
         log10(dm->display(1.f) / dm->display(0.f));  // display dynamic range
@@ -1012,15 +1023,13 @@ static int optimize_tonecurve(datmoConditionalDensity *C_pub,
 
         gsl_vector_memcpy(x_old, x);
 
-        solve(H, f, Ale, ble, x);
+        int status = solve(H, f, Ale, ble, x);
 
-        /*
         if (status == GSL_FAILURE)
         {
             std::cout << "GSL_FAILURE" << std::endl;
             return PFSTMO_ERROR;
         }
-        */
 
         // Check for convergence
         double min_delta =
@@ -1055,7 +1064,7 @@ int datmo_compute_tone_curve(datmoToneCurve *tc,
                              const float enh_factor, const float white_y,
                              datmoVisualModel visual_model,
                              double scene_l_adapt, pfs::Progress &ph) {
-    conditional_density *c = (conditional_density *)cond_dens;
+    conditional_density *c = static_cast<conditional_density *>(cond_dens);
     tc->init(c->x_count, c->x_scale);
     return optimize_tonecurve(cond_dens, df, ds, enh_factor, tc->y_i, white_y,
                               visual_model, scene_l_adapt, ph);

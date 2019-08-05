@@ -74,9 +74,9 @@ void transformSRGB2XYZ(const Array2Df *inC1, const Array2Df *inC2,
 #endif
 }
 void transformSRGB2Y(const Array2Df *inC1, const Array2Df *inC2,
-                     const Array2Df *inC3, Array2Df *outC1) {
+                     const Array2Df *inC3, Array2Df *outY) {
     utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
-                     outC1->begin(), colorspace::ConvertSRGB2Y());
+                     outY->begin(), colorspace::ConvertSRGB2Y());
 }
 
 //-----------------------------------------------------------

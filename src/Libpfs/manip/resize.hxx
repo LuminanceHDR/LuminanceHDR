@@ -239,12 +239,12 @@ void resample(const ::pfs::Array2D<Type> *in, ::pfs::Array2D<Type> *out,
 }  // anonymous
 
 template <typename Type>
-void resize(const Array2D<Type> *in, Array2D<Type> *out,
+void resize(const Array2D<Type> *from, Array2D<Type> *to,
             InterpolationMethod m) {
-    if (in->getCols() == out->getCols() && in->getRows() == out->getRows()) {
-        pfs::copy(in, out);
+    if (from->getCols() == to->getCols() && from->getRows() == to->getRows()) {
+        pfs::copy(from, to);
     } else {
-        detail::resample(in, out, m);
+        detail::resample(from, to, m);
     }
 }
 

@@ -1285,7 +1285,7 @@ void MainWindow::openFile(const QString &filename) {
 }
 
 void MainWindow::openFiles(const QStringList &files) {
-    if (files.size() > 0) {
+    if (!files.isEmpty()) {
         switch (DnDOptionDialog::showDndDialog(this, files)) {
             case DnDOptionDialog::ACTION_NEW_HDR: {
                 createNewHdr(files);

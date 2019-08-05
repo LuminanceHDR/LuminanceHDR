@@ -79,7 +79,7 @@ class VisualAdaptationModel {
     float Brod;
 
     //! calculate logarithmic average of Y
-    float calculateLogAvgLuminance(const pfs::Array2Df &Y);
+    static float calculateLogAvgLuminance(const pfs::Array2Df &Y);
 
    public:
     //!
@@ -111,16 +111,16 @@ class VisualAdaptationModel {
     void setAdaptation(const pfs::Array2Df &Y);
 
     //! Get cone adaptation level
-    float getAcone() { return Acone; }
+    float getAcone() const { return Acone; }
 
     //! Get rod adaptation level
-    float getArod() { return Arod; }
+    float getArod() const { return Arod; }
 
     //! Get cone bleaching term
-    float getBcone() { return Bcone; }
+    float getBcone() const { return Bcone; }
 
     //! Get rod bleaching term
-    float getBrod() { return Brod; }
+    float getBrod() const { return Brod; }
 };
 
 #endif /* TMO_PATTANAIK00_H */

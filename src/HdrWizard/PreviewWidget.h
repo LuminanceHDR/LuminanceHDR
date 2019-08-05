@@ -184,9 +184,9 @@ class PreviewWidget : public QWidget {
     }
 
     QRgb (PreviewWidget::*blendmode)(const QRgb *, const QRgb *) const;
-    void renderPreviewImage(QRgb (PreviewWidget::*f)(const QRgb *, const QRgb *)
+    void renderPreviewImage(QRgb (PreviewWidget::*rendermode)(const QRgb *, const QRgb *)
                                 const,
-                            const QRect a = QRect());
+                            const QRect rect = QRect());
     void renderAgMask();
     void scrollAgMask(int, int);
 

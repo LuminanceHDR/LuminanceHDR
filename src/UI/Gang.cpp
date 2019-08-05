@@ -36,56 +36,56 @@
 //#include <iostream>
 using namespace std;
 
-Gang::Gang(QSlider *slider, QDoubleSpinBox *doublespinbox, QCheckBox *chkbox1,
-           QCheckBox *chkbox2, QRadioButton *rb1, QRadioButton *rb2,
-           const float minvalue, const float maxvalue, const float vv,
+Gang::Gang(QSlider *slider, QDoubleSpinBox *doublespinbox, QCheckBox *checkbox1,
+           QCheckBox *checkbox2, QRadioButton *radiobutton1, QRadioButton *radiobutton2,
+           const float minvalue, const float maxvalue, const float defaultvalue,
            const bool logs)
-    : s(slider),
-      dsb(doublespinbox),
-      cbx1(chkbox1),
-      cbx2(chkbox2),
-      rb1(rb1),
-      rb2(rb2),
-      minv(minvalue),
-      maxv(maxvalue),
-      defaultv(vv),
+    : slider(slider),
+      doublespinbox(doublespinbox),
+      checkbox1(checkbox1),
+      checkbox2(checkbox2),
+      radiobutton1(radiobutton1),
+      radiobutton2(radiobutton2),
+      minvalue(minvalue),
+      maxvalue(maxvalue),
+      defaultvalue(defaultvalue),
       logscaling(logs),
       undoState(false),
       redoState(false) {
-    if (cbx1) isCbx1Checked_default = cbx1->isChecked();
-    if (cbx2) isCbx2Checked_default = cbx2->isChecked();
-    if (rb1) isRb1Checked_default = rb1->isChecked();
-    if (rb2) isRb2Checked_default = rb2->isChecked();
+    if (checkbox1) isCbx1Checked_default = checkbox1->isChecked();
+    if (checkbox2) isCbx2Checked_default = checkbox2->isChecked();
+    if (radiobutton1) isRb1Checked_default = radiobutton1->isChecked();
+    if (radiobutton2) isRb2Checked_default = radiobutton2->isChecked();
 
     tmoSettingsList = new TmoSettingsList();
     graphics_only = false;
 
-    if (s) s->setTracking(false);
+    if (slider) slider->setTracking(false);
 
-    if (s) {
-        connect(s, &QAbstractSlider::sliderMoved, this, &Gang::sliderMoved);
-        connect(s, &QAbstractSlider::valueChanged, this,
+    if (slider) {
+        connect(slider, &QAbstractSlider::sliderMoved, this, &Gang::sliderMoved);
+        connect(slider, &QAbstractSlider::valueChanged, this,
                 &Gang::sliderValueChanged);
     }
 
-    if (dsb)
+    if (doublespinbox)
         // connect( dsb, SIGNAL(editingFinished()), this,
         // SLOT(spinboxFocusEnter()));
-        connect(dsb, SIGNAL(valueChanged(double)), this,
+        connect(doublespinbox, SIGNAL(valueChanged(double)), this,
                 SLOT(spinboxValueChanged(double)));
 
-    if (cbx1)
-        connect(cbx1, &QAbstractButton::toggled, this, &Gang::checkBox1Checked);
+    if (checkbox1)
+        connect(checkbox1, &QAbstractButton::toggled, this, &Gang::checkBox1Checked);
 
-    if (cbx2)
-        connect(cbx2, &QAbstractButton::toggled, this, &Gang::checkBox2Checked);
+    if (checkbox2)
+        connect(checkbox2, &QAbstractButton::toggled, this, &Gang::checkBox2Checked);
 
-    if (rb1)
-        connect(rb1, &QAbstractButton::clicked, this,
+    if (radiobutton1)
+        connect(radiobutton1, &QAbstractButton::clicked, this,
                 &Gang::radioButton1Checked);
 
-    if (rb2)
-        connect(rb2, &QAbstractButton::clicked, this,
+    if (radiobutton2)
+        connect(radiobutton2, &QAbstractButton::clicked, this,
                 &Gang::radioButton2Checked);
 
     setDefault();
@@ -94,23 +94,23 @@ Gang::Gang(QSlider *slider, QDoubleSpinBox *doublespinbox, QCheckBox *chkbox1,
 Gang::~Gang() { delete tmoSettingsList; }
 
 float Gang::p2v(const int p) const {
-    float x = (p - s->minimum()) / ((float)(s->maximum() - s->minimum()));
+    float x = (p - slider->minimum()) / ((float)(slider->maximum() - slider->minimum()));
     if (logscaling) {
         // cout << "p:  " << p << ", x:  " << x << ", " <<
         // minv*exp(log(maxv/minv)*x
         // ) << endl;
-        return minv * exp(log(maxv / minv) * x);
+        return minvalue * exp(log(maxvalue / minvalue) * x);
     }
-    return (maxv - minv) * x + minv;
+    return (maxvalue - minvalue) * x + minvalue;
 }
 
 int Gang::v2p(const float x) const {
-    float y = (x - minv) / (maxv - minv);
+    float y = (x - minvalue) / (maxvalue - minvalue);
     if (logscaling) {
-        y = (log(x) - log(minv)) / (log(maxv) - log(minv));
+        y = (log(x) - log(minvalue)) / (log(maxvalue) - log(minvalue));
         // cout << "x:  " << x << ", y:  " << y << ", " << log(x) << endl;
     }
-    return (int)((s->maximum() - s->minimum()) * y + s->minimum());
+    return (int)((slider->maximum() - slider->minimum()) * y + slider->minimum());
 }
 
 void Gang::sliderMoved(int p) {
@@ -122,7 +122,7 @@ void Gang::sliderMoved(int p) {
     }
     value_from_slider = true;
     value = p2v(p);
-    dsb->setValue(value);
+    doublespinbox->setValue(value);
     changed_ = true;
     value_from_slider = false;
 }
@@ -136,8 +136,8 @@ void Gang::sliderValueChanged(int p) {
     }
     value_from_slider = true;
     value = p2v(p);
-    dsb->setValue(value);
-    value = dsb->value();
+    doublespinbox->setValue(value);
+    value = doublespinbox->value();
     changed_ = true;
     value_from_slider = false;
     if (!graphics_only) emit finished();
@@ -170,7 +170,7 @@ void Gang::spinboxValueChanged(double x) {
     }
     value = x;
     value_from_text = true;
-    s->setValue(v2p(value));
+    slider->setValue(v2p(value));
     changed_ = true;
 }
 
@@ -195,22 +195,22 @@ void Gang::radioButton2Checked(bool b) {
 void Gang::setDefault() {
     //     qDebug("def");
     graphics_only = true;
-    value = defaultv;
+    value = defaultvalue;
     value_from_slider = true;
-    if (dsb) {
-        dsb->setValue(value);
-        value = dsb->value();
+    if (doublespinbox) {
+        doublespinbox->setValue(value);
+        value = doublespinbox->value();
     }
     value_from_text = true;
-    if (s) s->setValue(v2p(value));
+    if (slider) slider->setValue(v2p(value));
     changed_ = false;
     value_from_text = false;
     value_from_slider = false;
     graphics_only = false;
-    if (cbx1) isCbx1Checked = isCbx1Checked_default;
-    if (cbx2) isCbx2Checked = isCbx2Checked_default;
-    if (rb1) isRb1Checked = isRb1Checked_default;
-    if (rb2) isRb2Checked = isRb2Checked_default;
+    if (checkbox1) isCbx1Checked = isCbx1Checked_default;
+    if (checkbox2) isCbx2Checked = isCbx2Checked_default;
+    if (radiobutton1) isRb1Checked = isRb1Checked_default;
+    if (radiobutton2) isRb2Checked = isRb2Checked_default;
 
     // cout << "Gang::setDefault()" << endl;
     // cout << "v: " << value << endl;
@@ -240,11 +240,11 @@ void Gang::setupUndo() {
     bool isRb2Checked = false;
     float v = 0.0;
 
-    if (s) v = value;
-    if (cbx1) isCbx1Checked = cbx1->isChecked();
-    if (cbx2) isCbx2Checked = cbx2->isChecked();
-    if (rb1) isRb1Checked = rb1->isChecked();
-    if (rb2) isRb2Checked = rb2->isChecked();
+    if (slider) v = value;
+    if (checkbox1) isCbx1Checked = checkbox1->isChecked();
+    if (checkbox2) isCbx2Checked = checkbox2->isChecked();
+    if (radiobutton1) isRb1Checked = radiobutton1->isChecked();
+    if (radiobutton2) isRb2Checked = radiobutton2->isChecked();
 
     tmoSettingsList->append(TmoSettings(this, v, isCbx1Checked, isCbx2Checked,
                                         isRb1Checked, isRb2Checked));
@@ -321,34 +321,34 @@ void Gang::updateUndoState() {
 TmoSettings::TmoSettings(Gang *gangPtr, float v, bool isCbx1, bool isCbx2,
                          bool isRB1C, bool isRB2C)
     : gangPtr(gangPtr) {
-    if (gangPtr->cbx1) {
+    if (gangPtr->checkbox1) {
         isCbx1Checked = isCbx1;
     }
-    if (gangPtr->cbx2) {
+    if (gangPtr->checkbox2) {
         isCbx2Checked = isCbx2;
     }
-    if (gangPtr->rb1) {
+    if (gangPtr->radiobutton1) {
         isRb1Checked = isRB1C;
     }
-    if (gangPtr->rb2) {
+    if (gangPtr->radiobutton2) {
         isRb2Checked = isRB2C;
     }
-    if (gangPtr->s) {
+    if (gangPtr->slider) {
         value = v;
     }
 }
 
 void TmoSettings::apply() const {
     // cout << "TmoSettings::apply()" << endl;
-    if (gangPtr->s) gangPtr->s->setValue(gangPtr->v2p(value));
-    if (gangPtr->dsb) {
-        gangPtr->dsb->setValue(value);
-        gangPtr->value = gangPtr->dsb->value();
+    if (gangPtr->slider) gangPtr->slider->setValue(gangPtr->v2p(value));
+    if (gangPtr->doublespinbox) {
+        gangPtr->doublespinbox->setValue(value);
+        gangPtr->value = gangPtr->doublespinbox->value();
     }
-    if (gangPtr->cbx1) gangPtr->cbx1->setChecked(isCbx1Checked);
-    if (gangPtr->cbx2) gangPtr->cbx2->setChecked(isCbx2Checked);
-    if (gangPtr->rb1) gangPtr->rb1->setChecked(isRb1Checked);
-    if (gangPtr->rb2) gangPtr->rb2->setChecked(isRb2Checked);
+    if (gangPtr->checkbox1) gangPtr->checkbox1->setChecked(isCbx1Checked);
+    if (gangPtr->checkbox2) gangPtr->checkbox2->setChecked(isCbx2Checked);
+    if (gangPtr->radiobutton1) gangPtr->radiobutton1->setChecked(isRb1Checked);
+    if (gangPtr->radiobutton2) gangPtr->radiobutton2->setChecked(isRb2Checked);
 }
 
 //

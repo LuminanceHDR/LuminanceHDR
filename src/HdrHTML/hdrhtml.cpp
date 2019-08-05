@@ -244,7 +244,7 @@ class ArrayLUT {
         : x_i(x_i), lut_size(lut_size) {
         assert(lut_size > 0);
 
-        if (y_i.size() == 0) {
+        if (y_i.empty()) {
             this->y_i.resize(lut_size);
             own_y_i = true;
         } else {

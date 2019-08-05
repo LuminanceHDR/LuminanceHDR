@@ -38,6 +38,7 @@
 #include <Libpfs/exception.h>
 #include "Libpfs/utils/sse.h"
 #include "arch/math.h"
+#include "noncopyable.h"
 
 class DisplayFunction {
    public:
@@ -51,7 +52,7 @@ class DisplayFunction {
 
 #ifdef __SSE2__
     virtual vfloat inv_display(vfloat L) = 0;
-    virtual vfloat display(vfloat L) = 0;
+    virtual vfloat display(vfloat pix) = 0;
 #endif
 
     virtual void print(FILE *fh) = 0;
@@ -68,34 +69,34 @@ class DisplayFunctionGGBA : public DisplayFunction {
    public:
     DisplayFunctionGGBA(float gamma, float L_max, float L_black, float E_amb,
                         float screen_refl);
-    DisplayFunctionGGBA(const char *predefined);
+    explicit DisplayFunctionGGBA(const char *predefined);
 
-    float inv_display(float L);
-    float display(float pix);
+    float inv_display(float L) override;
+    float display(float pix) override ;
 
 #ifdef __SSE2__
-    virtual vfloat inv_display(vfloat L);
-    virtual vfloat display(vfloat L);
+    virtual vfloat inv_display(vfloat L) override;
+    virtual vfloat display(vfloat pix) override;
 #endif
 
-    void print(FILE *fh);
+    void print(FILE *fh) override;
 
    private:
     void init(float gamma, float L_max, float L_black, float E_amb,
               float screen_refl);
 };
 
-class DisplayFunctionLUT : public DisplayFunction {
+class DisplayFunctionLUT : public DisplayFunction, lhdrengine::NonCopyable {
     float *pix_lut, *L_lut;
     size_t lut_size;
 
    public:
-    DisplayFunctionLUT(const char *file_name);
+    explicit DisplayFunctionLUT(const char *file_name);
     ~DisplayFunctionLUT();
 
-    float inv_display(float L);
-    float display(float pix);
-    void print(FILE *fh);
+    float inv_display(float L) override;
+    float display(float pix) override;
+    void print(FILE *fh) override;
 };
 
 // DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] );

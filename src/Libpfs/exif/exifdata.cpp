@@ -195,13 +195,13 @@ bool ExifData::isValid() const {
     return (hasIsoSpeed() && hasFNumber() && hasExposureTime());
 }
 
-std::ostream &operator<<(std::ostream &out, const ExifData &exifData) {
-    out << "Exposure time = " << exifData.m_exposureTime << ", ";
-    out << "F value = " << exifData.m_FNumber << ", ";
-    out << "ISO = " << exifData.m_isoSpeed << ", ";
-    out << "Exposure value = " << exifData.getExposureValue() << " ("
-        << exifData.m_EVCompensation << "), ";
-    out << "Average Scene Luminance = " << exifData.getAverageSceneLuminance();
+std::ostream &operator<<(std::ostream &out, const ExifData &exifdata) {
+    out << "Exposure time = " << exifdata.m_exposureTime << ", ";
+    out << "F value = " << exifdata.m_FNumber << ", ";
+    out << "ISO = " << exifdata.m_isoSpeed << ", ";
+    out << "Exposure value = " << exifdata.getExposureValue() << " ("
+        << exifdata.m_EVCompensation << "), ";
+    out << "Average Scene Luminance = " << exifdata.getAverageSceneLuminance();
 
     return out;
 }

@@ -125,7 +125,7 @@ HdrWizard::HdrWizard(QWidget *p, const QStringList &files,
     m_Ui->textEdit->hide();
     m_Ui->HideLogButton->hide();
 
-    if (files.size()) {
+    if (!files.isEmpty()) {
         m_Ui->pagestack->setCurrentIndex(0);
 
         QMetaObject::invokeMethod(this, "loadInputFiles", Qt::QueuedConnection,
@@ -313,9 +313,8 @@ void HdrWizard::updateTableGrid() {
 
 void HdrWizard::removeImageButtonClicked() {
 
-    int index = m_Ui->tableWidget->currentRow();
+    size_t index = m_Ui->tableWidget->currentRow();
 
-    Q_ASSERT(index >= 0);
     Q_ASSERT(index < m_hdrCreationManager->availableInputFiles());
 
     m_hdrCreationManager->removeFile(index);

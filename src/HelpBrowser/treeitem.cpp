@@ -41,7 +41,7 @@ TreeItem::TreeItem(const QList<QVariant> &data, TreeItem *parent) : itemData(dat
 
 TreeItem::~TreeItem() { qDeleteAll(childItems); }
 
-void TreeItem::appendChild(TreeItem *item) { childItems.append(item); }
+void TreeItem::appendChild(TreeItem *child) { childItems.append(child); }
 
 TreeItem *TreeItem::child(int row) { return childItems.value(row); }
 

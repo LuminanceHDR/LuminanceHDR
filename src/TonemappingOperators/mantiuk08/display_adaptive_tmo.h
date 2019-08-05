@@ -59,7 +59,7 @@ class datmoToneCurve {
     ~datmoToneCurve();
 
     void init(size_t n_size, const double *n_x_i, double *n_y_i = nullptr);
-    void free();
+    void free() const;
 };
 
 class datmoTCFilter {

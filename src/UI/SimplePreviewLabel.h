@@ -31,7 +31,7 @@ class SimplePreviewLabel : public QLabel {
     Q_OBJECT
 
    public:
-    SimplePreviewLabel(int index, QWidget *parent = 0);
+    explicit SimplePreviewLabel(int index, QWidget *parent = 0);
     ~SimplePreviewLabel();
 
     bool isSelected() { return m_selected; }

@@ -52,7 +52,7 @@ void TagContainer::setTag(const string &tagName, const string &tagValue) {
 }
 
 std::ostream &operator<<(std::ostream &out, const TagContainer &tags) {
-    if (tags.size() == 0) return out;
+    if (tags.isEmpty()) return out;
 
     TagContainer::const_iterator itEnd = tags.end();
     std::advance(itEnd, -1);

@@ -137,7 +137,7 @@ float Reinhard02::kaiserbessel(float x, float y, float M) {
 //
 
 // Compute Gaussian blurred images
-void Reinhard02::gaussian_filter(fftwf_complex *filter, float scale, float k) {
+void Reinhard02::gaussian_filter(fftwf_complex *filter, float scale, float k) const {
 
     const float a = 1.f / (k * scale);
     constexpr float c = 1.f / 4.f;
@@ -160,7 +160,7 @@ void Reinhard02::build_gaussian_fft() {
     for (int scale = 0; scale < m_range; scale++) {
 #ifndef NDEBUG
         fprintf(stderr,
-                "Computing FFT of Gaussian at scale %i (size %i x %i)%c", scale,
+                "Computing FFT of Gaussian at scale %i (size %zu x %zu)%c", scale,
                 m_cvts.xmax, m_cvts.ymax, (char)13);
 #endif
 
@@ -302,7 +302,7 @@ void Reinhard02::compute_fourier_convolution() {
 // Tonemapping routines
 //
 
-float Reinhard02::get_maxvalue() {
+float Reinhard02::get_maxvalue() const {
 
     float max = 0.;
 

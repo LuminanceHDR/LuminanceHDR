@@ -329,7 +329,7 @@ bool writeFloat32(TIFF *tif, const Frame &frame,
             throw pfs::io::WriteException("TiffWriter: Error writing strip " +
                                           boost::lexical_cast<std::string>(s));
 
-            return -1;
+            return false;
         }
     }
 

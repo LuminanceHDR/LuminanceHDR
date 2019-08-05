@@ -95,11 +95,11 @@ class Reinhard02 {
 
     float bessel(float);
     float kaiserbessel(float, float, float);
-    float get_maxvalue();
+    float get_maxvalue() const;
     void tonemap_image();
     float log_average();
     void scale_to_midtone();
-    void gaussian_filter(fftwf_complex *, float, float);
+    void gaussian_filter(fftwf_complex *, float, float) const;
     void build_gaussian_fft();
     void build_image_fft();
     void convolve_filter(int, fftwf_complex *);

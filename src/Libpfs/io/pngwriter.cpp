@@ -135,7 +135,7 @@ class PngWriterImpl {
     virtual void close() = 0;
     virtual void computeSize() = 0;
 
-    size_t getFileSize() { return m_filesize; }
+    size_t getFileSize() const { return m_filesize; }
     void setFileSize(size_t size) { m_filesize = size; }
 
     bool write(const pfs::Frame &frame, const PngWriterParams &params,

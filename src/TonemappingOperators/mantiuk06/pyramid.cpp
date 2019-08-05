@@ -183,13 +183,13 @@ void PyramidT::computeGradients(const pfs::Array2Df &Y) {
     }
 }
 
-void PyramidT::computeSumOfDivergence(pfs::Array2Df &sumOfdivG) {
+void PyramidT::computeSumOfDivergence(pfs::Array2Df &sumOfDivG) {
     // zero dimension Array2D
-    pfs::Array2Df tempSumOfdivG(downscaleBy2(sumOfdivG.getCols()),
-                                downscaleBy2(sumOfdivG.getRows()));
+    pfs::Array2Df tempSumOfdivG(downscaleBy2(sumOfDivG.getCols()),
+                                downscaleBy2(sumOfDivG.getRows()));
 
     if ((numLevels() % 2)) {
-        sumOfdivG.swap(tempSumOfdivG);
+        sumOfDivG.swap(tempSumOfdivG);
         tempSumOfdivG.fill(0.0f);
     } else {
         tempSumOfdivG.fill(0.0f);
@@ -198,14 +198,14 @@ void PyramidT::computeSumOfDivergence(pfs::Array2Df &sumOfdivG) {
     if (numLevels() != 0) {
         calculateAndAddDivergence(m_pyramid[m_pyramid.size() - 1],
                                   tempSumOfdivG.data());
-        tempSumOfdivG.swap(sumOfdivG);
+        tempSumOfdivG.swap(sumOfDivG);
     }
 
     for (int idx = numLevels() - 2; idx >= 0; idx--) {
         matrixUpsample(m_pyramid[idx].getCols(), m_pyramid[idx].getRows(),
-                       sumOfdivG.data(), tempSumOfdivG.data());
+                       sumOfDivG.data(), tempSumOfdivG.data());
         calculateAndAddDivergence(m_pyramid[idx], tempSumOfdivG.data());
-        tempSumOfdivG.swap(sumOfdivG);
+        tempSumOfdivG.swap(sumOfDivG);
     }
 }
 
@@ -275,7 +275,7 @@ void PyramidT::transformToG(float detailFactor) {
 }
 
 struct ScalePyramidS {
-    ScalePyramidS(float multiplier) : multiplier_(multiplier) {}
+    explicit ScalePyramidS(float multiplier) : multiplier_(multiplier) {}
 
     void operator()(PyramidS &multiply) {
         pfs::utils::vsmul(multiply.data(), multiplier_, multiply.data(),
@@ -292,15 +292,15 @@ void PyramidT::scale(float multiplier) {
 
 // scale gradients for the whole one pyramid with the use of (Cx,Cy)
 // from the other pyramid
-void PyramidT::multiply(const PyramidT &other) {
+void PyramidT::multiply(const PyramidT &multiplier) {
     // check that the pyramids have the same number of levels
-    assert(this->numLevels() == other.numLevels());
+    assert(this->numLevels() == multiplier.numLevels());
     // check that the first level of the pyramid has the same size
-    assert(this->getCols() == other.getCols());
-    assert(this->getRows() == other.getRows());
+    assert(this->getCols() == multiplier.getCols());
+    assert(this->getRows() == multiplier.getRows());
 
-    PyramidContainer::const_iterator inCurr = other.m_pyramid.begin();
-    PyramidContainer::const_iterator inEnd = other.m_pyramid.end();
+    PyramidContainer::const_iterator inCurr = multiplier.m_pyramid.begin();
+    PyramidContainer::const_iterator inEnd = multiplier.m_pyramid.end();
     PyramidContainer::iterator outCurr = m_pyramid.begin();
 
     for (; inCurr != inEnd; ++outCurr, ++inCurr) {

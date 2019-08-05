@@ -63,8 +63,6 @@ class Pyramid {  // each level of a Gaussian pyramid
 
 class GaussianPyramid {
    public:
-    GaussianPyramid() {}
-
     GaussianPyramid(pfs::Array2Df *lum_map, int im_height, int im_width) {
         // set a=0.4 (considered by Burt and Adelson, 1983).
         // obtained by Outer((0.05, 0.25, 0.4, 0.25, 0.05),(0.05, 0.25, 0.4,

@@ -51,7 +51,7 @@ class HdrViewer : public GenericViewer {
     Q_OBJECT
 
    public:
-    HdrViewer(pfs::Frame *frame, QWidget *parent = 0, bool ns = false);
+    explicit HdrViewer(pfs::Frame *frame, QWidget *parent = 0, bool ns = false);
     virtual ~HdrViewer();
 
     LuminanceRangeWidget *lumRange();

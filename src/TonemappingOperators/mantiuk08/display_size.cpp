@@ -51,15 +51,15 @@ DisplaySize::DisplaySize(int vres, float vd_screen_h, float vd_meters)
 DisplaySize::DisplaySize(float ppd, float vd_meters)
     : view_d(vd_meters), ppd(ppd) {}
 
-void DisplaySize::print(FILE *fh) {
+void DisplaySize::print(FILE *fh) const {
     fprintf(fh, "Display size parameters:\n");
     fprintf(fh, "   pixels per visual degree = %g\n", (double)getPixPerDeg());
     fprintf(fh, "   viewing distance = %g [meters]\n", (double)getViewD());
 }
 
-float DisplaySize::getPixPerDeg() { return ppd; }
+float DisplaySize::getPixPerDeg() const { return ppd; }
 
-float DisplaySize::getViewD() { return view_d; }
+float DisplaySize::getViewD() const { return view_d; }
 
 // ========== Command line parsing ==============
 

@@ -29,15 +29,16 @@
 
 #include <assert.h>
 #include "Libpfs/array2d_fwd.h"
+#include "noncopyable.h"
 
-class Histogram {
+class Histogram : public lhdrengine::NonCopyable {
     int bins;
     int accuracy;
 
     float *P;
 
    public:
-    Histogram(int bins, int accuracy = 1);
+    explicit Histogram(int bins, int accuracy = 1);
     ~Histogram();
 
     void computeLog(const pfs::Array2Df *image);

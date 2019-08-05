@@ -725,7 +725,7 @@ reinhard02|\nreinhard05|mai|mantiuk06|mantiuk08|\nvanhateren|lischinski] (Defaul
         }
     }
 
-    if (loadHdrFilename.isEmpty() && inputFiles.size() == 0) {
+    if (loadHdrFilename.isEmpty() && inputFiles.isEmpty()) {
         cout << cmdvisible_options << endl;
         exit(0); // Exit here instead of returning to main complicating main code
     }
@@ -742,11 +742,11 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
                "number of input files."));
     }
     // now validate operation mode.
-    if (inputFiles.size() != 0 && loadHdrFilename.isEmpty()) {
+    if (!inputFiles.isEmpty() && loadHdrFilename.isEmpty()) {
         operationMode = CREATE_HDR_MODE;
 
         printIfVerbose(QObject::tr("Running in HDR-creation mode."), verbose);
-    } else if (!loadHdrFilename.isEmpty() && inputFiles.size() == 0) {
+    } else if (!loadHdrFilename.isEmpty() && inputFiles.isEmpty()) {
         operationMode = LOAD_HDR_MODE;
 
         printIfVerbose(QObject::tr("Running in Load-HDR mode."), verbose);
@@ -811,7 +811,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
 
 void CommandLineInterfaceManager::finishedLoadingInputFiles() {
     QStringList filesLackingExif = hdrCreationManager->getFilesWithoutExif();
-    if (filesLackingExif.size() != 0 && ev.isEmpty()) {
+    if (!filesLackingExif.isEmpty() && ev.isEmpty()) {
         printErrorAndExit(tr(
             "Error: Exif data missing in images and EV values not specified on "
             "the commandline, bailing out."));

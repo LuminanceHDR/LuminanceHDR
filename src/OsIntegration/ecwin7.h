@@ -13,7 +13,7 @@ class EcWin7 {
    public:
     // Initialization methods
     EcWin7();
-    void init(QWidget *wid);
+    void init(QWidget *widget);
     void addRecentFile(const QString &filename);
 
     void setProgressValue(int value, int max);

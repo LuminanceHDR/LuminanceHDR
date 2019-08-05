@@ -199,7 +199,7 @@ void HdrCreationManager::loadFilesDone() {
 
 void HdrCreationManager::refreshEVOffset() {
     // no data
-    if (m_data.size() <= 0) {
+    if (m_data.empty()) {
         m_evOffset = 0.f;
         return;
     }
@@ -212,7 +212,7 @@ void HdrCreationManager::refreshEVOffset() {
     }
 
     // no image has EV
-    if (evs.size() == 0) {
+    if (evs.empty()) {
         m_evOffset = 0.f;
         return;
     }

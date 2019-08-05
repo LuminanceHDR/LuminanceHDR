@@ -52,12 +52,12 @@ class DisplaySize {
      * @param ppd number of pixels per one visual degree (e.g. 30)
      * @param vd_meters viewing distance in meters
      */
-    DisplaySize(float ppd, float vd_meters = 0.5);
+    explicit DisplaySize(float ppd, float vd_meters = 0.5);
 
-    void print(FILE *fh);
+    void print(FILE *fh) const;
 
-    float getPixPerDeg();
-    float getViewD();
+    float getPixPerDeg() const;
+    float getViewD() const;
 };
 
 DisplaySize *createDisplaySizeFromArgs(int &argc, char *argv[]);
