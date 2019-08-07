@@ -27,26 +27,115 @@
 #include <sstream>
 #include <vector>
 
+#include <rtprocess/librtprocess.h>
+
 #include <Libpfs/colorspace/copy.h>
 #include <Libpfs/colorspace/gamma.h>
 #include <Libpfs/fixedstrideiterator.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/io/rawreader.h>
 #include <Libpfs/utils/transform.h>
+#include "sleef.c"
+#include "opthelper.h"
+
+
+#define ABS(a) ((a)<0?-(a):(a))
+#define TR_NONE     0
+#define TR_R90      1
+#define TR_R180     2
+#define TR_R270     3
+#define TR_VFLIP    4
+#define TR_HFLIP    8
+#define TR_ROT      3
+
+
+bool callback(double a) { return false; }
+
+void transLineFuji (const float* const red, const float* const green, const float* const blue, const int i, pfs::Frame* const image, const int tran, const int imheight, const int fw)
+{
+
+    pfs::Channel *Xc, *Yc, *Zc;
+    image->getXYZChannels(Xc, Yc, Zc);
+
+    int W = Xc->getWidth();
+    int H = Xc->getHeight();
+
+    // Fuji SuperCCD rotation + coarse rotation
+    int start = ABS(fw - i);
+    int w = fw * 2 + 1;
+    int h = (imheight - fw) * 2 + 1;
+    int end = min(h + fw - i, w - fw + i);
+
+    switch(tran & TR_ROT) {
+        case TR_R180:
+            for (int j = start; j < end; j++) {
+                int y = i + j - fw;
+                int x = fw - i + j;
+
+                if (x >= 0 && y < H && y >= 0 && x < W) {
+                    (*Xc)(H - 1 - y, W - 1 - x) = red[j];
+                    (*Yc)(H - 1 - y, W - 1 - x) = green[j];
+                    (*Zc)(H - 1 - y, W - 1 - x) = blue[j];
+                }
+            }
+
+            break;
+
+        case TR_R270:
+            for (int j = start; j < end; j++) {
+                int y = i + j - fw;
+                int x = fw - i + j;
+
+                if (x >= 0 && x < H && y >= 0 && y < W) {
+                    (*Xc)(H - 1 - x, y) = red[j];
+                    (*Yc)(H - 1 - x, y) = green[j];
+                    (*Zc)(H - 1 - x, y) = blue[j];
+                }
+            }
+
+            break;
+
+        case TR_R90:
+            for (int j = start; j < end; j++) {
+                int y = i + j - fw;
+                int x = fw - i + j;
+
+                if (x >= 0 && y < W && y >= 0 && x < H) {
+                    (*Xc)(x, W - 1 - y) = red[j];
+                    (*Yc)(x, W - 1 - y) = green[j];
+                    (*Zc)(x, W - 1 - y) = blue[j];
+                }
+            }
+
+            break;
+
+        case TR_NONE:
+        default:
+            for (int j = start; j < end; j++) {
+                int y = i + j - fw;
+                int x = fw - i + j;
+
+                if (x >= 0 && y < H && y >= 0 && x < W) {
+                    (*Xc)(y, x) = red[j];
+                    (*Yc)(y, x) = green[j];
+                    (*Zc)(y, x) = blue[j];
+                }
+            }
+    }
+}
 
 using namespace pfs;
 
-#ifndef NDEBUG
+//#ifndef NDEBUG
 #define PRINT_DEBUG(str) std::cerr << "RAWReader: " << str << std::endl
-#else
-#define PRINT_DEBUG(str)
-#endif
+//#else
+//#define PRINT_DEBUG(str)
+//#endif
 
 namespace pfs {
 namespace io {
 
-/**************************** From UFRAW sourcecode
- * ********************************
+/**************************** From UFRAW sourcecode ********************************
  *
  * Convert between Temperature and RGB.
  * Base on information from http://www.brucelindbloom.com/
@@ -95,8 +184,7 @@ static void temperatureToRGB(double T, double RGB[3]) {
         RGB[c] = RGB[c] / max;
     }
 }
-/*********** END UFRAW CODE
- * *****************************************************/
+/*********** END UFRAW CODE *****************************************************/
 
 #ifdef DEMOSAICING_GPL3
 #define USER_QUALITY 10  // using  AMaZE interpolation
@@ -387,6 +475,8 @@ static void setParams(LibRaw &processor, const RAWReaderParams &params) {
         // outParams.aber[3] = params.chroma3_;
     }
 
+    outParams.no_interpolation = 1;
+
     // camera profile
     if (params.cameraProfile_.empty()) {
         outParams.camera_profile = (char *)embbededProfile;
@@ -434,16 +524,36 @@ void RAWReader::read(Frame &frame, const Params &params) {
         throw pfs::io::ReadException("Error Unpacking RAW File");
     }
 
-#ifndef NDEBUG
     PRINT_DEBUG("Width: " << S.width << " Height: " << S.height);
     PRINT_DEBUG("iWidth: " << S.iwidth << " iHeight: " << S.iheight);
     PRINT_DEBUG("Make: " << P1.make);
     PRINT_DEBUG("Model: " << P1.model);
+    PRINT_DEBUG("Software: " << P1.software);
+    PRINT_DEBUG("Raw Count: " << P1.raw_count);
+    PRINT_DEBUG("Is Foveon: " << P1.is_foveon);
+    PRINT_DEBUG("DNG Version: " << P1.dng_version);
+    PRINT_DEBUG("Colors: " << P1.colors);
+    PRINT_DEBUG("Filters: " << P1.filters);
+    PRINT_DEBUG("Color Desc: " << P1.cdesc);
+    PRINT_DEBUG("Xtrans: " << P1.xtrans);
+    PRINT_DEBUG("Xtrans_abs: " << P1.xtrans_abs);
     PRINT_DEBUG("ISO: " << P2.iso_speed);
     PRINT_DEBUG("Shutter: " << P2.shutter);
     PRINT_DEBUG("Aperture: " << P2.aperture);
     PRINT_DEBUG("Focal Length: " << P2.focal_len);
-#endif
+
+    libraw_decoder_info_t *dec_info = (libraw_decoder_info_t *) malloc(sizeof(libraw_decoder_info_t));
+    m_processor.get_decoder_info(dec_info);
+    cout << "Decoder name: " << dec_info->decoder_name << endl;
+    free (dec_info);
+
+    m_filters = P1.filters;
+
+    if ( m_filters == 0 ) {
+        cout << "FILTERS = 0 " << filename().c_str() << endl;
+    }
+
+    bool isFoveon = P1.is_foveon;
 
     if (m_processor.dcraw_process() != LIBRAW_SUCCESS) {
         m_processor.recycle();
@@ -454,13 +564,12 @@ void RAWReader::read(Frame &frame, const Params &params) {
 
     if (!image)  // ret != LIBRAW_SUCCESS ||
     {
-        PRINT_DEBUG("Memory Error in processing RAW File");
         m_processor.recycle();
         throw pfs::io::ReadException("Memory Error in processing RAW File");
     }
 
-    int W = image->width;
-    int H = image->height;
+    unsigned W = image->width;
+    unsigned H = image->height;
 
     assert(image->data_size == W * H * 3 * sizeof(uint16_t));
 
@@ -469,21 +578,168 @@ void RAWReader::read(Frame &frame, const Params &params) {
     pfs::Channel *Xc, *Yc, *Zc;
     tempFrame.createXYZChannels(Xc, Yc, Zc);
 
+    //transLineFuji(
     const uint16_t *raw_data = reinterpret_cast<const uint16_t *>(image->data);
-    utils::transform(
-        FixedStrideIterator<const uint16_t *, 3>(raw_data),
-        FixedStrideIterator<const uint16_t *, 3>(raw_data + H * W * 3),
-        FixedStrideIterator<const uint16_t *, 3>(raw_data + 1),
-        FixedStrideIterator<const uint16_t *, 3>(raw_data + 2), Xc->begin(),
-        Yc->begin(), Zc->begin(),
-        colorspace::Gamma<pfs::colorspace::Gamma1_8>());
+
+    if (isFoveon || !(isBayer() || isXtrans()) ) {
+
+        cout << "Foveon" << endl;
+        utils::transform(
+            FixedStrideIterator<const uint16_t *, 3>(raw_data),
+            FixedStrideIterator<const uint16_t *, 3>(raw_data + H * W * 3),
+            FixedStrideIterator<const uint16_t *, 3>(raw_data + 1),
+            FixedStrideIterator<const uint16_t *, 3>(raw_data + 2), Xc->begin(),
+            Yc->begin(), Zc->begin(),
+            colorspace::Gamma<pfs::colorspace::Gamma1_0>());
+
+        LibRaw::dcraw_clear_mem(image);
+        m_processor.recycle();
+
+        FrameReader::read(tempFrame, params);
+        frame.swap(tempFrame);
+        return;
+    }
+
+    /* utils::transform( */
+    /*     FixedStrideIterator<const uint16_t *, 3>(raw_data), */
+    /*     FixedStrideIterator<const uint16_t *, 3>(raw_data + H * W * 3), */
+    /*     FixedStrideIterator<const uint16_t *, 3>(raw_data + 1), */
+    /*     FixedStrideIterator<const uint16_t *, 3>(raw_data + 2), Xc->begin(), */
+    /*     Yc->begin(), Zc->begin(), */
+    /*     colorspace::Gamma<pfs::colorspace::Gamma1_8>()); */
 
     PRINT_DEBUG("Data size: " << image->data_size << " "
                               << W * H * 3 * sizeof(uint16_t));
     PRINT_DEBUG("W: " << W << " H: " << H);
 
+    unsigned cf_array[2][2];
+    if ( isBayer() ) {
+        cout << "Bayer" << endl;
+        for(unsigned i = 0; i < 2; i++) {
+            for(unsigned j = 0; j < 2; j++) {
+                cf_array[i][j] = m_processor.COLOR(i, j);
+                //cf_array[i][j] = FC(i, j);
+            }
+        }
+    }
+
+    unsigned xtrans[6][6];
+    //get xtrans color filter array
+    if (isXtrans()) {
+        cout << "Xtrans" << endl;
+        for (int i=0; i<6; i++)
+        {
+            cout << "xtrans: ";
+            for (int j=0; j<6; j++)
+            {
+                xtrans[i][j] = unsigned(m_processor.imgdata.idata.xtrans[i][j]);
+                cout << xtrans[i][j];
+            }
+            cout << endl;
+        }
+    }
+
+    float **rawdata;
+    rawdata = (float **) malloc(H * sizeof(float *));
+    rawdata[0] = (float *) malloc(W*H * sizeof(float));
+    for(unsigned i = 1; i < H; i++) {
+        rawdata[i] = rawdata[i-1] + W;
+    }
+
+    if ( isBayer() ) {
+        cout << "Bayer" << endl;
+    #ifdef _OPENMP
+        #pragma omp parallel for
+    #endif
+        for(unsigned i = 0; i < H; i++) {
+            unsigned k = 0;
+            for(unsigned j = 0; j < W; j++) {
+                unsigned c = cf_array[i%2][j%2];
+                unsigned pos = k + i*W*3;
+                rawdata[i][j] = raw_data[pos + c] / 65535.f;
+                k += 3;
+            }
+        }
+    }
+    else if ( isXtrans() ) {
+        cout << "Xtrans" << endl;
+    #ifdef _OPENMP
+        #pragma omp parallel for
+    #endif
+        for(unsigned i = 0; i < H; i++) {
+            unsigned k = 0;
+            for(unsigned j = 0; j < W; j++) {
+                unsigned c = xtrans[(i) % 6][(j) % 6];
+                unsigned pos = k + i*W*3;
+                rawdata[i][j] = raw_data[pos + c] / 65535.f;
+                k += 3;
+            }
+        }
+    }
+
     LibRaw::dcraw_clear_mem(image);
     m_processor.recycle();
+
+    float **r;
+    float **g;
+    float **b;
+
+    r = (float **) malloc(H * sizeof(float *));
+    g = (float **) malloc(H * sizeof(float *));
+    b = (float **) malloc(H * sizeof(float *));
+    r[0] = (float *)malloc(W*H * sizeof(float));
+    g[0] = (float *)malloc(W*H * sizeof(float));
+    b[0] = (float *)malloc(W*H * sizeof(float));
+    for(unsigned i = 1; i < H; i++) {
+        r[i] = r[i-1] + W;
+        g[i] = g[i-1] + W;
+        b[i] = b[i-1] + W;
+    }
+
+    try {
+        if ( isBayer() ) {
+            cout << "AMAZE DEMOSAICING" << endl;
+            igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+            //hphd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+            //dcb_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 3, true);
+            //amaze_demosaic(W, H, 0, 0, W, H, rawdata, r, g, b, cf_array, callback, 1.0, 0, 1.0, 1.0, 4);
+        }
+        else if ( isXtrans() ) {
+            cout << "MARKESTEIJN DEMOSAICING" << endl;
+            markesteijn_demosaic(W, H, rawdata, r, g, b, xtrans, C.rgb_cam, callback, 3, true);
+        }
+    }
+    catch(...) {
+        cout << "DEMOSAICING FAILED" << endl;
+    }
+
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (unsigned i = 0; i < H; ++i) {
+        unsigned j = 0;
+#ifdef __SSE2__
+        for (; j < W - 3; j += 4) {
+            STVFU((*Xc)(j, i), LVFU(r[i][j]));
+            STVFU((*Yc)(j, i), LVFU(g[i][j]));
+            STVFU((*Zc)(j, i), LVFU(b[i][j]));
+        }
+#endif
+        for (; j < W; ++j) {
+            (*Xc)(j, i) = r[i][j];
+            (*Yc)(j, i) = g[i][j];
+            (*Zc)(j, i) = b[i][j];
+        }
+    }
+
+    free ( b[0] );
+    free ( b );
+    free ( g[0] );
+    free ( g );
+    free ( r[0] );
+    free ( r );
+    free ( rawdata[0] );
+    free ( rawdata );
 
     FrameReader::read(tempFrame, params);
     frame.swap(tempFrame);
