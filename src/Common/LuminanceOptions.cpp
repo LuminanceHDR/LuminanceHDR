@@ -80,9 +80,9 @@ void LuminanceOptions::conditionallyDoUpgrade() {
     if (currentVersion < LUMINANCEVERSION_NUM) {
         if (currentVersion < 2030099) {
             options.setRawWhiteBalanceMethod(1);
-#ifdef DEMOSAICING_GPL3
-            options.setRawUserQuality(10);  // AMaZE
-#endif
+/* #ifdef DEMOSAICING_GPL3 */
+/*             options.setRawUserQuality(10);  // AMaZE */
+/* #endif */
         }
         if (currentVersion < 2040099) {
             options.setAlignImageStackOptions(

@@ -79,19 +79,19 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab)
     connect(m_Ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this,
             SLOT(on_themeChanged()));
 
-#ifdef DEMOSAICING_GPL2
-    qDebug() << "PreferencesDialog: Found demosaicing pack GPL2";
-    m_Ui->user_qual_comboBox->addItem(QStringLiteral("DCB"));
-    m_Ui->user_qual_comboBox->addItem(QStringLiteral("AHD v2"));
-    m_Ui->user_qual_comboBox->addItem(QStringLiteral("AFD"));
-    m_Ui->user_qual_comboBox->addItem(QStringLiteral("VCD"));
-    m_Ui->user_qual_comboBox->addItem(QStringLiteral("VCD & AHD"));
-    m_Ui->user_qual_comboBox->addItem(QStringLiteral("LMMSE"));
-#endif
-#ifdef DEMOSAICING_GPL3
-    qDebug() << "PreferencesDialog: Found AMaZE";
-    m_Ui->user_qual_comboBox->addItem(QStringLiteral("AMaZE"));
-#endif
+/* #ifdef DEMOSAICING_GPL2 */
+/*     qDebug() << "PreferencesDialog: Found demosaicing pack GPL2"; */
+/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("DCB")); */
+/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("AHD v2")); */
+/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("AFD")); */
+/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("VCD")); */
+/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("VCD & AHD")); */
+/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("LMMSE")); */
+/* #endif */
+/* #ifdef DEMOSAICING_GPL3 */
+/*     qDebug() << "PreferencesDialog: Found AMaZE"; */
+/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("AMaZE")); */
+/* #endif */
 
     fromIso639ToGuiIndex[QStringLiteral("cs")] = 0;
     fromIso639ToGuiIndex[QStringLiteral("da")] = 1;
@@ -220,25 +220,25 @@ void PreferencesDialog::on_okButton_clicked() {
         m_Ui->do_not_use_fuji_rotate_CB->isChecked());
     QString user_qual = m_Ui->user_qual_comboBox->itemText(
         m_Ui->user_qual_comboBox->currentIndex());
-    if (user_qual == QLatin1String("Bilinear") ||
-        user_qual == QLatin1String("VNG") ||
-        user_qual == QLatin1String("PPG") || user_qual == QLatin1String("AHD"))
+    /* if (user_qual == QLatin1String("Bilinear") || */
+    /*     user_qual == QLatin1String("VNG") || */
+    /*     user_qual == QLatin1String("PPG") || user_qual == QLatin1String("AHD")) */
         luminance_options.setRawUserQuality(
             m_Ui->user_qual_comboBox->currentIndex());
-    else if (user_qual == QLatin1String("DCB"))
-        luminance_options.setRawUserQuality(4);
-    else if (user_qual == QLatin1String("AHD v2"))
-        luminance_options.setRawUserQuality(5);
-    else if (user_qual == QLatin1String("AFD"))
-        luminance_options.setRawUserQuality(6);
-    else if (user_qual == QLatin1String("VCD"))
-        luminance_options.setRawUserQuality(7);
-    else if (user_qual == QLatin1String("VCD & AHD"))
-        luminance_options.setRawUserQuality(8);
-    else if (user_qual == QLatin1String("LMMSE"))
-        luminance_options.setRawUserQuality(9);
-    else if (user_qual == QLatin1String("AMaZE"))
-        luminance_options.setRawUserQuality(10);
+    /* else if (user_qual == QLatin1String("DCB")) */
+    /*     luminance_options.setRawUserQuality(4); */
+    /* else if (user_qual == QLatin1String("AHD v2")) */
+    /*     luminance_options.setRawUserQuality(5); */
+    /* else if (user_qual == QLatin1String("AFD")) */
+    /*     luminance_options.setRawUserQuality(6); */
+    /* else if (user_qual == QLatin1String("VCD")) */
+    /*     luminance_options.setRawUserQuality(7); */
+    /* else if (user_qual == QLatin1String("VCD & AHD")) */
+    /*     luminance_options.setRawUserQuality(8); */
+    /* else if (user_qual == QLatin1String("LMMSE")) */
+    /*     luminance_options.setRawUserQuality(9); */
+    /* else if (user_qual == QLatin1String("AMaZE")) */
+    /*     luminance_options.setRawUserQuality(10); */
     luminance_options.setRawMedPasses(m_Ui->med_passes_spinBox->value());
     luminance_options.setRawWhiteBalanceMethod(
         m_Ui->wb_method_comboBox->currentIndex());
@@ -601,25 +601,25 @@ void PreferencesDialog::from_options_to_gui() {
     m_Ui->do_not_use_fuji_rotate_CB->setChecked(
         luminance_options.isRawDoNotUseFujiRotate());
 
-#ifdef DEMOSAICING_GPL2
-    bool GPL2 = true;
-#else
-    bool GPL2 = false;
-#endif
-#ifdef DEMOSAICING_GPL3
-    bool GPL3 = true;
-#else
-    bool GPL3 = false;
-#endif
+/* #ifdef DEMOSAICING_GPL2 */
+/*     bool GPL2 = true; */
+/* #else */
+/*     bool GPL2 = false; */
+/* #endif */
+/* #ifdef DEMOSAICING_GPL3 */
+/*     bool GPL3 = true; */
+/* #else */
+/*     bool GPL3 = false; */
+/* #endif */
 
-    int user_quality = luminance_options.getRawUserQuality();
-    if (user_quality < 4)
-        m_Ui->user_qual_comboBox->setCurrentIndex(user_quality);
-    else if ((GPL2 && GPL3) ||
-             (GPL2 && !GPL3))  // We have both demosaicing packs or only GPL2
-        m_Ui->user_qual_comboBox->setCurrentIndex(user_quality);
-    else  // We have only GPL3
-        m_Ui->user_qual_comboBox->setCurrentIndex(4);
+    /* int user_quality = luminance_options.getRawUserQuality(); */
+    /* if (user_quality < 4) */
+    /*     m_Ui->user_qual_comboBox->setCurrentIndex(user_quality); */
+    /* else if ((GPL2 && GPL3) || */
+    /*          (GPL2 && !GPL3))  // We have both demosaicing packs or only GPL2 */
+        /* m_Ui->user_qual_comboBox->setCurrentIndex(user_quality); */
+    /* else  // We have only GPL3 */
+    /*     m_Ui->user_qual_comboBox->setCurrentIndex(4); */
 
     m_Ui->user_qual_comboBox->setCurrentIndex(
         luminance_options.getRawUserQuality());
