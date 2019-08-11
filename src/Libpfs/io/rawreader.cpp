@@ -640,7 +640,7 @@ void RAWReader::read(Frame &frame, const Params &params) {
                 break;
                 case 6:
                     PRINT_DEBUG("AHD DEMOSAICING");
-                    //ahd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+                    ahd_demosaic(W, H, rawdata, r, g, b, cf_array, C.rgb_cam, callback);
                 break;
                 case 7:
                     PRINT_DEBUG("AMAZE DEMOSAICING");
