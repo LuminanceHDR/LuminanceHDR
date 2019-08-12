@@ -30,7 +30,7 @@
 #endif
 
 #include "rt_algo.h"
-#include "rt_math.h"
+#include "lhdr_math.h"
 
 namespace lhdrengine
 {

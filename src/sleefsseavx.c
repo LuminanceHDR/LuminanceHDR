@@ -16,7 +16,7 @@
 //#include <bits/nan.h>
 //#include <bits/inf.h>
 //#include "sleefsseavx.h"
-#include "rt_math.h"
+#include "lhdr_math.h"
 #ifdef __SSE2__
 #include "helpersse2.h"
 

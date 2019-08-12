@@ -27,7 +27,7 @@
 #include <sstream>
 #include <vector>
 
-#include <rtprocess/librtprocess.h>
+#include "librtprocess.h"
 
 #include <Libpfs/colorspace/copy.h>
 #include <Libpfs/colorspace/gamma.h>
@@ -626,7 +626,7 @@ void RAWReader::read(Frame &frame, const Params &params) {
                 break;
                 case 10:
                     PRINT_DEBUG("AMAZE DEMOSAICING");
-                    amaze_demosaic(W, H, 0, 0, W, H, rawdata, r, g, b, cf_array, callback, 1.0, 0, 1.0, 1.0, 4);
+                    amaze_demosaic(W, H, 0, 0, W, H, rawdata, r, g, b, cf_array, callback, 1.0, 0, 1.0f, 1.0f);
                 break;
             }
         }

@@ -38,7 +38,7 @@
 #include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/utils/clamp.h"
 #include <Libpfs/colorspace/normalizer.h>
-#include "rt_math.h"
+#include "lhdr_math.h"
 #include "tmo_vanhateren06.h"
 
 using namespace pfs;
