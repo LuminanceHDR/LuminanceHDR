@@ -45,11 +45,11 @@ bool callback(double a) { return false; }
 
 using namespace pfs;
 
-//#ifndef NDEBUG
+#ifndef NDEBUG
 #define PRINT_DEBUG(str) std::cerr << "RAWReader: " << str << std::endl
-//#else
-//#define PRINT_DEBUG(str)
-//#endif
+#else
+#define PRINT_DEBUG(str)
+#endif
 
 namespace pfs {
 namespace io {
