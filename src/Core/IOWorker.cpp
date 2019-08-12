@@ -304,13 +304,15 @@ int progress_cb(void *data, enum LibRaw_progress p, int iteration,
 pfs::Params getRawSettings(const LuminanceOptions &opts) {
     pfs::Params p;
     //    // general parameters
-    //    if ( opts.isRawFourColorRGB() )
-    //    { p.set("raw.four_color", 1); }
-    //    if ( opts.isRawDoNotUseFujiRotate() )
-    //    { p.set("raw.fuji_rotate", 0); }
+    if ( opts.isRawFourColorRGB() ) {
+        p.set("raw.four_color", 1);
+    }
+    if ( opts.isRawDoNotUseFujiRotate() ) {
+        p.set("raw.fuji_rotate", 0);
+    }
 
-    //    p.set("raw.user_quality", opts.getRawUserQuality());
-    //    p.set("raw.med_passes", opts.getRawMedPasses());
+    p.set("raw.user_quality", opts.getRawUserQuality());
+    p.set("raw.med_passes", opts.getRawMedPasses());
 
     // white balance
     p.set("raw.wb_method", opts.getRawWhiteBalanceMethod());

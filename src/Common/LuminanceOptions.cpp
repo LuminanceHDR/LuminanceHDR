@@ -80,9 +80,6 @@ void LuminanceOptions::conditionallyDoUpgrade() {
     if (currentVersion < LUMINANCEVERSION_NUM) {
         if (currentVersion < 2030099) {
             options.setRawWhiteBalanceMethod(1);
-#ifdef DEMOSAICING_GPL3
-            options.setRawUserQuality(10);  // AMaZE
-#endif
         }
         if (currentVersion < 2040099) {
             options.setAlignImageStackOptions(
@@ -414,6 +411,14 @@ void LuminanceOptions::setRawNoiseReductionThreshold(float v) {
     m_settingHolder->setValue(KEY_THRESHOLD, v);
 }
 
+bool LuminanceOptions::isWarnNewDomosaicingAlgos() const {
+    return m_settingHolder->value(KEY_WARN_DEMOSAICING, true).toBool();
+}
+
+void LuminanceOptions::setWarnNewDomosaicingAlgos(bool warn) {
+    m_settingHolder->setValue(KEY_WARN_DEMOSAICING, warn);
+}
+
 int LuminanceOptions::getRawHalfSize() const {
     return m_settingHolder->value(KEY_HALF_SIZE, 0).toInt();
 }
@@ -459,13 +464,7 @@ int LuminanceOptions::getRawUserFlip() const {
     return m_settingHolder->value(KEY_USER_FLIP, 0).toInt();
 }
 
-#ifdef DEMOSAICING_GPL3
-#define USER_QUALITY 10  // using  AMaZE interpolation
-#elif DEMOSAICING_GPL2
-#define USER_QUALITY 5  // using AHDv2
-#else
-#define USER_QUALITY 3  // using AHD
-#endif
+#define USER_QUALITY 10  // default to AMaZE interpolation
 
 int LuminanceOptions::getRawUserQuality() const {
     return m_settingHolder->value(KEY_USER_QUAL, USER_QUALITY).toInt();

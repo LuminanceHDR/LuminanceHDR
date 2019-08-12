@@ -813,7 +813,7 @@
        <item row="1" column="0">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tabWidgetPage1">
           <attribute name="title">
@@ -875,6 +875,41 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <property name="text">
                    <string>AHD</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>IGV</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>HPHD</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DCB</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>LMMSE</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>VNG4</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>RCD</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>AMAZE</string>
                   </property>
                  </item>
                 </widget>

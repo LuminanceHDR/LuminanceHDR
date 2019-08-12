@@ -149,6 +149,10 @@ class LuminanceOptions : public QObject {
     void setRawUseNoiseReduction(bool);
     float getRawNoiseReductionThreshold() const;
     void setRawNoiseReductionThreshold(float);
+
+    // warn LHDR is using new demosicing algos from librtprocessing
+    bool isWarnNewDomosaicingAlgos() const;
+    void setWarnNewDomosaicingAlgos(bool);
     // ---
 
     QString getGuiTheme();
