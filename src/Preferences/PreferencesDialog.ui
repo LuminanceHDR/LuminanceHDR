@@ -859,6 +859,26 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <item>
                   <property name="text">
+                   <string>Bilinear</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>VNG</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>PPG</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>AHD</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
                    <string>IGV</string>
                   </property>
                  </item>
@@ -885,11 +905,6 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <property name="text">
                    <string>RCD</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>AHD</string>
                   </property>
                  </item>
                  <item>

@@ -312,7 +312,7 @@ pfs::Params getRawSettings(const LuminanceOptions &opts) {
     }
 
     p.set("raw.user_quality", opts.getRawUserQuality());
-    //    p.set("raw.med_passes", opts.getRawMedPasses());
+    p.set("raw.med_passes", opts.getRawMedPasses());
 
     // white balance
     p.set("raw.wb_method", opts.getRawWhiteBalanceMethod());

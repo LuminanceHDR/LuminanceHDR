@@ -40,14 +40,6 @@
 
 
 #define ABS(a) ((a)<0?-(a):(a))
-#define TR_NONE     0
-#define TR_R90      1
-#define TR_R180     2
-#define TR_R270     3
-#define TR_VFLIP    4
-#define TR_HFLIP    8
-#define TR_ROT      3
-
 
 bool callback(double a) { return false; }
 
@@ -113,13 +105,7 @@ static void temperatureToRGB(double T, double RGB[3]) {
 }
 /*********** END UFRAW CODE *****************************************************/
 
-/* #ifdef DEMOSAICING_GPL3 */
-/* #define USER_QUALITY 10  // using  AMaZE interpolation */
-/* #elif DEMOSAICING_GPL2 */
-/* #define USER_QUALITY 5  // using AHDv2 */
-/* #else */
-/* #define USER_QUALITY 3  // using AHD */
-/* #endif */
+#define USER_QUALITY 10  // default to AMaZE interpolation
 
 struct RAWReaderParams {
     RAWReaderParams()
@@ -127,7 +113,7 @@ struct RAWReaderParams {
           gamma1_(12.92),
           fourColorRGB_(0),
           useFujiRotate_(-1),
-          userQuality_(0),
+          userQuality_(10),
           medPasses_(0),
           wbMethod_(1),
           wbTemperature_(6500),
@@ -477,14 +463,10 @@ void RAWReader::read(Frame &frame, const Params &params) {
 
     m_filters = P1.filters;
 
-    if ( m_filters == 0 ) {
-        cout << "FILTERS = 0 " << filename().c_str() << endl;
-    }
-
     bool isFoveon = P1.is_foveon;
 
     // TODO check if super ccd can be identified by filters == 1263225675
-    if (isFoveon || !(isBayer() || isXtrans()) || (m_filters == 1263225675)) {
+    if ((p.userQuality_ < 3) || isFoveon || !(isBayer() || isXtrans()) || (m_filters == 1263225675)) {
         OUT.no_interpolation = 0;
     }
 
@@ -513,9 +495,9 @@ void RAWReader::read(Frame &frame, const Params &params) {
 
     const uint16_t *raw_data = reinterpret_cast<const uint16_t *>(image->data);
 
-    if (isFoveon || !(isBayer() || isXtrans()) || (m_filters == 1263225675)) {
+    if ((p.userQuality_ < 3) || isFoveon || !(isBayer() || isXtrans()) || (m_filters == 1263225675)) {
 
-        PRINT_DEBUG("Foveon or SUPER CCD");
+        PRINT_DEBUG("LibRaw internal demosaicing or Foveon or SUPER CCD");
         utils::transform(
             FixedStrideIterator<const uint16_t *, 3>(raw_data),
             FixedStrideIterator<const uint16_t *, 3>(raw_data + H * W * 3),
@@ -614,35 +596,35 @@ void RAWReader::read(Frame &frame, const Params &params) {
     try {
         if ( isBayer() ) {
             switch (p.userQuality_) {
-                case 0:
-                    PRINT_DEBUG("IGV DEMOSAICING");
-                    igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
-                break;
-                case 1:
-                    PRINT_DEBUG("HPHD DEMOSAICING");
-                    hphd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
-                break;
-                case 2:
-                    PRINT_DEBUG("DCB DEMOSAICING");
-                    dcb_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 3, true);
-                break;
                 case 3:
-                    PRINT_DEBUG("LMMSE DEMOSAICING");
-                    lmmse_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 1);
-                break;
-                case 4:
-                    PRINT_DEBUG("VNG4 DEMOSAICING");
-                    vng4_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
-                break;
-                case 5:
-                    PRINT_DEBUG("RCD DEMOSAICING");
-                    rcd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
-                break;
-                case 6:
                     PRINT_DEBUG("AHD DEMOSAICING");
                     ahd_demosaic(W, H, rawdata, r, g, b, cf_array, C.rgb_cam, callback);
                 break;
+                case 4:
+                    PRINT_DEBUG("IGV DEMOSAICING");
+                    igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+                break;
+                case 5:
+                    PRINT_DEBUG("HPHD DEMOSAICING");
+                    hphd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+                break;
+                case 6:
+                    PRINT_DEBUG("DCB DEMOSAICING");
+                    dcb_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 3, true);
+                break;
                 case 7:
+                    PRINT_DEBUG("LMMSE DEMOSAICING");
+                    lmmse_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 1);
+                break;
+                case 8:
+                    PRINT_DEBUG("VNG4 DEMOSAICING");
+                    vng4_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+                break;
+                case 9:
+                    PRINT_DEBUG("RCD DEMOSAICING");
+                    rcd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+                break;
+                case 10:
                     PRINT_DEBUG("AMAZE DEMOSAICING");
                     amaze_demosaic(W, H, 0, 0, W, H, rawdata, r, g, b, cf_array, callback, 1.0, 0, 1.0, 1.0, 4);
                 break;

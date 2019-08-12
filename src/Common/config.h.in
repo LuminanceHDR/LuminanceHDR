@@ -101,6 +101,7 @@
 #define KEY_USE_SAT "Raw_Conversion_Options/use_sat"
 #define KEY_USE_NOISE "Raw_Conversion_Options/use_noise"
 #define KEY_USE_CHROMA "Raw_Conversion_Options/use_chroma"
+#define KEY_WARN_DEMOSAICING "Raw_Conversion_Options/warn_new_demosicing_algos"
 #define KEY_USER_QUAL_TOOLBUTTON "preference_dialog/user_qual_toolButton"
 #define KEY_MED_PASSES_TOOLBUTTON "preference_dialog/med_passes_toolButton"
 #define KEY_WB_METHOD_TOOLBUTTON "preference_dialog/wb_method_toolButton"

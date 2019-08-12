@@ -79,20 +79,6 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab)
     connect(m_Ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this,
             SLOT(on_themeChanged()));
 
-/* #ifdef DEMOSAICING_GPL2 */
-/*     qDebug() << "PreferencesDialog: Found demosaicing pack GPL2"; */
-/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("DCB")); */
-/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("AHD v2")); */
-/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("AFD")); */
-/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("VCD")); */
-/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("VCD & AHD")); */
-/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("LMMSE")); */
-/* #endif */
-/* #ifdef DEMOSAICING_GPL3 */
-/*     qDebug() << "PreferencesDialog: Found AMaZE"; */
-/*     m_Ui->user_qual_comboBox->addItem(QStringLiteral("AMaZE")); */
-/* #endif */
-
     fromIso639ToGuiIndex[QStringLiteral("cs")] = 0;
     fromIso639ToGuiIndex[QStringLiteral("da")] = 1;
     fromIso639ToGuiIndex[QStringLiteral("de")] = 2;
@@ -216,36 +202,13 @@ void PreferencesDialog::on_okButton_clicked() {
 
     // --- RAW parameters
     luminance_options.setRawFourColorRGB(m_Ui->four_color_rgb_CB->isChecked());
-    luminance_options.setRawDoNotUseFujiRotate(
-        m_Ui->do_not_use_fuji_rotate_CB->isChecked());
-    QString user_qual = m_Ui->user_qual_comboBox->itemText(
-        m_Ui->user_qual_comboBox->currentIndex());
-    /* if (user_qual == QLatin1String("Bilinear") || */
-    /*     user_qual == QLatin1String("VNG") || */
-    /*     user_qual == QLatin1String("PPG") || user_qual == QLatin1String("AHD")) */
-        luminance_options.setRawUserQuality(
-            m_Ui->user_qual_comboBox->currentIndex());
-    /* else if (user_qual == QLatin1String("DCB")) */
-    /*     luminance_options.setRawUserQuality(4); */
-    /* else if (user_qual == QLatin1String("AHD v2")) */
-    /*     luminance_options.setRawUserQuality(5); */
-    /* else if (user_qual == QLatin1String("AFD")) */
-    /*     luminance_options.setRawUserQuality(6); */
-    /* else if (user_qual == QLatin1String("VCD")) */
-    /*     luminance_options.setRawUserQuality(7); */
-    /* else if (user_qual == QLatin1String("VCD & AHD")) */
-    /*     luminance_options.setRawUserQuality(8); */
-    /* else if (user_qual == QLatin1String("LMMSE")) */
-    /*     luminance_options.setRawUserQuality(9); */
-    /* else if (user_qual == QLatin1String("AMaZE")) */
-    /*     luminance_options.setRawUserQuality(10); */
+    luminance_options.setRawDoNotUseFujiRotate(m_Ui->do_not_use_fuji_rotate_CB->isChecked());
+    luminance_options.setRawUserQuality(m_Ui->user_qual_comboBox->currentIndex());
     luminance_options.setRawMedPasses(m_Ui->med_passes_spinBox->value());
-    luminance_options.setRawWhiteBalanceMethod(
-        m_Ui->wb_method_comboBox->currentIndex());
+    luminance_options.setRawWhiteBalanceMethod(m_Ui->wb_method_comboBox->currentIndex());
     luminance_options.setRawTemperatureKelvin(m_Ui->TK_spinBox->value());
     luminance_options.setRawGreen(m_Ui->green_doubleSpinBox->value());
-    luminance_options.setRawHighlightsMode(
-        m_Ui->highlights_comboBox->currentIndex());
+    luminance_options.setRawHighlightsMode(m_Ui->highlights_comboBox->currentIndex());
     luminance_options.setRawLevel(m_Ui->level_spinBox->value());
     luminance_options.setRawAutoBrightness(m_Ui->auto_bright_CB->isChecked());
     luminance_options.setRawBrightness(m_Ui->brightness_doubleSpinBox->value());
@@ -253,8 +216,7 @@ void PreferencesDialog::on_okButton_clicked() {
     luminance_options.setRawUseSaturation(m_Ui->use_sat_CB->isChecked());
     luminance_options.setRawUseNoiseReduction(m_Ui->use_noise_CB->isChecked());
     luminance_options.setRawUseChromaAber(m_Ui->use_chroma_CB->isChecked());
-    luminance_options.setRawNoiseReductionThreshold(
-        m_Ui->threshold_spinBox->value());
+    luminance_options.setRawNoiseReductionThreshold(m_Ui->threshold_spinBox->value());
     luminance_options.setRawUserBlack(m_Ui->user_black_spinBox->value());
     luminance_options.setRawUserSaturation(m_Ui->user_sat_spinBox->value());
     luminance_options.setRawAber0(m_Ui->red_doubleSpinBox->value());
@@ -598,66 +560,34 @@ void PreferencesDialog::from_options_to_gui() {
 
     // RAW Processing
     m_Ui->four_color_rgb_CB->setChecked(luminance_options.isRawFourColorRGB());
-    m_Ui->do_not_use_fuji_rotate_CB->setChecked(
-        luminance_options.isRawDoNotUseFujiRotate());
+    m_Ui->do_not_use_fuji_rotate_CB->setChecked(luminance_options.isRawDoNotUseFujiRotate());
 
-/* #ifdef DEMOSAICING_GPL2 */
-/*     bool GPL2 = true; */
-/* #else */
-/*     bool GPL2 = false; */
-/* #endif */
-/* #ifdef DEMOSAICING_GPL3 */
-/*     bool GPL3 = true; */
-/* #else */
-/*     bool GPL3 = false; */
-/* #endif */
-
-    /* int user_quality = luminance_options.getRawUserQuality(); */
-    /* if (user_quality < 4) */
-    /*     m_Ui->user_qual_comboBox->setCurrentIndex(user_quality); */
-    /* else if ((GPL2 && GPL3) || */
-    /*          (GPL2 && !GPL3))  // We have both demosaicing packs or only GPL2 */
-        /* m_Ui->user_qual_comboBox->setCurrentIndex(user_quality); */
-    /* else  // We have only GPL3 */
-    /*     m_Ui->user_qual_comboBox->setCurrentIndex(4); */
-
-    m_Ui->user_qual_comboBox->setCurrentIndex(
-        luminance_options.getRawUserQuality());
-    m_Ui->med_passes_horizontalSlider->setValue(
-        luminance_options.getRawMedPasses());
+    m_Ui->user_qual_comboBox->setCurrentIndex(luminance_options.getRawUserQuality());
+    m_Ui->med_passes_horizontalSlider->setValue(luminance_options.getRawMedPasses());
     m_Ui->med_passes_spinBox->setValue(luminance_options.getRawMedPasses());
-    m_Ui->wb_method_comboBox->setCurrentIndex(
-        luminance_options.getRawWhiteBalanceMethod());
+    m_Ui->wb_method_comboBox->setCurrentIndex(luminance_options.getRawWhiteBalanceMethod());
 
-    m_Ui->TK_horizontalSlider->setValue(
-        luminance_options.getRawTemperatureKelvin());
+    m_Ui->TK_horizontalSlider->setValue(luminance_options.getRawTemperatureKelvin());
     m_Ui->TK_spinBox->setValue(luminance_options.getRawTemperatureKelvin());
-    m_Ui->highlights_comboBox->setCurrentIndex(
-        luminance_options.getRawHighlightsMode());
+    m_Ui->highlights_comboBox->setCurrentIndex(luminance_options.getRawHighlightsMode());
     m_Ui->level_horizontalSlider->setValue(luminance_options.getRawLevel());
     m_Ui->level_spinBox->setValue(luminance_options.getRawLevel());
     // m_Ui->false_colors_CB->setChecked(luminance_options.false_colors);
     m_Ui->auto_bright_CB->setChecked(luminance_options.isRawAutoBrightness());
-    m_Ui->brightness_horizontalSlider->setValue(
-        (int)10.0 * luminance_options.getRawBrightness());
-    m_Ui->brightness_doubleSpinBox->setValue(
-        luminance_options.getRawBrightness());
+    m_Ui->brightness_horizontalSlider->setValue((int)10.0 * luminance_options.getRawBrightness());
+    m_Ui->brightness_doubleSpinBox->setValue(luminance_options.getRawBrightness());
     m_Ui->use_black_CB->setChecked(luminance_options.isRawUseBlack());
 
-    m_Ui->user_black_horizontalSlider->setValue(
-        luminance_options.getRawUserBlack());
+    m_Ui->user_black_horizontalSlider->setValue(luminance_options.getRawUserBlack());
     m_Ui->user_black_spinBox->setValue(luminance_options.getRawUserBlack());
     m_Ui->use_sat_CB->setChecked(luminance_options.isRawUseSaturation());
 
-    m_Ui->user_sat_horizontalSlider->setValue(
-        luminance_options.getRawUserSaturation());
+    m_Ui->user_sat_horizontalSlider->setValue(luminance_options.getRawUserSaturation());
     m_Ui->user_sat_spinBox->setValue(luminance_options.getRawUserSaturation());
     m_Ui->use_noise_CB->setChecked(luminance_options.isRawUseNoiseReduction());
 
-    m_Ui->threshold_horizontalSlider->setValue(
-        luminance_options.getRawNoiseReductionThreshold());
-    m_Ui->threshold_spinBox->setValue(
-        luminance_options.getRawNoiseReductionThreshold());
+    m_Ui->threshold_horizontalSlider->setValue(luminance_options.getRawNoiseReductionThreshold());
+    m_Ui->threshold_spinBox->setValue(luminance_options.getRawNoiseReductionThreshold());
     m_Ui->use_chroma_CB->setChecked(luminance_options.isRawUseChromaAber());
 
     double r_minv = m_Ui->red_doubleSpinBox->minimum();
