@@ -10,10 +10,8 @@ include(DefineCompilerFlags)
 
 # include cmake files
 include(DefineOptions.cmake)
-include(CompilerChecks.cmake)
 
 add_subdirectory(src)
-add_subdirectory(pkgconfig)
 
 ADD_LIBRARY(librtprocess STATIC ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/ahd.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/amaze.cc
@@ -27,5 +25,6 @@ ADD_LIBRARY(librtprocess STATIC ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/ahd.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/rcd.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/vng4.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/xtransfast.cc)
+
 SET(LUMINANCE_MODULES_CLI ${LUMINANCE_MODULES_CLI} librtprocess PARENT_SCOPE)
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} librtprocess PARENT_SCOPE)
