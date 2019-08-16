@@ -109,7 +109,7 @@ static void temperatureToRGB(double T, double RGB[3]) {
 
 struct RAWReaderParams {
     RAWReaderParams()
-        : gamma0_(1.f / 2.4),
+        : gamma0_(1 / 2.4),
           gamma1_(12.92),
           fourColorRGB_(0),
           useFujiRotate_(-1),
@@ -311,8 +311,8 @@ static void setParams(LibRaw &processor, const RAWReaderParams &params) {
 
     outParams.output_bps = 16;
     outParams.output_color = 1;          // sRGB
-    outParams.gamm[0] = params.gamma0_;  // outParams.gamm[0] = 1/2.4;   //sRGB
-    outParams.gamm[1] = params.gamma1_;  // outParams.gamm[1] = 12.92;   //sRGB
+    outParams.gamm[0] = params.gamma0_;
+    outParams.gamm[1] = params.gamma1_;
     // use 4-color demosaicing algorithm
     outParams.four_color_rgb = params.fourColorRGB_;
     // do not rotate or stretch pixels on fuji cameras - default = 1 (rotate)
@@ -601,24 +601,24 @@ void RAWReader::read(Frame &frame, const Params &params) {
                     ahd_demosaic(W, H, rawdata, r, g, b, cf_array, C.rgb_cam, callback);
                 break;
                 case 4:
-                    PRINT_DEBUG("IGV DEMOSAICING");
-                    igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+                    PRINT_DEBUG("VNG4 DEMOSAICING");
+                    vng4_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
                 break;
                 case 5:
                     PRINT_DEBUG("HPHD DEMOSAICING");
                     hphd_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
                 break;
                 case 6:
-                    PRINT_DEBUG("DCB DEMOSAICING");
-                    dcb_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 3, true);
+                    PRINT_DEBUG("IGV DEMOSAICING");
+                    igv_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
                 break;
                 case 7:
                     PRINT_DEBUG("LMMSE DEMOSAICING");
                     lmmse_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 1);
                 break;
                 case 8:
-                    PRINT_DEBUG("VNG4 DEMOSAICING");
-                    vng4_demosaic(W, H, rawdata, r, g, b, cf_array, callback);
+                    PRINT_DEBUG("DCB DEMOSAICING");
+                    dcb_demosaic(W, H, rawdata, r, g, b, cf_array, callback, 3, true);
                 break;
                 case 9:
                     PRINT_DEBUG("RCD DEMOSAICING");
@@ -639,6 +639,8 @@ void RAWReader::read(Frame &frame, const Params &params) {
         PRINT_DEBUG("DEMOSAICING FAILED");
         throw pfs::io::ReadException("DEMOSICING FAILED");
     }
+
+    //HLRecovery_inpaint(W, H, r, g, b, chmax, clmax, callback);
 
 #ifdef _OPENMP
     #pragma omp parallel for
