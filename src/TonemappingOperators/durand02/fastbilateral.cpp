@@ -42,7 +42,7 @@
 #endif
 #include "../../sleef.c"
 #include "../../opthelper.h"
-#include "../../gauss.h"
+#include "../../lhdr_gauss.h"
 
 using namespace std;
 
