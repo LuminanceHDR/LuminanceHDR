@@ -25,6 +25,7 @@
 
 //! \author Giuseppe Rota <grota@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \author Franco Comida <fcomida@users.sourceforge.net>
 
 #include "HdrCreation/debevec.h"
 #include <Libpfs/colorspace/normalizer.h>
@@ -118,33 +119,6 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
         images[i].frame()->getXYZChannels(Ch[0], Ch[1], Ch[2]);
         Array2Df *imagesCh[channels] = {Ch[0], Ch[1], Ch[2]};
 
-        float cmax[3];
-        float cmin[3];
-#ifdef _OPENMP
-        #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
-#endif
-        for (int c = 0; c < channels; c++) {
-            float minval = numeric_limits<float>::max();
-            float maxval = numeric_limits<float>::min();
-            for (size_t k = 0; k < size; k++) {
-                minval = std::min(minval, (*imagesCh[c])(k));
-                maxval = std::max(maxval, (*imagesCh[c])(k));
-            }
-            cmax[c] = maxval;
-            cmin[c] = minval;
-        }
-
-        float Max = max(cmax[0], max(cmax[1], cmax[2]));
-        float Min = min(cmin[0], min(cmin[1], cmin[2]));
-
-#ifdef _OPENMP
-        #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
-#endif
-        for (int c = 0; c < channels; c++) {
-            transform(Ch[c]->begin(), Ch[c]->end(), Ch[c]->begin(),
-                      Normalizer(Min, Max));
-        }
-
         Array2Df response_img(W, H);
         Array2Df w(W, H);
 
@@ -212,22 +186,6 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
             }
         }
     }
-    float cmax[3];
-    for (int c = 0; c < channels; c++) {
-        float max = numeric_limits<float>::min();
-#ifdef _OPENMP
-    #pragma omp parallel for reduction(max:max)
-#endif
-        for (size_t k = 0; k < size; k++) {
-            float val = (*resultCh[c])(k);
-            if(std::isnormal(val)) {
-                max = std::max(max, val);
-            }
-        }
-        cmax[c] = max;
-    }
-
-    float Max = max(cmax[0], max(cmax[1], cmax[2]));
 
     for (int c = 0; c < channels; c++) {
 #ifdef _OPENMP
@@ -236,18 +194,10 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
         for (size_t k = 0; k < size; k++) {
             float val = (*resultCh[c])(k);
             if(!std::isnormal(val)) {
-                (*resultCh[c])(k) = Max;
+                (*resultCh[c])(k) = 0.f;
             }
-        }
-    }
-
-    // TODO: Investigate why scaling hdr yields better result
-    for (int c = 0; c < channels; c++) {
-#ifdef _OPENMP
-    #pragma omp parallel for
-#endif
-        for (size_t k = 0; k < size; k++) {
-            (*resultCh[c])(k) *= 0.1f;
+            (*resultCh[c])(k) = (val < 0.f) ? 0.f : val;
+            (*resultCh[c])(k) = (val > 1.f) ? 1.f : val;
         }
     }
 

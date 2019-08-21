@@ -561,21 +561,21 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize],
     std::unique_ptr<Frame> ghosted(createHdr());
     ghosted->getXYZChannels(Ch[0], Ch[1], Ch[2]);
 
-    for (int c = 0; c < 3; c++) {
-        cmax[c] = *max_element(Ch[c]->begin(), Ch[c]->end());
-        cmin[c] = *min_element(Ch[c]->begin(), Ch[c]->end());
-    }
-    Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
-    Min = std::min(cmin[0], std::min(cmin[1], cmin[2]));
+    /* for (int c = 0; c < 3; c++) { */
+    /*     cmax[c] = *max_element(Ch[c]->begin(), Ch[c]->end()); */
+    /*     cmin[c] = *min_element(Ch[c]->begin(), Ch[c]->end()); */
+    /* } */
+    /* Max = std::max(cmax[0], std::max(cmax[1], cmax[2])); */
+    /* Min = std::min(cmin[0], std::min(cmin[1], cmin[2])); */
 
-    for (int c = 0; c < 3; c++) {
-        replace_if(Ch[c]->begin(), Ch[c]->end(),
-                   [](float f) { return !isnormal(f); }, Max);
-        replace_if(Ch[c]->begin(), Ch[c]->end(),
-                   [](float f) { return !isfinite(f); }, Max);
-        transform(Ch[c]->begin(), Ch[c]->end(), Ch[c]->begin(),
-                  Normalizer(Min, Max));
-    }
+    /* for (int c = 0; c < 3; c++) { */
+    /*     replace_if(Ch[c]->begin(), Ch[c]->end(), */
+    /*                [](float f) { return !isnormal(f); }, Max); */
+    /*     replace_if(Ch[c]->begin(), Ch[c]->end(), */
+    /*                [](float f) { return !isfinite(f); }, Max); */
+    /*     transform(Ch[c]->begin(), Ch[c]->end(), Ch[c]->begin(), */
+    /*               Normalizer(Min, Max)); */
+    /* } */
 
     Rc = Ch[0];
     Gc = Ch[1];

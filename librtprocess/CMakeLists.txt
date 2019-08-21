@@ -25,7 +25,8 @@ ADD_LIBRARY(librtprocess STATIC ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/ahd.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/rcd.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/vng4.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/demosaic/xtransfast.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/postprocess/hilite_recon.cc)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/postprocess/hilite_recon.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/preprocess/CA_correct.cc)
 
 SET(LUMINANCE_MODULES_CLI ${LUMINANCE_MODULES_CLI} librtprocess PARENT_SCOPE)
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} librtprocess PARENT_SCOPE)

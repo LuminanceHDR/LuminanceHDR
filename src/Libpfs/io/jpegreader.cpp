@@ -25,6 +25,7 @@
 #include <Libpfs/colorspace/cmyk.h>
 #include <Libpfs/colorspace/copy.h>
 #include <Libpfs/colorspace/lcms.h>
+#include <Libpfs/colorspace/gamma.h>
 #include <Libpfs/fixedstrideiterator.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
@@ -34,6 +35,8 @@
 #include <jpeglib.h>
 #include <cassert>
 #include <iostream>
+
+#undef NDEBUG
 
 using namespace pfs;
 
@@ -392,14 +395,16 @@ void JpegReader::read(Frame &frame, const Params &params) {
         switch (m_data->cinfo()->jpeg_color_space) {
             case JCS_RGB:
             case JCS_YCbCr: {
-                if (xform) {
-                    PRINT_DEBUG("Use LCMS RGB");
+                /* TODO */
+                /* if (xform) { */
+                /*     PRINT_DEBUG("Use LCMS RGB"); */
+                /*     read3Components(m_data->cinfo(), tempFrame, */
+                /*                     colorspace::Convert3LCMS3(xform.data())); */
+                /* } else { */
+                    PRINT_DEBUG("NO COLOR PROFILE");
                     read3Components(m_data->cinfo(), tempFrame,
-                                    colorspace::Convert3LCMS3(xform.data()));
-                } else {
-                    read3Components(m_data->cinfo(), tempFrame,
-                                    colorspace::Copy());
-                }
+                                    colorspace::Gamma<colorspace::Inv_Gamma2_2>());
+                /* } */
             } break;
             case JCS_CMYK:
             case JCS_YCCK: {

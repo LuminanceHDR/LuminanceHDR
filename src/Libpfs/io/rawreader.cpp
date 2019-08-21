@@ -31,15 +31,13 @@
 
 #include <Libpfs/colorspace/copy.h>
 #include <Libpfs/colorspace/gamma.h>
+#include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/fixedstrideiterator.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/io/rawreader.h>
 #include <Libpfs/utils/transform.h>
 #include "sleef.c"
 #include "opthelper.h"
-
-
-#define ABS(a) ((a)<0?-(a):(a))
 
 bool callback(double a) { return false; }
 
@@ -109,8 +107,8 @@ static void temperatureToRGB(double T, double RGB[3]) {
 
 struct RAWReaderParams {
     RAWReaderParams()
-        : gamma0_(1 / 2.4),
-          gamma1_(12.92),
+        : gamma0_(1),
+          gamma1_(1),
           fourColorRGB_(0),
           useFujiRotate_(-1),
           userQuality_(10),
@@ -470,6 +468,8 @@ void RAWReader::read(Frame &frame, const Params &params) {
         OUT.no_interpolation = 0;
     }
 
+    p.wbMethod_ = 3;
+
     if (m_processor.dcraw_process() != LIBRAW_SUCCESS) {
         m_processor.recycle();
         throw pfs::io::ReadException("Error Processing RAW File");
@@ -517,6 +517,21 @@ void RAWReader::read(Frame &frame, const Params &params) {
     PRINT_DEBUG("Data size: " << image->data_size << " " << W * H * 3 * sizeof(uint16_t));
     PRINT_DEBUG("W: " << W << " H: " << H);
 
+    float rCamMul = m_processor.imgdata.color.cam_mul[0];
+    float gCamMul = m_processor.imgdata.color.cam_mul[1];
+    float bCamMul = m_processor.imgdata.color.cam_mul[2];
+    float minMult = min(min(rCamMul, gCamMul), bCamMul);
+    rCamMul /= minMult;
+    gCamMul /= minMult;
+    bCamMul /= minMult;
+    float rPreMul = m_processor.imgdata.color.pre_mul[0];
+    float gPreMul = m_processor.imgdata.color.pre_mul[1];
+    float bPreMul = m_processor.imgdata.color.pre_mul[2];
+    minMult = min(min(rPreMul, gPreMul), bPreMul);
+    rPreMul /= minMult;
+    gPreMul /= minMult;
+    bPreMul /= minMult;
+
     unsigned cf_array[2][2];
     if ( isBayer() ) {
         PRINT_DEBUG("Bayer");
@@ -546,6 +561,7 @@ void RAWReader::read(Frame &frame, const Params &params) {
     }
 
     if ( isBayer() ) {
+        const float mult = 1.0f / 65535.f;
     #ifdef _OPENMP
         #pragma omp parallel for
     #endif
@@ -554,12 +570,13 @@ void RAWReader::read(Frame &frame, const Params &params) {
             for(unsigned j = 0; j < W; j++) {
                 unsigned c = cf_array[i%2][j%2];
                 unsigned pos = k + i*W*3;
-                rawdata[i][j] = raw_data[pos + c] / 65535.f;
+                rawdata[i][j] = raw_data[pos + c] * mult;
                 k += 3;
             }
         }
     }
     else if ( isXtrans() ) {
+        const float mult = 1.0f / 65535.f;
     #ifdef _OPENMP
         #pragma omp parallel for
     #endif
@@ -568,7 +585,7 @@ void RAWReader::read(Frame &frame, const Params &params) {
             for(unsigned j = 0; j < W; j++) {
                 unsigned c = xtrans[(i) % 6][(j) % 6];
                 unsigned pos = k + i*W*3;
-                rawdata[i][j] = raw_data[pos + c] / 65535.f;
+                rawdata[i][j] = raw_data[pos + c] * mult;
                 k += 3;
             }
         }
@@ -584,13 +601,19 @@ void RAWReader::read(Frame &frame, const Params &params) {
     r = (float **) malloc(H * sizeof(float *));
     g = (float **) malloc(H * sizeof(float *));
     b = (float **) malloc(H * sizeof(float *));
-    r[0] = (float *)malloc(W*H * sizeof(float));
-    g[0] = (float *)malloc(W*H * sizeof(float));
-    b[0] = (float *)malloc(W*H * sizeof(float));
+    r[0] = Xc->data();
+    g[0] = Yc->data();
+    b[0] = Zc->data();
     for(unsigned i = 1; i < H; i++) {
         r[i] = r[i-1] + W;
         g[i] = g[i-1] + W;
         b[i] = b[i-1] + W;
+    }
+
+    if (p.chromaAberation_) {
+        PRINT_DEBUG("CA_correct");
+        double fitparams[2][2][16];
+        CA_correct(0, 0, W, H, true, 1, 0.0, 0.0, true, rawdata, rawdata, cf_array, callback, fitparams, false);
     }
 
     try {
@@ -637,38 +660,63 @@ void RAWReader::read(Frame &frame, const Params &params) {
     }
     catch(...) {
         PRINT_DEBUG("DEMOSAICING FAILED");
+        free ( b );
+        free ( g );
+        free ( r );
+        free ( rawdata[0] );
+        free ( rawdata );
         throw pfs::io::ReadException("DEMOSICING FAILED");
     }
 
-    //HLRecovery_inpaint(W, H, r, g, b, chmax, clmax, callback);
+    if (p.highlightsMethod_ >= 3) {
+        PRINT_DEBUG("HL_recovery");
+        auto  minmaxR = std::minmax_element(Xc->begin(), Xc->end());
+        auto  minmaxG = std::minmax_element(Yc->begin(), Yc->end());
+        auto  minmaxB = std::minmax_element(Zc->begin(), Zc->end());
 
-#ifdef _OPENMP
-    #pragma omp parallel for
-#endif
-    for (unsigned i = 0; i < H; ++i) {
-        unsigned j = 0;
-#ifdef __SSE2__
-        for (; j < W - 3; j += 4) {
-            STVFU((*Xc)(j, i), LVFU(r[i][j]));
-            STVFU((*Yc)(j, i), LVFU(g[i][j]));
-            STVFU((*Zc)(j, i), LVFU(b[i][j]));
-        }
-#endif
-        for (; j < W; ++j) {
-            (*Xc)(j, i) = r[i][j];
-            (*Yc)(j, i) = g[i][j];
-            (*Zc)(j, i) = b[i][j];
-        }
+        PRINT_DEBUG("maxR: " << *minmaxR.second);
+        PRINT_DEBUG("minR: " << *minmaxR.first);
+        PRINT_DEBUG("maxG: " << *minmaxG.second);
+        PRINT_DEBUG("minG: " << *minmaxG.first);
+        PRINT_DEBUG("maxB: " << *minmaxB.second);
+        PRINT_DEBUG("minB: " << *minmaxB.first);
+
+        const float chmax[3] = {*minmaxR.second, *minmaxG.second, *minmaxB.second};
+        //Max clip point:
+        const float clmax[3] = {rCamMul, gCamMul, bCamMul};
+        HLRecovery_inpaint(W, H, r, g, b, chmax, clmax, callback);
     }
 
-    free ( b[0] );
     free ( b );
-    free ( g[0] );
     free ( g );
-    free ( r[0] );
     free ( r );
     free ( rawdata[0] );
     free ( rawdata );
+
+    Array2Df *Ch[3] = {Xc, Yc, Zc};
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+        for (size_t k = 0; k < W*H; k++) {
+            float r = (*Ch[0])(k);
+            float g = (*Ch[1])(k);
+            float b = (*Ch[2])(k);
+            if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
+                (*Ch[0])(k) = 0.f;
+                (*Ch[1])(k) = 0.f;
+                (*Ch[2])(k) = 0.f;
+            }
+            if ( (r < 0.f) || (g < 0.f) || (b < 0.f)) {
+                (*Ch[0])(k) = 0.f;
+                (*Ch[1])(k) = 0.f;
+                (*Ch[2])(k) = 0.f;
+            }
+            if ( (r > 1.f) || (g > 1.f) || (b > 1.f)) {
+                (*Ch[0])(k) = 1.f;
+                (*Ch[1])(k) = 1.f;
+                (*Ch[2])(k) = 1.f;
+            }
+        }
 
     FrameReader::read(tempFrame, params);
     frame.swap(tempFrame);

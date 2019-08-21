@@ -29,6 +29,10 @@
 namespace pfs {
 namespace colorspace {
 
+struct Inv_Gamma2_2 {
+    static float gamma() { return 2.2f; }
+};
+
 struct Gamma2_2 {
     static float gamma() { return 1.f / 2.2f; }
 };
