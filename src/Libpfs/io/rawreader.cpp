@@ -706,6 +706,11 @@ void RAWReader::read(Frame &frame, const Params &params) {
                 (*Ch[1])(k) = 0.f;
                 (*Ch[2])(k) = 0.f;
             }
+            if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
+                (*Ch[0])(k) = 0.f;
+                (*Ch[1])(k) = 0.f;
+                (*Ch[2])(k) = 0.f;
+            }
             if ( (r < 0.f) || (g < 0.f) || (b < 0.f)) {
                 (*Ch[0])(k) = 0.f;
                 (*Ch[1])(k) = 0.f;

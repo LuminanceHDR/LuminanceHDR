@@ -187,17 +187,78 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
         }
     }
 
+    float cmax[3];
+    float cmin[3];
+#ifdef _OPENMP
+    #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
+#endif
     for (int c = 0; c < channels; c++) {
+        float minval = numeric_limits<float>::max();
+        float maxval = numeric_limits<float>::min();
+        for (size_t k = 0; k < size; k++) {
+            minval = std::min(minval, (*Ch[c])(k));
+            maxval = std::max(maxval, (*Ch[c])(k));
+        }
+        cmax[c] = maxval;
+        cmin[c] = minval;
+    }
+
+    float Max = max(cmax[0], max(cmax[1], cmax[2]));
+    float Min = min(cmin[0], min(cmin[1], cmin[2]));
+
 #ifdef _OPENMP
     #pragma omp parallel for
 #endif
-        for (size_t k = 0; k < size; k++) {
-            float val = (*resultCh[c])(k);
-            if(!std::isnormal(val)) {
-                (*resultCh[c])(k) = 0.f;
-            }
-            (*resultCh[c])(k) = (val < 0.f) ? 0.f : val;
-            (*resultCh[c])(k) = (val > 1.f) ? 1.f : val;
+    for (size_t k = 0; k < W*H; k++) {
+        float r = (*Ch[0])(k);
+        float g = (*Ch[1])(k);
+        float b = (*Ch[2])(k);
+        if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
+            (*Ch[0])(k) = Max;
+            (*Ch[1])(k) = Max;
+            (*Ch[2])(k) = Max;
+        }
+        if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
+            (*Ch[0])(k) = Max;
+            (*Ch[1])(k) = Max;
+            (*Ch[2])(k) = Max;
+        }
+    }
+
+#ifdef _OPENMP
+    #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
+#endif
+    for (int c = 0; c < channels; c++) {
+        transform(Ch[c]->begin(), Ch[c]->end(), Ch[c]->begin(),
+                  Normalizer(Min, Max));
+    }
+
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (size_t k = 0; k < W*H; k++) {
+        float r = (*Ch[0])(k);
+        float g = (*Ch[1])(k);
+        float b = (*Ch[2])(k);
+        if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
+            (*Ch[0])(k) = 1.f;
+            (*Ch[1])(k) = 1.f;
+            (*Ch[2])(k) = 1.f;
+        }
+        if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
+            (*Ch[0])(k) = 1.f;
+            (*Ch[1])(k) = 1.f;
+            (*Ch[2])(k) = 1.f;
+        }
+        if ( (r < 0.f) || (g < 0.f) || (b < 0.f)) {
+            (*Ch[0])(k) = 0.f;
+            (*Ch[1])(k) = 0.f;
+            (*Ch[2])(k) = 0.f;
+        }
+        if ( (r > 1.f) || (g > 1.f) || (b > 1.f)) {
+            (*Ch[0])(k) = 1.f;
+            (*Ch[1])(k) = 1.f;
+            (*Ch[2])(k) = 1.f;
         }
     }
 
