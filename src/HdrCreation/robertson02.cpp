@@ -129,9 +129,10 @@ void RobertsonOperator::computeFusion(ResponseCurve &response,
                                       pfs::Frame &frame) {
     assert(frames.size());
 
-    size_t numExposures = frames.size();
-    Frame tempFrame(frames[0].frame()->getWidth(),
-                    frames[0].frame()->getHeight());
+    const size_t numExposures = frames.size();
+    const size_t W = frames[0].frame()->getWidth();
+    const size_t H = frames[0].frame()->getHeight();
+    Frame tempFrame(W, H);
 
     Channel *outputRed;
     Channel *outputGreen;
@@ -171,13 +172,25 @@ void RobertsonOperator::computeFusion(ResponseCurve &response,
     cmax[2] = *max_element(outputBlue->begin(), outputBlue->end());
     float Max = max(cmax[0], max(cmax[1], cmax[2]));
 
-    replace_if(outputRed->begin(), outputRed->end(),
-               [](float f) { return !isnormal(f); }, Max);
-    replace_if(outputGreen->begin(), outputGreen->end(),
-               [](float f) { return !isnormal(f); }, Max);
-    replace_if(outputBlue->begin(), outputBlue->end(),
-               [](float f) { return !isnormal(f); }, Max);
-
+    Channel *Ch[3] = { outputRed, outputGreen, outputBlue };
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (size_t k = 0; k < W*H; k++) {
+        float r = (*Ch[0])(k);
+        float g = (*Ch[1])(k);
+        float b = (*Ch[2])(k);
+        if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
+            (*Ch[0])(k) = Max;
+            (*Ch[1])(k) = Max;
+            (*Ch[2])(k) = Max;
+        }
+        if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
+            (*Ch[0])(k) = Max;
+            (*Ch[1])(k) = Max;
+            (*Ch[2])(k) = Max;
+        }
+    }
     frame.swap(tempFrame);
 }
 
@@ -370,9 +383,10 @@ void RobertsonOperatorAuto::computeFusion(
     const vector<FrameEnhanced> &frames, pfs::Frame &outFrame) {
     assert(frames.size());
 
-    size_t numExposures = frames.size();
-    Frame tempFrame(frames[0].frame()->getWidth(),
-                    frames[0].frame()->getHeight());
+    const size_t numExposures = frames.size();
+    const size_t W = frames[0].frame()->getWidth();
+    const size_t H = frames[0].frame()->getHeight();
+    Frame tempFrame(W, H);
 
     Channel *outputRed;
     Channel *outputGreen;
@@ -415,12 +429,25 @@ void RobertsonOperatorAuto::computeFusion(
     cmax[2] = *max_element(outputBlue->begin(), outputBlue->end());
     float Max = max(cmax[0], max(cmax[1], cmax[2]));
 
-    replace_if(outputRed->begin(), outputRed->end(),
-               [](float f) { return !isnormal(f); }, Max);
-    replace_if(outputGreen->begin(), outputGreen->end(),
-               [](float f) { return !isnormal(f); }, Max);
-    replace_if(outputBlue->begin(), outputBlue->end(),
-               [](float f) { return !isnormal(f); }, Max);
+    Channel *Ch[3] = { outputRed, outputGreen, outputBlue };
+#ifdef _OPENMP
+    #pragma omp parallel for
+#endif
+    for (size_t k = 0; k < W*H; k++) {
+        float r = (*Ch[0])(k);
+        float g = (*Ch[1])(k);
+        float b = (*Ch[2])(k);
+        if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
+            (*Ch[0])(k) = Max;
+            (*Ch[1])(k) = Max;
+            (*Ch[2])(k) = Max;
+        }
+        if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
+            (*Ch[0])(k) = Max;
+            (*Ch[1])(k) = Max;
+            (*Ch[2])(k) = Max;
+        }
+    }
 
     outFrame.swap(tempFrame);
 }
