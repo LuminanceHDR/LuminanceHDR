@@ -26,6 +26,7 @@
 //! to Giuseppe Rota)
 
 #include "robertson02.h"
+#include <Libpfs/colorspace/normalizer.h>
 #include "arch/math.h"
 
 #include <algorithm>
@@ -44,6 +45,7 @@
 #endif
 
 using namespace pfs;
+using namespace pfs::colorspace;
 using namespace std;
 using namespace std::placeholders;
 
@@ -173,6 +175,7 @@ void RobertsonOperator::computeFusion(ResponseCurve &response,
     float Max = max(cmax[0], max(cmax[1], cmax[2]));
 
     Channel *Ch[3] = { outputRed, outputGreen, outputBlue };
+
 #ifdef _OPENMP
     #pragma omp parallel for
 #endif
@@ -180,15 +183,24 @@ void RobertsonOperator::computeFusion(ResponseCurve &response,
         float r = (*Ch[0])(k);
         float g = (*Ch[1])(k);
         float b = (*Ch[2])(k);
-        if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
-            (*Ch[0])(k) = Max;
-            (*Ch[1])(k) = Max;
-            (*Ch[2])(k) = Max;
-        }
         if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
-            (*Ch[0])(k) = Max;
-            (*Ch[1])(k) = Max;
-            (*Ch[2])(k) = Max;
+            if (!std::isnan(r)) {
+                (*Ch[1])(k) = r;
+                (*Ch[2])(k) = r;
+            }
+            else if (!std::isnan(g)) {
+                (*Ch[0])(k) = g;
+                (*Ch[2])(k) = g;
+            }
+            else if (!std::isnan(b)) {
+                (*Ch[0])(k) = b;
+                (*Ch[1])(k) = b;
+            }
+            else {
+                (*Ch[0])(k) = Max;
+                (*Ch[1])(k) = Max;
+                (*Ch[2])(k) = Max;
+            }
         }
     }
     frame.swap(tempFrame);
@@ -430,6 +442,7 @@ void RobertsonOperatorAuto::computeFusion(
     float Max = max(cmax[0], max(cmax[1], cmax[2]));
 
     Channel *Ch[3] = { outputRed, outputGreen, outputBlue };
+
 #ifdef _OPENMP
     #pragma omp parallel for
 #endif
@@ -437,15 +450,24 @@ void RobertsonOperatorAuto::computeFusion(
         float r = (*Ch[0])(k);
         float g = (*Ch[1])(k);
         float b = (*Ch[2])(k);
-        if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
-            (*Ch[0])(k) = Max;
-            (*Ch[1])(k) = Max;
-            (*Ch[2])(k) = Max;
-        }
         if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
-            (*Ch[0])(k) = Max;
-            (*Ch[1])(k) = Max;
-            (*Ch[2])(k) = Max;
+            if (!std::isnan(r)) {
+                (*Ch[1])(k) = r;
+                (*Ch[2])(k) = r;
+            }
+            else if (!std::isnan(g)) {
+                (*Ch[0])(k) = g;
+                (*Ch[2])(k) = g;
+            }
+            else if (!std::isnan(b)) {
+                (*Ch[0])(k) = b;
+                (*Ch[1])(k) = b;
+            }
+            else {
+                (*Ch[0])(k) = Max;
+                (*Ch[1])(k) = Max;
+                (*Ch[2])(k) = Max;
+            }
         }
     }
 

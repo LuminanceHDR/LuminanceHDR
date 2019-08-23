@@ -395,16 +395,15 @@ void JpegReader::read(Frame &frame, const Params &params) {
         switch (m_data->cinfo()->jpeg_color_space) {
             case JCS_RGB:
             case JCS_YCbCr: {
-                /* TODO */
-                /* if (xform) { */
-                /*     PRINT_DEBUG("Use LCMS RGB"); */
-                /*     read3Components(m_data->cinfo(), tempFrame, */
-                /*                     colorspace::Convert3LCMS3(xform.data())); */
-                /* } else { */
+                if (xform) {
+                    PRINT_DEBUG("Use LCMS RGB");
+                    read3Components(m_data->cinfo(), tempFrame,
+                                    colorspace::Convert3LCMS3(xform.data()));
+                } else {
                     PRINT_DEBUG("NO COLOR PROFILE");
                     read3Components(m_data->cinfo(), tempFrame,
-                                    colorspace::Gamma<colorspace::Inv_Gamma2_2>());
-                /* } */
+                                    colorspace::Copy());
+                }
             } break;
             case JCS_CMYK:
             case JCS_YCCK: {

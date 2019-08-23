@@ -213,15 +213,24 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
         float r = (*Ch[0])(k);
         float g = (*Ch[1])(k);
         float b = (*Ch[2])(k);
-        if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
-            (*Ch[0])(k) = Max;
-            (*Ch[1])(k) = Max;
-            (*Ch[2])(k) = Max;
-        }
         if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
-            (*Ch[0])(k) = Max;
-            (*Ch[1])(k) = Max;
-            (*Ch[2])(k) = Max;
+            if(!std::isnan(r)) {
+                (*Ch[1])(k) = r;
+                (*Ch[2])(k) = r;
+            }
+            else if(!std::isnan(g)) {
+                (*Ch[0])(k) = g;
+                (*Ch[2])(k) = g;
+            }
+            else if(!std::isnan(b)) {
+                (*Ch[0])(k) = b;
+                (*Ch[1])(k) = b;
+            }
+            else {
+                (*Ch[0])(k) = Max;
+                (*Ch[1])(k) = Max;
+                (*Ch[2])(k) = Max;
+            }
         }
     }
 
@@ -240,25 +249,29 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
         float r = (*Ch[0])(k);
         float g = (*Ch[1])(k);
         float b = (*Ch[2])(k);
-        if(!std::isnormal(r) || !std::isnormal(g) || !std::isnormal(b)) {
-            (*Ch[0])(k) = 1.f;
-            (*Ch[1])(k) = 1.f;
-            (*Ch[2])(k) = 1.f;
+        if((r < 0.f) || (g < 0.f) || (b < 0.f)) {
+            (*Ch[0])(k) = .0f;
+            (*Ch[1])(k) = .0f;
+            (*Ch[2])(k) = .0f;
         }
         if(std::isnan(r) || std::isnan(g) || std::isnan(b)) {
-            (*Ch[0])(k) = 1.f;
-            (*Ch[1])(k) = 1.f;
-            (*Ch[2])(k) = 1.f;
-        }
-        if ( (r < 0.f) || (g < 0.f) || (b < 0.f)) {
-            (*Ch[0])(k) = 0.f;
-            (*Ch[1])(k) = 0.f;
-            (*Ch[2])(k) = 0.f;
-        }
-        if ( (r > 1.f) || (g > 1.f) || (b > 1.f)) {
-            (*Ch[0])(k) = 1.f;
-            (*Ch[1])(k) = 1.f;
-            (*Ch[2])(k) = 1.f;
+            if(!std::isnan(r)) {
+                (*Ch[1])(k) = r;
+                (*Ch[2])(k) = r;
+            }
+            else if(!std::isnan(g)) {
+                (*Ch[0])(k) = g;
+                (*Ch[2])(k) = g;
+            }
+            else if(!std::isnan(b)) {
+                (*Ch[0])(k) = b;
+                (*Ch[1])(k) = b;
+            }
+            else {
+                (*Ch[0])(k) = 1.0f;
+                (*Ch[1])(k) = 1.0f;
+                (*Ch[2])(k) = 1.0f;
+            }
         }
     }
 
