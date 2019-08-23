@@ -205,7 +205,7 @@ rpError CA_correct(
     const int hblsz = ceil((float)(width + border2) / (ts - border2) + 2 + hz1);
 
     //temporary array to store simple interpolation of G
-    std::unique_ptr<float> buffer(new (std::nothrow) float[height * width + vblsz * hblsz * (2 * 2 + 1)]);
+    std::unique_ptr<float[]> buffer(new (std::nothrow) float[height * width + vblsz * hblsz * (2 * 2 + 1)]);
 
     float *Gtmp = buffer.get();
     if (!Gtmp) {
@@ -259,7 +259,7 @@ rpError CA_correct(
             // assign working space
             constexpr int buffersize = ts * ts + 8 * ts * tsh + 8 * 16;
             constexpr int buffersizePassTwo = ts * ts + 4 * ts * tsh + 4 * 16;
-            std::unique_ptr<float> bufferThr(new (std::nothrow) float[(autoCA && !fitParamsSet) ? buffersize : buffersizePassTwo]);
+            std::unique_ptr<float[]> bufferThr(new (std::nothrow) float[(autoCA && !fitParamsSet) ? buffersize : buffersizePassTwo]);
             float *data = bufferThr.get();
 #ifdef _OPENMP
             #pragma omp critical
