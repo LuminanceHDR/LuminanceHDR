@@ -25,7 +25,7 @@
 #include "HdrWizard/ui_HdrPreview.h"
 #include "HdrWizard/HdrPreview.h"
 
-HdrPreview::HdrPreview(QDialog *parent)
+HdrPreview::HdrPreview(QDialog *parent, Qt::WindowFlags f)
     : QDialog(parent),
       m_Ui(new Ui::HdrPreview),
       m_viewer(new HdrViewer(nullptr)) {

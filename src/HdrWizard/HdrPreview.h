@@ -36,7 +36,7 @@ class HdrPreview : public QDialog {
     Q_OBJECT
     public:
 
-    HdrPreview(QDialog *parent);
+    HdrPreview(QDialog *parent = 0, Qt::WindowFlags f = 0);
     ~HdrPreview();
 
     void setFrame(std::shared_ptr<pfs::Frame> frame) {m_viewer->setFrameShared(frame); }
