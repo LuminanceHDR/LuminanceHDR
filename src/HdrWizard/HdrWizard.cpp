@@ -789,7 +789,7 @@ bool HdrWizard::loadRespCurve(bool newfile) {
         loadcurvefilename = LuminanceOptions().getDefaultResponseCurveFilename();
     }
 
-    if (loadcurvefilename.isEmpty()) {
+    if (!QFile::exists(loadcurvefilename) || loadcurvefilename.isEmpty()) {
         loadcurvefilename = QFileDialog::getOpenFileName(
         this, tr("Load camera response curve file"), QDir::currentPath(),
         tr("Camera response curve (*.m);;All Files (*)"));
