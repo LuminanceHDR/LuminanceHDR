@@ -647,6 +647,104 @@ p, li { white-space: pre-wrap; }
             <string>[2/2] Choose Settings for HDR Creation</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_14">
+            <item row="5" column="0">
+             <widget class="QLabel" name="responseCurveInputFileLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Response Curve Input File</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="responseCurveOutputFileLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Response Curve Output File</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" colspan="2">
+             <widget class="QComboBox" name="weightFunctionComboBox">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>250</width>
+                <height>0</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>Triangular</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gaussian</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Plateau</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Flat</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="weightFunctionLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Weighting Function</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1" colspan="2">
+             <widget class="QPushButton" name="pushButtonSaveSettings">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Save HDR creation Settings into database to use in Batch HDR</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="modelLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>HDR Creation Model</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
              <widget class="QLabel" name="profileLabel">
               <property name="text">
@@ -657,6 +755,32 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="wordWrap">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="responseCurveLabel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Response Curve</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" colspan="2">
+             <widget class="QCheckBox" name="customConfigCheckBox">
+              <property name="toolTip">
+               <string>Use this only if the default profiles above do not yield good results</string>
+              </property>
+              <property name="text">
+               <string>Use Custom Configuration</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -707,119 +831,6 @@ p, li { white-space: pre-wrap; }
               </item>
              </widget>
             </item>
-            <item row="1" column="1" colspan="2">
-             <widget class="QCheckBox" name="customConfigCheckBox">
-              <property name="toolTip">
-               <string>Use this only if the default profiles above do not yield good results</string>
-              </property>
-              <property name="text">
-               <string>Use Custom Configuration</string>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="modelLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>HDR Creation Model</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1" colspan="2">
-             <widget class="QComboBox" name="modelComboBox">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <item>
-               <property name="text">
-                <string>Debevec</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Robertson (Simple)</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Robertson (Response Recovery)</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="weightFunctionLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Weighting Function</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1" colspan="2">
-             <widget class="QComboBox" name="weightFunctionComboBox">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>0</height>
-               </size>
-              </property>
-              <item>
-               <property name="text">
-                <string>Triangular</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Gaussian</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Plateau</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Flat</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="responseCurveLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Response Curve</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
             <item row="4" column="1" colspan="2">
              <widget class="QComboBox" name="responseCurveComboBox">
               <property name="enabled">
@@ -864,19 +875,6 @@ p, li { white-space: pre-wrap; }
               </item>
              </widget>
             </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="responseCurveInputFileLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Response Curve Input File</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
             <item row="5" column="1" colspan="2">
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
@@ -906,19 +904,6 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
              </layout>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="responseCurveOutputFileLabel">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Response Curve Output File</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
             </item>
             <item row="6" column="1" colspan="2">
              <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -953,37 +938,32 @@ p, li { white-space: pre-wrap; }
               </item>
              </layout>
             </item>
-            <item row="7" column="1" colspan="2">
-             <widget class="QPushButton" name="pushButtonSaveSettings">
+            <item row="2" column="1" colspan="2">
+             <widget class="QComboBox" name="modelComboBox">
               <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="text">
-               <string>Save Settings</string>
+              <property name="minimumSize">
+               <size>
+                <width>250</width>
+                <height>0</height>
+               </size>
               </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QPushButton" name="hdrPreviewButton">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Show HDR</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="2">
-             <widget class="QCheckBox" name="hdrPreviewCheckBox">
-              <property name="text">
-               <string>Show HDR Preview</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
+              <item>
+               <property name="text">
+                <string>Debevec</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Robertson (Simple)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Robertson (Response Recovery)</string>
+               </property>
+              </item>
              </widget>
             </item>
            </layout>

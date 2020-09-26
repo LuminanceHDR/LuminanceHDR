@@ -181,60 +181,52 @@ void dump_gnuplot(const char *filename, const float *array, int M,
 
 void responseSave(FILE *file, const float *Ir, const float *Ig, const float *Ib,
                   int M) {
+
+    /* Set the locale to the POSIX C environment */
+    setlocale (LC_ALL, "C");
     // response curve matrix header
-    fprintf(file, "# Camera response curve, channels Ir, Ig, Ib \n");
     fprintf(
         file,
-        "# data layout: camera output | log10(response Ir) | response Ir | "
-        "log10(response Ig) | response Ig | log10(response Ib) | response Ib "
-        "\n");
-    fprintf(file, "# type: matrix\n");
-    fprintf(file, "# rows: %d\n", M);
-    fprintf(file, "# columns: 7\n");
+        "log10(Ir),Ir,log10(Ig),Ig,log10(Ib),Ib\n");
 
     // save response
     for (int m = 0; m < M; m++) {
         float logR = Ir[m] == 0.0f ? -6.0f : log10f(Ir[m]);
         float logG = Ig[m] == 0.0f ? -6.0f : log10f(Ig[m]);
         float logB = Ib[m] == 0.0f ? -6.0f : log10f(Ib[m]);
-        fprintf(file, " %4d %15.9f %15.9f %15.9f %15.9f %15.9f %15.9f \n", m,
+        fprintf(file, "%15.9f,%15.9f,%15.9f,%15.9f,%15.9f,%15.9f\n",
                 logR, Ir[m], logG, Ig[m], logB, Ib[m]);
     }
-    fprintf(file, "\n");
 }
 
 bool responseLoad(FILE *file, float *Ir, float *Ig, float *Ib, int M) {
+    /* Set the locale to the POSIX C environment */
+    setlocale (LC_ALL, "C");
+
     char line[1024];
-    int m = 0, c = 0;
 
     // parse response curve matrix header
-    while (fgets(line, 1024, file))
-        if (sscanf(line, "# rows: %d\n", &m) == 1) break;
-    if (m != M) {
-        std::cerr << "response: number of input levels is different,"
-                  << " M=" << M << " m=" << m << std::endl;
-        return false;
-    }
-    while (fgets(line, 1024, file))
-        if (sscanf(line, "# columns: %d\n", &c) == 1) break;
-    if (c != 7) return false;
+    fgets(line, 1024, file);
 
     // read response
     float ignoreR, ignoreG, ignoreB;
-    for (int i = 0; i < M; i++) {
+    int i = 0;
+    while( fgets(line, 1024, file) ) {
         float valR, valG, valB;
-        if (fscanf(file, " %d %f %f %f %f %f %f \n", &m, &ignoreR, &valR,
-                   &ignoreG, &valG, &ignoreB, &valB) != 7)
+        int c;
+        c = sscanf(line, "%f,%f,%f,%f,%f,%f\n",
+            &ignoreR, &valR, &ignoreG, &valG, &ignoreB, &valB);
+
+        if (c != 6)
             return false;
-        if (m < 0 || m > M)
-            std::cerr << "response: camera value out of range,"
-                      << " m=" << m << std::endl;
-        else {
-            Ir[m] = valR;
-            Ig[m] = valG;
-            Ib[m] = valB;
-        }
+
+        Ir[i] = valR;
+        Ig[i] = valG;
+        Ib[i++] = valB;
     }
 
-    return true;
+    if (i != M)
+        return false;
+    else
+        return true;
 }

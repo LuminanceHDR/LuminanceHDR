@@ -21,15 +21,18 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
+#include <iostream>
 
 #include "HdrWizard/ui_HdrPreview.h"
 #include "HdrWizard/HdrPreview.h"
 
-HdrPreview::HdrPreview(QDialog *parent)
+HdrPreview::HdrPreview(QDialog *parent, Qt::WindowFlags f)
     : QDialog(parent),
       m_Ui(new Ui::HdrPreview),
-      m_viewer(new HdrViewer(NULL)) {
+      m_viewer(new HdrViewer(nullptr)) {
 
+
+    connect(m_viewer.data(), SIGNAL(reject()), this, SLOT(reject()));
     m_Ui->setupUi(this);
     m_Ui->hdrPreviewFrame->layout()->addWidget(m_viewer.data());
     m_viewer->setFocus();
@@ -40,4 +43,8 @@ HdrPreview::~HdrPreview() {
 
 void HdrPreview::showEvent(QShowEvent *) {
     m_viewer->setFocus();
+}
+
+void HdrPreview::reject() {
+    QDialog::reject();
 }

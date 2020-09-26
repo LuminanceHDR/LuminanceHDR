@@ -24,8 +24,6 @@
 #include "HdrWizard/HdrWizard.h"
 #include "HdrWizard/ui_HdrWizard.h"
 
-#include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 #include <cmath>
 
 #include <QDebug>
@@ -106,7 +104,7 @@ HdrWizard::HdrWizard(QWidget *p, const QStringList &files,
       m_processing(false),
       m_isConfigChanged(false),
       m_db(db),
-      m_hdrPreview(new HdrPreview(0)) {
+      m_hdrPreview(new HdrPreview(this, Qt::WindowMinimizeButtonHint)) {
     m_Ui->setupUi(this);
 
     if (!QIcon::hasThemeIcon(QStringLiteral("edit-clear-list")))
@@ -127,7 +125,7 @@ HdrWizard::HdrWizard(QWidget *p, const QStringList &files,
     m_Ui->textEdit->hide();
     m_Ui->HideLogButton->hide();
 
-    if (files.size()) {
+    if (!files.isEmpty()) {
         m_Ui->pagestack->setCurrentIndex(0);
 
         QMetaObject::invokeMethod(this, "loadInputFiles", Qt::QueuedConnection,
@@ -248,7 +246,7 @@ void HdrWizard::updateTableGrid() {
     // insert the row at the bottom of the table widget
     int counter = 0;
     QStringList filesWithoutExif;
-    BOOST_FOREACH (const HdrCreationItem &item, *m_hdrCreationManager) {
+    for (const auto &item: *m_hdrCreationManager) {
         float normalizedEV = item.getEV() - m_hdrCreationManager->getEVOffset();
 
         qDebug() << QStringLiteral(
@@ -315,9 +313,8 @@ void HdrWizard::updateTableGrid() {
 
 void HdrWizard::removeImageButtonClicked() {
 
-    int index = m_Ui->tableWidget->currentRow();
+    size_t index = m_Ui->tableWidget->currentRow();
 
-    Q_ASSERT(index >= 0);
     Q_ASSERT(index < m_hdrCreationManager->availableInputFiles());
 
     m_hdrCreationManager->removeFile(index);
@@ -452,7 +449,7 @@ void HdrWizard::loadInputFiles(const QStringList &files) {
         m_inputFilesName = files;
 
         m_futureWatcher.setFuture(
-            QtConcurrent::run(boost::bind(&HdrCreationManager::loadFiles,
+            QtConcurrent::run(std::bind(&HdrCreationManager::loadFiles,
                                           m_hdrCreationManager.data(), files)));
     }
 }
@@ -631,23 +628,6 @@ void HdrWizard::customConfigCheckBoxToggled(bool wantCustom) {
     }
 }
 
-void HdrWizard::on_hdrPreviewButton_clicked() {
-    showHDR();
-}
-
-void HdrWizard::on_hdrPreviewCheckBox_stateChanged(int state) {
-    if (state == Qt::Checked) {
-        m_Ui->NextFinishButton->setText(tr("Compute"));
-    }
-    else {
-        m_Ui->NextFinishButton->setText(tr("Finish"));
-    }
-}
-
-void HdrWizard::showHDR() {
-    m_hdrPreview->exec();
-}
-
 void HdrWizard::NextFinishButtonClicked() {
     int currentpage = m_Ui->pagestack->currentIndex();
     switch (currentpage) {
@@ -687,11 +667,8 @@ void HdrWizard::NextFinishButtonClicked() {
             if (m_pfsFrameHDR == nullptr || m_isConfigChanged) {
                 startComputation();
             }
-            else if (!m_Ui->hdrPreviewCheckBox->isChecked()) {
-                accept();
-            }
             else {
-                showHDR();
+                accept();
             }
         }
     }
@@ -720,7 +697,7 @@ void HdrWizard::startComputation() {
     if (m_doAutoAntighosting) {
         int h0;
         m_hdrCreationManager->getAgData(m_patches, h0);
-        m_future = QtConcurrent::run(boost::bind(
+        m_future = QtConcurrent::run(std::bind(
             &HdrCreationManager::doAntiGhosting,
             m_hdrCreationManager.data(), m_patches, h0, false,
             &m_ph));  // false means auto anti-ghosting
@@ -733,7 +710,7 @@ void HdrWizard::startComputation() {
         m_futureWatcher.setFuture(m_future);
     } else if (m_doManualAntighosting) {
         m_future = QtConcurrent::run(
-            boost::bind(&HdrCreationManager::doAntiGhosting,
+            std::bind(&HdrCreationManager::doAntiGhosting,
                         m_hdrCreationManager.data(), m_patches,
                         m_agGoodImageIndex, true,
                         &m_ph));  // true means manual anti-ghosting
@@ -753,7 +730,7 @@ void HdrWizard::createHdr() {
     m_Ui->NextFinishButton->setEnabled(false);
     m_Ui->cancelButton->setEnabled(false);
 
-    m_future = QtConcurrent::run(boost::bind(&HdrCreationManager::createHdr,
+    m_future = QtConcurrent::run(std::bind(&HdrCreationManager::createHdr,
                                              m_hdrCreationManager.data()));
 
     if (m_pfsFrameHDR == nullptr) {
@@ -765,27 +742,24 @@ void HdrWizard::createHdr() {
 
 void HdrWizard::createHdrFinished() {
     m_isConfigChanged = false;
+    m_Ui->NextFinishButton->setText(tr("&Accept This HDR"));
     m_processing = false;
     m_Ui->NextFinishButton->setEnabled(true);
     m_Ui->cancelButton->setEnabled(true);
-    m_Ui->hdrPreviewButton->setEnabled(true);
 
     m_pfsFrameHDR.reset(m_future.result());
     m_Ui->progressBar->hide();
     OsIntegration::getInstance().setProgress(-1);
     QApplication::restoreOverrideCursor();
 
-    if (m_Ui->hdrPreviewCheckBox->isChecked() ) {
-        m_hdrPreview->setFrame(m_pfsFrameHDR);
-        m_hdrPreview->exec();
-    }
-    else {
+    m_hdrPreview->setFrame(m_pfsFrameHDR);
+    if (m_hdrPreview->exec() == QDialog::Accepted) {
         accept();
     }
 }
 
 void HdrWizard::currentPageChangedInto(int newindex) {
-    m_Ui->NextFinishButton->setText(tr("&Compute"));
+    m_Ui->NextFinishButton->setText(tr("&Compute HDR"));
     // when at least 2 LDR or MDR inputs perform Manual Alignment
     int num_images = m_hdrCreationManager->getData().size();
     if (m_Ui->checkBoxEditingTools->isChecked() && num_images >= 2) {
@@ -815,10 +789,10 @@ bool HdrWizard::loadRespCurve(bool newfile) {
         loadcurvefilename = LuminanceOptions().getDefaultResponseCurveFilename();
     }
 
-    if (loadcurvefilename.isEmpty()) {
+    if (!QFile::exists(loadcurvefilename) || loadcurvefilename.isEmpty()) {
         loadcurvefilename = QFileDialog::getOpenFileName(
         this, tr("Load camera response curve file"), QDir::currentPath(),
-        tr("Camera response curve (*.m);;All Files (*)"));
+        tr("Camera response curve (*.csv);;All Files (*)"));
     }
 
     if (loadcurvefilename.isEmpty()) {
@@ -846,12 +820,19 @@ bool HdrWizard::loadRespCurve(bool newfile) {
 }
 
 void HdrWizard::saveRespCurveFileButtonClicked() {
+    QFileInfo fi(LuminanceOptions().getDefaultResponseCurveFilename());
+    QString path = fi.absoluteFilePath();
     QString savecurvefilename = QFileDialog::getSaveFileName(
-        this, tr("Save a camera response curve file"), QDir::currentPath(),
-        tr("Camera response curve (*.m)"));
+        this, tr("Save a camera response curve file"), path,
+        tr("Camera response curve (*.csv);;All Files (*)"));
     if (!savecurvefilename.isEmpty()) {
+        QFileInfo savecurvefilename_info(savecurvefilename);
+        if (savecurvefilename_info.suffix().isEmpty()) {
+            savecurvefilename.append(".csv");
+        }
         m_Ui->CurveFileNameSaveLineEdit->setText(savecurvefilename);
         m_hdrCreationManager->setResponseCurveOutputFile(savecurvefilename);
+        LuminanceOptions().setDefaultResponseCurveFilename(savecurvefilename);
     }
 }
 
@@ -881,6 +862,7 @@ void updateHdrCreationManagerWeight(HdrCreationManager &manager,
 
 void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui) {
     m_isConfigChanged = true;
+    m_Ui->NextFinishButton->setText(tr("&Compute HDR"));
     const FusionOperatorConfig *cfg = nullptr;
 
     if (index_from_gui <= 5) {
@@ -906,12 +888,14 @@ void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui) {
 
 void HdrWizard::weightingFunctionComboBoxActivated(int from_gui) {
     m_isConfigChanged = true;
+    m_Ui->NextFinishButton->setText(tr("&Compute HDR"));
     updateHdrCreationManagerWeight(*m_hdrCreationManager,
                                    weights_in_gui[from_gui]);
 }
 
 void HdrWizard::responseCurveComboBoxActivated(int from_gui) {
     m_isConfigChanged = true;
+    m_Ui->NextFinishButton->setText(tr("&Compute HDR"));
     ResponseCurveType rc = responses_in_gui[from_gui];
 
     if (rc == RESPONSE_CUSTOM) {
@@ -962,6 +946,7 @@ void HdrWizard::responseCurveComboBoxActivated(int from_gui) {
 
 void HdrWizard::modelComboBoxActivated(int from_gui) {
     m_isConfigChanged = true;
+    m_Ui->NextFinishButton->setText(tr("&Compute HDR"));
     FusionOperator fo = models_in_gui[from_gui];
 
     updateHdrCreationManagerModel(*m_hdrCreationManager, fo);

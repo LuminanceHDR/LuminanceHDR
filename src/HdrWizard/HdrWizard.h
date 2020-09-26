@@ -152,10 +152,7 @@ class HdrWizard : public QDialog {
     void createHdr();
     void createHdrFinished();
     void updateHideLogButtonText(bool);
-    void showHDR();
 
-    void on_hdrPreviewButton_clicked();
-    void on_hdrPreviewCheckBox_stateChanged(int state);
 };
 
 #endif

@@ -13,8 +13,40 @@
   <property name="windowTitle">
    <string>HDR Preview</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0" colspan="2">
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>555</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="acceptHDRButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Accept This HDR</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="4">
     <widget class="QFrame" name="hdrPreviewFrame">
      <property name="minimumSize">
       <size>
@@ -35,19 +67,6 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>555</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="1" column="1">
     <widget class="QPushButton" name="pushButton">
      <property name="text">
@@ -63,15 +82,31 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>HdrPreview</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>467</x>
+     <y>470</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>484</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>acceptHDRButton</sender>
+   <signal>clicked()</signal>
+   <receiver>HdrPreview</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>605</x>
-     <y>486</y>
+     <x>596</x>
+     <y>490</y>
     </hint>
     <hint type="destinationlabel">
-     <x>485</x>
-     <y>476</y>
+     <x>185</x>
+     <y>488</y>
     </hint>
    </hints>
   </connection>
