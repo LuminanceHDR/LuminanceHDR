@@ -39,7 +39,6 @@
 #include <QSqlRecord>
 #include <QtConcurrentRun>
 
-#include <boost/bind.hpp>
 #include <memory>
 
 #include <Libpfs/frame.h>
@@ -50,6 +49,38 @@
 #include <arch/math.h>
 
 using namespace libhdr::fusion;
+
+static QStringList supported_image_types() {
+    QStringList filters;
+    filters << QStringLiteral("*.jpg") << QStringLiteral("*.jpeg")
+            << QStringLiteral("*.tiff") << QStringLiteral("*.tif")
+            << QStringLiteral("*.crw") << QStringLiteral("*.cr2")
+            << QStringLiteral("*.nef") << QStringLiteral("*.dng")
+            << QStringLiteral("*.mrw") << QStringLiteral("*.orf")
+            << QStringLiteral("*.kdc") << QStringLiteral("*.dcr")
+            << QStringLiteral("*.arw") << QStringLiteral("*.raf")
+            << QStringLiteral("*.ptx") << QStringLiteral("*.pef")
+            << QStringLiteral("*.x3f") << QStringLiteral("*.raw")
+            << QStringLiteral("*.rw2") << QStringLiteral("*.sr2")
+            << QStringLiteral("*.3fr") << QStringLiteral("*.mef")
+            << QStringLiteral("*.mos") << QStringLiteral("*.erf")
+            << QStringLiteral("*.nrw") << QStringLiteral("*.srw");
+    filters << QStringLiteral("*.JPG") << QStringLiteral("*.JPEG")
+            << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF")
+            << QStringLiteral("*.CRW") << QStringLiteral("*.CR2")
+            << QStringLiteral("*.NEF") << QStringLiteral("*.DNG")
+            << QStringLiteral("*.MRW") << QStringLiteral("*.ORF")
+            << QStringLiteral("*.KDC") << QStringLiteral("*.DCR")
+            << QStringLiteral("*.ARW") << QStringLiteral("*.RAF")
+            << QStringLiteral("*.PTX") << QStringLiteral("*.PEF")
+            << QStringLiteral("*.X3F") << QStringLiteral("*.RAW")
+            << QStringLiteral("*.RW2") << QStringLiteral("*.SR2")
+            << QStringLiteral("*.3FR") << QStringLiteral("*.MEF")
+            << QStringLiteral("*.MOS") << QStringLiteral("*.ERF")
+            << QStringLiteral("*.NRW") << QStringLiteral("*.SRW");
+
+    return filters;
+}
 
 BatchHDRDialog::BatchHDRDialog(QWidget *p, QSqlDatabase db)
     : QDialog(p),
@@ -172,33 +203,7 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p, QSqlDatabase db)
         m_customConfig.push_back(ct);
     }
     // process input images
-    QStringList filters;
-    filters << QStringLiteral("*.jpg") << QStringLiteral("*.jpeg")
-            << QStringLiteral("*.tiff") << QStringLiteral("*.tif")
-            << QStringLiteral("*.crw") << QStringLiteral("*.cr2")
-            << QStringLiteral("*.nef") << QStringLiteral("*.dng")
-            << QStringLiteral("*.mrw") << QStringLiteral("*.orf")
-            << QStringLiteral("*.kdc") << QStringLiteral("*.dcr")
-            << QStringLiteral("*.arw") << QStringLiteral("*.raf")
-            << QStringLiteral("*.ptx") << QStringLiteral("*.pef")
-            << QStringLiteral("*.x3f") << QStringLiteral("*.raw")
-            << QStringLiteral("*.rw2") << QStringLiteral("*.sr2")
-            << QStringLiteral("*.3fr") << QStringLiteral("*.mef")
-            << QStringLiteral("*.mos") << QStringLiteral("*.erf")
-            << QStringLiteral("*.nrw") << QStringLiteral("*.srw");
-    filters << QStringLiteral("*.JPG") << QStringLiteral("*.JPEG")
-            << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF")
-            << QStringLiteral("*.CRW") << QStringLiteral("*.CR2")
-            << QStringLiteral("*.NEF") << QStringLiteral("*.DNG")
-            << QStringLiteral("*.MRW") << QStringLiteral("*.ORF")
-            << QStringLiteral("*.KDC") << QStringLiteral("*.DCR")
-            << QStringLiteral("*.ARW") << QStringLiteral("*.RAF")
-            << QStringLiteral("*.PTX") << QStringLiteral("*.PEF")
-            << QStringLiteral("*.X3F") << QStringLiteral("*.RAW")
-            << QStringLiteral("*.RW2") << QStringLiteral("*.SR2")
-            << QStringLiteral("*.3FR") << QStringLiteral("*.MEF")
-            << QStringLiteral("*.MOS") << QStringLiteral("*.ERF")
-            << QStringLiteral("*.NRW") << QStringLiteral("*.SRW");
+    QStringList filters = supported_image_types();
 
     QDir chosenInputDir(m_batchHdrInputDir);
     chosenInputDir.setFilter(QDir::Files);
@@ -243,6 +248,17 @@ void BatchHDRDialog::on_selectInputFolder_clicked() {
             if (m_batchHdrInputDir != m_Ui->inputLineEdit->text()) {
                 m_batchHdrInputDir = m_Ui->inputLineEdit->text();
                 LuminanceOptions().setBatchHdrPathInput(m_batchHdrInputDir);
+                // process input images
+                QStringList filters = supported_image_types();
+
+                QDir chosenInputDir(m_batchHdrInputDir);
+                chosenInputDir.setFilter(QDir::Files);
+                chosenInputDir.setSorting(QDir::Name);
+                chosenInputDir.setNameFilters(filters);
+                m_bracketed = chosenInputDir.entryList();
+                // hack to prepend to this list the path as prefix.
+                m_bracketed.replaceInStrings(QRegExp("(.+)"),
+                                             chosenInputDir.path() + "/\\1");
             }
 
             // defaulting the same output folder as the input folder
@@ -364,7 +380,7 @@ void BatchHDRDialog::batch_hdr() {
         qDebug() << "BatchHDRDialog::batch_hdr() Files to process: "
                  << toProcess;
         // DAVIDE _ HDR CREATION
-        QtConcurrent::run(boost::bind(&HdrCreationManager::loadFiles,
+        QtConcurrent::run(std::bind(&HdrCreationManager::loadFiles,
                                       m_hdrCreationManager, toProcess));
     } else {
         m_Ui->closeButton->show();
@@ -423,7 +439,7 @@ void BatchHDRDialog::create_hdr(int) {
         int h0 = m_hdrCreationManager->computePatches(
             m_Ui->threshold_doubleSpinBox->value(), m_patches, patchesPercent,
             HV_offsets);
-        m_future = QtConcurrent::run(boost::bind(
+        m_future = QtConcurrent::run(std::bind(
             &HdrCreationManager::doAntiGhosting, m_hdrCreationManager,
             m_patches, h0, false, &m_ph));  // false means auto anti-ghosting
 
@@ -431,7 +447,7 @@ void BatchHDRDialog::create_hdr(int) {
 
     } else {
         m_future = QtConcurrent::run(
-            boost::bind(&HdrCreationManager::createHdr, m_hdrCreationManager));
+            std::bind(&HdrCreationManager::createHdr, m_hdrCreationManager));
 
         m_futureWatcher.setFuture(m_future);
     }
