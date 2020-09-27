@@ -38,6 +38,7 @@
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QtConcurrentRun>
+#include <QScrollBar>
 
 #include <memory>
 
@@ -292,6 +293,7 @@ void BatchHDRDialog::add_output_directory(QString dir) {
 }
 
 void BatchHDRDialog::on_startButton_clicked() {
+    QScrollBar *sb = m_Ui->textEdit->verticalScrollBar();
     if (m_Ui->inputLineEdit->text().isEmpty() ||
         m_Ui->outputLineEdit->text().isEmpty())
         return;
@@ -340,6 +342,7 @@ void BatchHDRDialog::on_startButton_clicked() {
     }
 
     if (doStart) {
+        m_Ui->label->setEnabled(false);
         m_Ui->horizontalSlider->setEnabled(false);
         m_Ui->spinBox->setEnabled(false);
         m_Ui->groupBoxOutput->setEnabled(false);
@@ -350,6 +353,7 @@ void BatchHDRDialog::on_startButton_clicked() {
         m_total = m_bracketed.count() / m_Ui->spinBox->value();
         m_Ui->progressBar->setMaximum(m_total);
         m_Ui->textEdit->append(tr("Started processing..."));
+        sb->setValue(sb->maximum());
         // mouse pointer to busy
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
         batch_hdr();
@@ -358,6 +362,7 @@ void BatchHDRDialog::on_startButton_clicked() {
 
 void BatchHDRDialog::batch_hdr() {
     m_processing = true;
+    QScrollBar *sb = m_Ui->textEdit->verticalScrollBar();
 
     if (m_abort) {
         qDebug() << "Aborted";
@@ -372,6 +377,7 @@ void BatchHDRDialog::batch_hdr() {
         m_output_file_name_base =
             fi1.completeBaseName() + "-" + fi2.completeBaseName();
         m_Ui->textEdit->append(tr("Loading files..."));
+        sb->setValue(sb->maximum());
         m_numProcessed++;
         QStringList toProcess;
         for (int i = 0; i < m_Ui->spinBox->value(); ++i) {
@@ -393,16 +399,19 @@ void BatchHDRDialog::batch_hdr() {
             m_Ui->textEdit->append(tr("Completed with errors"));
         else
             m_Ui->textEdit->append(tr("Completed without errors"));
+        sb->setValue(sb->maximum());
     }
 }
 
 void BatchHDRDialog::align() {
+    QScrollBar *sb = m_Ui->textEdit->verticalScrollBar();
     QStringList filesLackingExif = m_hdrCreationManager->getFilesWithoutExif();
     if (!filesLackingExif.isEmpty()) {
         qDebug() << "BatchHDRDialog::align Error: missing EXIF data";
         m_Ui->textEdit->append(tr("Error: missing EXIF data"));
         foreach (const QString &fname, filesLackingExif)
             m_Ui->textEdit->append(fname);
+        sb->setValue(sb->maximum());
         m_errors = true;
         // DAVIDE _ HDR WIZARD
         m_hdrCreationManager->reset();
@@ -412,6 +421,7 @@ void BatchHDRDialog::align() {
     if (m_Ui->autoAlignCheckBox->isChecked()) {
         m_Ui->progressBar->hide();
         m_Ui->textEdit->append(tr("Aligning..."));
+        sb->setValue(sb->maximum());
         if (m_Ui->aisRadioButton->isChecked()) {
             m_hdrCreationManager->set_ais_crop_flag(
                 m_Ui->autoCropCheckBox->isChecked());
@@ -425,16 +435,20 @@ void BatchHDRDialog::align() {
 void BatchHDRDialog::create_hdr(int) {
     qDebug() << "BatchHDRDialog::create_hdr()";
 
+    QScrollBar *sb = m_Ui->textEdit->verticalScrollBar();
     m_Ui->progressBar->hide();
     m_Ui->textEdit->append(tr("Creating HDR..."));
+    sb->setValue(sb->maximum());
     //int idx = m_Ui->profileComboBox->currentIndex();
 
     if (m_Ui->autoAG_checkBox->isChecked()) {
         m_Ui->textEdit->append(tr("Doing auto anti-ghosting..."));
+        sb->setValue(sb->maximum());
         QList<QPair<int, int>> HV_offsets;
         for (int i = 0; i < m_Ui->spinBox->value(); i++) {
             HV_offsets.append(qMakePair(0, 0));
         }
+        sb->setValue(sb->maximum());
         float patchesPercent;
         int h0 = m_hdrCreationManager->computePatches(
             m_Ui->threshold_doubleSpinBox->value(), m_patches, patchesPercent,
@@ -454,6 +468,7 @@ void BatchHDRDialog::create_hdr(int) {
 }
 
 void BatchHDRDialog::createHdrFinished() {
+    QScrollBar *sb = m_Ui->textEdit->verticalScrollBar();
     std::unique_ptr<pfs::Frame> resultHDR(m_future.result());
     if (resultHDR.get() == nullptr) {
         qDebug() << "Aborted";
@@ -502,12 +517,15 @@ void BatchHDRDialog::createHdrFinished() {
         progressValue,
         m_Ui->progressBar->maximum() - m_Ui->progressBar->minimum());
     m_Ui->textEdit->append(tr("Written ") + outName);
+    sb->setValue(sb->maximum());
     batch_hdr();
 }
 
 void BatchHDRDialog::error_while_loading(const QString &message) {
     qDebug() << message;
+    QScrollBar *sb = m_Ui->textEdit->verticalScrollBar();
     m_Ui->textEdit->append(tr("Error: ") + message);
+    sb->setValue(sb->maximum());
     m_errors = true;
     m_loading_error = true;
     m_processed++;
@@ -516,11 +534,13 @@ void BatchHDRDialog::error_while_loading(const QString &message) {
 
 void BatchHDRDialog::writeAisData(QByteArray &data) {
     qDebug() << data;
+    QScrollBar *sb = m_Ui->textEdit->verticalScrollBar();
     if (data.contains("[1A")) data.replace("[1A", "");
     if (data.contains("[2A")) data.replace("[2A", "");
     if (data.contains(QChar(0x01B).toLatin1()))
         data.replace(QChar(0x01B).toLatin1(), "");
     m_Ui->textEdit->append(data);
+    sb->setValue(sb->maximum());
     if (data.contains(": remapping")) {
         QRegExp exp("\\:\\s*(\\d+)\\s*");
         exp.indexIn(QString(data.data()));
