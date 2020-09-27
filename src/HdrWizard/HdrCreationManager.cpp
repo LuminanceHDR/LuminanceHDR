@@ -303,6 +303,12 @@ void HdrCreationManager::setConfig(const FusionOperatorConfig &c) {
     } else {
         m_response->setType(c.responseCurve);
     }
+    if (!c.outputResponseCurveFilename.isEmpty()) {
+        setSaveResponseCurve(true);
+        setResponseCurveOutputFilename(c.outputResponseCurveFilename);
+    } else {
+        m_response->setType(c.responseCurve);
+    }
     getWeightFunction().setType(c.weightFunction);
     setFusionOperator(c.fusionOperator);
 }

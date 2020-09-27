@@ -188,8 +188,11 @@ int CommandLineInterfaceManager::execCommandLineParams() {
         tr("model: robertson|robertsonauto|debevec (Default is debevec)")
             .toUtf8()
             .constData())(
-        "hdrCurveFilename", po::value<std::string>(),
-        tr("curve filename = your_file_here.m").toUtf8().constData());
+        "inputCameraResponseCurve", po::value<std::string>(),
+        tr("input response curve filename = your_file_here.csv").toUtf8().constData())(
+
+        "outputCameraResponseCurve", po::value<std::string>(),
+        tr("output response curve filename = your_file_here.csv").toUtf8().constData());
 
     po::options_description ldr_desc(
         tr("LDR output parameters").toUtf8().constData());
@@ -583,10 +586,14 @@ reinhard02|\nreinhard05|mai|mantiuk06|mantiuk08|\nvanhateren|lischinski] (Defaul
                 printErrorAndExit(
                     tr("Error: Unknown HDR creation model specified."));
         }
-        if (vm.count("hdrCurveFilename"))
+        if (vm.count("inputCameraResponseCurve"))
             hdrcreationconfig.inputResponseCurveFilename =
                 QString::fromStdString(
-                    vm["hdrCurveFilename"].as<std::string>());
+                    vm["inputCameraResponseCurve"].as<std::string>());
+        if (vm.count("outputCameraResponseCurve"))
+            hdrcreationconfig.outputResponseCurveFilename =
+                QString::fromStdString(
+                    vm["outputCameraResponseCurve"].as<std::string>());
         if (vm.count("tmo")) {
             const char *value = vm["tmo"].as<std::string>().c_str();
             if (strcmp(value, "ashikhmin") == 0)
@@ -632,7 +639,7 @@ reinhard02|\nreinhard05|mai|mantiuk06|mantiuk08|\nvanhateren|lischinski] (Defaul
             try {
                 TonemappingOptions *options =
                     TMOptionsOperations::parseFile(settingFile);
-                if (options != NULL)
+                if (options != nullptr)
                     tmopts.reset(options);
                 else
                     printErrorAndExit(
@@ -725,7 +732,7 @@ reinhard02|\nreinhard05|mai|mantiuk06|mantiuk08|\nvanhateren|lischinski] (Defaul
         }
     }
 
-    if (loadHdrFilename.isEmpty() && inputFiles.size() == 0) {
+    if (loadHdrFilename.isEmpty() && inputFiles.isEmpty()) {
         cout << cmdvisible_options << endl;
         exit(0); // Exit here instead of returning to main complicating main code
     }
@@ -742,11 +749,11 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
                "number of input files."));
     }
     // now validate operation mode.
-    if (inputFiles.size() != 0 && loadHdrFilename.isEmpty()) {
+    if (!inputFiles.isEmpty() && loadHdrFilename.isEmpty()) {
         operationMode = CREATE_HDR_MODE;
 
         printIfVerbose(QObject::tr("Running in HDR-creation mode."), verbose);
-    } else if (!loadHdrFilename.isEmpty() && inputFiles.size() == 0) {
+    } else if (!loadHdrFilename.isEmpty() && inputFiles.isEmpty()) {
         operationMode = LOAD_HDR_MODE;
 
         printIfVerbose(QObject::tr("Running in Load-HDR mode."), verbose);
@@ -786,7 +793,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
         } catch (std::runtime_error &e) {
             printErrorAndExit(e.what());
         } catch (...) {
-            printErrorAndExit(QStringLiteral("Catched unhandled exception"));
+            printErrorAndExit(QStringLiteral("Caught unhandled exception"));
         }
     } else {
         printIfVerbose(QObject::tr("Loading file %1").arg(loadHdrFilename),
@@ -795,10 +802,10 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
         try {
             HDR.reset(IOWorker().read_hdr_frame(loadHdrFilename));
         } catch (...) {
-            printErrorAndExit(QStringLiteral("Catched unhandled exception"));
+            printErrorAndExit(QStringLiteral("Caught unhandled exception"));
         }
 
-        if (HDR != NULL) {
+        if (HDR != nullptr) {
             printIfVerbose(QObject::tr("Successfully loaded file %1.")
                                .arg(loadHdrFilename),
                            verbose);
@@ -811,7 +818,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
 
 void CommandLineInterfaceManager::finishedLoadingInputFiles() {
     QStringList filesLackingExif = hdrCreationManager->getFilesWithoutExif();
-    if (filesLackingExif.size() != 0 && ev.isEmpty()) {
+    if (!filesLackingExif.isEmpty() && ev.isEmpty()) {
         printErrorAndExit(tr(
             "Error: Exif data missing in images and EV values not specified on "
             "the commandline, bailing out."));

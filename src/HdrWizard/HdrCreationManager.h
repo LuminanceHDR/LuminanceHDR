@@ -84,7 +84,15 @@ class HdrCreationManager : public QObject {
     QString &getResponseCurveInputFilename() {
         return m_responseCurveInputFilename;
     }
+    void setSaveResponseCurve(bool b) { m_isSaveResponseCurve = b; }
+    bool isSaveResponseCurve() const { return m_isSaveResponseCurve; }
+    void setResponseCurveOutputFilename(const QString &fn) {
+        m_responseCurveOutputFilename = fn;
+    }
 
+    QString &getResponseCurveOutputFilename() {
+        return m_responseCurveOutputFilename;
+    }
     // iterators
     typedef HdrCreationItemContainer::iterator iterator;
     typedef HdrCreationItemContainer::const_iterator const_iterator;
@@ -200,6 +208,7 @@ class HdrCreationManager : public QObject {
     int m_agGoodImageIndex;
     bool m_patches[agGridSize][agGridSize];
     bool m_isLoadResponseCurve;
+    bool m_isSaveResponseCurve;
 
    private slots:
     void ais_failed_slot(QProcess::ProcessError);
