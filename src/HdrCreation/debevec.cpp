@@ -147,6 +147,15 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
                       Normalizer(Min, Max));
         }
 
+        // Remove oversaturated pixels from darkest image
+        if (i == 0) {
+            const float SATURATION_TH = 0.85f;
+            for (int c = 0; c < channels; c++) {
+                replace_if(Ch[c]->begin(), Ch[c]->end(),
+                        std::bind(std::greater<float>(), std::placeholders::_1, SATURATION_TH), SATURATION_TH);
+                }
+        }
+
         Array2Df response_img(W, H);
         Array2Df w(W, H);
 
