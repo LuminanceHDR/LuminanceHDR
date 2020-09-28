@@ -57,7 +57,7 @@ class GenericViewer : public QWidget {
     //! \brief GenericViewer constructor
     //! \param[in] frame reference frame
     //! \param[in] ns need saving
-    GenericViewer(pfs::Frame *frame, QWidget *parent = 0, bool ns = false);
+    explicit GenericViewer(pfs::Frame *frame, QWidget *parent = 0, bool ns = false);
 
     //! \brief GenericViewer virtual destructor
     virtual ~GenericViewer();
@@ -217,7 +217,8 @@ class GenericViewer : public QWidget {
     void reparent(GenericViewer *v, bool close = false);     // emitted when exit fullscreen
     void goNext(GenericViewer *v);       // shows next image in fullscreen
     void goPrevious(GenericViewer *v);   // shows previous image in fullscreen
-    void syncViewers(GenericViewer *v);  // toggle viewers syncronization
+    void syncViewers(GenericViewer *v);  // toggle viewers synchronization
+    void reject();
 };
 
 inline bool GenericViewer::needsSaving(void) { return mNeedsSaving; }
