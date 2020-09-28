@@ -160,7 +160,7 @@ void Reinhard02::build_gaussian_fft() {
     for (int scale = 0; scale < m_range; scale++) {
 #ifndef NDEBUG
         fprintf(stderr,
-                "Computing FFT of Gaussian at scale %i (size %i x %i)%c", scale,
+                "Computing FFT of Gaussian at scale %i (size %li x %ld)%c", scale,
                 m_cvts.xmax, m_cvts.ymax, (char)13);
 #endif
 
