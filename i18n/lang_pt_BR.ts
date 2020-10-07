@@ -406,92 +406,92 @@ See documentation for more information.</source>
         <translation>Auto anti-ghosting</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="133"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="165"/>
         <source>Custom config %1</source>
         <translation>Configuração personalizada %1</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="235"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="241"/>
         <source>Choose a source directory</source>
         <translation>Escolha um diretório de origem</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="261"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="278"/>
         <source>Choose a output directory</source>
         <translation>Escolha um diretório de saída</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="298"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="308"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="319"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="316"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="326"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="337"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="299"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="317"/>
         <source>The chosen output directory contains HDR files. Those files might be overwritten.
 
 Continue?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="309"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="320"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="327"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="338"/>
         <source>Total number of pictures must be a multiple of number of bracketed images.</source>
         <translation>Número total de fotos deve ser um múltiplo do número de imagens enquadradas.</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="336"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="355"/>
         <source>Started processing...</source>
         <translation>Iniciado o processamento ...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="358"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="379"/>
         <source>Loading files...</source>
         <translation>Carregando arquivos...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="377"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="399"/>
         <source>Completed with errors</source>
         <translation>Concluído com erros</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="379"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="401"/>
         <source>Completed without errors</source>
         <translation>Concluído sem erros</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="387"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="411"/>
         <source>Error: missing EXIF data</source>
         <translation>Erro: falta de dados EXIF</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="398"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="423"/>
         <source>Aligning...</source>
         <translation>Alinhando... </translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="413"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="440"/>
         <source>Creating HDR...</source>
         <translation>Creando HDR...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="417"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="445"/>
         <source>Doing auto anti-ghosting...</source>
         <translation>Executando auto anti-ghosting...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="488"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="519"/>
         <source>Written </source>
         <translation>Escrito</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="494"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="527"/>
         <source>Error: </source>
         <translation>Erro:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="526"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="562"/>
         <source>Aborting...</source>
         <translation>Abortando...</translation>
     </message>
@@ -971,56 +971,61 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="192"/>
-        <source>curve filename = your_file_here.m</source>
-        <translation>curva nome do arquivo = seu_arquivo_aqui.m</translation>
+        <source>input response curve filename = your_file_here.csv</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="195"/>
+        <source>output response curve filename = your_file_here.csv</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="198"/>
         <source>LDR output parameters</source>
         <translation>Parâmetros de saída LDR</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="198"/>
+        <location filename="../src/MainCli/commandline.cpp" line="201"/>
         <source>VALUE      Quality of the saved tone mapped file (1-100).</source>
         <translation>VALUE      Qualidade do arquivo salvo de tom mapeado (1-100).</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="202"/>
+        <location filename="../src/MainCli/commandline.cpp" line="205"/>
         <source>Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)</source>
         <translation>Formato Tiff. Valores permitidos são [8b|16b|32b|logluv] (O padrão é 8b)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="206"/>
+        <location filename="../src/MainCli/commandline.cpp" line="209"/>
         <source>Tiff deflate compression. true|false (Default is true)</source>
         <translation>Compactação deflate Tiff. verdadeiro|falso (Padrão é verdadeiro)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="211"/>
+        <location filename="../src/MainCli/commandline.cpp" line="214"/>
         <source>HTML output parameters</source>
         <translation>Parâmetros de saída HTML</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="214"/>
+        <location filename="../src/MainCli/commandline.cpp" line="217"/>
         <source>VALUE      Quality of the interpolated exposures, from the worst (1) to the best(4). Higher quality will introduce less distortions in the brightest and the darkest tones, but will also generate more images. More images means that there is more data that needs to be transferred to the web-browser, making HDR viewer less responsive. (Default is 2, which is sufficient for most applications)</source>
         <translation>VALOR Qualidade das exposições interpoladas, do pior (1) ao melhor (4). Maior qualidade irá introduzir menos distorções nos tons mais brilhantes e mais escuras, mas também gerará mais imagens. Mais imagens significa que há mais dados que precisam ser transferidos para o navegador Web, tornando o visualizador HDR menos responsivo. (O padrão é 2, o que é suficiente para a maioria das aplicações)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="222"/>
+        <location filename="../src/MainCli/commandline.cpp" line="225"/>
         <source>Specifies the file name, of the web page to be generated. If &lt;page_name&gt; is missing, the file name of the first image with .html extension will be used. (Default is first image name)</source>
         <translation>Especifica o nome do arquivo da página Web a ser gerada. Se &lt;page_name&gt; estiver faltando, o nome do arquivo da primeira imagem com extensão .html será usado. (O padrão é o nome da primeira imagem)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="227"/>
+        <location filename="../src/MainCli/commandline.cpp" line="230"/>
         <source>Specify where to store the resulting image files. Links to images in HTML will be updated accordingly. This must be a relative path and the directory must exist.  Useful to avoid clutter in the current directory. (Default is current working directory)</source>
         <translation>Especifique onde armazenar os arquivos de imagem resultantes. Os links para imagens em HTML serão atualizados em conformidade. Este deve ser um caminho relativo e o diretório deve existir. Útil para evitar confusão no diretório atual. (O padrão é o diretório de trabalho atual)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="234"/>
+        <location filename="../src/MainCli/commandline.cpp" line="237"/>
         <source>Tone mapping parameters  - no tonemapping is performed unless -o is specified</source>
         <translation>Parâmetros de mapeamento de tom - nenhum mapeamento de tom é realizado a menos que seja especificado -o</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="241"/>
+        <location filename="../src/MainCli/commandline.cpp" line="244"/>
         <source>Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|
 ferwerda|kimkautz|pattanaik|reinhard02|
 reinhard05|mai|mantiuk06|mantiuk08|
@@ -1028,488 +1033,488 @@ vanhateren|lischinski] (Default is mantiuk06)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="245"/>
+        <location filename="../src/MainCli/commandline.cpp" line="248"/>
         <source>SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings</source>
         <translation>CONFIGURAÇÃO_ARQUIVO Carregue um arquivo de configuração existente contendo pre-gamma e todas as configurações TMO</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="250"/>
+        <location filename="../src/MainCli/commandline.cpp" line="253"/>
         <source> Fattal</source>
         <translation> Fattal</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="254"/>
-        <location filename="../src/MainCli/commandline.cpp" line="428"/>
+        <location filename="../src/MainCli/commandline.cpp" line="257"/>
+        <location filename="../src/MainCli/commandline.cpp" line="431"/>
         <source>alpha FLOAT</source>
         <translation>alpha FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="257"/>
+        <location filename="../src/MainCli/commandline.cpp" line="260"/>
         <source>beta FLOAT</source>
         <translation>beta FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="260"/>
+        <location filename="../src/MainCli/commandline.cpp" line="263"/>
         <source>color FLOAT</source>
         <translation>color FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="263"/>
+        <location filename="../src/MainCli/commandline.cpp" line="266"/>
         <source>noise FLOAT</source>
         <translation>ruído FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="266"/>
+        <location filename="../src/MainCli/commandline.cpp" line="269"/>
         <source>new true|false</source>
         <translation>novo verdadeiro | falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="268"/>
+        <location filename="../src/MainCli/commandline.cpp" line="271"/>
         <source> Ferradans</source>
         <translation> Ferradans</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="272"/>
+        <location filename="../src/MainCli/commandline.cpp" line="275"/>
         <source>rho FLOAT</source>
         <translation>rho FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="275"/>
+        <location filename="../src/MainCli/commandline.cpp" line="278"/>
         <source>inv_alpha FLOAT</source>
         <translation>inv_alpha FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="277"/>
+        <location filename="../src/MainCli/commandline.cpp" line="280"/>
         <source> Ferwerda</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="281"/>
+        <location filename="../src/MainCli/commandline.cpp" line="284"/>
         <source>mul FLOAT</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="284"/>
+        <location filename="../src/MainCli/commandline.cpp" line="287"/>
         <source>adapt_lum FLOAT</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="286"/>
+        <location filename="../src/MainCli/commandline.cpp" line="289"/>
         <source> KimKautz</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="291"/>
+        <location filename="../src/MainCli/commandline.cpp" line="294"/>
         <source>c1 FLOAT</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="296"/>
+        <location filename="../src/MainCli/commandline.cpp" line="299"/>
         <source>c2 FLOAT</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="298"/>
+        <location filename="../src/MainCli/commandline.cpp" line="301"/>
         <source> Mantiuk 06</source>
         <translation> Mantiuk 06</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="303"/>
+        <location filename="../src/MainCli/commandline.cpp" line="306"/>
         <source>contrast FLOAT</source>
         <translation>contraste FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="307"/>
+        <location filename="../src/MainCli/commandline.cpp" line="310"/>
         <source>saturation FLOAT</source>
         <translation>saturação FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="311"/>
+        <location filename="../src/MainCli/commandline.cpp" line="314"/>
         <source>detail FLOAT</source>
         <translation>detalhe FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="315"/>
+        <location filename="../src/MainCli/commandline.cpp" line="318"/>
         <source>equalization true|false</source>
         <translation>equalização verdadeiro|falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="317"/>
+        <location filename="../src/MainCli/commandline.cpp" line="320"/>
         <source> Mantiuk 08</source>
         <translation> Mantiuk 08</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="322"/>
+        <location filename="../src/MainCli/commandline.cpp" line="325"/>
         <source>color saturation FLOAT</source>
         <translation>saturação de cor FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="326"/>
+        <location filename="../src/MainCli/commandline.cpp" line="329"/>
         <source>contrast enhancement FLOAT</source>
         <translation>realce de contraste FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="330"/>
+        <location filename="../src/MainCli/commandline.cpp" line="333"/>
         <source>luminance level FLOAT</source>
         <translation>nível de luminância FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="334"/>
+        <location filename="../src/MainCli/commandline.cpp" line="337"/>
         <source>enable luminance level true|false</source>
         <translation>habilitar nível de luminância verdadeiro | falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="335"/>
+        <location filename="../src/MainCli/commandline.cpp" line="338"/>
         <source> Durand</source>
         <translation> Durand</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="339"/>
+        <location filename="../src/MainCli/commandline.cpp" line="342"/>
         <source>spatial kernel sigma FLOAT</source>
         <translation>kernel espacial sigma FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="342"/>
+        <location filename="../src/MainCli/commandline.cpp" line="345"/>
         <source>range kernel sigma FLOAT</source>
         <translation>série de kernel sigma FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="345"/>
+        <location filename="../src/MainCli/commandline.cpp" line="348"/>
         <source>base contrast FLOAT</source>
         <translation>contraste de base FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="346"/>
+        <location filename="../src/MainCli/commandline.cpp" line="349"/>
         <source> Drago</source>
         <translation> Drago</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="350"/>
+        <location filename="../src/MainCli/commandline.cpp" line="353"/>
         <source>bias FLOAT</source>
         <translation>viés FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="352"/>
+        <location filename="../src/MainCli/commandline.cpp" line="355"/>
         <source> Reinhard 02</source>
         <translation> Reinhard 02</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="356"/>
+        <location filename="../src/MainCli/commandline.cpp" line="359"/>
         <source>key value FLOAT</source>
         <translation>chave de valor FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="359"/>
+        <location filename="../src/MainCli/commandline.cpp" line="362"/>
         <source>phi FLOAT</source>
         <translation>phi FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="362"/>
+        <location filename="../src/MainCli/commandline.cpp" line="365"/>
         <source>use scales true|false</source>
         <translation>utilização de escalas verdadeiro|falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="365"/>
+        <location filename="../src/MainCli/commandline.cpp" line="368"/>
         <source>range FLOAT</source>
         <translation>série FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="368"/>
+        <location filename="../src/MainCli/commandline.cpp" line="371"/>
         <source>lower scale FLOAT</source>
         <translation>escala inferior FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="371"/>
+        <location filename="../src/MainCli/commandline.cpp" line="374"/>
         <source>upper scale FLOAT</source>
         <translation>escala superior FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="373"/>
+        <location filename="../src/MainCli/commandline.cpp" line="376"/>
         <source> Reinhard 05</source>
         <translation> Reinhard 05</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="378"/>
+        <location filename="../src/MainCli/commandline.cpp" line="381"/>
         <source>Brightness FLOAT</source>
         <translation>Brilho FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="382"/>
+        <location filename="../src/MainCli/commandline.cpp" line="385"/>
         <source>Chroma adaption FLOAT</source>
         <translation>Adaptação cromática FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="386"/>
+        <location filename="../src/MainCli/commandline.cpp" line="389"/>
         <source>Light adaption FLOAT</source>
         <translation>Adpatação luminosa FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="387"/>
+        <location filename="../src/MainCli/commandline.cpp" line="390"/>
         <source> Ashikmin</source>
         <translation> Ashikmin</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="391"/>
+        <location filename="../src/MainCli/commandline.cpp" line="394"/>
         <source>Equation number 2 true|false</source>
         <translation>Número da equação 2 verdadeiro|falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="394"/>
+        <location filename="../src/MainCli/commandline.cpp" line="397"/>
         <source>Simple true|false</source>
         <translation>Simples verdadeiro|falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="397"/>
+        <location filename="../src/MainCli/commandline.cpp" line="400"/>
         <source>Local threshold FLOAT</source>
         <translation>Limiar local FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="398"/>
+        <location filename="../src/MainCli/commandline.cpp" line="401"/>
         <source> Pattanaik</source>
         <translation> Pattanaik</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="402"/>
+        <location filename="../src/MainCli/commandline.cpp" line="405"/>
         <source>multiplier FLOAT</source>
         <translation>multiplicador FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="405"/>
+        <location filename="../src/MainCli/commandline.cpp" line="408"/>
         <source>Local tone mapping true|false</source>
         <translation>Mapeamento de tom local verdadeiro|falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="408"/>
+        <location filename="../src/MainCli/commandline.cpp" line="411"/>
         <source>Auto luminance true|false</source>
         <translation>Auto luminância verdadeiro|falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="411"/>
+        <location filename="../src/MainCli/commandline.cpp" line="414"/>
         <source>cone level FLOAT</source>
         <translation>nível do cone FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="414"/>
+        <location filename="../src/MainCli/commandline.cpp" line="417"/>
         <source>rod level FLOAT</source>
         <translation>vareta de nível FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="416"/>
+        <location filename="../src/MainCli/commandline.cpp" line="419"/>
         <source> VanHateren</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="421"/>
+        <location filename="../src/MainCli/commandline.cpp" line="424"/>
         <source>pupil_area FLOAT</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="423"/>
+        <location filename="../src/MainCli/commandline.cpp" line="426"/>
         <source> Lischinski</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="477"/>
+        <location filename="../src/MainCli/commandline.cpp" line="480"/>
         <source>Luminance HDR version </source>
         <translation>Luminance HDR versão</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="487"/>
+        <location filename="../src/MainCli/commandline.cpp" line="490"/>
         <source>With LibRaw version </source>
         <translation>Com LibRaw versão </translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="489"/>
+        <location filename="../src/MainCli/commandline.cpp" line="492"/>
         <source> models listed</source>
         <translation>modelos listados</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="506"/>
-        <location filename="../src/MainCli/commandline.cpp" line="700"/>
+        <location filename="../src/MainCli/commandline.cpp" line="509"/>
+        <location filename="../src/MainCli/commandline.cpp" line="707"/>
         <source>Error: Unsupported LDR file type.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="512"/>
-        <location filename="../src/MainCli/commandline.cpp" line="690"/>
+        <location filename="../src/MainCli/commandline.cpp" line="515"/>
+        <location filename="../src/MainCli/commandline.cpp" line="697"/>
         <source>Error: Unsupported HDR file type.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="518"/>
+        <location filename="../src/MainCli/commandline.cpp" line="521"/>
         <source>Error: htmlQuality must be in the range [1..4].</source>
         <translation>Erro: Qualidade html deve estar entre [1..4].</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="534"/>
+        <location filename="../src/MainCli/commandline.cpp" line="537"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>Erro: Motor de alinhamento não reconhecido.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="555"/>
+        <location filename="../src/MainCli/commandline.cpp" line="558"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Erro: Desconhecida a Função de peso especificada</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="572"/>
+        <location filename="../src/MainCli/commandline.cpp" line="575"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>Erro: Desconhecida a curva de resposta especificada.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="584"/>
+        <location filename="../src/MainCli/commandline.cpp" line="587"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>Erro: Desconhecido o modelo de criação HDR especificado</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="624"/>
+        <location filename="../src/MainCli/commandline.cpp" line="631"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>Erro: Desconhecido o operador de mapeamento de tom especificado.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="639"/>
-        <location filename="../src/MainCli/commandline.cpp" line="648"/>
+        <location filename="../src/MainCli/commandline.cpp" line="646"/>
+        <location filename="../src/MainCli/commandline.cpp" line="655"/>
         <source>Error: The specified file with TMO settings could not be parsed!</source>
         <translation>Erro: O arquivo especificado com configurações TMO não pôde ser analisado!</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="644"/>
+        <location filename="../src/MainCli/commandline.cpp" line="651"/>
         <source>Error: The specified file with TMO settings could not be parsed!: %1</source>
         <translation>Erro: O arquivo especificado com configurações TMO não pôde ser analisado!: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="658"/>
+        <location filename="../src/MainCli/commandline.cpp" line="665"/>
         <source>Error: Quality must be in the range [1..100].</source>
         <translation>Erro: Qualidade deve estar entre [1..100].</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="673"/>
+        <location filename="../src/MainCli/commandline.cpp" line="680"/>
         <source>Error: Unknown tiff format.</source>
         <translation>Erro: Formato tiff desconhecido.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="707"/>
+        <location filename="../src/MainCli/commandline.cpp" line="714"/>
         <source>Error: Threshold must be in the range [0..1].</source>
         <translation>Erro: Limite deve estar entre [0..1].</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="741"/>
+        <location filename="../src/MainCli/commandline.cpp" line="748"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>Erro: O número de valores especificados de EV é diferente do número de arquivos de entrada.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="807"/>
+        <location filename="../src/MainCli/commandline.cpp" line="814"/>
         <source>Load file %1 failed</source>
         <translation>Carregamento do arquivo %1 falhou</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="815"/>
+        <location filename="../src/MainCli/commandline.cpp" line="822"/>
         <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation>Erro: Faltando dados Exif nas imagens e valores não especificados de EV na linha de comando, socorrer.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="823"/>
+        <location filename="../src/MainCli/commandline.cpp" line="830"/>
         <source>EV values have been assigned.</source>
         <translation>Valores EV foram atribuídos.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="827"/>
-        <location filename="../src/MainCli/commandline.cpp" line="830"/>
+        <location filename="../src/MainCli/commandline.cpp" line="834"/>
+        <location filename="../src/MainCli/commandline.cpp" line="837"/>
         <source>Starting aligning...</source>
         <translation>Começando a alinhar...</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="838"/>
+        <location filename="../src/MainCli/commandline.cpp" line="845"/>
         <source>Failed executing align_image_stack</source>
         <translation>Falha na execução do Alinhamento_de Pilha_ de Imagem</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="842"/>
+        <location filename="../src/MainCli/commandline.cpp" line="849"/>
         <source>Failed aligning images.</source>
         <translation>Falha alinhando imagens.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="844"/>
+        <location filename="../src/MainCli/commandline.cpp" line="851"/>
         <source>Creating (in memory) the HDR.</source>
         <translation>Criando no HDR (na memória).</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="911"/>
+        <location filename="../src/MainCli/commandline.cpp" line="918"/>
         <source>Saving to file %1.</source>
         <translation>Salvando no arquivo %1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="918"/>
+        <location filename="../src/MainCli/commandline.cpp" line="925"/>
         <source>Image %1 saved successfully</source>
         <translation>Imagem %1 salva com sucesso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="921"/>
+        <location filename="../src/MainCli/commandline.cpp" line="928"/>
         <source>Could not save %1</source>
         <translation>Não é possível salvar %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="926"/>
+        <location filename="../src/MainCli/commandline.cpp" line="933"/>
         <source>NOT Saving HDR image to file. %1</source>
         <translation>Não salvou imagem HDR no arquivo. %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="931"/>
+        <location filename="../src/MainCli/commandline.cpp" line="938"/>
         <source>Exporting to HTML</source>
         <translation>Exportando para HTML</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="947"/>
+        <location filename="../src/MainCli/commandline.cpp" line="954"/>
         <source>ERROR: directory %1 must exist</source>
         <translation>ERRO: diretório %1 deve existir</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="982"/>
+        <location filename="../src/MainCli/commandline.cpp" line="989"/>
         <source>Tonemapping requested, saving to file %1.</source>
         <translation>Mapeamento de tom solicitado, salvando no arquivo %1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="998"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1005"/>
         <source>Resizing to width %1.</source>
         <translation>Redimensionando para largura %1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1002"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1009"/>
         <source>Applying gamma %1.</source>
         <translation>Aplicando gamma %1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1028"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1035"/>
         <source>
 Applying saturation enhancement %1.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1031"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1038"/>
         <source>
 Applying post-gamma %1.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1042"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1049"/>
         <source>
 Image %1 successfully saved</source>
         <translation>
 Imagem %1 foi salva</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1047"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1054"/>
         <source>
 ERROR: Cannot save to file: %1</source>
         <translation>
 ERRO: Não é possível salvar no arquivo: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1054"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1061"/>
         <source>Tonemapping NOT requested.</source>
         <translation>Mapeamento de tom NÃO requerido.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="1064"/>
+        <location filename="../src/MainCli/commandline.cpp" line="1071"/>
         <source>Failed loading images: %1</source>
         <translation type="unfinished"/>
     </message>
@@ -2334,23 +2339,23 @@ p, li { white-space: pre-wrap; }
         <translation>Carregue uma imagem FITS ...</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="237"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="241"/>
         <source>Cannot load FITS image %1.
 ERROR: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="258"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="262"/>
         <source>FITS images have different size</source>
         <translation>imagens FITS têm tamanho diferente</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="450"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="454"/>
         <source>align_image_stack exited with exit code %1</source>
         <translation>align_image_stack saiu com código de saída %1</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="466"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="470"/>
         <source>align_image_stack failed with error</source>
         <translation>align_image_stack falhou</translation>
     </message>
@@ -2385,7 +2390,12 @@ ERROR: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrPreview.ui" line="54"/>
+        <location filename="../src/HdrWizard/HdrPreview.ui" line="45"/>
+        <source>Accept This HDR</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrPreview.ui" line="73"/>
         <source>Close</source>
         <translation>Fechar</translation>
     </message>
@@ -2564,12 +2574,77 @@ p, li { white-space: pre-wrap; }
         <translation>[2/2] Escolha Configurações para Criação de HDR</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="653"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="656"/>
+        <source>Response Curve Input File</source>
+        <translation>Arquivo de Entrada da Curva de Resposta </translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="669"/>
+        <source>Response Curve Output File</source>
+        <translation>Arquivo de Saída da Curva de Resposta</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="689"/>
+        <source>Triangular</source>
+        <translation>Triangular</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="694"/>
+        <source>Gaussian</source>
+        <translation>Gaussian</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="699"/>
+        <source>Plateau</source>
+        <translation>Plateau</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="704"/>
+        <source>Flat</source>
+        <translation>Plano</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="715"/>
+        <source>Weighting Function</source>
+        <translation>Função de Ponderação:</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="728"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom settings are saved into the local database and will be shown inside Batch HDR tool, accessible from &lt;span style=&quot; font-weight:600;&quot;&gt;Tools-&amp;gt;Batch HDR...-&amp;gt;Predefined profil&lt;/span&gt;e combo box.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="731"/>
+        <source>Save HDR creation settings into database to use in Batch HDR</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="744"/>
+        <source>HDR Creation Model</source>
+        <translation>Modelo de Criação HDR:</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="754"/>
         <source>Profile</source>
         <translation>Perfil</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="672"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="770"/>
+        <source>Response Curve</source>
+        <translation>Curva de Resposta</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="780"/>
+        <source>Use this only if the default profiles above do not yield good results</source>
+        <translation>Use somente se os perfis padrão acima não produzirem bons resultados</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="783"/>
+        <source>Use Custom Configuration</source>
+        <translation>Use a Configuração Personalizada</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="799"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2582,356 +2657,281 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;O primeiro perfil pré-definido na lista geralmente leva a resultados melhores. Mude somente se a imagem HDR resultante não for boa o suficiente.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="680"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="807"/>
         <source>Profile 1 - Debevec, Triangular, Linear</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="685"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="812"/>
         <source>Profile 2 - Debevec, Triangular, Gamma</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="690"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="817"/>
         <source>Profile 3 - Debevec, Plateau, Linear</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="695"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="822"/>
         <source>Profile 4 - Debevec, Plateau, Gamma</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="700"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="827"/>
         <source>Profile 5 - Debevec, Gaussian, Linear</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="705"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="832"/>
         <source>Profile 6 - Debevec, Gaussian, Gamma</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="713"/>
-        <source>Use this only if the default profiles above do not yield good results</source>
-        <translation>Use somente se os perfis padrão acima não produzirem bons resultados</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="716"/>
-        <source>Use Custom Configuration</source>
-        <translation>Use a Configuração Personalizada</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="729"/>
-        <source>HDR Creation Model</source>
-        <translation>Modelo de Criação HDR:</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="749"/>
-        <source>Debevec</source>
-        <translation>Debevec</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="754"/>
-        <source>Robertson (Simple)</source>
-        <translation>Robertson (Simples)</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="759"/>
-        <source>Robertson (Response Recovery)</source>
-        <translation>Robertson (Recuperação Responsiva)</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="770"/>
-        <source>Weighting Function</source>
-        <translation>Função de Ponderação:</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="790"/>
-        <source>Triangular</source>
-        <translation>Triangular</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="795"/>
-        <source>Gaussian</source>
-        <translation>Gaussian</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="800"/>
-        <source>Plateau</source>
-        <translation>Plateau</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="805"/>
-        <source>Flat</source>
-        <translation>Plano</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="816"/>
-        <source>Response Curve</source>
-        <translation>Curva de Resposta</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="842"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="856"/>
         <source>Linear</source>
         <translation>Linear</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="847"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="861"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="852"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="866"/>
         <source>Log</source>
         <translation>Registro</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="857"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="871"/>
         <source>sRGB</source>
         <translation>sRGB</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="862"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="876"/>
         <source>Custom (From File)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="873"/>
-        <source>Response Curve Input File</source>
-        <translation>Arquivo de Entrada da Curva de Resposta </translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="904"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="905"/>
         <source>Load Response</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="916"/>
-        <source>Response Curve Output File</source>
-        <translation>Arquivo de Saída da Curva de Resposta</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="947"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="935"/>
         <source>Save As...</source>
         <translation>Salvar como...</translation>
     </message>
     <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="957"/>
+        <source>Debevec</source>
+        <translation>Debevec</translation>
+    </message>
+    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="962"/>
-        <source>Save Settings</source>
-        <translation>Salvar Configurações</translation>
+        <source>Robertson (Simple)</source>
+        <translation>Robertson (Simples)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="975"/>
-        <source>Show HDR</source>
-        <translation type="unfinished"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="967"/>
+        <source>Robertson (Response Recovery)</source>
+        <translation>Robertson (Recuperação Responsiva)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="982"/>
-        <source>Show HDR Preview</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1043"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1145"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1026"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1130"/>
         <source>Show Log</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1056"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1039"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Próximo &gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1066"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1049"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="120"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="118"/>
         <source>Image Filename</source>
         <translation>Nome do Arquivo de Imagem</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="120"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="118"/>
         <source>Exposure</source>
         <translation>Exposição</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="215"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="213"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>Todos os formatos (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="219"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="217"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
         <translation>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="223"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="221"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="224"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="222"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="226"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="224"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>Imagens RAW  (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="229"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="227"/>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
         <translation>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="234"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="232"/>
         <source>Select the input images</source>
         <translation>Selecione as imagens de entrada</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="278"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="276"/>
         <source>Unknown</source>
         <translation>Desconhecido</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="446"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="443"/>
         <source>Loading...</source>
         <translation>Carregando...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="483"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="480"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
         <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;AVISO:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR não foi capaz de encontrar o relevante &lt;b&gt;EXIF&lt;/b&gt; etiquetas para as imagens seguintes:&lt;ul&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="493"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="490"/>
         <source>&lt;/ul&gt;&lt;hr&gt;Luminance HDR has inserted those values for you, two stops apart.&lt;br&gt; If the guess is correct you can proceed creating the HDR, otherwise you have to &lt;b&gt;manually&lt;/b&gt; correct the EVs (exposure values) or stop difference values. &lt;hr&gt;To avoid this warning in the future you must load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Aperture (F-Number)&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="511"/>
         <source>Do not show this message again</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="515"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="512"/>
         <source>EXIF data not found</source>
         <translation>Dados EXIF ​​não encontrados</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="533"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="530"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Imagens Carregadas.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="538"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="535"/>
         <source>&lt;center&gt;&lt;font color=&quot;#ffaa00&quot;&gt;&lt;h3&gt;&lt;b&gt;Please check that all exposure values are correct before proceedings.&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="556"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="553"/>
         <source>Loading Error: </source>
         <translation>Erro ao carregar:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="564"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="561"/>
         <source>Start loading a set of images with different exposure</source>
         <translation>Inicie o carregamento de um conjunto de imagens com diferentes exposições</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="590"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="598"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="607"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="587"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="595"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="604"/>
         <source>Error...</source>
         <translation>Erro...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="591"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="588"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
         <translation>Falha ao iniciar a aplicação externa &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Por favor, leia &quot;Ajuda -&gt; Conteúdo ... -&gt; Configuração -&gt; Ferramentas externas&quot; para obter mais informações.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="599"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="596"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>A aplicação externa &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; caiu...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="608"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="605"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Ocorreu um erro desconhecido durante a execução do &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; aplicação...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="624"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="621"/>
         <source>Now click on next button</source>
         <translation>Agora clique no próximo botão</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="640"/>
-        <source>Compute</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="643"/>
-        <source>Finish</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="660"/>
         <source>Aligning...</source>
         <translation>Alinhando... </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="788"/>
-        <source>&amp;Compute</source>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="745"/>
+        <source>&amp;Accept This HDR</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="820"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="762"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="865"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="891"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="898"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="949"/>
+        <source>&amp;Compute HDR</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="794"/>
         <source>Load camera response curve file</source>
         <translation>Carga do arquivo curva de resposta da câmara</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="821"/>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation>Curva de resposta da câmera (* .m);; Todos os arquivos (*)</translation>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="795"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="827"/>
+        <source>Camera response curve (*.csv);;All Files (*)</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="841"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="815"/>
         <source>Invalid Response Curve File</source>
         <translation>Arquivo Curva de Resposta Inválido</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="842"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="816"/>
         <source>Invalid Response Curve File: please try a different file</source>
         <translation>Arquivo Curva de Resposta Inválido: tente um arquivo diferente</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="850"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="826"/>
         <source>Save a camera response curve file</source>
         <translation>Salvar um arquivo curva de resposta da câmera</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="851"/>
-        <source>Camera response curve (*.m)</source>
-        <translation>Curva de resposta da câmera (*.m)</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1014"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="999"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;
 Todos os valores de EV foram definidos.&lt;br&gt;Agora clique no botão Avançar.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1019"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1004"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Para continuar você precisa configurar manualmente os valores de exposição.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; valores ainda requeridos.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1145"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1130"/>
         <source>Hide Log</source>
         <translation type="unfinished"/>
     </message>
@@ -4380,7 +4380,7 @@ Do you want to continue?</source>
         <translation>Sem título HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="2196"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="2195"/>
         <source>FITS Image</source>
         <translation>Imagem FITS</translation>
     </message>
@@ -5235,23 +5235,23 @@ p, li { white-space: pre-wrap; }
         <translation>Não consigo executar a transformação de cor. Por favor seleccione outro perfil de monitor.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="993"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="451"/>
-        <location filename="../src/MainCli/commandline.cpp" line="886"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="978"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="482"/>
+        <location filename="../src/MainCli/commandline.cpp" line="893"/>
         <source>Weights= </source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="995"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="453"/>
-        <location filename="../src/MainCli/commandline.cpp" line="889"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="980"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="484"/>
+        <location filename="../src/MainCli/commandline.cpp" line="896"/>
         <source> - Response curve= </source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="997"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="455"/>
-        <location filename="../src/MainCli/commandline.cpp" line="892"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="982"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="486"/>
+        <location filename="../src/MainCli/commandline.cpp" line="899"/>
         <source> - Model= </source>
         <translation type="unfinished"/>
     </message>
@@ -5551,42 +5551,42 @@ p, li { white-space: pre-wrap; }
         <translation>Não foi possível converter %1 para um número flutuante</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="629"/>
+        <location filename="../src/MainCli/commandline.cpp" line="636"/>
         <source>Loading TMO settings from file: %1</source>
         <translation>Carregando configurações TMO do arquivo: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="721"/>
+        <location filename="../src/MainCli/commandline.cpp" line="728"/>
         <source>Input file %1</source>
         <translation>Arquivo de entrada %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="748"/>
+        <location filename="../src/MainCli/commandline.cpp" line="755"/>
         <source>Running in HDR-creation mode.</source>
         <translation>Executando no modo HDR-criação.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="752"/>
+        <location filename="../src/MainCli/commandline.cpp" line="759"/>
         <source>Running in Load-HDR mode.</source>
         <translation>Executando no modo Carregamento-HDR.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="761"/>
+        <location filename="../src/MainCli/commandline.cpp" line="768"/>
         <source>Temporary directory: %1</source>
         <translation>Diretório temporário: %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/MainCli/commandline.cpp" line="764"/>
+        <location filename="../src/MainCli/commandline.cpp" line="771"/>
         <source>Using %n thread(s).</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="792"/>
+        <location filename="../src/MainCli/commandline.cpp" line="799"/>
         <source>Loading file %1</source>
         <translation>Carregando arquivo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="802"/>
+        <location filename="../src/MainCli/commandline.cpp" line="809"/>
         <source>Successfully loaded file %1.</source>
         <translation>Carregado com êxito o arquivo %1.</translation>
     </message>
@@ -6332,68 +6332,68 @@ Nível do Luminace</translation>
         <translation>Tamanho da fila: %1</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="399"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="400"/>
         <source>TM Database Problem</source>
         <translation>TM Problema de Banco de Dados</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="400"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="401"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation>O banco de dados usado para salvar os parâmetros TM não pode ser aberto.
 Erro: %1</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1112"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1113"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Carregar um arquivo de texto de configurações do mapeamento de tom...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1114"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1140"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1115"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1141"/>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
         <translation>arquivo texto(*.txt) de configurações de mapeamento de tom LuminanceHDR </translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1119"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1158"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1285"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1304"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1120"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1159"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1286"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1305"/>
         <source>Aborting...</source>
         <translation>Abortando...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1120"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1121"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>O arquivo não pode ser lido (cheque existência, permissões, ...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1138"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1139"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Salve arquivo texto de configurações de mapeamento de tom para...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1159"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1160"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>O arquivo não é gravável (cheque permissões, caminho...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1286"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1287"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>O arquivo não pode ser lido (cheque permissões, caminho...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1305"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1306"/>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation>Erro: O formato do arquivo de configurações de mapeamento de tom mudou. Este arquivo (antigo) não pode ser usado nesta versão do LuminanceHDR. Criar um novo.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1510"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1511"/>
         <source>Custom LDR size</source>
         <translation>LDR tamanho personalizado</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1511"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1512"/>
         <source>Enter the width of the new size:</source>
         <translation>Digite a largura do novo tamanho:</translation>
     </message>
