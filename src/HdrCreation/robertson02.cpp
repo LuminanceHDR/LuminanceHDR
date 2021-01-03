@@ -34,7 +34,7 @@
 #include <iterator>
 #include <vector>
 
-#include <boost/bind.hpp>
+#include <functional>
 #include <boost/limits.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/numeric/conversion/bounds.hpp>
@@ -49,6 +49,7 @@
 
 using namespace pfs;
 using namespace std;
+using namespace std::placeholders;
 
 namespace libhdr {
 namespace fusion {
@@ -153,7 +154,7 @@ void RobertsonOperator::computeFusion(ResponseCurve &response,
     std::vector<float> averageLuminances;
     std::transform(frames.begin(), frames.end(),
                    std::back_inserter(averageLuminances),
-                   boost::bind(&FrameEnhanced::averageLuminance, _1));
+                   std::bind(&FrameEnhanced::averageLuminance, _1));
 
     applyResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels,
                   outputRed->data(), tempFrame.getWidth(),
@@ -394,7 +395,7 @@ void RobertsonOperatorAuto::computeFusion(
     std::vector<float> averageLuminances;
     std::transform(frames.begin(), frames.end(),
                    std::back_inserter(averageLuminances),
-                   boost::bind(&FrameEnhanced::averageLuminance, _1));
+                   std::bind(&FrameEnhanced::averageLuminance, _1));
 
     // red
     computeResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels,

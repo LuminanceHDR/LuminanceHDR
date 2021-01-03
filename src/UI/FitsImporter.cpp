@@ -34,8 +34,6 @@
 #include <QtConcurrentFilter>
 #include <QtConcurrentMap>
 
-#include <boost/bind.hpp>
-
 #include "UI/FitsImporter.h"
 #include "UI/ui_FitsImporter.h"
 

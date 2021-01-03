@@ -36,6 +36,8 @@
 #include <QDebug>
 #endif
 
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
+
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileDialog>
@@ -2091,6 +2093,7 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked) {
         m_Ui->actionFix_Histogram->setChecked(false);
     }
 }
+
 
 void MainWindow::on_actionWhite_Balance_triggered() {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));

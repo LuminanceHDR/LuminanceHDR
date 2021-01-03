@@ -25,7 +25,6 @@
 
 #include <fftw3.h>
 #include <stdlib.h>
-#include <boost/bind.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <cmath>
 #ifdef _OPENMP

@@ -44,7 +44,7 @@
 #include <vector>
 
 #include <boost/assign.hpp>
-#include <boost/bind.hpp>
+#include <functional>
 #include <boost/current_function.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
@@ -52,6 +52,7 @@
 using namespace pfs;
 using namespace pfs::utils;
 using namespace boost::assign;
+using namespace std::placeholders;
 
 #ifndef NDEBUG
 #define PRINT_DEBUG(str) std::cerr << "TiffReader: " << str << std::endl
@@ -158,7 +159,7 @@ struct TiffReaderData {
     TiffReaderData()
         : hasAlpha_(false),
           stonits_(1.0),
-          currentCallback_(boost::bind(&TiffReaderData::doNothing, _1, _2, _3)),
+          currentCallback_(std::bind(&TiffReaderData::doNothing, _1, _2, _3)),
           hsRGB_(cmsCreate_sRGBProfile()) {}
 
     // public members...
@@ -195,21 +196,21 @@ struct TiffReaderData {
 
         /*static*/ Registry sm_registry = map_list_of
             // (RegistryKey(PHOTOMETRIC_LOGLUV, 32),
-            // boost::bind(&TiffReaderData::readLogLuv, _1, _2, _3)) // <
+            // std::bind(&TiffReaderData::readLogLuv, _1, _2, _3)) // <
             (RegistryKey(PHOTOMETRIC_LOGLUV, 16),
-             boost::bind(&TiffReaderData::readLogLuv, _1, _2, _3))(
+             std::bind(&TiffReaderData::readLogLuv, _1, _2, _3))(
                 RegistryKey(PHOTOMETRIC_SEPARATED, 8),
-                boost::bind(&TiffReaderData::readCMYK<uint8_t>, _1, _2, _3))(
+                std::bind(&TiffReaderData::readCMYK<uint8_t>, _1, _2, _3))(
                 RegistryKey(PHOTOMETRIC_SEPARATED, 16),
-                boost::bind(&TiffReaderData::readCMYK<uint16_t>, _1, _2, _3))
+                std::bind(&TiffReaderData::readCMYK<uint16_t>, _1, _2, _3))
             // (RegistryKey(PHOTOMETRIC_SEPARATED, 32),
-            // boost::bind(&TiffReaderData::readCMYK<float>, _1, _2, _3))
+            // std::bind(&TiffReaderData::readCMYK<float>, _1, _2, _3))
             (RegistryKey(PHOTOMETRIC_RGB, 8),
-             boost::bind(&TiffReaderData::readRGB<uint8_t>, _1, _2, _3))(
+             std::bind(&TiffReaderData::readRGB<uint8_t>, _1, _2, _3))(
                 RegistryKey(PHOTOMETRIC_RGB, 16),
-                boost::bind(&TiffReaderData::readRGB<uint16_t>, _1, _2, _3))(
+                std::bind(&TiffReaderData::readRGB<uint16_t>, _1, _2, _3))(
                 RegistryKey(PHOTOMETRIC_RGB, 32),
-                boost::bind(&TiffReaderData::readRGB<float>, _1, _2, _3));
+                std::bind(&TiffReaderData::readRGB<float>, _1, _2, _3));
 
         Registry::iterator it =
             sm_registry.find(RegistryKey(photometricType_, bitsPerSample_));
