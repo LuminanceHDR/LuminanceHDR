@@ -26,11 +26,11 @@
 
 class FFTW_MUTEX {
    public:
-    static boost::mutex fftw_mutex_global;
-    static boost::mutex fftw_mutex_plan;
-    static boost::mutex fftw_mutex_destroy_plan;
-    static boost::mutex fftw_mutex_alloc;
-    static boost::mutex fftw_mutex_free;
+    static std::mutex fftw_mutex_global;
+    static std::mutex fftw_mutex_plan;
+    static std::mutex fftw_mutex_destroy_plan;
+    static std::mutex fftw_mutex_alloc;
+    static std::mutex fftw_mutex_free;
 };
 
 void init_fftw();

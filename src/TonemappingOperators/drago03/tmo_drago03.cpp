@@ -153,7 +153,7 @@ void tmo_drago03(const pfs::Array2Df &Y, pfs::Array2Df &L, float maxLum,
             float interpol = xlogf( 2.f + 8.f * xexpf(biasP * (xlogf(Yw) - logmaxLum)));
             L(x, y) = xlogf(Yw + 1.f) / (interpol * divider);  // avoid loss of precision
 
-            assert(!boost::math::isnan(L(x, y)));
+            assert(!::isnan(L(x, y)));
         }
     }
     }

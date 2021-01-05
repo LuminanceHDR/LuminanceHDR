@@ -313,7 +313,7 @@ void LoadFile::operator()(HdrCreationItem &currentItem) {
         // if it comes from fitsreader it's not and all channels are equal so I
         // calculate min and max of red channel only.
         std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator>
-            minmaxRed = boost::minmax_element(red->begin(), red->end());
+            minmaxRed = std::minmax_element(red->begin(), red->end());
 
         float minRed = *minmaxRed.first;
         float maxRed = *minmaxRed.second;

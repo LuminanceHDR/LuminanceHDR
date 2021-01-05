@@ -96,7 +96,7 @@ void pfstmo_drago03(pfs::Frame &frame, float opt_biasValue, pfs::Progress &ph) {
                 float yr = Yr(x, y);
                 float scale = yr != 0.f ? L(x, y) / yr : 0.f;
 
-                assert(!boost::math::isnan(scale));
+                assert(!::isnan(scale));
 
                 Yr(x, y) = Yr(x, y) * scale;
                 Xr(x, y) = Xr(x, y) * scale;

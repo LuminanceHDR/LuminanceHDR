@@ -30,7 +30,7 @@ struct ResourceHandlerTraits {
     static inline void cleanup(T *p) { delete p; }
 };
 
-//! \brief This class resemble QScopedPointer or boost::scoped_ptr
+//! \brief This class resemble QScopedPointer or std::scoped_ptr
 //! however, it doesn't provide and operator*(), which allow to store
 //! a pointer to void
 template <typename T, typename Traits = ResourceHandlerTraits<T>>

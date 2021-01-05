@@ -31,8 +31,8 @@
 #include <boost/math/constants/constants.hpp>
 
 #define exp2f(x) (powf(2.0f, x))
-#define log2(x) (log(x) / boost::math::double_constants::ln_two)
-#define log2f(x) (logf(x) / boost::math::double_constants::ln_two)
+#define log2(x) (log(x) / std::math::double_constants::ln_two)
+#define log2f(x) (logf(x) / std::math::double_constants::ln_two)
 
 #pragma warning(disable : 4996)
 

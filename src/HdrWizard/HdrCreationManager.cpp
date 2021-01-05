@@ -38,7 +38,7 @@
 #include <QtConcurrentMap>
 
 #include <algorithm>
-#include <boost/bind.hpp>
+#include <functional>
 #include <boost/limits.hpp>
 #include <boost/numeric/conversion/bounds.hpp>
 #include <cmath>
@@ -69,6 +69,7 @@
 #include <arch/math.h>
 
 using namespace std;
+using namespace std::placeholders;
 using namespace pfs;
 using namespace pfs::io;
 using namespace colorspace;
@@ -127,7 +128,7 @@ void HdrCreationManager::loadFiles(const QStringList &filenames) {
                         .arg(filename);
         HdrCreationItemContainer::iterator it =
             find_if(m_data.begin(), m_data.end(),
-                    boost::bind(&checkFileName, _1, filename));
+                    std::bind(&checkFileName, _1, filename));
         // has the file been inserted already?
         if (it == m_data.end()) {
             qDebug() << QStringLiteral(

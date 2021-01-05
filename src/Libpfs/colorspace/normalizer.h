@@ -35,7 +35,7 @@ struct Normalizer {
     }
 
     float operator()(float sample) const {
-        //assert(!boost::math::isnan(sample));
+        //assert(!std::math::isnan(sample));
 
         return (sample - m_min) / m_range;
     }

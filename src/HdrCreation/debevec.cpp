@@ -40,6 +40,7 @@
 #include <functional>
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include "../sleef.c"
 #include "../opthelper.h"
 #ifdef _OPENMP
@@ -58,7 +59,6 @@ using namespace pfs;
 using namespace std;
 using namespace utils;
 using namespace colorspace;
-using namespace boost::math;
 
 namespace libhdr {
 namespace fusion {

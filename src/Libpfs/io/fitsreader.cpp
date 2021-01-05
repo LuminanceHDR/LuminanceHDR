@@ -23,7 +23,6 @@
 
 #include <boost/algorithm/minmax_element.hpp>
 
-#include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include <Libpfs/colorspace/normalizer.h>
@@ -296,7 +295,7 @@ void FitsReader::read(Frame &frame, const Params &) {
 
 #ifndef NDEBUG
     std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator>
-        minmax = boost::minmax_element(Xc->begin(), Xc->end());
+        minmax = std::minmax_element(Xc->begin(), Xc->end());
     std::cout << "FITS min luminance = " << *minmax.first << std::endl;
     std::cout << "FITS max luminance = " << *minmax.second << std::endl;
 #endif
