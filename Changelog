@@ -1,3 +1,9 @@
+Changes 2.6.1
+* Better UI for last step of HdrWizard
+* Fix highlights glitch
+* fix save/load response cure even from the command line
+* usual bug fixing
+
 Changes 2.6.0
 NEW: New tonemapping operator kimkautz08
 NEW: New tonemapping operator lischinski06
