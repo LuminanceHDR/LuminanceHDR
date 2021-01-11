@@ -137,7 +137,7 @@ int findIndex(const float *data, int size) {
 typedef vector<double> BufferF;
 
 inline float hueMean(const BufferF &data) {
-    return std::accumulate(data.begin(), data.end(), 0.0d) / data.size();
+    return std::accumulate(data.begin(), data.end(), 0.0) / data.size();
 }
 
 void hueSquaredMean(const HdrCreationItemContainer &data, vector<float> &HE) {
