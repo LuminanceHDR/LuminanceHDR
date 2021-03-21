@@ -20,8 +20,8 @@ WeightFunctionType WeightFunction::fromString(const std::string &type) {
     typedef map<string, WeightFunctionType, pfs::utils::StringUnsensitiveComp>
         Dict;
     static Dict v = map_list_of("triangular", WEIGHT_TRIANGULAR)(
-        "gaussian", WEIGHT_GAUSSIAN)("plateau", WEIGHT_PLATEAU)("flat",
-                                                                WEIGHT_FLAT);
+        "gaussian", WEIGHT_GAUSSIAN)("plateau", WEIGHT_PLATEAU)(
+        "flat", WEIGHT_FLAT)("linear", WEIGHT_LINEAR);
 
     Dict::const_iterator it = v.find(type);
     if (it != v.end()) {
@@ -128,6 +128,38 @@ static float maxTrustedValueFlat() {
     return 1.f + std::numeric_limits<float>::epsilon();
 }
 
+namespace {
+static const float s_linearThreshold = 0.00025f;
+}
+
+static float getWeightLinear(float input) {
+    if ((input < s_linearThreshold) ||
+        (input > (1.f - s_linearThreshold))) {
+        return 0.f;
+    }
+    /* Clipping is such that weights rise quadratically on both edges
+       and the quadratic part reaches 1 at clipWidth away from edges. */
+    const float clipWidth = 0.07f;
+    float clipDark = 1.f - exp(-input / (clipWidth * clipWidth));
+    float clipBright = 1.f - exp(-pow((1.f - input) / clipWidth, 2));
+    return input * clipDark * clipBright;
+}
+
+static void fillWeightLinear(WeightFunction::WeightContainer &weight) {
+    size_t divider = (weight.size() - 1);
+    for (size_t i = 0; i < weight.size(); ++i) {
+        weight[i] = getWeightLinear((float)i / divider);
+    }
+}
+
+static float minTrustedValueLinear() {
+    return 0.f - std::numeric_limits<float>::epsilon();
+}
+static float maxTrustedValueLinear() {
+    return 1.f + std::numeric_limits<float>::epsilon();
+}
+
+
 void WeightFunction::setType(WeightFunctionType type) {
     typedef void (*WeightFunctionCalculator)(WeightContainer &);
     typedef float (*WeightTrustedValue)();
@@ -146,13 +178,16 @@ void WeightFunction::setType(WeightFunctionType type) {
     WeightFunctionFiller fillter_g = {&fillWeightGaussian,
                                       &minTrustedValueGaussian,
                                       &maxTrustedValueGaussian};
-    WeightFunctionFiller fillter_p = {
-        &fillWeightPlateau, &minTrustedValuePlateau, &maxTrustedValuePlateau};
+    WeightFunctionFiller fillter_p = {&fillWeightPlateau,
+                                      &minTrustedValuePlateau,
+                                      &maxTrustedValuePlateau};
     WeightFunctionFiller fillter_f = {&fillWeightFlat, &minTrustedValueFlat,
                                       &maxTrustedValueFlat};
+    WeightFunctionFiller fillter_l = {&fillWeightLinear, &minTrustedValueLinear,
+                                      &maxTrustedValueLinear};
     static WeightFunctionFunc funcs =
         map_list_of(WEIGHT_TRIANGULAR, fillter_t)(WEIGHT_GAUSSIAN, fillter_g)(
-            WEIGHT_PLATEAU, fillter_p)(WEIGHT_FLAT, fillter_f);
+            WEIGHT_PLATEAU, fillter_p)(WEIGHT_FLAT, fillter_f)(WEIGHT_LINEAR, fillter_l);
 
     WeightFunctionType type_ = WEIGHT_TRIANGULAR;
     WeightFunctionFiller func_ = {&fillWeightTriangular,

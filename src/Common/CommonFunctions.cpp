@@ -460,6 +460,8 @@ QString getQString(libhdr::fusion::WeightFunctionType wf) {
             return QObject::tr("Gaussian");
         case WEIGHT_FLAT:
             return QObject::tr("Flat");
+        case WEIGHT_LINEAR:
+            return QObject::tr("Linear");
     }
 
     return QString();

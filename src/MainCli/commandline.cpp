@@ -177,7 +177,7 @@ int CommandLineInterfaceManager::execCommandLineParams() {
             .constData());
     hdr_desc.add_options()(
         "hdrWeight", po::value<std::string>(),
-        tr("weight = triangular|gaussian|plateau|flat (Default is triangular)")
+        tr("weight = triangular|gaussian|plateau|flat|linear (Default is triangular)")
             .toUtf8()
             .constData())("hdrResponseCurve", po::value<std::string>(),
                           tr("response curve = from_file|linear|gamma|log|srgb "
@@ -550,6 +550,8 @@ reinhard02|\nreinhard05|mai|mantiuk06|mantiuk08|\nvanhateren|lischinski] (Defaul
                 hdrcreationconfig.weightFunction = WEIGHT_PLATEAU;
             else if (strcmp(value, "flat") == 0)
                 hdrcreationconfig.weightFunction = WEIGHT_FLAT;
+            else if (strcmp(value, "linear") == 0)
+                hdrcreationconfig.weightFunction = WEIGHT_LINEAR;
             else
                 printErrorAndExit(
                     tr("Error: Unknown weight function specified."));

@@ -34,7 +34,8 @@ enum WeightFunctionType {
     WEIGHT_TRIANGULAR = 0,
     WEIGHT_GAUSSIAN = 1,
     WEIGHT_PLATEAU = 2,
-    WEIGHT_FLAT = 3
+    WEIGHT_FLAT = 3,
+    WEIGHT_LINEAR = 4
 };
 
 class WeightFunction {
