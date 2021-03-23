@@ -99,8 +99,8 @@ static float getWeightPlateau(float input) {
         (input > (1.f - s_plateauThreshold))) {
         return 0.f;
     }
-
-    return 1.f - pow((2.0f * input - 1.0f), 12.0f);
+    
+    return 1.f - pow(cos(M_PI * input), 100.0f);
 }
 
 static void fillWeightPlateau(WeightFunction::WeightContainer &weight) {
