@@ -56,10 +56,10 @@ static void fillWeightTriangular(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValueTriangular() {
-    return 0.f - std::numeric_limits<float>::epsilon();
+    return 0.f + std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValueTriangular() {
-    return 1.f + std::numeric_limits<float>::epsilon();
+    return 1.f - std::numeric_limits<float>::epsilon();
 }
 
 namespace {
@@ -84,10 +84,10 @@ static void fillWeightGaussian(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValueGaussian() {
-    return 0.f - std::numeric_limits<float>::epsilon();
+    return 0.f + std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValueGaussian() {
-    return 1.f + std::numeric_limits<float>::epsilon();
+    return 1.f - std::numeric_limits<float>::epsilon();
 }
 
 namespace {
@@ -111,10 +111,10 @@ static void fillWeightPlateau(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValuePlateau() {
-    return 0.f - std::numeric_limits<float>::epsilon();
+    return 0.f + std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValuePlateau() {
-    return 1.f + std::numeric_limits<float>::epsilon();
+    return 1.f - std::numeric_limits<float>::epsilon();
 }
 
 static void fillWeightFlat(WeightFunction::WeightContainer &weight) {
@@ -122,10 +122,10 @@ static void fillWeightFlat(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValueFlat() {
-    return 0.f - std::numeric_limits<float>::epsilon();
+    return 0.f + std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValueFlat() {
-    return 1.f + std::numeric_limits<float>::epsilon();
+    return 1.f - std::numeric_limits<float>::epsilon();
 }
 
 namespace {
@@ -153,10 +153,10 @@ static void fillWeightLinear(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValueLinear() {
-    return 0.f - std::numeric_limits<float>::epsilon();
+    return 0.f + std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValueLinear() {
-    return 1.f + std::numeric_limits<float>::epsilon();
+    return 1.f - std::numeric_limits<float>::epsilon();
 }
 
 

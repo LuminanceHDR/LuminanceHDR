@@ -107,11 +107,11 @@ void RobertsonOperator::applyResponse(
             ++saturatedPixels;
         }
         if (div == 0.0f && maxti > -1e6f) {
-            sum = minAllowedValue;
+            sum = response(minAllowedValue, channel);
             div = maxti;
         }
         if (div == 0.0f && minti < +1e6f) {
-            sum = maxAllowedValue;
+            sum = response(maxAllowedValue, channel);
             div = minti;
         }
 

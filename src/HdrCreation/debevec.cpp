@@ -268,9 +268,9 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
                 (*Ch[1])(k) = b;
             }
             else {
-                (*Ch[0])(k) = 1.0f;
-                (*Ch[1])(k) = 1.0f;
-                (*Ch[2])(k) = 1.0f;
+                (*Ch[0])(k) = response(1.0f);
+                (*Ch[1])(k) = response(1.0f);
+                (*Ch[2])(k) = response(1.0f);
             }
         }
     }
