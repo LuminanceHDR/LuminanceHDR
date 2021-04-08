@@ -63,6 +63,7 @@
 #include <cstdint>
 #ifndef NDEBUG
 #include <cassert>
+#include <cstdio>
 #endif
 #include "opthelper.h"
 #include "rt_math.h"
