@@ -21,7 +21,7 @@ WeightFunctionType WeightFunction::fromString(const std::string &type) {
         Dict;
     static Dict v = map_list_of("triangular", WEIGHT_TRIANGULAR)(
         "gaussian", WEIGHT_GAUSSIAN)("plateau", WEIGHT_PLATEAU)(
-        "flat", WEIGHT_FLAT)("linear", WEIGHT_LINEAR);
+        "flat", WEIGHT_FLAT);
 
     Dict::const_iterator it = v.find(type);
     if (it != v.end()) {
