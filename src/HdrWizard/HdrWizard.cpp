@@ -70,7 +70,7 @@ static const FusionOperator models_in_gui[] = {DEBEVEC, ROBERTSON,
                                                ROBERTSON_AUTO};
 
 static const WeightFunctionType weights_in_gui[] = {
-    WEIGHT_TRIANGULAR, WEIGHT_GAUSSIAN, WEIGHT_PLATEAU, WEIGHT_FLAT, WEIGHT_LINEAR};
+    WEIGHT_TRIANGULAR, WEIGHT_GAUSSIAN, WEIGHT_PLATEAU, WEIGHT_FLAT};
 
 namespace {
 

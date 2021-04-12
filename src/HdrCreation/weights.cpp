@@ -56,10 +56,10 @@ static void fillWeightTriangular(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValueTriangular() {
-    return 0.f + std::numeric_limits<float>::epsilon();
+    return 0.f - std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValueTriangular() {
-    return 1.f - std::numeric_limits<float>::epsilon();
+    return 1.f + std::numeric_limits<float>::epsilon();
 }
 
 namespace {
@@ -84,10 +84,10 @@ static void fillWeightGaussian(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValueGaussian() {
-    return 0.f + std::numeric_limits<float>::epsilon();
+    return 0.f - std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValueGaussian() {
-    return 1.f - std::numeric_limits<float>::epsilon();
+    return 1.f + std::numeric_limits<float>::epsilon();
 }
 
 namespace {
@@ -99,8 +99,8 @@ static float getWeightPlateau(float input) {
         (input > (1.f - s_plateauThreshold))) {
         return 0.f;
     }
-    
-    return 1.f - pow(cos(M_PI * input), 100.0f);
+
+    return 1.f - pow((2.0f * input - 1.0f), 12.0f);
 }
 
 static void fillWeightPlateau(WeightFunction::WeightContainer &weight) {
@@ -111,10 +111,10 @@ static void fillWeightPlateau(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValuePlateau() {
-    return 0.f + std::numeric_limits<float>::epsilon();
+    return 0.f - std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValuePlateau() {
-    return 1.f - std::numeric_limits<float>::epsilon();
+    return 1.f + std::numeric_limits<float>::epsilon();
 }
 
 static void fillWeightFlat(WeightFunction::WeightContainer &weight) {
@@ -122,43 +122,11 @@ static void fillWeightFlat(WeightFunction::WeightContainer &weight) {
 }
 
 static float minTrustedValueFlat() {
-    return 0.f + std::numeric_limits<float>::epsilon();
+    return 0.f - std::numeric_limits<float>::epsilon();
 }
 static float maxTrustedValueFlat() {
-    return 1.f - std::numeric_limits<float>::epsilon();
+    return 1.f + std::numeric_limits<float>::epsilon();
 }
-
-namespace {
-static const float s_linearThreshold = 0.00025f;
-}
-
-static float getWeightLinear(float input) {
-    if ((input < s_linearThreshold) ||
-        (input > (1.f - s_linearThreshold))) {
-        return 0.f;
-    }
-    /* Clipping is such that weights rise quadratically on both edges
-       and the quadratic part reaches 1 at clipWidth away from edges. */
-    const float clipWidth = 0.07f;
-    float clipDark = 1.f - exp(-input / (clipWidth * clipWidth));
-    float clipBright = 1.f - exp(-pow((1.f - input) / clipWidth, 2));
-    return input * clipDark * clipBright;
-}
-
-static void fillWeightLinear(WeightFunction::WeightContainer &weight) {
-    size_t divider = (weight.size() - 1);
-    for (size_t i = 0; i < weight.size(); ++i) {
-        weight[i] = getWeightLinear((float)i / divider);
-    }
-}
-
-static float minTrustedValueLinear() {
-    return 0.f + std::numeric_limits<float>::epsilon();
-}
-static float maxTrustedValueLinear() {
-    return 1.f - std::numeric_limits<float>::epsilon();
-}
-
 
 void WeightFunction::setType(WeightFunctionType type) {
     typedef void (*WeightFunctionCalculator)(WeightContainer &);
@@ -183,11 +151,9 @@ void WeightFunction::setType(WeightFunctionType type) {
                                       &maxTrustedValuePlateau};
     WeightFunctionFiller fillter_f = {&fillWeightFlat, &minTrustedValueFlat,
                                       &maxTrustedValueFlat};
-    WeightFunctionFiller fillter_l = {&fillWeightLinear, &minTrustedValueLinear,
-                                      &maxTrustedValueLinear};
     static WeightFunctionFunc funcs =
         map_list_of(WEIGHT_TRIANGULAR, fillter_t)(WEIGHT_GAUSSIAN, fillter_g)(
-            WEIGHT_PLATEAU, fillter_p)(WEIGHT_FLAT, fillter_f)(WEIGHT_LINEAR, fillter_l);
+            WEIGHT_PLATEAU, fillter_p)(WEIGHT_FLAT, fillter_f);
 
     WeightFunctionType type_ = WEIGHT_TRIANGULAR;
     WeightFunctionFiller func_ = {&fillWeightTriangular,
