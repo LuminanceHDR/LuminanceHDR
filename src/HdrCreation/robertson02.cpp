@@ -105,7 +105,7 @@ void RobertsonOperator::applyResponse(
                 if (w < 1e-6)
                     w = 1e-6;
             }
-            if (i_darker >= 0) {
+            else {
                 // suppress value, when overexposure is expected
                 float m_darker = inputData[i_darker][j];
                 float r_darker = response(m_darker, channel);
