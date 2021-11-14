@@ -48,7 +48,7 @@
 #include <QModelIndex>
 #include <QVariant>
 
-#include "./tt/simpletreemodel/treemodel.h"
+#include "treemodel.h"
 
 
 class ScHelpTreeModel : public TreeModel
