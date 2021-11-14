@@ -1,28 +1,40 @@
-/**
-** This file is a part of Luminance HDR package.
-** ----------------------------------------------------------------------
-** Copyright (C) 2009-2016 Davide Anastasia, Franco Comida, Daniel Kaneider
+/****************************************************************************
 **
-*****************************************************************************
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
+** All rights reserved.
+** Contact: Nokia Corporation (qt-info@nokia.com)
 **
-** Copyright (C) 2005-2007 Trolltech ASA. All rights reserved.
+** This file is part of the examples of the Qt Toolkit.
 **
-** This file is part of the example classes of the Qt Toolkit.
+** $QT_BEGIN_LICENSE:BSD$
+** You may use this file under the terms of the BSD license as follows:
 **
-** This file may be used under the terms of the GNU General Public
-** License version 2.0 as published by the Free Software Foundation
-** and appearing in the file LICENSE.GPL included in the packaging of
-** this file.  Please review the following information to ensure GNU
-** General Public Licensing requirements will be met:
-** http://www.trolltech.com/products/qt/opensource.html
+** "Redistribution and use in source and binary forms, with or without
+** modification, are permitted provided that the following conditions are
+** met:
+**   * Redistributions of source code must retain the above copyright
+**     notice, this list of conditions and the following disclaimer.
+**   * Redistributions in binary form must reproduce the above copyright
+**     notice, this list of conditions and the following disclaimer in
+**     the documentation and/or other materials provided with the
+**     distribution.
+**   * Neither the name of Nokia Corporation and its Subsidiary(-ies) nor
+**     the names of its contributors may be used to endorse or promote
+**     products derived from this software without specific prior written
+**     permission.
 **
-** If you are unsure which license is appropriate for your use, please
-** review the following information:
-** http://www.trolltech.com/products/qt/licensing.html or contact the
-** sales department at sales@trolltech.com.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
@@ -33,61 +45,93 @@
     models.
 */
 
-#include <QtWidgets>
+#include <QtGui>
 
 #include "treeitem.h"
 #include "treemodel.h"
 
+TreeModel::TreeModel(QObject *parent )
+{
+	m_rootItem = nullptr;
+}
+
+//! [0]
 TreeModel::TreeModel(const QString &data, QObject *parent)
-    : QAbstractItemModel(parent) {
+    : QAbstractItemModel(parent)
+{
     QList<QVariant> rootData;
-    rootData << "Title"
-             << "Summary";
-    rootItem = new TreeItem(rootData);
-    setupModelData(data.split(QStringLiteral("\n")), rootItem);
+    rootData << "Title" << "Summary";
+    m_rootItem = new TreeItem(rootData);
+    setupModelData(data.split(QString("\n")), m_rootItem);
 }
+//! [0]
 
-TreeModel::~TreeModel() { delete rootItem; }
+//! [1]
+TreeModel::~TreeModel()
+{
+    delete m_rootItem;
+}
+//! [1]
 
-int TreeModel::columnCount(const QModelIndex &parent) const {
+//! [2]
+int TreeModel::columnCount(const QModelIndex &parent) const
+{
     if (parent.isValid())
-        return static_cast<TreeItem *>(parent.internalPointer())->columnCount();
+        return static_cast<TreeItem*>(parent.internalPointer())->columnCount();
     else
-        return rootItem->columnCount();
+        return m_rootItem->columnCount();
 }
+//! [2]
 
-QVariant TreeModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid()) return QVariant();
+//! [3]
+QVariant TreeModel::data(const QModelIndex &index, int role) const
+{
+    if (!index.isValid())
+        return QVariant();
 
-    if (role != Qt::DisplayRole) return QVariant();
+    if (role != Qt::DisplayRole)
+        return QVariant();
 
-    TreeItem *item = static_cast<TreeItem *>(index.internalPointer());
+    TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
     return item->data(index.column());
 }
+//! [3]
 
-Qt::ItemFlags TreeModel::flags(const QModelIndex &index) const {
-    if (!index.isValid()) return Qt::ItemIsEnabled;
+//! [4]
+Qt::ItemFlags TreeModel::flags(const QModelIndex &index) const
+{
+    if (!index.isValid())
+		return Qt::ItemFlags();
 
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
+//! [4]
 
+//! [5]
 QVariant TreeModel::headerData(int section, Qt::Orientation orientation,
-                               int role) const {
+                               int role) const
+{
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
-        return rootItem->data(section);
+        return m_rootItem->data(section);
 
     return QVariant();
 }
+//! [5]
 
-QModelIndex TreeModel::index(int row, int column,
-                             const QModelIndex &parent) const {
+//! [6]
+QModelIndex TreeModel::index(int row, int column, const QModelIndex &parent)
+            const
+{
+    if (!hasIndex(row, column, parent))
+        return QModelIndex();
+
     TreeItem *parentItem;
 
     if (!parent.isValid())
-        parentItem = rootItem;
+        parentItem = m_rootItem;
     else
-        parentItem = static_cast<TreeItem *>(parent.internalPointer());
+        parentItem = static_cast<TreeItem*>(parent.internalPointer());
 
     TreeItem *childItem = parentItem->child(row);
     if (childItem)
@@ -95,31 +139,43 @@ QModelIndex TreeModel::index(int row, int column,
     else
         return QModelIndex();
 }
+//! [6]
 
-QModelIndex TreeModel::parent(const QModelIndex &index) const {
-    if (!index.isValid()) return QModelIndex();
+//! [7]
+QModelIndex TreeModel::parent(const QModelIndex &index) const
+{
+    if (!index.isValid())
+        return QModelIndex();
 
-    TreeItem *childItem = static_cast<TreeItem *>(index.internalPointer());
+    TreeItem *childItem = static_cast<TreeItem*>(index.internalPointer());
     TreeItem *parentItem = childItem->parent();
 
-    if (parentItem == rootItem) return QModelIndex();
+    if (parentItem == m_rootItem)
+        return QModelIndex();
 
     return createIndex(parentItem->row(), 0, parentItem);
 }
+//! [7]
 
-int TreeModel::rowCount(const QModelIndex &parent) const {
+//! [8]
+int TreeModel::rowCount(const QModelIndex &parent) const
+{
     TreeItem *parentItem;
+    if (parent.column() > 0)
+        return 0;
 
     if (!parent.isValid())
-        parentItem = rootItem;
+        parentItem = m_rootItem;
     else
-        parentItem = static_cast<TreeItem *>(parent.internalPointer());
+        parentItem = static_cast<TreeItem*>(parent.internalPointer());
 
     return parentItem->childCount();
 }
+//! [8]
 
-void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent) {
-    QList<TreeItem *> parents;
+void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent)
+{
+    QList<TreeItem*> parents;
     QList<int> indentations;
     parents << parent;
     indentations << 0;
@@ -129,7 +185,8 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent) {
     while (number < lines.count()) {
         int position = 0;
         while (position < lines[number].length()) {
-            if (lines[number].mid(position, 1) != QLatin1String(" ")) break;
+            if (lines[number].mid(position, 1) != " ")
+                break;
             position++;
         }
 
@@ -137,8 +194,7 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent) {
 
         if (!lineData.isEmpty()) {
             // Read the column data from the rest of the line.
-            QStringList columnStrings =
-                lineData.split(QStringLiteral("\t"), QString::SkipEmptyParts);
+            QStringList columnStrings = lineData.split("\t", Qt::SkipEmptyParts);
             QList<QVariant> columnData;
             for (int column = 0; column < columnStrings.count(); ++column)
                 columnData << columnStrings[column];
@@ -148,8 +204,7 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent) {
                 // unless the current parent has no children.
 
                 if (parents.last()->childCount() > 0) {
-                    parents << parents.last()->child(
-                        parents.last()->childCount() - 1);
+                    parents << parents.last()->child(parents.last()->childCount()-1);
                     indentations << position;
                 }
             } else {
@@ -160,8 +215,7 @@ void TreeModel::setupModelData(const QStringList &lines, TreeItem *parent) {
             }
 
             // Append a new item to the current parent's list of children.
-            parents.last()->appendChild(
-                new TreeItem(columnData, parents.last()));
+            parents.last()->appendChild(new TreeItem(columnData, parents.last()));
         }
 
         number++;
