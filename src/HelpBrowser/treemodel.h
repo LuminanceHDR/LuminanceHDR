@@ -51,7 +51,7 @@
 //! [0]
 class TreeModel : public QAbstractItemModel
 {
-    Q_OBJECT
+    // Q_OBJECT
 
 public:
     TreeModel(const QString &data, QObject* parent = nullptr);
