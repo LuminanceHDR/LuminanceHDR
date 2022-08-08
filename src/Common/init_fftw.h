@@ -22,7 +22,7 @@
 #ifndef INIT_FFTW_H
 #define INIT_FFTW_H
 
-#include <boost/thread/mutex.hpp>
+#include <mutex>
 
 class FFTW_MUTEX {
    public:
