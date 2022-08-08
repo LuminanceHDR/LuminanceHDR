@@ -187,7 +187,7 @@ ENDIF()
 TARGET_LINK_LIBRARIES(TestFusionOperator Qt5::Core Qt5::Gui Qt5::Widgets)
 
 ADD_EXECUTABLE(TestPoissonSolver TestPoissonSolver.cpp)
-TARGET_LINK_LIBRARIES(TestPoissonSolver hdrwizard pfs pfstmo 
+TARGET_LINK_LIBRARIES(TestPoissonSolver hdrwizard pfs pfstmo common
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
     ${LIBS})
