@@ -20,8 +20,8 @@ WeightFunctionType WeightFunction::fromString(const std::string &type) {
     typedef map<string, WeightFunctionType, pfs::utils::StringUnsensitiveComp>
         Dict;
     static Dict v = map_list_of("triangular", WEIGHT_TRIANGULAR)(
-        "gaussian", WEIGHT_GAUSSIAN)("plateau", WEIGHT_PLATEAU)("flat",
-                                                                WEIGHT_FLAT);
+        "gaussian", WEIGHT_GAUSSIAN)("plateau", WEIGHT_PLATEAU)(
+        "flat", WEIGHT_FLAT);
 
     Dict::const_iterator it = v.find(type);
     if (it != v.end()) {
@@ -146,8 +146,9 @@ void WeightFunction::setType(WeightFunctionType type) {
     WeightFunctionFiller fillter_g = {&fillWeightGaussian,
                                       &minTrustedValueGaussian,
                                       &maxTrustedValueGaussian};
-    WeightFunctionFiller fillter_p = {
-        &fillWeightPlateau, &minTrustedValuePlateau, &maxTrustedValuePlateau};
+    WeightFunctionFiller fillter_p = {&fillWeightPlateau,
+                                      &minTrustedValuePlateau,
+                                      &maxTrustedValuePlateau};
     WeightFunctionFiller fillter_f = {&fillWeightFlat, &minTrustedValueFlat,
                                       &maxTrustedValueFlat};
     static WeightFunctionFunc funcs =

@@ -59,6 +59,27 @@ void RobertsonOperator::applyResponse(
     assert(inputData.size());
 
     size_t saturatedPixels = 0;
+    
+    // find index of next darker frame for each frame
+    vector<size_t> i_sorted((int)inputData.size());
+    iota(i_sorted.begin(), i_sorted.end(), 0);
+    sort(i_sorted.begin(), i_sorted.end(), [&arrayofexptime](const size_t &a, const size_t &b)
+         { return arrayofexptime[a] < arrayofexptime[b];});
+    
+    vector<int> idx_darker((int)inputData.size());
+    idx_darker[i_sorted[0]] = -1; // darkest frame has no darker predecessor
+    for (int i = 1; i < (int)inputData.size(); ++i) {
+        if (arrayofexptime[i_sorted[i]] > arrayofexptime[i_sorted[i-1]]) {
+            // frame is truly brighter than previous one
+            idx_darker[i_sorted[i]] = i_sorted[i-1];
+        }
+        else {
+            // same brightness as previous frame -> take next darker one
+            idx_darker[i_sorted[i]] = idx_darker[i_sorted[i-1]];
+        }
+    }
+    
+    float r_max = response(maxAllowedValue, channel);
 
     int numPixels = (int)width * height;
     for (int j = 0; j < numPixels; ++j) {
@@ -75,6 +96,28 @@ void RobertsonOperator::applyResponse(
 
             float w = weight(m);
             float r = response(m, channel);
+            
+            // robust anti-overexposure: suppress values when overexposure was
+            // expected from next-darker frame
+            int i_darker = idx_darker[i];
+            if (i_darker < 0) {
+                // always give nonzero weight to darkest frame
+                if (w < 1e-6)
+                    w = 1e-6;
+            }
+            else {
+                // suppress value, when overexposure is expected
+                float m_darker = inputData[i_darker][j];
+                float r_darker = response(m_darker, channel);
+                float ti_darker = arrayofexptime[i_darker];
+                float expected_brightness = (ti / ti_darker) * r_darker / r_max;
+                // this weighting function could be pre-computed in a LUT
+                float weight_darker = 1.f - pow(expected_brightness, 4);
+                if (weight_darker < 0.f)
+                    weight_darker = 0.f;
+                w *= weight_darker;
+            }
+            
             // --- anti saturation: observe minimum exposure time at which
             // saturated value is present, and maximum exp time at which
             // black value is present
@@ -97,8 +140,15 @@ void RobertsonOperator::applyResponse(
             //                }
             //            }
 
-            sum += w * ti * r;
-            div += w * ti * ti;
+            // Robertson originally weights response values with exposure time,
+            // which assumes that noise is dominated by discretization noise
+            //sum += w * ti * r;
+            //div += w * ti * ti;
+            // In reality, noise is rather dominated by photon shot-noise.
+            // In that case, optimal weighting is without an additional
+            // exposure time factor. Simple, robust and intuitive.
+            sum += w * r;
+            div += w * ti;
         }
 
         // --- anti saturation: if a meaningful representation of pixel
@@ -107,11 +157,11 @@ void RobertsonOperator::applyResponse(
             ++saturatedPixels;
         }
         if (div == 0.0f && maxti > -1e6f) {
-            sum = minAllowedValue;
+            sum = response(minAllowedValue, channel);
             div = maxti;
         }
         if (div == 0.0f && minti < +1e6f) {
-            sum = maxAllowedValue;
+            sum = response(maxAllowedValue, channel);
             div = minti;
         }
 
