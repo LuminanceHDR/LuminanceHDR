@@ -73,19 +73,20 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #endif
     assert(images.size() != 0);
 
-    vector<float> times;
+    vector<float> exp_times;
 
     const size_t W = images[0].frame()->getWidth();
     const size_t H = images[0].frame()->getHeight();
+    const size_t num_images = images.size();
 
-    for (size_t idx = 0; idx < images.size(); ++idx) {
-        times.push_back(images[idx].averageLuminance());
+    for (size_t idx = 0; idx < num_images; ++idx) {
+        exp_times.push_back(images[idx].averageLuminance());
     }
 
     const int channels = 3;
-    const size_t size = W * H;
+    const size_t numPixels = W * H;
 
-    vector<float> exp_values(times);
+    vector<float> exp_values(exp_times);
 
     transform(exp_values.begin(), exp_values.end(), exp_values.begin(), logf);
 
@@ -103,18 +104,16 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     Array2Df weight_sum(W, H);
     weight_sum.fill(0.f);
 
-    int length = images.size();
-
 #ifdef _OPENMP
     int numthreads = omp_get_max_threads();
-    int nestedthreads = std::max(numthreads / length, 1);
+    int nestedthreads = std::max(numthreads / (int)num_images, 1);
     bool oldNested = omp_get_nested();
     if(nestedthreads > 1) {
         omp_set_nested(true);
     }
     #pragma omp parallel for
 #endif
-    for (int i = 0; i < length; i++) {
+    for (size_t i = 0; i < num_images; i++) {
         Channel *Ch[channels];
         images[i].frame()->getXYZChannels(Ch[0], Ch[1], Ch[2]);
         Array2Df *imagesCh[channels] = {Ch[0], Ch[1], Ch[2]};
@@ -126,13 +125,13 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #ifdef _OPENMP
         #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
 #endif
-        for (size_t k = 0; k < size; k++) {
+        for (size_t k = 0; k < numPixels; k++) {
             w(k) = cmul * (weight((*imagesCh[0])(k)) + weight((*imagesCh[1])(k)) + weight((*imagesCh[2])(k)));
         }
-        float cadd = -logf(times.at((int)i));
+        float cadd = -logf(exp_times.at((int)i));
         for (int c = 0; c < channels; c++) {
             #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
-            for (size_t k = 0; k < size; k++) {
+            for (size_t k = 0; k < numPixels; k++) {
                 (response_img)(k) = response((*imagesCh[c])(k));
             }
 #ifdef __SSE2__
@@ -140,17 +139,17 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #ifdef _OPENMP
             #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
 #endif
-            for (size_t k = 0; k < size - 3; k+=4) {
+            for (size_t k = 0; k < numPixels - 3; k+=4) {
                 STVFU((response_img)(k), (xlogf(LVFU((response_img)(k))) + caddv) * LVFU(w(k)));
             }
-            for (size_t k = size - (size % 4); k < size; k++) {
+            for (size_t k = numPixels - (numPixels % 4); k < numPixels; k++) {
                 (response_img)(k) = (xlogf((response_img)(k)) + cadd) * w(k);
             }
 #else
 #ifdef _OPENMP
             #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
 #endif
-            for (size_t k = 0; k < size; k++) {
+            for (size_t k = 0; k < numPixels; k++) {
                 (response_img)(k) = (xlogf((response_img)(k)) + cadd) * w(k);
             }
 #endif
@@ -158,13 +157,13 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #ifdef _OPENMP
             #pragma omp critical
 #endif
-            vadd(resultCh[c]->data(), response_img.data(), resultCh[c]->data(), size);
+            vadd(resultCh[c]->data(), response_img.data(), resultCh[c]->data(), numPixels);
         }
 
 #ifdef _OPENMP
         #pragma omp critical
 #endif
-        vadd(weight_sum.data(), w.data(), weight_sum.data(), size);
+        vadd(weight_sum.data(), w.data(), weight_sum.data(), numPixels);
     }
 #ifdef _OPENMP
     omp_set_nested(oldNested);
@@ -195,7 +194,7 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     for (int c = 0; c < channels; c++) {
         float minval = numeric_limits<float>::max();
         float maxval = numeric_limits<float>::min();
-        for (size_t k = 0; k < size; k++) {
+        for (size_t k = 0; k < numPixels; k++) {
             minval = std::min(minval, (*Ch[c])(k));
             maxval = std::max(maxval, (*Ch[c])(k));
         }
