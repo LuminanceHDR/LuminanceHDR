@@ -21,7 +21,7 @@
 #define _LIBRTPROCESS_
 
 #include <functional>
-
+#include <cstddef>
 
 enum rpError {RP_NO_ERROR, RP_MEMORY_ERROR, RP_WRONG_CFA, RP_CACORRECT_ERROR};
 rpError bayerborder_demosaic(int winw, int winh, int lborders, const float * const *rawData, float **red, float **green, float **blue, const unsigned cfarray[2][2]);
