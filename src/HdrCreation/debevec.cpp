@@ -141,9 +141,9 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     #pragma omp parallel for
 #endif
     for (size_t i = 0; i < num_images; i++) {
-        Channel *Ch[channels];
-        images[i].frame()->getXYZChannels(Ch[0], Ch[1], Ch[2]);
-        Array2Df *imagesCh[channels] = {Ch[0], Ch[1], Ch[2]};
+        Channel *Ch_i[channels];
+        images[i].frame()->getXYZChannels(Ch_i[0], Ch_i[1], Ch_i[2]);
+        Array2Df *imagesCh[channels] = {Ch_i[0], Ch_i[1], Ch_i[2]};
 
         int i_darker = idx_darker[i];
         Channel *Ch_dark[channels];
@@ -253,7 +253,7 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     float cmax[3];
     float cmin[3];
 #ifdef _OPENMP
-    #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
+    #pragma omp parallel for
 #endif
     for (int c = 0; c < channels; c++) {
         float minval = numeric_limits<float>::max();
@@ -298,7 +298,7 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     }
 
 #ifdef _OPENMP
-    #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
+    #pragma omp parallel for
 #endif
     for (int c = 0; c < channels; c++) {
         transform(Ch[c]->begin(), Ch[c]->end(), Ch[c]->begin(),
