@@ -73,19 +73,47 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #endif
     assert(images.size() != 0);
 
-    vector<float> times;
+    vector<float> exp_times;
 
     const size_t W = images[0].frame()->getWidth();
     const size_t H = images[0].frame()->getHeight();
+    const size_t num_images = images.size();
 
-    for (size_t idx = 0; idx < images.size(); ++idx) {
-        times.push_back(images[idx].averageLuminance());
+    for (size_t idx = 0; idx < num_images; ++idx) {
+        exp_times.push_back(images[idx].averageLuminance());
     }
 
     const int channels = 3;
-    const size_t size = W * H;
+    const size_t numPixels = W * H;
 
-    vector<float> exp_values(times);
+    // find index of next darker frame for each frame
+    const float *arrayofexptime = exp_times.data();
+    vector<size_t> i_sorted((int)num_images);
+    iota(i_sorted.begin(), i_sorted.end(), 0);
+    sort(i_sorted.begin(), i_sorted.end(), [&arrayofexptime](const size_t &a, const size_t &b)
+         { return arrayofexptime[a] < arrayofexptime[b];});
+
+    vector<int> idx_darker((int)num_images);
+    idx_darker[i_sorted[0]] = -1; // darkest frame has no darker predecessor
+    for (int i = 1; i < (int)num_images; ++i) {
+        if (arrayofexptime[i_sorted[i]] > arrayofexptime[i_sorted[i-1]]) {
+            // frame is truly brighter than previous one
+            idx_darker[i_sorted[i]] = i_sorted[i-1];
+        }
+        else {
+            // same brightness as previous frame -> take next darker one
+            idx_darker[i_sorted[i]] = idx_darker[i_sorted[i-1]];
+        }
+    }
+
+    float maxAllowedValue = weight.maxTrustedValue();
+    ResponseChannel resp_chan[channels] = {RESPONSE_CHANNEL_RED, RESPONSE_CHANNEL_GREEN, RESPONSE_CHANNEL_BLUE};
+    vector<float> max_responses(channels);
+    for (int c = 0; c < channels; c++) {
+        max_responses[c] = response(maxAllowedValue, resp_chan[c]);
+    }
+
+    vector<float> exp_values(exp_times);
 
     transform(exp_values.begin(), exp_values.end(), exp_values.begin(), logf);
 
@@ -103,21 +131,31 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     Array2Df weight_sum(W, H);
     weight_sum.fill(0.f);
 
-    int length = images.size();
-
 #ifdef _OPENMP
     int numthreads = omp_get_max_threads();
-    int nestedthreads = std::max(numthreads / length, 1);
+    int nestedthreads = std::max(numthreads / (int)num_images, 1);
     bool oldNested = omp_get_nested();
     if(nestedthreads > 1) {
         omp_set_nested(true);
     }
     #pragma omp parallel for
 #endif
-    for (int i = 0; i < length; i++) {
-        Channel *Ch[channels];
-        images[i].frame()->getXYZChannels(Ch[0], Ch[1], Ch[2]);
-        Array2Df *imagesCh[channels] = {Ch[0], Ch[1], Ch[2]};
+    for (size_t i = 0; i < num_images; i++) {
+        Channel *Ch_i[channels];
+        images[i].frame()->getXYZChannels(Ch_i[0], Ch_i[1], Ch_i[2]);
+        Array2Df *imagesCh[channels] = {Ch_i[0], Ch_i[1], Ch_i[2]};
+
+        int i_darker = idx_darker[i];
+        Channel *Ch_dark[channels];
+        Array2Df *imgCh_dark[channels];
+        float brighter_ratio = 1.f;
+        if (i_darker >= 0) {
+            brighter_ratio = arrayofexptime[i] / arrayofexptime[i_darker];
+            images[i_darker].frame()->getXYZChannels(Ch_dark[0], Ch_dark[1], Ch_dark[2]);
+            imgCh_dark[0] = Ch_dark[0];
+            imgCh_dark[1] = Ch_dark[1];
+            imgCh_dark[2] = Ch_dark[2];
+        }
 
         Array2Df response_img(W, H);
         Array2Df w(W, H);
@@ -126,13 +164,38 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #ifdef _OPENMP
         #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
 #endif
-        for (size_t k = 0; k < size; k++) {
+        for (size_t k = 0; k < numPixels; k++) {
             w(k) = cmul * (weight((*imagesCh[0])(k)) + weight((*imagesCh[1])(k)) + weight((*imagesCh[2])(k)));
+
+            // Robust anti-overexposure: suppress values when overexposure was
+            // expected from next-darker frame.
+            // Work with worst case across all channels, because Debevec only
+            // uses a single weight for all channels. If one channel is bad,
+            // discard all to avoid funky colors.
+            if (i_darker < 0) {
+                // always give nonzero weight to darkest frame
+                if (w(k) < 1e-6) {
+                    w(k) = 1e-6;
+                }
+            }
+            else {
+                // suppress value, when overexposure is expected.
+                float suppress_w = 1.f;
+                for (int c = 0; c < channels; c++) {
+                    float m_darker = (*imgCh_dark[c])(k);
+                    float r_darker = response(m_darker, resp_chan[c]);
+                    float expected_brightness = brighter_ratio * r_darker / max_responses[c];
+                    // this weighting function could be pre-computed in a LUT
+                    float w_darker_ch = 1.f - powf(expected_brightness, 4);
+                    suppress_w = std::min(suppress_w, w_darker_ch);
+                }
+                w(k) *= std::max(0.f, suppress_w);
+            }
         }
-        float cadd = -logf(times.at((int)i));
+        float cadd = -logf(exp_times.at((int)i));
         for (int c = 0; c < channels; c++) {
             #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
-            for (size_t k = 0; k < size; k++) {
+            for (size_t k = 0; k < numPixels; k++) {
                 (response_img)(k) = response((*imagesCh[c])(k));
             }
 #ifdef __SSE2__
@@ -140,17 +203,17 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #ifdef _OPENMP
             #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
 #endif
-            for (size_t k = 0; k < size - 3; k+=4) {
+            for (size_t k = 0; k < numPixels - 3; k+=4) {
                 STVFU((response_img)(k), (xlogf(LVFU((response_img)(k))) + caddv) * LVFU(w(k)));
             }
-            for (size_t k = size - (size % 4); k < size; k++) {
+            for (size_t k = numPixels - (numPixels % 4); k < numPixels; k++) {
                 (response_img)(k) = (xlogf((response_img)(k)) + cadd) * w(k);
             }
 #else
 #ifdef _OPENMP
             #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
 #endif
-            for (size_t k = 0; k < size; k++) {
+            for (size_t k = 0; k < numPixels; k++) {
                 (response_img)(k) = (xlogf((response_img)(k)) + cadd) * w(k);
             }
 #endif
@@ -158,13 +221,13 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
 #ifdef _OPENMP
             #pragma omp critical
 #endif
-            vadd(resultCh[c]->data(), response_img.data(), resultCh[c]->data(), size);
+            vadd(resultCh[c]->data(), response_img.data(), resultCh[c]->data(), numPixels);
         }
 
 #ifdef _OPENMP
         #pragma omp critical
 #endif
-        vadd(weight_sum.data(), w.data(), weight_sum.data(), size);
+        vadd(weight_sum.data(), w.data(), weight_sum.data(), numPixels);
     }
 #ifdef _OPENMP
     omp_set_nested(oldNested);
@@ -190,12 +253,12 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     float cmax[3];
     float cmin[3];
 #ifdef _OPENMP
-    #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
+    #pragma omp parallel for
 #endif
     for (int c = 0; c < channels; c++) {
         float minval = numeric_limits<float>::max();
         float maxval = numeric_limits<float>::min();
-        for (size_t k = 0; k < size; k++) {
+        for (size_t k = 0; k < numPixels; k++) {
             minval = std::min(minval, (*Ch[c])(k));
             maxval = std::max(maxval, (*Ch[c])(k));
         }
@@ -235,7 +298,7 @@ void DebevecOperator::computeFusion(ResponseCurve &response,
     }
 
 #ifdef _OPENMP
-    #pragma omp parallel for num_threads(nestedthreads) if (nestedthreads>1)
+    #pragma omp parallel for
 #endif
     for (int c = 0; c < channels; c++) {
         transform(Ch[c]->begin(), Ch[c]->end(), Ch[c]->begin(),
