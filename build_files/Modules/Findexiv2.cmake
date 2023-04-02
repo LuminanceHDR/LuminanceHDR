@@ -76,7 +76,7 @@ include(FindPackageHandleStandardArgs)
 #find_package_handle_standard_args(Exiv2  REQUIRED_VARS  EXIV2_LIBRARY EXIV2_INCLUDE_DIR
 #                                         VERSION_VAR  EXIV2_VERSION)
 
-find_package_handle_standard_args(Exiv2  REQUIRED_VARS  EXIV2_LIBRARY EXIV2_INCLUDE_DIR
+find_package_handle_standard_args(exiv2  REQUIRED_VARS  EXIV2_LIBRARY EXIV2_INCLUDE_DIR
                                          EXIV2_VERSION)
 mark_as_advanced(EXIV2_INCLUDE_DIR EXIV2_LIBRARY)
 
