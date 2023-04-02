@@ -83,7 +83,7 @@ class HdrViewer : public GenericViewer {
     // Methods
     virtual void retranslateUi() override;
     void setRangeWindow(float min, float max);
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
 
     // UI
     LuminanceRangeWidget *m_lumRange;
