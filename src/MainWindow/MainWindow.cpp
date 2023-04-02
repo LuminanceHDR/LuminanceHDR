@@ -50,7 +50,7 @@
 #include <QtConcurrentRun>
 
 //#include <functional>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 #include "MainWindow/ui_MainWindow.h"
 
