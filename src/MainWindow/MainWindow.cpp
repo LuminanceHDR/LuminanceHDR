@@ -584,13 +584,13 @@ void MainWindow::on_fileOpenAction_triggered() {
     filetypes += QLatin1String("FITS (*.fit *.FIT *.fits *.FITS);;");
 #endif
     filetypes += QLatin1String(
-        "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw "
+        "RAW images (*.crw *.cr2 *.cr3 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw "
         "*.raf "
         "*.ptx *.pef *.x3f *.raw "
         "*.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw "
         "*.srw");
     filetypes += QLatin1String(
-        "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC "
+        "*.CRW *.CR2 *.CR3 *.NEF *.DNG *.MRW *.ORF *.KDC "
         "*.DCR *.ARW *.RAF *.PTX *.PEF "
         "*.X3F *.RAW *.RW2 *.SR2 "
         "*.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;");

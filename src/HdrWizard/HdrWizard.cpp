@@ -211,21 +211,21 @@ void HdrWizard::loadImagesButtonClicked() {
     // when changing these filetypes, also change in DnDOption - for Drag and
     // Drop
     filetypes += tr(
-        "All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw "
+        "All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.cr3 *.nef *.dng *.mrw "
         "*.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 "
         "*.3fr *.mef *.mos *.erf *.nrw *.srw");
     filetypes += tr(
-        "*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC "
+        "*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC "
         "*.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF "
         "*.MOS *.ERF *.NRW *.SRW);;");
     filetypes += tr("JPEG (*.jpeg *.jpg *.JPEG *.JPG);;");
     filetypes += tr("TIFF Images (*.tiff *.tif *.TIFF *.TIF);;");
     filetypes +=
-        tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw "
+        tr("RAW Images (*.crw *.cr2 *.cr3 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw "
            "*.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf "
            "*.nrw *.srw");
     filetypes += tr(
-        "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX "
+        "*.CRW *.CR2 *.CR3 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX "
         "*.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)");
 
     QStringList files = QFileDialog::getOpenFileNames(

@@ -37,7 +37,7 @@
 
 bool matchesLdrFilename(const QString &file) {
     QRegExp exp(
-        ".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|"
+        ".*\\.(jpeg|jpg|tiff|tif|crw|cr2|cr3|nef|dng|mrw|orf|kdc|dcr|arw|"
         "raf|ptx|pef|"
         "x3f|raw|sr2|rw2)$",
         Qt::CaseInsensitive);
@@ -47,13 +47,13 @@ bool matchesLdrFilename(const QString &file) {
 bool matchesHdrFilename(const QString &file) {
 #ifdef HAVE_CFITSIO
     QRegExp exp(
-        ".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|nef|dng|mrw|"
+        ".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|cr3|nef|dng|mrw|"
         "orf|kdc|dcr|"
         "arw|raf|ptx|pef|x3f|raw|sr2|rw2)$",
         Qt::CaseInsensitive);
 #else
     QRegExp exp(
-        ".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|"
+        ".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|cr3|nef|dng|mrw|orf|kdc|"
         "dcr|arw|raf|"
         "ptx|pef|x3f|raw|sr2|rw2)$",
         Qt::CaseInsensitive);
@@ -70,17 +70,29 @@ QStringList getAllHdrFileExtensions() {
 #if HAVE_CFITSIO
     list << QStringLiteral(".fit") << QStringLiteral(".fits");
 #endif
-    list << QStringLiteral(".pfs") << QStringLiteral(".crw")
-         << QStringLiteral(".cr2") << QStringLiteral(".nef")
-         << QStringLiteral(".dng") << QStringLiteral(".mrw")
-         << QStringLiteral(".orf") << QStringLiteral(".kdc")
-         << QStringLiteral(".dcr") << QStringLiteral(".arw")
-         << QStringLiteral(".raf") << QStringLiteral(".ptx")
-         << QStringLiteral(".pef") << QStringLiteral(".x3f")
-         << QStringLiteral(".raw") << QStringLiteral(".rw2")
-         << QStringLiteral(".sr2") << QStringLiteral(".3fr")
-         << QStringLiteral(".mef") << QStringLiteral(".mos")
-         << QStringLiteral(".erf") << QStringLiteral(".nrw")
+    list << QStringLiteral(".pfs")
+         << QStringLiteral(".crw")
+         << QStringLiteral(".cr2")
+         << QStringLiteral(".cr3")
+         << QStringLiteral(".nef")
+         << QStringLiteral(".dng")
+         << QStringLiteral(".mrw")
+         << QStringLiteral(".orf")
+         << QStringLiteral(".kdc")
+         << QStringLiteral(".dcr")
+         << QStringLiteral(".arw")
+         << QStringLiteral(".raf")
+         << QStringLiteral(".ptx")
+         << QStringLiteral(".pef")
+         << QStringLiteral(".x3f")
+         << QStringLiteral(".raw")
+         << QStringLiteral(".rw2")
+         << QStringLiteral(".sr2")
+         << QStringLiteral(".3fr")
+         << QStringLiteral(".mef")
+         << QStringLiteral(".mos")
+         << QStringLiteral(".erf")
+         << QStringLiteral(".nrw")
          << QStringLiteral(".srw");
 
     foreach (const QString &s, list) {

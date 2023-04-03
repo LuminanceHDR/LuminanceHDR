@@ -254,9 +254,9 @@ void TransplantExifDialog::remove_right() {
 void TransplantExifDialog::append_left() {
     QString filetypes = tr("All Supported formats");
     filetypes +=
-        " (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc "
+        " (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.cr3 *.nef *.dng *.mrw *.orf *.kdc "
         "*.dcr *.arw *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 "
-        "*.JPEG *.JPG *.TIF *.TIFF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC "
+        "*.JPEG *.JPG *.TIF *.TIFF *.CRW *.CR2 *.CR3 *.NEF *.DNG *.MRW *.ORF *.KDC "
         "*.DCR *.ARW *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2)";
     QStringList files = QFileDialog::getOpenFileNames(
         this, tr("Select the input images"), RecentDirEXIFfrom, filetypes);

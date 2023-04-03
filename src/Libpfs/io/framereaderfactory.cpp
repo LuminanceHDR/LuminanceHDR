@@ -87,6 +87,7 @@ FrameReaderFactory::FrameReaderCreatorMap FrameReaderFactory::sm_registry =
     // RAW formats
     ("crw", creator<RAWReader>)
     ("cr2", creator<RAWReader>)
+    ("cr3", creator<RAWReader>)
     ("nef", creator<RAWReader>)
     ("dng", creator<RAWReader>)
     ("mrw", creator<RAWReader>)

@@ -129,29 +129,53 @@ void BatchTMDialog::add_dir_HDRs() {
     if (!dirname.isEmpty()) {
         LuminanceOptions().setBatchTmPathHdrInput(dirname);  // update settings
         QStringList filters;
-        filters << QStringLiteral("*.exr") << QStringLiteral("*.hdr")
-                << QStringLiteral("*.pic") << QStringLiteral("*.tiff")
-                << QStringLiteral("*.tif") << QStringLiteral("*.pfs")
-                << QStringLiteral("*.crw") << QStringLiteral("*.cr2")
-                << QStringLiteral("*.nef") << QStringLiteral("*.dng")
-                << QStringLiteral("*.mrw") << QStringLiteral("*.orf")
-                << QStringLiteral("*.kdc") << QStringLiteral("*.dcr")
-                << QStringLiteral("*.arw") << QStringLiteral("*.raf")
-                << QStringLiteral("*.ptx") << QStringLiteral("*.pef")
-                << QStringLiteral("*.x3f") << QStringLiteral("*.raw")
-                << QStringLiteral("*.sr2") << QStringLiteral("*.rw2")
+        filters << QStringLiteral("*.exr")
+                << QStringLiteral("*.hdr")
+                << QStringLiteral("*.pic")
+                << QStringLiteral("*.tiff")
+                << QStringLiteral("*.tif")
+                << QStringLiteral("*.pfs")
+                << QStringLiteral("*.crw")
+                << QStringLiteral("*.cr2")
+                << QStringLiteral("*.cr3")
+                << QStringLiteral("*.nef")
+                << QStringLiteral("*.dng")
+                << QStringLiteral("*.mrw")
+                << QStringLiteral("*.orf")
+                << QStringLiteral("*.kdc")
+                << QStringLiteral("*.dcr")
+                << QStringLiteral("*.arw")
+                << QStringLiteral("*.raf")
+                << QStringLiteral("*.ptx")
+                << QStringLiteral("*.pef")
+                << QStringLiteral("*.x3f")
+                << QStringLiteral("*.raw")
+                << QStringLiteral("*.sr2")
+                << QStringLiteral("*.rw2")
                 << QStringLiteral("*.srw");
-        filters << QStringLiteral("*.EXR") << QStringLiteral("*.HDR")
-                << QStringLiteral("*.PIC") << QStringLiteral("*.TIFF")
-                << QStringLiteral("*.TIF") << QStringLiteral("*.PFS")
-                << QStringLiteral("*.CRW") << QStringLiteral("*.CR2")
-                << QStringLiteral("*.NEF") << QStringLiteral("*.DNG")
-                << QStringLiteral("*.MRW") << QStringLiteral("*.ORF")
-                << QStringLiteral("*.KDC") << QStringLiteral("*.DCR")
-                << QStringLiteral("*.ARW") << QStringLiteral("*.RAF")
-                << QStringLiteral("*.PTX") << QStringLiteral("*.PEF")
-                << QStringLiteral("*.X3F") << QStringLiteral("*.RAW")
-                << QStringLiteral("*.SR2") << QStringLiteral("*.RW2")
+        filters << QStringLiteral("*.EXR")
+                << QStringLiteral("*.HDR")
+                << QStringLiteral("*.PIC")
+                << QStringLiteral("*.TIFF")
+                << QStringLiteral("*.TIF")
+                << QStringLiteral("*.PFS")
+                << QStringLiteral("*.CRW")
+                << QStringLiteral("*.CR2")
+                << QStringLiteral("*.CR3")
+                << QStringLiteral("*.NEF")
+                << QStringLiteral("*.DNG")
+                << QStringLiteral("*.MRW")
+                << QStringLiteral("*.ORF")
+                << QStringLiteral("*.KDC")
+                << QStringLiteral("*.DCR")
+                << QStringLiteral("*.ARW")
+                << QStringLiteral("*.RAF")
+                << QStringLiteral("*.PTX")
+                << QStringLiteral("*.PEF")
+                << QStringLiteral("*.X3F")
+                << QStringLiteral("*.RAW")
+                << QStringLiteral("*.SR2")
+                << QStringLiteral("*.RW2")
                 << QStringLiteral("*.SRW");
         QDir chosendir(dirname);
         chosendir.setFilter(QDir::Files);
@@ -166,10 +190,10 @@ void BatchTMDialog::add_dir_HDRs() {
 void BatchTMDialog::add_HDRs() {
     QString filetypes = tr("All HDR images ");
     filetypes +=
-        "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw "
+        "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.cr3 *.nef *.dng *.mrw "
         "*.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef "
         "*.x3f *.raw *.sr2 *.rw2 *.srw "
-        "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW "
+        "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.CR3 *.NEF *.DNG *.MRW "
         "*.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW "
         "*.SR2 *.RW2 *.SRW)";
     QStringList onlyhdrs = QFileDialog::getOpenFileNames(
