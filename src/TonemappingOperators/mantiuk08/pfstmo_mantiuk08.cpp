@@ -102,6 +102,7 @@ void pfstmo_mantiuk08(pfs::Frame &frame, float saturation_factor,
 
     if (!inX || !inY || !inZ) {
         if (df != nullptr) delete df;
+        if (ds != nullptr) delete ds;
         throw pfs::Exception("Missing X, Y, Z channels in the PFS stream");
     }
 

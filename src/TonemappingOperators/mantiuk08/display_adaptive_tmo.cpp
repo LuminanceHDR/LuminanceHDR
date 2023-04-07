@@ -534,7 +534,7 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density(
     //    }
     //    fclose( fh );
 
-    return std::move(C);
+    return C;
 }
 
 // =============== Quadratic programming solver ==============
