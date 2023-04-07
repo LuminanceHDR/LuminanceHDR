@@ -53,12 +53,13 @@ using namespace pfs::colorspace;
 static const int previewWidth = 300;
 static const int previewHeight = 200;
 
-FitsImporter::~FitsImporter() { delete m_frame; }
+FitsImporter::~FitsImporter() { /* delete m_frame; */ }
 
 FitsImporter::FitsImporter(QWidget *parent)
     : QWizard(parent),
       m_width(0),
       m_height(0),
+      m_frame(nullptr),
       m_align(),
       m_Ui(new Ui::FitsImporter) {
     m_Ui->setupUi(this);
@@ -127,7 +128,7 @@ FitsImporter::FitsImporter(QWidget *parent)
 
 pfs::Frame *FitsImporter::getFrame() {
     buildFrame();
-    return pfs::copy(m_frame);
+    return pfs::copy(m_frame.get());
 }
 
 void FitsImporter::selectInputFile(QLineEdit *textField, QString *channel) {
@@ -401,7 +402,7 @@ void FitsImporter::buildFrame() {
     float greenGreen = m_Ui->dsbGreenGreen->value();
     float blueBlue = m_Ui->dsbBlueBlue->value();
 
-    m_frame = new Frame(m_width, m_height);
+    m_frame.reset(new Frame(m_width, m_height));
     Channel *Xc, *Yc, *Zc;
     m_frame->createXYZChannels(Xc, Yc, Zc);
 

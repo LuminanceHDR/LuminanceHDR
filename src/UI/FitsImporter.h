@@ -95,7 +95,7 @@ class FitsImporter : public QWizard {
     size_t m_width;
     size_t m_height;
 
-    pfs::Frame *m_frame;
+    unique_ptr<pfs::Frame> m_frame;
     PreviewFrame *m_previewFrame;
     QLabel *m_previewLabel;
 
