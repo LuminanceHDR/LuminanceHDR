@@ -48,7 +48,8 @@ using namespace std;
 
 void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
                       string image_dir, string object_output,
-                      string html_output, int quality, bool verbose) {
+                      string html_output, int quality, bool verbose
+                      ) {
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     const int MAX_LINE_LENGTH = 2048;
     QString p_t = HDRHTMLDIR;
@@ -118,26 +119,27 @@ void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
 
     base_name = tmp_str;
 
-    HDRHTMLSet image_set(nullptr, image_dir.empty() ? nullptr : image_dir.c_str());
+    HDRHTMLSet image_set(page_name.c_str(), image_dir.empty() ? nullptr : image_dir.c_str());
     if (verbose)
         cout << QObject::tr("Adding image ").toStdString() << base_name
              << QObject::tr(" to the web page").toStdString() << endl;
 
     try {
-        image_set.add_image(frame->getWidth(), frame->getHeight(), R1, G1, B1,
-                            Y1, base_name.c_str(),
+        image_set.add_image(frame->getWidth(), frame->getHeight(), R1, G1, B1, Y1,
+                            base_name.c_str(),
                             out_dir.empty() ? nullptr : out_dir.c_str(), quality,
-                            verbose);
+                            verbose
+                            );
     } catch (pfs::Exception &e) {
         throw;
     }
 
     try {
-        image_set.generate_webpage(
-            page_template, image_template,
-            out_dir.empty() ? nullptr : out_dir.c_str(),
-            object_output.empty() ? nullptr : object_output.c_str(),
-            html_output.empty() ? nullptr : html_output.c_str(), verbose);
+        image_set.generate_webpage(page_template, image_template,
+                                   out_dir.empty() ? nullptr : out_dir.c_str(),
+                                   object_output.empty() ? nullptr : object_output.c_str(),
+                                   html_output.empty() ? nullptr : html_output.c_str(), verbose
+                                   );
     } catch (pfs::Exception &e) {
         throw;
     }

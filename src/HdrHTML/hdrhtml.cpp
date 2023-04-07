@@ -1,7 +1,7 @@
 /**
  * @brief Create a web page with an HDR viewer
  *
- * This file is a part of LuminanceHDR package, based on pfstools.
+ * This file is a part of LuminanceHDR package, based on PFSTOOLS.
  * ----------------------------------------------------------------------
  * Copyright (C) 2009 Rafal Mantiuk
  *
@@ -35,6 +35,7 @@
 #include <iostream>
 #include <limits>
 #include <locale>
+#include <memory>
 #include <sstream>
 #include <vector>
 
@@ -55,10 +56,10 @@ namespace hdrhtml {
 //        Parameters controllig the web page
 // ================================================
 
-const int f_step_res = 3;  // How many steps per f-stop (do not change)
-const int pix_per_fstop =
-    25;  // Distance in pixels between f-stops shown on the histogram
-const char *hdrhtml_version = "1.0";  // Version of the HDRHTML code
+const int f_step_res = 3; // How many steps per f-stop (do not change)
+const int pix_per_fstop = 25;   // Distance in pixels between f-stops shown on the histogram
+const char *hdrhtml_version = "1.0"; // Version of the HDRHTML code
+
 
 // ================================================
 //                Histogram
@@ -66,18 +67,21 @@ const char *hdrhtml_version = "1.0";  // Version of the HDRHTML code
 
 template <class T>
 class Histogram {
-   public:
+public:
     vector<T> x;       // Bin centers
     vector<size_t> n;  // No of items in a bin
     size_t bins;
 
-    Histogram() : bins(0) {}
+    Histogram()
+    {
+    }
 
-    ~Histogram() { free(); }
+    ~Histogram()
+    {
+        free();
+    }
 
     void free() {
-        // delete []x;
-        // delete []n;
         bins = 0;
     }
 
@@ -115,16 +119,14 @@ class Histogram {
 
         if (reject_outofrange) {
             for (size_t k = 0; k < d_size; k++) {
-                int ind = floor((data[k] - min_val) / (max_val - min_val) *
-                                (float)bins);
+                int ind = floor((data[k] - min_val) / (max_val - min_val) * (float)bins);
                 if (ind < 0) continue;
                 if (ind >= bins) continue;
                 n[ind]++;
             }
         } else {
             for (size_t k = 0; k < d_size; k++) {
-                int ind = floor((data[k] - min_val) / (max_val - min_val) *
-                                (float)bins);
+                int ind = floor((data[k] - min_val) / (max_val - min_val) * (float)bins);
                 if (ind < 0) {
                     n[0]++;
                     continue;
@@ -149,72 +151,71 @@ class Histogram {
  * x_i must be at least two elements
  * y_i must be initialized after creating an object
  */
-class UniformArrayLUT {
-   public:
-    float *y_i;
+class UniformArrayLUT
+{
+  const float *x_i;
+  size_t lut_size;
+  float delta;
 
-    UniformArrayLUT(size_t lut_size, const float *x_i, float *y_i = nullptr)
-        : y_i(nullptr), x_i(x_i), lut_size(lut_size), delta(x_i[1] - x_i[0]) {
-        if (y_i == nullptr) {
-            this->y_i = new float[lut_size];
-            own_y_i = true;
-        } else {
-            this->y_i = y_i;
-            own_y_i = false;
-        }
+  bool own_y_i;
+public:
+  float *y_i;
+
+  UniformArrayLUT( size_t lut_size, const float *x_i, float *y_i = NULL ) : x_i( x_i ), lut_size( lut_size ), delta( x_i[1]-x_i[0] )
+  {
+    if( y_i == NULL ) {
+      this->y_i = new float[lut_size];
+      own_y_i = true;
+    } else {
+      this->y_i = y_i;
+      own_y_i = false;
     }
+  }
 
-    UniformArrayLUT() : y_i(nullptr), x_i(0), lut_size(0), delta(0.), own_y_i(false) {}
+  UniformArrayLUT() : x_i( 0 ), lut_size( 0 ), delta( 0. ), y_i(0) {}
 
-    UniformArrayLUT(const UniformArrayLUT &other)
-        : y_i(nullptr),
-          x_i(other.x_i),
-          lut_size(other.lut_size),
-          delta(other.delta) {
+  UniformArrayLUT(const UniformArrayLUT& other) : x_i( other.x_i ), lut_size( other.lut_size ), delta( other.delta )
+  {
+    this->y_i = new float[lut_size];
+    own_y_i = true;
+    memcpy(this->y_i, other.y_i, lut_size * sizeof(float));
+  }
+
+  UniformArrayLUT& operator = (const UniformArrayLUT& other)
+  {
+      if (this != &other) {
+        this->lut_size = other.lut_size;
+        this->delta = other.delta;
+        this->x_i = other.x_i;
         this->y_i = new float[lut_size];
         own_y_i = true;
         memcpy(this->y_i, other.y_i, lut_size * sizeof(float));
-    }
+      }
+      return *this;
+  }
 
-    UniformArrayLUT &operator=(const UniformArrayLUT &other) {
-        if (this != &other) {
-            this->lut_size = other.lut_size;
-            this->delta = other.delta;
-            this->x_i = other.x_i;
-            this->y_i = new float[lut_size];
-            own_y_i = true;
-            memcpy(this->y_i, other.y_i, lut_size * sizeof(float));
-        }
-        return *this;
-    }
+  ~UniformArrayLUT()
+  {
+    if( own_y_i )
+        delete []y_i;
+  }
 
-    ~UniformArrayLUT() {
-        if (own_y_i) delete[] y_i;
-    }
+  float interp( float x )
+  {
+    const float ind_f = (x - x_i[0])/delta;
+    const size_t ind_low = (size_t)(ind_f);
+    const size_t ind_hi = (size_t)ceil(ind_f);
 
-    float interp(float x) const {
-        const float ind_f = (x - x_i[0]) / delta;
-        const size_t ind_low = (size_t)(ind_f);
-        const size_t ind_hi = (size_t)ceil(ind_f);
+    if( (ind_f < 0) )           // Out of range checks
+      return y_i[0];
+    if( (ind_hi >= lut_size) )
+      return y_i[lut_size-1];
 
-        if ((ind_f < 0))  // Out of range checks
-            return y_i[0];
-        if ((ind_hi >= lut_size)) return y_i[lut_size - 1];
+    if( (ind_low == ind_hi) )
+      return y_i[ind_low];      // No interpolation necessary
 
-        if ((ind_low == ind_hi))
-            return y_i[ind_low];  // No interpolation necessary
-
-        return y_i[ind_low] +
-               (y_i[ind_hi] - y_i[ind_low]) *
-                   (ind_f - (float)ind_low);  // Interpolation
-    }
-
-   private:
-    const float *x_i;
-    size_t lut_size;
-    float delta;
-
-    bool own_y_i;
+    return y_i[ind_low] + (y_i[ind_hi]-y_i[ind_low])*(ind_f-(float)ind_low); // Interpolation
+  }
 };
 
 template <class T>
@@ -468,7 +469,7 @@ void create_from_template(const char *output_file_name,
     try {
         create_from_template(outfs, template_file_name, pattern_list);
     } catch (pfs::Exception &e) {
-        throw;
+        throw e;
     }
 }
 
@@ -582,12 +583,13 @@ class CSVTable {
 void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
                            float *Y, const char *base_name, const char *out_dir,
                            int quality, bool verbose) {
-    // THIS CAUSED ME A BIG HEADACHE!!!
-    string user_locale = locale("").name();
-    locale::global(locale::classic());
 
     const int pixels = width * height;
     const int basis_no = quality;
+
+    // THIS CAUSED ME A BIG HEADACHE!!!
+    string user_locale = locale("").name();
+    locale::global(locale::classic());
 
     // Load LUT for the basis tone-curves
     ostringstream lut_filename;
@@ -602,7 +604,7 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
     try {
         basis_table.read(lut_filename.str().c_str(), basis_no + 1);
     } catch (pfs::Exception &e) {
-        throw;
+        throw e;
     }
     // Transform the first row (luminance factors) to the log domain
     for (int k = 0; k < basis_table.rows; k++) {
@@ -624,8 +626,10 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
             float min_val = numeric_limits<float>::max(),
                   max_val = numeric_limits<float>::min();
             for (int i = 0; i < pixels; i++) {
-                if (x[i] < min_val && x[i] > 0) min_val = x[i];
-                if (x[i] > max_val) max_val = x[i];
+                if (x[i] < min_val && x[i] > 0)
+                    min_val = x[i];
+                if (x[i] > max_val)
+                    max_val = x[i];
             }
             img_max = max(img_max, log2f(max_val));
             img_min = min(img_min, log2f(min_val));
@@ -664,28 +668,23 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
     float hist_start = (img_max - img_min - hist_fstops) / 2;
     {
         Histogram<float> hist;
-        hist.compute(Y, pixels, hist_width, img_min + hist_start,
-                     img_min + hist_start + hist_fstops);
+        hist.compute(Y, pixels, hist_width, img_min + hist_start, img_min + hist_start + hist_fstops);
 
-        unsigned short *hist_buffer =
-            new unsigned short[hist_width * hist_height * 3];
+        unsigned short *hist_buffer = new unsigned short[hist_width * hist_height * 3];
         float hist_n_max = -1;
         for (int k = 0; k < hist_width; k++)
             hist_n_max = max(hist_n_max, (float)hist.n[k]);
 
         for (int k = 0; k < hist_width; k++) {
-            float top = hist_height -
-                        round((float)hist.n[k] / hist_n_max * hist_height);
+            float top = hist_height - round((float)hist.n[k] / hist_n_max * hist_height);
             for (int r = 0; r < hist_height; r++) {
                 hist_buffer[(r * hist_width + k) * 3 + 0] = 0;
-                hist_buffer[(r * hist_width + k) * 3 + 1] =
-                    (r >= top ? (1 << 16) - 1 : 0);
+                hist_buffer[(r * hist_width + k) * 3 + 1] = (r >= top ? (1 << 16) - 1 : 0);
                 hist_buffer[(r * hist_width + k) * 3 + 2] = 0;
             }
         }
 
-        unsigned char *hist_buffer_c =
-            new unsigned char[hist_width * hist_height * 3];
+        unsigned char *hist_buffer_c = new unsigned char[hist_width * hist_height * 3];
         for (int h = 0; h < hist_width * hist_height * 3; h++) {
             float v = 255.f * (hist_buffer[h] / 65535.f);
             hist_buffer_c[h] = (unsigned char)v;
@@ -699,11 +698,12 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
         // plot_name = sprintf( '%s_hist.png', base_name );
         // imwrite( hist_img, plot_name );
 
-        QImage hist_image(hist_buffer_c, hist_width, hist_height,
-                          QImage::Format_RGB888);
+        QImage hist_image(hist_buffer_c, hist_width, hist_height, QImage::Format_RGB888);
         ostringstream img_filename;
-        if (out_dir != nullptr) img_filename << out_dir << "/";
-        if (image_dir != nullptr) img_filename << image_dir << "/";
+        if (out_dir != nullptr)
+            img_filename << out_dir << "/";
+        if (image_dir != nullptr)
+            img_filename << image_dir << "/";
         img_filename << base_name << "_hist.png";
         if (verbose)
             cout << QObject::tr("Writing: ").toStdString() << img_filename.str()
@@ -720,20 +720,16 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
     vector<float> imgBuffer(pixels * 3);
     vector<unsigned char> imgBuffer_c(pixels * 3);
     for (int k = 1; k <= f8_stops + 1; k++) {
-        float max_value =
-            (float)numeric_limits<unsigned char>::max();  //(1<<16) -1;
+        float max_value = (float)numeric_limits<unsigned short>::max();  //(1<<16) -1;
 
         float exp_multip = log2f(1 / powf(2, l_start + k * 8));
 
         int max_basis = basis_no;
-        if (k ==
-            f8_stops +
-                1)  // Do only one shared basis for the last 8-fstop segment
+        if (k == f8_stops + 1)  // Do only one shared basis for the last 8-fstop segment
             max_basis = 1;
 
         for (int b = 0; b < max_basis; b++) {
-            UniformArrayLUT basis_lut(basis_table.rows, basis_table.data[0],
-                                      basis_table.data[b + 1]);
+            UniformArrayLUT basis_lut(basis_table.rows, basis_table.data[0], basis_table.data[b + 1]);
 
             int i = 0;
             for (int pix = 0; pix < pixels; pix++) {
@@ -748,9 +744,21 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
                     imgBuffer[i++] = v;
                 }
             }
+            float maxVal = imgBuffer[0];
+            float minVal = imgBuffer[0];
             for (int pix = 0; pix < pixels * 3; pix++) {
                 float r = imgBuffer[pix];
-                imgBuffer_c[pix] = (unsigned char)r;
+                if (r > maxVal) {
+                    maxVal = r;
+                }
+                if (r < minVal) {
+                    minVal = r;
+                }
+            }
+
+            for (int pix = 0; pix < pixels * 3; pix++) {
+                float r = (imgBuffer[pix] - minVal)/(maxVal - minVal);
+                imgBuffer_c[pix] = (unsigned char)(255 * r);
             }
             QImage imImage(imgBuffer_c.data(), width, height,
                            QImage::Format_RGB888);
@@ -778,7 +786,6 @@ void HDRHTMLSet::add_image(int width, int height, float *R, float *G, float *B,
     new_image.best_exp = best_exp;
 
     image_list.push_back(new_image);
-
     locale::global(locale(user_locale.c_str()));
 }
 
@@ -793,12 +800,19 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
                                   const char *html_output, bool verbose) {
     if (image_list.empty()) return;
 
+    // THIS CAUSED ME A BIG HEADACHE!!!
+    string user_locale = locale("").name();
+    locale::global(locale::classic());
+
     ostringstream out_file_name;
     if (out_dir != nullptr) out_file_name << out_dir << "/";
     if (page_name == nullptr)
         out_file_name << image_list.front().base_name << ".html";
     else
-        out_file_name << page_name;
+        if (!QString(page_name).endsWith(".html"))
+            out_file_name << page_name << ".html";
+        else
+            out_file_name << page_name;
 
     // Load the table of the opacity coefficients
     ostringstream lut_filename;
@@ -827,7 +841,7 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
         create_from_template(out_file_name.str().c_str(), page_template,
                              replace_list);
     } catch (pfs::Exception &e) {
-        throw;
+        throw e;
     }
 
     if (object_output != nullptr) {
@@ -855,17 +869,28 @@ void HDRHTMLSet::generate_webpage(const char *page_template,
         try {
             print_image_htmlcode(hofs, this, nullptr);
         } catch (pfs::Exception &e) {
-            throw;
+            throw e;
         }
     }
+    locale::global(locale(user_locale.c_str()));
 }
 
 void print_image_objects(ostream &out, void *user_data, const char *parameter) {
     HDRHTMLSet *hdrhtml_set = static_cast<HDRHTMLSet *>(user_data);
 
+    // THIS CAUSED ME A BIG HEADACHE!!!
+    string user_locale = locale("").name();
+    locale::global(locale::classic());
+
+    struct separate_thousands : numpunct<char> {
+        char_type do_thousands_sep() const override { return '\0'; }
+    };
+
+    std::unique_ptr<separate_thousands> thousands(new separate_thousands);
+    out.imbue(locale(out.getloc(), thousands.release()));
+
     list<HDRHTMLImage>::iterator it;
-    for (it = hdrhtml_set->image_list.begin();
-         it != hdrhtml_set->image_list.end(); ++it) {
+    for (it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); ++it) {
         string obj_name("hdr_");
         obj_name.append(it->base_name);
 
@@ -888,10 +913,10 @@ void print_image_objects(ostream &out, void *user_data, const char *parameter) {
         out << obj_name << ".exposure = " << it->best_exp << ";\n";
         out << obj_name << ".best_exp = " << it->best_exp << ";\n\n";
     }
+    locale::global(locale(user_locale.c_str()));
 }
 
-void print_image_htmlcode(ostream &out, HDRHTMLSet *hdrhtml_set,
-                          const HDRHTMLImage &it) {
+void print_image_htmlcode(ostream &out, HDRHTMLSet *hdrhtml_set, const HDRHTMLImage &it) {
     string obj_name("hdr_");
     obj_name.append(it.base_name);
 
@@ -913,18 +938,20 @@ void print_image_htmlcode(ostream &out, HDRHTMLSet *hdrhtml_set,
     try {
         create_from_template(out, hdrhtml_set->image_template, replace_list);
     } catch (pfs::Exception &e) {
-        throw;
+        throw e;
     }
 }
 
-void print_image_htmlcode(ostream &out, void *user_data,
-                          const char *parameter) {
+void print_image_htmlcode(ostream &out, void *user_data, const char *parameter) {
     HDRHTMLSet *hdrhtml_set = static_cast<HDRHTMLSet *>(user_data);
+
+    // THIS CAUSED ME A BIG HEADACHE!!!
+    string user_locale = locale("").name();
+    locale::global(locale::classic());
 
     if (parameter != nullptr) {
         list<HDRHTMLImage>::iterator it;
-        for (it = hdrhtml_set->image_list.begin();
-             it != hdrhtml_set->image_list.end(); ++it) {
+        for (it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); ++it) {
             if (it->base_name.compare(parameter) == 0) break;
         }
         if (it == hdrhtml_set->image_list.end()) {
@@ -934,20 +961,20 @@ void print_image_htmlcode(ostream &out, void *user_data,
         try {
             print_image_htmlcode(out, hdrhtml_set, *it);
         } catch (pfs::Exception &e) {
-            throw;
+            throw e;
         }
 
     } else {
         list<HDRHTMLImage>::iterator it;
-        for (it = hdrhtml_set->image_list.begin();
-             it != hdrhtml_set->image_list.end(); ++it) {
+        for (it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); ++it) {
             try {
                 print_image_htmlcode(out, hdrhtml_set, *it);
             } catch (pfs::Exception &e) {
-                throw;
+                throw e;
             }
         }
     }
+    locale::global(locale(user_locale.c_str()));
 }
 
 void print_cf_table(ostream &out, void *user_data, const char *parameter) {

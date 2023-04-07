@@ -75,22 +75,21 @@ void ExportToHtmlDialog::onExportButtonClicked() {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     bool quit = false;
-    pfs::Frame *resized;
+    unique_ptr<pfs::Frame> resized;
     int size_percent = m_Ui->spinBoxSize->value();
     if (size_percent == 100) {
-        resized = pfs::copy(m_frame);
+        resized.reset(pfs::copy(m_frame));
     } else {
         int resized_width =
             (int)((float)(size_percent * m_frame->getWidth()) / 100.f);
-        resized = pfs::resize(m_frame, resized_width, BilinearInterp);
+        resized.reset(pfs::resize(m_frame, resized_width, BilinearInterp));
     }
     try {
-        generate_hdrhtml(resized, m_pageName.toStdString(),
+        generate_hdrhtml(resized.get(), m_pageName.toStdString(),
                          m_outputFolder.toStdString(),
                          m_imagesFolder.toStdString(), "", "",
                          m_Ui->spinBoxQuality->value(), false);
     } catch (pfs::Exception &e) {
-        delete resized;
         QApplication::restoreOverrideCursor();
         QMessageBox::critical(this, tr("Error: "), e.what(), QMessageBox::Ok,
                               QMessageBox::NoButton);
@@ -104,7 +103,6 @@ void ExportToHtmlDialog::onExportButtonClicked() {
             QDesktopServices::openUrl(QUrl(url));
         }
     }
-    delete resized;
     accept();
 }
 

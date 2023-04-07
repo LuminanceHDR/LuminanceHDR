@@ -41,6 +41,7 @@
 #include <HdrHTML/pfsouthdrhtml.h>
 #include <Libpfs/manip/gamma_levels.h>
 #include <Libpfs/tm/TonemapOperator.h>
+#include <Libpfs/exception.h>
 #include "commandline.h"
 
 #if defined(_MSC_VER)
@@ -799,9 +800,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot() {
         }
 
         if (HDR != nullptr) {
-            printIfVerbose(QObject::tr("Successfully loaded file %1.")
-                               .arg(loadHdrFilename),
-                           verbose);
+            printIfVerbose(QObject::tr("Successfully loaded file %1.") .arg(loadHdrFilename), verbose);
             saveHDR();
         } else {
             printErrorAndExit(tr("Load file %1 failed").arg(loadHdrFilename));
@@ -936,9 +935,15 @@ void CommandLineInterfaceManager::saveHDR() {
 
 void CommandLineInterfaceManager::generateHTML() {
     if (operationMode == LOAD_HDR_MODE) {
-        if (pageName.empty()) pageName = loadHdrFilename.toStdString();
+        if (pageName.empty()) {
+            QFileInfo fi(loadHdrFilename);
+            pageName = fi.baseName().toStdString();
+        }
     } else {
-        if (pageName.empty()) pageName = inputFiles.at(0).toStdString();
+        if (pageName.empty()) {
+            QFileInfo fi(inputFiles.at(0));
+            pageName = fi.baseName().toStdString();
+        }
     }
     if (!imagesDir.empty()) {
         QFileInfo qfi = QFileInfo(QDir::currentPath() + "/" +
@@ -947,9 +952,14 @@ void CommandLineInterfaceManager::generateHTML() {
             printErrorAndExit(tr("ERROR: directory %1 must exist")
                                   .arg(QString::fromStdString(imagesDir)));
     }
-    generate_hdrhtml(HDR.data(), pageName, "", imagesDir, "", "", htmlQuality,
-                     verbose);
-    isHtmlDone = true;
+    try {
+        generate_hdrhtml(HDR.data(), pageName, "", imagesDir, "", "", htmlQuality, verbose);
+        isHtmlDone = true;
+    }
+    catch(pfs::Exception &e) {
+            printErrorAndExit( e.what() );
+    }
+
 }
 
 void CommandLineInterfaceManager::startTonemap() {

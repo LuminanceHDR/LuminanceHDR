@@ -1,7 +1,7 @@
 /**
  * @brief Create a web page with an HDR viewer
  *
- * This file is a part of LuminanceHDR package, based on pfstools.
+ * This file is a part of LuminanceHDR package, based on PFSTOOLS.
  * ----------------------------------------------------------------------
  * Copyright (C) 2009 Rafal Mantiuk
  *
@@ -33,53 +33,46 @@
 
 namespace hdrhtml {
 
-class HDRHTMLImage {
-   public:
-    std::string base_name;
-    int width, height;
-    int f8_stops;
-    int f_step_res;
-    int basis;
-    int shared_basis;
-    int pix_per_fstop;
-    float hist_start;
-    int hist_width;
-    float exposure;
-    float best_exp;
+class HDRHTMLImage
+{
+public:
+  std::string base_name;
+  int width, height;
+  int f8_stops;
+  int f_step_res;
+  int basis;
+  int shared_basis;
+  int pix_per_fstop;
+  float hist_start;
+  int hist_width;
+  float exposure;
+  float best_exp;
 
-    HDRHTMLImage(const char *base_name, int width, int height)
-        : base_name(base_name),
-          width(width),
-          height(height),
-          f8_stops(0),
-          f_step_res(0),
-          basis(0),
-          shared_basis(0),
-          pix_per_fstop(0),
-          hist_start(0),
-          hist_width(0),
-          exposure(0),
-          best_exp(0) {}
+  HDRHTMLImage( const char *base_name, int width, int height ) :
+  base_name( base_name ), width( width ), height( height )
+  {
+  }
 };
 
-class HDRHTMLSet {
-    const char *page_name;
+class HDRHTMLSet
+{
+  const char *page_name;
+public:
+  const char *image_dir;
+  const char *image_template;
+  std::list<HDRHTMLImage> image_list;
 
-   public:
-    const char *image_dir;
-    const char *image_template;
-    std::list<HDRHTMLImage> image_list;
+  explicit HDRHTMLSet( const char *page_name, const char *image_dir = nullptr) :
+  page_name( page_name ), image_dir( image_dir )
+  {
+  }
 
-    explicit HDRHTMLSet(const char *page_name, const char *image_dir = nullptr)
-        : page_name(page_name), image_dir(image_dir), image_template(nullptr) {}
 
-    void add_image(int width, int height, float *R, float *G, float *B,
-                   float *Y, const char *base_name, const char *out_dir,
-                   int quality, bool verbose);
+  void add_image( int width, int height, float *R, float *G, float *B, float *Y,
+                  const char *base_name, const char *out_dir, int quality, bool verbose);
 
-    void generate_webpage(const char *page_template, const char *image_template,
-                          const char *out_dir, const char *object_output = nullptr,
-                          const char *html_output = nullptr, bool verbose = false);
+  void generate_webpage( const char *page_template, const char *image_template,
+                         const char *out_dir, const char *object_output = nullptr, const char *html_output = nullptr, bool verbose = false);
 };
-}
+} // namespace hdrhtml
 #endif
