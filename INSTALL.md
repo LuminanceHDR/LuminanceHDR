@@ -65,7 +65,7 @@ To compile Luminance HDR your system will need a set of tools and code libraries
 - [FFTW](www.fftw.org), used for computing discrete Fourier transforms. Luminance HDR requires the single-precision "float" version of FFTW3, usually called `fftw3f` or `fftw-3-single` on MacPorts.
 - [Boost](https://www.boost.org/), a set of C++ support libraries.
 - [GNU Scientific Library](https://www.gnu.org/software/gsl/), GSL is used by the Mantiuk08 tone mapping operator.
-- [Eigen3](http://eigen.tuxfamily.org/), a C++ template library required by by the Lischinski tone mapping operator.
+- [Eigen3](http://eigen.tuxfamily.org/), a C++ template library required by the Lischinski tone mapping operator.
 
 ## Compilation <a name="compilation"></a>
 
