@@ -84,23 +84,13 @@ void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
     pfs::Channel *R, *G, *B;
     frame->getXYZChannels(R, G, B);
 
-    int size = frame->getWidth() * frame->getHeight();
+    const size_t W = frame->getWidth();
+    const size_t H = frame->getHeight();
 
-    pfs::Array2Df X(frame->getWidth(), frame->getHeight());
-    pfs::Array2Df Y(frame->getWidth(), frame->getHeight());
-    pfs::Array2Df Z(frame->getWidth(), frame->getHeight());
+    pfs::Array2Df Y(W, H);
 
-    pfs::transformColorSpace(pfs::CS_RGB, R, G, B, pfs::CS_XYZ, &X, &Y, &Z);
+    transformRGB2Y(R, G, B, &Y);
 
-    float *R1 = new float[size];
-    float *G1 = new float[size];
-    float *B1 = new float[size];
-    float *Y1 = new float[size];
-
-    copy(R->begin(), R->end(), R1);
-    copy(G->begin(), G->end(), G1);
-    copy(B->begin(), B->end(), B1);
-    copy(Y.begin(), Y.end(), Y1);
     // Get base_name if needed
     string base_name;
     string tmp_str(page_name);
@@ -125,13 +115,13 @@ void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
              << QObject::tr(" to the web page").toStdString() << endl;
 
     try {
-        image_set.add_image(frame->getWidth(), frame->getHeight(), R1, G1, B1, Y1,
+        image_set.add_image(W, H, R->data(), G->data(), B->data(), Y.data(),
                             base_name.c_str(),
                             out_dir.empty() ? nullptr : out_dir.c_str(), quality,
                             verbose
                             );
     } catch (pfs::Exception &e) {
-        throw;
+        throw e;
     }
 
     try {
@@ -141,11 +131,6 @@ void generate_hdrhtml(pfs::Frame *frame, string page_name, string out_dir,
                                    html_output.empty() ? nullptr : html_output.c_str(), verbose
                                    );
     } catch (pfs::Exception &e) {
-        throw;
+        throw e;
     }
-
-    delete[] R1;
-    delete[] G1;
-    delete[] B1;
-    delete[] Y1;
 }
