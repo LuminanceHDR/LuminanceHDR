@@ -51,6 +51,11 @@ ExifData::ExifData(const std::string &filename) { fromFile(filename); }
 
 void ExifData::fromFile(const std::string &filename) {
     reset();
+    bool isMBFFSupported = ::Exiv2::enableBMFF();
+    if (isMBFFSupported == false) {
+      assert(!"Exiv2 should be compiled with EXIV2_ENABLE_BMFF");
+      return;
+    }
     try {
         ::Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
         image->readMetadata();
