@@ -3,6 +3,7 @@ CMAKE_POLICY(SET CMP0025 NEW)
 CMAKE_POLICY(SET CMP0043 NEW)
 CMAKE_POLICY(SET CMP0054 NEW)
 CMAKE_POLICY(SET CMP0053 NEW)
+CMAKE_POLICY(SET CMP0070 NEW)
 PROJECT("Luminance HDR")
 
 string(TOLOWER ${CMAKE_BUILD_TYPE} LOWERCASE_CMAKE_BUILD_TYPE)
@@ -179,7 +180,7 @@ ENDIF()
 IF(WIN32)
     SET(Boost_USE_STATIC_LIBS ON)
 ENDIF()
-FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options thread chrono system date_time)
+FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options thread chrono system date_time atomic)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 FIND_PACKAGE(exiv2 REQUIRED)
@@ -363,36 +364,37 @@ IF(APPLE)
     )
 
     # Install Boost libs
-    file(MAKE_DIRECTORY ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
-    file(COPY
-        ${Boost_SYSTEM_LIBRARY_RELEASE} DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
-    file(COPY
-        ${Boost_THREAD_LIBRARY_RELEASE} DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
-    file(COPY
-        ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
-    file(COPY
-        ${Boost_CHRONO_LIBRARY_RELEASE}  DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
-    file(COPY
-        ${Boost_DATE_TIME_LIBRARY_RELEASE}  DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
-    file(COPY
-        ${Boost_ATOMIC_LIBRARY_RELEASE} DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks)
+    get_filename_component(SYSTEM_LIBRARY_RELEASE ${Boost_SYSTEM_LIBRARY_RELEASE} NAME)
+    get_filename_component(THREAD_LIBRARY_RELEASE ${Boost_THREAD_LIBRARY_RELEASE} NAME)
+    get_filename_component(PROGRAM_OPTIONS_LIBRARY_RELEASE ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} NAME)
+    get_filename_component(CHRONO_LIBRARY_RELEASE ${Boost_CHRONO_LIBRARY_RELEASE} NAME)
+    get_filename_component(DATE_TIME_LIBRARY_RELEASE ${Boost_DATE_TIME_LIBRARY_RELEASE} NAME)
+    get_filename_component(ATOMIC_LIBRARY_RELEASE ${Boost_ATOMIC_LIBRARY_RELEASE} NAME)
     add_custom_command(
         TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
         POST_BUILD
-        COMMAND install_name_tool -change libboost_system.dylib @rpath/libboost_system.dylib *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change libboost_thread.dylib @rpath/libboost_thread.dylib *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change libboost_program_options.dylib @rpath/libboost_program_options.dylib *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change libboost_chrono.dylib @rpath/libboost_chrono.dylib *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change libboost_date_time.dylib @rpath/libboost_date_time.dylib *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change libboost_atomic.dylib @rpath/libboost_atomic.dylib *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change libboost_system.dylib @rpath/libboost_system.dylib *.app/Contents/Frameworks/libboost_chrono.dylib &&
-        install_name_tool -change libboost_system.dylib @rpath/libboost_system.dylib *.app/Contents/Frameworks/libboost_thread.dylib &&
-        install_name_tool -change libboost_system.dylib @rpath/libboost_system.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change libboost_thread.dylib @rpath/libboost_thread.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change libboost_program_options.dylib @rpath/libboost_program_options.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change libboost_chrono.dylib @rpath/libboost_chrono.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change libboost_date_time.dylib @rpath/libboost_date_time.dylib *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change libboost_atomic.dylib @rpath/libboost_atomic.dylib *.app/Contents/MacOS/luminance-hdr-cli)
+	COMMAND mkdir -p ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks &&
+	echo "copying libs into ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks" &&
+	cp -f ${Boost_CHRONO_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${CHRONO_LIBRARY_RELEASE} &&
+	cp -f ${Boost_SYSTEM_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${SYSTEM_LIBRARY_RELEASE} &&
+	cp -f ${Boost_THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${THREAD_LIBRARY_RELEASE} &&
+	cp -f ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${PROGRAM_OPTIONS_LIBRARY_RELEASE} &&
+	cp -f ${Boost_DATE_TIME_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${DATE_TIME_LIBRARY_RELEASE} &&
+	cp -f ${Boost_ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${ATOMIC_LIBRARY_RELEASE}
+        COMMAND install_name_tool -change ${SYSTEM_LIBRARY_RELEASE} @rpath/${SYSTEM_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${DATE_TIME_LIBRARY_RELEASE} @rpath/${DATE_TIME_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${ATOMIC_LIBRARY_RELEASE} @rpath/${ATOMIC_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${SYSTEM_LIBRARY_RELEASE} @rpath/${SYSTEM_LIBRARY_RELEASE} *.app/Contents/Frameworks/${CHRONO_LIBRARY_RELEASE} &&
+        install_name_tool -change ${SYSTEM_LIBRARY_RELEASE} @rpath/${SYSTEM_LIBRARY_RELEASE} *.app/Contents/Frameworks/${THREAD_LIBRARY_RELEASE} &&
+        install_name_tool -change ${SYSTEM_LIBRARY_RELEASE} @rpath/${SYSTEM_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${DATE_TIME_LIBRARY_RELEASE} @rpath/${DATE_TIME_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${ATOMIC_LIBRARY_RELEASE} @rpath/${ATOMIC_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli)
 
 # Unix
 ELSEIF(UNIX)
