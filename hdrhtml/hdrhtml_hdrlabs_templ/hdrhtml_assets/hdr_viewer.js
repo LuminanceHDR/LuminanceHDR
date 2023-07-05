@@ -169,7 +169,7 @@ Requires: mootools javascript library from www.mootools.net or linked in from go
             hdr_viewport.set('html',injection);
 			
 
-			// link help viewer to help buttom
+			// link help viewer to help button
 
             var help_view = $(hdr_image.base_name+'_help_view').fade('hide');;
 

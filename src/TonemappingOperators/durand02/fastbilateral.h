@@ -39,7 +39,7 @@ class Progress;
 //!
 //! @brief Fast bilateral filtering
 //!
-//! Pieceweise linear algorithm (fast).
+//! Piecewise linear algorithm (fast).
 //!
 //! \param I [in] input array
 //! \param J [out] filtered array

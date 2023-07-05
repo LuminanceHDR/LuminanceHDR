@@ -25,7 +25,7 @@
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \date 28 April 2013
 //! \brief This headers defines the base interface for the fusion operator
-//! fusion operators take as input a set of images and trasform them into an hdr
+//! fusion operators take as input a set of images and transform them into an hdr
 //! merged image, ready for tonemap or other processing
 //! \note This the first header written specifically for LibHDR (milestone!)
 

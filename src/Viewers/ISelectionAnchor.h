@@ -59,7 +59,7 @@ class ISelectionAnchor : public QGraphicsItem {
     explicit ISelectionAnchor(AnchorPosition position,
                               QGraphicsItem *parent = 0);
 
-    // allows the owner to find out which coner this is
+    // allows the owner to find out which corner this is
     inline AnchorPosition getCorner() { return mPosition; }
     // allows the owner to record the current mouse state
     inline void setMouseState(AnchorPosition position) { mPosition = position; }

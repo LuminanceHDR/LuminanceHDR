@@ -109,7 +109,7 @@ the logic to convert from/to this structure.
 		for (unsigned i=1; i<h; i++) 
 			blue[i]     = blue[i - 1] + w;
 
-    //loads the internal data to the librtprocess rawData structure.  The interal data's red channel 
+    //loads the internal data to the librtprocess rawData structure.  The internal data's red channel 
     //is arbitrarily chosen as a monochrome image is represented R=G=B:
 		#pragma omp parallel for num_threads(threadcount)
 		for (unsigned y=0; y<h; y++) {
