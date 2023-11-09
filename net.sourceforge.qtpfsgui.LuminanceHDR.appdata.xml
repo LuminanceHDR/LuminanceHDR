@@ -39,7 +39,9 @@
     <binary>luminance-hdr-cli</binary>
   </provides>
 
-  <developer_name>Luminance HDR Development Team</developer_name>
+  <developer>
+    <name>Luminance HDR Development Team</name>
+  </developer>
   <update_contact>fcomida_AT_users.sourceforge.net</update_contact>
   <url type="homepage">http://qtpfsgui.sourceforge.net/</url>
   <url type="help">https://luminancehdr.readthedocs.io/en/latest/</url>
