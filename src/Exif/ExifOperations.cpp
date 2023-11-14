@@ -42,6 +42,14 @@
 #include "ExifOperations.h"
 #include "arch/math.h"
 
+#if EXIV2_TEST_VERSION(0,28,0)
+typedef Exiv2::Error Exiv2Error;
+typedef Exiv2::Image::UniquePtr ImagePtr;
+#else
+typedef Exiv2::AnyError Exiv2Error;
+typedef Exiv2::Image::AutoPtr ImagePtr;
+#endif
+
 using namespace boost;
 using namespace boost::assign;
 
@@ -108,7 +116,7 @@ void copyExifData(const std::string &from, const std::string &to,
 #endif
 
     try {
-        Exiv2::Image::AutoPtr sourceImage;
+        ImagePtr sourceImage;
         Exiv2::ExifData srcExifData;
 
         if (!from.empty()) {
@@ -128,7 +136,7 @@ void copyExifData(const std::string &from, const std::string &to,
         }
 
         // get destination exif data
-        Exiv2::Image::AutoPtr destinationImage = Exiv2::ImageFactory::open(to);
+        ImagePtr destinationImage = Exiv2::ImageFactory::open(to);
 
         if (dontOverwrite) {
             // doesn't throw anything if it is empty
@@ -212,7 +220,7 @@ void copyExifData(const std::string &from, const std::string &to,
             destinationImage->setExifData(srcExifData);
         }
         destinationImage->writeMetadata();
-    } catch (Exiv2::AnyError &e) {
+    } catch (Exiv2Error &e) {
 #ifndef NDEBUG
         qDebug() << e.what();
 #endif
@@ -250,7 +258,7 @@ float obtain_avg_lum(const std::string& filename)
 {
     try
     {
-        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        ImagePtr image = Exiv2::ImageFactory::open(filename);
         image->readMetadata();
         Exiv2::ExifData &exifData = image->exifData();
         if (exifData.empty())
@@ -329,7 +337,7 @@ allowed for ev computation purposes.
             return -1;
         }
     }
-    catch (Exiv2::AnyError& e)
+    catch (Exiv2Error& e)
     {
         return -1;
     }
@@ -338,7 +346,7 @@ allowed for ev computation purposes.
 
 float getExposureTime(const std::string &filename) {
     try {
-        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        ImagePtr image = Exiv2::ImageFactory::open(filename);
         image->readMetadata();
         Exiv2::ExifData &exifData = image->exifData();
         if (exifData.empty()) return -1;
@@ -374,14 +382,14 @@ float getExposureTime(const std::string &filename) {
         } else {
             return -1;
         }
-    } catch (Exiv2::AnyError &e) {
+    } catch (Exiv2Error &e) {
         return -1;
     }
 }
 
 float getAverageLuminance(const std::string &filename) {
     try {
-        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        ImagePtr image = Exiv2::ImageFactory::open(filename);
         image->readMetadata();
         Exiv2::ExifData &exifData = image->exifData();
 
@@ -403,7 +411,7 @@ float getAverageLuminance(const std::string &filename) {
                   << std::endl;
 
         return -1.0;
-    } catch (Exiv2::AnyError &e) {
+    } catch (Exiv2Error &e) {
         return -1.0;
     }
 }
