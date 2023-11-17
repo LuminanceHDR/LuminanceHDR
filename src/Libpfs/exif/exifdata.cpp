@@ -25,6 +25,16 @@
 #include <exiv2/exiv2.hpp>
 #include <iostream>
 
+#if EXIV2_TEST_VERSION(0,28,0)
+typedef Exiv2::Error Exiv2Error;
+typedef Exiv2::Image::UniquePtr ImagePtr;
+#define EXIV2_TO_INT toInt64
+#else
+typedef Exiv2::AnyError Exiv2Error;
+typedef Exiv2::Image::AutoPtr ImagePtr;
+#define EXIV2_TO_INT toLong
+#endif
+
 namespace pfs {
 namespace exif {
 
@@ -57,7 +67,7 @@ void ExifData::fromFile(const std::string &filename) {
       return;
     }
     try {
-        ::Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        ::ImagePtr image = Exiv2::ImageFactory::open(filename);
         image->readMetadata();
         ::Exiv2::ExifData &exifData = image->exifData();
 
@@ -129,7 +139,7 @@ MissingFNumber:
          */
         if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Image.Orientation"))) !=
             exifData.end()) {
-            long rotation = it->toLong();
+            long rotation = it->EXIV2_TO_INT();
             switch (rotation) {
                 case 3:
                     m_orientation = 180;
@@ -142,7 +152,7 @@ MissingFNumber:
                     break;
             }
         }
-    } catch (Exiv2::AnyError &e) {
+    } catch (Exiv2Error &e) {
         return;
     }
 }

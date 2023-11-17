@@ -27,14 +27,11 @@
 #include <exif.hpp>
 #include <image.hpp>
 #include <exiv2/exiv2.hpp>
-// Make sure an EXIV2_TEST_VERSION macro exists:
-#ifdef EXIV2_VERSION
-# ifndef EXIV2_TEST_VERSION
-# define EXIV2_TEST_VERSION(major,minor,patch) \
-    ( EXIV2_VERSION >= EXIV2_MAKE_VERSION(major,minor,patch) )
-# endif
+
+#if EXIV2_TEST_VERSION(0,28,0)
+typedef Exiv2::Error Exiv2Error;
 #else
-# define EXIV2_TEST_VERSION(major,minor,patch) (false)
+typedef Exiv2::AnyError Exiv2Error;
 #endif
 
 #include "Common/config.h"
@@ -347,7 +344,7 @@ void TransplantExifDialog::transplant_requested() {
                 QFile::encodeName((*i_dest)).constData(),
                 m_Ui->checkBox_dont_overwrite->isChecked());
             m_Ui->rightlist->item(index)->setBackground(QBrush("#a0ff87"));
-        } catch (Exiv2::AnyError &e) {
+        } catch (Exiv2Error &e) {
             add_log_message("ERROR:" + QString::fromStdString(e.what()));
             m_Ui->rightlist->item(index)->setBackground(QBrush("#ff743d"));
         }
