@@ -34,8 +34,8 @@ class HelpSideBar : public QDockWidget {
     Q_OBJECT
 
    public:
-    HelpSideBar(const QString &title, QWidget *parent = 0,
-                Qt::WindowFlags flags = 0);
+    HelpSideBar(const QString &title, QWidget *parent = nullptr,
+                Qt::WindowFlags flags = Qt::WindowFlags());
     ~HelpSideBar();
 
    protected:

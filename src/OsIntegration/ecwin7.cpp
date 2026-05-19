@@ -56,7 +56,7 @@ void EcWin7::associateFileTypes(const QStringList &fileTypes) {
     settings.setValue("FriendlyAppName", displayName);
 
     settings.beginGroup("SupportedTypes");
-    foreach (const QString &fileType, fileTypes)
+    for (const QString &fileType : fileTypes)
         settings.setValue(fileType, QString());
     settings.endGroup();
 

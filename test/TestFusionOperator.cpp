@@ -65,7 +65,7 @@ int main(int argc, char** argv)
         po::notify(vm);
 
         std::vector<libhdr::fusion::FrameEnhanced> images;
-        foreach (const string& filename, inputFiles)
+        for (const string& filename, inputFiles)
         {
             images.push_back(loadFile(filename));
         }

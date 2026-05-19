@@ -98,7 +98,7 @@ QLayoutItem *FlowLayout::takeAt(int index) {
 //! [5]
 
 //! [6]
-Qt::Orientations FlowLayout::expandingDirections() const { return 0; }
+Qt::Orientations FlowLayout::expandingDirections() const { return Qt::Orientations(); }
 //! [6]
 
 //! [7]
@@ -121,10 +121,10 @@ QSize FlowLayout::sizeHint() const { return minimumSize(); }
 QSize FlowLayout::minimumSize() const {
     QSize size;
     QLayoutItem *item;
-    foreach (item, itemList)
+    for (auto item : itemList)
         size = size.expandedTo(item->minimumSize());
 
-    size += QSize(2 * margin(), 2 * margin());
+    size += QSize(2 * contentsMargins().left(), 2 * contentsMargins().top());
     return size;
 }
 //! [8]
@@ -140,7 +140,7 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const {
     //! [9]
 
     //! [10]
-    foreach (QLayoutItem *item, itemList) {
+    for (QLayoutItem *item : itemList) {
         QWidget *wid = item->widget();
         int spaceX = horizontalSpacing();
         if (spaceX == -1)

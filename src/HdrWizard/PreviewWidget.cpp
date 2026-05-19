@@ -79,7 +79,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p)
 
     mVBL = new QVBoxLayout(this);
     mVBL->setSpacing(0);
-    mVBL->setMargin(0);
+    mVBL->setContentsMargins(0, 0, 0, 0);
     mScene = new QGraphicsScene(this);
     mScene->setBackgroundBrush(Qt::darkGray);
     mView = new IGraphicsView(mScene, this);
@@ -125,7 +125,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p)
     mAgPixmap->setVisible(false);
     mScene->addItem(mPixmap);
 
-    mAgPixmap->setAcceptedMouseButtons(0);
+    mAgPixmap->setAcceptedMouseButtons(Qt::MouseButtons());
 }
 
 PreviewWidget::~PreviewWidget() {
@@ -312,7 +312,7 @@ bool PreviewWidget::eventFilter(QObject *object, QEvent *event) {
     if (m_mode == EditingMode) return false;
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
-        if (mouse->buttons() == Qt::MidButton) {
+        if (mouse->buttons() == Qt::MiddleButton) {
             QApplication::setOverrideCursor(QCursor(Qt::ClosedHandCursor));
             m_mousePos = mView->mapToScene(mouse->pos());
         } else if (mouse->buttons() == Qt::LeftButton) {
@@ -344,7 +344,7 @@ bool PreviewWidget::eventFilter(QObject *object, QEvent *event) {
         }
     } else if (event->type() == QEvent::MouseMove) {
         QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
-        if (mouse->buttons() == Qt::MidButton) {
+        if (mouse->buttons() == Qt::MiddleButton) {
             QPointF pos = mView->mapToScene(mouse->pos());
             // moving mouse with middle button pans the preview
             QPointF diff = pos - m_mousePos;
@@ -371,7 +371,7 @@ bool PreviewWidget::eventFilter(QObject *object, QEvent *event) {
                 m_drawingPathEnded = true;
                 drawPath();
             }
-        } else if (mouse->button() == Qt::MidButton) {
+        } else if (mouse->button() == Qt::MiddleButton) {
             QApplication::restoreOverrideCursor();
         }
         paste(m_agMask, m_agMaskPixmap->toImage(), (m_mx - m_old_mx),
@@ -387,7 +387,7 @@ bool PreviewWidget::eventFilter(QObject *object, QEvent *event) {
         else {
             if (m_drawingMode == BRUSH) {
                 fillAntiGhostingCursorPixmap();
-                QApplication::setOverrideCursor(*m_agcursorPixmap);
+                QApplication::setOverrideCursor(QCursor(*m_agcursorPixmap));
             } else
                 QApplication::setOverrideCursor(Qt::CrossCursor);
         }
@@ -760,7 +760,7 @@ void PreviewWidget::fillAntiGhostingCursorPixmap() {
 
 void PreviewWidget::switchAntighostingMode(bool ag) {
     if (ag) {
-        mPixmap->setAcceptedMouseButtons(0);
+        mPixmap->setAcceptedMouseButtons(Qt::MouseButtons());
         delete m_agMaskPixmap;
         m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
         mAgPixmap->setPixmap(*m_agMaskPixmap);
@@ -768,7 +768,7 @@ void PreviewWidget::switchAntighostingMode(bool ag) {
         m_mode = AntighostingMode;
     } else {
         mPixmap->setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton |
-                                         Qt::MidButton);
+                                         Qt::MiddleButton);
         mAgPixmap->setVisible(false);
         m_mode = EditingMode;
     }
@@ -777,7 +777,7 @@ void PreviewWidget::switchAntighostingMode(bool ag) {
 void PreviewWidget::switchViewPatchesMode(bool pp, bool patches[][agGridSize],
                                           const int gridX, const int gridY) {
     if (pp) {
-        mPixmap->setAcceptedMouseButtons(0);
+        mPixmap->setAcceptedMouseButtons(Qt::MouseButtons());
         mAgPixmap->setVisible(true);
         m_mode = ViewPatches;
         m_gridX = gridX;
@@ -785,7 +785,7 @@ void PreviewWidget::switchViewPatchesMode(bool pp, bool patches[][agGridSize],
         memcpy(m_patches, patches, agGridSize * agGridSize);
     } else {
         mPixmap->setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton |
-                                         Qt::MidButton);
+                                         Qt::MiddleButton);
         mAgPixmap->setVisible(false);
         m_mode = EditingMode;
     }

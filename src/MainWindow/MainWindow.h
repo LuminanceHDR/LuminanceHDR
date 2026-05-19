@@ -41,7 +41,6 @@
 #include <QProgressBar>
 #include <QScopedPointer>
 #include <QScrollArea>
-#include <QSignalMapper>
 #include <QSplitter>
 #include <QString>
 #include <QStringList>
@@ -241,7 +240,6 @@ class MainWindow : public QMainWindow {
 
     QTabWidget *m_tabwidget;
 
-    QSignalMapper *windowMapper;
     QDialog *splash;
 
     // Recent Files Management

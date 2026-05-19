@@ -134,7 +134,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg,
         QStringLiteral("%1").arg(lassocolor.blue()) + ")");
     assert(m_originalImagesList.size() == m_fileList.size());
     QVBoxLayout *qvl = new QVBoxLayout;
-    qvl->setMargin(0);
+    qvl->setContentsMargins(0, 0, 0, 0);
     qvl->setSpacing(0);
 
     m_previewWidget = new PreviewWidget(this, m_originalImagesList[1],
@@ -151,7 +151,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg,
     m_Ui->previewImageFrame->setLayout(qvl);
 
     int idx = 0;
-    foreach (QString s, m_fileList) {
+    for (QString s : m_fileList) {
         m_filesMap[QFileInfo(s).fileName()] = idx++;
         m_Ui->movableListWidget->addItem(QFileInfo(s).fileName());
         m_Ui->referenceListWidget->addItem(QFileInfo(s).fileName());
@@ -616,7 +616,7 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
                 &EditingTools::updateMovable);
         connect(m_Ui->referenceListWidget, &QListWidget::currentRowChanged,
                 this, &EditingTools::updatePivot);
-        foreach (QString s, m_fileList) {
+        for (QString s : m_fileList) {
             m_Ui->movableListWidget->addItem(QFileInfo(s).fileName());
             m_Ui->referenceListWidget->addItem(QFileInfo(s).fileName());
         }
