@@ -209,7 +209,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame *ldr_input, const QString &filename,
             if (!expoTimes.empty()) {
                 comment +=
                     QLatin1String("\nBracketed images exposure times:\n");
-                foreach (float e, expoTimes) {
+                for (float e : expoTimes) {
                     comment += QStringLiteral("%1").arg(e) + "\n";
                 }
             }

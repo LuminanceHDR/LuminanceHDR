@@ -110,27 +110,22 @@ Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyHuginBinPath}/align_image_stack.exe"; DestDir: "{app}/hugin"; Flags: ignoreversion
 Source: "{#MyHuginBinPath}/*.dll"; Excludes: "wx*.dll"; DestDir: "{app}/hugin"; Flags: ignoreversion
 
-;---- DLLs !  (the Qt5 plugins dll are already copied in the base path
-Source: "{#MySourceLibsDir}\qt5concurrent.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5gui.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5network.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5printsupport.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5sql.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5webkitwidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5winextras.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5xml.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5webkit.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5multimedia.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5multimediawidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5xml.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5positioning.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5qml.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5quick.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5sensors.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5webchannel.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt5opengl.dll"; DestDir: "{app}"; Flags: ignoreversion
+;---- DLLs !  (the Qt6 plugins dll are already copied in the base path
+Source: "{#MySourceLibsDir}\qt6concurrent.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6gui.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6network.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6printsupport.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6sql.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6webenginewidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6winextras.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6xml.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6webenginecore.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6qml.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6quick.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6positioning.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6webchannel.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libexiv2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libgsl-23.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libiex-2_*.dll"; DestDir: "{app}"; Flags: ignoreversion

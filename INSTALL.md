@@ -53,7 +53,7 @@ The rest of this document concerns compiling Luminance HDR yourself.
 
 To compile Luminance HDR your system will need a set of tools and code libraries called "dependencies". The following is a list of dependencies needed to compile the latest version of Luminance HDR:
 
-- [Qt5](https://www.qt.io/), the widget toolkit used by the graphical user interface (GUI).
+- [Qt6](https://www.qt.io/), the widget toolkit used by the graphical user interface (GUI).
 - [Exiv2](https://www.exiv2.org/), used to read and write image metadata (Exif, IPTC, XMP).
 - [Little CMS](http://www.littlecms.com/), LCMS2 is used for color management.
 - [libjpeg-turbo](https://libjpeg-turbo.org/) (or libjpeg), used to read and write JPEG files.
@@ -170,12 +170,12 @@ It is also possible to build Luminance HDR using MSYS2/MinGW, see `build_files/p
 
 ### macOS <a name="pnote_macos"></a>
 
-On macOS, all the dependencies can be obtained using MacPorts, except for LibRaw which must be compiled from source, and Qt5 which must be downloaded from the official Qt5 website.
+On macOS, all the dependencies can be obtained using MacPorts, except for LibRaw which must be compiled from source, and Qt6 which must be downloaded from the official Qt website.
 
-If you install Qt/5.13.0 into `~/Qt/5.13.0`, generate the project with:
+If you install Qt/6.x.x into `~/Qt/6.x.x`, generate the project with:
 
 ```bash
-export QT=~/Qt/5.13.0/clang_64
+export QT=~/Qt/6.x.x/macos
 cd ~/programs/code-lhdr
 mkdir build
 cd build
@@ -233,7 +233,7 @@ If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10
 Then use the following:
 
 ```bash
-export QT=~/Qt/5.9.8/clang_64
+export QT=~/Qt/6.x.x/macos
 export MACOSX_DEPLOYMENT_TARGET="10.10"
 export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk"
 cmake .. \

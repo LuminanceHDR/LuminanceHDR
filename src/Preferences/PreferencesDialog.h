@@ -27,7 +27,7 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QMap>
-#include <QSignalMapper>
+
 
 #include "LibpfsAdditions/formathelper.h"
 
@@ -51,7 +51,6 @@ class PreferencesDialog : public QDialog {
     QColor infnancolor, negcolor;
     QMap<QString, int> fromIso639ToGuiIndex;
     QMap<int, QString> fromGuiIndexToIso639;
-    QSignalMapper *toolButtonMapper;
     pfsadditions::FormatHelper m_formatHelper;
 
    protected:

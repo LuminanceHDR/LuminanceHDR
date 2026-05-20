@@ -4,8 +4,8 @@ ADD_DEFINITIONS(-Wno-deprecated)
 ADD_DEFINITIONS(-Wno-deprecated-declarations)
 
 IF(APPLE)
-# optimize for 64-bit core 2 architecture on Apple
-ADD_DEFINITIONS(-march=core2)
+# optimize for native architecture on Apple
+# ADD_DEFINITIONS(-march=native)  # Disabled: not supported on all Apple Silicon
 ENDIF()
 ENDIF()
 
@@ -28,7 +28,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     message(STATUS "C++11 activated for Clang")
     set(CMAKE_CXX_STANDARD 11)
     if (APPLE)
-        set(CMAKE_EXE_LINKER_FLAGS "-lc++abi -stdlib=libc++ -rpath @loader_path/../Frameworks/")
+        set(CMAKE_EXE_LINKER_FLAGS "-lc++abi -stdlib=libc++ -rpath @loader_path/../Frameworks/ -Wl,-no_warn_duplicate_libraries")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
     endif()
     add_definitions(-DLHDR_CXX11_ENABLED)

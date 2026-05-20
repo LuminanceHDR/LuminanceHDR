@@ -161,7 +161,7 @@ void PreviewSettings::updatePreviews(pfs::Frame *frame) {
 
     // 2. (non concurrent) for each PreviewLabel, call
     // PreviewLabelUpdater::operator()
-    foreach (PreviewLabel *current_label, m_ListPreviewLabel) {
+    for (PreviewLabel *current_label : m_ListPreviewLabel) {
         PreviewLabelUpdater updater(current_frame);
         updater(current_label);
     }
@@ -183,7 +183,7 @@ void PreviewSettings::tonemapPreview(TonemappingOptions *opts) {
 }
 
 QSize PreviewSettings::getLabelSize() {
-    return m_ListPreviewLabel.at(0)->pixmap()->size();
+    return m_ListPreviewLabel.at(0)->pixmap().size();
 }
 
 void PreviewSettings::addPreviewLabel(PreviewLabel *label) {

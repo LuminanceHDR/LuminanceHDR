@@ -33,7 +33,7 @@
 #include <QMessageBox>
 #include <QMimeData>
 #include <QProcess>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringList>
 #include <QTextStream>
 #include <QUrl>
@@ -41,7 +41,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QThread>
-#include <QtConcurrentRun>
+#include <QtConcurrent>
 
 // --- SQL handling
 #include <QSqlError>
@@ -78,7 +78,10 @@ static QString buildEVString(float newEV) {
     QString EVdisplay;
     QTextStream ts(&EVdisplay);
     ts.setRealNumberPrecision(2);
-    ts << right << forcesign << fixed << newEV << " EV";
+    ts.setFieldAlignment(QTextStream::FieldAlignment::AlignRight);
+    ts.setNumberFlags(ts.numberFlags() | QTextStream::NumberFlag::ForceSign);
+    ts.setRealNumberNotation(QTextStream::RealNumberNotation::FixedNotation);
+    ts << newEV << " EV";
 
     return EVdisplay;
 }
@@ -482,7 +485,7 @@ void HdrWizard::enableNextOrWarning(const QStringList &filesWithoutExif) {
                "tags for the following images:"
                "<ul>");
 
-        foreach (const QString &filename, filesWithoutExif) {
+        for (const QString &filename : filesWithoutExif) {
             QFileInfo qfi(filename);
             warningMessage += "<li>" + qfi.baseName() + "</li>";
         }
@@ -1049,10 +1052,12 @@ void HdrWizard::writeAisData(QByteArray data) {
 
     m_Ui->textEdit->append(data);
     if (data.contains(": remapping")) {
-        QRegExp exp("\\:\\s*(\\d+)\\s*");
-        exp.indexIn(QString(data.data()));
-        emit setRange(0, 100);
-        emit setValue(exp.cap(1).toInt());
+        QRegularExpression exp("\\:\\s*(\\d+)\\s*");
+        auto match = exp.match(QString(data.data()));
+        if (match.hasMatch()) {
+            emit setRange(0, 100);
+            emit setValue(match.captured(1).toInt());
+        }
     }
 }
 

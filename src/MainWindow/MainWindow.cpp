@@ -37,17 +37,18 @@
 #endif
 
 #include <QDesktopServices>
+#include <QActionGroup>
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QMimeData>
-#include <QSignalMapper>
+
 #include <QString>
 #include <QTextStream>
 #include <QTimer>
 #include <QWhatsThis>
-#include <QtConcurrentRun>
+#include <QtConcurrent>
 
 //#include <functional>
 #include <boost/bind/bind.hpp>
@@ -508,10 +509,6 @@ void MainWindow::createStatusBar() {
 }
 
 void MainWindow::createConnections() {
-    windowMapper = new QSignalMapper(this);
-    connect(windowMapper, static_cast<void (QSignalMapper::*)(QWidget *)>(
-                              &QSignalMapper::mapped),
-            this, &MainWindow::setActiveMainWindow);
     connect(&m_futureWatcher, &QFutureWatcherBase::finished, this,
             &MainWindow::whiteBalanceDone);
 }
@@ -573,7 +570,7 @@ void MainWindow::on_fileOpenAction_triggered() {
     QString filetypes = tr("All HDR formats ");
     QStringList hdrExtensionsList = getAllHdrFileExtensions();
     filetypes += QLatin1String("(");
-    foreach (const QString &s, hdrExtensionsList) {
+    for (const QString &s : hdrExtensionsList) {
         filetypes += "*" + s + " ";
     }
     filetypes += QLatin1String(");;");
@@ -609,7 +606,7 @@ void MainWindow::on_fileOpenAction_triggered() {
 
     LuminanceOptions().setDefaultPathHdrIn(qfi.absolutePath());
 
-    foreach (const QString &filename, files) {
+    for (const QString &filename : files) {
         // emit open_hdr_frame(filename);
         QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame",
                                   Qt::QueuedConnection,
@@ -1291,7 +1288,7 @@ void MainWindow::openFiles(const QStringList &files) {
                 createNewHdr(files);
             } break;
             case DnDOptionDialog::ACTION_OPEN_HDR: {
-                foreach (const QString &filename, files) { openFile(filename); }
+                for (const QString &filename : files) { openFile(filename); }
             } break;
         }
     }
@@ -1334,13 +1331,13 @@ void MainWindow::on_actionAbout_Luminance_triggered() { UMessageBox::about(); }
  */
 void MainWindow::updateWindowMenu() {
     // Remove current elements inside the menuWindows
-    foreach (QAction *Action_MW, openMainWindows) {
+    for (QAction *Action_MW : openMainWindows) {
         openMainWindows.removeAll(Action_MW);
         m_Ui->menuWindows->removeAction(Action_MW);
         delete Action_MW;
     }
 
-    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+    for (QWidget *widget : QApplication::topLevelWidgets()) {
         MainWindow *MW = qobject_cast<MainWindow *>(widget);
         if (MW != nullptr) {
             QAction *action =
@@ -1348,9 +1345,9 @@ void MainWindow::updateWindowMenu() {
 
             action->setCheckable(true);
             action->setChecked(MW == this);
-            // connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-            connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-            windowMapper->setMapping(action, MW);
+            connect(action, &QAction::triggered, this, [this, MW]() {
+                setActiveMainWindow(MW);
+            });
 
             openMainWindows.push_back(action);
         }
@@ -1372,7 +1369,7 @@ void MainWindow::setActiveMainWindow(QWidget *w) {
 }
 
 void MainWindow::on_actionBring_All_to_Front_triggered() {
-    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+    for (QWidget *widget : QApplication::topLevelWidgets()) {
         MainWindow *MW = qobject_cast<MainWindow *>(widget);
         if (MW != nullptr) {
             MW->raise();
@@ -2007,7 +2004,7 @@ void MainWindow::setCurrentFile(const QString &fileName) {
     LuminanceOptions().setValue(KEY_RECENT_FILES, files);
 
     // Update ALL MainWindow
-    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+    for (QWidget *widget : QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
         if (mainWin) mainWin->updateRecentFileActions();
     }

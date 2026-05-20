@@ -73,12 +73,14 @@
 #include <QString>
 #include <QTextEdit>
 #include <QTreeView>
-#include <QXmlDefaultHandler>
 #include <QCloseEvent>
 
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtPrintSupport/QPrinter>
+#include <QWebEnginePage>
+#include <QWebEnginePage>
+#include <QWebEnginePage>
 
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
@@ -91,28 +93,19 @@ from ~/.scribus/doc/history.xml file.
 The reference to historyBrowser is a reference to the dialog.
 \author Petr Vanek <petr@yarpen.cz>
 */
-class HistoryParser2 : public QXmlDefaultHandler {
-   public:
-    HelpBrowser *helpBrowser;
-
-    bool startDocument() { return true; }
-
-    bool startElement(const QString &, const QString &, const QString &qName,
-                      const QXmlAttributes &attrs) {
-        if (qName == QLatin1String("item")) {
+static void parseHistoryXml(QXmlStreamReader &xml, HelpBrowser *helpBrowser) {
+    while (!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement() && xml.name() == QLatin1String("item")) {
+            QXmlStreamAttributes attrs = xml.attributes();
             struct histd2 his;
-            his.title = attrs.value(0);
-            his.url = attrs.value(1);
+            his.title = attrs.at(0).value().toString();
+            his.url = attrs.at(1).value().toString();
             helpBrowser->mHistory[helpBrowser->histMenu->addAction(his.title)] =
                 his;
         }
-        return true;
     }
-
-    bool endElement(const QString &, const QString &, const QString &) {
-        return true;
-    }
-};
+}
 
 /*! \brief XML parser for documentation bookmarks.
 This is small helper class which reads saved bookmarks configuration
@@ -120,34 +113,25 @@ from ~/.scribus/doc/bookmarks.xml file.
 The reference to QListView *view is a reference to the list view with bookmarks
 \author Petr Vanek <petr@yarpen.cz>
 */
-class BookmarkParser2 : public QXmlDefaultHandler {
-   public:
-    QTreeWidget *view;
-    QMap<QString, QString> *quickHelpIndex;
-    QMap<QString, QPair<QString, QString>> *bookmarkIndex;
-
-    bool startDocument() { return true; }
-
-    bool startElement(const QString &, const QString &, const QString &qName,
-                      const QXmlAttributes &attrs) {
-        if (qName == QLatin1String("item")) {
+static void parseBookmarkXml(QXmlStreamReader &xml, QTreeWidget *view,
+                             QMap<QString, QString> *quickHelpIndex,
+                             QMap<QString, QPair<QString, QString>> *bookmarkIndex) {
+    while (!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement() && xml.name() == QLatin1String("item")) {
+            QXmlStreamAttributes attrs = xml.attributes();
             // TODO : This will dump items if bookmarks get loaded into a
             // different
             // GUI language
-            if (quickHelpIndex->contains(attrs.value(1))) {
+            if (quickHelpIndex->contains(attrs.at(1).value().toString())) {
                 bookmarkIndex->insert(
-                    attrs.value(0), qMakePair(attrs.value(1), attrs.value(2)));
+                    attrs.at(0).value().toString(), qMakePair(attrs.at(1).value().toString(), attrs.at(2).value().toString()));
                 view->addTopLevelItem(
-                    new QTreeWidgetItem(view, QStringList() << attrs.value(0)));
+                    new QTreeWidgetItem(view, QStringList() << attrs.at(0).value().toString()));
             }
         }
-        return true;
     }
-
-    bool endElement(const QString &, const QString &, const QString &) {
-        return true;
-    }
-};
+}
 
 HelpBrowser::HelpBrowser(QWidget *parent)
     : QMainWindow(parent), m_Ui(new Ui::HelpBrowser) {
@@ -173,27 +157,15 @@ HelpBrowser::HelpBrowser(QWidget *parent, const QString & /*caption*/,
     // m_Ui->htmlPage->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
     // connect(m_Ui->htmlPage, SIGNAL(linkClicked(const QUrl &)), this,
     // SLOT(handleExternalLink(const QUrl &)));
-#ifdef USE_DEPRECATED_QTWEBKIT
-    connect(m_Ui->htmlPage, &QWebView::loadStarted, this,
-            &HelpBrowser::loadStarted);
-    connect(m_Ui->htmlPage, &QWebView::loadFinished, this,
-            &HelpBrowser::loadFinished);
-#else
     connect(m_Ui->htmlPage, &QWebEngineView::loadStarted, this,
             &HelpBrowser::loadStarted);
     connect(m_Ui->htmlPage, &QWebEngineView::loadFinished, this,
             &HelpBrowser::loadFinished);
-#endif
     // connect(m_Ui->htmlPage->page(), SIGNAL(linkHovered(const QString &, const
     // QString &, const QString & )), this, SLOT(linkHovered(const QString &,
     // const QString &, const QString & )));
-#ifdef USE_DEPRECATED_QTWEBKIT
-    connect(m_Ui->htmlPage->page(), &QWebPage::linkHovered, this,
-            &HelpBrowser::linkHovered);
-#else
     connect(m_Ui->htmlPage->page(), &QWebEnginePage::linkHovered, this,
             &HelpBrowser::linkHovered);
-#endif
     language =
         guiLanguage.isEmpty() ? QStringLiteral("en") : guiLanguage.left(2);
     finalBaseDir = LuminancePaths::HelpDir();
@@ -227,8 +199,8 @@ void HelpBrowser::closeEvent(QCloseEvent *event) {
     LuminanceOptions options;
     {
         QByteArray ba;
-        QTextStream stream(&ba);
-        stream.setCodec("UTF-8");
+        QTextStream stream(&ba, QIODevice::WriteOnly);
+        stream.setEncoding(QStringConverter::Utf8);
         stream << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         stream << "<bookmarks>\n";
         QTreeWidgetItemIterator it(helpSideBar->m_Ui->bookmarksView);
@@ -251,8 +223,8 @@ void HelpBrowser::closeEvent(QCloseEvent *event) {
     // history
     {
         QByteArray ba;
-        QTextStream stream(&ba);
-        stream.setCodec("UTF-8");
+        QTextStream stream(&ba, QIODevice::WriteOnly);
+        stream.setEncoding(QStringConverter::Utf8);
         stream << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         stream << "<history>\n";
         for (QMap<QAction *, histd2>::Iterator it = mHistory.begin();
@@ -273,7 +245,7 @@ void HelpBrowser::closeEvent(QCloseEvent *event) {
 
 void HelpBrowser::setupLocalUI() {
     helpSideBar = new HelpSideBar(tr("Help SideBar"), this);
-    helpSideBar->setFeatures(QDockWidget::AllDockWidgetFeatures);
+    helpSideBar->setFeatures(QDockWidget::DockWidgetFeature::DockWidgetClosable | QDockWidget::DockWidgetFeature::DockWidgetMovable | QDockWidget::DockWidgetFeature::DockWidgetFloatable);
     addDockWidget(Qt::LeftDockWidgetArea, helpSideBar);
 
     histMenu = new QMenu(this);
@@ -307,17 +279,10 @@ void HelpBrowser::setupLocalUI() {
             &HelpBrowser::deleteAllBookmarkButton_clicked);
     connect(m_Ui->goHome, &QAction::triggered, m_Ui->htmlPage,
             &ScTextBrowser::home);
-#ifdef USE_DEPRECATED_QTWEBKIT
-    connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage,
-            &QWebView::back);
-    connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage,
-            &QWebView::forward);
-#else
     connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage,
             &QWebEngineView::back);
     connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage,
             &QWebEngineView::forward);
-#endif
     connect(m_Ui->zoomIn, &QAction::triggered, this,
             &HelpBrowser::zoomIn_clicked);
     connect(m_Ui->zoomOriginal, &QAction::triggered, this,
@@ -392,11 +357,7 @@ void HelpBrowser::print() {
             this->printAvailable();
             });
     */
-#ifdef USE_DEPRECATED_QTWEBKIT
-    m_textBrowser->setSource(m_Ui->htmlPage->url());
-#else
     m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
-#endif
     this->printAvailable();
 }
 
@@ -418,11 +379,7 @@ void HelpBrowser::printPreview() {
             this->printPreviewAvailable();
             });
     */
-#ifdef USE_DEPRECATED_QTWEBKIT
-    m_textBrowser->setSource(m_Ui->htmlPage->url());
-#else
     m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
-#endif
     this->printPreviewAvailable();
 }
 
@@ -498,7 +455,7 @@ void HelpBrowser::findNext() {
         return;
     }
     // find it. finally
-    m_Ui->htmlPage->findText(findText, 0);
+    m_Ui->htmlPage->findText(findText, QWebEnginePage::FindFlags());
 }
 
 void HelpBrowser::findPrevious() {
@@ -654,15 +611,9 @@ void HelpBrowser::loadMenu() {
 void HelpBrowser::readBookmarks() {
     LuminanceOptions options;
     QByteArray ba(options.value(KEY_HELP_BOOKMARK).toByteArray());
-    QBuffer buffer(&ba);
-    BookmarkParser2 handler;
-    handler.view = helpSideBar->m_Ui->bookmarksView;
-    handler.quickHelpIndex = &quickHelpIndex;
-    handler.bookmarkIndex = &bookmarkIndex;
-    QXmlInputSource source(&buffer);
-    QXmlSimpleReader reader;
-    reader.setContentHandler(&handler);
-    reader.parse(source);
+    QXmlStreamReader xml(ba);
+    parseBookmarkXml(xml, helpSideBar->m_Ui->bookmarksView,
+                     &quickHelpIndex, &bookmarkIndex);
 }
 
 void HelpBrowser::setText(const QString &str) { m_Ui->htmlPage->setHtml(str); }
@@ -673,7 +624,7 @@ void HelpBrowser::itemSelected(const QItemSelection &selected,
 
     QModelIndexList items = selected.indexes();
     int i = 0;
-    foreach (const QModelIndex &index, items) {
+    for (const QModelIndex &index : items) {
         if (i == 1)  // skip 0, as this is always the rootitem, even if we are
                      // selecting the rootitem. hmm
         {

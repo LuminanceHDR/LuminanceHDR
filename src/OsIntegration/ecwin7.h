@@ -4,15 +4,12 @@
 #include <QWidget>
 #include <QtGlobal>
 
-#include <QtWinExtras/QWinJumpList>
-#include <QtWinExtras/QWinJumpListCategory>
-#include <QtWinExtras/QWinTaskbarButton>
-#include <QtWinExtras/QWinTaskbarProgress>
+#include <shobjidl.h>
 
 class EcWin7 {
    public:
-    // Initialization methods
     EcWin7();
+    ~EcWin7();
     void init(QWidget *widget);
     void addRecentFile(const QString &filename);
 
@@ -21,9 +18,8 @@ class EcWin7 {
    private:
     void associateFileTypes(const QStringList &fileTypes);
 
-    QWinTaskbarButton *taskbarButton;
-    QWinTaskbarProgress *taskbarProgress;
-    QWinJumpList *jumplist;
+    ITaskbarList3 *taskbarList;
+    HWND hwnd;
 };
 
 #endif  // ECWIN7_H
