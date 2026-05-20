@@ -68,10 +68,6 @@ endif( HAS_BRANCH_PREDICTION )
 
 find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui WebEngineWidgets Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
 
-if(WIN32)
-    find_package(Qt6 COMPONENTS WinExtras QUIET)
-endif()
-
 # Include the qtmain lib if we are on the windows platform
 IF(WIN32)
     SET(LIBS ${LIBS} ${Qt5Core_QTMAIN_LIBRARIES})
@@ -475,7 +471,7 @@ ELSEIF(WIN32)
         ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
         ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
 
-        TARGET_LINK_LIBRARIES(luminance-hdr Qt6::Core Qt6::Gui Qt6::Widgets Qt6::WinExtras Qt6::Svg)
+        TARGET_LINK_LIBRARIES(luminance-hdr Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Svg)
         TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt6::Core Qt6::Gui Qt6::Widgets)
 
         # link libraries

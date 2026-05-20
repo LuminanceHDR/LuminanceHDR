@@ -4,45 +4,65 @@
 #include <QFileInfo>
 #include <QGuiApplication>
 #include <QSettings>
+#include <QStandardPaths>
+
+#include <propkey.h>
+#include <shlguid.h>
+#include <shlobj.h>
 
 #include "Common/global.h"
 
-// Constructor: variabiles initialization
-EcWin7::EcWin7() {
-    taskbarButton = 0;
-    taskbarProgress = 0;
-    jumplist = 0;
+EcWin7::EcWin7() : taskbarList(nullptr), hwnd(nullptr) {
+    CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 }
 
-// Init taskbar communication
-void EcWin7::init(QWidget *widget) {
-    taskbarButton = new QWinTaskbarButton(widget);
-    taskbarButton->setWindow(widget->windowHandle());
+EcWin7::~EcWin7() {
+    if (taskbarList) {
+        taskbarList->Release();
+        taskbarList = nullptr;
+    }
+    CoUninitialize();
+}
 
-    taskbarProgress = taskbarButton->progress();
+void EcWin7::init(QWidget *widget) {
+    hwnd = reinterpret_cast<HWND>(widget->winId());
+
+    HRESULT hr = CoCreateInstance(CLSID_TaskbarList, nullptr, CLSCTX_INPROC_SERVER,
+                                  IID_ITaskbarList3, reinterpret_cast<void **>(&taskbarList));
+    if (SUCCEEDED(hr)) {
+        taskbarList->HrInit();
+    }
+
     associateFileTypes(getAllHdrFileExtensions());
 
-    jumplist = new QWinJumpList(widget);
-    jumplist->recent()->setVisible(true);
+    PWSTR appId;
+    hr = GetCurrentProcessExplicitAppUserModelID(&appId);
+    if (SUCCEEDED(hr)) {
+        SHAddToRecentDocs(SHARD_APPIDINFO, nullptr);
+        CoTaskMemFree(appId);
+    }
 }
 
 void EcWin7::addRecentFile(const QString &filename) {
-    jumplist->recent()->addDestination(filename);
+    PWSTR appId;
+    HRESULT hr = GetCurrentProcessExplicitAppUserModelID(&appId);
+    if (SUCCEEDED(hr)) {
+        SHAddToRecentDocs(SHARD_PATHW, filename.toStdWString().c_str());
+        CoTaskMemFree(appId);
+    }
 }
 
-// Set progress bar current value
 void EcWin7::setProgressValue(int value, int max) {
-    if (!taskbarProgress) return;
+    if (!taskbarList || !hwnd) return;
 
     if (value < 0) {
-        taskbarProgress->hide();
+        taskbarList->SetProgressState(hwnd, TBPF_NOPROGRESS);
         return;
     }
 
-    taskbarProgress->show();
-    taskbarProgress->resume();
-    taskbarProgress->setMaximum(max);
-    taskbarProgress->setValue(value);
+    taskbarList->SetProgressState(hwnd, TBPF_NORMAL);
+    taskbarList->SetProgressValue(hwnd, static_cast<ULONGLONG>(value),
+                                  static_cast<ULONGLONG>(max));
 }
 
 void EcWin7::associateFileTypes(const QStringList &fileTypes) {
