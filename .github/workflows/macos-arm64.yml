@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Require a native Apple Silicon runner
         run: test "$(uname -m)" = arm64
@@ -27,6 +27,7 @@ jobs:
           brew install cmake ninja qtbase qtsvg qttools qttranslations
           qtwebengine boost exiv2 libraw fftw little-cms2 eigen libtiff
           libpng openexr gsl jpeg-turbo cfitsio libomp libpano wxwidgets glew
+          sqlite zlib
 
       - name: Build align_image_stack
         run: |
@@ -60,7 +61,7 @@ jobs:
           echo "archive_path=$archive_path" >> "$GITHUB_OUTPUT"
 
       - name: Upload arm64 app
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: luminance-hdr-macos-arm64
           path: ${{ steps.package.outputs.archive_path }}
