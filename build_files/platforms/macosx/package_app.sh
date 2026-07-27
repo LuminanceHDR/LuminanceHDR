@@ -45,7 +45,11 @@ fi
 
 if [[ -n "${QT_PREFIX:-}" ]]; then
     qt_prefix="$QT_PREFIX"
-elif brew_prefix=$(brew --prefix qt 2>/dev/null); then
+elif brew_prefix=$(brew --prefix qt 2>/dev/null) &&
+     [[ -x "$brew_prefix/bin/macdeployqt" ]]; then
+    qt_prefix="$brew_prefix"
+elif brew_prefix=$(brew --prefix qtbase 2>/dev/null) &&
+     [[ -x "$brew_prefix/bin/macdeployqt" ]]; then
     qt_prefix="$brew_prefix"
 else
     echo "Set QT_PREFIX to a Qt 6 installation containing macdeployqt." >&2
@@ -73,6 +77,16 @@ fi
 ditto --noextattr --noqtn "$source_app" "$output_app"
 touch "$output_app/Contents/Resources/.lhdr-packaging-in-progress"
 
+# Older build trees put documentation directly in Contents, where codesign
+# classifies unknown entries as nested code. Normalize them into Resources.
+documentation_dir="$output_app/Contents/Resources/Documentation"
+mkdir -p "$documentation_dir"
+for documentation_file in AUTHORS README.md LICENSE Changelog; do
+    if [[ -f "$output_app/Contents/$documentation_file" ]]; then
+        mv "$output_app/Contents/$documentation_file" "$documentation_dir/"
+    fi
+done
+
 plugin_paths=(
     platforms/libqcocoa.dylib
     styles/libqmacstyle.dylib
@@ -99,18 +113,31 @@ if [[ -x "$output_app/Contents/MacOS/align_image_stack" ]]; then
     deploy_arguments+=("-executable=$output_app/Contents/MacOS/align_image_stack")
 fi
 
+homebrew_prefix=$(brew --prefix)
+# Boost 1.90's thread and program_options libraries load Boost.Container as a
+# sibling via @loader_path. macdeployqt does not discover that sibling when it
+# first copies those libraries, so seed it into the one deployment pass.
+boost_container="$homebrew_prefix/lib/libboost_container.dylib"
+if [[ -f "$boost_container" ]]; then
+    boost_container_destination="$output_app/Contents/Frameworks/libboost_container.dylib"
+    mkdir -p "$(dirname "$boost_container_destination")"
+    ditto --noextattr --noqtn "$(realpath "$boost_container")" \
+        "$boost_container_destination"
+    deploy_arguments+=("-executable=$boost_container_destination")
+fi
+
 for relative_plugin in "${plugin_paths[@]}"; do
     plugin_source="$plugin_dir/$relative_plugin"
     if [[ ! -f "$plugin_source" ]]; then
         continue
     fi
+    plugin_source=$(realpath "$plugin_source")
     plugin_destination="$output_app/Contents/PlugIns/$relative_plugin"
     mkdir -p "$(dirname "$plugin_destination")"
     ditto --noextattr --noqtn "$plugin_source" "$plugin_destination"
     deploy_arguments+=("-executable=$plugin_destination")
 done
 
-homebrew_prefix=$(brew --prefix)
 deploy_arguments+=("-libpath=$homebrew_prefix/lib")
 if [[ -n "${LHDR_EXTRA_LIBPATHS:-}" ]]; then
     old_ifs="$IFS"
@@ -167,6 +194,28 @@ while IFS= read -r -d '' candidate; do
     fi
 done < <(find "$output_app/Contents" -type f -print0)
 
+# macdeployqt rewrites the helper's libraries into Contents/Frameworks but does
+# not add a search path when the executable does not use Qt itself. Ensure every
+# top-level executable can also resolve transitive @rpath dependencies there.
+bundle_framework_rpath="@loader_path/../Frameworks"
+for candidate in "$output_app/Contents/MacOS/"*; do
+    if [[ ! -f "$candidate" ]] ||
+       ! file -b "$candidate" | grep -q 'Mach-O'; then
+        continue
+    fi
+    if ! otool -l "$candidate" | awk '
+        /cmd LC_RPATH/ { in_rpath = 1; next }
+        in_rpath && /path / {
+            sub(/^[[:space:]]*path /, "")
+            sub(/ \(offset.*/, "")
+            print
+            in_rpath = 0
+        }
+    ' | grep -Fxq "$bundle_framework_rpath"; then
+        install_name_tool -add_rpath "$bundle_framework_rpath" "$candidate"
+    fi
+done
+
 webengine_helper="$output_app/Contents/Frameworks/QtWebEngineCore.framework/Versions/A/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess"
 if [[ -x "$webengine_helper" ]]; then
     helper_framework_rpath="@executable_path/../../../../../../.."
@@ -190,19 +239,25 @@ else
 fi
 
 while IFS= read -r -d '' candidate; do
-    if file -b "$candidate" | grep -q 'Mach-O'; then
-        codesign "${codesign_arguments[@]}" "$candidate"
+    if ! file -b "$candidate" | grep -q 'Mach-O'; then
+        continue
     fi
+    case "$candidate" in
+        "$output_app/Contents/MacOS/luminance-hdr"|"$webengine_helper"|*.framework/*)
+            continue
+            ;;
+    esac
+    codesign "${codesign_arguments[@]}" "$candidate"
 done < <(find "$output_app/Contents" -type f -print0)
 
+while IFS= read -r nested_app; do
+    codesign "${codesign_arguments[@]}" "$nested_app"
+done < <(find "$output_app/Contents" -depth -type d -name '*.app' -print)
 if [[ -d "$output_app/Contents/Frameworks" ]]; then
     while IFS= read -r framework; do
         codesign "${codesign_arguments[@]}" "$framework"
     done < <(find "$output_app/Contents/Frameworks" -depth -type d -name '*.framework' -print)
 fi
-while IFS= read -r nested_app; do
-    codesign "${codesign_arguments[@]}" "$nested_app"
-done < <(find "$output_app/Contents" -depth -type d -name '*.app' -print)
 codesign "${codesign_arguments[@]}" "$output_app"
 
 "$script_dir/verify_bundle.sh" "$output_app" "$expected_architectures"
