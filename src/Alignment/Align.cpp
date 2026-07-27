@@ -23,7 +23,9 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QFileInfo>
 #include <QRegularExpression>
+#include <QStandardPaths>
 #include <QUuid>
 #include <QtConcurrentFilter>
 #include <QtConcurrentMap>
@@ -120,8 +122,15 @@ void Align::align_with_ais(bool ais_crop_flag) {
     }
     qDebug() << "ais_parameters " << ais_parameters;
 #ifdef Q_OS_MACOS
-    qDebug() << QCoreApplication::applicationDirPath() + "/align_image_stack";
-    m_ais->start(QCoreApplication::applicationDirPath() + "/align_image_stack",
+    const QString bundledAlignImageStack =
+        QCoreApplication::applicationDirPath() + "/align_image_stack";
+    const QString alignImageStack = QFileInfo::exists(bundledAlignImageStack)
+                                        ? bundledAlignImageStack
+                                        : QStandardPaths::findExecutable(
+                                              "align_image_stack");
+    qDebug() << "align_image_stack executable:" << alignImageStack;
+    m_ais->start(alignImageStack.isEmpty() ? QStringLiteral("align_image_stack")
+                                           : alignImageStack,
                  ais_parameters);
 #elif defined Q_OS_WIN
     QFileInfo huginPath("hugin/align_image_stack.exe");
