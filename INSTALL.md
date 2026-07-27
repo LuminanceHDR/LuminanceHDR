@@ -177,7 +177,7 @@ and libraries with native arm64 Homebrew:
 ```bash
 brew install cmake ninja qtbase qtsvg qttools qttranslations qtwebengine \
     boost exiv2 libraw fftw little-cms2 eigen libtiff libpng openexr \
-    gsl jpeg-turbo cfitsio libomp libpano wxwidgets glew
+    gsl jpeg-turbo cfitsio libomp libpano wxwidgets glew sqlite zlib
 ```
 
 Build the pinned Hugin 2025.0.1 helper from source, then configure Luminance HDR

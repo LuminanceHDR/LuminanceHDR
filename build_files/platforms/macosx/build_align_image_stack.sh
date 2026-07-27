@@ -42,7 +42,18 @@ fi
 architecture="${LHDR_ARCHITECTURES:-arm64}"
 deployment_target="${MACOSX_DEPLOYMENT_TARGET:-14.0}"
 brew_prefix=$(brew --prefix)
+for formula in libomp libtiff jpeg-turbo libpng zlib sqlite; do
+    if ! brew list --versions "$formula" >/dev/null 2>&1; then
+        echo "Required Homebrew formula is not installed: $formula" >&2
+        exit 1
+    fi
+done
 libomp_prefix=$(brew --prefix libomp)
+tiff_prefix=$(brew --prefix libtiff)
+jpeg_prefix=$(brew --prefix jpeg-turbo)
+png_prefix=$(brew --prefix libpng)
+zlib_prefix=$(brew --prefix zlib)
+sqlite_prefix=$(brew --prefix sqlite)
 
 cleanup_work=0
 if [[ -n "${LHDR_HUGIN_WORK_DIR:-}" ]]; then
@@ -142,6 +153,9 @@ patch -d "$hugin_source" -p1 <<'PATCH'
      MESSAGE(STATUS "VIGRA version: ${VIGRA_VERSION}")
 PATCH
 
+# GitHub's macOS image includes a Mono framework with stale image-library
+# headers. Hugin's custom find modules otherwise discover those before the
+# native Homebrew libraries and produce incompatible typedefs.
 cmake -S "$hugin_source" -B "$hugin_build" -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_OSX_ARCHITECTURES="$architecture" \
@@ -149,6 +163,17 @@ cmake -S "$hugin_source" -B "$hugin_build" -G Ninja \
     -DCMAKE_PREFIX_PATH="${vigra_prefix};${brew_prefix}" \
     -DCMAKE_INCLUDE_PATH="${vigra_prefix}/include;${brew_prefix}/include" \
     -DCMAKE_LIBRARY_PATH="${vigra_prefix}/lib;${brew_prefix}/lib" \
+    -DCMAKE_IGNORE_PREFIX_PATH=/Library/Frameworks/Mono.framework \
+    -DTIFF_INCLUDE_DIR:PATH="${tiff_prefix}/include" \
+    -DTIFF_LIBRARIES:FILEPATH="${tiff_prefix}/lib/libtiff.dylib" \
+    -DJPEG_INCLUDE_DIR:PATH="${jpeg_prefix}/include" \
+    -DJPEG_LIBRARIES:FILEPATH="${jpeg_prefix}/lib/libjpeg.dylib" \
+    -DPNG_INCLUDE_DIR:PATH="${png_prefix}/include" \
+    -DPNG_LIBRARIES:FILEPATH="${png_prefix}/lib/libpng.dylib" \
+    -DZLIB_INCLUDE_DIR:PATH="${zlib_prefix}/include" \
+    -DZLIB_LIBRARIES:FILEPATH="${zlib_prefix}/lib/libz.dylib" \
+    -DSQLITE3_INCLUDE_DIR:PATH="${sqlite_prefix}/include" \
+    -DSQLITE3_LIBRARIES:FILEPATH="${sqlite_prefix}/lib/libsqlite3.dylib" \
     -DVIGRA_INCLUDE_DIR="${vigra_prefix}/include" \
     -DVIGRA_LIBRARIES="${vigra_prefix}/lib/libvigraimpex.a" \
     -DDISABLE_DPKG=ON \
