@@ -175,9 +175,9 @@ dependencies, and Hugin's `align_image_stack` helper. Install the build tools
 and libraries with native arm64 Homebrew:
 
 ```bash
-brew install cmake ninja qt boost exiv2 libraw fftw little-cms2 eigen \
-    libtiff libpng openexr gsl jpeg-turbo cfitsio libomp \
-    libpano wxwidgets glew flann
+brew install cmake ninja qtbase qtsvg qttools qttranslations qtwebengine \
+    boost exiv2 libraw fftw little-cms2 eigen libtiff libpng openexr \
+    gsl jpeg-turbo cfitsio libomp libpano wxwidgets glew
 ```
 
 Build the pinned Hugin 2025.0.1 helper from source, then configure Luminance HDR
@@ -192,7 +192,7 @@ cmake -S . -B build-arm64 -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_OSX_ARCHITECTURES=arm64 \
     -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0 \
-    -DCMAKE_PREFIX_PATH="$(brew --prefix qt)" \
+    -DCMAKE_PREFIX_PATH="$(brew --prefix)" \
     -DLHDR_ALIGN_IMAGE_STACK="$PWD/build-arm64-tools/align_image_stack"
 cmake --build build-arm64 --parallel
 ```

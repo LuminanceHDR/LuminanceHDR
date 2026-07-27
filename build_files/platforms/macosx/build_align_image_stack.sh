@@ -116,7 +116,7 @@ patch -d "$hugin_source" -p1 <<'PATCH'
        set(CMAKE_INCLUDE_PATH ${CMAKE_SOURCE_DIR}/mac/ExternalPrograms/repository/include ${CMAKE_SOURCE_DIR}/mac/ExternalPrograms/repository/bin)
 --- a/CMakeModules/FindVIGRA.cmake
 +++ b/CMakeModules/FindVIGRA.cmake
-@@ -52,8 +52,22 @@ IF (VIGRA_FOUND)
+@@ -52,8 +52,21 @@ IF (VIGRA_FOUND)
    IF(NOT VIGRA_CONFIG_VERSION_HXX)
      MESSAGE(FATAL_ERROR "Could not find vigra/configVersion.hxx or vigra/config_version.hxx. Your vigra installation seems to be corrupt.")
    ENDIF()

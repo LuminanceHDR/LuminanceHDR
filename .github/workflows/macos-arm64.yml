@@ -24,9 +24,9 @@ jobs:
 
       - name: Install native dependencies
         run: >-
-          brew install cmake ninja qt boost exiv2 libraw fftw little-cms2
-          eigen libtiff libpng openexr gsl jpeg-turbo cfitsio libomp libpano
-          wxwidgets glew flann
+          brew install cmake ninja qtbase qtsvg qttools qttranslations
+          qtwebengine boost exiv2 libraw fftw little-cms2 eigen libtiff
+          libpng openexr gsl jpeg-turbo cfitsio libomp libpano wxwidgets glew
 
       - name: Build align_image_stack
         run: |
@@ -40,7 +40,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_OSX_ARCHITECTURES=arm64 \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOSX_DEPLOYMENT_TARGET" \
-            -DCMAKE_PREFIX_PATH="$(brew --prefix qt)" \
+            -DCMAKE_PREFIX_PATH="$(brew --prefix)" \
             -DLHDR_ALIGN_IMAGE_STACK="$PWD/build-arm64-tools/align_image_stack"
 
       - name: Build Luminance HDR

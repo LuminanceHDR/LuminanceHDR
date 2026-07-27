@@ -343,13 +343,14 @@ IF(APPLE)
     FILE(COPY "${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/qt.conf"
                                             DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
 
-    # Copy Licence/README/Authors/Changelog to top of bundle
+    # Documentation is data, so keep it under Resources. Files placed directly
+    # in Contents are treated as nested code by codesign.
     FILE(COPY
          ${CMAKE_SOURCE_DIR}/AUTHORS
          ${CMAKE_SOURCE_DIR}/README.md
          ${CMAKE_SOURCE_DIR}/LICENSE
          ${CMAKE_SOURCE_DIR}/Changelog
-         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
+         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources/Documentation
     )
 
     # Runtime dependencies are collected and rewritten by the macOS packaging

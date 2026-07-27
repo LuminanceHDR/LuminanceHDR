@@ -66,6 +66,17 @@ while IFS= read -r -d '' candidate; do
 
     while IFS= read -r dependency; do
         case "$dependency" in
+            @loader_path/*)
+                loader_relative="${dependency#@loader_path/}"
+                loader_parent="$(dirname "$candidate")/$(dirname "$loader_relative")"
+                if [[ -d "$loader_parent" ]]; then
+                    loader_parent=$(cd "$loader_parent" && pwd -P)
+                fi
+                loader_target="$loader_parent/$(basename "$loader_relative")"
+                if [[ ! -e "$loader_target" ]]; then
+                    echo "$relative_path: missing dependency $dependency" >> "$errors_file"
+                fi
+                ;;
             /System/Library/*|/usr/lib/*)
                 ;;
             /*)
@@ -100,9 +111,27 @@ if [[ "${LHDR_SKIP_CODESIGN_CHECK:-0}" != "1" ]]; then
     codesign --verify --deep --strict --verbose=2 "$app_path"
 fi
 
-QT_QPA_PLATFORM=offscreen "$cli_executable" --version >/dev/null
+set +e
+cli_version_output=$(QT_QPA_PLATFORM=offscreen "$cli_executable" --version 2>&1)
+cli_version_status=$?
+set -e
+if [[ "$cli_version_status" -gt 1 ]] ||
+   ! grep -q 'Luminance HDR version' <<< "$cli_version_output"; then
+    echo "The CLI version smoke test failed (exit $cli_version_status)." >&2
+    echo "$cli_version_output" >&2
+    exit 1
+fi
 if [[ -x "$align_executable" ]]; then
-    "$align_executable" --help >/dev/null
+    set +e
+    align_help_output=$("$align_executable" --help 2>&1)
+    align_help_status=$?
+    set -e
+    if [[ "$align_help_status" -ne 0 ]] ||
+       ! grep -q 'align_image_stack' <<< "$align_help_output"; then
+        echo "The align_image_stack smoke test failed (exit $align_help_status)." >&2
+        echo "$align_help_output" >&2
+        exit 1
+    fi
 fi
 
 echo "Verified $mach_o_count Mach-O files in $(basename "$app_path"): $expected_architectures, self-contained, signed, and smoke-tested."
