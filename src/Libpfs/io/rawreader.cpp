@@ -373,7 +373,15 @@ static void setParams(LibRaw &processor, const RAWReaderParams &params) {
     if (params.isSaturation()) {
         outParams.user_sat = params.saturation_;
     }
-    if (params.isNoiseReduction()) {
+
+    // LibRaw 0.22.2's OpenMP wavelet denoiser uses an uninitialized image
+    // size and can crash while processing RAW files. Disable only that broken
+    // implementation until the upstream fix is available.
+    // https://github.com/LibRaw/LibRaw/issues/842
+    const bool hasBrokenWaveletDenoise =
+        LibRaw::versionNumber() == LIBRAW_MAKE_VERSION(0, 22, 2);
+    outParams.threshold = 0;
+    if (params.isNoiseReduction() && !hasBrokenWaveletDenoise) {
         outParams.threshold = params.noiseReductionThreshold_;
     }
 
