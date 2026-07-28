@@ -1,0 +1,68 @@
+name: macOS arm64
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 120
+    env:
+      MACOSX_DEPLOYMENT_TARGET: "14.0"
+      LHDR_ARCHITECTURES: arm64
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Require a native Apple Silicon runner
+        run: test "$(uname -m)" = arm64
+
+      - name: Install native dependencies
+        run: >-
+          brew install cmake ninja qtbase qtsvg qttools qttranslations
+          qtwebengine boost exiv2 libraw fftw little-cms2 eigen libtiff
+          libpng openexr gsl jpeg-turbo cfitsio libomp libpano wxwidgets glew
+          sqlite zlib
+
+      - name: Build align_image_stack
+        run: |
+          mkdir -p build-arm64-tools
+          build_files/platforms/macosx/build_align_image_stack.sh \
+            build-arm64-tools/align_image_stack
+
+      - name: Configure Luminance HDR
+        run: |
+          cmake -S . -B build-arm64 -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOSX_DEPLOYMENT_TARGET" \
+            -DCMAKE_PREFIX_PATH="$(brew --prefix)" \
+            -DLHDR_ALIGN_IMAGE_STACK="$PWD/build-arm64-tools/align_image_stack"
+
+      - name: Build Luminance HDR
+        run: cmake --build build-arm64 --parallel
+
+      - name: Package and verify
+        id: package
+        run: |
+          source_app=$(find build-arm64 -maxdepth 1 -type d -name 'Luminance HDR*.app' -print -quit)
+          test -n "$source_app"
+          mkdir -p dist
+          packaged_app="dist/$(basename "${source_app%.app}")-arm64.app"
+          build_files/platforms/macosx/package_app.sh \
+            "$source_app" "$packaged_app" arm64
+          archive_path="${packaged_app%.app}.zip"
+          ditto -c -k --sequesterRsrc --keepParent "$packaged_app" "$archive_path"
+          echo "archive_path=$archive_path" >> "$GITHUB_OUTPUT"
+
+      - name: Upload arm64 app
+        uses: actions/upload-artifact@v7
+        with:
+          name: luminance-hdr-macos-arm64
+          path: ${{ steps.package.outputs.archive_path }}
+          if-no-files-found: error

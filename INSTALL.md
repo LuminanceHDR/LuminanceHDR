@@ -170,75 +170,54 @@ It is also possible to build Luminance HDR using MSYS2/MinGW, see `build_files/p
 
 ### macOS <a name="pnote_macos"></a>
 
-On macOS, all the dependencies can be obtained using MacPorts, except for LibRaw which must be compiled from source, and Qt6 which must be downloaded from the official Qt website.
-
-If you install Qt/6.x.x into `~/Qt/6.x.x`, generate the project with:
-
-```bash
-export QT=~/Qt/6.x.x/macos
-cd ~/programs/code-lhdr
-mkdir build
-cd build
-cmake -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g') ..
-make
-```
-
-As AppleClang requires preprocessing to detect OpenMP, the CMake command to enable AppleClang to use the libomp implementation would be:
+Apple Silicon builds use AppleClang, Qt 6, Homebrew's native arm64
+dependencies, and Hugin's `align_image_stack` helper. Install the build tools
+and libraries with native arm64 Homebrew:
 
 ```bash
-cmake .. \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.12" \
-    -DCMAKE_PREFIX_PATH="$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')" -G "Unix Makefiles" \
-    -DCMAKE_C_COMPILER="clang" \
-    -DCMAKE_CXX_COMPILER="clang++" \
-    -DCMAKE_BUILD_TYPE="Release" \
-    -DOpenMP_C_FLAGS=-fopenmp="lomp" \
-    -DOpenMP_CXX_FLAGS=-fopenmp="lomp" \
-    -DOpenMP_C_LIB_NAMES="libomp" \
-    -DOpenMP_CXX_LIB_NAMES="libomp" \
-    -DOpenMP_libomp_LIBRARY="/opt/local/lib/libomp.dylib" \
-    -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libomp.dylib -I/opt/local/include" \
-    -DOpenMP_CXX_LIB_NAMES="libiomp5" \
-    -DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp /opt/local/lib/libomp.dylib -I/opt/local/include"
+brew install cmake ninja qtbase qtsvg qttools qttranslations qtwebengine \
+    boost exiv2 libraw fftw little-cms2 eigen libtiff libpng openexr \
+    gsl jpeg-turbo cfitsio libomp libpano wxwidgets glew sqlite zlib
 ```
 
-Troubleshooting:
-- If you crash on start up with a message about `libz.1.2.8.dylib`, modify the executable as follows:
-    ```bash
-    install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib "Luminance HDR 2.6.0.app/Contents/MacOS/Luminance HDR 2.6.0"
-    ```
-- If you built libboost from source, you may encounter errors from macdeployqt about missing libraries. Copy the boost libraries to `/usr/lib`:
-    ```bash
-    sudo cp /usr/local/*boost*.dylib /usr/lib
-    ```
-- Copy Qt frameworks and dynamic libraries into the bundle:
-    ```bash
-    $QT/bin/macdeployqt Luminance*.app/ -executable=Luminance*.app/Contents/MacOS/luminance-hdr-cli -no-strip
-    ```
-  This may produce warnings (which you can ignore) such as:
-    ```
-    WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store compliant.
-    WARNING: Plugin "libqsqlpsql.dylib" uses private API and is not Mac App store compliant.
-    ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
-    ERROR: no file at "/usr/local/lib/libpq.5.dylib"
-    ```
-
-If you wish to make a DMG:
+Build the pinned Hugin 2025.0.1 helper from source, then configure Luminance HDR
+for arm64:
 
 ```bash
-hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 2.6.0.app" "Luminance HDR 2.6.0.dmg"
+mkdir -p build-arm64-tools
+build_files/platforms/macosx/build_align_image_stack.sh \
+    build-arm64-tools/align_image_stack
+
+cmake -S . -B build-arm64 -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_OSX_ARCHITECTURES=arm64 \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0 \
+    -DCMAKE_PREFIX_PATH="$(brew --prefix)" \
+    -DLHDR_ALIGN_IMAGE_STACK="$PWD/build-arm64-tools/align_image_stack"
+cmake --build build-arm64 --parallel
 ```
 
-If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10.10), you can obtain legacy SDKs from https://github.com/phracker/MacOSX-SDKs/releases
-Then use the following:
+`LHDR_ALIGN_IMAGE_STACK` may be omitted for a development build. In that case,
+Luminance HDR looks for `align_image_stack` on `PATH` at runtime. Release
+bundles should always provide a native helper.
+
+Package and verify a self-contained app from a fresh build bundle:
 
 ```bash
-export QT=~/Qt/6.x.x/macos
-export MACOSX_DEPLOYMENT_TARGET="10.10"
-export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk"
-cmake .. \
-    -DCMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk" \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.10" \
-    -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
-make
+source_app=$(find build-arm64 -maxdepth 1 -type d -name 'Luminance HDR*.app' -print -quit)
+build_files/platforms/macosx/package_app.sh \
+    "$source_app" "dist/$(basename "${source_app%.app}")-arm64.app" arm64
 ```
+
+The packaging script deliberately refuses an existing output and runs
+`macdeployqt` exactly once. It then verifies that every bundled Mach-O file is
+arm64, no Homebrew or user-directory dependency remains, the signatures are
+valid, and both command-line tools start. The default signature is ad hoc for
+local testing. Set `LHDR_CODESIGN_IDENTITY` to use a Developer ID identity; an
+official distributable must additionally use the project's signing,
+notarization, and release credentials.
+
+Set `LHDR_CREATE_DMG=1` to create a compressed DMG next to the packaged app.
+Build release artifacts on the oldest supported macOS runner rather than a
+newer developer machine: Homebrew bottles can inherit the minimum OS version
+of the host on which they were built.
