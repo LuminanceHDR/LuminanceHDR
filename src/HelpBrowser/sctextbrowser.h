@@ -45,23 +45,14 @@ for which a new license (GPL+exception) is in place.
 #define SCTEXTBROWSER_H
 
 #include <QUrl>
-
-#ifdef USE_DEPRECATED_QTWEBKIT
-#include <QWebView>
-#else
 #include <QWebEngineView>
-#endif
 
-#ifdef USE_DEPRECATED_QTWEBKIT
-class ScTextBrowser : public QWebView {
-#else
 class ScTextBrowser : public QWebEngineView {
-#endif
     Q_OBJECT
     QUrl m_home;
 
    public:
-    explicit ScTextBrowser(QWidget *parent = 0);
+    explicit ScTextBrowser(QWidget *parent = nullptr);
     void setHome(const QUrl &h) { m_home = h; }
 
    signals:

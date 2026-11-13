@@ -22,6 +22,7 @@
 //! \brief apply gamma and black/white point to the input frame
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 
@@ -133,9 +134,9 @@ void gammaAndLevels(pfs::Frame *inFrame, float black_in, float white_in,
         blue = (blue - black_in) / (white_in - black_in);
         blue *= c;
 
-        R_o[idx] = clamp(black_out + red * (white_out - black_out), 0.f, 1.f);
-        G_o[idx] = clamp(black_out + green * (white_out - black_out), 0.f, 1.f);
-        B_o[idx] = clamp(black_out + blue * (white_out - black_out), 0.f, 1.f);
+        R_o[idx] = std::clamp(black_out + red * (white_out - black_out), 0.f, 1.f);
+        G_o[idx] = std::clamp(black_out + green * (white_out - black_out), 0.f, 1.f);
+        B_o[idx] = std::clamp(black_out + blue * (white_out - black_out), 0.f, 1.f);
     }
 
 #ifdef TIMER_PROFILING

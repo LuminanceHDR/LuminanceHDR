@@ -25,6 +25,9 @@
 #include <QFileDialog>
 #include <QImage>
 #include <QMessageBox>
+#include <QRegularExpression>
+#include <QRegularExpression>
+#include <QRegularExpression>
 #include <QScopedPointer>
 #include <QTranslator>
 #include <QUrl>
@@ -36,29 +39,29 @@
 #include "Common/global.hxx"
 
 bool matchesLdrFilename(const QString &file) {
-    QRegExp exp(
+    QRegularExpression exp(
         ".*\\.(jpeg|jpg|tiff|tif|crw|cr2|cr3|nef|dng|mrw|orf|kdc|dcr|arw|"
         "raf|ptx|pef|"
         "x3f|raw|sr2|rw2)$",
-        Qt::CaseInsensitive);
-    return exp.exactMatch(file);
+        QRegularExpression::CaseInsensitiveOption);
+    return exp.match(file).hasMatch();
 }
 
 bool matchesHdrFilename(const QString &file) {
 #ifdef HAVE_CFITSIO
-    QRegExp exp(
+    QRegularExpression exp(
         ".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|cr3|nef|dng|mrw|"
         "orf|kdc|dcr|"
         "arw|raf|ptx|pef|x3f|raw|sr2|rw2)$",
-        Qt::CaseInsensitive);
+        QRegularExpression::CaseInsensitiveOption);
 #else
-    QRegExp exp(
+    QRegularExpression exp(
         ".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|cr3|nef|dng|mrw|orf|kdc|"
         "dcr|arw|raf|"
         "ptx|pef|x3f|raw|sr2|rw2)$",
-        Qt::CaseInsensitive);
+        QRegularExpression::CaseInsensitiveOption);
 #endif
-    return exp.exactMatch(file);
+    return exp.match(file).hasMatch();
 }
 
 QStringList getAllHdrFileExtensions() {
@@ -95,7 +98,7 @@ QStringList getAllHdrFileExtensions() {
          << QStringLiteral(".nrw")
          << QStringLiteral(".srw");
 
-    foreach (const QString &s, list) {
+    for (const QString &s : list) {
         listAll << s;
         listAll << s.toUpper();
     }

@@ -87,7 +87,7 @@ QString LuminancePaths::LocalizedDirPath(const QString &base,
     names << base + fallback;
     names << base;
 
-    foreach (const QString &t, names) {
+    for (const QString &t : names) {
         QDir d(t);
         if (d.exists()) return d.absolutePath() + QString(QDir::separator());
     }

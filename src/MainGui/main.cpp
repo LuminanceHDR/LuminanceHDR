@@ -87,6 +87,9 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context,
         case QtDebugMsg:
             txt = QString("Debug: %1").arg(msg);
             break;
+        case QtInfoMsg:
+            txt = QString("Info: %1").arg(msg);
+            break;
         case QtWarningMsg:
             txt = QString("Warning: %1").arg(msg);
             break;
@@ -101,7 +104,7 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context,
     QFile outFile("debuglog.txt");
     if (outFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
         QTextStream ts(&outFile);
-        ts << txt << endl;
+        ts << txt << Qt::endl;
     }
 }
 #endif
@@ -165,7 +168,7 @@ int main(int argc, char **argv) {
     bool isBatchHDR = false;
     bool isBatchTM = false;
 
-    foreach (QString arg, arguments) {
+    for (QString arg : arguments) {
         if (arg.startsWith("--batchhdr")) isBatchHDR = true;
         if (arg.startsWith("--batchtm")) isBatchTM = true;
     }

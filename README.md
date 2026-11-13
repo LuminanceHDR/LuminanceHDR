@@ -23,7 +23,7 @@ Copyright (C) 2006-2010 - Giuseppe Rota <grota@users.sourceforge.net>
 
 What it is
 ----------
-Luminance HDR is a graphical user interface (based on the Qt5 toolkit) that provides a complete workflow for HDR imaging.
+Luminance HDR is a graphical user interface (based on the Qt6 toolkit) that provides a complete workflow for HDR imaging.
 
 Supported HDR formats:
 * OpenEXR (extension: exr)

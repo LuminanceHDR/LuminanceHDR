@@ -114,7 +114,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab)
     fromGuiIndexToIso639[15] = QStringLiteral("zh");
 
     // for (const QString &style : QStyleFactory::keys())
-    foreach (const QString &style, QStyleFactory::keys()) {
+    for (const QString &style : QStyleFactory::keys()) {
 #ifdef Q_OS_MACOS
         if (style == "Windows") {
             continue;
@@ -129,24 +129,19 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab)
 
     from_options_to_gui();  // update the gui in order to show the options
 
-    toolButtonMapper = new QSignalMapper(this);
-    connect(toolButtonMapper, SIGNAL(mapped(int)), this,
-            SLOT(toolButton_clicked(int)));
-
-    QObject *tabEntries[] = {
+    QAbstractButton *tabEntries[] = {
         m_Ui->toolButtonInterface, m_Ui->toolButtonQueue,
         m_Ui->toolButtonTM,        m_Ui->toolButtonRAW,
         m_Ui->toolButtonCMS,       m_Ui->toolButtonExtTool};
     for (int i = 0; i < 6; i++) {
-        toolButtonMapper->setMapping(tabEntries[i], i);
-        connect(tabEntries[i], SIGNAL(clicked()), toolButtonMapper,
-                SLOT(map()));
+        connect(tabEntries[i], &QAbstractButton::clicked, this,
+                [this, i]() { toolButton_clicked(i); });
     }
 
     toolButton_clicked(tab);
 }
 
-PreferencesDialog::~PreferencesDialog() { delete toolButtonMapper; }
+PreferencesDialog::~PreferencesDialog() {}
 
 void PreferencesDialog::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange) {
@@ -197,7 +192,7 @@ void PreferencesDialog::on_okButton_clicked() {
     // --- Other Parameters
 
     QStringList ais_options = m_Ui->aisParamsLineEdit->text().split(
-        QStringLiteral(" "), QString::SkipEmptyParts);
+        QStringLiteral(" "), Qt::SkipEmptyParts);
     luminance_options.setAlignImageStackOptions(ais_options, true);
 
     // --- RAW parameters

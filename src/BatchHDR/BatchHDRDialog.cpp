@@ -32,7 +32,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
@@ -233,8 +233,8 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p, QSqlDatabase db)
     chosenInputDir.setNameFilters(filters);
     m_bracketed = chosenInputDir.entryList();
     // hack to prepend to this list the path as prefix.
-    m_bracketed.replaceInStrings(QRegExp("(.+)"),
-                                 chosenInputDir.path() + "/\\1");
+    m_bracketed.replaceInStrings(QRegularExpression("(.+)"),
+                                  chosenInputDir.path() + "/\\1");
 
     check_start_button();
 }
@@ -315,7 +315,7 @@ void BatchHDRDialog::on_startButton_clicked() {
 
     bool doStart = true;
     if (!files.empty()) {
-        foreach (const QString &file, files) {
+        for (const QString &file : files) {
             if (file.startsWith(QLatin1String("hdr_"))) foundHDR = true;
         }
         if (foundHDR)
@@ -391,8 +391,8 @@ void BatchHDRDialog::batch_hdr() {
         qDebug() << "BatchHDRDialog::batch_hdr() Files to process: "
                  << toProcess;
         // DAVIDE _ HDR CREATION
-        QtConcurrent::run(std::bind(&HdrCreationManager::loadFiles,
-                                      m_hdrCreationManager, toProcess));
+        (void)QtConcurrent::run(std::bind(&HdrCreationManager::loadFiles,
+                                           m_hdrCreationManager, toProcess));
     } else {
         m_Ui->closeButton->show();
         m_Ui->cancelButton->hide();
@@ -412,7 +412,7 @@ void BatchHDRDialog::align() {
     if (!filesLackingExif.isEmpty()) {
         qDebug() << "BatchHDRDialog::align Error: missing EXIF data";
         m_Ui->textEdit->append(tr("Error: missing EXIF data"));
-        foreach (const QString &fname, filesLackingExif)
+        for (const QString &fname : filesLackingExif)
             m_Ui->textEdit->append(fname);
         m_errors = true;
         // DAVIDE _ HDR WIZARD
@@ -533,9 +533,11 @@ void BatchHDRDialog::writeAisData(QByteArray &data) {
         data.replace(QChar(0x01B).toLatin1(), "");
     m_Ui->textEdit->append(data);
     if (data.contains(": remapping")) {
-        QRegExp exp("\\:\\s*(\\d+)\\s*");
-        exp.indexIn(QString(data.data()));
-        emit setValue(exp.cap(1).toInt());
+        QRegularExpression exp("\\:\\s*(\\d+)\\s*");
+        auto match = exp.match(QString(data.data()));
+        if (match.hasMatch()) {
+            emit setValue(match.captured(1).toInt());
+        }
     }
 }
 

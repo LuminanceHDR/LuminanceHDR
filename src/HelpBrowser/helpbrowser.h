@@ -63,7 +63,7 @@
 #include <QUrl>
 #include <QVariant>
 #include <QWidget>
-#include <QXmlInputSource>
+#include <QXmlStreamReader>
 //#include <QTextEdit>
 #include <QTextBrowser>
 

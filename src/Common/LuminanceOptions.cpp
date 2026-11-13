@@ -105,7 +105,7 @@ void LuminanceOptions::setPortableMode(bool isPortable) {
         QSettings *oldSettings = m_settingHolder;
         LuminanceOptions::isCurrentPortableMode = isPortable;
         initSettings();
-        foreach (const QString &key, oldSettings->allKeys()) {
+        for (const QString &key : oldSettings->allKeys()) {
             m_settingHolder->setValue(key, oldSettings->value(key));
         }
         delete oldSettings;

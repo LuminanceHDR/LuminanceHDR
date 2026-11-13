@@ -1,11 +1,11 @@
 
-QT5_WRAP_CPP(FILES_MOC)
+qt_wrap_cpp(FILES_MOC)
 
 ADD_EXECUTABLE(WhiteBalance
     WhiteBalanceMain.cpp
     ${FILES_MOC})
 
-TARGET_LINK_LIBRARIES(WhiteBalance Qt5::Core Qt5::Gui Qt5::Widgets)
+TARGET_LINK_LIBRARIES(WhiteBalance Qt6::Core Qt6::Gui Qt6::Widgets)
 
 # Link sub modules
 IF(MSVC OR APPLE)

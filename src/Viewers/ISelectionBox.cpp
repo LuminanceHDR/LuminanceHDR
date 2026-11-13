@@ -153,7 +153,9 @@ void ISelectionBox::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 
     painter->setPen(Qt::NoPen);
     painter->setBrush(QColor(127, 127, 127, 188));
-    painter->drawRects(outsideArea.rects());
+    for (const QRect &rect : outsideArea.rects()) {
+        painter->drawRect(rect);
+    }
 
     // draw border
     // QPen pen(QColor(255,255,255,255));
