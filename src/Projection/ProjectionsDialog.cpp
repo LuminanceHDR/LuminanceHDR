@@ -21,7 +21,7 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include <QtConcurrent>
+#include <QtConcurrentRun>
 
 #include "Projection/ProjectionsDialog.h"
 #include "Projection/ui_ProjectionsDialog.h"

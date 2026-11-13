@@ -41,7 +41,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QThread>
-#include <QtConcurrent>
+#include <QtConcurrentRun>
 
 // --- SQL handling
 #include <QSqlError>

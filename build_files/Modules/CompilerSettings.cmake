@@ -2,6 +2,10 @@ IF(UNIX)
 ADD_DEFINITIONS(-Wall -Wno-unknown-pragmas)
 ADD_DEFINITIONS(-Wno-deprecated)
 ADD_DEFINITIONS(-Wno-deprecated-declarations)
+# Must come after -Wall: VLAs are used deliberately in ported DSP code
+# (lhdr_gauss.h, TMO operators, in-tree librtprocess), and fabsf truncation
+# warnings come from librtprocess.
+ADD_DEFINITIONS(-Wno-vla-cxx-extension -Wno-absolute-value)
 
 IF(APPLE)
 # optimize for native architecture on Apple

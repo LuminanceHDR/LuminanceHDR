@@ -48,7 +48,7 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QWhatsThis>
-#include <QtConcurrent>
+#include <QtConcurrentRun>
 
 //#include <functional>
 #include <boost/bind/bind.hpp>

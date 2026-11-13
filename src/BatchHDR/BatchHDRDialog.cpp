@@ -37,7 +37,7 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
-#include <QtConcurrent>
+#include <QtConcurrentRun>
 
 #include <memory>
 
@@ -391,8 +391,8 @@ void BatchHDRDialog::batch_hdr() {
         qDebug() << "BatchHDRDialog::batch_hdr() Files to process: "
                  << toProcess;
         // DAVIDE _ HDR CREATION
-        QtConcurrent::run(std::bind(&HdrCreationManager::loadFiles,
-                                      m_hdrCreationManager, toProcess));
+        (void)QtConcurrent::run(std::bind(&HdrCreationManager::loadFiles,
+                                           m_hdrCreationManager, toProcess));
     } else {
         m_Ui->closeButton->show();
         m_Ui->cancelButton->hide();

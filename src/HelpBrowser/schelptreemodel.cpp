@@ -48,7 +48,6 @@
     models.
 */
 
-#include <QtGui>
 #include <QDomDocument>
 #include <QFile>
 

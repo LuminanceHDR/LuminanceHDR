@@ -87,26 +87,6 @@
 #include "HelpBrowser/LuminancePaths.h"
 #include "HelpBrowser/schelptreemodel.h"
 
-/*! \brief XML parser for documentation history.
-This is small helper class which reads saved bookmarks configuration
-from ~/.scribus/doc/history.xml file.
-The reference to historyBrowser is a reference to the dialog.
-\author Petr Vanek <petr@yarpen.cz>
-*/
-static void parseHistoryXml(QXmlStreamReader &xml, HelpBrowser *helpBrowser) {
-    while (!xml.atEnd()) {
-        xml.readNext();
-        if (xml.isStartElement() && xml.name() == QLatin1String("item")) {
-            QXmlStreamAttributes attrs = xml.attributes();
-            struct histd2 his;
-            his.title = attrs.at(0).value().toString();
-            his.url = attrs.at(1).value().toString();
-            helpBrowser->mHistory[helpBrowser->histMenu->addAction(his.title)] =
-                his;
-        }
-    }
-}
-
 /*! \brief XML parser for documentation bookmarks.
 This is small helper class which reads saved bookmarks configuration
 from ~/.scribus/doc/bookmarks.xml file.

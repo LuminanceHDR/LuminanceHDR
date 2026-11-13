@@ -38,7 +38,10 @@
 **
 ****************************************************************************/
 
-#include <QtWidgets>
+#include <QLayout>
+#include <QSizePolicy>
+#include <QStyle>
+#include <QWidget>
 
 #include "FlowLayout.h"
 //! [1]
@@ -120,7 +123,6 @@ QSize FlowLayout::sizeHint() const { return minimumSize(); }
 
 QSize FlowLayout::minimumSize() const {
     QSize size;
-    QLayoutItem *item;
     for (auto item : itemList)
         size = size.expandedTo(item->minimumSize());
 
