@@ -82,6 +82,8 @@ elseif (BIT_DEPTH EQUAL 8)
 endif (BIT_DEPTH EQUAL 4)
 # set part of the output archive name
 set(SYSTEM_NAME "Windows")
-set ( QTTRANS "$ENV{MSYSTEM_PREFIX}/share/qt5/translations")
+set ( QTTRANS "$ENV{MSYSTEM_PREFIX}/share/qt6/translations")
+set ( QTWEBENGINE_RESOURCES "$ENV{MSYSTEM_PREFIX}/share/qt6/resources")
+set ( QTWEBENGINE_LOCALES "$ENV{MSYSTEM_PREFIX}/share/qt6/translations/qtwebengine_locales")
 
 configure_file ("${PROJECT_SOURCE_DIR}/build_files/platforms/msys2/WindowsInnoSetup.iss.in" "${CMAKE_INSTALL_PREFIX}/WindowsInnoSetup.iss")

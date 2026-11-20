@@ -34,22 +34,10 @@ void EcWin7::init(QWidget *widget) {
     }
 
     associateFileTypes(getAllHdrFileExtensions());
-
-    PWSTR appId;
-    hr = GetCurrentProcessExplicitAppUserModelID(&appId);
-    if (SUCCEEDED(hr)) {
-        SHAddToRecentDocs(SHARD_APPIDINFO, nullptr);
-        CoTaskMemFree(appId);
-    }
 }
 
 void EcWin7::addRecentFile(const QString &filename) {
-    PWSTR appId;
-    HRESULT hr = GetCurrentProcessExplicitAppUserModelID(&appId);
-    if (SUCCEEDED(hr)) {
-        SHAddToRecentDocs(SHARD_PATHW, filename.toStdWString().c_str());
-        CoTaskMemFree(appId);
-    }
+    SHAddToRecentDocs(SHARD_PATHW, filename.toStdWString().c_str());
 }
 
 void EcWin7::setProgressValue(int value, int max) {
@@ -87,4 +75,7 @@ void EcWin7::associateFileTypes(const QStringList &fileTypes) {
     settings.setValue(
         ".",
         QChar('"') + QDir::toNativeSeparators(filePath) + QString("\" \"%1\""));
+    settings.endGroup();  // Command
+    settings.endGroup();  // open
+    settings.endGroup();  // shell
 }

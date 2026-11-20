@@ -10,6 +10,8 @@ class EcWin7 {
    public:
     EcWin7();
     ~EcWin7();
+    EcWin7(const EcWin7 &) = delete;
+    EcWin7 &operator=(const EcWin7 &) = delete;
     void init(QWidget *widget);
     void addRecentFile(const QString &filename);
 

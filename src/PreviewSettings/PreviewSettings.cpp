@@ -183,6 +183,7 @@ void PreviewSettings::tonemapPreview(TonemappingOptions *opts) {
 }
 
 QSize PreviewSettings::getLabelSize() {
+    if (m_ListPreviewLabel.isEmpty()) return QSize();
     return m_ListPreviewLabel.at(0)->pixmap().size();
 }
 

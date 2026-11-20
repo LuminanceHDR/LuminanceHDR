@@ -533,7 +533,7 @@ void BatchHDRDialog::writeAisData(QByteArray &data) {
         data.replace(QChar(0x01B).toLatin1(), "");
     m_Ui->textEdit->append(data);
     if (data.contains(": remapping")) {
-        QRegularExpression exp("\\:\\s*(\\d+)\\s*");
+        QRegularExpression exp(QStringLiteral(R"(:\s*remapping\s+(\d+)\s*)"));
         auto match = exp.match(QString(data.data()));
         if (match.hasMatch()) {
             emit setValue(match.captured(1).toInt());

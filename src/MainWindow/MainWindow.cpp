@@ -50,8 +50,7 @@
 #include <QWhatsThis>
 #include <QtConcurrentRun>
 
-//#include <functional>
-#include <boost/bind/bind.hpp>
+#include <functional>
 
 #include "MainWindow/ui_MainWindow.h"
 
@@ -1331,8 +1330,8 @@ void MainWindow::on_actionAbout_Luminance_triggered() { UMessageBox::about(); }
  */
 void MainWindow::updateWindowMenu() {
     // Remove current elements inside the menuWindows
-    for (QAction *Action_MW : openMainWindows) {
-        openMainWindows.removeAll(Action_MW);
+    while (!openMainWindows.isEmpty()) {
+        QAction *Action_MW = openMainWindows.takeFirst();
         m_Ui->menuWindows->removeAction(Action_MW);
         delete Action_MW;
     }
@@ -2096,8 +2095,9 @@ void MainWindow::on_actionWhite_Balance_triggered() {
 
     Frame *frame = m_viewerToProcess->getFrame();
 
-    m_futureWatcher.setFuture(QtConcurrent::run(
-        boost::bind(whiteBalance, boost::ref(*frame), WB_COLORBALANCE)));
+    m_futureWatcher.setFuture(QtConcurrent::run([frame]() {
+        whiteBalance(*frame, WB_COLORBALANCE);
+    }));
 }
 
 void MainWindow::whiteBalanceDone() {

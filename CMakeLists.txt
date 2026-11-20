@@ -68,11 +68,6 @@ endif( HAS_BRANCH_PREDICTION )
 
 find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui WebEngineWidgets Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
 
-# Include the qtmain lib if we are on the windows platform
-IF(WIN32)
-    SET(LIBS ${LIBS} ${Qt5Core_QTMAIN_LIBRARIES})
-ENDIF(WIN32)
-
 set(LIBS ${LIBS}
     ${Qt6Core_LIBRARIES} ${Qt6Gui_LIBRARIES} ${Qt6Network_LIBRARIES}
     ${Qt6Xml_LIBRARIES} ${Qt6Sql_LIBRARIES})
@@ -279,7 +274,8 @@ IF(APPLE)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
 
     # Build project (bundle and luminance-hdr-cli)
-    SET( CMAKE_OSX_ARCHITECTURES arm64 )  # Apple Silicon build
+    # Architecture selection is left to the toolchain / packager
+    # (override with -DCMAKE_OSX_ARCHITECTURES=... for Intel or universal builds).
     ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES} )
     set_property(TARGET ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTY OUTPUT_NAME ${LHDR_OSX_EXECUTABLE_NAME})
@@ -438,7 +434,7 @@ ELSEIF(WIN32)
         get_filename_component(LIBS_SRC_DIR "${QT_LOCATION}" DIRECTORY)
         message(STATUS "> Base libs dir:    ${LIBS_SRC_DIR}")
         get_filename_component(QT6_PLUGINS_SRC_DIR "${LIBS_SRC_DIR}/../share/qt6/plugins" ABSOLUTE)
-        message(STATUS "> Qt5 plugins libs: ${QT6_PLUGINS_SRC_DIR}")
+        message(STATUS "> Qt6 plugins libs: ${QT6_PLUGINS_SRC_DIR}")
 
         get_filename_component(PRGFILES_DIR "$ENV{ProgramFiles}" ABSOLUTE)
         get_filename_component(PRGFILESX86_DIR "$ENV{ProgramFiles\(x86\)}" ABSOLUTE)

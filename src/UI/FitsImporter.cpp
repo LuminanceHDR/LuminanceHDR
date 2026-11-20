@@ -496,7 +496,7 @@ void FitsImporter::readData(QByteArray data) {
 
     m_Ui->textEdit->append(data);
     if (data.contains(": remapping")) {
-        QRegularExpression exp("\\:\\s*(\\d+)\\s*");
+        QRegularExpression exp(QStringLiteral(R"(:\s*remapping\s+(\d+)\s*)"));
         auto match = exp.match(QString(data.data()));
         if (match.hasMatch()) {
             emit setRange(0, 100);

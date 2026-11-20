@@ -809,12 +809,12 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
         REM ----- QT Stuff (Dlls, translations) --------------------------------------------
         pushd LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%
 
-        for %%v in ( "Qt5Concurrent.dll", "Qt5Core.dll", "Qt5Gui.dll", "Qt5Multimedia.dll", ^
-						"Qt5MultimediaWidgets.dll", "Qt5Network.dll", "Qt5Positioning.dll", ^
-						"Qt5OpenGL.dll", "Qt5PrintSupport.dll", "Qt5Qml.dll", "Qt5Quick.dll", "Qt5Sensors.dll", ^
-						"Qt5Sql.dll", "Qt5V8.dll", "Qt5WebEngine.dll", "Qt5WebEngineCore.dll", "Qt5WebEngineWidgets.dll", ^
-						"Qt5Svg.dll", "Qt5WebKitWidgets.dll", "Qt5Widgets.dll", "Qt5Xml.dll", "Qt5WebChannel.dll", ^
-						"Qt5QuickWidgets.dll", "icudt53.dll", "icuin53.dll", "icuuc53.dll" ) do (
+        for %%v in ( "Qt6Concurrent.dll", "Qt6Core.dll", "Qt6Gui.dll", "Qt6Multimedia.dll", ^
+						"Qt6MultimediaWidgets.dll", "Qt6Network.dll", "Qt6Positioning.dll", ^
+						"Qt6OpenGL.dll", "Qt6PrintSupport.dll", "Qt6Qml.dll", "Qt6Quick.dll", "Qt6Sensors.dll", ^
+						"Qt6Sql.dll", "Qt6WebEngineCore.dll", "Qt6WebEngineWidgets.dll", ^
+						"Qt6Svg.dll", "Qt6Widgets.dll", "Qt6Xml.dll", "Qt6WebChannel.dll", ^
+						"Qt6QuickWidgets.dll" ) do (
 								robocopy %QTDIR%\bin . %%v >nul
         )
         for %%v in ("imageformats", "sqldrivers", "platforms") do (

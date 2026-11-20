@@ -35,7 +35,6 @@ TMOProgressIndicator::TMOProgressIndicator(QWidget *parent)
 
     m_hbl->setContentsMargins(0, 0, 0, 0);   // Design
     m_hbl->setSpacing(4);  // Design
-    m_hbl->setContentsMargins(0, 0, 0, 0);
 
     m_progressBar = new QProgressBar(this);
     m_progressBar->setValue(0);
