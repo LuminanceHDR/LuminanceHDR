@@ -2,17 +2,19 @@ IF(UNIX)
 ADD_DEFINITIONS(-Wall -Wno-unknown-pragmas)
 ADD_DEFINITIONS(-Wno-deprecated)
 ADD_DEFINITIONS(-Wno-deprecated-declarations)
-# Must come after -Wall: VLAs are used deliberately in ported DSP code
-# (lhdr_gauss.h, TMO operators, in-tree librtprocess), and fabsf truncation
-# warnings come from librtprocess. Only pass -Wno-vla-cxx-extension when the
-# compiler actually supports it (Clang-specific; CMake fails the check on
-# "unknown warning option").
-INCLUDE(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-Wno-vla-cxx-extension" COMPILER_SUPPORTS_WNO_VLA_CXX_EXTENSION)
-IF(COMPILER_SUPPORTS_WNO_VLA_CXX_EXTENSION)
-    ADD_DEFINITIONS(-Wno-vla-cxx-extension)
+# Clang-only suppressions for ported DSP code (VLAs in lhdr_gauss.h, TMO
+# operators and in-tree librtprocess; fabsf truncation in librtprocess).
+# GCC must not receive these flags: -Wno-absolute-value is C/ObjC-only there.
+IF(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    # Must come after -Wall; only pass -Wno-vla-cxx-extension when supported
+    # (some Clang versions do not know the flag).
+    INCLUDE(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG("-Wno-vla-cxx-extension" COMPILER_SUPPORTS_WNO_VLA_CXX_EXTENSION)
+    IF(COMPILER_SUPPORTS_WNO_VLA_CXX_EXTENSION)
+        ADD_DEFINITIONS(-Wno-vla-cxx-extension)
+    ENDIF()
+    ADD_DEFINITIONS(-Wno-absolute-value)
 ENDIF()
-ADD_DEFINITIONS(-Wno-absolute-value)
 
 IF(APPLE)
 # optimize for native architecture on Apple
