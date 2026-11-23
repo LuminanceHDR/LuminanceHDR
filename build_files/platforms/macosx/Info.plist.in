@@ -18,6 +18,10 @@
         <string>@LHDR_NAME@</string>
         <key>CFBundleName</key>
         <string>@LHDR_NAME@</string>
+        <key>CFBundleShortVersionString</key>
+        <string>@LHDR_VERSION@</string>
+        <key>CFBundleVersion</key>
+        <string>@LHDR_VERSION_MAJOR@.@LHDR_VERSION_MINOR@.@LHDR_VERSION_PATCH@</string>
         <key>LSMinimumSystemVersion</key>
         <string>@CMAKE_OSX_DEPLOYMENT_TARGET@</string>
         <key>NSHighResolutionCapable</key>

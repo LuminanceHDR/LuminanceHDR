@@ -48,6 +48,14 @@ jobs:
       - name: Build
         run: cmake --build build --parallel
 
+      - name: Deploy Qt frameworks and plugins
+        run: |
+          APP=$(find build -maxdepth 1 -type d -name 'Luminance HDR*.app' -print -quit)
+          test -n "$APP"
+          "$(brew --prefix qt@6)/bin/macdeployqt" "$APP" \
+            -executable="$APP/Contents/MacOS/luminance-hdr-cli" -no-strip
+          codesign --force --deep --sign - "$APP"
+
       - name: Smoke test CLI
         run: |
           APP=$(find build -maxdepth 1 -type d -name 'Luminance HDR*.app' -print -quit)

@@ -161,7 +161,7 @@ ENDIF()
 IF(WIN32)
     SET(Boost_USE_STATIC_LIBS ON)
 ENDIF()
-FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options thread chrono date_time atomic)
+FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options thread chrono date_time atomic container)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 FIND_PACKAGE(exiv2 REQUIRED 0.27.0)
@@ -346,12 +346,14 @@ IF(APPLE)
          DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
     )
 
-    # Install Boost libs (boost_system is header-only in modern Boost)
+    # Install Boost libs (boost_system is header-only in modern Boost).
+    # container is required at runtime by date_time/thread/program_options.
     get_filename_component(THREAD_LIBRARY_RELEASE ${Boost_THREAD_LIBRARY_RELEASE} NAME)
     get_filename_component(PROGRAM_OPTIONS_LIBRARY_RELEASE ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} NAME)
     get_filename_component(CHRONO_LIBRARY_RELEASE ${Boost_CHRONO_LIBRARY_RELEASE} NAME)
     get_filename_component(DATE_TIME_LIBRARY_RELEASE ${Boost_DATE_TIME_LIBRARY_RELEASE} NAME)
     get_filename_component(ATOMIC_LIBRARY_RELEASE ${Boost_ATOMIC_LIBRARY_RELEASE} NAME)
+    get_filename_component(CONTAINER_LIBRARY_RELEASE ${Boost_CONTAINER_LIBRARY_RELEASE} NAME)
     add_custom_command(
         TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
         POST_BUILD
@@ -361,7 +363,8 @@ IF(APPLE)
 	cp -f ${Boost_THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${THREAD_LIBRARY_RELEASE} &&
 	cp -f ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${PROGRAM_OPTIONS_LIBRARY_RELEASE} &&
 	cp -f ${Boost_DATE_TIME_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${DATE_TIME_LIBRARY_RELEASE} &&
-	cp -f ${Boost_ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${ATOMIC_LIBRARY_RELEASE}
+	cp -f ${Boost_ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${ATOMIC_LIBRARY_RELEASE} &&
+	cp -f ${Boost_CONTAINER_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${CONTAINER_LIBRARY_RELEASE}
         COMMAND install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
         install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
         install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&

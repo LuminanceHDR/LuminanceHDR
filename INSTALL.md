@@ -215,6 +215,12 @@ Troubleshooting:
     ```bash
     $QT/bin/macdeployqt Luminance*.app/ -executable=Luminance*.app/Contents/MacOS/luminance-hdr-cli -no-strip
     ```
+  This step is required: without the deployed Qt plugins the GUI aborts at startup with
+  `Could not find the Qt platform plugin "cocoa"`. Since `macdeployqt` uses
+  `install_name_tool`, re-sign the bundle afterwards:
+    ```bash
+    codesign --force --deep --sign - Luminance*.app
+    ```
   This may produce warnings (which you can ignore) such as:
     ```
     WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store compliant.
