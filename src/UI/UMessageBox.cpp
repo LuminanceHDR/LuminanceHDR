@@ -118,7 +118,7 @@ void UMessageBox::about(QWidget *parent) {
                "%2 and %3 are html tags")
                 .arg(QStringLiteral("<html>"),
                      QStringLiteral("<a \
-                                    href=\"http://www.gnu.org/licenses/ \
+                                    href=\"https://www.gnu.org/licenses/ \
                                     old-licenses/gpl-2.0.txt\">"),
                      QStringLiteral("</a></html>")));
     }

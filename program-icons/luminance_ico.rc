@@ -21,7 +21,7 @@ BEGIN
             VALUE "InternalName",     PRODUCTNAME_STR
             VALUE "ProductVersion",   LUMINANCEVERSION
             VALUE "LegalCopyright",   "GPL v2.0"
-            VALUE "Comments",         "For the full text version of the GPL please read http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt"
+            VALUE "Comments",         "For the full text version of the GPL please read https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt"
             //VALUE "OriginalFilename", "luminance-hdr.exe"
             //VALUE "LegalTrademarks",  VER_LEGALTRADEMARKS1_STR
         END
