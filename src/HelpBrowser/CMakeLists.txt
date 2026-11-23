@@ -28,7 +28,11 @@ qt_wrap_cpp(FILES_MOC ${FILES_H})
 qt_wrap_ui(FILES_UI_H ${FILES_UI})
 
 ADD_LIBRARY(helpbrowser STATIC ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H} ${FILES_HXX})
-TARGET_LINK_LIBRARIES(helpbrowser Qt6::Core Qt6::Concurrent Qt6::Gui Qt6::Widgets Qt6::Xml Qt6::WebEngineCore Qt6::WebEngineWidgets Qt6::PrintSupport)
+IF(USE_WEBENGINE)
+    TARGET_LINK_LIBRARIES(helpbrowser Qt6::Core Qt6::Concurrent Qt6::Gui Qt6::Widgets Qt6::Xml Qt6::WebEngineCore Qt6::WebEngineWidgets Qt6::PrintSupport)
+ELSE()
+    TARGET_LINK_LIBRARIES(helpbrowser Qt6::Core Qt6::Concurrent Qt6::Gui Qt6::Widgets Qt6::Xml Qt6::PrintSupport)
+ENDIF()
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} ${FILES_UI} ${FILES_HXX} PARENT_SCOPE)
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} helpbrowser PARENT_SCOPE)

@@ -78,9 +78,9 @@
 #include <QtPrintSupport/QPrintDialog>
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtPrintSupport/QPrinter>
+#ifdef USE_WEBENGINE
 #include <QWebEnginePage>
-#include <QWebEnginePage>
-#include <QWebEnginePage>
+#endif
 
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
@@ -137,15 +137,14 @@ HelpBrowser::HelpBrowser(QWidget *parent, const QString & /*caption*/,
     // m_Ui->htmlPage->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
     // connect(m_Ui->htmlPage, SIGNAL(linkClicked(const QUrl &)), this,
     // SLOT(handleExternalLink(const QUrl &)));
+#ifdef USE_WEBENGINE
     connect(m_Ui->htmlPage, &QWebEngineView::loadStarted, this,
             &HelpBrowser::loadStarted);
     connect(m_Ui->htmlPage, &QWebEngineView::loadFinished, this,
             &HelpBrowser::loadFinished);
-    // connect(m_Ui->htmlPage->page(), SIGNAL(linkHovered(const QString &, const
-    // QString &, const QString & )), this, SLOT(linkHovered(const QString &,
-    // const QString &, const QString & )));
     connect(m_Ui->htmlPage->page(), &QWebEnginePage::linkHovered, this,
             &HelpBrowser::linkHovered);
+#endif
     language =
         guiLanguage.isEmpty() ? QStringLiteral("en") : guiLanguage.left(2);
     finalBaseDir = LuminancePaths::HelpDir();
@@ -259,10 +258,17 @@ void HelpBrowser::setupLocalUI() {
             &HelpBrowser::deleteAllBookmarkButton_clicked);
     connect(m_Ui->goHome, &QAction::triggered, m_Ui->htmlPage,
             &ScTextBrowser::home);
+#ifdef USE_WEBENGINE
     connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage,
             &QWebEngineView::back);
     connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage,
             &QWebEngineView::forward);
+#else
+    connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage,
+            &ScTextBrowser::back);
+    connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage,
+            &ScTextBrowser::forward);
+#endif
     connect(m_Ui->zoomIn, &QAction::triggered, this,
             &HelpBrowser::zoomIn_clicked);
     connect(m_Ui->zoomOriginal, &QAction::triggered, this,
@@ -337,7 +343,7 @@ void HelpBrowser::print() {
             this->printAvailable();
             });
     */
-    m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
+    m_textBrowser->setSource(m_Ui->htmlPage->url());
     this->printAvailable();
 }
 
@@ -359,7 +365,7 @@ void HelpBrowser::printPreview() {
             this->printPreviewAvailable();
             });
     */
-    m_textBrowser->setSource(m_Ui->htmlPage->page()->url());
+    m_textBrowser->setSource(m_Ui->htmlPage->url());
     this->printPreviewAvailable();
 }
 
@@ -435,7 +441,11 @@ void HelpBrowser::findNext() {
         return;
     }
     // find it. finally
+#ifdef USE_WEBENGINE
     m_Ui->htmlPage->findText(findText, QWebEnginePage::FindFlags());
+#else
+    (void)m_Ui->htmlPage->findText(findText);
+#endif
 }
 
 void HelpBrowser::findPrevious() {
@@ -444,7 +454,7 @@ void HelpBrowser::findPrevious() {
         return;
     }
     // find it. finally
-    m_Ui->htmlPage->findText(findText);
+    (void)m_Ui->htmlPage->findText(findText);
 }
 
 void HelpBrowser::bookmarkButton_clicked() {

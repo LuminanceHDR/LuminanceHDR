@@ -45,6 +45,8 @@ for which a new license (GPL+exception) is in place.
 #define SCTEXTBROWSER_H
 
 #include <QUrl>
+
+#ifdef USE_WEBENGINE
 #include <QWebEngineView>
 
 class ScTextBrowser : public QWebEngineView {
@@ -61,5 +63,39 @@ class ScTextBrowser : public QWebEngineView {
    public slots:
     void home();
 };
+
+#else  // !USE_WEBENGINE
+
+#include <QTextBrowser>
+
+// Lightweight fallback for toolchains without Qt WebEngine (e.g. MinGW).
+// Provides the subset of the QWebEngineView API used by HelpBrowser.
+class ScTextBrowser : public QTextBrowser {
+    Q_OBJECT
+    QUrl m_home;
+    qreal m_zoom = 1.0;
+
+   public:
+    explicit ScTextBrowser(QWidget *parent = nullptr);
+    void setHome(const QUrl &h) { m_home = h; }
+    QUrl url() const { return source(); }
+    QString title() const { return documentTitle(); }
+    void load(const QUrl &u) { setSource(u); }
+    void findText(const QString &text);
+    void setZoomFactor(qreal factor);
+
+   signals:
+    void overLink(const QString &link);
+
+   public slots:
+    void home();
+    void back() { QTextBrowser::backward(); }
+    void forward() { QTextBrowser::forward(); }
+
+   private slots:
+    void onAnchorClicked(const QUrl &u);
+};
+
+#endif  // USE_WEBENGINE
 
 #endif
