@@ -46,15 +46,14 @@ OsIntegration::OsIntegration()
 #endif
 {
 #ifdef Q_OS_WIN
-    if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
-        m_winProgressbar = new EcWin7();
+    // Qt6 requires Windows 10+, so the old Windows 7 version check is obsolete.
+    m_winProgressbar = new EcWin7();
 #endif
 }
 
 OsIntegration::~OsIntegration() {
 #ifdef Q_OS_WIN
-    if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
-        delete m_winProgressbar;
+    delete m_winProgressbar;
 #endif
 }
 
