@@ -103,6 +103,11 @@ IF(WIN32)
     # to not define min/max macros, which cause troubles with STL and boost
     ADD_DEFINITIONS(-DNOMINMAX)
     IF(MINGW)
+        # Windows SDK declares ::byte while libstdc++ in C++17 declares
+        # std::byte; project headers with `using namespace std;` make the two
+        # ambiguous. Parse windows.h first, before std::byte can leak into
+        # the global namespace (NOMINMAX is already defined above).
+        ADD_DEFINITIONS(-include windows.h)
         find_package(PkgConfig)
         pkg_check_modules(FFTW3F REQUIRED fftw3f)
         SET(FFTWF_LIBRARIES "libfftw3f.a")
