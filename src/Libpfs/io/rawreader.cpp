@@ -41,6 +41,7 @@
 
 bool callback(double a) { return false; }
 
+using namespace std;
 using namespace pfs;
 
 #ifndef NDEBUG

@@ -35,6 +35,7 @@
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/resize.h"
 #include "ui_ExportToHtmlDialog.h"
+using namespace std;
 
 ExportToHtmlDialog::ExportToHtmlDialog(QWidget *parent, pfs::Frame *frame)
     : QDialog(parent),

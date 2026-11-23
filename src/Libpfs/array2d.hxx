@@ -33,14 +33,6 @@
 #include <Libpfs/array2d.h>
 #include <Libpfs/utils/numeric.h>
 
-#ifdef _WIN32
-// Parse the Windows SDK first: it declares ::byte, which conflicts with
-// std::byte once `using namespace std;` is active below (C++17).
-#include <windows.h>
-#endif
-
-using namespace std;
-
 namespace pfs {
 
 template <typename Type>

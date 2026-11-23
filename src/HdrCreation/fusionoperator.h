@@ -82,9 +82,9 @@ class IFusionOperator {
                                pfs::Frame &outFrame) = 0;
 };
 
-typedef vector<float *> DataList;
+typedef std::vector<float *> DataList;
 
-void fillDataLists(const vector<FrameEnhanced> &frames, DataList &redChannels,
+void fillDataLists(const std::vector<FrameEnhanced> &frames, DataList &redChannels,
                    DataList &greenChannels, DataList &blueChannels);
 
 }  // fusion
