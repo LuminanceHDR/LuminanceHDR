@@ -66,13 +66,26 @@ endif( HAS_BRANCH_PREDICTION )
 
 # find and setup Qt6 for this project
 
-find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui WebEngineWidgets Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
+# Qt WebEngine requires MSVC on Windows (it does not build with MinGW).
+# Allow a QTextBrowser-based help browser for toolchains without WebEngine.
+option(USE_WEBENGINE "Use QtWebEngine for the help browser" ON)
+
+if(USE_WEBENGINE)
+    find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui WebEngineWidgets Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
+    add_definitions(-DUSE_WEBENGINE)
+else()
+    find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
+endif()
 
 set(LIBS ${LIBS}
     ${Qt6Core_LIBRARIES} ${Qt6Gui_LIBRARIES} ${Qt6Network_LIBRARIES}
     ${Qt6Xml_LIBRARIES} ${Qt6Sql_LIBRARIES})
 
-message(STATUS "Building with QtWebEngine")
+if(USE_WEBENGINE)
+    message(STATUS "Building with QtWebEngine")
+else()
+    message(STATUS "Building with QTextBrowser fallback (no QtWebEngine)")
+endif()
 
 FIND_PACKAGE(Git)
 IF(GIT_FOUND)
@@ -92,7 +105,7 @@ IF(WIN32)
     IF(MINGW)
         find_package(PkgConfig)
         pkg_check_modules(FFTW3F REQUIRED fftw3f)
-        SET(FFTWF_LIBRARIES "libfftw3f.a")
+        SET(FFTWF_LIBRARIES "libfftw3f.a" "libfftw3f_threads.a")
         pkg_check_modules(LCMS REQUIRED lcms2>=2.6)
         pkg_check_modules(LIBRAW REQUIRED libraw)
         ADD_DEFINITIONS("-DDEMOSAICING_GPL2")

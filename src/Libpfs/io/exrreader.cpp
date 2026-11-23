@@ -149,7 +149,7 @@ void EXRReader::read(Frame &frame, const Params & /*params*/) {
     FrameBuffer frameBuffer;
     frameBuffer.insert(
         "R",          // name
-        Slice(FLOAT,  // type
+        Slice(Imf::FLOAT,  // type
               (char *)(X->data() - dtw.min.x - dtw.min.y * width()),
               sizeof(float),            // xStride
               sizeof(float) * width(),  // yStride
@@ -158,7 +158,7 @@ void EXRReader::read(Frame &frame, const Params & /*params*/) {
 
     frameBuffer.insert(
         "G",          // name
-        Slice(FLOAT,  // type
+        Slice(Imf::FLOAT,  // type
               (char *)(Y->data() - dtw.min.x - dtw.min.y * width()),
               sizeof(float),            // xStride
               sizeof(float) * width(),  // yStride
@@ -167,7 +167,7 @@ void EXRReader::read(Frame &frame, const Params & /*params*/) {
 
     frameBuffer.insert(
         "B",          // name
-        Slice(FLOAT,  // type
+        Slice(Imf::FLOAT,  // type
               (char *)(Z->data() - dtw.min.x - dtw.min.y * width()),
               sizeof(float),            // xStride
               sizeof(float) * width(),  // yStride
@@ -190,7 +190,7 @@ void EXRReader::read(Frame &frame, const Params & /*params*/) {
         }
         pfs::Channel *pfsCh = tempFrame.createChannel( channelName );
         frameBuffer.insert( i.name(),                               // name
-                            Slice( FLOAT,                           // type
+                            Slice( Imf::FLOAT,                           // type
                                    (char *)(pfsCh->data() - dtw.min.x -
     dtw.min.y
     * width()),

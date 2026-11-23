@@ -47,6 +47,11 @@ for which a new license (GPL+exception) is in place.
 #include <QCursor>
 #include <QFileDialog>
 #include <QFileInfo>
+#ifdef USE_WEBENGINE
+#else
+#include <QFont>
+#include <QTextCursor>
+#endif
 #include <QMessageBox>
 #include <QProcess>
 #include <QString>
@@ -56,7 +61,31 @@ for which a new license (GPL+exception) is in place.
 
 #include "sctextbrowser.h"
 
+#ifdef USE_WEBENGINE
 ScTextBrowser::ScTextBrowser(QWidget *parent) : QWebEngineView(parent) {}
 void ScTextBrowser::home() {
     if (m_home.isValid()) load(m_home);
 }
+#else
+ScTextBrowser::ScTextBrowser(QWidget *parent) : QTextBrowser(parent) {
+    connect(this, &QTextBrowser::anchorClicked, this,
+            &ScTextBrowser::onAnchorClicked);
+}
+void ScTextBrowser::home() {
+    if (m_home.isValid()) load(m_home);
+}
+void ScTextBrowser::findText(const QString &text) {
+    QTextCursor cursor = document()->find(text);
+    if (!cursor.isNull()) setTextCursor(cursor);
+}
+void ScTextBrowser::setZoomFactor(qreal factor) {
+    QFont f = font();
+    f.setPointSizeF(qMax(4.0, f.pointSizeF() * factor / m_zoom));
+    setFont(f);
+    m_zoom = factor;
+}
+void ScTextBrowser::onAnchorClicked(const QUrl &u) {
+    emit overLink(u.toString());
+    setSource(u);
+}
+#endif

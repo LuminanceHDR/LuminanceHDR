@@ -23,7 +23,6 @@
 #include <boost/assign.hpp>
 
 using namespace ::boost::assign;
-using namespace std;
 
 namespace pfs {
 namespace io {
@@ -32,7 +31,7 @@ using pfs::utils::getFormat;
 
 FrameWriterPtr FrameWriterFactory::open(const std::string &filename,
                                         const pfs::Params &params) {
-    string ext = getFormat(filename);
+    std::string ext = getFormat(filename);
     std::string content;
     if (params.get("format", content)) {
         if (!content.empty()) {

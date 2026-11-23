@@ -47,6 +47,7 @@
 #include <Libpfs/utils/transform.h>
 #include <UI/UMessageBox.h>
 
+using namespace std;
 using namespace pfs;
 using namespace pfs::colorspace;
 

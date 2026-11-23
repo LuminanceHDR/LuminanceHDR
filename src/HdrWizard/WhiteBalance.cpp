@@ -149,8 +149,8 @@ void robustAWB(Array2Df *R_orig, Array2Df *G_orig, Array2Df *B_orig) {
     Array2Df V(width, height);
     Array2Df F(width, height);
 
-    vector<float> gray_r;
-    vector<float> gray_b;
+    std::vector<float> gray_r;
+    std::vector<float> gray_b;
 
     copy(R_orig, &R);
     copy(G_orig, &G);

@@ -28,6 +28,7 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/projection.h"
+using namespace std;
 
 static void worker(pfs::Frame *original, pfs::Frame *transformed, int xSize,
                    int ySize, TransformInfo *transforminfo) {

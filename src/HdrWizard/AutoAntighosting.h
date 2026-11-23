@@ -30,7 +30,6 @@
 
 #define agGridSize 40
 
-using namespace std;
 using namespace pfs;
 
 float max(const Array2Df &u);
@@ -38,7 +37,7 @@ float min(const Array2Df &u);
 void solve_pde_dct(Array2Df &F, Array2Df &U);
 void clampToZero(Array2Df &R, Array2Df &G, Array2Df &B, float m);
 int findIndex(const float *data, int size);
-void hueSquaredMean(const HdrCreationItemContainer &data, vector<float> &HE);
+void hueSquaredMean(const HdrCreationItemContainer &data, std::vector<float> &HE);
 void sdv(const HdrCreationItem &item1, const HdrCreationItem &item2,
          const float deltaEV, const int dx, const int dy, float &sR, float &sG,
          float &sB);

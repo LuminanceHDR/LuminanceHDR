@@ -1,0 +1,80 @@
+name: Windows build (MSYS2 / MinGW-w64)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compile with MinGW-w64 (UCRT) and Qt6 (QTextBrowser fallback)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            diffutils
+            git
+            gzip
+            intltool
+            make
+            tar
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-make
+            mingw-w64-ucrt-x86_64-pkg-config
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-eigen3
+            mingw-w64-ucrt-x86_64-lcms2
+            mingw-w64-ucrt-x86_64-fftw
+            mingw-w64-ucrt-x86_64-qt6-base
+            mingw-w64-ucrt-x86_64-qt6-tools
+            mingw-w64-ucrt-x86_64-qt6-svg
+            mingw-w64-ucrt-x86_64-libraw
+            mingw-w64-ucrt-x86_64-boost
+            mingw-w64-ucrt-x86_64-exiv2
+            mingw-w64-ucrt-x86_64-openexr
+            mingw-w64-ucrt-x86_64-gsl
+            mingw-w64-ucrt-x86_64-cfitsio
+
+      # CMake's MINGW branch requires align_image_stack.exe (find_program).
+      # A tiny stub is enough: Hugin is never invoked during the build.
+      # MSYS2 has no Hugin package, so build one locally.
+      - name: Provide align_image_stack.exe stub
+        run: |
+          mkdir -p tools/hugin
+          printf 'int main(void) { return 0; }\n' > tools/hugin/align_image_stack.c
+          gcc -o tools/hugin/align_image_stack.exe tools/hugin/align_image_stack.c
+
+      - name: Configure
+        run: |
+          mkdir -p build
+          cd build
+          HUGIN_DIR=$(cd ../tools/hugin && pwd -W)
+          cmake -G "MSYS Makefiles" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DUSE_WEBENGINE=OFF \
+            -DHUGIN_BASE_PATH="$HUGIN_DIR" \
+            ..
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Upload executables
+        uses: actions/upload-artifact@v4
+        with:
+          name: luminance-hdr-windows-ucrt64
+          path: |
+            build/luminance-hdr.exe
+            build/luminance-hdr-cli.exe
+          if-no-files-found: warn

@@ -155,7 +155,7 @@ void Lanczos(const Type *src, Type *dst, int W, int H, int W2, int H2)
                 }
 
                 dst[i * W2 + j] =
-                    max(zero, min(static_cast<Type>(o),
+                    std::max(zero, std::min(static_cast<Type>(o),
                                   boost::numeric::bounds<Type>::highest()));
             }
         }
