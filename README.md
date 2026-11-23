@@ -69,7 +69,7 @@ Contact and Links
 -----------------
 All comments and suggestions concerning this package or the implementation of particular algorithms are welcome.
 
-For bugs, issues or feature requests, please refer to the [BUGS](BUGS) file
+For bugs, issues or feature requests, please use the [GitHub issue tracker](https://github.com/LuminanceHDR/LuminanceHDR/issues)
 
 See also:
 * [PFStools](http://www.mpii.mpg.de/resources/pfstools/)
