@@ -2,11 +2,12 @@ name: Ubuntu build (Qt6)
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v3.0.0*'
   release:
     types: [published]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -58,9 +59,43 @@ jobs:
           ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
           echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
 
-      - name: Upload install tree
+      - name: Create tarball
+        run: |
+          tar czf "luminance-hdr-${ARTIFACT_VERSION}-linux-x86_64.tar.gz" -C install .
+
+      - name: Upload tarball
         uses: actions/upload-artifact@v4
         with:
           name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-ubuntu-amd64
-          path: install/
+          path: luminance-hdr-${{ env.ARTIFACT_VERSION }}-linux-x86_64.tar.gz
           if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'release'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Determine artifact version
+        id: names
+        run: |
+          SAFE=$(printf '%s' "${{ github.event.release.tag_name }}" | tr -c 'A-Za-z0-9._-' '-')
+          echo "version=$SAFE" >> "$GITHUB_OUTPUT"
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: luminance-hdr-${{ steps.names.outputs.version }}-ubuntu-amd64
+          path: artifacts
+
+      - name: Upload release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ASSET=$(find artifacts -type f -name '*.tar.gz' -print -quit)
+          test -n "$ASSET"
+          NAME="Luminance-HDR-${{ steps.names.outputs.version }}-linux-x86_64.tar.gz"
+          cp "$ASSET" "$NAME"
+          gh release upload "${{ github.event.release.tag_name }}" "$NAME" --clobber

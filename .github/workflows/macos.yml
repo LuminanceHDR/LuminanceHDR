@@ -2,11 +2,12 @@ name: macOS build (Qt6)
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v3.0.0*'
   release:
     types: [published]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -73,15 +74,46 @@ jobs:
           ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
           echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
 
-      - name: Compress app bundle
+      - name: Create DMG
         run: |
           APP=$(find build -maxdepth 1 -type d -name 'Luminance HDR*.app' -print -quit)
-          ditto -c -k --sequesterRsrc --keepParent "$APP" \
-            "luminance-hdr-${ARTIFACT_VERSION}-macos-arm64.zip"
+          test -n "$APP"
+          hdiutil create -ov -fs HFS+ -format UDZO -srcfolder "$APP" \
+            "luminance-hdr-${ARTIFACT_VERSION}-macos-arm64.dmg"
 
       - name: Upload app bundle
         uses: actions/upload-artifact@v4
         with:
           name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-macos-arm64
-          path: luminance-hdr-${{ env.ARTIFACT_VERSION }}-macos-arm64.zip
+          path: luminance-hdr-${{ env.ARTIFACT_VERSION }}-macos-arm64.dmg
           if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'release'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Determine artifact version
+        id: names
+        run: |
+          SAFE=$(printf '%s' "${{ github.event.release.tag_name }}" | tr -c 'A-Za-z0-9._-' '-')
+          echo "version=$SAFE" >> "$GITHUB_OUTPUT"
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: luminance-hdr-${{ steps.names.outputs.version }}-macos-arm64
+          path: artifacts
+
+      - name: Upload release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ASSET=$(find artifacts -type f -name '*.dmg' -print -quit)
+          test -n "$ASSET"
+          NAME="Luminance-HDR-${{ steps.names.outputs.version }}-macos-arm64.dmg"
+          cp "$ASSET" "$NAME"
+          gh release upload "${{ github.event.release.tag_name }}" "$NAME" --clobber

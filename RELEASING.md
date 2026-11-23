@@ -62,18 +62,19 @@ Update stale release text in the same commit that changes the version:
   entry. AppStream release entries are normally added for final versions, not
   for RCs.
 
-### 4. Configure CI for release tags
+### 4. Configure CI for GitHub Releases
 
-`.github/workflows/windows-msys2.yml` should accept:
+Each platform workflow accepts only manual dispatch and published releases:
 
 ```yaml
 on:
   workflow_dispatch:
-  push:
-    tags: ['v3.0.0*']
   release:
     types: [published]
 ```
+
+Tag pushes do not trigger builds. Publishing a GitHub Release triggers all
+three platform workflows once.
 
 Artifact names include a sanitized `${{ github.ref_name }}`, because branch
 names such as `release/3.0.0` contain characters that GitHub artifact names do
@@ -84,12 +85,17 @@ not allow:
   run: |
     ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
     echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
-
-- name: Upload executables
-  uses: actions/upload-artifact@v4
-  with:
-    name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-windows-ucrt64
 ```
+
+Each workflow publishes its own release asset from a separate `publish` job
+that runs only for `release.published` and has `contents: write`:
+
+- Windows: `Luminance-HDR-<tag>-win64.exe`
+- macOS: `Luminance-HDR-<tag>-macos-arm64.dmg`
+- Ubuntu: `Luminance-HDR-<tag>-linux-x86_64.tar.gz`
+
+Assets are attached with `gh release upload "$TAG" "$ASSET" --clobber`, so
+reruns can replace existing files. Build jobs keep `contents: read`.
 
 `build_files/platforms/msys2/UpdateInfo.cmake` uses the exact tag for tagged
 builds and the CMake-computed version for branch builds. It also sanitizes
@@ -144,12 +150,9 @@ gh release create v3.0.0-rc1 \
   --generate-notes
 ```
 
-Download the build artifacts from the tag-triggered workflow and attach them
-to the GitHub pre-release:
-
-```bash
-gh release upload v3.0.0-rc1 /path/to/artifact.zip
-```
+Publishing the pre-release triggers the Windows, macOS, and Ubuntu workflows.
+Each workflow attaches its asset automatically via `gh release upload`; wait
+for all `publish` jobs to complete.
 
 Verify that:
 
@@ -184,7 +187,8 @@ gh release create v3.0.0 \
   --generate-notes
 ```
 
-7. Attach the final Windows, macOS, Linux, and source artifacts.
+7. Wait for the Windows, macOS, and Ubuntu `publish` jobs to attach the final
+   installer, DMG, and tarball.
 8. Confirm that GitHub marks `3.0.0` as the latest release.
 
 ## Merge-back and cleanup
@@ -219,5 +223,11 @@ git branch -d release/3.0.0
   Keep both aligned by tagging the exact release commit.
 - The legacy updater compares version strings strictly. A tagged RC may be
   reported as out of date; this is expected unless the updater is replaced.
+- RC installers are unsigned (Windows) or ad-hoc signed (macOS). Final public
+  releases require proper code signing and macOS notarization.
+- The Linux tarball depends on system Qt 6 and runtime libraries. It is not a
+  self-contained AppImage.
+- Workflows must be merged into the long-lived branch before `release/3.0.0`
+  is deleted, or publishing CI will disappear.
 - Do not cherry-pick release fixes casually. Commit them on the release branch
   and merge them back into `convert-to-qt6`.

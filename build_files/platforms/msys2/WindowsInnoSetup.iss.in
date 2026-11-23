@@ -120,19 +120,19 @@ Source: "{#MySourceLibsDir}\qt6network.dll"; DestDir: "{app}"; Flags: ignorevers
 Source: "{#MySourceLibsDir}\qt6printsupport.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\qt6sql.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\qt6svg.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt6webenginewidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6webenginewidgets.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "{#MySourceLibsDir}\qt6widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\qt6xml.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt6webenginecore.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt6qml.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt6quick.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt6positioning.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MySourceLibsDir}\qt6webchannel.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MySourceLibsDir}\qt6webenginecore.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#MySourceLibsDir}\qt6qml.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#MySourceLibsDir}\qt6quick.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#MySourceLibsDir}\qt6positioning.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#MySourceLibsDir}\qt6webchannel.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 
-;---- Qt WebEngine runtime (required by the QWebEngineView-based Help Browser)
-Source: "{#MySourceLibsDir}\QtWebEngineProcess.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyQtWebEngineResources}\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#MyQtWebEngineLocales}\*"; DestDir: "{app}\translations\qtwebengine_locales"; Flags: ignoreversion recursesubdirs createallsubdirs
+;---- Qt WebEngine runtime (only present when built with Qt WebEngine)
+Source: "{#MySourceLibsDir}\QtWebEngineProcess.exe"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#MyQtWebEngineResources}\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs skipifsourcedoesntexist
+Source: "{#MyQtWebEngineLocales}\*"; DestDir: "{app}\translations\qtwebengine_locales"; Flags: ignoreversion recursesubdirs createallsubdirs skipifsourcedoesntexist
 Source: "{#MySourceLibsDir}\libexiv2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libgsl-23.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MySourceLibsDir}\libiex-2_*.dll"; DestDir: "{app}"; Flags: ignoreversion
