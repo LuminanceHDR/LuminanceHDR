@@ -28,6 +28,11 @@
 
 #include "HdrCreationItem.h"
 
+#ifdef _WIN32
+// See array2d.hxx: define ::byte before `using namespace std;` leaks std::byte.
+#include <windows.h>
+#endif
+
 #define agGridSize 40
 
 using namespace std;
