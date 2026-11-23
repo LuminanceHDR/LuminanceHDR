@@ -105,6 +105,8 @@ Before tagging an RC or the final release:
 - [ ] The local default build succeeds with Qt WebEngine enabled.
 - [ ] The local build succeeds with `-DUSE_WEBENGINE=OFF`.
 - [ ] The Windows MSYS2/UCRT64 workflow succeeds.
+- [ ] The Ubuntu Qt6 workflow succeeds.
+- [ ] The macOS Qt6 workflow succeeds.
 - [ ] The CLI starts, for example with `--help`.
 - [ ] The About dialog and Windows installer show the expected version.
 - [ ] `Changelog`, README badge, and installation docs are current.

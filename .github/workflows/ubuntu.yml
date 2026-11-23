@@ -1,0 +1,66 @@
+name: Ubuntu build (Qt6)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v3.0.0*'
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compile with GCC and Qt6 (QTextBrowser fallback)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build git pkg-config \
+            qt6-base-dev qt6-tools-dev qt6-tools-dev-tools qt6-l10n-tools libqt6svg6-dev \
+            libexiv2-dev liblcms2-dev libfftw3-dev libraw-dev libeigen3-dev \
+            libboost-all-dev libgsl-dev libopenexr-dev \
+            libtiff-dev libpng-dev libjpeg-dev libcfitsio-dev
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DUSE_WEBENGINE=OFF \
+            -DCMAKE_INSTALL_PREFIX="$PWD/install"
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Install
+        run: cmake --install build
+
+      - name: Smoke test CLI
+        run: |
+          set +e
+          ./build/luminance-hdr-cli --help > cli-help.txt 2>&1
+          STATUS=$?
+          set -e
+          test "$STATUS" -eq 1
+          grep -q "Usage:" cli-help.txt
+          rm cli-help.txt
+
+      - name: Prepare artifact name
+        run: |
+          ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
+          echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
+
+      - name: Upload install tree
+        uses: actions/upload-artifact@v4
+        with:
+          name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-ubuntu-amd64
+          path: install/
+          if-no-files-found: error
