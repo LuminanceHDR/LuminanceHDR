@@ -366,7 +366,7 @@ void PreviewPanel::updatePreviews(pfs::Frame *frame, int index) {
     // 2. (non concurrent) for each PreviewLabel, call
     // PreviewLabelUpdater::operator()
     if (index == -1) {
-        foreach (PreviewLabel *current_label, m_ListPreviewLabel) {
+        for (PreviewLabel *current_label : m_ListPreviewLabel) {
             PreviewLabelUpdater updater(current_frame);
             updater.setAutolevels(m_doAutolevels, m_autolevelThreshold);
             updater(current_label);
@@ -394,7 +394,7 @@ void PreviewPanel::tonemapPreview(TonemappingOptions *opts) {
 }
 
 QSize PreviewPanel::getLabelSize() {
-    return m_ListPreviewLabel.at(0)->pixmap()->size();
+    return m_ListPreviewLabel.at(0)->pixmap().size();
 }
 
 PreviewLabel *PreviewPanel::getLabel(int index) {

@@ -1,0 +1,139 @@
+name: Windows build (MSYS2 / MinGW-w64)
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compile and package with MinGW-w64 (UCRT) and Qt6
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            diffutils
+            git
+            gzip
+            intltool
+            make
+            tar
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-make
+            mingw-w64-ucrt-x86_64-pkg-config
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-eigen3
+            mingw-w64-ucrt-x86_64-lcms2
+            mingw-w64-ucrt-x86_64-fftw
+            mingw-w64-ucrt-x86_64-qt6-base
+            mingw-w64-ucrt-x86_64-qt6-tools
+            mingw-w64-ucrt-x86_64-qt6-svg
+            mingw-w64-ucrt-x86_64-libraw
+            mingw-w64-ucrt-x86_64-boost
+            mingw-w64-ucrt-x86_64-exiv2
+            mingw-w64-ucrt-x86_64-openexr
+            mingw-w64-ucrt-x86_64-gsl
+            mingw-w64-ucrt-x86_64-cfitsio
+
+      - name: Provide align_image_stack.exe stub
+        run: |
+          mkdir -p tools/hugin
+          printf 'int main(void) { return 0; }\n' > tools/hugin/align_image_stack.c
+          gcc -o tools/hugin/align_image_stack.exe tools/hugin/align_image_stack.c
+
+      - name: Configure
+        run: |
+          mkdir -p build
+          cd build
+          HUGIN_DIR=$(cd ../tools/hugin && pwd -W)
+          cmake -G "MSYS Makefiles" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DUSE_WEBENGINE=OFF \
+            -DCMAKE_INSTALL_PREFIX="$PWD/install" \
+            -DHUGIN_BASE_PATH="$HUGIN_DIR" \
+            ..
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Install
+        run: cmake --install build
+
+      - name: Generate Inno Setup script
+        run: cmake --build build --target prepare_setup
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = (Get-Command ISCC.exe -ErrorAction SilentlyContinue).Source
+          if (-not $iscc) {
+            $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          }
+          if (-not (Test-Path $iscc)) {
+            choco install innosetup -y --no-progress
+            $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          }
+          if (-not (Test-Path $iscc)) {
+            throw "Inno Setup compiler not found"
+          }
+          & $iscc "build\install\WindowsInnoSetup.iss"
+
+      - name: Prepare artifact name
+        run: |
+          ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
+          echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-windows-ucrt64
+          path: build/Luminance-HDR_*.exe
+          if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'release'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Determine artifact version
+        id: names
+        run: |
+          SAFE=$(printf '%s' "${{ github.event.release.tag_name }}" | tr -c 'A-Za-z0-9._-' '-')
+          echo "version=$SAFE" >> "$GITHUB_OUTPUT"
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: luminance-hdr-${{ steps.names.outputs.version }}-windows-ucrt64
+          path: artifacts
+
+      - name: Upload release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ASSET=$(find artifacts -type f -name '*.exe' -print -quit)
+          test -n "$ASSET"
+          NAME="Luminance-HDR-${{ steps.names.outputs.version }}-win64.exe"
+          cp "$ASSET" "$NAME"
+          gh release upload "${{ github.event.release.tag_name }}" "$NAME" --clobber

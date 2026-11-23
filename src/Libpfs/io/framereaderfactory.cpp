@@ -23,7 +23,6 @@
 #include <boost/assign.hpp>
 
 using namespace boost::assign;
-using namespace std;
 
 namespace pfs {
 namespace io {
@@ -31,7 +30,7 @@ namespace io {
 using pfs::utils::getFormat;
 
 FrameReaderPtr FrameReaderFactory::open(const std::string &filename) {
-    string ext = getFormat(filename);
+    std::string ext = getFormat(filename);
     if (!ext.empty()) {
         FrameReaderCreatorMap::const_iterator it = sm_registry.find(ext);
         if (it != sm_registry.end()) {

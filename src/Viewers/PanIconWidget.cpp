@@ -24,7 +24,8 @@
 
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
@@ -122,7 +123,7 @@ void PanIconWidget::setRegionSelection(QRect rs) {
 }
 
 void PanIconWidget::mousePressEvent(QMouseEvent *e) {
-    if ((e->button() == Qt::LeftButton || e->button() == Qt::MidButton) &&
+    if ((e->button() == Qt::LeftButton || e->button() == Qt::MiddleButton) &&
         m_localRegionSelection.contains(e->x(), e->y())) {
         xpos = e->x();
         ypos = e->y();
@@ -133,7 +134,7 @@ void PanIconWidget::mousePressEvent(QMouseEvent *e) {
 
 void PanIconWidget::mouseMoveEvent(QMouseEvent *e) {
     if (moveSelection &&
-        (e->buttons() == Qt::LeftButton || e->buttons() == Qt::MidButton)) {
+        (e->buttons() == Qt::LeftButton || e->buttons() == Qt::MiddleButton)) {
         int newxpos = e->x();
         int newypos = e->y();
 
@@ -197,7 +198,7 @@ void PanIconWidget::paintEvent(QPaintEvent *e) {
 }
 
 void PanIconWidget::popup(const QPoint &pos) {
-    QRect d = QApplication::desktop()->screenGeometry();
+    QRect d = QGuiApplication::primaryScreen()->geometry();
     int x = pos.x();
     int y = pos.y();
     int w = width();

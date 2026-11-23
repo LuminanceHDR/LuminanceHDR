@@ -1,0 +1,101 @@
+name: Ubuntu build (Qt6)
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compile with GCC and Qt6 (QTextBrowser fallback)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build git pkg-config \
+            qt6-base-dev qt6-tools-dev qt6-tools-dev-tools qt6-l10n-tools libqt6svg6-dev \
+            libexiv2-dev liblcms2-dev libfftw3-dev libraw-dev libeigen3-dev \
+            libboost-all-dev libgsl-dev libopenexr-dev \
+            libtiff-dev libpng-dev libjpeg-dev libcfitsio-dev
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DUSE_WEBENGINE=OFF \
+            -DCMAKE_INSTALL_PREFIX="$PWD/install"
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Install
+        run: cmake --install build
+
+      - name: Smoke test CLI
+        run: |
+          set +e
+          ./build/luminance-hdr-cli --help > cli-help.txt 2>&1
+          STATUS=$?
+          set -e
+          test "$STATUS" -eq 1
+          grep -q "Usage:" cli-help.txt
+          rm cli-help.txt
+
+      - name: Prepare artifact name
+        run: |
+          ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
+          echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
+
+      - name: Create tarball
+        run: |
+          tar czf "luminance-hdr-${ARTIFACT_VERSION}-linux-x86_64.tar.gz" -C install .
+
+      - name: Upload tarball
+        uses: actions/upload-artifact@v4
+        with:
+          name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-ubuntu-amd64
+          path: luminance-hdr-${{ env.ARTIFACT_VERSION }}-linux-x86_64.tar.gz
+          if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'release'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Determine artifact version
+        id: names
+        run: |
+          SAFE=$(printf '%s' "${{ github.event.release.tag_name }}" | tr -c 'A-Za-z0-9._-' '-')
+          echo "version=$SAFE" >> "$GITHUB_OUTPUT"
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: luminance-hdr-${{ steps.names.outputs.version }}-ubuntu-amd64
+          path: artifacts
+
+      - name: Upload release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ASSET=$(find artifacts -type f -name '*.tar.gz' -print -quit)
+          test -n "$ASSET"
+          NAME="Luminance-HDR-${{ steps.names.outputs.version }}-linux-x86_64.tar.gz"
+          cp "$ASSET" "$NAME"
+          gh release upload "${{ github.event.release.tag_name }}" "$NAME" --clobber

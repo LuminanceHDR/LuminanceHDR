@@ -1162,120 +1162,120 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
         return;
     }
     QTextStream out(&file);
-    out << "# LuminanceHDR Tonemapping Setting file." << endl;
+    out << "# LuminanceHDR Tonemapping Setting file." << Qt::endl;
     out << "# Editing this file by hand is risky, worst case scenario is "
            "Luminance crashing."
-        << endl;
+        << Qt::endl;
     out << "# Please edit this file by hand only if you know what you're "
            "doing, "
            "in any case never change the left hand side text (i.e. the part "
            "before the ``='')."
-        << endl;
-    out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
-    out << "XSIZE=" << sizes[m_Ui->sizeComboBox->currentIndex()] << endl;
+        << Qt::endl;
+    out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << Qt::endl;
+    out << "XSIZE=" << sizes[m_Ui->sizeComboBox->currentIndex()] << Qt::endl;
 
     QWidget *current_page = m_Ui->stackedWidget_operators->currentWidget();
     if (current_page == m_Ui->page_mantiuk06) {
         out << "TMO="
-            << "Mantiuk06" << endl;
-        out << "CONTRASTFACTOR=" << contrastfactorGang->v() << endl;
-        out << "SATURATIONFACTOR=" << saturationfactorGang->v() << endl;
-        out << "DETAILFACTOR=" << detailfactorGang->v() << endl;
+            << "Mantiuk06" << Qt::endl;
+        out << "CONTRASTFACTOR=" << contrastfactorGang->v() << Qt::endl;
+        out << "SATURATIONFACTOR=" << saturationfactorGang->v() << Qt::endl;
+        out << "DETAILFACTOR=" << detailfactorGang->v() << Qt::endl;
         out << "CONTRASTEQUALIZATION="
             << (m_Ui->contrastEqualizCheckBox->isChecked() ? "YES" : "NO")
-            << endl;
+            << Qt::endl;
     } else if (current_page == m_Ui->page_mantiuk08) {
         out << "TMO="
-            << "Mantiuk08" << endl;
-        out << "COLORSATURATION=" << colorSaturationGang->v() << endl;
-        out << "CONTRASTENHANCEMENT=" << contrastEnhancementGang->v() << endl;
-        out << "LUMINANCELEVEL=" << luminanceLevelGang->v() << endl;
+            << "Mantiuk08" << Qt::endl;
+        out << "COLORSATURATION=" << colorSaturationGang->v() << Qt::endl;
+        out << "CONTRASTENHANCEMENT=" << contrastEnhancementGang->v() << Qt::endl;
+        out << "LUMINANCELEVEL=" << luminanceLevelGang->v() << Qt::endl;
         out << "SETLUMINANCE="
             << (m_Ui->luminanceLevelCheckBox->isChecked() ? "YES" : "NO")
-            << endl;
+            << Qt::endl;
     } else if (current_page == m_Ui->page_fattal) {
         out << "TMO="
-            << "Fattal02" << endl;
-        out << "ALPHA=" << alphaGang->v() << endl;
-        out << "BETA=" << betaGang->v() << endl;
-        out << "COLOR=" << saturation2Gang->v() << endl;
-        out << "NOISE=" << noiseGang->v() << endl;
+            << "Fattal02" << Qt::endl;
+        out << "ALPHA=" << alphaGang->v() << Qt::endl;
+        out << "BETA=" << betaGang->v() << Qt::endl;
+        out << "COLOR=" << saturation2Gang->v() << Qt::endl;
+        out << "NOISE=" << noiseGang->v() << Qt::endl;
         out << "OLDFATTAL="
-            << (m_Ui->fftVersionCheckBox->isChecked() ? "NO" : "YES") << endl;
+            << (m_Ui->fftVersionCheckBox->isChecked() ? "NO" : "YES") << Qt::endl;
     } else if (current_page == m_Ui->page_ferradans) {
         out << "TMO="
-            << "Ferradans11" << endl;
-        out << "RHO=" << rhoGang->v() << endl;
-        out << "INV_ALPHA=" << inv_alphaGang->v() << endl;
+            << "Ferradans11" << Qt::endl;
+        out << "RHO=" << rhoGang->v() << Qt::endl;
+        out << "INV_ALPHA=" << inv_alphaGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_ferwerda) {
         out << "TMO="
-            << "Ferwerda96" << endl;
-        out << "MAX_LUMINANCE=" << ferwerdamultiplierGang->v() << endl;
-        out << "ADAPTATION_LUMINANCE=" << adaptationGang->v() << endl;
+            << "Ferwerda96" << Qt::endl;
+        out << "MAX_LUMINANCE=" << ferwerdamultiplierGang->v() << Qt::endl;
+        out << "ADAPTATION_LUMINANCE=" << adaptationGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_kimkautz) {
         out << "TMO="
-            << "KimKautz08" << endl;
-        out << "KK_C1=" << kimkautzc1Gang->v() << endl;
-        out << "KK_C2=" << kimkautzc2Gang->v() << endl;
+            << "KimKautz08" << Qt::endl;
+        out << "KK_C1=" << kimkautzc1Gang->v() << Qt::endl;
+        out << "KK_C2=" << kimkautzc2Gang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_mai) {
         out << "TMO="
-            << "Mai11" << endl;
+            << "Mai11" << Qt::endl;
     } else if (current_page == m_Ui->page_ashikhmin) {
         out << "TMO="
-            << "Ashikhmin02" << endl;
+            << "Ashikhmin02" << Qt::endl;
         out << "SIMPLE=" << (m_Ui->simpleCheckBox->isChecked() ? "YES" : "NO")
-            << endl;
+            << Qt::endl;
         out << "EQUATION=" << (m_Ui->eq2RadioButton->isChecked() ? "2" : "4")
-            << endl;
-        out << "CONTRAST=" << contrastGang->v() << endl;
+            << Qt::endl;
+        out << "CONTRAST=" << contrastGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_durand) {
         out << "TMO="
-            << "Durand02" << endl;
-        out << "SPATIAL=" << spatialGang->v() << endl;
-        out << "RANGE=" << rangeGang->v() << endl;
-        out << "BASE=" << baseGang->v() << endl;
+            << "Durand02" << Qt::endl;
+        out << "SPATIAL=" << spatialGang->v() << Qt::endl;
+        out << "RANGE=" << rangeGang->v() << Qt::endl;
+        out << "BASE=" << baseGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_drago) {
         out << "TMO="
-            << "Drago03" << endl;
-        out << "BIAS=" << biasGang->v() << endl;
+            << "Drago03" << Qt::endl;
+        out << "BIAS=" << biasGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_pattanaik) {
         out << "TMO="
-            << "Pattanaik00" << endl;
-        out << "MULTIPLIER=" << multiplierGang->v() << endl;
+            << "Pattanaik00" << Qt::endl;
+        out << "MULTIPLIER=" << multiplierGang->v() << Qt::endl;
         out << "LOCAL=" << (m_Ui->pattalocal->isChecked() ? "YES" : "NO")
-            << endl;
+            << Qt::endl;
         out << "AUTOLUMINANCE="
-            << (m_Ui->autoYcheckbox->isChecked() ? "YES" : "NO") << endl;
-        out << "CONE=" << coneGang->v() << endl;
-        out << "ROD=" << rodGang->v() << endl;
+            << (m_Ui->autoYcheckbox->isChecked() ? "YES" : "NO") << Qt::endl;
+        out << "CONE=" << coneGang->v() << Qt::endl;
+        out << "ROD=" << rodGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_reinhard02) {
         out << "TMO="
-            << "Reinhard02" << endl;
-        out << "KEY=" << keyGang->v() << endl;
-        out << "PHI=" << phiGang->v() << endl;
+            << "Reinhard02" << Qt::endl;
+        out << "KEY=" << keyGang->v() << Qt::endl;
+        out << "PHI=" << phiGang->v() << Qt::endl;
         out << "SCALES="
-            << (m_Ui->usescalescheckbox->isChecked() ? "YES" : "NO") << endl;
-        out << "RANGE=" << range2Gang->v() << endl;
-        out << "LOWER=" << lowerGang->v() << endl;
-        out << "UPPER=" << upperGang->v() << endl;
+            << (m_Ui->usescalescheckbox->isChecked() ? "YES" : "NO") << Qt::endl;
+        out << "RANGE=" << range2Gang->v() << Qt::endl;
+        out << "LOWER=" << lowerGang->v() << Qt::endl;
+        out << "UPPER=" << upperGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_reinhard05) {
         out << "TMO="
-            << "Reinhard05" << endl;
-        out << "BRIGHTNESS=" << brightnessGang->v() << endl;
-        out << "CHROMATICADAPTATION=" << chromaticGang->v() << endl;
-        out << "LIGHTADAPTATION=" << lightGang->v() << endl;
+            << "Reinhard05" << Qt::endl;
+        out << "BRIGHTNESS=" << brightnessGang->v() << Qt::endl;
+        out << "CHROMATICADAPTATION=" << chromaticGang->v() << Qt::endl;
+        out << "LIGHTADAPTATION=" << lightGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_vanhateren) {
         out << "TMO="
-            << "VanHateren06" << endl;
-        out << "PUPIL_AREA=" << vanhaterenPupilAreaGang->v() << endl;
+            << "VanHateren06" << Qt::endl;
+        out << "PUPIL_AREA=" << vanhaterenPupilAreaGang->v() << Qt::endl;
     } else if (current_page == m_Ui->page_lischinski) {
         out << "TMO="
-            << "Lischinski06" << endl;
-        out << "ALPHA_L=" << lischinskiAlphaGang->v() << endl;
+            << "Lischinski06" << Qt::endl;
+        out << "ALPHA_L=" << lischinskiAlphaGang->v() << Qt::endl;
     }
-    out << "PREGAMMA=" << pregammaGang->v() << endl;
-    out << "POSTSATURATION=" << postsaturationGang->v() << endl;
-    out << "POSTGAMMA=" << postgammaGang->v() << endl;
+    out << "PREGAMMA=" << pregammaGang->v() << Qt::endl;
+    out << "POSTSATURATION=" << postsaturationGang->v() << Qt::endl;
+    out << "POSTGAMMA=" << postgammaGang->v() << Qt::endl;
     file.close();
 }
 

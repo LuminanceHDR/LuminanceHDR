@@ -1,7 +1,7 @@
 ![Logo](images/luminance.svg)
 # Luminance HDR
 ---------------
-[![Release](https://img.shields.io/github/release/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/releases/tag/v.2.6.0)
+[![Release](https://img.shields.io/github/release/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/releases/tag/v3.0.0-rc1)
 [![License](https://img.shields.io/github/license/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/blob/master/LICENSE)
 [![Issue Stats](https://img.shields.io/github/issues/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/issues)
 [![Pull Request Stats](https://img.shields.io/github/issues-pr/LuminanceHDR/LuminanceHDR.svg)](https://github.com/LuminanceHDR/LuminanceHDR/pulls)
@@ -23,7 +23,7 @@ Copyright (C) 2006-2010 - Giuseppe Rota <grota@users.sourceforge.net>
 
 What it is
 ----------
-Luminance HDR is a graphical user interface (based on the Qt5 toolkit) that provides a complete workflow for HDR imaging.
+Luminance HDR is a graphical user interface (based on the Qt6 toolkit) that provides a complete workflow for HDR imaging.
 
 Supported HDR formats:
 * OpenEXR (extension: exr)
@@ -59,6 +59,8 @@ Dependencies
 ------------
 Please, refer to the [INSTALL.md](INSTALL.md) file
 
+Release instructions for maintainers are documented in [RELEASING.md](RELEASING.md).
+
 Compiling the sources
 ---------------------
 Please, refer to the [INSTALL.md](INSTALL.md) file
@@ -67,7 +69,7 @@ Contact and Links
 -----------------
 All comments and suggestions concerning this package or the implementation of particular algorithms are welcome.
 
-For bugs, issues or feature requests, please refer to the [BUGS](BUGS) file
+For bugs, issues or feature requests, please use the [GitHub issue tracker](https://github.com/LuminanceHDR/LuminanceHDR/issues)
 
 See also:
 * [PFStools](http://www.mpii.mpg.de/resources/pfstools/)

@@ -53,7 +53,7 @@ The rest of this document concerns compiling Luminance HDR yourself.
 
 To compile Luminance HDR your system will need a set of tools and code libraries called "dependencies". The following is a list of dependencies needed to compile the latest version of Luminance HDR:
 
-- [Qt5](https://www.qt.io/), the widget toolkit used by the graphical user interface (GUI).
+- [Qt6](https://www.qt.io/), the widget toolkit used by the graphical user interface (GUI).
 - [Exiv2](https://www.exiv2.org/), used to read and write image metadata (Exif, IPTC, XMP).
 - [Little CMS](http://www.littlecms.com/), LCMS2 is used for color management.
 - [libjpeg-turbo](https://libjpeg-turbo.org/) (or libjpeg), used to read and write JPEG files.
@@ -170,12 +170,12 @@ It is also possible to build Luminance HDR using MSYS2/MinGW, see `build_files/p
 
 ### macOS <a name="pnote_macos"></a>
 
-On macOS, all the dependencies can be obtained using MacPorts, except for LibRaw which must be compiled from source, and Qt5 which must be downloaded from the official Qt5 website.
+On macOS, all the dependencies can be obtained using MacPorts, except for LibRaw which must be compiled from source, and Qt6 which must be downloaded from the official Qt website.
 
-If you install Qt/5.13.0 into `~/Qt/5.13.0`, generate the project with:
+If you install Qt/6.x.x into `~/Qt/6.x.x`, generate the project with:
 
 ```bash
-export QT=~/Qt/5.13.0/clang_64
+export QT=~/Qt/6.x.x/macos
 cd ~/programs/code-lhdr
 mkdir build
 cd build
@@ -205,7 +205,7 @@ cmake .. \
 Troubleshooting:
 - If you crash on start up with a message about `libz.1.2.8.dylib`, modify the executable as follows:
     ```bash
-    install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib "Luminance HDR 2.6.0.app/Contents/MacOS/Luminance HDR 2.6.0"
+    install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib "Luminance HDR 3.0.0-rc1.app/Contents/MacOS/Luminance HDR 3.0.0-rc1"
     ```
 - If you built libboost from source, you may encounter errors from macdeployqt about missing libraries. Copy the boost libraries to `/usr/lib`:
     ```bash
@@ -214,6 +214,12 @@ Troubleshooting:
 - Copy Qt frameworks and dynamic libraries into the bundle:
     ```bash
     $QT/bin/macdeployqt Luminance*.app/ -executable=Luminance*.app/Contents/MacOS/luminance-hdr-cli -no-strip
+    ```
+  This step is required: without the deployed Qt plugins the GUI aborts at startup with
+  `Could not find the Qt platform plugin "cocoa"`. Since `macdeployqt` uses
+  `install_name_tool`, re-sign the bundle afterwards:
+    ```bash
+    codesign --force --deep --sign - Luminance*.app
     ```
   This may produce warnings (which you can ignore) such as:
     ```
@@ -226,14 +232,14 @@ Troubleshooting:
 If you wish to make a DMG:
 
 ```bash
-hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 2.6.0.app" "Luminance HDR 2.6.0.dmg"
+hdiutil create -ov -fs HFS+ -srcfolder "Luminance HDR 3.0.0-rc1.app" "Luminance HDR 3.0.0-rc1.dmg"
 ```
 
 If you wish to build with an earlier version of the MacOSX Platform SDK (e.g. 10.10), you can obtain legacy SDKs from https://github.com/phracker/MacOSX-SDKs/releases
 Then use the following:
 
 ```bash
-export QT=~/Qt/5.9.8/clang_64
+export QT=~/Qt/6.x.x/macos
 export MACOSX_DEPLOYMENT_TARGET="10.10"
 export CMAKE_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk"
 cmake .. \

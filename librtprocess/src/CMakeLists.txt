@@ -1,5 +1,6 @@
 if (OPTION_OMP)
     find_package(OpenMP REQUIRED COMPONENTS CXX)
+    separate_arguments(OpenMP_CXX_FLAGS UNIX_COMMAND "${OpenMP_CXX_FLAGS}")
 endif()
 
 set(rtprocess_SRCS

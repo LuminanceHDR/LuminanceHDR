@@ -15,6 +15,21 @@ endif ()
 # "git describe" will return "5.0-gtk2-2-g12345678" or "5.0-gtk2", respectively.
 execute_process(COMMAND ${GIT_CMD} describe --tags --always OUTPUT_VARIABLE GIT_DESCRIBE OUTPUT_STRIP_TRAILING_WHITESPACE WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
+# Prefer the exact tag for tagged builds. On branch builds, use the version
+# computed by CMake so the installer matches the application version even
+# when an older reachable tag would otherwise win "git describe".
+execute_process(COMMAND ${GIT_CMD} describe --tags --exact-match
+    OUTPUT_VARIABLE GIT_EXACT_TAG
+    RESULT_VARIABLE GIT_EXACT_TAG_RESULT
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
+if(GIT_EXACT_TAG_RESULT EQUAL 0 AND NOT "${GIT_EXACT_TAG}" STREQUAL "")
+    set(GIT_DESCRIBE "${GIT_EXACT_TAG}")
+elseif(DEFINED LHDR_VERSION AND NOT "${LHDR_VERSION}" STREQUAL "")
+    set(GIT_DESCRIBE "${LHDR_VERSION}")
+endif()
+
 # Get branch name.
 # Will return empty if you checked out a commit or tag. Empty string handled later.
 execute_process(COMMAND ${GIT_CMD} symbolic-ref --short -q HEAD OUTPUT_VARIABLE GIT_BRANCH OUTPUT_STRIP_TRAILING_WHITESPACE WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
@@ -42,10 +57,12 @@ set(GIT_NUMERIC_VERSION_ONLY "${LHDR_VERSION_MAJOR}.${LHDR_VERSION_MINOR}.${LHDR
 # Works when checking out branch, tag or commit.
 execute_process(COMMAND ${GIT_CMD} rev-list --count HEAD --not --tags OUTPUT_VARIABLE GIT_COMMITS_SINCE_BRANCH OUTPUT_STRIP_TRAILING_WHITESPACE WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
-# If user checked-out something which is not a branch, use the description as branch name.
+# If the user checked out a tag or detached commit, use a generic label.
+# Branch names may contain slashes, which are not valid in installer filenames.
 if (GIT_BRANCH STREQUAL "")
-    set (GIT_BRANCH "${GIT_DESCRIBE}")
+    set (GIT_BRANCH "release")
 endif()
+string(REGEX REPLACE "[^A-Za-z0-9._-]" "-" GIT_BRANCH "${GIT_BRANCH}")
 
 # Create numeric version.
 # This version is nonsense, either don't use it at all or use it only where you have no other choice, e.g. Inno Setup's VersionInfoVersion.
@@ -82,6 +99,8 @@ elseif (BIT_DEPTH EQUAL 8)
 endif (BIT_DEPTH EQUAL 4)
 # set part of the output archive name
 set(SYSTEM_NAME "Windows")
-set ( QTTRANS "$ENV{MSYSTEM_PREFIX}/share/qt5/translations")
+set ( QTTRANS "$ENV{MSYSTEM_PREFIX}/share/qt6/translations")
+set ( QTWEBENGINE_RESOURCES "$ENV{MSYSTEM_PREFIX}/share/qt6/resources")
+set ( QTWEBENGINE_LOCALES "$ENV{MSYSTEM_PREFIX}/share/qt6/translations/qtwebengine_locales")
 
 configure_file ("${PROJECT_SOURCE_DIR}/build_files/platforms/msys2/WindowsInnoSetup.iss.in" "${CMAKE_INSTALL_PREFIX}/WindowsInnoSetup.iss")

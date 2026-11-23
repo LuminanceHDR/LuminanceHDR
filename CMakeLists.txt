@@ -1,9 +1,14 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.3...3.12)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 CMAKE_POLICY(SET CMP0025 NEW)
 CMAKE_POLICY(SET CMP0043 NEW)
 CMAKE_POLICY(SET CMP0054 NEW)
 CMAKE_POLICY(SET CMP0053 NEW)
 CMAKE_POLICY(SET CMP0070 NEW)
+CMAKE_POLICY(SET CMP0071 NEW)
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 OLD)
+endif()
+set(Boost_NO_BOOST_CMAKE ON)
 PROJECT("Luminance HDR")
 
 string(TOLOWER ${CMAKE_BUILD_TYPE} LOWERCASE_CMAKE_BUILD_TYPE)
@@ -59,49 +64,27 @@ else( HAS_BRANCH_PREDICTION )
     set( BRANCH_PREDICTION 0 )
 endif( HAS_BRANCH_PREDICTION )
 
-# find and setup Qt5 for this project
+# find and setup Qt6 for this project
 
-find_package(Qt5Core             REQUIRED)
-find_package(Qt5Concurrent       REQUIRED)
-find_package(Qt5Widgets          REQUIRED)
-find_package(Qt5Gui              REQUIRED)
-# QtWebEngine is preferred web engine because QtWebKit is deprecated since Qt 5.5:
-# https://wiki.qt.io/New-Features-in-Qt-5.5#Deprecated_Functionality. Unfortunately,
-# some Qt distributions still provide QtWebKit instead of QtWebEngine. So first we
-# try to find QtWebEngine and if not found, we fall back to QtWebKit.
-find_package(Qt5WebEngineCore    QUIET)
-if(Qt5WebEngineCore_FOUND)
-    find_package(Qt5WebEngineWidgets REQUIRED)
+# Qt WebEngine requires MSVC on Windows (it does not build with MinGW).
+# Allow a QTextBrowser-based help browser for toolchains without WebEngine.
+option(USE_WEBENGINE "Use QtWebEngine for the help browser" ON)
+
+if(USE_WEBENGINE)
+    find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui WebEngineWidgets Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
+    add_definitions(-DUSE_WEBENGINE)
 else()
-    find_package(Qt5WebKit           REQUIRED)
-    find_package(Qt5WebKitWidgets    REQUIRED)
-    add_definitions(-DUSE_DEPRECATED_QTWEBKIT)
+    find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
 endif()
-find_package(Qt5Xml              REQUIRED)
-find_package(Qt5Sql              REQUIRED)
-find_package(Qt5Svg              REQUIRED)
-find_package(Qt5Network          REQUIRED)
-find_package(Qt5LinguistTools    REQUIRED)
-find_package(Qt5PrintSupport     REQUIRED)
-IF(WIN32)
-    find_package(Qt5WinExtras)
-ENDIF()
-
-# Include the qtmain lib if we are on the windows platform
-IF(WIN32)
-    SET(LIBS ${LIBS} ${Qt5Core_QTMAIN_LIBRARIES})
-ENDIF(WIN32)
 
 set(LIBS ${LIBS}
-    ${QT_QTCORE_LIBRARIES}  ${QT_QTGUI_LIBRARIES}  ${QT_QTNETWORK_LIBRARIES}
-    ${QT_QTXML_LIBRARIES}   ${QT_QTSQL_LIBRARIES})
+    ${Qt6Core_LIBRARIES} ${Qt6Gui_LIBRARIES} ${Qt6Network_LIBRARIES}
+    ${Qt6Xml_LIBRARIES} ${Qt6Sql_LIBRARIES})
 
-if(Qt5WebEngineCore_FOUND)
+if(USE_WEBENGINE)
     message(STATUS "Building with QtWebEngine")
-    set(LIBS ${LIBS} ${QT_QTWEBENGINE_LIBRARIES})
 else()
-    message(STATUS "Building with QtWebKit")
-    set(LIBS ${LIBS} ${QT_QTWEBKIT_LIBRARIES})
+    message(STATUS "Building with QTextBrowser fallback (no QtWebEngine)")
 endif()
 
 FIND_PACKAGE(Git)
@@ -122,7 +105,7 @@ IF(WIN32)
     IF(MINGW)
         find_package(PkgConfig)
         pkg_check_modules(FFTW3F REQUIRED fftw3f)
-        SET(FFTWF_LIBRARIES "libfftw3f.a")
+        SET(FFTWF_LIBRARIES "libfftw3f.a" "libfftw3f_threads.a")
         pkg_check_modules(LCMS REQUIRED lcms2>=2.6)
         pkg_check_modules(LIBRAW REQUIRED libraw)
         ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
@@ -132,7 +115,6 @@ IF(WIN32)
             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -Werror=unknown-pragmas")
         ENDIF()
         FIND_PACKAGE(Eigen3 REQUIRED)
-        INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
     ELSE()
         SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
         SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
@@ -174,13 +156,12 @@ ELSE()
     INCLUDE_DIRECTORIES(${LCMS2_INCLUDE_DIR})
 
     FIND_PACKAGE(Eigen3 REQUIRED)
-    INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 ENDIF()
 
 IF(WIN32)
     SET(Boost_USE_STATIC_LIBS ON)
 ENDIF()
-FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options thread chrono system date_time atomic)
+FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options thread chrono date_time atomic container)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 FIND_PACKAGE(exiv2 REQUIRED 0.27.0)
@@ -221,6 +202,7 @@ SET(LIBS ${LIBS} ${JPEG_LIBRARIES})
 SET(LIBS ${LIBS} ${LCMS2_LIBRARIES})
 SET(LIBS ${LIBS} ${PNG_LIBRARIES})
 SET(LIBS ${LIBS} ${Boost_LIBRARIES})
+SET(LIBS ${LIBS} ${OpenMP_omp_LIBRARY})
 ##SET(LIBS ${LIBS} ${RTPROCESS_LIBRARIES})
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/")
@@ -239,7 +221,7 @@ SET(LUMINANCE_HDR_H ${LUMINANCE_HDR_H}
 )
 
 SET(LUMINANCE_HDR_RCCS icons.qrc)
-QT5_ADD_RESOURCES(LUMINANCE_HDR_RCCS_SRCS ${LUMINANCE_HDR_RCCS})
+qt_add_resources(LUMINANCE_HDR_RCCS_SRCS ${LUMINANCE_HDR_RCCS})
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/librtprocess/src/include")
 ADD_SUBDIRECTORY(src)
@@ -256,9 +238,9 @@ FILE(GLOB LUMINANCE_TS i18n/lang_*.ts)
 IF(UPDATE_TRANSLATIONS)
     SET(LUMINANCE_TS ${LUMINANCE_TS} i18n/source.ts)
     IF(LUPDATE_NOOBSOLETE)
-        QT5_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS} OPTIONS -noobsolete)
+        qt_create_translation(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS} OPTIONS -noobsolete)
     ELSE()
-        QT5_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS})
+        qt_create_translation(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS})
     ENDIF()
     IF(UNIX)
         IF(NOT APPLE) # Sadly on Linux Qt5 add global include paths in list of translation files, let's get rid of them
@@ -267,7 +249,7 @@ IF(UPDATE_TRANSLATIONS)
         ENDIF(NOT APPLE)
     ENDIF(UNIX)
 ELSE(UPDATE_TRANSLATIONS)
-    QT5_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
+    qt_add_translation(LUMINANCE_QM ${LUMINANCE_TS})
 ENDIF(UPDATE_TRANSLATIONS)
 
 ADD_CUSTOM_TARGET(translations_target DEPENDS ${LUMINANCE_QM})
@@ -303,7 +285,8 @@ IF(APPLE)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
 
     # Build project (bundle and luminance-hdr-cli)
-    SET( CMAKE_OSX_ARCHITECTURES x86_64 )  # Universal/Generic x86_64 build
+    # Architecture selection is left to the toolchain / packager
+    # (override with -DCMAKE_OSX_ARCHITECTURES=... for Intel or universal builds).
     ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES} )
     set_property(TARGET ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTY OUTPUT_NAME ${LHDR_OSX_EXECUTABLE_NAME})
@@ -320,8 +303,8 @@ IF(APPLE)
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QT_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
 
     # QT magic
-    TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} Qt5::Core Qt5::Gui Qt5::Widgets)
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt5::Core Qt5::Gui Qt5::Widgets)
+    TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} Qt6::Core Qt6::Gui Qt6::Widgets)
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt6::Core Qt6::Gui Qt6::Widgets)
 
     # Link libraries
     TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} ${LUMINANCE_MODULES_GUI} ${LIBS})
@@ -363,38 +346,42 @@ IF(APPLE)
          DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
     )
 
-    # Install Boost libs
-    get_filename_component(SYSTEM_LIBRARY_RELEASE ${Boost_SYSTEM_LIBRARY_RELEASE} NAME)
+    # Install Boost libs (boost_system is header-only in modern Boost).
+    # container is required at runtime by date_time/thread/program_options.
     get_filename_component(THREAD_LIBRARY_RELEASE ${Boost_THREAD_LIBRARY_RELEASE} NAME)
     get_filename_component(PROGRAM_OPTIONS_LIBRARY_RELEASE ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} NAME)
     get_filename_component(CHRONO_LIBRARY_RELEASE ${Boost_CHRONO_LIBRARY_RELEASE} NAME)
     get_filename_component(DATE_TIME_LIBRARY_RELEASE ${Boost_DATE_TIME_LIBRARY_RELEASE} NAME)
     get_filename_component(ATOMIC_LIBRARY_RELEASE ${Boost_ATOMIC_LIBRARY_RELEASE} NAME)
+    get_filename_component(CONTAINER_LIBRARY_RELEASE ${Boost_CONTAINER_LIBRARY_RELEASE} NAME)
     add_custom_command(
         TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
         POST_BUILD
 	COMMAND mkdir -p ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks &&
 	echo "copying libs into ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks" &&
 	cp -f ${Boost_CHRONO_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${CHRONO_LIBRARY_RELEASE} &&
-	cp -f ${Boost_SYSTEM_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${SYSTEM_LIBRARY_RELEASE} &&
 	cp -f ${Boost_THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${THREAD_LIBRARY_RELEASE} &&
 	cp -f ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${PROGRAM_OPTIONS_LIBRARY_RELEASE} &&
 	cp -f ${Boost_DATE_TIME_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${DATE_TIME_LIBRARY_RELEASE} &&
-	cp -f ${Boost_ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${ATOMIC_LIBRARY_RELEASE}
-        COMMAND install_name_tool -change ${SYSTEM_LIBRARY_RELEASE} @rpath/${SYSTEM_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${DATE_TIME_LIBRARY_RELEASE} @rpath/${DATE_TIME_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${ATOMIC_LIBRARY_RELEASE} @rpath/${ATOMIC_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${SYSTEM_LIBRARY_RELEASE} @rpath/${SYSTEM_LIBRARY_RELEASE} *.app/Contents/Frameworks/${CHRONO_LIBRARY_RELEASE} &&
-        install_name_tool -change ${SYSTEM_LIBRARY_RELEASE} @rpath/${SYSTEM_LIBRARY_RELEASE} *.app/Contents/Frameworks/${THREAD_LIBRARY_RELEASE} &&
-        install_name_tool -change ${SYSTEM_LIBRARY_RELEASE} @rpath/${SYSTEM_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${DATE_TIME_LIBRARY_RELEASE} @rpath/${DATE_TIME_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${ATOMIC_LIBRARY_RELEASE} @rpath/${ATOMIC_LIBRARY_RELEASE} *.app/Contents/MacOS/luminance-hdr-cli)
+	cp -f ${Boost_ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${ATOMIC_LIBRARY_RELEASE} &&
+	cp -f ${Boost_CONTAINER_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${CONTAINER_LIBRARY_RELEASE}
+        COMMAND install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${DATE_TIME_LIBRARY_RELEASE} @rpath/${DATE_TIME_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${ATOMIC_LIBRARY_RELEASE} @rpath/${ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
+        install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${CHRONO_LIBRARY_RELEASE} &&
+        install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${THREAD_LIBRARY_RELEASE})
+
+    # Fix rpaths for CLI tool
+    add_custom_command(
+        TARGET luminance-hdr-cli
+        POST_BUILD
+        COMMAND install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${DATE_TIME_LIBRARY_RELEASE} @rpath/${DATE_TIME_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli &&
+        install_name_tool -change ${ATOMIC_LIBRARY_RELEASE} @rpath/${ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli)
 
 # Unix
 ELSEIF(UNIX)
@@ -403,8 +390,8 @@ ELSEIF(UNIX)
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
 
-    TARGET_LINK_LIBRARIES(luminance-hdr Qt5::Core Qt5::Gui Qt5::Widgets)
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt5::Core Qt5::Gui Qt5::Widgets)
+    TARGET_LINK_LIBRARIES(luminance-hdr Qt6::Core Qt6::Gui Qt6::Widgets)
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt6::Core Qt6::Gui Qt6::Widgets)
 
     # link libraries
     TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
@@ -457,11 +444,11 @@ ELSEIF(WIN32)
 
         # ------------------------------------------------------------------------------------
 
-        get_target_property(QT_LOCATION Qt5::Core LOCATION)
+        get_target_property(QT_LOCATION Qt6::Core LOCATION)
         get_filename_component(LIBS_SRC_DIR "${QT_LOCATION}" DIRECTORY)
         message(STATUS "> Base libs dir:    ${LIBS_SRC_DIR}")
-        get_filename_component(QT5_PLUGINS_SRC_DIR "${LIBS_SRC_DIR}/../share/qt5/plugins" ABSOLUTE)
-        message(STATUS "> Qt5 plugins libs: ${QT5_PLUGINS_SRC_DIR}")
+        get_filename_component(QT6_PLUGINS_SRC_DIR "${LIBS_SRC_DIR}/../share/qt6/plugins" ABSOLUTE)
+        message(STATUS "> Qt6 plugins libs: ${QT6_PLUGINS_SRC_DIR}")
 
         get_filename_component(PRGFILES_DIR "$ENV{ProgramFiles}" ABSOLUTE)
         get_filename_component(PRGFILESX86_DIR "$ENV{ProgramFiles\(x86\)}" ABSOLUTE)
@@ -471,6 +458,7 @@ ELSEIF(WIN32)
 
         set(RELINFO_WITH_ARGS ${CMAKE_COMMAND}
             -DLHDR_NAME:STRING="${LHDR_NAME}"
+            -DLHDR_VERSION:STRING="${LHDR_VERSION}"
             -DLHDR_VERSION_MAJOR:STRING=${LHDR_VERSION_MAJOR}
             -DLHDR_VERSION_MINOR:STRING=${LHDR_VERSION_MINOR}
             -DLHDR_VERSION_PATCH:STRING=${LHDR_VERSION_PATCH}
@@ -494,8 +482,8 @@ ELSEIF(WIN32)
         ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
         ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
 
-        TARGET_LINK_LIBRARIES(luminance-hdr Qt5::Core Qt5::Gui Qt5::Widgets Qt5::WinExtras Qt5::Svg)
-        TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt5::Core Qt5::Gui Qt5::Widgets)
+        TARGET_LINK_LIBRARIES(luminance-hdr Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Svg)
+        TARGET_LINK_LIBRARIES(luminance-hdr-cli Qt6::Core Qt6::Gui Qt6::Widgets)
 
         # link libraries
         TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
@@ -508,10 +496,10 @@ ELSEIF(WIN32)
         INSTALL(FILES ${LUMINANCE_QM} DESTINATION ./i18n) # i18n
         #INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION ./i18n) # i18n
 
-        INSTALL(FILES ${QT5_PLUGINS_SRC_DIR}/imageformats/qjpeg.dll DESTINATION ./imageformats/)
-        INSTALL(FILES ${QT5_PLUGINS_SRC_DIR}/imageformats/qsvg.dll DESTINATION ./imageformats/)
-        INSTALL(FILES ${QT5_PLUGINS_SRC_DIR}/platforms/qwindows.dll DESTINATION ./platforms/)
-        INSTALL(FILES ${QT5_PLUGINS_SRC_DIR}/sqldrivers/qsqlite.dll DESTINATION ./sqldrivers/)
+        INSTALL(FILES ${QT6_PLUGINS_SRC_DIR}/imageformats/qjpeg.dll DESTINATION ./imageformats/)
+        INSTALL(FILES ${QT6_PLUGINS_SRC_DIR}/imageformats/qsvg.dll DESTINATION ./imageformats/)
+        INSTALL(FILES ${QT6_PLUGINS_SRC_DIR}/platforms/qwindows.dll DESTINATION ./platforms/)
+        INSTALL(FILES ${QT6_PLUGINS_SRC_DIR}/sqldrivers/qsqlite.dll DESTINATION ./sqldrivers/)
 
         INSTALL(FILES ${CMAKE_SOURCE_DIR}/program-icons/luminance-hdr.png DESTINATION ./icons/hicolor/48x48/apps) # icon
         INSTALL(FILES ${CMAKE_SOURCE_DIR}/AUTHORS

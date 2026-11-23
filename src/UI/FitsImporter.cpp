@@ -47,6 +47,7 @@
 #include <Libpfs/utils/transform.h>
 #include <UI/UMessageBox.h>
 
+using namespace std;
 using namespace pfs;
 using namespace pfs::colorspace;
 
@@ -88,7 +89,7 @@ FitsImporter::FitsImporter(QWidget *parent)
     m_previewLabel->resize(600, 400);
     m_previewLabel->setScaledContents(true);
     QPalette *palette = new QPalette();
-    palette->setColor(QPalette::Foreground, Qt::red);
+    palette->setColor(QPalette::WindowText, Qt::red);
     m_previewLabel->setPalette(*palette);
     m_previewLabel->setFrameStyle(QFrame::Box);
     m_previewLabel->setLineWidth(3);
@@ -496,10 +497,12 @@ void FitsImporter::readData(QByteArray data) {
 
     m_Ui->textEdit->append(data);
     if (data.contains(": remapping")) {
-        QRegExp exp("\\:\\s*(\\d+)\\s*");
-        exp.indexIn(QString(data.data()));
-        emit setRange(0, 100);
-        emit setValue(exp.cap(1).toInt());
+        QRegularExpression exp(QStringLiteral(R"(:\s*remapping\s+(\d+)\s*)"));
+        auto match = exp.match(QString(data.data()));
+        if (match.hasMatch()) {
+            emit setRange(0, 100);
+            emit setValue(match.captured(1).toInt());
+        }
     }
 }
 
@@ -538,7 +541,7 @@ void FitsImporter::on_pushButtonClockwise_clicked() {
         QPixmap::fromImage(m_data[index].qimage()));
     if (m_Ui->pushButtonPreview->isChecked()) {
         m_previewLabel->setPixmap(
-            *m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())
+            m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())
                  ->pixmap());
     }
     Channel *C = m_data[index].frame()->getChannel("X");
@@ -553,7 +556,7 @@ void FitsImporter::on_pushButtonClockwise_clicked() {
 void FitsImporter::on_pushButtonPreview_clicked() {
     if (m_Ui->pushButtonPreview->isChecked()) {
         m_previewLabel->setPixmap(
-            *m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())
+            m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())
                  ->pixmap());
         m_previewLabel->show();
     } else
@@ -563,7 +566,7 @@ void FitsImporter::on_pushButtonPreview_clicked() {
 void FitsImporter::previewLabelSelected(int index) {
     if (m_Ui->pushButtonPreview->isChecked()) {
         m_previewLabel->setPixmap(
-            *m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())
+            m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())
                  ->pixmap());
     }
 }

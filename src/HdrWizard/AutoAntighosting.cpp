@@ -76,7 +76,7 @@ void solve_pde_dct(Array2Df &F, Array2Df &U) {
 
 #pragma omp parallel
     {
-        vector<float> c(height);
+        std::vector<float> c(height);
 #pragma omp for
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -135,13 +135,13 @@ int findIndex(const float *data, int size) {
     return idx;
 }
 
-typedef vector<float> BufferF;
+typedef std::vector<float> BufferF;
 
 inline float hueMean(const BufferF &data) {
     return std::accumulate(data.begin(), data.end(), 0.0f) / data.size();
 }
 
-void hueSquaredMean(const HdrCreationItemContainer &data, vector<float> &HE) {
+void hueSquaredMean(const HdrCreationItemContainer &data, std::vector<float> &HE) {
     size_t width = data[0].frame()->getWidth();
     size_t height = data[0].frame()->getHeight();
     size_t numItems = data.size();
@@ -195,9 +195,9 @@ void sdv(const HdrCreationItem &item1, const HdrCreationItem &item2,
     const size_t W = item1.frame()->getWidth();
     const size_t H = item1.frame()->getHeight();
 
-    vector<float> logRed(W * H);
-    vector<float> logGreen(W * H);
-    vector<float> logBlue(W * H);
+    std::vector<float> logRed(W * H);
+    std::vector<float> logGreen(W * H);
+    std::vector<float> logBlue(W * H);
 
     float logDeltaEV = log(std::abs(deltaEV));
 
@@ -298,9 +298,9 @@ bool comparePatches(const HdrCreationItem &item1, const HdrCreationItem &item2,
                     const float sB, const float deltaEV, const int dx,
                     const int dy) {
     const int gridSize = gridX * gridY;
-    vector<float> logRed(gridSize);
-    vector<float> logGreen(gridSize);
-    vector<float> logBlue(gridSize);
+    std::vector<float> logRed(gridSize);
+    std::vector<float> logGreen(gridSize);
+    std::vector<float> logBlue(gridSize);
 
     Channel *X1, *Y1, *Z1, *X2, *Y2, *Z2;
     item1.frame()->getXYZChannels(X1, Y1, Z1);

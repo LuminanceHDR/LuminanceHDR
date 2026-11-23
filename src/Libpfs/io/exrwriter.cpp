@@ -84,23 +84,23 @@ bool EXRWriter::write(const Frame &frame, const Params & /*params*/) {
     // Define channels in Header
     // and
     // Create channels in FrameBuffer
-    header.channels().insert("R", Imf::Channel(FLOAT));
+    header.channels().insert("R", Imf::Channel(Imf::FLOAT));
     frameBuffer.insert("R",                                       // name
-                       Slice(FLOAT,                               // type
+                       Slice(Imf::FLOAT,                               // type
                              (char *)R->data(),                   // base
                              sizeof(float) * 1,                   // xStride
                              sizeof(float) * frame.getWidth()));  // yStride
 
-    header.channels().insert("G", Imf::Channel(FLOAT));
+    header.channels().insert("G", Imf::Channel(Imf::FLOAT));
     frameBuffer.insert("G",                                       // name
-                       Slice(FLOAT,                               // type
+                       Slice(Imf::FLOAT,                               // type
                              (char *)G->data(),                   // base
                              sizeof(float) * 1,                   // xStride
                              sizeof(float) * frame.getWidth()));  // yStride
 
-    header.channels().insert("B", Imf::Channel(FLOAT));
+    header.channels().insert("B", Imf::Channel(Imf::FLOAT));
     frameBuffer.insert("B",                                       // name
-                       Slice(FLOAT,                               // type
+                       Slice(Imf::FLOAT,                               // type
                              (char *)B->data(),                   // base
                              sizeof(float) * 1,                   // xStride
                              sizeof(float) * frame.getWidth()));  // yStride

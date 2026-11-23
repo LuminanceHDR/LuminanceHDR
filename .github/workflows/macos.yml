@@ -1,0 +1,119 @@
+name: macOS build (Qt6)
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compile with AppleClang and Qt6 (QTextBrowser fallback, arm64)
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          brew update
+          brew install \
+            cmake ninja pkg-config git \
+            qt@6 exiv2 lcms2 fftw libraw eigen boost gsl openexr \
+            libtiff libpng libjpeg-turbo cfitsio libomp
+
+      - name: Configure
+        run: |
+          OPENMP_PREFIX="$(brew --prefix libomp)"
+          MACOS_MIN=$(sw_vers -productVersion | awk -F. '{print $1 ".0"}')
+          cmake -S . -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DUSE_WEBENGINE=OFF \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOS_MIN" \
+            -DCMAKE_PREFIX_PATH="$(brew --prefix):$(brew --prefix qt@6)" \
+            -DOpenMP_ROOT="$OPENMP_PREFIX" \
+            -DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp -I$OPENMP_PREFIX/include" \
+            -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp -I$OPENMP_PREFIX/include" \
+            -DOpenMP_C_LIB_NAMES=omp \
+            -DOpenMP_CXX_LIB_NAMES=omp \
+            -DOpenMP_omp_LIBRARY="$OPENMP_PREFIX/lib/libomp.dylib"
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Deploy Qt frameworks and plugins
+        run: |
+          APP=$(find build -maxdepth 1 -type d -name 'Luminance HDR*.app' -print -quit)
+          test -n "$APP"
+          "$(brew --prefix qt@6)/bin/macdeployqt" "$APP" \
+            -executable="$APP/Contents/MacOS/luminance-hdr-cli" -no-strip
+          codesign --force --deep --sign - "$APP"
+
+      - name: Smoke test CLI
+        run: |
+          APP=$(find build -maxdepth 1 -type d -name 'Luminance HDR*.app' -print -quit)
+          test -n "$APP"
+          set +e
+          "$APP/Contents/MacOS/luminance-hdr-cli" --help > cli-help.txt 2>&1
+          STATUS=$?
+          set -e
+          test "$STATUS" -eq 1
+          grep -q "Usage:" cli-help.txt
+          rm cli-help.txt
+
+      - name: Prepare artifact name
+        run: |
+          ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
+          echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
+
+      - name: Create DMG
+        run: |
+          APP=$(find build -maxdepth 1 -type d -name 'Luminance HDR*.app' -print -quit)
+          test -n "$APP"
+          hdiutil create -ov -fs HFS+ -format UDZO -srcfolder "$APP" \
+            "luminance-hdr-${ARTIFACT_VERSION}-macos-arm64.dmg"
+
+      - name: Upload app bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-macos-arm64
+          path: luminance-hdr-${{ env.ARTIFACT_VERSION }}-macos-arm64.dmg
+          if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'release'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Determine artifact version
+        id: names
+        run: |
+          SAFE=$(printf '%s' "${{ github.event.release.tag_name }}" | tr -c 'A-Za-z0-9._-' '-')
+          echo "version=$SAFE" >> "$GITHUB_OUTPUT"
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: luminance-hdr-${{ steps.names.outputs.version }}-macos-arm64
+          path: artifacts
+
+      - name: Upload release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ASSET=$(find artifacts -type f -name '*.dmg' -print -quit)
+          test -n "$ASSET"
+          NAME="Luminance-HDR-${{ steps.names.outputs.version }}-macos-arm64.dmg"
+          cp "$ASSET" "$NAME"
+          gh release upload "${{ github.event.release.tag_name }}" "$NAME" --clobber

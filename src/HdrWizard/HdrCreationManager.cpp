@@ -236,7 +236,7 @@ float HdrCreationManager::getEVOffset() const { return m_evOffset; }
 
 QStringList HdrCreationManager::getFilesWithoutExif() const {
     QStringList invalidFiles;
-    foreach (const HdrCreationItem &fileData, m_data) {
+    for (const HdrCreationItem &fileData : m_data) {
         if (!fileData.hasAverageLuminance()) {
             invalidFiles.push_back(fileData.filename());
         }
@@ -246,7 +246,7 @@ QStringList HdrCreationManager::getFilesWithoutExif() const {
 
 size_t HdrCreationManager::numFilesWithoutExif() const {
     size_t counter = 0;
-    foreach (const HdrCreationItem &fileData, m_data) {
+    for (const HdrCreationItem &fileData : m_data) {
         if (!fileData.hasAverageLuminance()) {
             ++counter;
         }

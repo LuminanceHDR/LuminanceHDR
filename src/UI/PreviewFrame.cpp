@@ -26,9 +26,9 @@
 PreviewFrame::PreviewFrame(QWidget *parent) : QFrame(parent), m_index(0) {
     m_flowLayout = new FlowLayout;
     setLayout(m_flowLayout);
-    QPalette *palette = new QPalette();
-    palette->setColor(QPalette::Foreground, Qt::red);
-    setPalette(*palette);
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, Qt::red);
+    setPalette(palette);
 }
 
 PreviewFrame::~PreviewFrame() {}

@@ -129,7 +129,7 @@ void TransplantExifDialog::updateinterval(bool left) {
         start_left = m_Ui->leftlist->count();
         stop_left = -1;
         for (int i = 0; i < m_Ui->leftlist->count(); i++) {
-            if (m_Ui->leftlist->isItemSelected(m_Ui->leftlist->item(i))) {
+            if (m_Ui->leftlist->item(i)->isSelected()) {
                 start_left = (start_left > i) ? i : start_left;
                 stop_left = (stop_left < i) ? i : stop_left;
             }
@@ -139,7 +139,7 @@ void TransplantExifDialog::updateinterval(bool left) {
         start_right = m_Ui->rightlist->count();
         stop_right = -1;
         for (int i = 0; i < m_Ui->rightlist->count(); i++) {
-            if (m_Ui->rightlist->isItemSelected(m_Ui->rightlist->item(i))) {
+            if (m_Ui->rightlist->item(i)->isSelected()) {
                 start_right = (start_right > i) ? i : start_right;
                 stop_right = (stop_right < i) ? i : stop_right;
             }
@@ -382,8 +382,8 @@ void TransplantExifDialog::filterChanged(const QString &newtext) {
     if (no_text)
         filterComboBoxActivated(m_Ui->filterComboBox->currentIndex());
     else
-        log_filter->setFilterRegExp(
-            QRegExp(newtext, Qt::CaseInsensitive, QRegExp::RegExp));
+        log_filter->setFilterRegularExpression(
+            QRegularExpression(newtext, QRegularExpression::CaseInsensitiveOption));
 }
 
 void TransplantExifDialog::filterComboBoxActivated(int index) {
@@ -396,6 +396,6 @@ void TransplantExifDialog::filterComboBoxActivated(int index) {
             regexp = QStringLiteral("error");
             break;
     }
-    log_filter->setFilterRegExp(
-        QRegExp(regexp, Qt::CaseInsensitive, QRegExp::RegExp));
+    log_filter->setFilterRegularExpression(
+        QRegularExpression(regexp, QRegularExpression::CaseInsensitiveOption));
 }

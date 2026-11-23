@@ -43,9 +43,7 @@
 #include "Libpfs/frame.h"
 #include "Fileformat/pfsoutldrimage.h"
 
-#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 #include <QCoreApplication>
-#endif
 #include "HdrHTML/hdrhtml-path.hxx"
 
 #include <QImage>

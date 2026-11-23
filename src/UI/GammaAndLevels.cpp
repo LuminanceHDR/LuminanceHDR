@@ -52,7 +52,7 @@ GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage &data)
     m_Ui->setupUi(this);
 
     QVBoxLayout *qvl = new QVBoxLayout;
-    qvl->setMargin(0);
+    qvl->setContentsMargins(0, 0, 0, 0);
     qvl->setSpacing(1);
 
     histogram = new HistogramLDR(this);
@@ -80,7 +80,7 @@ GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage &data)
     m_Ui->inputStuffFrame->setLayout(qvl);
 
     QVBoxLayout *qvl2 = new QVBoxLayout;
-    qvl2->setMargin(0);
+    qvl2->setContentsMargins(0, 0, 0, 0);
     qvl2->setSpacing(1);
     gb2 = new GrayBar(m_Ui->out_levels, true);
     connect(m_Ui->black_out_spinbox, SIGNAL(valueChanged(int)), gb2,

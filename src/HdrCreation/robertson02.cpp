@@ -173,6 +173,7 @@ void RobertsonOperator::applyResponse(
     }
 
     PRINT_DEBUG("Saturated pixels: " << saturatedPixels);
+    (void)saturatedPixels;
 }
 
 void RobertsonOperator::computeFusion(ResponseCurve &response,

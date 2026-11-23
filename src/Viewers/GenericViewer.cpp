@@ -51,7 +51,7 @@ GenericViewer::GenericViewer(pfs::Frame *frame, QWidget *parent, bool ns)
       mFrame(frame) {
     mVBL = new QVBoxLayout(this);
     mVBL->setSpacing(0);
-    mVBL->setMargin(0);
+    mVBL->setContentsMargins(0, 0, 0, 0);
 
     mToolBar = new QToolBar(QLatin1String(""), this);
     mToolBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);

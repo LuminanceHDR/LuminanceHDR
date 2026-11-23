@@ -49,6 +49,7 @@
 #include <io.h>
 #endif
 
+using namespace std;
 using namespace libhdr::fusion;
 
 namespace {

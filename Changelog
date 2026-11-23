@@ -1,3 +1,11 @@
+Changes 3.0.0-rc1
+NEW: Port to Qt 6
+NEW: QTextBrowser-based help browser fallback for toolchains without Qt WebEngine
+NEW: MinGW-w64/UCRT64 Windows CI with release artifacts
+* Windows taskbar and jump-list integration migrated to native Win32 APIs
+* Removed Qt 5 compatibility APIs and resolved Qt 6 build warnings
+* Build fixes for Linux, macOS, and Windows
+
 Changes 2.6.0
 NEW: New tonemapping operator kimkautz08
 NEW: New tonemapping operator lischinski06

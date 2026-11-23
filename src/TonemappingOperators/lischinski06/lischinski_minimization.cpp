@@ -38,7 +38,6 @@
  */
 
 #include <Eigen/Sparse>
-#include <Eigen/src/SparseCore/SparseMatrix.h>
 
 #include "Libpfs/exception.h"
 #include "Libpfs/manip/resize.h"

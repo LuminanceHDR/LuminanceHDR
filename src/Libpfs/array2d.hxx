@@ -33,8 +33,6 @@
 #include <Libpfs/array2d.h>
 #include <Libpfs/utils/numeric.h>
 
-using namespace std;
-
 namespace pfs {
 
 template <typename Type>

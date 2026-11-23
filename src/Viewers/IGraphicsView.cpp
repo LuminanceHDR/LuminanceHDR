@@ -48,8 +48,8 @@ void IGraphicsView::wheelEvent(QWheelEvent *event) {
     setFocus();
 
     if (event->modifiers() == Qt::ControlModifier) {
-        if (event->delta() > 0) emit zoomIn();
-        if (event->delta() < 0) emit zoomOut();
+        if (event->angleDelta().y() > 0) emit zoomIn();
+        if (event->angleDelta().y() < 0) emit zoomOut();
     } else {
         // scrolls up/down - left/right
         QGraphicsView::wheelEvent(event);
