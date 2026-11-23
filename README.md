@@ -59,6 +59,8 @@ Dependencies
 ------------
 Please, refer to the [INSTALL.md](INSTALL.md) file
 
+Release instructions for maintainers are documented in [RELEASING.md](RELEASING.md).
+
 Compiling the sources
 ---------------------
 Please, refer to the [INSTALL.md](INSTALL.md) file
