@@ -31,11 +31,12 @@ jobs:
       - name: Configure
         run: |
           OPENMP_PREFIX="$(brew --prefix libomp)"
+          MACOS_MIN=$(sw_vers -productVersion | awk -F. '{print $1 ".0"}')
           cmake -S . -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DUSE_WEBENGINE=OFF \
             -DCMAKE_OSX_ARCHITECTURES=arm64 \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="$MACOS_MIN" \
             -DCMAKE_PREFIX_PATH="$(brew --prefix):$(brew --prefix qt@6)" \
             -DOpenMP_ROOT="$OPENMP_PREFIX" \
             -DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp -I$OPENMP_PREFIX/include" \
