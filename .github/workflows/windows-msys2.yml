@@ -2,6 +2,11 @@ name: Windows build (MSYS2 / MinGW-w64)
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - 'v3.0.0*'
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -70,10 +75,15 @@ jobs:
       - name: Build
         run: cmake --build build --parallel
 
+      - name: Prepare artifact name
+        run: |
+          ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
+          echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
+
       - name: Upload executables
         uses: actions/upload-artifact@v4
         with:
-          name: luminance-hdr-windows-ucrt64
+          name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-windows-ucrt64
           path: |
             build/luminance-hdr.exe
             build/luminance-hdr-cli.exe

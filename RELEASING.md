@@ -4,6 +4,9 @@ This document describes the manual, tag-first release process for maintainers.
 It uses a short-lived release branch, immutable annotated tags, and GitHub
 Releases. The 3.0.0 examples can be adapted to later versions.
 
+Current release line: `release/3.0.0`, version `3.0.0-rc1`. No tag or GitHub
+release has been published yet.
+
 ## Principles
 
 - Cut the release from `convert-to-qt6` until the Qt 6 branch has been merged
@@ -72,15 +75,26 @@ on:
     types: [published]
 ```
 
-Artifact names should include `${{ github.ref_name }}`, for example:
+Artifact names include a sanitized `${{ github.ref_name }}`, because branch
+names such as `release/3.0.0` contain characters that GitHub artifact names do
+not allow:
 
 ```yaml
-name: luminance-hdr-${{ github.ref_name }}-windows-ucrt64
+- name: Prepare artifact name
+  run: |
+    ARTIFACT_VERSION=$(printf '%s' "$GITHUB_REF_NAME" | tr -c 'A-Za-z0-9._-' '-')
+    echo "ARTIFACT_VERSION=$ARTIFACT_VERSION" >> "$GITHUB_ENV"
+
+- name: Upload executables
+  uses: actions/upload-artifact@v4
+  with:
+    name: luminance-hdr-${{ env.ARTIFACT_VERSION }}-windows-ucrt64
 ```
 
-In `build_files/platforms/msys2/UpdateInfo.cmake`, make sure a tag build does
-not use `GIT_DESCRIBE` as both the branch name and the version, otherwise the
-installer filename can contain the version twice.
+`build_files/platforms/msys2/UpdateInfo.cmake` uses the exact tag for tagged
+builds and the CMake-computed version for branch builds. It also sanitizes
+branch names, so the installer filename cannot contain the version twice or
+an invalid path separator.
 
 ## Preflight checklist
 
