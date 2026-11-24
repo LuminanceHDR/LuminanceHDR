@@ -2842,7 +2842,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="599"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation>Az &quot;align_image_stack&quot; külső folyamat bedöglött...</translation>
+        <translation>Az &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; külső folyamat bedöglött...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="608"/>

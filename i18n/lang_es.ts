@@ -643,7 +643,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="408"/>
         <source>Selec&amp;t...</source>
-        <translation>Seleccionar</translation>
+        <translation>&amp;Seleccionar</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="432"/>
@@ -962,7 +962,7 @@ Continue?</source>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="183"/>
         <source>response curve = from_file|linear|gamma|log|srgb (Default is linear)</source>
-        <translation>Curva de respuesta = desde_archivo|lineal|gamma|log|srgb (valor por defecto: lineal) </translation>
+        <translation>Curva de respuesta = desde_archivo|lineal|gamma|log|srgb (valor por defecto: lineal)</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="188"/>
@@ -2623,7 +2623,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="729"/>
         <source>HDR Creation Model</source>
-        <translation>Modelo de creción de HDR </translation>
+        <translation>Modelo de creción de HDR</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="749"/>
@@ -3217,7 +3217,7 @@ associated with the protocol?</source>
     <message>
         <location filename="../src/HelpBrowser/HelpSideBar.ui" line="54"/>
         <source>&amp;Search</source>
-        <translation>&amp;Buscar </translation>
+        <translation>&amp;Buscar</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpSideBar.ui" line="64"/>
@@ -3542,7 +3542,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="287"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Quitar </translation>
+        <translation>&amp;Quitar</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="290"/>
@@ -4780,7 +4780,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Punto negro&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Usar un valor de punto negro específico para decodificar imágenes RAW. Si desactiva esta opción, se calculará el valor del punto negro de forma automática.&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Usar un valor de punto negro específico para decodificar imágenes RAW. Si desactiva esta opción, se calculará el valor del punto negro de forma automática.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1714"/>
@@ -4915,7 +4915,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Multiplicador rojo&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Indique aquí el factor de aumento de la capa roja&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Indique aquí el factor de aumento de la capa roja&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2291"/>
@@ -4930,7 +4930,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Multiplicador azul&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Indique aquí el factor de aumento de la capa azul&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Indique aquí el factor de aumento de la capa azul&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2350"/>
@@ -5521,7 +5521,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="629"/>
         <source>Loading TMO settings from file: %1</source>
-        <translation>Cargar función de respuesta desde archivo</translation>
+        <translation>Cargar ajustes de TMO desde archivo: %1</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="721"/>
@@ -6141,7 +6141,7 @@ Nivel de Luminancia</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3493"/>
         <source>&amp;Update preview</source>
-        <translation>Actualizar vista previa</translation>
+        <translation>&amp;Actualizar vista previa</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3496"/>

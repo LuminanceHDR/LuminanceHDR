@@ -2026,7 +2026,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1574"/>
         <source>Insert a vertical shift value for the currently selected movable image</source>
-        <translation>Indsæt en lodret forskydningsværdi for det valgte flytbare billede </translation>
+        <translation>Indsæt en lodret forskydningsværdi for det valgte flytbare billede</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1609"/>
@@ -2461,8 +2461,7 @@ ERROR: %2</source>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="235"/>
         <source>Preview</source>
-        <translation>Preview
-</translation>
+        <translation>Preview</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="294"/>
@@ -4591,7 +4590,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Stræk og rotér ikke pixels&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For Fuji Super CCD-kameraer, vil billedet roteret 45°. For kameraer med ikke-kvadratiske pixels, stræk ikke billedet til dets korrekte højde/breddeforhold. Uanset,     </translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For Fuji Super CCD-kameraer, vil billedet roteret 45°. For kameraer med ikke-kvadratiske pixels, stræk ikke billedet til dets korrekte højde/breddeforhold. Uanset,</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="998"/>

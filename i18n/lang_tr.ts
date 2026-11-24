@@ -2554,7 +2554,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="647"/>
         <source>[2/2] Choose Settings for HDR Creation</source>
-        <translation>[2/2] HDR Oluşturma Ayarlarını Seçin </translation>
+        <translation>[2/2] HDR Oluşturma Ayarlarını Seçin</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="653"/>
@@ -5550,8 +5550,7 @@ p, li { white-space: pre-wrap; }
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation>Veritabanında kullanılan kayıtlı TM parametreleri açılamaz.
-Hata: %1
-</translation>
+Hata: %1</translation>
     </message>
     <message>
         <location filename="../src/MainGui/main.cpp" line="178"/>
@@ -5563,7 +5562,7 @@ To change this go to Tools-&gt;Preferences-&gt;Raw Conversion-&gt;Quality</sourc
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="112"/>
         <source>All LDR formats</source>
-        <translation>Tüm LDR biçimleri </translation>
+        <translation>Tüm LDR biçimleri</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="124"/>
@@ -6297,8 +6296,7 @@ Düzeyini Etkinleştir</translation>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation>Veritabanında kullanılan kayıtlı TM parametreleri açılamaz.
-Hata: %1
-</translation>
+Hata: %1</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1112"/>
@@ -6437,7 +6435,7 @@ Hata: %1
         <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="163"/>
         <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="301"/>
         <source>Move down selected file(s)</source>
-        <translation>Seçili dosyaları aşağı taşı </translation>
+        <translation>Seçili dosyaları aşağı taşı</translation>
     </message>
     <message>
         <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="198"/>

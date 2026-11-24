@@ -1099,7 +1099,7 @@ Continuare?</translation>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="222"/>
         <source>Specifies the file name, of the web page to be generated. If &lt;page_name&gt; is missing, the file name of the first image with .html extension will be used. (Default is first image name)</source>
-        <translation>Specifica il nome di file della pagina web da generare. Se manca &lt;nome_pagina&gt;, verrà usato il nome di file della prima immagine, con estensione html (di default viene usato il nome di file della prima immagine)</translation>
+        <translation>Specifica il nome di file della pagina web da generare. Se manca &lt;page_name&gt;, verrà usato il nome di file della prima immagine, con estensione html (di default viene usato il nome di file della prima immagine)</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="227"/>
@@ -6194,8 +6194,7 @@ livello luminanza</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2533"/>
         <source>Auto Cone/Rod</source>
-        <translation>Coni/bastoncelli
-automatici</translation>
+        <translation>Coni/bastoncelli automatici</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2592"/>

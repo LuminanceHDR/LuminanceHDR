@@ -892,12 +892,12 @@ Continue?</source>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="147"/>
         <source>HDR_FILE Load an HDR instead of creating a new one.</source>
-        <translation>HDR_FILE      Lädt eine HDR-Datei, anstatt eine neue zu erzeugen. </translation>
+        <translation>HDR_FILE      Lädt eine HDR-Datei, anstatt eine neue zu erzeugen.</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="149"/>
         <source>HDR_FILE Save to a HDR file format. (default: don&apos;t save)</source>
-        <translation>HDR_FILE      Speichert eine HDR-Datei. (Standard: nicht speichern) </translation>
+        <translation>HDR_FILE      Speichert eine HDR-Datei. (Standard: nicht speichern)</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="152"/>
@@ -917,7 +917,7 @@ Continue?</source>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="157"/>
         <source>VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping)</source>
-        <translation>VALUE       Breite, auf die das HDR-Bild skaliert wird (geschieht vor Gammakorrektur und Dynamikkompression) </translation>
+        <translation>VALUE       Breite, auf die das HDR-Bild skaliert wird (geschieht vor Gammakorrektur und Dynamikkompression)</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="160"/>
@@ -5592,7 +5592,8 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/MainGui/main.cpp" line="72"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
-        <translation>Die Datenbank zum Speichern von Dynamikkompressionsparametern konnte nicht geöffnet werden. Fehler: %1</translation>
+        <translation>Die Datenbank zum Speichern von Dynamikkompressionsparametern konnte nicht geöffnet werden.
+Fehler: %1</translation>
     </message>
     <message>
         <location filename="../src/MainGui/main.cpp" line="178"/>
@@ -6336,7 +6337,8 @@ Luminace Level</source>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="400"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
-        <translation>Die Datenbank zum Speichern von Dynamikkompressionsparametern konnte nicht geöffnet werden. Fehler: %1</translation>
+        <translation>Die Datenbank zum Speichern von Dynamikkompressionsparametern konnte nicht geöffnet werden.
+Fehler: %1</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1112"/>

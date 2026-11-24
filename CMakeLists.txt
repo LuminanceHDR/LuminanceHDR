@@ -243,7 +243,7 @@ IF(UPDATE_TRANSLATIONS)
         qt_create_translation(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS})
     ENDIF()
     IF(UNIX)
-        IF(NOT APPLE) # Sadly on Linux Qt5 add global include paths in list of translation files, let's get rid of them
+        IF(NOT APPLE) # On Linux Qt adds global include paths to the translation source list; remove them
             EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build_files/platforms/linux/sanitize_translations.sh
                 WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
         ENDIF(NOT APPLE)
