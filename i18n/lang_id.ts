@@ -5054,8 +5054,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="751"/>
-        <source>ERROR: cannot parse Tone Mapping Setting file:  </source>
-        <translation>ERROR: cannot parse Tone Mapping Setting file:</translation>
+        <source>ERROR: cannot parse Tone Mapping Setting file: </source>
+        <translation>ERROR: cannot parse Tone Mapping Setting file: </translation>
     </message>
 </context>
 <context>

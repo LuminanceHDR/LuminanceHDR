@@ -5576,7 +5576,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="532"/>
         <source>Pupil Area</source>
-        <translation>pup&amp;illaire</translation>
+        <translation>Zone pupillaire</translation>
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="541"/>
@@ -6244,7 +6244,7 @@ Niveau de luminance</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3244"/>
         <source>Pup&amp;il Area</source>
-        <translation>pup&amp;illaire</translation>
+        <translation>&amp;Zone pupillaire</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3296"/>

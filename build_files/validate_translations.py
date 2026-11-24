@@ -107,8 +107,14 @@ def consensus_english(ts_files):
     if not counts:
         return {}
     threshold = max(counts.values()) // 2
-    keys = {key for key, count in counts.items() if count >= threshold}
-    return {key: maps[0][key] for key in keys if key in maps[0]}
+    result = {}
+    for key, count in counts.items():
+        if count < threshold:
+            continue
+        result[key] = maps[0][key] if key in maps[0] else next(
+            mapping[key] for mapping in maps if key in mapping
+        )
+    return result
 
 
 def source_english(source_ts):
@@ -335,7 +341,9 @@ def main():
 
     if args.fail_on == "error" and any(f["severity"] == "error" for f in findings):
         return 1
-    if args.fail_on == "warning" and findings:
+    if args.fail_on == "warning" and any(
+        f["severity"] in ("warning", "error") for f in findings
+    ):
         return 1
     return 0
 

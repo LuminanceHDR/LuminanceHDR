@@ -28,11 +28,11 @@ Translation directory: `i18n`
 
 - Errors: 0
 - Warnings: 33
-- Info: 1553
+- Info: 1552
 
 | Severity | Category | Count |
 |---|---|---:|
-| info | not-in-english | 289 |
+| info | not-in-english | 288 |
 | info | source-not-found | 1264 |
 | warning | accelerator-missing | 8 |
 | warning | html-tag | 16 |
