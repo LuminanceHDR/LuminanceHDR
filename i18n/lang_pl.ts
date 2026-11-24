@@ -6236,7 +6236,7 @@ Error: %1</source>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1138"/>
         <source>Save tonemapping settings text file to...</source>
-        <translation>Zapisz plik z ustawieniami mapowania tonów... </translation>
+        <translation>Zapisz plik z ustawieniami mapowania tonów...</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1159"/>

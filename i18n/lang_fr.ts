@@ -386,7 +386,7 @@ Lire la documentation pour plus d&apos;informations.</translation>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="304"/>
         <source>Use MTB (Median Threshold Bitmap) engine</source>
-        <translation>Utiliser MTB (Median Threshold Bitmap) </translation>
+        <translation>Utiliser MTB (Median Threshold Bitmap)</translation>
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="307"/>
@@ -689,7 +689,7 @@ Continuer ?</translation>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="290"/>
         <source>Remove Settings (Alt+M)</source>
-        <translation>Retirer les réglages (Alt+M) </translation>
+        <translation>Retirer les réglages (Alt+M)</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="303"/>
@@ -1963,7 +1963,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="886"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recalcul&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recalcul&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="908"/>
@@ -2383,7 +2383,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/UI/FitsImporter.ui" line="385"/>
         <source>Hugin&apos;s align_&amp;image_stack</source>
-        <translation>align_image_stack de Hugin</translation>
+        <translation>align_&amp;image_stack de Hugin</translation>
     </message>
     <message>
         <location filename="../src/UI/FitsImporter.ui" line="420"/>
@@ -2620,7 +2620,7 @@ ERREUR: %2</translation>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="526"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recalcul&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seuil utilisé par l&apos;algorithme auto d&apos;anti-fantôme. Un seuil bas provoque un traitement aggressif mais qui peut limiter la plage dynamique finale. Utilier te bouton &amp;quot;Recalcul&amp;quot; pour visualiser la couverture des corrections en cours et ajuster le seuil en fonction.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="545"/>
@@ -2635,7 +2635,7 @@ ERREUR: %2</translation>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="597"/>
         <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
-        <translation>Pour un alignement ou un anti-fantôme manuels, activez cette option. Cette dernière est destinée aux utilisateurs qui maîtrisent bien les étapes de création d&apos;un HDR! </translation>
+        <translation>Pour un alignement ou un anti-fantôme manuels, activez cette option. Cette dernière est destinée aux utilisateurs qui maîtrisent bien les étapes de création d&apos;un HDR!</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="600"/>
@@ -5566,7 +5566,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="523"/>
         <source>Chromatic Adaptation</source>
-        <translation>Adaptation Chromatique</translation>
+        <translation>Ad&amp;aptation Chromatique</translation>
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="526"/>
@@ -5576,7 +5576,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="532"/>
         <source>Pupil Area</source>
-        <translation>Zone pupillaire</translation>
+        <translation>pup&amp;illaire</translation>
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="541"/>
@@ -6159,7 +6159,7 @@ Niveau de luminance</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2056"/>
         <source>Chromatic A&amp;daptation</source>
-        <translation>Adaptation Chromatique</translation>
+        <translation>Ad&amp;aptation Chromatique</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2090"/>
@@ -6244,7 +6244,7 @@ Niveau de luminance</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3244"/>
         <source>Pup&amp;il Area</source>
-        <translation>Zone pupillaire</translation>
+        <translation>pup&amp;illaire</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3296"/>

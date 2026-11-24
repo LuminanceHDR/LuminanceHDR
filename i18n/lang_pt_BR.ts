@@ -44,7 +44,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/UI/about.ui" line="118"/>
         <source>A&amp;uthors</source>
-        <translation>Á%utores </translation>
+        <translation>Á&amp;utores</translation>
     </message>
     <message>
         <location filename="../src/UI/about.ui" line="127"/>
@@ -326,7 +326,7 @@ See documentation for more information.</source>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="374"/>
         <source>&amp;Start</source>
-        <translation>&amp;Começar </translation>
+        <translation>&amp;Começar</translation>
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="384"/>
@@ -468,7 +468,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="398"/>
         <source>Aligning...</source>
-        <translation>Alinhando... </translation>
+        <translation>Alinhando...</translation>
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="413"/>
@@ -622,7 +622,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="385"/>
         <source>Output</source>
-        <translation>Saída </translation>
+        <translation>Saída</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="391"/>
@@ -694,7 +694,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="568"/>
         <source>All messages</source>
-        <translation>Todas as mensagens </translation>
+        <translation>Todas as mensagens</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="573"/>
@@ -724,7 +724,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="655"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancelar </translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="668"/>
@@ -734,7 +734,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="671"/>
         <source>&amp;Start</source>
-        <translation>&amp;Começar  </translation>
+        <translation>&amp;Começar</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="109"/>
@@ -766,7 +766,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="208"/>
         <source>Luminance HDR tone mapping settings text file (*.txt)</source>
-        <translation>arquivo texto(*.txt) de configurações de mapeamento de tom Luminance HDR </translation>
+        <translation>arquivo texto(*.txt) de configurações de mapeamento de tom Luminance HDR</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="285"/>
@@ -781,7 +781,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="489"/>
         <source>Processing...</source>
-        <translation>Processando... </translation>
+        <translation>Processando...</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="491"/>
@@ -844,7 +844,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMJob.cpp" line="144"/>
         <source>[T%1] ERROR: Loading of %2 failed</source>
-        <translation>[T%1] ERRO: Falhou o carregamento de %2 </translation>
+        <translation>[T%1] ERRO: Falhou o carregamento de %2</translation>
     </message>
 </context>
 <context>
@@ -1529,7 +1529,7 @@ ERRO: Não é possível salvar no arquivo: %1</translation>
     <message>
         <location filename="../src/MainWindow/DnDOption.ui" line="51"/>
         <source>&amp;Open</source>
-        <translation>%Abrir</translation>
+        <translation>&amp;Abrir</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/DnDOption.ui" line="64"/>
@@ -1549,7 +1549,7 @@ ERRO: Não é possível salvar no arquivo: %1</translation>
     <message>
         <location filename="../src/MainWindow/DnDOption.ui" line="91"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancelar </translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/DnDOption.ui" line="104"/>
@@ -1577,7 +1577,7 @@ ERRO: Não é possível salvar no arquivo: %1</translation>
     <message>
         <location filename="../src/MainWindow/DonationDialog.ui" line="57"/>
         <source>Ask me again later</source>
-        <translation>Me pergunte mais tarde de novo </translation>
+        <translation>Me pergunte mais tarde de novo</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/DonationDialog.ui" line="70"/>
@@ -1826,7 +1826,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="759"/>
         <source>O. Gallo and others</source>
-        <translation>O. Gallo e outros </translation>
+        <translation>O. Gallo e outros</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="766"/>
@@ -1856,7 +1856,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="848"/>
         <source>Threshold</source>
-        <translation>Limiar </translation>
+        <translation>Limiar</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="858"/>
@@ -1992,7 +1992,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1433"/>
         <source>Shift values for editable image</source>
-        <translation>Valores de deslocamento para a imagem editável </translation>
+        <translation>Valores de deslocamento para a imagem editável</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1474"/>
@@ -2067,7 +2067,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1681"/>
         <source>Histogram</source>
-        <translation>Histograma </translation>
+        <translation>Histograma</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1704"/>
@@ -2092,7 +2092,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="1753"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancelar </translation>
+        <translation>&amp;Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2145,7 +2145,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/UI/ExportToHtmlDialog.ui" line="261"/>
         <source>Select...</source>
-        <translation>Escolher... </translation>
+        <translation>Escolher...</translation>
     </message>
     <message>
         <location filename="../src/UI/ExportToHtmlDialog.ui" line="310"/>
@@ -2203,7 +2203,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/UI/FitsImporter.ui" line="116"/>
         <location filename="../src/UI/FitsImporter.ui" line="325"/>
         <source>Select...</source>
-        <translation>Escolher... </translation>
+        <translation>Escolher...</translation>
     </message>
     <message>
         <location filename="../src/UI/FitsImporter.ui" line="73"/>
@@ -2271,7 +2271,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/UI/FitsImporter.ui" line="339"/>
         <location filename="../src/UI/FitsImporter.ui" line="446"/>
         <source>Alignment</source>
-        <translation>Alinhamento </translation>
+        <translation>Alinhamento</translation>
     </message>
     <message>
         <location filename="../src/UI/FitsImporter.ui" line="365"/>
@@ -2301,7 +2301,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/UI/FitsImporter.ui" line="465"/>
         <source>Progress:</source>
-        <translation>Progressão: </translation>
+        <translation>Progressão:</translation>
     </message>
     <message>
         <location filename="../src/UI/FitsImporter.ui" line="478"/>
@@ -2373,8 +2373,7 @@ ERROR: %2</source>
     <message>
         <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="195"/>
         <source>HdrCreationManager::loadFilesDone(): The images have different size.</source>
-        <translation>Hdr Gerente de Criação :: Arquivos de Carga feito (): As imagens têm tamanho diferente.
-</translation>
+        <translation>Hdr Gerente de Criação :: Arquivos de Carga feito (): As imagens têm tamanho diferente.</translation>
     </message>
 </context>
 <context>
@@ -2483,7 +2482,7 @@ ERROR: %2</source>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="384"/>
         <source>Alignment</source>
-        <translation>Alinhamento </translation>
+        <translation>Alinhamento</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="401"/>
@@ -2513,7 +2512,7 @@ ERROR: %2</source>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="488"/>
         <source>Threshold</source>
-        <translation>Limiar </translation>
+        <translation>Limiar</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="498"/>
@@ -2699,7 +2698,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="873"/>
         <source>Response Curve Input File</source>
-        <translation>Arquivo de Entrada da Curva de Resposta </translation>
+        <translation>Arquivo de Entrada da Curva de Resposta</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="904"/>
@@ -2745,7 +2744,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1066"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancelar </translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="120"/>
@@ -2882,7 +2881,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="660"/>
         <source>Aligning...</source>
-        <translation>Alinhando... </translation>
+        <translation>Alinhando...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="788"/>
@@ -3342,7 +3341,7 @@ associated with the protocol?</source>
     <message>
         <location filename="../src/UI/GammaAndLevels.ui" line="17"/>
         <source>Levels and Gamma</source>
-        <translation>Níveis e Gamma </translation>
+        <translation>Níveis e Gamma</translation>
     </message>
     <message>
         <location filename="../src/UI/GammaAndLevels.ui" line="75"/>
@@ -3735,14 +3734,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="512"/>
         <source>Zoom &amp;Out</source>
-        <translation>&amp;Diminuir </translation>
+        <translation>&amp;Diminuir</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="515"/>
         <location filename="../src/MainWindow/MainWindow.ui" line="518"/>
         <location filename="../src/MainWindow/MainWindow.ui" line="521"/>
         <source>Zoom out</source>
-        <translation>Diminuir </translation>
+        <translation>Diminuir</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="524"/>
@@ -3774,7 +3773,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="566"/>
         <source>&amp;Preferences...</source>
-        <translation>&amp;Preferências... </translation>
+        <translation>&amp;Preferências...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="569"/>
@@ -4325,7 +4324,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="1168"/>
         <source>Aborting...</source>
-        <translation>Abortando... </translation>
+        <translation>Abortando...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="1410"/>
@@ -4405,7 +4404,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="161"/>
         <source>Color Management</source>
-        <translation>Gerenciamento de Cores </translation>
+        <translation>Gerenciamento de Cores</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="202"/>
@@ -4668,12 +4667,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1087"/>
         <source>Camera</source>
-        <translation>Câmera </translation>
+        <translation>Câmera</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1092"/>
         <source>Auto</source>
-        <translation>Automático </translation>
+        <translation>Automático</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1097"/>
@@ -4752,7 +4751,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1470"/>
         <source>Level</source>
-        <translation>Nível </translation>
+        <translation>Nível</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1522"/>
@@ -4777,12 +4776,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1576"/>
         <source>Auto Brightness</source>
-        <translation>Brilho Automático </translation>
+        <translation>Brilho Automático</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1586"/>
         <source>Brightness</source>
-        <translation>Brilho </translation>
+        <translation>Brilho</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="1653"/>
@@ -4984,7 +4983,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2466"/>
         <source>Camera profile</source>
-        <translation>Perfil de câmera </translation>
+        <translation>Perfil de câmera</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2473"/>
@@ -4994,12 +4993,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2480"/>
         <source>Printer profile</source>
-        <translation>Perfil de impressora </translation>
+        <translation>Perfil de impressora</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2548"/>
         <source>align_image_stack command line arguments</source>
-        <translation>argumentos de linha de comando align_image_stack </translation>
+        <translation>argumentos de linha de comando align_image_stack</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2573"/>
@@ -5048,7 +5047,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="750"/>
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
-        <translation>Perfil de cor (*.icc *.ICC *.icm *.ICM) </translation>
+        <translation>Perfil de cor (*.icc *.ICC *.icm *.ICM)</translation>
     </message>
 </context>
 <context>
@@ -5274,7 +5273,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Core/TonemappingOptions.cpp" line="373"/>
         <location filename="../src/Core/TonemappingOptions.cpp" line="414"/>
         <source>Saturation</source>
-        <translation>Saturação </translation>
+        <translation>Saturação</translation>
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="376"/>
@@ -5294,7 +5293,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="394"/>
         <source>Color Saturation</source>
-        <translation>Saturação de cor </translation>
+        <translation>Saturação de cor</translation>
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="397"/>
@@ -5310,7 +5309,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="412"/>
         <source>Beta</source>
-        <translation>Beta </translation>
+        <translation>Beta</translation>
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="417"/>
@@ -5397,7 +5396,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="482"/>
         <source>Multiplier</source>
-        <translation>Multiplicador </translation>
+        <translation>Multiplicador</translation>
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="487"/>
@@ -5442,7 +5441,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="521"/>
         <source>Brightness</source>
-        <translation>Brilho </translation>
+        <translation>Brilho</translation>
     </message>
     <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="523"/>
@@ -5627,7 +5626,7 @@ To change this go to Tools-&gt;Preferences-&gt;Raw Conversion-&gt;Quality</sourc
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="722"/>
         <source>Save as...</source>
-        <translation>Salvar como... </translation>
+        <translation>Salvar como...</translation>
     </message>
 </context>
 <context>
@@ -5680,7 +5679,7 @@ To change this go to Tools-&gt;Preferences-&gt;Raw Conversion-&gt;Quality</sourc
     <message>
         <location filename="../src/Resize/ResizeDialog.ui" line="199"/>
         <source>Width:</source>
-        <translation>Largura: </translation>
+        <translation>Largura:</translation>
     </message>
     <message>
         <location filename="../src/Resize/ResizeDialog.ui" line="244"/>
@@ -5703,7 +5702,7 @@ To change this go to Tools-&gt;Preferences-&gt;Raw Conversion-&gt;Quality</sourc
     <message>
         <location filename="../src/UI/SavedParametersDialog.cpp" line="74"/>
         <source>Comment</source>
-        <translation>Comentário </translation>
+        <translation>Comentário</translation>
     </message>
     <message>
         <location filename="../src/UI/SavedParametersDialog.cpp" line="75"/>
@@ -5780,7 +5779,7 @@ To change this go to Tools-&gt;Preferences-&gt;Raw Conversion-&gt;Quality</sourc
     <message>
         <location filename="../src/TonemappingPanel/ThresholdWidget.ui" line="37"/>
         <source>Threshold</source>
-        <translation>Limiar </translation>
+        <translation>Limiar</translation>
     </message>
 </context>
 <context>
@@ -6148,7 +6147,7 @@ Nível do Luminace</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3431"/>
         <source>Previous</source>
-        <translation>Anterior </translation>
+        <translation>Anterior</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3454"/>
@@ -6158,7 +6157,7 @@ Nível do Luminace</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3460"/>
         <source>Next</source>
-        <translation>Próximo </translation>
+        <translation>Próximo</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3487"/>
@@ -6352,7 +6351,7 @@ Erro: %1</translation>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1114"/>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1140"/>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
-        <translation>arquivo texto(*.txt) de configurações de mapeamento de tom LuminanceHDR </translation>
+        <translation>arquivo texto(*.txt) de configurações de mapeamento de tom LuminanceHDR</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1119"/>
@@ -6413,12 +6412,12 @@ Erro: %1</translation>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="84"/>
         <source>Comments:</source>
-        <translation>Comentários: </translation>
+        <translation>Comentários:</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="111"/>
         <source>Comment</source>
-        <translation>Comentário </translation>
+        <translation>Comentário</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="116"/>
@@ -6510,7 +6509,7 @@ Erro: %1</translation>
     <message>
         <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="418"/>
         <source>All messages</source>
-        <translation>Todas as mensagens </translation>
+        <translation>Todas as mensagens</translation>
     </message>
     <message>
         <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="423"/>
@@ -6540,7 +6539,7 @@ Erro: %1</translation>
     <message>
         <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="536"/>
         <source>&amp;Start</source>
-        <translation>&amp;Começar </translation>
+        <translation>&amp;Começar</translation>
     </message>
     <message>
         <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="255"/>
@@ -6577,17 +6576,17 @@ Erro: %1</translation>
     <message>
         <location filename="../src/UI/UMessageBox.cpp" line="194"/>
         <source>Donation</source>
-        <translation>Doação </translation>
+        <translation>Doação</translation>
     </message>
     <message>
         <location filename="../src/UI/UMessageBox.cpp" line="195"/>
         <source>Would you like to donate?</source>
-        <translation>Gostaria de doar? </translation>
+        <translation>Gostaria de doar?</translation>
     </message>
     <message>
         <location filename="../src/UI/UMessageBox.cpp" line="199"/>
         <source>Yes, I&apos;d love to!</source>
-        <translation>Sim, adoraria! </translation>
+        <translation>Sim, adoraria!</translation>
     </message>
     <message>
         <location filename="../src/UI/UMessageBox.cpp" line="201"/>
@@ -6605,13 +6604,13 @@ Erro: %1</translation>
     <message>
         <location filename="../src/MainWindow/UpdateChecker.cpp" line="104"/>
         <source>A new release is ready for download!</source>
-        <translation>Uma nova versão esta pronta para baixar! </translation>
+        <translation>Uma nova versão esta pronta para baixar!</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/UpdateChecker.cpp" line="112"/>
         <location filename="../src/MainWindow/UpdateChecker.cpp" line="129"/>
         <source>Do you want to open the webpage for download now?</source>
-        <translation>Gostaria de abrir a página para baixar agora? </translation>
+        <translation>Gostaria de abrir a página para baixar agora?</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/UpdateChecker.cpp" line="124"/>

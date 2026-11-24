@@ -108,7 +108,10 @@ The most significant options follow:
     Points to a folder into which the compiled program will be installed. Defaults to `/usr/local` in Linux/macOS and `c:/Program Files/Luminance HDR` in Windows.
 - `UPDATE_TRANSLATIONS`
     Values:`OFF` (default), `ON`.
-    Luminance HDR ships with translations files for localization. These are stored inside the `i18n` folder. Should you wish to update the translation `.ts` files then set this option to `ON`, compile, then set it back to `OFF`.
+    Luminance HDR ships with Qt 6 translation files in the `i18n` folder. Set this option to `ON` and build the `translations_target` target to regenerate `i18n/source.ts` and update the `.ts` files, then set it back to `OFF` for normal builds. Requires Qt 6 LinguistTools. See [LOCALIZATION.md](LOCALIZATION.md) for the full workflow and validation commands.
+- `LUPDATE_NOOBSOLETE`
+    Values:`OFF` (default), `ON`.
+    When `UPDATE_TRANSLATIONS` is `ON`, pass `-noobsolete` to `lupdate` so messages no longer present in the source are removed.
 - `ENABLE_UNIT_TEST`
     Values:`OFF` (default), `ON`.
     Enables unit testing. Requires Google's gtest framework. The resulting test executables are placed in the `test` sub-folder.

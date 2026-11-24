@@ -2845,7 +2845,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="591"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
-        <translation>Eşuat în a porni aplicaţie externă. Te rog foloseşte: Conţinut-Ajutor-Setări-Unelte Externe pentru mai multe informaţii.</translation>
+        <translation>Eşuat în a porni aplicaţia externă &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Te rog foloseşte: Ajutor -&gt; Conţinut... -&gt; Setări -&gt; Unelte externe pentru mai multe informaţii.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="599"/>
@@ -3916,7 +3916,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/MainWindow/MainWindow.ui" line="735"/>
         <location filename="../src/MainWindow/MainWindow.ui" line="738"/>
         <source>Show information about Luminance HDR, its authors and contributors</source>
-        <translation>Arată informații despre Luminance HDR, autorii și contribuitorii săi </translation>
+        <translation>Arată informații despre Luminance HDR, autorii și contribuitorii săi</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="741"/>

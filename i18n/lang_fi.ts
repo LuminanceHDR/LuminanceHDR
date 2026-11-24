@@ -497,8 +497,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="14"/>
         <source>Batch Tone Mapping</source>
-        <translation>
-Kuvaerän tonemappaus</translation>
+        <translation>Kuvaerän tonemappaus</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="29"/>

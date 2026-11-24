@@ -2946,7 +2946,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="591"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
-        <translation>Не удалось запустить внешнее приложение «&lt;em&gt;align_image_stack&lt;/em&gt;».&lt;br/&gt;За подробностями обратитесь к разделу «Справка→Содержание…→Setting up→External Tools».</translation>
+        <translation>Не удалось запустить внешнее приложение «&lt;em&gt;align_image_stack&lt;/em&gt;».&lt;br&gt;За подробностями обратитесь к разделу «Справка→Содержание…→Setting up→External Tools».</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="599"/>
@@ -3383,7 +3383,7 @@ associated with the protocol?</source>
     <message>
         <location filename="../src/UI/ImageQualityDialog.ui" line="26"/>
         <source>Save as</source>
-        <translation>Сохранить как </translation>
+        <translation>Сохранить как</translation>
     </message>
     <message>
         <location filename="../src/UI/ImageQualityDialog.ui" line="38"/>
@@ -4338,7 +4338,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1186"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Switch between Lanczos and Bilinear interpolation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;Переключение между билинейной интерполяцией и фильтром Ланцоша&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Переключение между билинейной интерполяцией и фильтром Ланцоша&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1189"/>
