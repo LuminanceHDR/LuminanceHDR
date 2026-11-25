@@ -32,9 +32,14 @@ def inspect(path):
         rpaths = re.findall(r'\bcmd LC_RPATH\s+cmdsize \d+\s+path (.*?) \(offset \d+\)', load_output)
         maximum = os.environ.get('LHDR_MAX_MINIMUM_OS')
         versions = re.findall(r'\bcmd LC_BUILD_VERSION\s+cmdsize \d+\s+platform (?:MACOS|1)\s+minos ([0-9.]+)', load_output)
-        if maximum and versions:
+        versions += re.findall(r'\bcmd LC_VERSION_MIN_MACOSX\s+cmdsize \d+\s+version ([0-9.]+)', load_output)
+        if maximum and not versions:
+            errors.add(f'{path.relative_to(app)}: missing macOS minimum version')
+        if maximum:
             for version in versions:
-                if tuple(map(int, version.split('.'))) > tuple(map(int, maximum.split('.'))):
+                current = tuple(map(int, version.split('.')))
+                limit = tuple(map(int, maximum.split('.')))
+                if (current + (0, 0, 0))[:3] > (limit + (0, 0, 0))[:3]:
                     errors.add(f'{path.relative_to(app)}: minimum macOS {version} exceeds {maximum}')
         cache[path] = deps, rpaths, install_id
     return cache[path]
