@@ -12,7 +12,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Luminance HDR. If not, see <http://www.gnu.org/licenses/>.
+ *  along with Luminance HDR. If not, see <https://www.gnu.org/licenses/>.
  *
  *  This file was copied from RawTherapee on 5 Dec 2017, commit 08203cc.
  *

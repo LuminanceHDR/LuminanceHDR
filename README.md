@@ -13,9 +13,11 @@ Copyright (C) 2010-2019
  - Franco Comida <fcomida@users.sourceforge.net>
  - Daniel Kaneider <danielkaneider@users.sourceforge.net>
 
- and many contributors and translators
+  and many contributors and translators
 
 Copyright (C) 2006-2010 - Giuseppe Rota <grota@users.sourceforge.net>
+
+Copyright (C) 2026 Luminance HDR contributors
 
 - Webpage: http://qtpfsgui.sourceforge.net
 - Sourceforge: http://sourceforge.net/projects/qtpfsgui

@@ -29,6 +29,7 @@ This document covers the compilation and installation of Luminance HDR.
     <danielkaneider@users.sourceforge.net>
     - (C) 2019 Maciej Dworak
     <https://github.com/Beep6581>
+    - (C) 2026 Luminance HDR contributors
 - Project homepage:
     http://qtpfsgui.sourceforge.net/
 - Source code and issue tracker:

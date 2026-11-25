@@ -14,7 +14,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with RawTherapee.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with RawTherapee.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <cmath>
 
@@ -36,7 +36,7 @@ using namespace librtprocess;
 *   Contact info: luis.sanz.rodriguez@gmail.com
 *
 *   This code is distributed under a GNU General Public License, version 3.
-*   Visit <http://www.gnu.org/licenses/> for more information.
+*   Visit <https://www.gnu.org/licenses/> for more information.
 *
 ***/
 // Adapted to RawTherapee by Jacques Desmis 3/2013
