@@ -77,6 +77,12 @@ else()
     find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
 endif()
 
+# Qt 6.11.0 and 6.11.1 release a color space too early on macOS
+# (QTBUG-147602), causing native menu and cursor image conversions to crash.
+if(APPLE AND Qt6_VERSION VERSION_GREATER_EQUAL 6.11.0 AND Qt6_VERSION VERSION_LESS 6.11.2)
+    message(FATAL_ERROR "Qt ${Qt6_VERSION} has a macOS image conversion crash (QTBUG-147602); use Qt 6.11.2 or newer, or an earlier Qt release.")
+endif()
+
 set(LIBS ${LIBS}
     ${Qt6Core_LIBRARIES} ${Qt6Gui_LIBRARIES} ${Qt6Network_LIBRARIES}
     ${Qt6Xml_LIBRARIES} ${Qt6Sql_LIBRARIES})
@@ -202,7 +208,9 @@ SET(LIBS ${LIBS} ${JPEG_LIBRARIES})
 SET(LIBS ${LIBS} ${LCMS2_LIBRARIES})
 SET(LIBS ${LIBS} ${PNG_LIBRARIES})
 SET(LIBS ${LIBS} ${Boost_LIBRARIES})
-SET(LIBS ${LIBS} ${OpenMP_omp_LIBRARY})
+IF(OpenMP_CXX_FOUND)
+    SET(LIBS ${LIBS} OpenMP::OpenMP_CXX)
+ENDIF()
 ##SET(LIBS ${LIBS} ${RTPROCESS_LIBRARIES})
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/")
@@ -317,12 +325,28 @@ IF(APPLE)
     COMMAND mv ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/${LHDR_OSX_EXECUTABLE_NAME} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr
     )
 
-    # Copy align_image_stack into bundle/Contents/MacOS
-    FILE(COPY
-        ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/align_image_stack
-        DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS
-        FILE_PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE WORLD_EXECUTE
-    )
+    # A release bundle should contain an align_image_stack built for the same
+    # architectures as Luminance HDR. Development builds can leave this unset
+    # and use an align_image_stack available on PATH instead.
+    SET(LHDR_ALIGN_IMAGE_STACK "" CACHE FILEPATH
+        "Path to a native align_image_stack executable to include in the app bundle")
+    IF(LHDR_ALIGN_IMAGE_STACK)
+        IF(NOT EXISTS "${LHDR_ALIGN_IMAGE_STACK}")
+            MESSAGE(FATAL_ERROR
+                "LHDR_ALIGN_IMAGE_STACK does not exist: ${LHDR_ALIGN_IMAGE_STACK}")
+        ENDIF()
+        ADD_CUSTOM_COMMAND(
+            TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${LHDR_ALIGN_IMAGE_STACK}"
+                    "$<TARGET_BUNDLE_DIR:${LHDR_OSX_EXECUTABLE_TARGET}>/Contents/MacOS/align_image_stack"
+            COMMENT "Bundling native align_image_stack"
+            VERBATIM)
+    ELSE()
+        MESSAGE(STATUS
+            "LHDR_ALIGN_IMAGE_STACK is not set; alignment will use align_image_stack from PATH")
+    ENDIF()
 
     # Copy help/icons/hdrhtml and qt.conf to bundle resources
     FILE(COPY "${CMAKE_SOURCE_DIR}/help"    DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
@@ -331,57 +355,19 @@ IF(APPLE)
     FILE(COPY "${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/qt.conf"
                                             DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
 
-    # Copy Licence/README/Authors/Changelog to top of bundle
+    # Documentation is data, so keep it under Resources. Files placed directly
+    # in Contents are treated as nested code by codesign.
     FILE(COPY
          ${CMAKE_SOURCE_DIR}/AUTHORS
          ${CMAKE_SOURCE_DIR}/README.md
          ${CMAKE_SOURCE_DIR}/LICENSE
          ${CMAKE_SOURCE_DIR}/Changelog
-         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
+         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources/Documentation
     )
 
-    # Copy align_image_stack dependencies to bundle
-    FILE(COPY
-         ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/Libraries
-         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents
-    )
-
-    # Install Boost libs (boost_system is header-only in modern Boost).
-    # container is required at runtime by date_time/thread/program_options.
-    get_filename_component(THREAD_LIBRARY_RELEASE ${Boost_THREAD_LIBRARY_RELEASE} NAME)
-    get_filename_component(PROGRAM_OPTIONS_LIBRARY_RELEASE ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} NAME)
-    get_filename_component(CHRONO_LIBRARY_RELEASE ${Boost_CHRONO_LIBRARY_RELEASE} NAME)
-    get_filename_component(DATE_TIME_LIBRARY_RELEASE ${Boost_DATE_TIME_LIBRARY_RELEASE} NAME)
-    get_filename_component(ATOMIC_LIBRARY_RELEASE ${Boost_ATOMIC_LIBRARY_RELEASE} NAME)
-    get_filename_component(CONTAINER_LIBRARY_RELEASE ${Boost_CONTAINER_LIBRARY_RELEASE} NAME)
-    add_custom_command(
-        TARGET ${LHDR_OSX_EXECUTABLE_TARGET}
-        POST_BUILD
-	COMMAND mkdir -p ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks &&
-	echo "copying libs into ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks" &&
-	cp -f ${Boost_CHRONO_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${CHRONO_LIBRARY_RELEASE} &&
-	cp -f ${Boost_THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${THREAD_LIBRARY_RELEASE} &&
-	cp -f ${Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${PROGRAM_OPTIONS_LIBRARY_RELEASE} &&
-	cp -f ${Boost_DATE_TIME_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${DATE_TIME_LIBRARY_RELEASE} &&
-	cp -f ${Boost_ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${ATOMIC_LIBRARY_RELEASE} &&
-	cp -f ${Boost_CONTAINER_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${CONTAINER_LIBRARY_RELEASE}
-        COMMAND install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${DATE_TIME_LIBRARY_RELEASE} @rpath/${DATE_TIME_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${ATOMIC_LIBRARY_RELEASE} @rpath/${ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr &&
-        install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${CHRONO_LIBRARY_RELEASE} &&
-        install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Frameworks/${THREAD_LIBRARY_RELEASE})
-
-    # Fix rpaths for CLI tool
-    add_custom_command(
-        TARGET luminance-hdr-cli
-        POST_BUILD
-        COMMAND install_name_tool -change ${THREAD_LIBRARY_RELEASE} @rpath/${THREAD_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${PROGRAM_OPTIONS_LIBRARY_RELEASE} @rpath/${PROGRAM_OPTIONS_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${CHRONO_LIBRARY_RELEASE} @rpath/${CHRONO_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${DATE_TIME_LIBRARY_RELEASE} @rpath/${DATE_TIME_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli &&
-        install_name_tool -change ${ATOMIC_LIBRARY_RELEASE} @rpath/${ATOMIC_LIBRARY_RELEASE} ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS/luminance-hdr-cli)
+    # Runtime dependencies are collected and rewritten by the macOS packaging
+    # script after the build, instead of copying architecture-specific binaries
+    # from the source tree.
 
 # Unix
 ELSEIF(UNIX)
