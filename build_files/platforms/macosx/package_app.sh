@@ -251,7 +251,17 @@ while IFS= read -r -d '' candidate; do
 done < <(find "$output_app/Contents" -type f -print0)
 
 while IFS= read -r nested_app; do
-    codesign "${codesign_arguments[@]}" "$nested_app"
+    if [[ "$nested_app" == "${webengine_helper%/Contents/MacOS/QtWebEngineProcess}" &&
+          "$codesign_identity" != "-" && "${LHDR_HARDENED_RUNTIME:-0}" == "1" ]]; then
+        entitlements="$nested_app/Contents/Resources/QtWebEngineProcess.entitlements"
+        if [[ ! -f "$entitlements" ]]; then
+            echo "Missing WebEngine helper entitlements: $entitlements" >&2
+            exit 1
+        fi
+        codesign "${codesign_arguments[@]}" --entitlements "$entitlements" "$nested_app"
+    else
+        codesign "${codesign_arguments[@]}" "$nested_app"
+    fi
 done < <(find "$output_app/Contents" -depth -type d -name '*.app' -print)
 if [[ -d "$output_app/Contents/Frameworks" ]]; then
     while IFS= read -r framework; do
