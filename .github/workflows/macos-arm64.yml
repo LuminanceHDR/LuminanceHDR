@@ -9,11 +9,12 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
     timeout-minutes: 120
     env:
-      MACOSX_DEPLOYMENT_TARGET: "14.0"
+      MACOSX_DEPLOYMENT_TARGET: "15.0"
       LHDR_ARCHITECTURES: arm64
+      LHDR_MAX_MINIMUM_OS: "15.0"
 
     steps:
       - name: Check out source

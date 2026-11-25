@@ -40,7 +40,7 @@ if [[ -e "$output_path" ]]; then
 fi
 
 architecture="${LHDR_ARCHITECTURES:-arm64}"
-deployment_target="${MACOSX_DEPLOYMENT_TARGET:-14.0}"
+deployment_target="${MACOSX_DEPLOYMENT_TARGET:-15.0}"
 brew_prefix=$(brew --prefix)
 for formula in libomp libtiff jpeg-turbo libpng zlib sqlite; do
     if ! brew list --versions "$formula" >/dev/null 2>&1; then

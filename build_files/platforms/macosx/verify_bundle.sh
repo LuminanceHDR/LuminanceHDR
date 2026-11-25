@@ -49,6 +49,8 @@ expected_normalized=$(normalize_architectures "$expected_architectures")
 temporary_dir=$(mktemp -d "${TMPDIR:-/tmp}/lhdr-verify.XXXXXX")
 errors_file="$temporary_dir/errors"
 touch "$errors_file"
+mach_o_file="$temporary_dir/mach-o-files"
+: > "$mach_o_file"
 trap 'rm -rf -- "$temporary_dir"' EXIT
 
 mach_o_count=0
@@ -64,35 +66,7 @@ while IFS= read -r -d '' candidate; do
         echo "$relative_path: architectures '$actual_architectures', expected '$expected_architectures'" >> "$errors_file"
     fi
 
-    while IFS= read -r dependency; do
-        case "$dependency" in
-            @loader_path/*)
-                loader_relative="${dependency#@loader_path/}"
-                loader_parent="$(dirname "$candidate")/$(dirname "$loader_relative")"
-                if [[ -d "$loader_parent" ]]; then
-                    loader_parent=$(cd "$loader_parent" && pwd -P)
-                fi
-                loader_target="$loader_parent/$(basename "$loader_relative")"
-                if [[ ! -e "$loader_target" ]]; then
-                    echo "$relative_path: missing dependency $dependency" >> "$errors_file"
-                fi
-                ;;
-            /System/Library/*|/usr/lib/*)
-                ;;
-            /*)
-                echo "$relative_path: external dependency $dependency" >> "$errors_file"
-                ;;
-        esac
-    done < <(otool -L "$candidate" | sed -n '2,$s/^[[:space:]]*\([^[:space:]]*\).*/\1/p')
-
-    install_id=$(otool -D "$candidate" 2>/dev/null | sed -n '2p' || true)
-    case "$install_id" in
-        /System/Library/*|/usr/lib/*|"")
-            ;;
-        /*)
-            echo "$relative_path: external install name $install_id" >> "$errors_file"
-            ;;
-    esac
+    printf '%s\0' "$candidate" >> "$mach_o_file"
 done < <(find "$app_path/Contents" -type f -print0)
 
 if [[ "$mach_o_count" -eq 0 ]]; then
@@ -105,6 +79,8 @@ if [[ -s "$errors_file" ]]; then
     sed 's/^/  - /' "$errors_file" >&2
     exit 1
 fi
+
+python3 "$(dirname "${BASH_SOURCE[0]}")/verify_dependencies.py" "$app_path" "$mach_o_file"
 
 plutil -lint "$app_path/Contents/Info.plist" >/dev/null
 if [[ "${LHDR_SKIP_CODESIGN_CHECK:-0}" != "1" ]]; then

@@ -193,7 +193,7 @@ build_files/platforms/macosx/build_align_image_stack.sh \
 cmake -S . -B build-arm64 -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_OSX_ARCHITECTURES=arm64 \
-    -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0 \
+    -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
     -DCMAKE_PREFIX_PATH="$(brew --prefix)" \
     -DLHDR_ALIGN_IMAGE_STACK="$PWD/build-arm64-tools/align_image_stack"
 cmake --build build-arm64 --parallel
@@ -220,6 +220,6 @@ official distributable must additionally use the project's signing,
 notarization, and release credentials.
 
 Set `LHDR_CREATE_DMG=1` to create a compressed DMG next to the packaged app.
-Build release artifacts on the oldest supported macOS runner rather than a
-newer developer machine: Homebrew bottles can inherit the minimum OS version
-of the host on which they were built.
+The hosted build uses macOS 15, the oldest available GitHub-hosted arm64
+runner. Homebrew bottles can require the macOS version on which they were built;
+check every bundled binary before claiming compatibility with an older release.
