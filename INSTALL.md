@@ -171,7 +171,9 @@ It is also possible to build Luminance HDR using MSYS2/MinGW, see `build_files/p
 ### macOS <a name="pnote_macos"></a>
 
 Apple Silicon builds use AppleClang, Qt 6, Homebrew's native arm64
-dependencies, and Hugin's `align_image_stack` helper. Install the build tools
+dependencies, and Hugin's `align_image_stack` helper. Qt 6.11.0 and 6.11.1 are
+not supported on macOS due to QTBUG-147602; use Qt 6.11.2 or newer, or an
+earlier Qt release. Install the build tools
 and libraries with native arm64 Homebrew:
 
 ```bash

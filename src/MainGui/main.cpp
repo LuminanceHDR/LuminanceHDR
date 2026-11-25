@@ -27,7 +27,6 @@
 #include <QDebug>
 #include <QFile>
 #include <QObject>
-#include <QOperatingSystemVersion>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QString>
@@ -112,12 +111,6 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context,
 
 int main(int argc, char **argv) {
     QGuiApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
-#ifdef Q_OS_MACOS
-    // Qt native menu icon conversion can crash on macOS 27.
-    if (QOperatingSystemVersion::current().majorVersion() >= 27) {
-        QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
-    }
-#endif
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 

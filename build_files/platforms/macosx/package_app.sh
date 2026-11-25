@@ -74,6 +74,12 @@ if [[ -z "$plugin_dir" || ! -d "$plugin_dir" ]]; then
     exit 1
 fi
 
+qt_version=$("$qtpaths_candidate" --qt-version)
+if [[ "$qt_version" == "6.11.0" || "$qt_version" == "6.11.1" ]]; then
+    echo "Qt $qt_version has a macOS image conversion crash (QTBUG-147602); use Qt 6.11.2 or newer, or an earlier release." >&2
+    exit 1
+fi
+
 ditto --noextattr --noqtn "$source_app" "$output_app"
 touch "$output_app/Contents/Resources/.lhdr-packaging-in-progress"
 
@@ -163,6 +169,14 @@ fi
 while IFS= read -r -d '' candidate; do
     if ! file -b "$candidate" | grep -q 'Mach-O'; then
         continue
+    fi
+    # Official Qt distributions contain universal binaries; remove the other
+    # slice before signing when producing a single-architecture bundle.
+    if [[ "$expected_architectures" == "arm64" && "$(lipo -archs "$candidate")" == *" "* ]]; then
+        temporary_binary="${candidate}.lhdr-thin"
+        lipo "$candidate" -thin arm64 -output "$temporary_binary"
+        chmod "$(stat -f %Lp "$candidate")" "$temporary_binary"
+        mv "$temporary_binary" "$candidate"
     fi
     while IFS= read -r dependency; do
         replacement=""

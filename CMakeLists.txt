@@ -77,6 +77,12 @@ else()
     find_package(Qt6 COMPONENTS Core Concurrent Widgets Gui Xml Sql Svg Network LinguistTools PrintSupport REQUIRED)
 endif()
 
+# Qt 6.11.0 and 6.11.1 release a color space too early on macOS
+# (QTBUG-147602), causing native menu and cursor image conversions to crash.
+if(APPLE AND Qt6_VERSION VERSION_GREATER_EQUAL 6.11.0 AND Qt6_VERSION VERSION_LESS 6.11.2)
+    message(FATAL_ERROR "Qt ${Qt6_VERSION} has a macOS image conversion crash (QTBUG-147602); use Qt 6.11.2 or newer, or an earlier Qt release.")
+endif()
+
 set(LIBS ${LIBS}
     ${Qt6Core_LIBRARIES} ${Qt6Gui_LIBRARIES} ${Qt6Network_LIBRARIES}
     ${Qt6Xml_LIBRARIES} ${Qt6Sql_LIBRARIES})
